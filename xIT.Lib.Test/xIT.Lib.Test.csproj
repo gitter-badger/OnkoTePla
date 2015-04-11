@@ -6,14 +6,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D3BC5548-ED91-4D37-8A1C-4FC5089436B4}</ProjectGuid>
+    <ProjectGuid>{24728878-25A0-4360-BFD5-817A73795C82}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>xIT.OnkoTePla.Client.Core.Test</RootNamespace>
-    <AssemblyName>xIT.OnkoTePla.Client.Core.Test</AssemblyName>
+    <RootNamespace>xIT.Lib.Test</RootNamespace>
+    <AssemblyName>xIT.Lib.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>6fb81c7c</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>693d36eb</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,21 +58,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PatientDataProviderMockTest.cs" />
+    <Compile Include="ClonableListTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\xIT.Lib\xIT.Lib.csproj">
-      <Project>{825B03A5-FD0F-417A-ADC5-D3A0AAD2C36B}</Project>
+      <Project>{825b03a5-fd0f-417a-adc5-d3a0aad2c36b}</Project>
       <Name>xIT.Lib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\xIT.OnkoTePla.Client.Core\xIT.OnkoTePla.Client.Core.csproj">
-      <Project>{d6dec4c7-d919-4528-ae91-510317a1d0fc}</Project>
-      <Name>xIT.OnkoTePla.Client.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\xIT.OnkoTePla.Contracts\xIT.OnkoTePla.Contracts.csproj">
-      <Project>{85958036-dfef-4c68-abf4-fd241eaab47f}</Project>
-      <Name>xIT.OnkoTePla.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

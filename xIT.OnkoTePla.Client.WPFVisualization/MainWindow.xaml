@@ -1,8 +1,26 @@
 ﻿<Window x:Class="xIT.OnkoTePla.Client.WPFVisualization.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+		xmlns:sampleData="clr-namespace:xIT.OnkoTePla.Client.WPFVisualization.SampleData"
+		xmlns:viewModels="clr-namespace:xIT.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces"
+        mc:Ignorable="d" 
+        xmlns:views="clr-namespace:xIT.OnkoTePla.Client.WPFVisualization.Views"
+        Title="MainWindow" Height="431" Width="573">
+	
+	<d:Window.DataContext>		
+		<sampleData:MainWindowViewModelSampleData/>
+	</d:Window.DataContext>
+	
+	<Window.Resources>
+		
+		<DataTemplate x:Key="TextViewDataTemplate" DataType="{x:Type viewModels:ITestViewViewModel}">
+			<views:TestView/>	
+		</DataTemplate>
+		
+	</Window.Resources>
+	
+	<ContentControl Content="{Binding Path=TestViewViewModel}" ContentTemplate="{StaticResource TextViewDataTemplate}"/>
+		
 </Window>

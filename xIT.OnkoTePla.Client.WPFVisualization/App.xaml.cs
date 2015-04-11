@@ -1,4 +1,8 @@
 ﻿using System.Windows;
+using xIT.OnkoTePla.Client.Core.Communication;
+using xIT.OnkoTePla.Client.WPFVisualization.ViewModels;
+using xIT.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
+using xIT.OnkoTePla.Contracts.Communication;
 
 
 namespace xIT.OnkoTePla.Client.WPFVisualization
@@ -12,10 +16,29 @@ namespace xIT.OnkoTePla.Client.WPFVisualization
 		{
 			base.OnStartup(e);
 
-			// TODO: Composition Root here !!
+			///////////////////////////////////////////////////////////////////////////////////////////////
+			////////                                                                             //////////
+			////////                               Composition Root                              //////////
+			////////                                                                             //////////
+			///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-			var mainWindow = new MainWindow();
+			IAppointmentInfoProvider     appointmentInfo     = new AppointmentDataProviderMock();
+			IMedicalPracticeInfoProvider medicalPracticeInfo = new MedicalPracticeInfoProviderMock();
+			IPatientInfoProvider         patientInfo         = new PatientDataProviderMock();
+
+			var testViewViewModel = new TestViewViewModel(medicalPracticeInfo.GetMedicalPractice().AllTherapyPlaces,
+														  patientInfo.GetPatients(),
+														  appointmentInfo.GetAppointments());
+
+			var mainWindowViewModel = new MainWindowViewModel(testViewViewModel);
+
+
+			var mainWindow = new MainWindow
+			{
+				DataContext = mainWindowViewModel
+			};
+
 			mainWindow.Show();
 		}
 	}
