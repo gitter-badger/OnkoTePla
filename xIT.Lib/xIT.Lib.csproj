@@ -42,6 +42,7 @@
     <Compile Include="ClonableList.cs" />
     <Compile Include="IGenericClonable.cs" />
     <Compile Include="IClonableList.cs" />
+    <Compile Include="Notifyer\PropertyChangedNotifierExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
