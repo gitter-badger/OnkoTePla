@@ -7,20 +7,22 @@
 		xmlns:viewModels="clr-namespace:xIT.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces"
         mc:Ignorable="d" 
         xmlns:views="clr-namespace:xIT.OnkoTePla.Client.WPFVisualization.Views"
-        Title="MainWindow" Height="431" Width="573">
-	
-	<d:Window.DataContext>		
+        Title="MainWindow" Height="703" Width="1104">
+
+	<d:Window.DataContext>
 		<sampleData:MainWindowViewModelSampleData/>
 	</d:Window.DataContext>
-	
-	<Window.Resources>
-		
-		<DataTemplate x:Key="TextViewDataTemplate" DataType="{x:Type viewModels:ITestViewViewModel}">
-			<views:TestView/>	
-		</DataTemplate>
-		
-	</Window.Resources>
-	
-	<ContentControl Content="{Binding Path=TestViewViewModel}" ContentTemplate="{StaticResource TextViewDataTemplate}"/>
-		
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="3*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+
+		<views:TestView DataContext="{Binding TestViewViewModel}" />
+
+		<views:PatientSelector Grid.Column="1" 
+							   DataContext="{Binding PatientSelectorViewModel}"/>
+	</Grid>
+
 </Window>

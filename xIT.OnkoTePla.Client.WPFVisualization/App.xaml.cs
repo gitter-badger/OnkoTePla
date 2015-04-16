@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using xIT.OnkoTePla.Client.Core.Communication;
 using xIT.OnkoTePla.Client.WPFVisualization.ViewModels;
-using xIT.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using xIT.OnkoTePla.Contracts.Communication;
 
 
@@ -12,7 +11,7 @@ namespace xIT.OnkoTePla.Client.WPFVisualization
 	/// </summary>
 	public partial class App : Application
 	{
-		protected override void OnStartup(StartupEventArgs e)
+		protected override void OnStartup (StartupEventArgs e)
 		{
 			base.OnStartup(e);
 
@@ -31,7 +30,9 @@ namespace xIT.OnkoTePla.Client.WPFVisualization
 														  patientInfo.GetPatients(),
 														  appointmentInfo.GetAppointments());
 
-			var mainWindowViewModel = new MainWindowViewModel(testViewViewModel);
+			var patientSelectorViewModel = new PatientSelectorViewModel(patientInfo.GetPatients());
+
+			var mainWindowViewModel = new MainWindowViewModel(testViewViewModel, patientSelectorViewModel);
 
 
 			var mainWindow = new MainWindow

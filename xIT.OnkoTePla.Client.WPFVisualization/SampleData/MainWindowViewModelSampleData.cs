@@ -5,11 +5,13 @@ namespace xIT.OnkoTePla.Client.WPFVisualization.SampleData
 {
 	internal class MainWindowViewModelSampleData : IMainWindowViewModel
 	{
-		public MainWindowViewModelSampleData()
+		public MainWindowViewModelSampleData ()
 		{
-			TestViewViewModel = new TestViewViewModelMock();
+			TestViewViewModel = new TestViewViewModelSampleData();
+			PatientSelectorViewModel = new PatientSelectorViewModelSampleData();
 		}
 
 		public ITestViewViewModel TestViewViewModel { get; private set; }
+		public IPatientSelectorViewModel PatientSelectorViewModel { get; private set; }
 	}
 }

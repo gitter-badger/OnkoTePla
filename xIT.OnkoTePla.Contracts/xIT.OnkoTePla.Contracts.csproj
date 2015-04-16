@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appointments\Appointment.cs" />
+    <Compile Include="CommunicationSampleData.cs" />
     <Compile Include="Communication\IMedicalPracticeInfoProvider.cs" />
     <Compile Include="Communication\IAppointmentInfoProvider.cs" />
     <Compile Include="Communication\IPatientInfoProvider.cs" />

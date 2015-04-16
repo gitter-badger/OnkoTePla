@@ -12,23 +12,23 @@ namespace xIT.Lib
 	
 	public class ClonableList<T> : IClonableList<T> where T : IGenericClonable<T>
 	{
-		private readonly List<T> _list;
+		private readonly List<T> list;
 
 		#region constructors
 
 		public ClonableList()
 		{
-			_list = new List<T>();
+			list = new List<T>();
 		}
 
 		public ClonableList(int capacity)
 		{
-			_list = new List<T>(capacity);
+			list = new List<T>(capacity);
 		}
 
 		public ClonableList(List<T> initList)
 		{
-			_list = initList;
+			list = initList;
 		} 
 
 		#endregion
@@ -39,7 +39,7 @@ namespace xIT.Lib
 		{
 			var resultList = new ClonableList<T>();
 
-			foreach (var genericClonable in _list)
+			foreach (var genericClonable in list)
 			{
 				resultList.Add(copyFunc(genericClonable));
 			}
@@ -63,7 +63,7 @@ namespace xIT.Lib
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			return _list.GetEnumerator();
+			return list.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -73,58 +73,58 @@ namespace xIT.Lib
 
 		public void Add(T item)
 		{
-			_list.Add(item);
+			list.Add(item);
 		}
 
 		public void Clear()
 		{
-			_list.Clear();
+			list.Clear();
 		}
 
 		public bool Contains(T item)
 		{
-			return _list.Contains(item);
+			return list.Contains(item);
 		}
 
 		public void CopyTo(T[] array, int arrayIndex)
 		{
-			_list.CopyTo(array, arrayIndex);
+			list.CopyTo(array, arrayIndex);
 		}
 
 		public bool Remove(T item)
 		{
-			return _list.Remove(item);
+			return list.Remove(item);
 		}
 
 		public int Count
 		{
-			get { return _list.Count; }
+			get { return list.Count; }
 		}
 		
 		public bool IsReadOnly
 		{
-			get { return (_list as IList<T>).IsReadOnly; }
+			get { return (list as IList<T>).IsReadOnly; }
 		}
 
 		public int IndexOf(T item)
 		{
-			return _list.IndexOf(item);
+			return list.IndexOf(item);
 		}
 
 		public void Insert(int index, T item)
 		{
-			_list.Insert(index, item);
+			list.Insert(index, item);
 		}
 
 		public void RemoveAt(int index)
 		{
-			_list.RemoveAt(index);
+			list.RemoveAt(index);
 		}
 
 		public T this[int index]
 		{
-			get { return _list[index]; }
-			set { _list[index] = value; }
+			get { return list[index]; }
+			set { list[index] = value; }
 		}
 
 		#endregion
@@ -133,27 +133,27 @@ namespace xIT.Lib
 		
 		public void AppendList(List<T> items)
 		{
-			_list.AddRange(items);
+			list.AddRange(items);
 		}
 
 		public void AppendList(IClonableList<T> items)
 		{
-			_list.AddRange(items);
+			list.AddRange(items);
 		}
 
 		public void Sort()
 		{
-			_list.Sort();
+			list.Sort();
 		}
 		
 		public void Sort(IComparer<T> comparer)
 		{
-			_list.Sort(comparer);
+			list.Sort(comparer);
 		}
 		
 		public void Sort(Comparison<T> comparison)
 		{
-			_list.Sort(comparison);
+			list.Sort(comparison);
 		}
 		
 		#endregion

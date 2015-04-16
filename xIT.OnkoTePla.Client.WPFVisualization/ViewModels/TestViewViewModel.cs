@@ -12,7 +12,7 @@ namespace xIT.OnkoTePla.Client.WPFVisualization.ViewModels
 		private readonly IReadOnlyList<Patient> patients;
 		private readonly IReadOnlyList<Appointment> appointments;
 
-		public TestViewViewModel(IReadOnlyList<TherapyPlace> therapyPlaces, IReadOnlyList<Patient> patients, 
+		public TestViewViewModel (IReadOnlyList<TherapyPlace> therapyPlaces, IReadOnlyList<Patient> patients,
 								 IReadOnlyList<Appointment> appointments)
 		{
 			this.therapyPlaces = therapyPlaces;

@@ -11,7 +11,7 @@ namespace xIT.OnkoTePla.Contracts.Appointments
 		private readonly DateTime     endTime;
 		private readonly TherapyPlace therapyPlace;
 
-		public Appointment(Patient patient,    TherapyPlace therapyPlace, 
+		public Appointment (Patient patient, TherapyPlace therapyPlace,
 						   DateTime startTime, DateTime endTime)
 		{
 			this.patient      = patient;
@@ -22,10 +22,10 @@ namespace xIT.OnkoTePla.Contracts.Appointments
 
 		#region propertys (Patient / StartTime / EndTime)
 
-		public Patient      Patient      { get { return patient;      }}
-		public DateTime     StartTime    { get { return startTime;    }}
-		public DateTime     EndTime      { get { return endTime;      }}
-		public TherapyPlace TherapyPlace { get { return therapyPlace; }}
+		public Patient Patient { get { return patient; } }
+		public DateTime StartTime { get { return startTime; } }
+		public DateTime EndTime { get { return endTime; } }
+		public TherapyPlace TherapyPlace { get { return therapyPlace; } }
 
 		public TimeSpan Duration
 		{
@@ -36,14 +36,14 @@ namespace xIT.OnkoTePla.Contracts.Appointments
 
 		#region operations
 
-		public Appointment MoveToAnotherTherapyChair(TherapyPlace newTherapyPlace)
+		public Appointment MoveToAnotherTherapyChair (TherapyPlace newTherapyPlace)
 		{
 			return new Appointment(Patient, newTherapyPlace, StartTime, EndTime);
 		}
 
-		public Appointment MoveStartTimeAndKeepDuration(DateTime newStartTime)
+		public Appointment MoveStartTimeAndKeepDuration (DateTime newStartTime)
 		{
-			return new Appointment(Patient, TherapyPlace, 
+			return new Appointment(Patient, TherapyPlace,
 								  newStartTime, newStartTime.Add(Duration));
 		}
 
