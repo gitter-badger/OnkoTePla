@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using xIT.OnkoTePla.Client.Core.Communication;
-using xIT.OnkoTePla.Contracts.DataObjects;
+using xIT.OnkoTePla.Contracts.Infrastructure;
+using xIT.OnkoTePla.Contracts.Patients;
 using Xunit;
 
 

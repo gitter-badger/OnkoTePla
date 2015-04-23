@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using xIT.OnkoTePla.Contracts.DataObjects;
+using xIT.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace xIT.OnkoTePla.Client.WPFVisualization.Converter

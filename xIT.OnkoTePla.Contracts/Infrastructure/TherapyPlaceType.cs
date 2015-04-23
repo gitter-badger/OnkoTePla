@@ -2,9 +2,9 @@
 using xIT.OnkoTePla.Contracts.Enums;
 
 
-namespace xIT.OnkoTePla.Contracts.DataObjects
+namespace xIT.OnkoTePla.Contracts.Infrastructure
 {
-	public class TherapyPlaceType
+	public sealed class TherapyPlaceType
 	{
 		private readonly string typeName;
 		private readonly TherapyPlaceIconType icon;

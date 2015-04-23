@@ -1,4 +1,4 @@
-﻿namespace xIT.OnkoTePla.Contracts.DataObjects
+﻿namespace xIT.OnkoTePla.Contracts.Infrastructure
 {
 	public sealed class TherapyPlace
 	{

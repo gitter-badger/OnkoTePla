@@ -5,7 +5,8 @@ using System.Linq;
 using xIT.Lib.Notifyer;
 using xIT.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using xIT.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
-using xIT.OnkoTePla.Contracts.DataObjects;
+using xIT.OnkoTePla.Contracts.Infrastructure;
+using xIT.OnkoTePla.Contracts.Patients;
 
 
 namespace xIT.OnkoTePla.Client.WPFVisualization.ViewModels

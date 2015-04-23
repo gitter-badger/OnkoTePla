@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace xIT.OnkoTePla.Contracts.DataObjects
+namespace xIT.OnkoTePla.Contracts.Infrastructure
 {
 	public sealed class Room
 	{

@@ -1,5 +1,6 @@
 ﻿using System;
-using xIT.OnkoTePla.Contracts.DataObjects;
+using xIT.OnkoTePla.Contracts.Infrastructure;
+using xIT.OnkoTePla.Contracts.Patients;
 
 
 namespace xIT.OnkoTePla.Contracts.Appointments
@@ -7,9 +8,11 @@ namespace xIT.OnkoTePla.Contracts.Appointments
 	public sealed class Appointment
 	{
 		private readonly Patient      patient;
-		private readonly DateTime     startTime;
-		private readonly DateTime     endTime;
-		private readonly TherapyPlace therapyPlace;
+
+		private string       discription;
+		private DateTime     startTime;
+		private DateTime     endTime;
+		private TherapyPlace therapyPlace;
 
 		public Appointment (Patient patient, TherapyPlace therapyPlace,
 						   DateTime startTime, DateTime endTime)
@@ -23,8 +26,20 @@ namespace xIT.OnkoTePla.Contracts.Appointments
 		#region propertys (Patient / StartTime / EndTime)
 
 		public Patient Patient { get { return patient; } }
+
+		public string Discription
+		{
+			get
+			{
+				return discription;
+			}
+			set { discription = value; }
+		}
+
 		public DateTime StartTime { get { return startTime; } }
+
 		public DateTime EndTime { get { return endTime; } }
+
 		public TherapyPlace TherapyPlace { get { return therapyPlace; } }
 
 		public TimeSpan Duration

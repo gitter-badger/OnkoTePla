@@ -1,20 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace xIT.OnkoTePla.Contracts.DataObjects
+
+namespace xIT.OnkoTePla.Contracts.Infrastructure
 {
-	public class MedicalPractice
+	public sealed class MedicalPractice
 	{
 		private readonly IReadOnlyList<Room> rooms;
+		private readonly string name;
 
-		public MedicalPractice(IReadOnlyList<Room> rooms)
+		public MedicalPractice(IReadOnlyList<Room> rooms, string name)
 		{
 			this.rooms = rooms;
+			this.name = name;
 		}
 
 		public IReadOnlyList<Room> Rooms
 		{
 			get { return rooms; }
+		}
+
+		public string Name
+		{
+			get { return name; }
 		}
 
 		public IReadOnlyList<TherapyPlace> AllTherapyPlaces

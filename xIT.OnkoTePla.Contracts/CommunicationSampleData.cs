@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using xIT.OnkoTePla.Contracts.Appointments;
-using xIT.OnkoTePla.Contracts.DataObjects;
 using xIT.OnkoTePla.Contracts.Enums;
+using xIT.OnkoTePla.Contracts.Infrastructure;
+using xIT.OnkoTePla.Contracts.Patients;
 
 
 namespace xIT.OnkoTePla.Contracts
@@ -66,7 +67,7 @@ namespace xIT.OnkoTePla.Contracts
 			{
 				new Room(0, listOfTherapyPlacesRoom1),
 				new Room(0, listOfTherapyPlacesRoom2)
-			});
+			}, "test");
 
 			var listOfTherapyPlaces = MedicalPractice.AllTherapyPlaces;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace xIT.OnkoTePla.Contracts.DataObjects
+namespace xIT.OnkoTePla.Contracts.Patients
 {
 	public sealed class Patient
 	{

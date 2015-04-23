@@ -44,15 +44,17 @@
     <Compile Include="Communication\IMedicalPracticeInfoProvider.cs" />
     <Compile Include="Communication\IAppointmentInfoProvider.cs" />
     <Compile Include="Communication\IPatientInfoProvider.cs" />
-    <Compile Include="DataObjects\MedicalPractice.cs" />
-    <Compile Include="DataObjects\Patient.cs" />
-    <Compile Include="DataObjects\Room.cs" />
-    <Compile Include="DataObjects\TherapyPlace.cs" />
-    <Compile Include="DataObjects\TherapyPlaceType.cs" />
+    <Compile Include="Infrastructure\MedicalPractice.cs" />
+    <Compile Include="Patients\Patient.cs" />
+    <Compile Include="Infrastructure\Room.cs" />
+    <Compile Include="Infrastructure\TherapyPlace.cs" />
+    <Compile Include="Infrastructure\TherapyPlaceType.cs" />
     <Compile Include="Enums\TherapyPlaceIconType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="DataObjects.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
