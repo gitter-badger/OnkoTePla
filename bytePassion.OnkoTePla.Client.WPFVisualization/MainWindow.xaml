@@ -1,0 +1,27 @@
+﻿<Window x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
+        xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="703" Width="1104">
+
+	<d:Window.DataContext>
+		<sampleData:MainWindowViewModelSampleData/>
+	</d:Window.DataContext>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="3*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+
+		<views:TestView DataContext="{Binding TestViewViewModel}" />
+
+		<views:PatientSelector Grid.Column="1" 
+							   DataContext="{Binding PatientSelectorViewModel}"/>
+	</Grid>
+
+</Window>

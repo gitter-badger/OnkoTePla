@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6DEC4C7-D919-4528-AE91-510317A1D0FC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>bytePassion.OnkoTePla.Client.Core</RootNamespace>
+    <AssemblyName>bytePassion.OnkoTePla.Client.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Administration\AppointmentDataAdministration.cs" />
+    <Compile Include="CommandSystem\CommandBase\DomainCommand.cs" />
+    <Compile Include="Communication\AppointmentDataProviderMock.cs" />
+    <Compile Include="Communication\MedicalPracticeInfoProviderMock.cs" />
+    <Compile Include="Communication\PatientDataProviderMock.cs" />
+    <Compile Include="Administration\PatientDataAdministration.cs" />
+    <Compile Include="CommandSystem\DomainCommands\AddAppointment.cs" />
+    <Compile Include="Eventsystem\IDomainEventHandler.cs" />
+    <Compile Include="Eventsystem\EventGroup.cs" />
+    <Compile Include="Eventsystem\EventSourcingSystem.cs" />
+    <Compile Include="Eventsystem\Eventbase\DomainEvent.cs" />
+    <Compile Include="Eventsystem\Eventbase\Event.cs" />
+    <Compile Include="Eventsystem\Eventbase\LocalDomainEvent.cs" />
+    <Compile Include="Eventsystem\DomainEvents\AppointmentAdded.cs" />
+    <Compile Include="Eventsystem\DomainEvents\AppointmentDetailsModified.cs" />
+    <Compile Include="Eventsystem\DomainEvents\AppointmentMoved.cs" />
+    <Compile Include="Eventsystem\DomainEvents\AppointmentRemoved.cs" />
+    <Compile Include="Eventsystem\EventType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Readmodel\AppointmentReadModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
+      <Project>{825B03A5-FD0F-417A-ADC5-D3A0AAD2C36B}</Project>
+      <Name>bytePassion.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Contracts\bytePassion.OnkoTePla.Contracts.csproj">
+      <Project>{85958036-dfef-4c68-abf4-fd241eaab47f}</Project>
+      <Name>bytePassion.OnkoTePla.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
