@@ -13,14 +13,20 @@
 	</d:Window.DataContext>
 
 	<Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="3*"/>
 			<ColumnDefinition Width="1*"/>
 		</Grid.ColumnDefinitions>
+        
+        <views:ActionBar Grid.ColumnSpan="2"></views:ActionBar>
 
-		<views:TestView DataContext="{Binding TestViewViewModel}" />
+        <views:TestView DataContext="{Binding TestViewViewModel}" Grid.Row="1"/>
 
-		<views:PatientSelector Grid.Column="1" 
+		<views:PatientSelector Grid.Column="1" Grid.Row="1"
 							   DataContext="{Binding PatientSelectorViewModel}"/>
 	</Grid>
 

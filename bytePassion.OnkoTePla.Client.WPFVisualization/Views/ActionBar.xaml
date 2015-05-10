@@ -8,13 +8,19 @@
     <UserControl.Resources>
         <ControlTemplate x:Key="ActionBarViewSwitchToggleButton"
                          TargetType="{x:Type ToggleButton}">
-            <Border Background="Black"
-                    BorderBrush="DarkBlue"
-                    BorderThickness="2"
-                    CornerRadius="4">
+            <Border Background="Black" Name="BtnBorder"
+                    CornerRadius="4" Cursor="Hand">
                 <Image Source="{TemplateBinding Content}"
-                       Margin="2" />
+                       Margin="6" />
             </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkSlateGray" TargetName="BtnBorder"></Setter>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="MidnightBlue" TargetName="BtnBorder"></Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
         </ControlTemplate>
     </UserControl.Resources>
     <Border>
@@ -38,6 +44,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <RadioButton Grid.Column="0"
+                         GroupName="ViewSwitchButtons"
                          Margin="2,2,0,2"
                          Template="{StaticResource ActionBarViewSwitchToggleButton}"
                          Width="32"
@@ -55,6 +62,7 @@
             </RadioButton>
 
             <RadioButton Grid.Column="1"
+                         GroupName="ViewSwitchButtons"
                          Margin="2,2"
                          Template="{StaticResource ActionBarViewSwitchToggleButton}"
                          Width="32"
@@ -73,6 +81,7 @@
 
             <RadioButton Template="{StaticResource ActionBarViewSwitchToggleButton}"
                          Grid.Column="2"
+                         GroupName="ViewSwitchButtons"
                          Margin="0,2"
                          Width="32"
                          Height="32">
@@ -88,9 +97,10 @@
                 </DrawingImage>
             </RadioButton>
 
-            <TextBlock Text="xIT - OnkoTePla"
+            <TextBlock Text="OnkoTePla - Version 0.1"
                        Margin="10,0"
-                       VerticalAlignment="Center"
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"
                        FontSize="20"
                        Grid.Column="3" Foreground="#FFD8D8D8" />
 
