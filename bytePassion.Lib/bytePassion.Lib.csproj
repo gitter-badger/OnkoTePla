@@ -40,18 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClonableList.cs" />
+    <Compile Include="FrameworkExtensions\ClonableList.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ParameterrizedCommand.cs" />
     <Compile Include="FrameworkExtensions\GenericExtensions.cs" />
     <Compile Include="FrameworkExtensions\GenericParameterizedValueConverter.cs" />
     <Compile Include="FrameworkExtensions\GenericValueConverter.cs" />
-    <Compile Include="Generic.cs" />
     <Compile Include="TimeLib\Date.cs" />
     <Compile Include="TimeLib\Time.cs" />
     <Compile Include="TimeLib\Duration.cs" />
-    <Compile Include="IGenericClonable.cs" />
-    <Compile Include="IClonableList.cs" />
+    <Compile Include="FrameworkExtensions\IGenericClonable.cs" />
+    <Compile Include="FrameworkExtensions\IClonableList.cs" />
     <Compile Include="FrameworkExtensions\PropertyChangedNotifierExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
