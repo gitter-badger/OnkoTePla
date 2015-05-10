@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 
-namespace bytePassion.Lib.Extensions
+namespace bytePassion.Lib.FrameworkExtensions
 {
 	public static class PropertyChangedNotifierExtension
 	{
@@ -14,6 +14,15 @@ namespace bytePassion.Lib.Extensions
 
 			field = value;
 
+			var tmpHandler = handler;
+			if (tmpHandler != null)
+			{
+				tmpHandler(sender, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+
+		public static void Notify (this PropertyChangedEventHandler handler, object sender, string propertyName)
+		{
 			var tmpHandler = handler;
 			if (tmpHandler != null)
 			{
