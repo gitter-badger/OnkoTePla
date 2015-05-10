@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows.Data;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 {
-	internal class BirthdayToStringConverter : IValueConverter
+	internal class BirthdayToStringConverter : GenericValueConverter<DateTime, string>
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		protected override string Convert(DateTime date, CultureInfo culture)
 		{
-			if (!(value is DateTime)) throw new ArgumentException();
-
-			var valueAsDateTime = (DateTime) value;
-
 			// TODO: CultureInfo nicht hard coden!
-			return valueAsDateTime.ToString("d", new CultureInfo("de-DE"));
+			return date.ToString("d", new CultureInfo("de-DE"));
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		protected override DateTime ConvertBack(string value, CultureInfo culture)
 		{
 			throw new NotImplementedException();
 		}

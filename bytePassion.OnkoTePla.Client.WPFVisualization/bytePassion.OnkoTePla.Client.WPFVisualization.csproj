@@ -55,7 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
-    <Compile Include="Converter\TherapyPlaveToStringConverter.cs" />
+    <Compile Include="Converter\TherapyPlaceToStringConverter.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
     <Compile Include="SampleData\MainWindowViewModelSampleData.cs" />
