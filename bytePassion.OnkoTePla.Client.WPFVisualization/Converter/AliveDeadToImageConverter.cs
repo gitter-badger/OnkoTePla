@@ -15,9 +15,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 			bool alive = (bool)value;
 
 			if (alive)
-				return new BitmapImage(new Uri(@"\Icons\AliveDead\alive.png", UriKind.Relative));			
+				return new BitmapImage(new Uri(@"pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;Component/Icons/AliveDead/alive.png"));			
 			else
-				return new BitmapImage(new Uri(@"\Icons\AliveDead\dead.png", UriKind.Relative));						
+				return new BitmapImage(new Uri(@"pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;Component/Icons/AliveDead/dead.png"));						
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
