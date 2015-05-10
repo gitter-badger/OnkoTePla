@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
@@ -27,13 +28,10 @@ namespace bytePassion.Lib.TimeLib
 		}
 
 		public override bool Equals(object obj)
-		{
-
-			Func<Date, Date, bool> dateCompareFunc = (date1, date2) => date1.day == date2.day &&
-																	   date1.month == date2.month &&
-																	   date1.year == date2.year; 
-
-			return Generic.Equals(this, obj, dateCompareFunc);			
+		{					
+			return this.Equals(obj, (date1, date2) => date1.day == date2.day &&
+												      date1.month == date2.month &&
+													  date1.year == date2.year);
 		}
 
 		public override int GetHashCode()

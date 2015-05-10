@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
@@ -29,11 +30,8 @@ namespace bytePassion.Lib.TimeLib
 
 		public override bool Equals (object obj)
 		{
-
-			Func<Time, Time, bool> timeCompareFunc = (time1, time2) => time1.hour == time2.hour &&
-																	   time1.minute == time2.minute;
-
-			return Generic.Equals(this, obj, timeCompareFunc);
+			return this.Equals(obj, (time1, time2) => time1.hour == time2.hour &&
+													  time1.minute == time2.minute);
 		}
 
 		public override int GetHashCode ()
