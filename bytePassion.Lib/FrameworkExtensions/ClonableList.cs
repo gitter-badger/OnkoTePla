@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-namespace bytePassion.Lib
+namespace bytePassion.Lib.FrameworkExtensions
 {
 	/// <summary>
-	/// A <c>ClonableList</c> is a partial wrapped <c>System.Collections.Generic.List</c> extended by a deep- and shallow copy function.	
+	/// A <c>ClonableList</c> is a partial wrapped <c>System.Collections.Generic.List</c>, extended by a deep- and shallow-copy function.	
 	/// </summary>
 	/// <typeparam name="T">IGenericClonable</typeparam>
 	
@@ -131,14 +131,14 @@ namespace bytePassion.Lib
 
 		#region List<T> Wrapper
 		
-		public void AppendList(List<T> items)
+		public void AppendList(IReadOnlyList<T> items)
 		{
 			list.AddRange(items);
 		}
 
 		public void AppendList(IClonableList<T> items)
 		{
-			list.AddRange(items);
+			AppendList((IReadOnlyList<T>)items);
 		}
 
 		public void Sort()
