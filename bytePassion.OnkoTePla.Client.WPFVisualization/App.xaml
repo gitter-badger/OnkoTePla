@@ -1,13 +1,12 @@
 ﻿<Application x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper"
-             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter">
-	<Application.Resources>
+             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
+             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper">
+    <Application.Resources>
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;component/Styles/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
@@ -18,35 +17,36 @@
             <converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter" />
             <converter:TherapyPlaceToStringConverter x:Key="TherapyPlaceToStringConverter" />
             <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <converter:TimeFromDateConverter x:Key="TimeFromDateConverter" />
 
             <FontFamily x:Key="StandardFontFamily">Segoe UI Light</FontFamily>
 
             <DataTemplate x:Key="PatientDataTemplate" DataType="{x:Type helper:PatientListItem}">
                 <Border Margin="1" CornerRadius="5">
 
-				<Border.Style>
-					<Style>
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding Path=IsCurrentVisibleInList}" Value="False">
-								<Setter Property="Border.Visibility" Value="Collapsed" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</Border.Style>
+                    <Border.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsCurrentVisibleInList}" Value="False">
+                                    <Setter Property="Border.Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
 
                     <StackPanel Margin="2" Orientation="Vertical">
                         <TextBlock FontFamily="{StaticResource StandardFontFamily}"
                                    FontSize="15"
                                    Text="{Binding Patient.Name}" />
-					<StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding Patient.Alive, Converter={StaticResource AliveDeadToImageConverter}}" />
                             <TextBlock Text="{Binding Patient.Birthday, Converter={StaticResource BirthdayToStringConverter}}" />
-					</StackPanel>
-				</StackPanel>
-			</Border>
-		</DataTemplate>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
         </ResourceDictionary>
 
 
-	</Application.Resources>
+    </Application.Resources>
 </Application>

@@ -70,6 +70,7 @@
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
     <Compile Include="Converter\TherapyPlaceToStringConverter.cs" />
+    <Compile Include="Converter\TimeFromDateConverter.cs" />
     <Compile Include="SampleData\MainWindowViewModelSampleData.cs" />
     <Compile Include="SampleData\PatientSelectorViewModelSampleData.cs" />
     <Compile Include="SampleData\TestViewViewModelSampleData.cs" />

@@ -9,31 +9,38 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 	{
 		private readonly Patient      patient;
 
-		private string       discription;
+		private string       _description;
 		private DateTime     startTime;
 		private DateTime     endTime;
 		private TherapyPlace therapyPlace;
+	    private readonly Room _room;
 
-		public Appointment (Patient patient, TherapyPlace therapyPlace,
+	    public Room Room
+	    {
+	        get { return _room; }
+	    }
+
+	    public Appointment (Patient patient, TherapyPlace therapyPlace, Room room,
 						   DateTime startTime, DateTime endTime)
 		{
 			this.patient      = patient;
 			this.startTime    = startTime;
 			this.endTime      = endTime;
 			this.therapyPlace = therapyPlace;
+	        _room = room;
 		}
 
 		#region propertys (Patient / StartTime / EndTime)
 
 		public Patient Patient { get { return patient; } }
 
-		public string Discription
+		public string Description
 		{
 			get
 			{
-				return discription;
+				return _description;
 			}
-			set { discription = value; }
+			set { _description = value; }
 		}
 
 		public DateTime StartTime { get { return startTime; } }
@@ -53,12 +60,12 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 
 		public Appointment MoveToAnotherTherapyChair (TherapyPlace newTherapyPlace)
 		{
-			return new Appointment(Patient, newTherapyPlace, StartTime, EndTime);
+			return new Appointment(Patient, newTherapyPlace, Room, StartTime, EndTime);
 		}
 
 		public Appointment MoveStartTimeAndKeepDuration (DateTime newStartTime)
 		{
-			return new Appointment(Patient, TherapyPlace,
+			return new Appointment(Patient, TherapyPlace, Room,
 								  newStartTime, newStartTime.Add(Duration));
 		}
 

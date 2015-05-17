@@ -30,7 +30,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 														  patientInfo.GetPatients(),
 														  appointmentInfo.GetAppointments());
 
-			var patientSelectorViewModel = new PatientSelectorViewModel(patientInfo.GetPatients());
+			var patientSelectorViewModel = new PatientSelectorViewModel(patientInfo.GetPatients(), appointmentInfo.GetAppointments());
 
 			var mainWindowViewModel = new MainWindowViewModel(testViewViewModel, patientSelectorViewModel);
 
