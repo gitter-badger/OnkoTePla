@@ -8,12 +8,12 @@
     <UserControl.Resources>
         <ControlTemplate x:Key="ActionBarViewSwitchToggleButton"
                          TargetType="{x:Type ToggleButton}">
-            <Border Background="Black"
-                    BorderBrush="DarkBlue"
+            <Border Background="Transparent"
+                    BorderBrush="White"
                     BorderThickness="2"
-                    CornerRadius="4">
+                    CornerRadius="16">
                 <Image Source="{TemplateBinding Content}"
-                       Margin="2" />
+                       Margin="6" />
             </Border>
         </ControlTemplate>
     </UserControl.Resources>
