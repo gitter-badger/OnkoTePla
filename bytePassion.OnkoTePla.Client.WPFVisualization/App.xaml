@@ -3,46 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper">
-	<Application.Resources>
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converter:AliveDeadToImageConverter x:Key="AliveDeadToImageConverter" />
+            <converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter" />
+            <converter:TherapyPlaceToStringConverter x:Key="TherapyPlaceToStringConverter" />
+            <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <converter:TimeFromDateConverter x:Key="TimeFromDateConverter" />
+
+            <FontFamily x:Key="StandardFontFamily">Segoe UI Light</FontFamily>
+
+            <DataTemplate x:Key="PatientDataTemplate" DataType="{x:Type helper:PatientListItem}">
+                <Border Margin="1" CornerRadius="5">
+
+                    <Border.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsCurrentVisibleInList}" Value="False">
+                                    <Setter Property="Border.Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <StackPanel Margin="2" Orientation="Vertical">
+                        <TextBlock FontFamily="{StaticResource StandardFontFamily}"
+                                   FontSize="15"
+                                   Text="{Binding Patient.Name}" />
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Patient.Alive, Converter={StaticResource AliveDeadToImageConverter}}" />
+                            <TextBlock Text="{Binding Patient.Birthday, Converter={StaticResource BirthdayToStringConverter}}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
+        </ResourceDictionary>
 
 
-		<converter:AliveDeadToImageConverter x:Key="AliveDeadToImageConverter"/>
-		<converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter"/>
-		<converter:TherapyPlaceToStringConverter x:Key="TherapyPlaceToStringConverter"/>
-
-		<FontFamily x:Key="StandardFontFamily" >
-			Segoe UI Light
-		</FontFamily>
-
-		<DataTemplate x:Key="PatientDataTemplate" 
-					  DataType="{x:Type helper:PatientListItem}">
-			<Border Margin="1" 
-					CornerRadius="5" 
-					BorderThickness="2"					
-					BorderBrush="Chartreuse">
-
-				<Border.Style>
-					<Style>
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding Path=IsCurrentVisibleInList}" Value="False">
-								<Setter Property="Border.Visibility" Value="Collapsed" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</Border.Style>
-
-				<StackPanel Margin="2" 
-							Orientation="Vertical">
-					<TextBlock Text="{Binding Patient.Name}" 
-							   FontFamily="{StaticResource StandardFontFamily}" 
-							   FontSize="15"/>
-					<StackPanel Orientation="Horizontal">
-						<Image Source="{Binding Patient.Alive, Converter={StaticResource AliveDeadToImageConverter}}"/>
-						<TextBlock Text="{Binding Patient.Birthday, Converter={StaticResource BirthdayToStringConverter}}"/>
-					</StackPanel>
-				</StackPanel>
-			</Border>
-		</DataTemplate>
-
-	</Application.Resources>
+    </Application.Resources>
 </Application>

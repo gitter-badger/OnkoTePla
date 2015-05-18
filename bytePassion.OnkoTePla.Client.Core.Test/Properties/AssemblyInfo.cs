@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("xIT.OnkoPlan.Client.Core.Test")]
+[assembly: AssemblyTitle("bytePassion.OnkoPlan.Client.Core.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("xIT.OnkoPlan.Client.Core.Test")]
+[assembly: AssemblyProduct("bytePassion.OnkoPlan.Client.Core.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

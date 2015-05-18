@@ -5,21 +5,23 @@ using System.Linq;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
+using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Patients;
-
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {
 	internal class PatientSelectorViewModel : IPatientSelectorViewModel, INotifyPropertyChanged
-	{		
-
-		private string filterstring;
+	{
+	    private readonly IReadOnlyList<Appointment> _appointments;
+	    private string filterstring;
 		private readonly IReadOnlyList<PatientListItem> patients;
 		private bool isListEmpty;
+        private PatientListItem selectedPatient;
 
-		public PatientSelectorViewModel(IReadOnlyList<Patient> patients)
+		public PatientSelectorViewModel(IReadOnlyList<Patient> patients, IReadOnlyList<Appointment> appointments )
 		{
-			this.patients = PatientListItem.ConvertPatientList(patients);
+		    _appointments = appointments;
+		    this.patients = PatientListItem.ConvertPatientList(patients);
 			filterstring = "";
 
 			IsListEmpty = Patients.Count == 0;
@@ -30,7 +32,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			get { return patients; }
 		}
 
-		private static bool IsMatch(string patientName, string filterString)
+	    public IReadOnlyList<Appointment> Appointments
+	    {
+            get
+            {
+                if (selectedPatient != null)
+                    return _appointments.Where(a => a.Patient.ID == SelectedPatient.Patient.ID).ToList();
+                return null;
+            }
+	    }
+
+	    private static bool IsMatch(string patientName, string filterString)
 		{
 			var seperatedPatientNames = patientName.Split(' ');
 
@@ -39,14 +51,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		public bool IsListEmpty
 		{
-			get
-			{
-				return isListEmpty;
+            get { return isListEmpty; }
+            private set { PropertyChanged.ChangeAndNotify(this, ref isListEmpty, value); }
 			}
-			private set
+
+        public PatientListItem SelectedPatient
 			{
-				PropertyChanged.ChangeAndNotify(this, ref isListEmpty, value);
-			}
+            get { return selectedPatient; }
+            set { PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value); PropertyChanged.Notify(this, "Appointments");}
 		}	
 
 		public string FilterString
