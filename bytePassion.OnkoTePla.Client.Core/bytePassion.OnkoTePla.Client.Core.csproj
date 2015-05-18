@@ -39,26 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Administration\AppointmentDataAdministration.cs" />
     <Compile Include="CommandSystem\CommandBase\DomainCommand.cs" />
-    <Compile Include="Communication\AppointmentDataProviderMock.cs" />
-    <Compile Include="Communication\MedicalPracticeInfoProviderMock.cs" />
-    <Compile Include="Communication\PatientDataProviderMock.cs" />
-    <Compile Include="Administration\PatientDataAdministration.cs" />
     <Compile Include="CommandSystem\DomainCommands\AddAppointment.cs" />
     <Compile Include="Eventsystem\IDomainEventHandler.cs" />
-    <Compile Include="Eventsystem\EventGroup.cs" />
-    <Compile Include="Eventsystem\EventSourcingSystem.cs" />
+    <Compile Include="Eventsystem\EventBus.cs" />
     <Compile Include="Eventsystem\Eventbase\DomainEvent.cs" />
-    <Compile Include="Eventsystem\Eventbase\Event.cs" />
-    <Compile Include="Eventsystem\Eventbase\LocalDomainEvent.cs" />
     <Compile Include="Eventsystem\DomainEvents\AppointmentAdded.cs" />
-    <Compile Include="Eventsystem\DomainEvents\AppointmentDetailsModified.cs" />
-    <Compile Include="Eventsystem\DomainEvents\AppointmentMoved.cs" />
+    <Compile Include="Eventsystem\DomainEvents\AppointmentModified.cs" />
     <Compile Include="Eventsystem\DomainEvents\AppointmentRemoved.cs" />
     <Compile Include="Eventsystem\EventType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Readmodel\AppointmentReadModel.cs" />
+    <Compile Include="Readmodel\AppointmentChangedEventArgs.cs" />
+    <Compile Include="Readmodel\AppointmentsOfAPatient.cs" />
+    <Compile Include="Readmodel\ChangeAction.cs" />
+    <Compile Include="Readmodel\AppointmentsOfADay.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
@@ -70,7 +64,9 @@
       <Name>bytePassion.OnkoTePla.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Communication\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

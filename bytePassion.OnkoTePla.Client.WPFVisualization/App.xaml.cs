@@ -1,7 +1,6 @@
 ﻿using System.Windows;
-using bytePassion.OnkoTePla.Client.Core.Communication;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels;
-using bytePassion.OnkoTePla.Contracts.Communication;
+using bytePassion.OnkoTePla.Contracts;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization
@@ -21,16 +20,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
 
+			
 
-			IAppointmentInfoProvider     appointmentInfo     = new AppointmentDataProviderMock();
-			IMedicalPracticeInfoProvider medicalPracticeInfo = new MedicalPracticeInfoProviderMock();
-			IPatientInfoProvider         patientInfo         = new PatientDataProviderMock();
+			var testViewViewModel = new TestViewViewModel(CommunicationSampleData.MedicalPractice.AllTherapyPlaces,
+														  CommunicationSampleData.PatientList,
+														  CommunicationSampleData.Appointments);
 
-			var testViewViewModel = new TestViewViewModel(medicalPracticeInfo.GetMedicalPractice().AllTherapyPlaces,
-														  patientInfo.GetPatients(),
-														  appointmentInfo.GetAppointments());
-
-			var patientSelectorViewModel = new PatientSelectorViewModel(patientInfo.GetPatients());
+			var patientSelectorViewModel = new PatientSelectorViewModel(CommunicationSampleData.PatientList);
 
 			var mainWindowViewModel = new MainWindowViewModel(testViewViewModel, patientSelectorViewModel);
 

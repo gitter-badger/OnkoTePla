@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
 {
-	public class AppointmentMoved : DomainEvent
+	public class AppointmentModified : DomainEvent
 	{
 	}
 }
