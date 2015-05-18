@@ -26,7 +26,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 														  CommunicationSampleData.PatientList,
 														  CommunicationSampleData.Appointments);
 
-			var patientSelectorViewModel = new PatientSelectorViewModel(CommunicationSampleData.PatientList);
+			var patientSelectorViewModel = new PatientSelectorViewModel(CommunicationSampleData.PatientList, CommunicationSampleData.Appointments);
 
 			var mainWindowViewModel = new MainWindowViewModel(testViewViewModel, patientSelectorViewModel);
 

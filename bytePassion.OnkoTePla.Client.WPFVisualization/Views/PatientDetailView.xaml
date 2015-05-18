@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.PatientDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
+             d:DesignHeight="700"
+             d:DesignWidth="700"
+             mc:Ignorable="d">
+
+    <d:UserControl.DataContext>
+        <sampleData:PatientSelectorViewModelSampleData />
+    </d:UserControl.DataContext>
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="AppointmenTemplate">
+                <DockPanel Margin="3">
+                    <StackPanel DockPanel.Dock="Left">
+                        <TextBlock>
+                            <Run Text="Uhrzeit: " />
+                            <Run Text="{Binding StartTime, Converter={StaticResource TimeFromDateConverter}, Mode=OneWay}" />
+                            <Run Text=" - " />
+                            <Run Text="{Binding EndTime, Converter={StaticResource TimeFromDateConverter}, Mode=OneWay}" />
+                            <Run Text="Uhr" />
+                        </TextBlock>
+                        <TextBlock>
+                            <Run Text="Datum: " />
+                            <Run Text="{Binding StartTime, Converter={StaticResource BirthdayToStringConverter}, Mode=OneWay}" />
+                        </TextBlock>
+                        <TextBlock Margin="0,10,0,0" Text="{Binding Description, Mode=OneWay}" />
+
+                    </StackPanel>
+                    <StackPanel Margin="50,0" DockPanel.Dock="Left">
+                        <TextBlock>
+                            <Run Text="Raum: Raum" />
+                            <Run Text="{Binding Room.RoomID, Mode=OneWay}" />
+                            <Run Text="" />
+                        </TextBlock>
+                        <TextBlock>
+                            <Run Text="Platz: " />
+                            <Run Text="{Binding TherapyPlace.TherapyPlaceType.TypeName, Mode=OneWay}" />
+                        </TextBlock>
+                        <TextBlock Margin="0,10,0,0" Text="{Binding Description, Mode=OneWay}" />
+
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Left" />
+                </DockPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Visibility="{Binding SelectedPatient, Converter={StaticResource NullToVisibilityConverter}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <StackPanel Margin="0,0,0,5"
+                        DockPanel.Dock="Top"
+                        Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="DarkSlateGray"
+                           Text="Patient:" />
+                <TextBlock Margin="10,0"
+                           VerticalAlignment="Center"
+                           FontSize="24"
+                           Foreground="DarkSlateGray"
+                           TextTrimming="CharacterEllipsis">
+                    <Run Text="{Binding SelectedPatient.Patient.Name, Mode=OneWay}" />
+                    <Run Text="(*" />
+                    <Run Text="{Binding SelectedPatient.Patient.Birthday, Mode=OneWay, Converter={StaticResource BirthdayToStringConverter}}" />
+                    <Run Text=")" />
+                </TextBlock>
+            </StackPanel>
+
+            <CheckBox Content="vergangene Termine"
+                      DockPanel.Dock="Bottom"
+                      Foreground="DarkSlateGray" />
+        </DockPanel>
+        <ListView Grid.Row="2"
+                  ItemTemplate="{StaticResource AppointmenTemplate}"
+                  ItemsSource="{Binding Appointments}" />
+    </Grid>
+</UserControl>
