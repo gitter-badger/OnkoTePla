@@ -6,7 +6,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
 {
 	public class AppointmentModified : DomainEvent
 	{
-		public AppointmentModified(Guid aggregateID, int versionOfAggregate, Guid commandID) 
-			: base(aggregateID, versionOfAggregate, commandID) {}
+		public AppointmentModified(Guid aggregateID, int aggregateVersion, Guid eventID)
+			: base(aggregateID, aggregateVersion, eventID)
+		{
+			
+		}
 	}
 }

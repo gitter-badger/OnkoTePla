@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandSystem\CommandBase\DomainCommand.cs" />
+    <Compile Include="CommandSystem\DomainCommands\CommandBase\DomainCommand.cs" />
     <Compile Include="CommandSystem\CommandBus.cs" />
     <Compile Include="CommandSystem\DomainCommandHandlerCollection.cs" />
     <Compile Include="CommandSystem\DomainCommands\AddAppointment.cs" />

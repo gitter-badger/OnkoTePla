@@ -1,4 +1,4 @@
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.CommandBase;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.CommandBase;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
@@ -9,7 +9,7 @@ namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
 		void RegisterCommandHandler<TCommand>(IDomainCommandHandler<TCommand> domainCommandHandler)
 			where TCommand : DomainCommand;
 
-		void Publish<TCommand>(TCommand command) 
+		void Send<TCommand>(TCommand command) 
 			where TCommand : DomainCommand;
 	}
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.CommandBase;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.CommandBase;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
