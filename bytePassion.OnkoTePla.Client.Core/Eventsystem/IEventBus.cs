@@ -6,7 +6,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 
 	public interface IEventBus
 	{
-		void Subscribe<TDomainEvent>(IDomainEventHandler<TDomainEvent> domainEventHandler)
+		void RegisterEventHandler<TDomainEvent>(IDomainEventHandler<TDomainEvent> domainEventHandler)
 			where TDomainEvent : DomainEvent;
 
 		void Publish<TDomainEvent>(TDomainEvent @event)

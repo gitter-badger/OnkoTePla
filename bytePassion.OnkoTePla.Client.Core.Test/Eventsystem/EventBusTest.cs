@@ -31,7 +31,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			IEventBus eventBus = new EventBus();
 			var testEventHandler = new TestSingleEventHandler();
 
-			eventBus.Subscribe(testEventHandler);
+			eventBus.RegisterEventHandler(testEventHandler);
 			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
 			Assert.True(testEventHandler.HandledEvent);
@@ -67,8 +67,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			IEventBus eventBus = new EventBus();
 			var testEventHandler = new TestDoubleEventHandler();
 
-			eventBus.Subscribe<AppointmentAdded>(testEventHandler);
-			eventBus.Subscribe<AppointmentRemoved>(testEventHandler);			
+			eventBus.RegisterEventHandler<AppointmentAdded>(testEventHandler);
+			eventBus.RegisterEventHandler<AppointmentRemoved>(testEventHandler);			
 
 			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
@@ -88,8 +88,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			var testEventHandler1 = new TestSingleEventHandler();
 			var testEventHandler2 = new TestSingleEventHandler();
 
-			eventBus.Subscribe(testEventHandler1);
-			eventBus.Subscribe(testEventHandler2);
+			eventBus.RegisterEventHandler(testEventHandler1);
+			eventBus.RegisterEventHandler(testEventHandler2);
 
 			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
@@ -120,8 +120,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			var testEventHandler1 = new TestSingleEventHandler();
 			var testEventHandler2 = new TestAnotherSingleEventHandler();
 
-			eventBus.Subscribe(testEventHandler1);
-			eventBus.Subscribe(testEventHandler2);
+			eventBus.RegisterEventHandler(testEventHandler1);
+			eventBus.RegisterEventHandler(testEventHandler2);
 
 			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 

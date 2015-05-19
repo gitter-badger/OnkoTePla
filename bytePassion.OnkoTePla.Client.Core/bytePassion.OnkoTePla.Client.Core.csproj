@@ -41,7 +41,11 @@
   <ItemGroup>
     <Compile Include="CommandSystem\CommandBase\DomainCommand.cs" />
     <Compile Include="CommandSystem\CommandBus.cs" />
+    <Compile Include="CommandSystem\DomainCommandHandlerCollection.cs" />
     <Compile Include="CommandSystem\DomainCommands\AddAppointment.cs" />
+    <Compile Include="CommandSystem\ICommandBus.cs" />
+    <Compile Include="CommandSystem\IDomainCommandHandler.cs" />
+    <Compile Include="CommandSystem\IDomainCommandHandlerCollection.cs" />
     <Compile Include="Eventsystem\DomainEventHandlerCollection.cs" />
     <Compile Include="Eventsystem\IDomainEventHandler.cs" />
     <Compile Include="Eventsystem\EventBus.cs" />
