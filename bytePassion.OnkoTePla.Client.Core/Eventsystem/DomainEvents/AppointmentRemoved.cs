@@ -1,5 +1,5 @@
 ﻿using System;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Eventbase;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 

@@ -1,4 +1,5 @@
-﻿using bytePassion.OnkoTePla.Client.Core.Eventsystem.Eventbase;
+﻿using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
+
 
 namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 {

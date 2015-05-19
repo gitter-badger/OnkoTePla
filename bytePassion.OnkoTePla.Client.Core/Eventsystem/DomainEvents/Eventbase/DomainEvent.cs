@@ -2,7 +2,7 @@
 using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.Eventbase
+namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase
 {
 	public class DomainEvent
 	{
