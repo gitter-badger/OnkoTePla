@@ -68,12 +68,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			var testEventHandler = new TestDoubleEventHandler();
 
 			eventBus.Subscribe<AppointmentAdded>(testEventHandler);
-			eventBus.Subscribe<AppointmentRemoved>(testEventHandler);
+			eventBus.Subscribe<AppointmentRemoved>(testEventHandler);			
 
-			Assert.False(testEventHandler.HandleAddedEvent);
-			Assert.False(testEventHandler.HandleRemovedEvent);
-
-			eventBus.Publish(new AppointmentAdded  (new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.False(testEventHandler.HandleRemovedEvent);
@@ -82,6 +79,59 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.True(testEventHandler.HandleRemovedEvent);
+		}
+
+		[Fact]
+		public void SubscriptionOfTwoHandlerTest()
+		{
+			IEventBus eventBus = new EventBus();
+			var testEventHandler1 = new TestSingleEventHandler();
+			var testEventHandler2 = new TestSingleEventHandler();
+
+			eventBus.Subscribe(testEventHandler1);
+			eventBus.Subscribe(testEventHandler2);
+
+			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+
+			Assert.True(testEventHandler1.HandledEvent);
+			Assert.True(testEventHandler2.HandledEvent);
+		}
+
+		private class TestAnotherSingleEventHandler : IDomainEventHandler<AppointmentRemoved>
+		{
+
+			public TestAnotherSingleEventHandler ()
+			{
+				HandledEvent = false;
+			}		
+			
+			public void Handle(AppointmentRemoved domainEvent)
+			{
+				HandledEvent = true;
+			}
+
+			public bool HandledEvent { private set; get; }
+		}
+
+		[Fact]
+		public void SubscriptionOfTwoDistinctHandlerTest ()
+		{
+			IEventBus eventBus = new EventBus();
+			var testEventHandler1 = new TestSingleEventHandler();
+			var testEventHandler2 = new TestAnotherSingleEventHandler();
+
+			eventBus.Subscribe(testEventHandler1);
+			eventBus.Subscribe(testEventHandler2);
+
+			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+
+			Assert.True(testEventHandler1.HandledEvent);
+			Assert.False(testEventHandler2.HandledEvent);
+
+			eventBus.Publish(new AppointmentRemoved(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+
+			Assert.True(testEventHandler1.HandledEvent);
+			Assert.True(testEventHandler2.HandledEvent);
 		}
 	}
 }
