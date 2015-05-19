@@ -5,8 +5,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 {
 
 	public class EventBus : IEventBus
-	{
-		
+	{		
 		private readonly DomainEventHandlerRepository eventHandlerRepository;		
 		
 		public EventBus()
@@ -14,15 +13,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 			eventHandlerRepository = new DomainEventHandlerRepository();
 		}
 
+
 		public void Subscribe<TDomainEvent>(IDomainEventHandler<TDomainEvent> domainEventHandler) 
 			where TDomainEvent : DomainEvent
 		{
 			eventHandlerRepository.Add(domainEventHandler);
 		}
+		
 	
 		public void Publish<TDomainEvent>(TDomainEvent @event) where TDomainEvent : DomainEvent
 		{
-
 			var eventHandlerList = eventHandlerRepository.GetAllDomainEventHandlers<TDomainEvent>();
 
 			if (eventHandlerList == null) 
