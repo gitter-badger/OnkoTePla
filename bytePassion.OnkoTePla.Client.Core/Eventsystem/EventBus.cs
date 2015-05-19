@@ -1,36 +1,34 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Eventbase;
+﻿using bytePassion.OnkoTePla.Client.Core.Eventsystem.Eventbase;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 {
-	public class EventBus
-	{
 
-		private IDictionary<Type, IList<IDomainEventHandler<DomainEvent>>> eventHandler;		
+	public class EventBus : IEventBus
+	{
+		
+		private readonly DomainEventHandlerRepository eventHandlerRepository;		
 		
 		public EventBus()
-		{
-			eventHandler = new ConcurrentDictionary<Type, IList<IDomainEventHandler<DomainEvent>>>();
+		{			
+			eventHandlerRepository = new DomainEventHandlerRepository();
 		}
 
-		public void Subscribe(IDomainEventHandler<DomainEvent> domainEventHandler)
+		public void Subscribe<TDomainEvent>(IDomainEventHandler<TDomainEvent> domainEventHandler) 
+			where TDomainEvent : DomainEvent
 		{
-			if (!(eventHandler.ContainsKey(domainEventHandler.HandledEventType)))
-				eventHandler.Add(domainEventHandler.HandledEventType, new List<IDomainEventHandler<DomainEvent>>());
-
-			eventHandler[domainEventHandler.HandledEventType].Add(domainEventHandler);
-		}		
-
-		public void Publish(DomainEvent @event)
+			eventHandlerRepository.Add(domainEventHandler);
+		}
+	
+		public void Publish<TDomainEvent>(TDomainEvent @event) where TDomainEvent : DomainEvent
 		{
-			if (!eventHandler.ContainsKey(@event.GetType())) 
+
+			var eventHandlerList = eventHandlerRepository.GetAllDomainEventHandlers<TDomainEvent>();
+
+			if (eventHandlerList == null) 
 				return;
 
-
-			foreach (var domainEventHandler in eventHandler[@event.GetType()])
+			foreach (var domainEventHandler in eventHandlerList)
 			{
 				domainEventHandler.Handle(@event);
 			}

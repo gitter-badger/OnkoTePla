@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="CommandSystem\CommandBase\DomainCommand.cs" />
     <Compile Include="CommandSystem\DomainCommands\AddAppointment.cs" />
+    <Compile Include="Eventsystem\DomainEventHandlerRepository.cs" />
     <Compile Include="Eventsystem\IDomainEventHandler.cs" />
     <Compile Include="Eventsystem\EventBus.cs" />
     <Compile Include="Eventsystem\Eventbase\DomainEvent.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Eventsystem\DomainEvents\AppointmentModified.cs" />
     <Compile Include="Eventsystem\DomainEvents\AppointmentRemoved.cs" />
     <Compile Include="Eventsystem\EventType.cs" />
+    <Compile Include="Eventsystem\IEventBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Readmodel\AppointmentChangedEventArgs.cs" />
     <Compile Include="Readmodel\AppointmentsOfAPatient.cs" />
