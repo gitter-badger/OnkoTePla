@@ -2,7 +2,7 @@
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Readmodel
+namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 {
 	public class AppointmentChangedEventArgs : EventArgs
 	{

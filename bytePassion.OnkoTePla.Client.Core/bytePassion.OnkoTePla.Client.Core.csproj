@@ -48,13 +48,12 @@
     <Compile Include="Eventsystem\DomainEvents\AppointmentAdded.cs" />
     <Compile Include="Eventsystem\DomainEvents\AppointmentModified.cs" />
     <Compile Include="Eventsystem\DomainEvents\AppointmentRemoved.cs" />
-    <Compile Include="Eventsystem\EventType.cs" />
     <Compile Include="Eventsystem\IEventBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Readmodel\AppointmentChangedEventArgs.cs" />
-    <Compile Include="Readmodel\AppointmentsOfAPatient.cs" />
-    <Compile Include="Readmodel\ChangeAction.cs" />
-    <Compile Include="Readmodel\AppointmentsOfADay.cs" />
+    <Compile Include="Readmodels\AppointmentChangedEventArgs.cs" />
+    <Compile Include="Readmodels\AppointmentsOfAPatient.cs" />
+    <Compile Include="Readmodels\ChangeAction.cs" />
+    <Compile Include="Readmodels\AppointmentsOfADay.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
