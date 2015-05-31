@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
 {
 	public class Date
-	{
-		private readonly DateTime dateTime;
-		private readonly int dateTimeHash;
-
-		private readonly int day;
-		private readonly int month;
-		private readonly int year;
+	{		
+		private readonly byte day;
+		private readonly byte month;
+		private readonly ushort year;
 
 		public Date(DateTime dateTime)
+		{			
+			day   =   (byte) dateTime.Day;
+			month =   (byte) dateTime.Month;
+			year  = (ushort) dateTime.Year;
+		}
+
+		public Date(byte day, byte month, ushort year)
 		{
-			this.dateTime = dateTime;
-
-			day = dateTime.Day;
-			month = dateTime.Month;
-			year = dateTime.Year;
-
-			dateTimeHash = year.GetHashCode() ^ 
-						   month.GetHashCode() ^ 
-						   day.GetHashCode();
+			this.day   = day;
+			this.month = month;
+			this.year  = year;
 		}
 
 		public override bool Equals(object obj)
@@ -36,17 +35,55 @@ namespace bytePassion.Lib.TimeLib
 
 		public override int GetHashCode()
 		{
-			return dateTimeHash;
-		}
+			return year.GetHashCode() ^ month.GetHashCode() ^ day.GetHashCode();
+		}		
 
+		/// <summary>
+		/// return Date as String in format: dd.mm.yyyy
+		/// </summary>
+		/// <returns>Date in format dd.mm.yyyy</returns>
 		public override string ToString()
 		{
-			// TODO: CultureInfo nicht hard coden!
-			return dateTime.ToString("d", new CultureInfo("de-DE"));
+			var builder = new StringBuilder();
+
+			if (day < 10)
+				builder.Append('0');
+
+			builder.Append(day);
+			builder.Append('.');
+
+			if (month < 10)
+				builder.Append('0');
+
+			builder.Append(month);
+			builder.Append('.');
+			builder.Append(year);
+
+			return builder.ToString();
+		}
+
+		public string GetDisplayString(CultureInfo cultureInfo)
+		{
+			var dateTime = new DateTime(year, month, day);
+			return dateTime.ToString("d", cultureInfo);
 		}
 
 		public int Day   { get { return day;   }}
 		public int Month { get { return month; }}
 		public int Year  { get { return year;  }}
+
+		public static Date Parse(string s)
+		{
+			var elements = s.Split('.');
+
+			if (elements.Length != 3)
+				throw new FormatException("expected Format: dd.mm.yyyy");
+
+			var day   = Byte.Parse(elements[0]);
+			var month = Byte.Parse(elements[1]);
+			var year  = UInt16.Parse(elements[2]);
+
+			return new Date(day, month, year);
+		}
 	}
 }

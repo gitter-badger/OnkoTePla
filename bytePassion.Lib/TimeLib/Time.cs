@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Globalization;
+using System.Text;
 using bytePassion.Lib.FrameworkExtensions;
 
 
@@ -7,26 +7,23 @@ namespace bytePassion.Lib.TimeLib
 {
 	public class Time
 	{
-		private readonly int hour;
-		private readonly int minute;
-
-		private readonly DateTime dateTime;
+		private readonly byte hour;
+		private readonly byte minute;		
 
 		public Time(DateTime time)
 		{
-			hour = time.Hour;
-			minute = time.Minute;
-
-			dateTime = time;
+			hour   = (byte) time.Hour;
+			minute = (byte) time.Minute;			
 		}
 
-		public Time(int hour, int minute)
+		public Time(byte hour, byte minute)
 		{
-			dateTime = new DateTime(0,0,0,hour, minute, 0);
+			this.hour = hour;
+			this.minute = minute;
 		}
 
-		public int Hour   { get { return hour;   }}
-		public int Minute { get { return minute; }}
+		public byte Hour   { get { return hour;   }}
+		public byte Minute { get { return minute; }}
 
 		public override bool Equals (object obj)
 		{
@@ -39,10 +36,40 @@ namespace bytePassion.Lib.TimeLib
 			return hour.GetHashCode() ^ minute.GetHashCode();
 		}
 
+		public static Duration operator - (Time t1, Time t2)
+		{
+			throw new NotImplementedException();
+		}
+
 		public override string ToString ()
 		{
-			// TODO: CultureInfo nicht hard coden!
-			return dateTime.ToString("t", new CultureInfo("de-DE"));
+			var builder = new StringBuilder();
+
+			if (hour < 10)
+				builder.Append('0');
+
+			builder.Append(hour);
+			builder.Append(':');
+
+			if (minute < 10)
+				builder.Append('0');
+
+			builder.Append(minute);
+
+			return builder.ToString();
+		}
+
+		public static Time Parse(string s)
+		{
+			var elements = s.Split(':');
+
+			if (elements.Length != 2)
+				throw new FormatException("expected Format: hh:mm");
+
+			var hour   = Byte.Parse(elements[0]);
+			var minute = Byte.Parse(elements[1]);
+
+			return new Time(hour, minute);
 		}
 	}
 }
