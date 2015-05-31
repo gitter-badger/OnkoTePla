@@ -9,7 +9,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
 	{
 		private readonly Appointment addedAppointment;
 
-		public AppointmentAdded(Guid aggregateID, int aggregateVersion, Guid eventID, Appointment addedAppointment)
+		public AppointmentAdded(Guid aggregateID, uint aggregateVersion, Guid eventID, Appointment addedAppointment)
 			: base(aggregateID, aggregateVersion, eventID)
 		{
 			this.addedAppointment = addedAppointment;

@@ -46,6 +46,8 @@
     <Compile Include="CommandSystem\ICommandBus.cs" />
     <Compile Include="CommandSystem\IDomainCommandHandler.cs" />
     <Compile Include="CommandSystem\IDomainCommandHandlerCollection.cs" />
+    <Compile Include="Domain\AggregateRootBase.cs" />
+    <Compile Include="Domain\AppointmentsOfDayAggregate.cs" />
     <Compile Include="Eventsystem\DomainEventHandlerCollection.cs" />
     <Compile Include="Eventsystem\IDomainEventHandler.cs" />
     <Compile Include="Eventsystem\EventBus.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="Readmodels\AppointmentsOfAPatient.cs" />
     <Compile Include="Readmodels\ChangeAction.cs" />
     <Compile Include="Readmodels\AppointmentsOfADay.cs" />
+    <Compile Include="State\StateEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
@@ -72,7 +75,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Communication\" />
+    <Folder Include="Repository\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

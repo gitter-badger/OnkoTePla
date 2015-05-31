@@ -32,7 +32,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			var testEventHandler = new TestSingleEventHandler();
 
 			eventBus.RegisterEventHandler(testEventHandler);
-			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+			eventBus.Publish(new AppointmentAdded(new Guid(), 1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
 			Assert.True(testEventHandler.HandledEvent);
 		}
@@ -70,12 +70,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			eventBus.RegisterEventHandler<AppointmentAdded>(testEventHandler);
 			eventBus.RegisterEventHandler<AppointmentRemoved>(testEventHandler);			
 
-			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+			eventBus.Publish(new AppointmentAdded(new Guid(), 1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.False(testEventHandler.HandleRemovedEvent);
 
-			eventBus.Publish(new AppointmentRemoved(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+			eventBus.Publish(new AppointmentRemoved(new Guid(), 1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.True(testEventHandler.HandleRemovedEvent);
@@ -91,7 +91,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			eventBus.RegisterEventHandler(testEventHandler1);
 			eventBus.RegisterEventHandler(testEventHandler2);
 
-			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+			eventBus.Publish(new AppointmentAdded(new Guid(), 1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.True(testEventHandler2.HandledEvent);
@@ -123,12 +123,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			eventBus.RegisterEventHandler(testEventHandler1);
 			eventBus.RegisterEventHandler(testEventHandler2);
 
-			eventBus.Publish(new AppointmentAdded(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+			eventBus.Publish(new AppointmentAdded(new Guid(), 1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.False(testEventHandler2.HandledEvent);
 
-			eventBus.Publish(new AppointmentRemoved(new Guid(), -1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
+			eventBus.Publish(new AppointmentRemoved(new Guid(), 1, new Guid(), new Appointment(null, null, null, new DateTime(), new DateTime())));
 
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.True(testEventHandler2.HandledEvent);

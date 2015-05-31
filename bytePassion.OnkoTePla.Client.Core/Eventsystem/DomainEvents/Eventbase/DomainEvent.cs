@@ -7,10 +7,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase
 	public class DomainEvent
 	{
 		private readonly Guid aggregateId;
-		private readonly int  aggregateVersion;
+		private readonly uint  aggregateVersion;
 		private readonly Guid eventId;
 
-		public DomainEvent(Guid aggregateID, int aggregateVersion, Guid eventId)
+		public DomainEvent(Guid aggregateID, uint aggregateVersion, Guid eventId)
 		{
 			this.aggregateId = aggregateID;
 			this.aggregateVersion = aggregateVersion;
@@ -19,6 +19,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase
 
 		public Guid EventId          { get { return eventId;          }}
 		public Guid AggregateId      { get { return aggregateId;      }}
-		public int  AggregateVersion { get { return aggregateVersion; }}
+		public uint  AggregateVersion { get { return aggregateVersion; }}
 	}
 }

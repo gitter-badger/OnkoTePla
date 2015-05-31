@@ -9,15 +9,15 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 	{
 		private readonly Patient      patient;
 
-		private string       _description;
+		private string       description;
 		private DateTime     startTime;
 		private DateTime     endTime;
 		private TherapyPlace therapyPlace;
-	    private readonly Room _room;
+	    private Room		 room;
 
 	    public Room Room
 	    {
-	        get { return _room; }
+	        get { return room; }
 	    }
 
 	    public Appointment (Patient patient, TherapyPlace therapyPlace, Room room,
@@ -27,7 +27,7 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 			this.startTime    = startTime;
 			this.endTime      = endTime;
 			this.therapyPlace = therapyPlace;
-	        _room = room;
+	        this.room = room;
 		}
 
 		#region propertys (Patient / StartTime / EndTime)
@@ -38,9 +38,9 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 		{
 			get
 			{
-				return _description;
+				return description;
 			}
-			set { _description = value; }
+			set { description = value; }
 		}
 
 		public DateTime StartTime { get { return startTime; } }
