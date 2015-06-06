@@ -37,26 +37,27 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		private const string XmlRoot = "configuration";
 
 		private const string CountAttribute = "count";
-		private const string NameAttribute = "name";
-		private const string IdAttribute = "id";
+		private const string NameAttribute  = "name";
+		private const string IdAttribute    = "id";
 
 		private const string TherapyPlaceTypes = "therapyPlaceTypes";		
-		private const string TherapyPlaceType = "therapyPlaceType";
+		private const string TherapyPlaceType  = "therapyPlaceType";
 
 		private const string MedicalPractices = "medicalPractices";
-		private const string MedicalPractice = "medicalPractice";
+		private const string MedicalPractice  = "medicalPractice";
 
 		private const string Users = "users";
-		private const string User = "user";
+		private const string User  = "user";
 
-		private const string Room = "room";
+		private const string Room         = "room";
 		private const string TherapyPlace = "therapyPlace";
 
-		private const string IconTypeAttribute = "iconType";			
-		private const string MPVersionAttribute = "version";						
-		private const string TherapyPlaceTypeAttribute = "type";		
-		private const string PassworAttribute          = "password";
-		private const string AccessablePratice = "accessablePractice";
+		private const string IconTypeAttribute            = "iconType";			
+		private const string MPVersionAttribute           = "version";						
+		private const string TherapyPlaceTypeAttribute    = "type";		
+		private const string PassworAttribute             = "password";
+		private const string AccessablePratice            = "accessablePractice";
+		private const string HasPreviousVersionsAttribute = "hasPreviousVersions";
 		#endregion
 
 		public void Persist(Configuration config)
@@ -121,11 +122,15 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			writer.WriteAttributeString(CountAttribute, medicalPractice.Rooms.Count.ToString());
 			writer.WriteAttributeString(MPVersionAttribute, medicalPractice.Version.ToString());
 			writer.WriteAttributeString(IdAttribute, medicalPractice.Id.ToString());
+			writer.WriteAttributeString(HasPreviousVersionsAttribute, medicalPractice.HasPreviousVersion.ToString());
 
 			foreach (var room in medicalPractice.Rooms)
 			{
 				WriteRoom(writer, room);
 			}
+
+			if (medicalPractice.HasPreviousVersion)
+				WriteMedicalPractice(writer, medicalPractice.PreviousVersion);
 
 			writer.WriteEndElement();
 		}
@@ -210,8 +215,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 								medicalPracticesCount = Int32.Parse(reader.Value);
 						}
 
-						var medicalPractices = AcceptMedicalPractices(reader, therapyPlaceTypes, medicalPracticesCount);
-						practices = medicalPractices;
+						practices = AcceptMedicalPractices(reader, therapyPlaceTypes, medicalPracticesCount);
 					}
 
 					if (reader.NodeType == XmlNodeType.Element && reader.Name == Users)
@@ -232,7 +236,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				}
 			}
 			reader.Close();
-
 
 			return new Configuration(therapyPlaceTypes.Values.ToList(), practices, users);
 		}
@@ -293,26 +296,47 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				if (reader.NodeType != XmlNodeType.Element || reader.Name != MedicalPractice) continue;
 				i++;
 
-				var name = String.Empty;
-				var version = 0u;
-				var roomCount = 0;
-				var id = new Guid();
-
-				if (reader.HasAttributes)
-				{
-					while (reader.MoveToNextAttribute())
-					{
-						if (reader.Name == NameAttribute)      name      = reader.Value;
-						if (reader.Name == MPVersionAttribute) version   = UInt32.Parse(reader.Value);
-						if (reader.Name == CountAttribute)     roomCount = Int32.Parse(reader.Value);
-						if (reader.Name == IdAttribute)        id        = Guid.Parse(reader.Value);
-					}
-				}
-
-				var rooms = AcceptRooms(reader, therapyPlaceTypes, roomCount);
-				medicalPractices.Add(new MedicalPractice(rooms, name, version, id));
+				var medicalPractice = AcceptMedivalPractice(reader, therapyPlaceTypes);				
+				medicalPractices.Add(medicalPractice);
 			}
 			return medicalPractices;			
+		}
+
+		private static MedicalPractice AcceptMedivalPractice (XmlReader reader,
+															 IDictionary<string, TherapyPlaceType> therapyPlaceTypes)
+		{
+			var name = String.Empty;
+			var version = 0u;
+			var roomCount = 0;
+			var id = new Guid();
+			var hasPreviousVersion = false;
+
+			if (reader.HasAttributes)
+			{
+				while (reader.MoveToNextAttribute())
+				{
+					if (reader.Name == NameAttribute)                name               = reader.Value;
+					if (reader.Name == MPVersionAttribute)           version            = UInt32.Parse(reader.Value);
+					if (reader.Name == CountAttribute)               roomCount          = Int32.Parse(reader.Value);
+					if (reader.Name == IdAttribute)                  id                 = Guid.Parse(reader.Value);
+					if (reader.Name == HasPreviousVersionsAttribute) hasPreviousVersion = Boolean.Parse(reader.Value);
+				}
+			}
+
+			var rooms = AcceptRooms(reader, therapyPlaceTypes, roomCount);
+
+			MedicalPractice previousVersion = null;
+			if (hasPreviousVersion)
+			{
+				while (reader.Read())
+				{
+					if (reader.NodeType != XmlNodeType.Element || reader.Name != MedicalPractice) continue;
+					previousVersion = AcceptMedivalPractice(reader, therapyPlaceTypes);
+					break;
+				}
+			}
+
+			return new MedicalPractice(rooms, name, version,id, previousVersion);
 		}
 
 		private static IReadOnlyList<Room> AcceptRooms (XmlReader reader, 

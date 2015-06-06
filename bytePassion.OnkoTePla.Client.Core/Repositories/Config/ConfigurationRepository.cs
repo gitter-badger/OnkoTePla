@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
@@ -13,6 +15,17 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		public ConfigurationRepository(IPersistenceService<Configuration> persistenceService)
 		{
 			this.persistenceService = persistenceService;
+		}
+
+		public uint GetLatestVersionFor(Guid medicalPractiveId)
+		{
+			var practice = configuration.GetAllMedicalPractices()
+										.FirstOrDefault(medicalPractice => medicalPractice.Id == medicalPractiveId);
+
+			if (practice == null)
+				throw new ArgumentException("there is no medicalPractice with that id");
+
+			return practice.Version;
 		}
 
 		public void SetConfig(Configuration newConfig)
