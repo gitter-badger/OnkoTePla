@@ -49,6 +49,8 @@
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\XmlConfigurationDataStore.cs" />
+    <Compile Include="Repositories\EventStore\EventStream.cs" />
+    <Compile Include="Repositories\EventStore\EventStreamIdentifier.cs" />
     <Compile Include="Repositories\KeyMapper\AggregateKeyMapper.cs" />
     <Compile Include="Repositories\KeyMapper\IAggregateKeyMapper.cs" />
     <Compile Include="Repositories\KeyMapper\XmlAggregateOfADayKeyMapDataStore.cs" />
