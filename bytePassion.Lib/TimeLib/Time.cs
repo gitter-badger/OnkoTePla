@@ -5,8 +5,10 @@ using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.Lib.TimeLib
 {
-	public class Time
+	public struct Time
 	{
+		public static readonly Time Dummy = new Time(0,0);
+
 		private readonly byte hour;
 		private readonly byte minute;		
 
@@ -34,6 +36,16 @@ namespace bytePassion.Lib.TimeLib
 		public override int GetHashCode ()
 		{
 			return hour.GetHashCode() ^ minute.GetHashCode();
+		}
+
+		public static bool operator ==(Time t1, Time t2)
+		{
+			return t1.Equals(t2);
+		}
+
+		public static bool operator !=(Time t1, Time t2)
+		{
+			return !(t1 == t2);
 		}
 
 		public static Duration operator - (Time t1, Time t2)
@@ -70,6 +82,11 @@ namespace bytePassion.Lib.TimeLib
 			var minute = Byte.Parse(elements[1]);
 
 			return new Time(hour, minute);
+		}
+
+		public static bool IsDummy(Time t)
+		{
+			return t == Dummy;
 		}
 	}
 }

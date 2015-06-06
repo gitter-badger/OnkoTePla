@@ -6,8 +6,10 @@ using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.Lib.TimeLib
 {
-	public class Date
+	public struct Date
 	{		
+		public static readonly Date Dummy = new Date(0,0,0);
+
 		private readonly byte day;
 		private readonly byte month;
 		private readonly ushort year;
@@ -36,7 +38,17 @@ namespace bytePassion.Lib.TimeLib
 		public override int GetHashCode()
 		{
 			return year.GetHashCode() ^ month.GetHashCode() ^ day.GetHashCode();
-		}		
+		}
+
+		public static bool operator == (Date d1, Date d2)
+		{
+			return d1.Equals(d2);
+		}
+
+		public static bool operator != (Date d1, Date d2)
+		{
+			return !(d1 == d2);
+		}
 
 		/// <summary>
 		/// return Date as String in format: dd.mm.yyyy
@@ -84,6 +96,11 @@ namespace bytePassion.Lib.TimeLib
 			var year  = UInt16.Parse(elements[2]);
 
 			return new Date(day, month, year);
+		}
+
+		public static bool IsDumme(Date d)
+		{
+			return d == Dummy;
 		}
 	}
 }
