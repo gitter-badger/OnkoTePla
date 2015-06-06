@@ -10,7 +10,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 	{
 		protected override string Convert(TherapyPlace therapyPlace, CultureInfo culture)
 		{
-			return therapyPlace.TherapyPlaceID + " (" + therapyPlace.TherapyPlaceType.TypeName + ")";
+			return therapyPlace.Id + " (" + therapyPlace.Type.Name + ")";
 		}
 
 		protected override TherapyPlace ConvertBack(string value, CultureInfo culture)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 
@@ -7,7 +6,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 {
 	public class AppointmentsOfADay
 	{
-		public event EventHandler<AppointmentChangedEventArgs> AppointmentChanged; 
+		//public event EventHandler<AppointmentChangedEventArgs> AppointmentChanged; 
 
 		private readonly IReadOnlyList<Appointment> appointments;
 

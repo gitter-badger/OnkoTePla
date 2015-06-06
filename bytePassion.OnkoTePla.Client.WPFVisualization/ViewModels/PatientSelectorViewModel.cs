@@ -12,7 +12,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {
 	internal class PatientSelectorViewModel : IPatientSelectorViewModel, INotifyPropertyChanged
 	{
-	    private readonly IReadOnlyList<Appointment> _appointments;
+	    private readonly IReadOnlyList<Appointment> appointments;
 	    private string filterstring;
 		private readonly IReadOnlyList<PatientListItem> patients;
 		private bool isListEmpty;
@@ -20,7 +20,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		public PatientSelectorViewModel(IReadOnlyList<Patient> patients, IReadOnlyList<Appointment> appointments )
 		{
-		    _appointments = appointments;
+		    this.appointments = appointments;
 		    this.patients = PatientListItem.ConvertPatientList(patients);
 			filterstring = "";
 
@@ -37,7 +37,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
             get
             {
                 if (selectedPatient != null)
-                    return _appointments.Where(a => a.Patient.ID == SelectedPatient.Patient.ID).ToList();
+                    return appointments.Where(a => a.Patient.Id == SelectedPatient.Patient.Id).ToList();
                 return null;
             }
 	    }

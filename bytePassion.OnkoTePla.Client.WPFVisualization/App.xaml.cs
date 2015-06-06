@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels;
-using bytePassion.OnkoTePla.Contracts;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization
@@ -22,18 +20,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			
 
-			var testViewViewModel = new TestViewViewModel(CommunicationSampleData.MedicalPractice.AllTherapyPlaces,
-														  CommunicationSampleData.PatientList,
-														  CommunicationSampleData.Appointments);
-
-			var patientSelectorViewModel = new PatientSelectorViewModel(CommunicationSampleData.PatientList, CommunicationSampleData.Appointments);
-
-			var mainWindowViewModel = new MainWindowViewModel(testViewViewModel, patientSelectorViewModel);
+//			var testViewViewModel = new TestViewViewModel(CommunicationSampleData.MedicalPractice.AllTherapyPlaces,
+//														  CommunicationSampleData.PatientList,
+//														  CommunicationSampleData.Appointments);
+//
+//			var patientSelectorViewModel = new PatientSelectorViewModel(CommunicationSampleData.PatientList, CommunicationSampleData.Appointments);
+//
+//			var mainWindowViewModel = new MainWindowViewModel(testViewViewModel, patientSelectorViewModel);
 
 
 			var mainWindow = new MainWindow
 			{
-				DataContext = mainWindowViewModel
+				//DataContext = mainWindowViewModel
 			};
 
 			mainWindow.Show();

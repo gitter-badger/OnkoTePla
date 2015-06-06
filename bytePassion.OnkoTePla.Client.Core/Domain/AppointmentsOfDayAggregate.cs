@@ -10,17 +10,20 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 	public class AppointmentsOfDayAggregate : AggregateRootBase
 	{
 
-		private IList<Appointment> appointments; 
+		private IList<Appointment> appointments;
+		private readonly uint configVersion;
 
-		public AppointmentsOfDayAggregate(Guid id, uint version) 
+		public AppointmentsOfDayAggregate(Guid id, uint version, uint configVersion) 
 			: base(id, version)
 		{
+			this.configVersion = configVersion;
 			appointments = new List<Appointment>();
 		}
 
-		protected void Apply (AppointmentAdded addedAppointmentEvent)
+		protected void Apply (AppointmentAdded @event)
 		{
-			appointments.Add(addedAppointmentEvent.AddedAppointment);
+			appointments.Add(new Appointment(@event.Patient, @event.TherapyPlace, @event.Room, 
+											 @event.Day, @event.StartTime, @event.EndTime));
 		}
 	}
 }

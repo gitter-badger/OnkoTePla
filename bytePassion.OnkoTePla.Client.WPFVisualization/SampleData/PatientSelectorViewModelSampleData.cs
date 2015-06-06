@@ -2,7 +2,6 @@
 using System.Linq;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
-using bytePassion.OnkoTePla.Contracts;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
@@ -11,7 +10,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 	{
 		public PatientSelectorViewModelSampleData()
 		{			
-			Patients = PatientListItem.ConvertPatientList(CommunicationSampleData.PatientList);
+			//Patients = PatientListItem.ConvertPatientList(CommunicationSampleData.PatientList);
 		    SelectedPatient = Patients.FirstOrDefault();
 			IsListEmpty = false;
 			FilterString = "";
@@ -21,7 +20,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 	    {
 	        get
 	        {
-	            return CommunicationSampleData.Appointments.Where(a => a.Patient.ID == SelectedPatient.Patient.ID).ToList();
+	            //return CommunicationSampleData.Appointments.Where(a => a.Patient.Id == SelectedPatient.Patient.Id).ToList();
+				return new List<Appointment>();
 	        }
 	    }
 
