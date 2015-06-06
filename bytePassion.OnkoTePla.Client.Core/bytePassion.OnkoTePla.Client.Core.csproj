@@ -49,6 +49,9 @@
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\XmlConfigurationDataStore.cs" />
+    <Compile Include="Repositories\KeyMapper\AggregateKeyMapper.cs" />
+    <Compile Include="Repositories\KeyMapper\IAggregateKeyMapper.cs" />
+    <Compile Include="Repositories\KeyMapper\XmlAggregateOfADayKeyMapDataStore.cs" />
     <Compile Include="Repositories\Patients\IPatientReadRepository.cs" />
     <Compile Include="Repositories\Patients\IPatientWriteRepository.cs" />
     <Compile Include="Repositories\IPersistablility.cs" />
