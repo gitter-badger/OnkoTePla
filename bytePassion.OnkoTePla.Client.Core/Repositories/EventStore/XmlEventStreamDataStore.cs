@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 {
-	public class XmlEventStreamDataStore : IPersistenceService<IDictionary<Guid, IReadOnlyCollection<DomainEvent>>>
+	public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream>>
 	{
 
 		private static XmlWriterSettings WriterSettings
@@ -26,13 +27,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 		private const string XmlRoot				      = "eventStreams";
 		private const string CountAttribute			      = "count";
-		private const string EventStreamElement		      = "eventStream";
+		private const string EventStream  		          = "eventStream";
+		private const string ConfigVersionAttribute       = "configVersion";
 		private const string EventElement			      = "event";
 		private const string AggregateIdAttribute	      = "aggregateId";
+		private const string DateAttribute				  = "date";
+		private const string MedicalPracticeAttribute     = "medicalPracticeId";
 		private const string AggregateVersionAttribute    = "aggregateVersion";
 		private const string EventIdAttribute             = "eventId";
 
-		private const string AppointmentAddedEventElement = "appointmentAddedEvent";
+		private const string AppointmentAddedEvent        = "appointmentAddedEvent";
 		private const string PatientIdAttribute		      = "patientId";
 		private const string DescriptionAttribute	      = "description";
 		private const string StartTimeAttribute		      = "startTime";
@@ -47,19 +51,18 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			this.filename = filename;			
 		}
 
-		public void Persist(IDictionary<Guid, IReadOnlyCollection<DomainEvent>> data)
+		public void Persist(IEnumerable<EventStream> eventStreams)
 		{
 			var writer = XmlWriter.Create(filename, WriterSettings);
 
 			writer.WriteStartDocument();
 			
-				writer.WriteStartElement(XmlRoot);
-				writer.WriteAttributeString(CountAttribute, data.Count.ToString());
+				writer.WriteStartElement(XmlRoot);				
 
-					foreach (var kvp in data)
-					{
-						WriteEventStream(writer, kvp.Key, kvp.Value);
-					}
+				foreach (var eventStream in eventStreams)
+				{
+					WriteEventStream(writer, eventStream);
+				}
 
 				writer.WriteEndElement();
 
@@ -67,18 +70,18 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.Close();
 		}
 
-		private void WriteEventStream(XmlWriter writer, 
-									  Guid aggregateId, 
-									  IReadOnlyCollection<DomainEvent> eventStream)
+		private void WriteEventStream(XmlWriter writer, EventStream eventStream)
 		{
-			writer.WriteStartElement(EventStreamElement);
-			writer.WriteAttributeString(CountAttribute, eventStream.Count.ToString());
-			writer.WriteAttributeString(AggregateIdAttribute, aggregateId.ToString());
+			writer.WriteStartElement(EventStream);
+			writer.WriteAttributeString(CountAttribute, eventStream.EventCount.ToString());
+			writer.WriteAttributeString(DateAttribute, eventStream.Id.Date.ToString());
+			writer.WriteAttributeString(ConfigVersionAttribute, eventStream.Id.PracticeVersion.ToString());
+			writer.WriteAttributeString(MedicalPracticeAttribute, eventStream.Id.MedicalPracticeId.ToString());
 
-				foreach (var domainEvent in eventStream)
-				{
-					WriteEvent(writer, domainEvent);
-				}
+			foreach (var domainEvent in eventStream.Events)
+			{
+				WriteEvent(writer, domainEvent);
+			}
 				
 			writer.WriteEndElement();
 		}
@@ -97,7 +100,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 		protected void WriteEvent(XmlWriter writer, AppointmentAdded @event)
 		{
-			writer.WriteStartElement(AppointmentAddedEventElement);
+			writer.WriteStartElement(AppointmentAddedEvent);
 
 			writer.WriteAttributeString(PatientIdAttribute,      @event.Patient.Id.ToString());
 			writer.WriteAttributeString(DescriptionAttribute,    @event.Description);
@@ -109,11 +112,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.WriteEndElement();
 		} 
 
-		public IDictionary<Guid, IReadOnlyCollection<DomainEvent>> Load ()
+		public IEnumerable<EventStream> Load ()
 		{
 
-			IDictionary<Guid, IReadOnlyCollection<DomainEvent>> eventStreams = null;
-			int eventStreamCount = 0;
+			IList<EventStream> eventStreams = null;			
 
 			var reader = XmlReader.Create(filename);
 
@@ -121,54 +123,38 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			{
 				if (reader.NodeType != XmlNodeType.Element || reader.Name != XmlRoot) continue;
 
-				if (reader.HasAttributes)
+				while (reader.Read())
 				{
-					while (reader.MoveToNextAttribute())						
-						if (reader.Name == CountAttribute)							
-							eventStreamCount = Int32.Parse(reader.Value);													
-				}
+					if (reader.NodeType != XmlNodeType.Element || reader.Name != EventStream) continue;
+					if (!reader.HasAttributes) continue;
 
-				eventStreams = AcceptEventStreams(reader, eventStreamCount);
+					var eventCount = 0;
+					var date = Date.Dummy;
+					var configVersion = 0u;
+					var medicalPractiveId = new Guid();
+
+					while (reader.MoveToNextAttribute())
+					{
+						switch (reader.Name)
+						{							
+							case ConfigVersionAttribute:   configVersion     = UInt32.Parse(reader.Value); break;
+							case CountAttribute:           eventCount        = Int32.Parse(reader.Value);  break;
+							case DateAttribute:            date              = Date.Parse(reader.Value);   break;
+							case MedicalPracticeAttribute: medicalPractiveId = Guid.Parse(reader.Value);   break;
+						}
+					}
+
+					var id = new EventStreamIdentifier(date, configVersion, medicalPractiveId);
+					var events = AcceptEventStream(reader,eventCount);
+					eventStreams.Add(new EventStream(id, events)); 
+				}
 			}
 			reader.Close();
 
 			return eventStreams;
-		}
+		}		
 
-		private IDictionary<Guid, IReadOnlyCollection<DomainEvent>> AcceptEventStreams(XmlReader reader, int streamCount)
-		{
-			IDictionary<Guid, IReadOnlyCollection<DomainEvent>> eventStreams = new Dictionary<Guid, IReadOnlyCollection<DomainEvent>>();
-
-			int i = 0;
-			while (i < streamCount)
-			{
-				reader.Read();
-
-				if (reader.NodeType != XmlNodeType.Element || reader.Name != EventStreamElement) continue;
-				i++;
-
-				var eventStreamElementCount = 0;
-				var aggregateId = new Guid();
-
-				if (reader.HasAttributes)
-				{
-					while (reader.MoveToNextAttribute())
-					{
-						if (reader.Name == CountAttribute)							
-							eventStreamElementCount = Int32.Parse(reader.Value);
-							
-						if (reader.Name == AggregateIdAttribute)							
-							aggregateId = Guid.Parse(reader.Value);							
-					}
-				}
-
-				var eventStream = AcceptEventStream(reader, eventStreamElementCount);
-				eventStreams.Add(aggregateId, eventStream);
-			}
-			return eventStreams;
-		}
-
-		private IReadOnlyList<DomainEvent> AcceptEventStream(XmlReader reader, int eventStreamElementCount)
+		private IEnumerable<DomainEvent> AcceptEventStream(XmlReader reader, int eventStreamElementCount)
 		{
 			throw new NotImplementedException();
 		}	
