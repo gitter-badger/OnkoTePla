@@ -46,8 +46,19 @@
     <Compile Include="CommandSystem\ICommandBus.cs" />
     <Compile Include="CommandSystem\IDomainCommandHandler.cs" />
     <Compile Include="CommandSystem\IDomainCommandHandlerCollection.cs" />
+    <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
+    <Compile Include="Repositories\Config\IConfigurationRepository.cs" />
+    <Compile Include="Repositories\Config\XmlConfigurationDataStore.cs" />
+    <Compile Include="Repositories\Patients\IPatientReadRepository.cs" />
+    <Compile Include="Repositories\Patients\IPatientWriteRepository.cs" />
+    <Compile Include="Repositories\IPersistablility.cs" />
+    <Compile Include="Repositories\Patients\PatientRepository.cs" />
     <Compile Include="Domain\AggregateRootBase.cs" />
     <Compile Include="Domain\AppointmentsOfDayAggregate.cs" />
+    <Compile Include="Repositories\EventStore\EventStore.cs" />
+    <Compile Include="Repositories\EventStore\IEventStore.cs" />
+    <Compile Include="Repositories\IPersistenceService.cs" />
+    <Compile Include="Repositories\EventStore\XmlEventStreamDataStore.cs" />
     <Compile Include="Eventsystem\DomainEventHandlerCollection.cs" />
     <Compile Include="Eventsystem\IDomainEventHandler.cs" />
     <Compile Include="Eventsystem\EventBus.cs" />
@@ -62,6 +73,9 @@
     <Compile Include="Readmodels\AppointmentsOfAPatient.cs" />
     <Compile Include="Readmodels\ChangeAction.cs" />
     <Compile Include="Readmodels\AppointmentsOfADay.cs" />
+    <Compile Include="Repositories\Aggregate\AggregateRepository.cs" />
+    <Compile Include="Repositories\Aggregate\IAggregateRepository.cs" />
+    <Compile Include="Repositories\Patients\XmlPatientDataStore.cs" />
     <Compile Include="State\StateEngine.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +88,7 @@
       <Name>bytePassion.OnkoTePla.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repository\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,113 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Xml;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Contracts.Patients;
+
+
+namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
+{
+	public class XmlPatientDataStore : IPersistenceService<IEnumerable<Patient>>
+	{
+
+		private readonly string filename;
+
+		public XmlPatientDataStore(string filename)
+		{
+			this.filename = filename;
+		}
+
+		private static XmlWriterSettings WriterSettings
+		{
+			get
+			{
+				return new XmlWriterSettings
+				{
+					Indent = true,
+					IndentChars = "  ",
+					NewLineChars = "\r\n",
+					NewLineHandling = NewLineHandling.Replace
+				};
+			}
+		}
+
+		private const string XmlRoot = "patients";
+		
+		private const string Patient               = "patient";
+		private const string NameAttribute         = "name";
+		private const string BirthdayAttribute     = "birthday";
+		private const string LivingStatusAttribute = "livingStatus";
+		private const string IdAttribute           = "id";
+
+		public void Persist(IEnumerable<Patient> data)
+		{
+		
+			var writer = XmlWriter.Create(filename, WriterSettings);
+
+			writer.WriteStartDocument();
+			
+				writer.WriteStartElement(XmlRoot);				
+
+					foreach (var patient in data)
+					{
+						WritePatient(writer, patient);
+					}
+
+				writer.WriteEndElement();
+
+			writer.WriteEndDocument();			
+			writer.Close();
+		}
+
+		private void WritePatient(XmlWriter writer, Patient patient)
+		{
+			writer.WriteStartElement(Patient);
+
+			writer.WriteAttributeString(NameAttribute, patient.Name);
+			writer.WriteAttributeString(BirthdayAttribute, patient.Birthday.ToString());
+			writer.WriteAttributeString(LivingStatusAttribute, patient.Alive.ToString());
+			writer.WriteAttributeString(IdAttribute, patient.Id.ToString());	
+				
+			writer.WriteEndElement();		
+		}
+
+		public IEnumerable<Patient> Load()
+		{
+			IList<Patient> patients = new List<Patient>();			
+
+			var reader = XmlReader.Create(filename);
+
+			while (reader.Read())
+			{
+				if (reader.NodeType != XmlNodeType.Element || reader.Name != XmlRoot) continue;
+
+				while (reader.Read())
+				{
+					if (reader.NodeType != XmlNodeType.Element || reader.Name != Patient) continue;
+					if (!reader.HasAttributes) continue;
+
+					var name         = String.Empty;
+					var birthday     = Date.Dummy;
+					var livingStatus = false;
+					var id           = new Guid();
+						
+					while (reader.MoveToNextAttribute())
+					{
+						switch (reader.Name)
+						{
+							case NameAttribute:         name         = reader.Value; break;
+							case BirthdayAttribute:     birthday     = Date.Parse(reader.Value); break;
+							case LivingStatusAttribute: livingStatus = Boolean.Parse(reader.Value); break;
+							case IdAttribute:           id           = Guid.Parse(reader.Value); break;
+						}
+					}
+
+					patients.Add(new Patient(name, birthday, livingStatus, id));
+				}
+			}
+			reader.Close();
+
+			return patients;
+		}
+	}
+}
