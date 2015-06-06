@@ -40,10 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appointments\Appointment.cs" />
-    <Compile Include="CommunicationSampleData.cs" />
-    <Compile Include="Communication\IMedicalPracticeInfoProvider.cs" />
-    <Compile Include="Communication\IAppointmentInfoProvider.cs" />
-    <Compile Include="Communication\IPatientInfoProvider.cs" />
+    <Compile Include="Config\Configuration.cs" />
+    <Compile Include="Config\User.cs" />
     <Compile Include="Infrastructure\MedicalPractice.cs" />
     <Compile Include="Patients\Patient.cs" />
     <Compile Include="Infrastructure\Room.cs" />
@@ -54,6 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DataObjects.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
+      <Project>{825B03A5-FD0F-417A-ADC5-D3A0AAD2C36B}</Project>
+      <Name>bytePassion.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

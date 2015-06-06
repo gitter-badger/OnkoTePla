@@ -1,4 +1,5 @@
 ﻿using System;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -32,7 +33,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.CommandSystem
 			Assert.False(testCommandHandler.CommandExecuted);
 
 			commandBus.RegisterCommandHandler(testCommandHandler);
-			commandBus.Send(new AddAppointment(new Guid(), -1, new Appointment(null, null, null, new DateTime(), new DateTime())));
+			commandBus.Send(new AddAppointment(new Guid(), -1, new Appointment(null, null, null, new Date(1,2,3), new Time(1,2), new Time(1,2))));
 
 			Assert.True(testCommandHandler.CommandExecuted);
 		}

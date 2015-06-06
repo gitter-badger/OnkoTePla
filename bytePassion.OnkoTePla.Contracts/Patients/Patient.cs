@@ -1,16 +1,17 @@
 ﻿using System;
+using bytePassion.Lib.TimeLib;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Patients
 {
-	public sealed class Patient
+	public class Patient
 	{
-		private readonly string   name;
-		private readonly bool     alive;
-		private readonly DateTime birthday;
-		private readonly uint     id;
+		private readonly string name;
+		private readonly bool   alive;
+		private readonly Date   birthday;
+		private readonly Guid   id;
 
-		public Patient(string name, DateTime birthday, bool alive, uint id)
+		public Patient(string name, Date birthday, bool alive, Guid id)
 		{
 			this.name     = name;
 			this.alive    = alive;
@@ -18,9 +19,9 @@ namespace bytePassion.OnkoTePla.Contracts.Patients
 			this.id       = id;
 		}
 
-		public string   Name     { get { return name;     }}		
-		public bool     Alive    { get { return alive;    }}
-		public DateTime Birthday { get { return birthday; }}
-		public uint     ID       { get { return id;       }}
+		public string Name     { get { return name;     }}		
+		public bool   Alive    { get { return alive;    }}
+		public Date   Birthday { get { return birthday; }}
+		public Guid   Id       { get { return id;       }}		
 	}
 }

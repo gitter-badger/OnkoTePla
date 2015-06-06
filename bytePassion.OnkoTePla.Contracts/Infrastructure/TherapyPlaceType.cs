@@ -1,28 +1,25 @@
 ﻿
+using System;
 using bytePassion.OnkoTePla.Contracts.Enums;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
-	public sealed class TherapyPlaceType
+	public class TherapyPlaceType
 	{
-		private readonly string typeName;
-		private readonly TherapyPlaceIconType icon;
+		private readonly Guid id;
+		private readonly string name;
+		private readonly TherapyPlaceIconType iconType;
 
-		public TherapyPlaceType(string typeName, TherapyPlaceIconType icon)
+		public TherapyPlaceType(string name, TherapyPlaceIconType iconType, Guid id)
 		{
-			this.typeName = typeName;
-			this.icon = icon;
+			this.name = name;
+			this.iconType = iconType;
+			this.id = id;
 		}
 
-		public string TypeName
-		{
-			get { return typeName; }
-		}
-
-		public TherapyPlaceIconType Icon
-		{
-			get { return icon; }
-		}
+		public string               Name     { get { return name;     }}
+		public TherapyPlaceIconType IconType { get { return iconType; }}
+		public Guid                 Id       { get { return id;       }}		
 	}
 }

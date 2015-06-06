@@ -1,27 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
 	public sealed class Room
 	{
-		private readonly uint roomID;
-		private readonly IReadOnlyList<TherapyPlace> availableTherapyPlaces;
+		private readonly Guid id;
+		private readonly IReadOnlyList<TherapyPlace> therapyPlaces;
 
-		public Room(uint roomId, IReadOnlyList<TherapyPlace> availableTherapyPlaces)
+		public Room(Guid id, IReadOnlyList<TherapyPlace> therapyPlaces)
 		{
-			roomID = roomId;
-			this.availableTherapyPlaces = availableTherapyPlaces;
+			this.id = id;
+			this.therapyPlaces = therapyPlaces;
 		}
 
-		public uint RoomID
+		public Guid Id
 		{
-			get { return roomID; }
+			get { return id; }
 		}
 
-		public IReadOnlyList<TherapyPlace> AvailableTherapyPlaces
+		public IReadOnlyList<TherapyPlace> TherapyPlaces
 		{
-			get { return availableTherapyPlaces; }
+			get { return therapyPlaces; }
 		} 
 	}
 }

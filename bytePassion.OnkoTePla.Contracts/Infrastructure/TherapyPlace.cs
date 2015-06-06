@@ -1,24 +1,19 @@
-﻿namespace bytePassion.OnkoTePla.Contracts.Infrastructure
+﻿
+
+namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
 	public sealed class TherapyPlace
 	{
-		private readonly uint             therapyPlaceID;
-		private readonly TherapyPlaceType therapyPlaceType;
+		private readonly uint             id;
+		private readonly TherapyPlaceType type;
 
-		public TherapyPlace(uint therapyPlaceID, TherapyPlaceType therapyPlaceType)
+		public TherapyPlace(uint id, TherapyPlaceType type)
 		{
-			this.therapyPlaceID   = therapyPlaceID;
-			this.therapyPlaceType = therapyPlaceType;
+			this.id   = id;
+			this.type = type;
 		}
 
-		public uint TherapyPlaceID
-		{
-			get { return therapyPlaceID; }
-		}
-
-		public TherapyPlaceType TherapyPlaceType
-		{
-			get { return therapyPlaceType; }
-		}
+		public uint             Id   { get { return id;   }}
+		public TherapyPlaceType Type { get { return type; }}		
 	}
 }
