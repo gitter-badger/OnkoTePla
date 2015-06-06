@@ -1,17 +1,18 @@
 ﻿
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
+using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Domain
 {
-	public class AggregateRootBase
+	public abstract class AggregateRootBase<TIdentifier>
 	{
-		private readonly Guid id;
+		private readonly TIdentifier id;
 		private readonly IList<DomainEvent> uncommitedChanges;
 
-		public AggregateRootBase(Guid id, uint version)
+		protected AggregateRootBase(TIdentifier id, uint version)
 		{
 			this.id = id;
 			Version = version;
@@ -19,7 +20,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			uncommitedChanges = new List<DomainEvent>();
 		}
 
-		public Guid Id
+		public TIdentifier Id
 		{
 			get { return id; }
 		}
@@ -31,17 +32,14 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
 		public IEnumerable<DomainEvent> GetUncommitedChanges()
 		{
-			return uncommitedChanges;
-		}
-
-		public void MarkChangesAsCommited()
-		{
+			var uncommitedEvents = uncommitedChanges.ToList();
 			uncommitedChanges.Clear();
-		}
+			return uncommitedEvents;
+		}		
 
-		public void LoadFromEventStream(IEnumerable<DomainEvent> eventStream)
+		public void LoadFromEventStream(EventStream eventStream)
 		{
-			foreach (var domainEvent in eventStream)
+			foreach (var domainEvent in eventStream.Events)
 			{
 				ApplyChange(domainEvent, false);
 				Version = domainEvent.AggregateVersion;
@@ -58,6 +56,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			(this as dynamic).Apply(@event);
 			
 			if (isNew) uncommitedChanges.Add(@event);			
-		}      
+		}		
 	}
 }
