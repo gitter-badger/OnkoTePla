@@ -1,7 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.CommandBase;
-using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
@@ -18,11 +18,11 @@ namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands
 		private readonly TherapyPlace therapyPlace;
 		private readonly Room		  room;
 
-		public AddAppointment(EventStreamIdentifier id, int aggregateVersion, Guid userId, 
+		public AddAppointment(AggregateIdentifier aggregateId, int aggregateVersion, Guid userId, 
 							  Patient patient, string description, 
 							  Date day, Time startTime, Time endTime, 
 							  TherapyPlace therapyPlace, Room room)
-			: base(id, aggregateVersion, userId)
+			: base(aggregateId, aggregateVersion, userId)
 		{
 			this.patient = patient;
 			this.description = description;

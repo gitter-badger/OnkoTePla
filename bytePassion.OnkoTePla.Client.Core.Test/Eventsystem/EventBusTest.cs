@@ -1,5 +1,6 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
 using Xunit;
@@ -8,6 +9,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 {
 	public class EventBusTest
 	{
+
+		private static AppointmentAdded GetAppointmentAddedDummy()
+		{
+			return new AppointmentAdded(new AggregateIdentifier(Date.Dummy, new Guid()),0, new Guid(),null,null, null, Date.Dummy, Time.Dummy, Time.Dummy, null, null);
+		}
 
 		private class TestSingleEventHandler : IDomainEventHandler<AppointmentAdded>
 		{
@@ -32,7 +38,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			var testEventHandler = new TestSingleEventHandler();
 
 			eventBus.RegisterEventHandler(testEventHandler);
-			eventBus.Publish(new AppointmentAdded(new Guid(),0, new Guid(),new Guid(),null, null, null, Date.Dummy, Time.Dummy, Time.Dummy, null, null));
+			eventBus.Publish(GetAppointmentAddedDummy());
 
 			Assert.True(testEventHandler.HandledEvent);
 		}
@@ -46,7 +52,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 				HandleAddedEvent = false;
 				HandleRemovedEvent = false;
 			}
-
+			
 			public void Handle(AppointmentAdded domainEvent)
 			{
 				HandleAddedEvent = true;
@@ -70,12 +76,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			eventBus.RegisterEventHandler<AppointmentAdded>(testEventHandler);
 			eventBus.RegisterEventHandler<AppointmentRemoved>(testEventHandler);
 
-			eventBus.Publish(new AppointmentAdded(new Guid(), 0, new Guid(), new Guid(), null, null, null, Date.Dummy, Time.Dummy, Time.Dummy, null, null));
+			eventBus.Publish(GetAppointmentAddedDummy());
 
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.False(testEventHandler.HandleRemovedEvent);
 
-			eventBus.Publish(new AppointmentAdded(new Guid(), 0, new Guid(), new Guid(), null, null, null, Date.Dummy, Time.Dummy, Time.Dummy, null, null));
+			eventBus.Publish(GetAppointmentAddedDummy());
 
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.True(testEventHandler.HandleRemovedEvent);
@@ -91,7 +97,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			eventBus.RegisterEventHandler(testEventHandler1);
 			eventBus.RegisterEventHandler(testEventHandler2);
 
-			eventBus.Publish(new AppointmentAdded(new Guid(), 0, new Guid(), new Guid(), null, null, null, Date.Dummy, Time.Dummy, Time.Dummy, null, null));
+			eventBus.Publish(GetAppointmentAddedDummy());
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.True(testEventHandler2.HandledEvent);
 		}
@@ -122,12 +128,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			eventBus.RegisterEventHandler(testEventHandler1);
 			eventBus.RegisterEventHandler(testEventHandler2);
 
-			eventBus.Publish(new AppointmentAdded(new Guid(), 0, new Guid(), new Guid(), null, null, null, Date.Dummy, Time.Dummy, Time.Dummy, null, null));
+			eventBus.Publish(GetAppointmentAddedDummy());
 
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.False(testEventHandler2.HandledEvent);
 
-			eventBus.Publish(new AppointmentAdded(new Guid(), 0, new Guid(), new Guid(), null, null, null, Date.Dummy, Time.Dummy, Time.Dummy, null, null));
+			eventBus.Publish(GetAppointmentAddedDummy());
 
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.True(testEventHandler2.HandledEvent);

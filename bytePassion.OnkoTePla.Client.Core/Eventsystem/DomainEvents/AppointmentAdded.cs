@@ -1,5 +1,6 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -17,12 +18,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
 		private readonly TherapyPlace therapyPlace;
 		private readonly Room		  room;
 
-		public AppointmentAdded(Guid aggregateID, uint aggregateVersion, Guid eventID, 
+		public AppointmentAdded(AggregateIdentifier aggregateID, uint aggregateVersion, 
 								Guid userId, Tuple<Date, Time> timeStamp,
 							    Patient patient, string description, 
 								Date day, Time startTime, Time endTime, 
 								TherapyPlace therapyPlace, Room room)
-			: base(aggregateID, aggregateVersion, eventID, userId, timeStamp)
+			: base(aggregateID, aggregateVersion, userId, timeStamp)
 		{
 			this.patient      = patient;
 			this.description  = description;

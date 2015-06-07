@@ -1,18 +1,18 @@
 ﻿using System;
-using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.CommandBase
 {
 	public class DomainCommand
 	{
-		private readonly EventStreamIdentifier id;
+		private readonly AggregateIdentifier aggregateId;
 		private readonly Guid userId;
 		private readonly int aggregateVersion;
 
-		public DomainCommand(EventStreamIdentifier id, int aggregateVersion, Guid userId)
+		public DomainCommand(AggregateIdentifier aggregateId, int aggregateVersion, Guid userId)
 		{
-			this.id = id;
+			this.aggregateId = aggregateId;
 			this.aggregateVersion = aggregateVersion;
 			this.userId = userId;
 		}
@@ -22,9 +22,9 @@ namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.Command
 			get { return userId; }
 		}		
 
-		public EventStreamIdentifier Id
+		public AggregateIdentifier AggregateId
 		{
-			get { return id; }
+			get { return aggregateId; }
 		}
 
 		public int AggregateVersion

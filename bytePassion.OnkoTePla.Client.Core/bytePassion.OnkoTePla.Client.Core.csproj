@@ -46,14 +46,12 @@
     <Compile Include="CommandSystem\ICommandBus.cs" />
     <Compile Include="CommandSystem\IDomainCommandHandler.cs" />
     <Compile Include="CommandSystem\IDomainCommandHandlerCollection.cs" />
+    <Compile Include="Domain\CommandHandler\AddAppointmentCommandHandler.cs" />
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\XmlConfigurationDataStore.cs" />
     <Compile Include="Repositories\EventStore\EventStream.cs" />
-    <Compile Include="Repositories\EventStore\EventStreamIdentifier.cs" />
-    <Compile Include="Repositories\KeyMapper\AggregateKeyMapper.cs" />
-    <Compile Include="Repositories\KeyMapper\IAggregateKeyMapper.cs" />
-    <Compile Include="Repositories\KeyMapper\XmlAggregateOfADayKeyMapDataStore.cs" />
+    <Compile Include="Domain\AggregateIdentifier.cs" />
     <Compile Include="Repositories\Patients\IPatientReadRepository.cs" />
     <Compile Include="Repositories\Patients\IPatientWriteRepository.cs" />
     <Compile Include="Repositories\IPersistablility.cs" />
@@ -93,9 +91,7 @@
       <Name>bytePassion.OnkoTePla.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\CommandHandler\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

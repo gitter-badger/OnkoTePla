@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Xml;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
 
@@ -90,8 +91,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		{
 			writer.WriteStartElement(EventElement);
 			writer.WriteAttributeString(AggregateIdAttribute,      @event.AggregateId.ToString());
-			writer.WriteAttributeString(AggregateVersionAttribute, @event.AggregateVersion.ToString());
-			writer.WriteAttributeString(EventIdAttribute,          @event.EventId.ToString());
+			writer.WriteAttributeString(AggregateVersionAttribute, @event.AggregateVersion.ToString());			
+
+			// TODO alle attributes hinzufÜgen
 
 			(this as dynamic).WriteEvent(@event);
 			
@@ -144,7 +146,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 						}
 					}
 
-					var id = new EventStreamIdentifier(date, configVersion, medicalPractiveId);
+					var id = new AggregateIdentifier(date, medicalPractiveId, configVersion);
 					var events = AcceptEventStream(reader,eventCount);
 					eventStreams.Add(new EventStream(id, events)); 
 				}

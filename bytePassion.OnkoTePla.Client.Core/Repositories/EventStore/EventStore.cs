@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
+using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
@@ -12,44 +12,33 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private readonly IPersistenceService<IEnumerable<EventStream>> persistenceService;
 
 		private IList<EventStream> eventStreams;
+		private readonly IConfigurationRepository config;
 
-
-		public EventStore (IPersistenceService<IEnumerable<EventStream>> persistenceService)
+		public EventStore (IPersistenceService<IEnumerable<EventStream>> persistenceService, IConfigurationRepository config)
 		{
 			eventStreams = new List<EventStream>();
 			this.persistenceService = persistenceService;
-		}
-
-		public EventStreamIdentifier CreateEventStream(Date date, uint configVersion, Guid medicalPracticeId)
+			this.config = config;
+		}		
+		
+		public EventStream GetEventStream(AggregateIdentifier id)
 		{
-			var id = new EventStreamIdentifier(date, configVersion, medicalPracticeId);
-			eventStreams.Add(new EventStream(id));
-			return id;
-		}
-
-		public EventStreamIdentifier? DoesEventStreamExist(Date date, Guid medicalPracticeId)
-		{
-			var eventStream = GetEventStream(new EventStreamIdentifier(date, 0, medicalPracticeId));
+			var eventStream = eventStreams.FirstOrDefault(evenstream => evenstream.Id == id);
 
 			if (eventStream == null)
-				return null;
-			else
-				return eventStream.Id;
+			{
+				eventStream = new EventStream(new AggregateIdentifier(id.Date, 
+																	  id.MedicalPracticeId,
+																	  config.GetLatestVersionFor(id.MedicalPracticeId)));
+				eventStreams.Add(eventStream);
+			}
+
+			return eventStream;
 		}
 
-		public EventStream GetEventStream(EventStreamIdentifier id)
-		{
-			return eventStreams.FirstOrDefault(evenstream => evenstream.Id == id);
-		}
-
-		public void AddEventsToEventStream(EventStreamIdentifier id, IEnumerable<DomainEvent> eventStream)
-		{			
-			var es = GetEventStream(id);
-			
-			if (es == null)
-				throw new ArgumentException("there is no eventStream with that id");
-			
-			es.AddEvents(eventStream);
+		public void AddEventsToEventStream(AggregateIdentifier id, IEnumerable<DomainEvent> eventStream)
+		{						
+			GetEventStream(id).AddEvents(eventStream);
 		}		
 
 		public void PersistRepository()
