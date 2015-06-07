@@ -53,6 +53,7 @@
     <Compile Include="FrameworkExtensions\IClonableList.cs" />
     <Compile Include="FrameworkExtensions\PropertyChangedNotifierExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeLib\Tools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

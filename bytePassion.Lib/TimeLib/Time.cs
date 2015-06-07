@@ -10,22 +10,26 @@ namespace bytePassion.Lib.TimeLib
 		public static readonly Time Dummy = new Time(0,0);
 
 		private readonly byte hour;
-		private readonly byte minute;		
+		private readonly byte minute;
+		private readonly byte second;
 
 		public Time(DateTime time)
 		{
 			hour   = (byte) time.Hour;
-			minute = (byte) time.Minute;			
+			minute = (byte) time.Minute;
+			second = (byte) time.Second;
 		}
 
-		public Time(byte hour, byte minute)
+		public Time(byte hour, byte minute, byte second=0)
 		{
 			this.hour = hour;
 			this.minute = minute;
+			this.second = second;
 		}
 
 		public byte Hour   { get { return hour;   }}
 		public byte Minute { get { return minute; }}
+		public byte Second { get { return second; }}
 
 		public override bool Equals (object obj)
 		{
