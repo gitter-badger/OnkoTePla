@@ -1,23 +1,44 @@
 ﻿using System;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.CommandBase;
-using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands
 {
 	public class AddAppointment : DomainCommand
 	{
-		private readonly Appointment newAppointment;
+		private readonly Patient      patient;
+		private readonly string       description;
+		private readonly Date         day;
+		private readonly Time         startTime;
+		private readonly Time         endTime;
+		private readonly TherapyPlace therapyPlace;
+		private readonly Room		  room;
 
-		public AddAppointment(Guid aggregateId, int aggregateVersion, Appointment newAppointment) 
-			: base(aggregateId, aggregateVersion)
+		public AddAppointment(EventStreamIdentifier id, int aggregateVersion, Guid userId, 
+							  Patient patient, string description, 
+							  Date day, Time startTime, Time endTime, 
+							  TherapyPlace therapyPlace, Room room)
+			: base(id, aggregateVersion, userId)
 		{
-			this.newAppointment = newAppointment;
+			this.patient = patient;
+			this.description = description;
+			this.day = day;
+			this.startTime = startTime;
+			this.endTime = endTime;
+			this.therapyPlace = therapyPlace;
+			this.room = room;
 		}
 
-		public Appointment NewAppointment
-		{
-			get { return newAppointment; }
-		}
+		public Patient      Patient      { get { return patient;      }}
+		public string       Description  { get { return description;  }}
+		public Date         Day          { get { return day;          }}
+		public Time         StartTime    { get { return startTime;    }}
+		public Time         EndTime      { get { return endTime;      }}
+		public TherapyPlace TherapyPlace { get { return therapyPlace; }}
+		public Room         Room         { get { return room;         }}
 	}
 }
