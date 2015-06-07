@@ -11,9 +11,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		private Configuration configuration;
 		private readonly IPersistenceService<Configuration> persistenceService; 
 
-		public ConfigurationRepository(IPersistenceService<Configuration> persistenceService)
+		public ConfigurationRepository(IPersistenceService<Configuration> persistenceService, Configuration initialConfig=null)
 		{
 			this.persistenceService = persistenceService;
+
+			if (initialConfig != null)
+				configuration = initialConfig;
 		}
 
 		public uint GetLatestVersionFor(Guid medicalPractiveId)
@@ -36,7 +39,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		{
 			return configuration.GetMedicalPracticeById(id);
 		}
-		
+
+		public MedicalPractice GetMedicalPracticeByIdAndVersion(Guid id, uint version)
+		{
+			return configuration.GetMedicalPracticeByIdAndVersion(id, version);
+		}
+
 		public void RemoveMedicalPractice(Guid medicalPracticeId)
 		{
 			configuration.RemoveMedicalPractice(medicalPracticeId);

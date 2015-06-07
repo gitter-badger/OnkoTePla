@@ -18,9 +18,22 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			this.medicalPracticeId = medicalPracticeId;
 		}
 
-		public uint? PracticeVersion   { get { return practiceVersion;   }}
-		public Guid  MedicalPracticeId { get { return medicalPracticeId; }}
-		public Date  Date              { get { return date;              }}
+		public uint PracticeVersion
+		{
+			get
+			{
+				if (practiceVersion != null) 
+					return practiceVersion.Value;
+
+				throw new InvalidOperationException("Do not try to get this version value. " +
+				                                    "That's impossible. Instead... " + 
+				                                    "only try to realize the truth. " +
+				                                    "There is no value");
+			}
+		}
+
+		public Guid MedicalPracticeId { get { return medicalPracticeId; }}
+		public Date Date              { get { return date;              }}
 
 		public override bool Equals(object obj)
 		{

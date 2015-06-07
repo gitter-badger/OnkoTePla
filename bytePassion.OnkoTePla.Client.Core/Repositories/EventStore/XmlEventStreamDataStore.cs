@@ -34,8 +34,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private const string AggregateIdAttribute	      = "aggregateId";
 		private const string DateAttribute				  = "date";
 		private const string MedicalPracticeAttribute     = "medicalPracticeId";
-		private const string AggregateVersionAttribute    = "aggregateVersion";
-		private const string EventIdAttribute             = "eventId";
+		private const string AggregateVersionAttribute    = "aggregateVersion";		
 
 		private const string AppointmentAddedEvent        = "appointmentAddedEvent";
 		private const string PatientIdAttribute		      = "patientId";
@@ -104,12 +103,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		{
 			writer.WriteStartElement(AppointmentAddedEvent);
 
-			writer.WriteAttributeString(PatientIdAttribute,      @event.Patient.Id.ToString());
+			writer.WriteAttributeString(PatientIdAttribute,      @event.PatientId.ToString());
 			writer.WriteAttributeString(DescriptionAttribute,    @event.Description);
 			writer.WriteAttributeString(StartTimeAttribute,      @event.StartTime.ToString());
 			writer.WriteAttributeString(EndTimeAttribute,        @event.EndTime.ToString());
-			writer.WriteAttributeString(TherapyPlaceIdAttribute, @event.TherapyPlace.Id.ToString());
-			writer.WriteAttributeString(RoomIdAttribute,         @event.Room.Id.ToString());
+			writer.WriteAttributeString(TherapyPlaceIdAttribute, @event.TherapyPlaceId.ToString());
+			writer.WriteAttributeString(RoomIdAttribute,         @event.RoomId.ToString());
 
 			writer.WriteEndElement();
 		} 

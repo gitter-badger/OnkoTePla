@@ -11,7 +11,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		uint GetLatestVersionFor(Guid medicalPractiveId);		
 
 		MedicalPractice GetMedicalPracticeByName(string name);
-		MedicalPractice GetMedicalPracticeById  (Guid id);
+		MedicalPractice GetMedicalPracticeById(Guid id);
+		MedicalPractice GetMedicalPracticeByIdAndVersion(Guid id, uint version);
 		IEnumerable<MedicalPractice> GetAllMedicalPractices();
 		void AddMedicalPractice(MedicalPractice practice);
 		void RemoveMedicalPractice(Guid medicalPracticeId);

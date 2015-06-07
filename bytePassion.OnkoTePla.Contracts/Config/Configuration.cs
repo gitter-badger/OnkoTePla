@@ -55,6 +55,12 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 			return configuredMedicalPractices.FirstOrDefault(medicalPractice => medicalPractice.Id == id);
 		}
 
+		public MedicalPractice GetMedicalPracticeByIdAndVersion (Guid id, uint version)
+		{
+			var medicalPractice = GetMedicalPracticeById(id);
+			return medicalPractice.GetVersion(version);
+		}
+
 		public IEnumerable<MedicalPractice> GetAllMedicalPractices ()
 		{
 			return configuredMedicalPractices.ToList();
@@ -96,6 +102,6 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 		{
 			configuredUsers.Remove(GetUserById(userId));
 		}
-		#endregion
+		#endregion		
 	} 
 }

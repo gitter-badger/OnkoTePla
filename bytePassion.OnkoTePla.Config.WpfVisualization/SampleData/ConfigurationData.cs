@@ -23,9 +23,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		public static void ConfigToXml()
 		{
 			IPersistenceService<Configuration> persistenceService = new XmlConfigurationDataStore("config.xml");
-			ConfigurationRepository repo = new ConfigurationRepository(persistenceService);
-
-			repo.SetConfig(GetMedicalPracticeSample());
+			ConfigurationRepository repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());			
 
 			repo.PersistRepository();
 		}

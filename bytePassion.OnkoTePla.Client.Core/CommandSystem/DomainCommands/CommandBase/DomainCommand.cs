@@ -8,9 +8,9 @@ namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.Command
 	{
 		private readonly AggregateIdentifier aggregateId;
 		private readonly Guid userId;
-		private readonly int aggregateVersion;
+		private readonly uint aggregateVersion;
 
-		public DomainCommand(AggregateIdentifier aggregateId, int aggregateVersion, Guid userId)
+		public DomainCommand(AggregateIdentifier aggregateId, uint aggregateVersion, Guid userId)
 		{
 			this.aggregateId = aggregateId;
 			this.aggregateVersion = aggregateVersion;
@@ -27,7 +27,7 @@ namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.Command
 			get { return aggregateId; }
 		}
 
-		public int AggregateVersion
+		public uint AggregateVersion
 		{
 			get { return aggregateVersion; }
 		}

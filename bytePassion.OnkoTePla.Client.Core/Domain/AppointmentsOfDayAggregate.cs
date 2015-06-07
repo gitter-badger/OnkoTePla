@@ -1,11 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
+using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Domain
@@ -13,28 +12,38 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 	public class AppointmentsOfDayAggregate : AggregateRootBase<AggregateIdentifier>
 	{
 
-		private IList<Appointment> appointments;
+		private readonly IList<Appointment> appointments;
+		private readonly IPatientReadRepository patientRepository;
+		private readonly IConfigurationRepository config;
 
-		public AppointmentsOfDayAggregate(AggregateIdentifier id, uint version) 
-			: base(id, version)
+		public AppointmentsOfDayAggregate(AggregateIdentifier id, 
+										  IPatientReadRepository patientRepository, 
+										  IConfigurationRepository config) 
+			: base(id, 0)
 		{
+			this.patientRepository = patientRepository;
+			this.config = config;
 			appointments = new List<Appointment>();
-		}		
+		}
 
 		protected void Apply (AppointmentAdded @event)
 		{
-			appointments.Add(new Appointment(@event.Patient, @event.TherapyPlace, @event.Room, 
+			var medicalPractice = config.GetMedicalPracticeByIdAndVersion(Id.MedicalPracticeId, Id.PracticeVersion);
+
+			appointments.Add(new Appointment(patientRepository.GetPatientById(@event.PatientId), 
+											 medicalPractice.GetTherapyPlaceById(@event.TherapyPlaceId), 
+											 medicalPractice.GetRoomById(@event.RoomId), 
 											 @event.Day, @event.StartTime, @event.EndTime));
 		}
 		
 		public void AddAppointment(Guid userId,
-								   Patient patient, string description, 
+								   Guid patientId, string description, 
 								   Date day, Time startTime, Time endTime,
-								   TherapyPlace therapyPlace, Room room) 
+								   uint therapyPlaceId, Guid roomId) 
 		{
  			ApplyChange(new AppointmentAdded(Id, Version, userId,TimeTools.GetCurrentTimeStamp(), 
-											 patient, description, day, startTime, endTime, 
-											 therapyPlace, room ));
+											 patientId, description, day, startTime, endTime, 
+											 therapyPlaceId, roomId ));
 		}
 	}
 }

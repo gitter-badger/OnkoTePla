@@ -82,5 +82,16 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 
 			return previousVersion.GetVersion(requestedVersion);
 		}
+
+		public TherapyPlace GetTherapyPlaceById(uint therapyPlaceId)
+		{
+			return rooms.SelectMany(room => room.TherapyPlaces)
+				        .FirstOrDefault(therapyPlace => therapyPlace.Id == therapyPlaceId);
+		}
+
+		public Room GetRoomById(Guid roomId)
+		{
+			return rooms.FirstOrDefault(room => room.Id == roomId);
+		}
 	}
 }

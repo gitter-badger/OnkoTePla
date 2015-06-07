@@ -2,44 +2,42 @@
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
 {
 	public class AppointmentAdded : DomainEvent
 	{
-		private readonly Patient      patient;
-		private readonly string       description;
-		private readonly Date         day;
-		private readonly Time         startTime;
-		private readonly Time         endTime;
-		private readonly TherapyPlace therapyPlace;
-		private readonly Room		  room;
+		private readonly Guid   patientId;
+		private readonly string description;
+		private readonly Date   day;
+		private readonly Time   startTime;
+		private readonly Time   endTime;
+		private readonly uint   therapyPlaceId;
+		private readonly Guid	roomId;
 
 		public AppointmentAdded(AggregateIdentifier aggregateID, uint aggregateVersion, 
 								Guid userId, Tuple<Date, Time> timeStamp,
-							    Patient patient, string description, 
+							    Guid patientId, string description, 
 								Date day, Time startTime, Time endTime, 
-								TherapyPlace therapyPlace, Room room)
+								uint therapyPlaceId, Guid roomId)
 			: base(aggregateID, aggregateVersion, userId, timeStamp)
 		{
-			this.patient      = patient;
-			this.description  = description;
-			this.day          = day;
-			this.startTime    = startTime;
-			this.endTime      = endTime;
-			this.therapyPlace = therapyPlace;
-			this.room         = room;			
+			this.patientId      = patientId;
+			this.description    = description;
+			this.day            = day;
+			this.startTime      = startTime;
+			this.endTime        = endTime;
+			this.therapyPlaceId = therapyPlaceId;
+			this.roomId         = roomId;			
 		}
 
-		public Patient      Patient      { get { return patient;      }}
-		public string       Description  { get { return description;  }}
-		public Date         Day          { get { return day;          }}
-		public Time         StartTime    { get { return startTime;    }}
-		public Time         EndTime      { get { return endTime;      }}
-		public TherapyPlace TherapyPlace { get { return therapyPlace; }}
-		public Room         Room         { get { return room;         }}
+		public Guid   PatientId      { get { return patientId;      }}
+		public string Description    { get { return description;    }}
+		public Date   Day            { get { return day;            }}
+		public Time   StartTime      { get { return startTime;      }}
+		public Time   EndTime        { get { return endTime;        }}
+		public uint   TherapyPlaceId { get { return therapyPlaceId; }}
+		public Guid   RoomId         { get { return roomId;         }}
 	}
 }
