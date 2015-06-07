@@ -2,7 +2,7 @@
 
 namespace bytePassion.Lib.TimeLib
 {
-	public static class Tools
+	public static class TimeTools
 	{
 		public static Tuple<Date, Time> GetCurrentTimeStamp()
 		{
