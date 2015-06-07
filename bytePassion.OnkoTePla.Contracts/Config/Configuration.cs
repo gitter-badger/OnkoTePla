@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
@@ -7,33 +8,29 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 {
 	public class Configuration
 	{
-		private readonly IEnumerable<TherapyPlaceType> configuredTherapyPlaceTypes;
-		private readonly IEnumerable<MedicalPractice>  configuredMedicalPractices;
-		private readonly IEnumerable<User>			   configuredUsers; 
+		private readonly IList<TherapyPlaceType> configuredTherapyPlaceTypes;
+		private readonly IList<MedicalPractice>  configuredMedicalPractices;
+		private readonly IList<User>			 configuredUsers; 
 		
 
 		public Configuration(IEnumerable<TherapyPlaceType> configuredTherapyPlaceTypes, 
 							 IEnumerable<MedicalPractice> configuredMedicalPractices, 
 							 IEnumerable<User> configuredUsers)
 		{			
-			this.configuredMedicalPractices  = configuredMedicalPractices.ToList();
+			this.configuredMedicalPractices = configuredMedicalPractices.ToList();
 			this.configuredTherapyPlaceTypes = configuredTherapyPlaceTypes.ToList();
 			this.configuredUsers = configuredUsers.ToList();
-		}		
+		}
 
+		#region TherapyPlaceTypes
 		public TherapyPlaceType GetTherapyPlaceTypeByName(string name)
 		{
 			 return configuredTherapyPlaceTypes.FirstOrDefault(therapyPlace => therapyPlace.Name == name);			
 		}
 
-		public MedicalPractice GetMedicalPracticeByName(string name)
+		public TherapyPlaceType GetTherapyPlaceTypeById(Guid id)
 		{
-			return configuredMedicalPractices.FirstOrDefault(medicalPractice => medicalPractice.Name == name);
-		}
-
-		public User GetUserByName(string name)
-		{
-			return configuredUsers.FirstOrDefault(user => user.Name == name);
+			return configuredTherapyPlaceTypes.FirstOrDefault(therapyPlace => therapyPlace.Id == id);
 		}
 
 		public IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes()
@@ -41,14 +38,64 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 			return configuredTherapyPlaceTypes.ToList();
 		}
 
-		public IEnumerable<MedicalPractice> GetAllMedicalPractices()
+		public void AddTherapyPlaceType(TherapyPlaceType newTherapyPlaceType)
+		{
+			configuredTherapyPlaceTypes.Add(newTherapyPlaceType);
+		}
+		#endregion
+
+		#region MedicalPractice
+		public MedicalPractice GetMedicalPracticeByName(string name)
+		{
+			return configuredMedicalPractices.FirstOrDefault(medicalPractice => medicalPractice.Name == name);
+		}
+
+		public MedicalPractice GetMedicalPracticeById(Guid id)
+		{
+			return configuredMedicalPractices.FirstOrDefault(medicalPractice => medicalPractice.Id == id);
+		}
+
+		public IEnumerable<MedicalPractice> GetAllMedicalPractices ()
 		{
 			return configuredMedicalPractices.ToList();
 		}
 
-		public IEnumerable<User> GetAllUsers()
+		public void AddMedicalPractice(MedicalPractice practice)
+		{
+			configuredMedicalPractices.Add(practice);
+		}
+
+		public void RemoveMedicalPractice(Guid medicalPracticeId)
+		{
+			configuredMedicalPractices.Remove(GetMedicalPracticeById(medicalPracticeId));
+		}
+		#endregion
+
+		#region User
+		public User GetUserByName (string name)
+		{
+			return configuredUsers.FirstOrDefault(user => user.Name == name);
+		}
+
+		public User GetUserById(Guid id)
+		{
+			return configuredUsers.FirstOrDefault(user => user.Id == id);
+		}
+
+		public IEnumerable<User> GetAllUsers ()
 		{
 			return configuredUsers.ToList();
 		} 
+
+		public void AddUser(User newUser)
+		{
+			configuredUsers.Add(newUser);
+		}
+
+		public void RemoveUser(Guid userId)
+		{
+			configuredUsers.Remove(GetUserById(userId));
+		}
+		#endregion
 	} 
 }
