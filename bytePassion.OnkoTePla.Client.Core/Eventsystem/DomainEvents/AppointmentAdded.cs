@@ -9,8 +9,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
 	public class AppointmentAdded : DomainEvent
 	{
 		private readonly Guid   patientId;
-		private readonly string description;
-		private readonly Date   day;
+		private readonly string description;		
 		private readonly Time   startTime;
 		private readonly Time   endTime;
 		private readonly uint   therapyPlaceId;
@@ -19,25 +18,24 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
 		public AppointmentAdded(AggregateIdentifier aggregateID, uint aggregateVersion, 
 								Guid userId, Tuple<Date, Time> timeStamp,
 							    Guid patientId, string description, 
-								Date day, Time startTime, Time endTime, 
+								Time startTime, Time endTime, 
 								uint therapyPlaceId, Guid roomId)
 			: base(aggregateID, aggregateVersion, userId, timeStamp)
 		{
 			this.patientId      = patientId;
-			this.description    = description;
-			this.day            = day;
+			this.description    = description;			
 			this.startTime      = startTime;
 			this.endTime        = endTime;
 			this.therapyPlaceId = therapyPlaceId;
 			this.roomId         = roomId;			
 		}
 
-		public Guid   PatientId      { get { return patientId;      }}
-		public string Description    { get { return description;    }}
-		public Date   Day            { get { return day;            }}
-		public Time   StartTime      { get { return startTime;      }}
-		public Time   EndTime        { get { return endTime;        }}
-		public uint   TherapyPlaceId { get { return therapyPlaceId; }}
-		public Guid   RoomId         { get { return roomId;         }}
+		public Guid   PatientId      { get { return patientId;        }}
+		public string Description    { get { return description;      }}
+		public Date   Day            { get { return AggregateId.Date; }}
+		public Time   StartTime      { get { return startTime;        }}
+		public Time   EndTime        { get { return endTime;          }}
+		public uint   TherapyPlaceId { get { return therapyPlaceId;   }}
+		public Guid   RoomId         { get { return roomId;           }}
 	}
 }

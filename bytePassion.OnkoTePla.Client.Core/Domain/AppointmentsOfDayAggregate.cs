@@ -38,11 +38,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 		
 		public void AddAppointment(Guid userId,
 								   Guid patientId, string description, 
-								   Date day, Time startTime, Time endTime,
+								   Time startTime, Time endTime,
 								   uint therapyPlaceId, Guid roomId) 
 		{
  			ApplyChange(new AppointmentAdded(Id, Version, userId,TimeTools.GetCurrentTimeStamp(), 
-											 patientId, description, day, startTime, endTime, 
+											 patientId, description, startTime, endTime, 
 											 therapyPlaceId, roomId ));
 		}
 	}

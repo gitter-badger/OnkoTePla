@@ -119,7 +119,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		{
 			writer.WriteStartElement(MedicalPractice);
 			writer.WriteAttributeString(NameAttribute, medicalPractice.Name);	
-			writer.WriteAttributeString(CountAttribute, medicalPractice.Rooms.Count.ToString());
+			writer.WriteAttributeString(CountAttribute, medicalPractice.Rooms.Count().ToString());
 			writer.WriteAttributeString(MPVersionAttribute, medicalPractice.Version.ToString());
 			writer.WriteAttributeString(IdAttribute, medicalPractice.Id.ToString());
 			writer.WriteAttributeString(HasPreviousVersionsAttribute, medicalPractice.HasPreviousVersion.ToString());

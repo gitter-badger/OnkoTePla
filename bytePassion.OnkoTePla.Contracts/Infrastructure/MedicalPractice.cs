@@ -19,20 +19,20 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 			return new MedicalPractice(rooms, name, 0, Guid.NewGuid(), null);
 		}
 
-		public MedicalPractice(IReadOnlyList<Room> rooms, string name, uint version, Guid id, MedicalPractice previousVersion)
+		public MedicalPractice(IEnumerable<Room> rooms, string name, uint version, Guid id, MedicalPractice previousVersion)
 		{
-			this.rooms = rooms;
+			this.rooms = rooms.ToList();
 			this.name = name;
 			this.version = version;
 			this.id = id;
 			this.previousVersion = previousVersion;
 		}
 
-		public uint                Version         { get { return version;         }}
-		public IReadOnlyList<Room> Rooms           { get { return rooms;           }}
-		public string              Name            { get { return name;            }}
-		public Guid                Id              { get { return id;              }}
-		public MedicalPractice     PreviousVersion { get { return previousVersion; }}
+		public uint              Version         { get { return version;         }}
+		public IEnumerable<Room> Rooms           { get { return rooms.ToList();  }}
+		public string            Name            { get { return name;            }}
+		public Guid              Id              { get { return id;              }}
+		public MedicalPractice   PreviousVersion { get { return previousVersion; }}
 
 		public bool HasPreviousVersion
 		{
@@ -92,6 +92,6 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		public Room GetRoomById(Guid roomId)
 		{
 			return rooms.FirstOrDefault(room => room.Id == roomId);
-		}
+		}	
 	}
 }

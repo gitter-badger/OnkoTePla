@@ -21,7 +21,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 
 			aggregate.AddAppointment(command.UserId, 
 									 command.PatientId, command.Description, 
-									 command.Day, command.StartTime, command.EndTime, 
+									 command.StartTime, command.EndTime, 
 									 command.TherapyPlaceId, command.Room);
 		}
 	}

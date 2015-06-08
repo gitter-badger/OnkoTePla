@@ -18,7 +18,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		}
 
 
-		public AggregateIdentifier    Id     { get { return id;              }}
+		public AggregateIdentifier      Id     { get { return id;              }}
 		public IEnumerable<DomainEvent> Events { get { return events.ToList(); }}
 
 		public void AddEvents(IEnumerable<DomainEvent> newEvents)
