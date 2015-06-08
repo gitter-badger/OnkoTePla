@@ -57,6 +57,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 											   "first Appointment through cqrs system", 
 											   new Time(10,0), new Time(12,00), 
 											   2, room.Id));
+
+			((IPersistable) eventStore).PersistRepository();
 		} 
 	}
 }

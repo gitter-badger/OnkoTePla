@@ -54,7 +54,7 @@
     <Compile Include="Domain\AggregateIdentifier.cs" />
     <Compile Include="Repositories\Patients\IPatientReadRepository.cs" />
     <Compile Include="Repositories\Patients\IPatientWriteRepository.cs" />
-    <Compile Include="Repositories\IPersistablility.cs" />
+    <Compile Include="Repositories\IPersistable.cs" />
     <Compile Include="Repositories\Patients\PatientRepository.cs" />
     <Compile Include="Domain\AggregateRootBase.cs" />
     <Compile Include="Domain\AppointmentsOfDayAggregate.cs" />
