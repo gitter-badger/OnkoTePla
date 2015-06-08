@@ -25,6 +25,17 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 			eventHandlerLists[typeof(TEvent)].Add(newEventHandler);
 		}
 
+		public void Remove<TEvent>(IDomainEventHandler<TEvent> eventHandlerToRemove) where TEvent : DomainEvent
+		{
+			if (!eventHandlerLists.ContainsKey(typeof (TEvent))) 
+				return;
+
+			eventHandlerLists[typeof(TEvent)].Remove(eventHandlerToRemove);
+
+			if (eventHandlerLists[typeof(TEvent)].Count == 0)
+				eventHandlerLists.Remove(typeof(TEvent));
+		}
+
 		public IEnumerable<IDomainEventHandler<TEvent>> GetAllDomainEventHandlersFor<TEvent>() where TEvent : DomainEvent
 		{
 			if (!eventHandlerLists.ContainsKey(typeof(TEvent)))					

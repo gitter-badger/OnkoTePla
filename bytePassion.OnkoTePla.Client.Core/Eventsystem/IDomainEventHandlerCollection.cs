@@ -10,6 +10,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 		void Add<TEvent>(IDomainEventHandler<TEvent> newEventHandler)
 			where TEvent : DomainEvent;
 
+		void Remove<TEvent>(IDomainEventHandler<TEvent> eventHandlerToRemove)
+			where TEvent : DomainEvent;
+
 		IEnumerable<IDomainEventHandler<TEvent>> GetAllDomainEventHandlersFor<TEvent>()
 			where TEvent : DomainEvent;
 	}

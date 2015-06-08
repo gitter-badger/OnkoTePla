@@ -14,6 +14,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 		}
 
 
+		public void DeregisterEventHandler<TDomainEvent>(IDomainEventHandler<TDomainEvent> domainEventHandler) where TDomainEvent : DomainEvent
+		{
+			eventHandlerCollection.Remove(domainEventHandler);
+		}
+
 		public void RegisterEventHandler<TDomainEvent>(IDomainEventHandler<TDomainEvent> domainEventHandler) 
 			where TDomainEvent : DomainEvent
 		{
