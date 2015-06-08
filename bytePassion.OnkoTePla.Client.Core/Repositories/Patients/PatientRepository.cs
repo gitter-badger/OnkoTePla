@@ -26,6 +26,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 			return patients.ContainsKey(id) ? patients[id] : null;
 		}
 
+		public IEnumerable<Patient> GetAllPatients()
+		{
+			return patients.Values.ToList();
+		}
+
 		public void AddPatient(string name, Date birthday, bool alive)
 		{
 			var newPatientId = Guid.NewGuid();

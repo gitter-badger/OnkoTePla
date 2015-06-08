@@ -79,6 +79,8 @@
     <Compile Include="Repositories\Aggregate\AggregateRepository.cs" />
     <Compile Include="Repositories\Aggregate\IAggregateRepository.cs" />
     <Compile Include="Repositories\Patients\XmlPatientDataStore.cs" />
+    <Compile Include="Repositories\Readmodel\IReadModelRepository.cs" />
+    <Compile Include="Repositories\Readmodel\ReadModelRepository.cs" />
     <Compile Include="State\StateEngine.cs" />
   </ItemGroup>
   <ItemGroup>

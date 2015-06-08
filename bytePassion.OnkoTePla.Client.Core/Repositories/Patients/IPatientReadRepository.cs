@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 {
 	public interface IPatientReadRepository
 	{
-		event Action<Contracts.Patients.Patient> PatientAdded;
-		event Action<Contracts.Patients.Patient> PatientModified;
+		event Action<Patient> PatientAdded;
+		event Action<Patient> PatientModified;
 
-		Contracts.Patients.Patient GetPatientById(Guid id);
+		Patient GetPatientById(Guid id);
+		IEnumerable<Patient> GetAllPatients();
 	}
 	
 }
