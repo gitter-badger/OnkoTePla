@@ -75,7 +75,7 @@
     <Compile Include="Readmodels\AppointmentChangedEventArgs.cs" />
     <Compile Include="Readmodels\AppointmentsOfAPatient.cs" />
     <Compile Include="Readmodels\ChangeAction.cs" />
-    <Compile Include="Readmodels\AppointmentsOfADay.cs" />
+    <Compile Include="Readmodels\AppointmentsOfADayReadModel.cs" />
     <Compile Include="Repositories\Aggregate\AggregateRepository.cs" />
     <Compile Include="Repositories\Aggregate\IAggregateRepository.cs" />
     <Compile Include="Repositories\Patients\XmlPatientDataStore.cs" />
