@@ -91,8 +91,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 		private static void WriteEvent(XmlWriter writer, DomainEvent @event)
 		{
-			writer.WriteStartElement(EventElement);
-			writer.WriteAttributeString(AggregateIdAttribute,      @event.AggregateId.ToString());
+			writer.WriteStartElement(EventElement);			
 			writer.WriteAttributeString(AggregateVersionAttribute, @event.AggregateVersion.ToString());	
 			writer.WriteAttributeString(UserIdAttribute,           @event.UserId.ToString());
 			writer.WriteAttributeString(TimeStampDateAttribute,    @event.TimeStamp.Item1.ToString());

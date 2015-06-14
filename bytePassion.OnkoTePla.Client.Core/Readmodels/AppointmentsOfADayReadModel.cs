@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
+using bytePassion.OnkoTePla.Client.Core.Exceptions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
@@ -52,6 +53,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		public void Handle(AppointmentAdded domainEvent)
 		{
+			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
+				throw new VersionNotApplicapleException("@handle appointmentAdded @readmodel");
+
 			var medicalPractice = config.GetMedicalPracticeByIdAndVersion(domainEvent.AggregateId.MedicalPracticeId, 
 																		  domainEvent.AggregateId.PracticeVersion);
 

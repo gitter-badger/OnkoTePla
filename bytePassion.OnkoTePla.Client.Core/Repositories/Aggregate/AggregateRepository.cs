@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
@@ -41,7 +42,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate
 			eventStore.AddEventsToEventStream(aggregate.Id, uncommittedChanges);
 
 			foreach (var @event in uncommittedChanges)			
-				eventBus.Publish(@event);							
+				eventBus.Publish(Converter.ChangeTo(@event, @event.GetType()));							
 		}
 	}
 }

@@ -71,6 +71,12 @@ namespace bytePassion.Lib.TimeLib
 				builder.Append('0');
 
 			builder.Append(minute);
+			builder.Append(':');
+
+			if (second < 10)
+				builder.Append('0');
+
+			builder.Append(second);
 
 			return builder.ToString();
 		}

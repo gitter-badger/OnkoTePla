@@ -47,6 +47,7 @@
     <Compile Include="CommandSystem\IDomainCommandHandler.cs" />
     <Compile Include="CommandSystem\IDomainCommandHandlerCollection.cs" />
     <Compile Include="Domain\CommandHandler\AddAppointmentCommandHandler.cs" />
+    <Compile Include="Exceptions\VersionNotApplicapleException.cs" />
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\XmlConfigurationDataStore.cs" />

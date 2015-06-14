@@ -58,6 +58,21 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 											   new Time(10,0), new Time(12,00), 
 											   therapyPlace.Id, room.Id));
 
+
+
+			commandBus.Send(new AddAppointment(aggregateID, readmodel.AggregateVersion,
+											   user.Id, patient.Id,
+											   "first Appointment through cqrs system",
+											   new Time(13, 0), new Time(15, 00),
+											   therapyPlace.Id, room.Id));
+
+			commandBus.Send(new AddAppointment(aggregateID, readmodel.AggregateVersion,
+											   user.Id, patient.Id,
+											   "first Appointment through cqrs system",
+											   new Time(16, 0), new Time(18, 00),
+											   therapyPlace.Id, room.Id));
+
+
 			eventStore.PersistRepository();
 
 			var readmodel2 = readModelRepository.GetAppointmentsOfADayReadModel(aggregateID);
