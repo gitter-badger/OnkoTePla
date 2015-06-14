@@ -23,7 +23,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 	{
 
 
-		public static void GenerateExampleEventStream(Configuration config)
+		public static void GenerateExampleEventStream()
 		{			
 			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new XmlPatientDataStore("patients.xml");
 			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
@@ -42,23 +42,21 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
 
-
 			var medicalPratice = configRepository.GetMedicalPracticeByName("examplePractice1");
-			var aggregateID = new AggregateIdentifier(new Date(8, 6, 2015), medicalPratice.Id);
-			
-			var patient = patientRepository.GetAllPatients().First();
-
+			var aggregateID = new AggregateIdentifier(new Date(8, 6, 2015), medicalPratice.Id);						
 			var readmodel = readModelRepository.GetAppointmentsOfADayReadModel(aggregateID);
+			var patient = patientRepository.GetAllPatients().First();
 			var user = configRepository.GetUserByName("exampleUser1");
 			var room = medicalPratice.Rooms.First();
+			var therapyPlace = room.TherapyPlaces.First();
 
 			commandBus.Send(new AddAppointment(aggregateID, readmodel.AggregateVersion, 
 											   user.Id, patient.Id, 
 											   "first Appointment through cqrs system", 
 											   new Time(10,0), new Time(12,00), 
-											   2, room.Id));
+											   therapyPlace.Id, room.Id));
 
-			((IPersistable) eventStore).PersistRepository();
+			eventStore.PersistRepository();
 		} 
 	}
 }

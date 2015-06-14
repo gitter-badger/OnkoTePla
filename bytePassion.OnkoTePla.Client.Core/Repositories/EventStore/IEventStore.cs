@@ -5,7 +5,7 @@ using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 {
-	public interface IEventStore
+	public interface IEventStore : IPersistable
 	{				
 		EventStream GetEventStream(AggregateIdentifier id);
 		void AddEventsToEventStream (AggregateIdentifier id, IEnumerable<DomainEvent> eventStream);		

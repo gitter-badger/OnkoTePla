@@ -12,13 +12,13 @@ namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands
 		private readonly string description;		
 		private readonly Time   startTime;
 		private readonly Time   endTime;
-		private readonly uint   therapyPlaceId;
+		private readonly Guid   therapyPlaceId;
 		private readonly Guid   roomId;
 
 		public AddAppointment(AggregateIdentifier aggregateId, uint aggregateVersion, Guid userId, 
 							  Guid patientId, string description, 
 							  Time startTime, Time endTime, 
-							  uint therapyPlaceId, Guid roomId)
+							  Guid therapyPlaceId, Guid roomId)
 			: base(aggregateId, aggregateVersion, userId)
 		{
 			this.patientId      = patientId;
@@ -34,7 +34,7 @@ namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands
 		public Date   Day            { get { return AggregateId.Date; }}
 		public Time   StartTime      { get { return startTime;        }}
 		public Time   EndTime        { get { return endTime;          }}
-		public uint   TherapyPlaceId { get { return therapyPlaceId;   }}
+		public Guid   TherapyPlaceId { get { return therapyPlaceId;   }}
 		public Guid   Room           { get { return roomId;           }}
 	}
 }

@@ -4,7 +4,7 @@ using bytePassion.Lib.TimeLib;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 {
-	public interface IPatientWriteRepository
+	public interface IPatientWriteRepository : IPersistable
 	{
 		void AddPatient(string name, Date birthday, bool alive);
 

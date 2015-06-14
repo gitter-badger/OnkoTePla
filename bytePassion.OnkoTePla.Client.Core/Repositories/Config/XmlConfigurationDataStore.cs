@@ -154,6 +154,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			writer.WriteStartElement(TherapyPlace);
 
 			writer.WriteAttributeString(IdAttribute, therapyPlace.Id.ToString());
+			writer.WriteAttributeString(NameAttribute, therapyPlace.Name);
 			writer.WriteAttributeString(TherapyPlaceTypeAttribute, therapyPlace.Type.Name);
 			
 			writer.WriteEndElement();
@@ -387,20 +388,21 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				if (reader.NodeType != XmlNodeType.Element || reader.Name != TherapyPlace) continue;
 				i++;
 
-				var id = 0u;
+				var id = new Guid();
 				var type = String.Empty;
+				var name = String.Empty;
 
 				if (reader.HasAttributes)
 				{
 					while (reader.MoveToNextAttribute())
 					{
-						if (reader.Name == IdAttribute)               id   = UInt32.Parse(reader.Value);
+						if (reader.Name == IdAttribute)               id   = Guid.Parse(reader.Value);
 						if (reader.Name == TherapyPlaceTypeAttribute) type = reader.Value;
-
+						if (reader.Name == NameAttribute)             name = reader.Value;
 					}
 				}
 
-				var therapyPlace = new TherapyPlace(id, therapyPlaceTypes[type]);
+				var therapyPlace = new TherapyPlace(id, therapyPlaceTypes[type], name);
 				therapyPlaces.Add(therapyPlace);
 			}
 

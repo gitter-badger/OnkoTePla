@@ -7,7 +7,7 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 {
-	public class EventStore : IEventStore, IPersistable
+	public class EventStore : IEventStore
 	{
 		private readonly IPersistenceService<IEnumerable<EventStream>> persistenceService;
 

@@ -6,7 +6,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 {
-	public interface IConfigurationRepository
+	public interface IConfigurationRepository : IPersistable
 	{
 		uint GetLatestVersionFor(Guid medicalPractiveId);		
 

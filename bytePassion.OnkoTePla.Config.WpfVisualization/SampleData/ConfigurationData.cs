@@ -33,32 +33,20 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			var type1 = new TherapyPlaceType("therapieStuhl", TherapyPlaceIconType.ChairType1, Guid.NewGuid());
 			var type2 = new TherapyPlaceType("therapieBett",  TherapyPlaceIconType.BedType1,   Guid.NewGuid());
 
-			var therapyPlacesRoom1 = new List<TherapyPlace>
-			{
-				new TherapyPlace( 0, type1), new TherapyPlace( 1, type1),
-				new TherapyPlace( 2, type1), new TherapyPlace( 3, type1),
-				new TherapyPlace( 4, type1), new TherapyPlace( 5, type1),
-				new TherapyPlace( 6, type1), new TherapyPlace( 7, type1),
-				new TherapyPlace( 8, type1), new TherapyPlace( 9, type1),
-				new TherapyPlace(10, type1), new TherapyPlace(11, type1),
-				new TherapyPlace(12, type1), new TherapyPlace(13, type1),
-				new TherapyPlace(14, type1), new TherapyPlace(15, type1),
-				new TherapyPlace(16, type1), new TherapyPlace(17, type1)
-			};
+			var therapyPlacesRoom1 = new List<TherapyPlace>();
+			var therapyPlacesRoom2 = new List<TherapyPlace>();
+			var therapyPlacesRoom3 = new List<TherapyPlace>();
 
-			var therapyPlacesRoom2 = new List<TherapyPlace>
-			{
-				new TherapyPlace(18, type1), new TherapyPlace(19, type1),
-				new TherapyPlace(20, type1), new TherapyPlace(21, type1),
-				new TherapyPlace(22, type1), new TherapyPlace(23, type1)
-			};
+			int therapyPlaceIndex = 1;
 
-			var therapyPlacesRoom3 = new List<TherapyPlace>
-			{
-				new TherapyPlace(24, type2), 
-				new TherapyPlace(25, type2),
-				new TherapyPlace(26, type2)
-			};		
+			for (int i = 0; i < 20; i++)			
+				therapyPlacesRoom1.Add(new TherapyPlace(Guid.NewGuid(), type1, (therapyPlaceIndex++).ToString()));
+
+			for (int i = 0; i < 6; i++)			
+				therapyPlacesRoom2.Add(new TherapyPlace(Guid.NewGuid(), type1, (therapyPlaceIndex++).ToString()));
+
+			for (int i = 0; i < 3; i++)			
+				therapyPlacesRoom2.Add(new TherapyPlace(Guid.NewGuid(), type2, (therapyPlaceIndex++).ToString()));										
 
 			var rooms = new List<Room>
 			{
@@ -69,24 +57,17 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			var medPrac1 = MedicalPractice.CreateNeMedicalPractice(rooms, "examplePractice1");
 			medPrac1 = medPrac1.AddRoom(new Room(Guid.NewGuid(), therapyPlacesRoom3));
 
-			var therapyPlacesRoom4 = new List<TherapyPlace>
-			{
-				new TherapyPlace( 0, type1), new TherapyPlace( 1, type1),
-				new TherapyPlace( 2, type1), new TherapyPlace( 3, type1),
-				new TherapyPlace( 4, type1), new TherapyPlace( 5, type1),
-				new TherapyPlace( 6, type1), new TherapyPlace( 7, type1),
-				new TherapyPlace( 8, type1), new TherapyPlace( 9, type1)				
-			};
+			var therapyPlacesRoom4 = new List<TherapyPlace>();
+			var therapyPlacesRoom5 = new List<TherapyPlace>();
 
-			var therapyPlacesRoom5 = new List<TherapyPlace>
-			{
-				new TherapyPlace(10, type1), new TherapyPlace(11, type1),
-				new TherapyPlace(12, type1), new TherapyPlace(13, type1),
-				new TherapyPlace(14, type1), new TherapyPlace(15, type1),
-				new TherapyPlace(16, type1), new TherapyPlace(17, type1),
-				new TherapyPlace(18, type1), new TherapyPlace(19, type1)				
-			};
+			therapyPlaceIndex = 1;
 
+			for (int i = 0; i < 10; i++)
+				therapyPlacesRoom4.Add(new TherapyPlace(Guid.NewGuid(), type1, (therapyPlaceIndex++).ToString()));
+
+			for (int i = 0; i < 10; i++)
+				therapyPlacesRoom5.Add(new TherapyPlace(Guid.NewGuid(), type1, (therapyPlaceIndex++).ToString()));
+					
 			var rooms2 = new List<Room>
 			{
 				new Room(Guid.NewGuid(), therapyPlacesRoom4), 

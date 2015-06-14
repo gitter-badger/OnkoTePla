@@ -7,7 +7,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 {
-	public class PatientRepository : IPatientReadRepository, IPatientWriteRepository, IPersistable
+	public class PatientRepository : IPatientReadRepository, IPatientWriteRepository
 	{
 		public event Action<Patient> PatientAdded;
 		public event Action<Patient> PatientModified;

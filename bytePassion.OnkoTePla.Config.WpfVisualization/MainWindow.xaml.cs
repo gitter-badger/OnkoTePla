@@ -23,5 +23,10 @@ namespace bytePassion.OnkoTePla.Config.WpfClient
 		{
 			ConfigurationData.TestLoad();	
 		}
+
+		private void ButtonBase_OnClick3(object sender, RoutedEventArgs e)
+		{
+			EventStreamDataBase.GenerateExampleEventStream();
+		}
 	}
 }

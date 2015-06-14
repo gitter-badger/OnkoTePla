@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 		public void AddAppointment(Guid userId,
 								   Guid patientId, string description, 
 								   Time startTime, Time endTime,
-								   uint therapyPlaceId, Guid roomId) 
+								   Guid therapyPlaceId, Guid roomId) 
 		{
  			ApplyChange(new AppointmentAdded(Id, Version, userId,TimeTools.GetCurrentTimeStamp(), 
 											 patientId, description, startTime, endTime, 

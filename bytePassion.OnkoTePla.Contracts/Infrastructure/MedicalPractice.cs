@@ -83,7 +83,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 			return previousVersion.GetVersion(requestedVersion);
 		}
 
-		public TherapyPlace GetTherapyPlaceById(uint therapyPlaceId)
+		public TherapyPlace GetTherapyPlaceById(Guid therapyPlaceId)
 		{
 			return rooms.SelectMany(room => room.TherapyPlaces)
 				        .FirstOrDefault(therapyPlace => therapyPlace.Id == therapyPlaceId);
