@@ -23,6 +23,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 									 command.PatientId, command.Description, 
 									 command.StartTime, command.EndTime, 
 									 command.TherapyPlaceId, command.Room);
+
+			repository.Save(aggregate);
 		}
 	}
 }

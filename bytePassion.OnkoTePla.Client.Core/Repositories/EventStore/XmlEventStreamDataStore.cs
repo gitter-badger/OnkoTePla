@@ -43,6 +43,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private const string EndTimeAttribute		      = "endTime";
 		private const string TherapyPlaceIdAttribute      = "therapyPlaceId";
 		private const string RoomIdAttribute		      = "roomId";
+		private const string UserIdAttribute              = "userId";
+		private const string TimeStampTimeAttribute       = "timeStampTime";
+		private const string TimeStampDateAttribute       = "timeStampDate";
 
 		private readonly string filename;
 
@@ -70,13 +73,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.Close();
 		}
 
-		private void WriteEventStream(XmlWriter writer, EventStream eventStream)
+		private static void WriteEventStream(XmlWriter writer, EventStream eventStream)
 		{
 			writer.WriteStartElement(EventStream);
 			writer.WriteAttributeString(CountAttribute, eventStream.EventCount.ToString());
 			writer.WriteAttributeString(DateAttribute, eventStream.Id.Date.ToString());
 			writer.WriteAttributeString(ConfigVersionAttribute, eventStream.Id.PracticeVersion.ToString());
-			writer.WriteAttributeString(MedicalPracticeAttribute, eventStream.Id.MedicalPracticeId.ToString());
+			writer.WriteAttributeString(MedicalPracticeAttribute, eventStream.Id.MedicalPracticeId.ToString());			
 
 			foreach (var domainEvent in eventStream.Events)
 			{
@@ -86,20 +89,26 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.WriteEndElement();
 		}
 
-		private void WriteEvent(XmlWriter writer, DomainEvent @event)
+		private static void WriteEvent(XmlWriter writer, DomainEvent @event)
 		{
 			writer.WriteStartElement(EventElement);
 			writer.WriteAttributeString(AggregateIdAttribute,      @event.AggregateId.ToString());
-			writer.WriteAttributeString(AggregateVersionAttribute, @event.AggregateVersion.ToString());			
+			writer.WriteAttributeString(AggregateVersionAttribute, @event.AggregateVersion.ToString());	
+			writer.WriteAttributeString(UserIdAttribute,           @event.UserId.ToString());
+			writer.WriteAttributeString(TimeStampDateAttribute,    @event.TimeStamp.Item1.ToString());
+			writer.WriteAttributeString(TimeStampTimeAttribute,    @event.TimeStamp.Item2.ToString());			
 
-			// TODO alle attributes hinzufÜgen
-
-			(this as dynamic).WriteEvent(@event);
-			
+			if (@event is AppointmentAdded) WriteEvent(writer, (AppointmentAdded) @event);			
+					
 			writer.WriteEndElement();
 		}
 
-		protected void WriteEvent(XmlWriter writer, AppointmentAdded @event)
+		private static void WriteEvent(XmlWriter writer, AppointmentModified @event)
+		{
+			throw new NotImplementedException();
+		}
+
+		private static void WriteEvent(XmlWriter writer, AppointmentAdded @event)
 		{
 			writer.WriteStartElement(AppointmentAddedEvent);
 

@@ -28,7 +28,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate
 		public AppointmentsOfDayAggregate GetById(AggregateIdentifier aggregateId)
 		{			
 			var eventStream = eventStore.GetEventStream(aggregateId);
-			var aggregate   = new AppointmentsOfDayAggregate(aggregateId, patientRepository, config);
+			var aggregate   = new AppointmentsOfDayAggregate(eventStream.Id, patientRepository, config);
 			aggregate.LoadFromEventStream(eventStream);
 
 			return aggregate;

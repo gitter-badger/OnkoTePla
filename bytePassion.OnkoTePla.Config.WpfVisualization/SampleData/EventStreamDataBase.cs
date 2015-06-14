@@ -27,9 +27,11 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		{			
 			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new XmlPatientDataStore("patients.xml");
 			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
+			patientRepository.LoadRepository();
 
 			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore("config.xml");
 			IConfigurationRepository configRepository = new ConfigurationRepository(configPersistenceService);
+			configRepository.LoadRepository();
 
 			IPersistenceService<IEnumerable<EventStream>> eventStorePersistenceService = new XmlEventStreamDataStore("eventHistory.xml");
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configRepository);
@@ -57,6 +59,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 											   therapyPlace.Id, room.Id));
 
 			eventStore.PersistRepository();
+
+			var readmodel2 = readModelRepository.GetAppointmentsOfADayReadModel(aggregateID);
 		} 
 	}
 }

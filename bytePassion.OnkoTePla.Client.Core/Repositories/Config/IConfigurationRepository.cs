@@ -10,23 +10,47 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 	{
 		uint GetLatestVersionFor(Guid medicalPractiveId);		
 
-		MedicalPractice GetMedicalPracticeByName(string name);
-		MedicalPractice GetMedicalPracticeById(Guid id);
-		MedicalPractice GetMedicalPracticeByIdAndVersion(Guid id, uint version);
-		IEnumerable<MedicalPractice> GetAllMedicalPractices();
-		void AddMedicalPractice(MedicalPractice practice);
-		void RemoveMedicalPractice(Guid medicalPracticeId);
+		/////////////////////////////////////////////////////////////////////////////////////
+		////////                          Medical practice                          /////////
+		/////////////////////////////////////////////////////////////////////////////////////
+																					/////////
+		MedicalPractice GetMedicalPracticeByName (string name);						/////////
+		MedicalPractice GetMedicalPracticeById (Guid id);							/////////
+		MedicalPractice GetMedicalPracticeByIdAndVersion (Guid id, uint version);	/////////																				
+		IEnumerable<MedicalPractice> GetAllMedicalPractices ();						/////////
+																					/////////
+		void AddMedicalPractice (MedicalPractice practice);							/////////
+		void RemoveMedicalPractice (Guid medicalPracticeId);						/////////
+																					/////////
+		/////////////////////////////////////////////////////////////////////////////////////
+		
 
-		TherapyPlaceType GetTherapyPlaceTypeByName(string name);
-		TherapyPlaceType GetTherapyPlaceTypeById  (Guid id);		
-		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes();
-		void AddTherapyPlaceType(TherapyPlaceType newTherapyPlaceType);
 
-		User GetUserByName(string name);
-		User GetUserById(Guid id);
-		IEnumerable<User> GetAllUsers(); 
-		void AddUser(User newUser);
-		void RemoveUser(Guid userId);
+		/////////////////////////////////////////////////////////////////////////////////////
+		////////                            Therapy Place                           /////////
+		/////////////////////////////////////////////////////////////////////////////////////
+																					/////////
+		TherapyPlaceType GetTherapyPlaceTypeByName (string name);					/////////
+		TherapyPlaceType GetTherapyPlaceTypeById (Guid id);							/////////
+		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes ();					/////////
+																					/////////
+		void AddTherapyPlaceType (TherapyPlaceType newTherapyPlaceType);			/////////
+																					/////////
+		/////////////////////////////////////////////////////////////////////////////////////
 
+
+
+		/////////////////////////////////////////////////////////////////////////////////////
+		////////                                 User                               /////////
+		/////////////////////////////////////////////////////////////////////////////////////
+																					/////////
+		User GetUserByName (string name);											/////////
+		User GetUserById (Guid id);													/////////
+		IEnumerable<User> GetAllUsers ();											/////////
+																					/////////
+		void AddUser (User newUser);												/////////
+		void RemoveUser (Guid userId);												/////////
+																					/////////
+		/////////////////////////////////////////////////////////////////////////////////////
 	}
 }

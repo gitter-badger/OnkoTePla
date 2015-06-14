@@ -26,7 +26,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			appointments = new List<Appointment>();
 		}
 
-		protected void Apply (AppointmentAdded @event)
+		public void Apply (AppointmentAdded @event)
 		{
 			var medicalPractice = config.GetMedicalPracticeByIdAndVersion(Id.MedicalPracticeId, Id.PracticeVersion);
 
@@ -34,6 +34,14 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 											 medicalPractice.GetTherapyPlaceById(@event.TherapyPlaceId), 
 											 medicalPractice.GetRoomById(@event.RoomId), 
 											 @event.Day, @event.StartTime, @event.EndTime));
+		}
+
+		public void Apply(AppointmentModified @event)
+		{			
+		}
+
+		public void Apply(AppointmentRemoved @event)
+		{			
 		}
 		
 		public void AddAppointment(Guid userId,

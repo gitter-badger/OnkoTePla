@@ -43,6 +43,7 @@
     <Compile Include="FrameworkExtensions\ClonableList.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ParameterrizedCommand.cs" />
+    <Compile Include="FrameworkExtensions\Converter.cs" />
     <Compile Include="FrameworkExtensions\GenericExtensions.cs" />
     <Compile Include="FrameworkExtensions\GenericParameterizedValueConverter.cs" />
     <Compile Include="FrameworkExtensions\GenericValueConverter.cs" />

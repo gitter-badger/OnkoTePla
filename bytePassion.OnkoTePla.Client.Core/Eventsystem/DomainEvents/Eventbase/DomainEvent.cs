@@ -20,7 +20,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase
 			this.timeStamp = timeStamp;
 		}
 		
-		public AggregateIdentifier AggregateId      { get { return aggregateId;      }}
+		public AggregateIdentifier   AggregateId      { get { return aggregateId;      }}
 		public uint                  AggregateVersion { get { return aggregateVersion; }}
 		public Guid                  UserId           { get { return userId;           }}
 		public Tuple<Date, Time>     TimeStamp        { get { return timeStamp;        }} 

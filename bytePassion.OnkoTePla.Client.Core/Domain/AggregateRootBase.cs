@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 
@@ -52,8 +53,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 		}
 
 		private void ApplyChange<TDomainEvent>(TDomainEvent @event, bool isNew) where TDomainEvent : DomainEvent
-		{			
-			(this as dynamic).Apply(@event);
+		{
+			(this as dynamic).Apply(Converter.ChangeTo(@event, @event.GetType()));			
 			
 			if (isNew) uncommitedChanges.Add(@event);			
 		}		

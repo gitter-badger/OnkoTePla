@@ -46,7 +46,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 				therapyPlacesRoom2.Add(new TherapyPlace(Guid.NewGuid(), type1, (therapyPlaceIndex++).ToString()));
 
 			for (int i = 0; i < 3; i++)			
-				therapyPlacesRoom2.Add(new TherapyPlace(Guid.NewGuid(), type2, (therapyPlaceIndex++).ToString()));										
+				therapyPlacesRoom3.Add(new TherapyPlace(Guid.NewGuid(), type2, (therapyPlaceIndex++).ToString()));										
 
 			var rooms = new List<Room>
 			{

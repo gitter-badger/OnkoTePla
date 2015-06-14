@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
@@ -40,10 +41,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		public void LoadFromEventStream(EventStream eventStream)
 		{			
-			foreach (var domainEvent in eventStream.Events)
-			{
-				(this as dynamic).Handle(domainEvent);
-			}
+			foreach (var domainEvent in eventStream.Events)			
+				(this as dynamic).Handle(Converter.ChangeTo(domainEvent, domainEvent.GetType()));			
 		}
 
 		public IEnumerable<Appointment> Appointments
