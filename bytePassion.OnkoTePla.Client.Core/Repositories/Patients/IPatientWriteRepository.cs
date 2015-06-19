@@ -6,7 +6,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 {
 	public interface IPatientWriteRepository : IPersistable
 	{
-		void AddPatient(string name, Date birthday, bool alive);
+		void AddPatient(string name, Date birthday, bool alive, string externalId);
 
 		void SetNewName(Guid patientId, string newName);
 		void SetNewBirthday(Guid patientId, Date newBirthday);

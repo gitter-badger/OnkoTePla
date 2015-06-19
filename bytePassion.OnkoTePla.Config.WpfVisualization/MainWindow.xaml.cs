@@ -14,7 +14,7 @@ namespace bytePassion.OnkoTePla.Config.WpfClient
 			InitializeComponent();
 		}
 
-		private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+		private void ButtonBase_OnClick1(object sender, RoutedEventArgs e)
 		{
 			ConfigurationData.ConfigToXml();
 		}
@@ -27,6 +27,11 @@ namespace bytePassion.OnkoTePla.Config.WpfClient
 		private void ButtonBase_OnClick3(object sender, RoutedEventArgs e)
 		{
 			EventStreamDataBase.GenerateExampleEventStream();
+		}
+
+		private void ButtonBase_OnClick4(object sender, RoutedEventArgs e)
+		{
+			PatientDataBase.GenerateXmlPatientsFile(20000);
 		}
 	}
 }

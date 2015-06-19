@@ -80,9 +80,9 @@ namespace bytePassion.Lib.TimeLib
 			return dateTime.ToString("d", cultureInfo);
 		}
 
-		public int Day   { get { return day;   }}
-		public int Month { get { return month; }}
-		public int Year  { get { return year;  }}
+		public byte   Day   { get { return day;   }}
+		public byte   Month { get { return month; }}
+		public ushort Year  { get { return year;  }}
 
 		public static Date Parse(string s)
 		{

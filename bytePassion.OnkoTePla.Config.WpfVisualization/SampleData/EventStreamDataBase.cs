@@ -44,6 +44,9 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
 
+
+			//////////////////////////////
+
 			var medicalPratice = configRepository.GetMedicalPracticeByName("examplePractice1");
 			var aggregateID = new AggregateIdentifier(new Date(8, 6, 2015), medicalPratice.Id);						
 			var readmodel = readModelRepository.GetAppointmentsOfADayReadModel(aggregateID);

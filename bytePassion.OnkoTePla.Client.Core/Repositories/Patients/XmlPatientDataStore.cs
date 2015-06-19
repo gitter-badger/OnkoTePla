@@ -7,6 +7,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 {
+
 	public class XmlPatientDataStore : IPersistenceService<IEnumerable<Patient>>
 	{
 
@@ -38,7 +39,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 		private const string BirthdayAttribute     = "birthday";
 		private const string LivingStatusAttribute = "livingStatus";
 		private const string IdAttribute           = "id";
-
+		private const string ExternalIdAttribute   = "externalId";
+		
 		public void Persist(IEnumerable<Patient> data)
 		{
 		
@@ -67,6 +69,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 			writer.WriteAttributeString(BirthdayAttribute, patient.Birthday.ToString());
 			writer.WriteAttributeString(LivingStatusAttribute, patient.Alive.ToString());
 			writer.WriteAttributeString(IdAttribute, patient.Id.ToString());	
+			writer.WriteAttributeString(ExternalIdAttribute, patient.ExternalId);
 				
 			writer.WriteEndElement();		
 		}
@@ -90,6 +93,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 					var birthday     = Date.Dummy;
 					var livingStatus = false;
 					var id           = new Guid();
+					var externalId   = String.Empty;
 						
 					while (reader.MoveToNextAttribute())
 					{
@@ -99,10 +103,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 							case BirthdayAttribute:     birthday     = Date.Parse(reader.Value); break;
 							case LivingStatusAttribute: livingStatus = Boolean.Parse(reader.Value); break;
 							case IdAttribute:           id           = Guid.Parse(reader.Value); break;
+							case ExternalIdAttribute:   externalId   = reader.Value; break;
 						}
 					}
 
-					patients.Add(new Patient(name, birthday, livingStatus, id));
+					patients.Add(new Patient(name, birthday, livingStatus, id, externalId));
 				}
 			}
 			reader.Close();
