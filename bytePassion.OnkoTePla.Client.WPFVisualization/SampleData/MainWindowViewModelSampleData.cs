@@ -6,12 +6,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 	internal class MainWindowViewModelSampleData : IMainWindowViewModel
 	{
 		public MainWindowViewModelSampleData ()
-		{
-			TestViewViewModel = new TestViewViewModelSampleData();
+		{			
 			PatientSelectorViewModel = new PatientSelectorViewModelSampleData();
+			AddAppointmentTestViewModel = new AddAppointmentTestViewModelSampleData();
 		}
-
-		public ITestViewViewModel TestViewViewModel { get; private set; }
-		public IPatientSelectorViewModel PatientSelectorViewModel { get; private set; }
+		
+		public IPatientSelectorViewModel    PatientSelectorViewModel    { get; private set; }
+		public IAddAppointmentTestViewModel AddAppointmentTestViewModel { get; private set; }
 	}
 }

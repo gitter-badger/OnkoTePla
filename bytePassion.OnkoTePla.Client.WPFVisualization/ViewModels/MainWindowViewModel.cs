@@ -5,23 +5,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {
 	internal class MainWindowViewModel : IMainWindowViewModel
 	{
-		private readonly ITestViewViewModel testViewViewModel;
-		private readonly IPatientSelectorViewModel patientSelectorViewModel;
+		
+		private readonly IPatientSelectorViewModel    patientSelectorViewModel;
+		private readonly IAddAppointmentTestViewModel addAppointmentTestViewModel;
 
-		public MainWindowViewModel (ITestViewViewModel testViewViewModel, IPatientSelectorViewModel patientSelectorViewModel)
+		public MainWindowViewModel (IPatientSelectorViewModel patientSelectorViewModel, 
+									IAddAppointmentTestViewModel addAppointmentTestViewModel)
 		{
-			this.testViewViewModel = testViewViewModel;
 			this.patientSelectorViewModel = patientSelectorViewModel;
-		}
-
-		public ITestViewViewModel TestViewViewModel
-		{
-			get { return testViewViewModel; }
+			this.addAppointmentTestViewModel = addAppointmentTestViewModel;
 		}
 
 		public IPatientSelectorViewModel PatientSelectorViewModel
 		{
 			get { return patientSelectorViewModel; }
+		}
+
+		public IAddAppointmentTestViewModel AddAppointmentTestViewModel
+		{
+			get { return addAppointmentTestViewModel; }
 		}
 	}
 }

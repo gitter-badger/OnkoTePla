@@ -11,47 +11,49 @@
                       BorderThickness="1,0,1,1"
                       mc:Ignorable="d">
 
-    <Window.Resources>
-        <ControlTemplate x:Key="ActionBarViewSwitchToggleButton" TargetType="{x:Type ToggleButton}">
-            <Border Background="Transparent"
-                    BorderBrush="White"
-                    BorderThickness="2"
-                    CornerRadius="16">
-                <Image Margin="6" Source="{TemplateBinding Content}" />
-            </Border>
-        </ControlTemplate>
-    </Window.Resources>
+	<Window.Resources>
+		<ControlTemplate x:Key="ActionBarViewSwitchToggleButton" TargetType="{x:Type ToggleButton}">
+			<Border Background="Transparent"
+			        BorderBrush="White"
+			        BorderThickness="2"
+			        CornerRadius="16">
+				<Image Margin="6" Source="{TemplateBinding Content}" />
+			</Border>
+		</ControlTemplate>
+	</Window.Resources>
 
-    <d:Window.DataContext>
-        <sampleData:MainWindowViewModelSampleData />
-    </d:Window.DataContext>
+	<d:Window.DataContext>		
+		<sampleData:MainWindowViewModelSampleData />
+	</d:Window.DataContext>
 
-    <controls:MetroContentControl>
+	<controls:MetroContentControl>
 
-        <TabControl>
-            <TabItem Header="Übersicht">
-                <Grid>
-                    <views:TestView DataContext="{Binding TestViewViewModel}" />
-                </Grid>
-            </TabItem>
-            <TabItem Header="Hinzufügen" />
-            <TabItem Header="Suchen">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <views:PatientSelector Grid.Column="0" DataContext="{Binding PatientSelectorViewModel}" />
-                    <views:PatientDetailView Grid.Column="1"
-                                             Margin="20"
-                                             DataContext="{Binding PatientSelectorViewModel}" />
-                </Grid>
-            </TabItem>
+		<TabControl>
+			<TabItem Header="Übersicht">
+				<Grid>
+					<views:AddAppointmentTestView Width="500"
+					                              Height="370"
+					                              DataContext="{Binding AddAppointmentTestViewModel}" />
+				</Grid>
+			</TabItem>
+			<TabItem Header="Hinzufügen" />
+			<TabItem Header="Suchen">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<views:PatientSelector Grid.Column="0" DataContext="{Binding PatientSelectorViewModel}" />
+					<views:PatientDetailView Grid.Column="1"
+					                         Margin="20"
+					                         DataContext="{Binding PatientSelectorViewModel}" />
+				</Grid>
+			</TabItem>
 
-        </TabControl>
+		</TabControl>
 
 
-    </controls:MetroContentControl>
+	</controls:MetroContentControl>
 
 
 </controls:MetroWindow>
