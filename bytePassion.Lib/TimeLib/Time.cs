@@ -52,10 +52,10 @@ namespace bytePassion.Lib.TimeLib
 			return !(t1 == t2);
 		}
 
-		public static Duration operator - (Time t1, Time t2)
+		public static Duration GetDurationBetween(Time t1, Time t2)
 		{
 			throw new NotImplementedException();
-		}
+		}		
 
 		public override string ToString ()
 		{
@@ -85,13 +85,24 @@ namespace bytePassion.Lib.TimeLib
 		{
 			var elements = s.Split(':');
 
-			if (elements.Length != 2)
-				throw new FormatException("expected Format: hh:mm");
+			if (elements.Length == 2)
+			{
+				var hour = Byte.Parse(elements[0]);
+				var minute = Byte.Parse(elements[1]);
 
-			var hour   = Byte.Parse(elements[0]);
-			var minute = Byte.Parse(elements[1]);
+				return new Time(hour, minute);
+			}
 
-			return new Time(hour, minute);
+			if (elements.Length == 3)
+			{
+				var hour = Byte.Parse(elements[0]);
+				var minute = Byte.Parse(elements[1]);
+				var seconds = Byte.Parse(elements[2]);
+
+				return new Time(hour, minute, seconds);
+			}
+
+			throw new FormatException("expected Format: hh:mm");
 		}
 
 		public static bool IsDummy(Time t)
