@@ -12,9 +12,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private readonly IPersistenceService<IEnumerable<EventStream>> persistenceService;
 
 		private IList<EventStream> eventStreams;
-		private readonly IConfigurationRepository config;
+		private readonly IConfigurationReadRepository config;
 
-		public EventStore (IPersistenceService<IEnumerable<EventStream>> persistenceService, IConfigurationRepository config)
+		public EventStore (IPersistenceService<IEnumerable<EventStream>> persistenceService, IConfigurationReadRepository config)
 		{
 			eventStreams = new List<EventStream>();
 			this.persistenceService = persistenceService;

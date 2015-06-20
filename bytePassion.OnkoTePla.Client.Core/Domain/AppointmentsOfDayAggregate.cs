@@ -15,11 +15,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
 		private readonly IList<Appointment> appointments;
 		private readonly IPatientReadRepository patientRepository;
-		private readonly IConfigurationRepository config;
+		private readonly IConfigurationReadRepository config;
 
 		public AppointmentsOfDayAggregate(AggregateIdentifier id, 
 										  IPatientReadRepository patientRepository, 
-										  IConfigurationRepository config) 
+										  IConfigurationReadRepository config) 
 			: base(id, 0)
 		{
 			this.patientRepository = patientRepository;

@@ -1,23 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 {
-	public interface IConfigurationRepository : IPersistable
+	public interface IConfigurationWriteRepository : IPersistable
 	{
-		uint GetLatestVersionFor(Guid medicalPractiveId);		
-
+		
 		/////////////////////////////////////////////////////////////////////////////////////
 		////////                          Medical practice                          /////////
-		/////////////////////////////////////////////////////////////////////////////////////
-																					/////////
-		MedicalPractice GetMedicalPracticeByName (string name);						/////////
-		MedicalPractice GetMedicalPracticeById (Guid id);							/////////
-		MedicalPractice GetMedicalPracticeByIdAndVersion (Guid id, uint version);	/////////																				
-		IEnumerable<MedicalPractice> GetAllMedicalPractices ();						/////////
+		/////////////////////////////////////////////////////////////////////////////////////																							
 																					/////////
 		void AddMedicalPractice (MedicalPractice practice);							/////////
 		void RemoveMedicalPractice (Guid medicalPracticeId);						/////////
@@ -30,10 +23,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		////////                            Therapy Place                           /////////
 		/////////////////////////////////////////////////////////////////////////////////////
 																					/////////
-		TherapyPlaceType GetTherapyPlaceTypeByName (string name);					/////////
-		TherapyPlaceType GetTherapyPlaceTypeById (Guid id);							/////////
-		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes ();					/////////
-																					/////////
 		void AddTherapyPlaceType (TherapyPlaceType newTherapyPlaceType);			/////////
 																					/////////
 		/////////////////////////////////////////////////////////////////////////////////////
@@ -43,10 +32,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		/////////////////////////////////////////////////////////////////////////////////////
 		////////                                 User                               /////////
 		/////////////////////////////////////////////////////////////////////////////////////
-																					/////////
-		User GetUserByName (string name);											/////////
-		User GetUserById (Guid id);													/////////
-		IEnumerable<User> GetAllUsers ();											/////////
 																					/////////
 		void AddUser (User newUser);												/////////
 		void RemoveUser (Guid userId);												/////////

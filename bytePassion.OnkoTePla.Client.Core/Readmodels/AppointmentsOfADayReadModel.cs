@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
 using bytePassion.OnkoTePla.Client.Core.Exceptions;
@@ -20,18 +21,21 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		public event EventHandler<AppointmentChangedEventArgs> AppointmentChanged; 
 
 		private readonly IEventBus eventBus;
-		private readonly IConfigurationRepository config;
-		private readonly IPatientReadRepository patientsRepository;		
+		private readonly IConfigurationReadRepository config;
+		private readonly IPatientReadRepository patientsRepository;
+		private readonly AggregateIdentifier identifier;
 
 		private readonly IList<Appointment> appointments;
 
 		public AppointmentsOfADayReadModel(IEventBus eventBus, 
-								           IConfigurationRepository config, 
-								           IPatientReadRepository patientsRepository)
+								           IConfigurationReadRepository config, 
+								           IPatientReadRepository patientsRepository,
+										   AggregateIdentifier identifier)
 		{
 			this.eventBus = eventBus;
 			this.config = config;
 			this.patientsRepository = patientsRepository;
+			this.identifier = identifier;
 
 			appointments = new List<Appointment>();
 
@@ -39,6 +43,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		}
 
 		public uint AggregateVersion { private set; get; }
+		public AggregateIdentifier Identifier { get { return identifier; }}
 
 		public void LoadFromEventStream(EventStream eventStream)
 		{			

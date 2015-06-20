@@ -49,7 +49,8 @@
     <Compile Include="Domain\CommandHandler\AddAppointmentCommandHandler.cs" />
     <Compile Include="Exceptions\VersionNotApplicapleException.cs" />
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
-    <Compile Include="Repositories\Config\IConfigurationRepository.cs" />
+    <Compile Include="Repositories\Config\IConfigurationWriteRepository.cs" />
+    <Compile Include="Repositories\Config\IConfigurationReadRepository.cs" />
     <Compile Include="Repositories\Config\XmlConfigurationDataStore.cs" />
     <Compile Include="Repositories\EventStore\EventStream.cs" />
     <Compile Include="Domain\AggregateIdentifier.cs" />

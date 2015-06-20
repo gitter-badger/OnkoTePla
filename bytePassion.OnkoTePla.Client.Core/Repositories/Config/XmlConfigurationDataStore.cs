@@ -363,9 +363,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				{
 					while (reader.MoveToNextAttribute())
 					{
-						if (reader.Name == IdAttribute)                id         = Guid.Parse(reader.Value);
+						if (reader.Name == IdAttribute)    id         = Guid.Parse(reader.Value);
 						if (reader.Name == CountAttribute) placeCount = Int32.Parse(reader.Value);
-						if (reader.Name == NameAttribute) name = reader.Value;
+						if (reader.Name == NameAttribute)  name       = reader.Value;
 
 					}
 				}
