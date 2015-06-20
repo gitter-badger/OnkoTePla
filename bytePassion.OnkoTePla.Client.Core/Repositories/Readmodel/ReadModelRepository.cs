@@ -13,12 +13,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel
 	{
 		private readonly IEventBus eventBus;
 		private readonly IEventStore eventstore;
-		private readonly IConfigurationRepository config;
+		private readonly IConfigurationReadRepository config;
 		private readonly IPatientReadRepository patientsRepository;
 
 		public ReadModelRepository(IEventBus eventBus, IEventStore eventstore,
  								   IPatientReadRepository patientsRepository,
-								   IConfigurationRepository config)
+								   IConfigurationReadRepository config)
 		{
 			this.eventstore = eventstore;
 			this.config = config;
@@ -29,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel
 		public AppointmentsOfADayReadModel GetAppointmentsOfADayReadModel(AggregateIdentifier id)
 		{
 			var eventStream = eventstore.GetEventStream(id);
-			var readmodel = new AppointmentsOfADayReadModel(eventBus, config, patientsRepository);
+			var readmodel = new AppointmentsOfADayReadModel(eventBus, config, patientsRepository, eventStream.Id);
 			readmodel.LoadFromEventStream(eventStream);
 
 			return readmodel;

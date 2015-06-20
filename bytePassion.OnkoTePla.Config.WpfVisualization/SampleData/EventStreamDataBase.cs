@@ -30,28 +30,28 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			patientRepository.LoadRepository();
 
 			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore("config.xml");
-			IConfigurationRepository configRepository = new ConfigurationRepository(configPersistenceService);
-			configRepository.LoadRepository();
+			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
+			configReadRepository.LoadRepository();
 
 			IPersistenceService<IEnumerable<EventStream>> eventStorePersistenceService = new XmlEventStreamDataStore("eventHistory.xml");
-			IEventStore eventStore = new EventStore(eventStorePersistenceService, configRepository);
+			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 
 			IEventBus eventBus = new EventBus();
 			ICommandBus commandBus = new CommandBus();
 
-			IAggregateRepository aggregateRepository = new AggregateRepository(eventBus, eventStore, patientRepository, configRepository);
-			IReadModelRepository readModelRepository = new ReadModelRepository(eventBus, eventStore, patientRepository, configRepository);
+			IAggregateRepository aggregateRepository = new AggregateRepository(eventBus, eventStore, patientRepository, configReadRepository);
+			IReadModelRepository readModelRepository = new ReadModelRepository(eventBus, eventStore, patientRepository, configReadRepository);
 
 			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
 
 
 			//////////////////////////////
 
-			var medicalPratice = configRepository.GetMedicalPracticeByName("examplePractice1");
+			var medicalPratice = configReadRepository.GetMedicalPracticeByName("examplePractice1");
 			var aggregateID = new AggregateIdentifier(new Date(8, 6, 2015), medicalPratice.Id);						
 			var readmodel = readModelRepository.GetAppointmentsOfADayReadModel(aggregateID);
 			var patient = patientRepository.GetAllPatients().First();
-			var user = configRepository.GetUserByName("exampleUser1");
+			var user = configReadRepository.GetUserByName("exampleUser1");
 			var room = medicalPratice.Rooms.First();
 			var therapyPlace = room.TherapyPlaces.First();
 
