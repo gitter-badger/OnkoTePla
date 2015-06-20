@@ -66,7 +66,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 			var appointment = new Appointment(patientsRepository.GetPatientById(domainEvent.PatientId), 
 											  medicalPractice.GetTherapyPlaceById(domainEvent.TherapyPlaceId),
-											  medicalPractice.GetRoomById(domainEvent.RoomId),
+											  medicalPractice.GetRoomForTherapyPlace(domainEvent.TherapyPlaceId),
 											  domainEvent.Day,
 											  domainEvent.StartTime,
 											  domainEvent.EndTime);
