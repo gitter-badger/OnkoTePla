@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
@@ -30,9 +31,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private readonly IReadModelRepository readModelRepository;
 		// ReSharper restore NotAccessedField.Local
 
-
 		private AppointmentsOfADayReadModel readModel;
-		private IEnumerable<TherapyPlace> therapyPlaces; 
+		private ObservableCollection<TherapyPlace> therapyPlaces; 
 
 		private readonly Command loadReadModelCommand;
 		private readonly Command addAppointmentCommmand;
@@ -46,6 +46,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			this.patients = patients;
 			this.commandBus = commandBus;
 			this.readModelRepository = readModelRepository;
+			therapyPlaces = new ObservableCollection<TherapyPlace>();
 
 			loadReadModelCommand = new Command(
 				() =>
@@ -54,8 +55,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 					var identifier = new AggregateIdentifier(date, SelectedMedicalPractice.Id);
 					readModel = readModelRepository.GetAppointmentsOfADayReadModel(identifier);
 
-					therapyPlaces = config.GetMedicalPracticeByIdAndVersion(readModel.Identifier.MedicalPracticeId,readModel.Identifier.PracticeVersion)
-										  .GetAllTherapyPlaces();					
+					therapyPlaces.Clear();
+
+					var places = config.GetMedicalPracticeByIdAndVersion(readModel.Identifier.MedicalPracticeId,readModel.Identifier.PracticeVersion)
+										  .GetAllTherapyPlaces();
+
+					foreach (var therapyPlace in places)
+					{
+						therapyPlaces.Add(therapyPlace);
+					}					
 				});
 
 			addAppointmentCommmand = new Command(
@@ -85,13 +93,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			get { return patients.GetAllPatients(); }
 		}
 
-		public IEnumerable<TherapyPlace> TherapyPlaces
+		public ObservableCollection<TherapyPlace> TherapyPlaces
 		{
-			get { return therapyPlaces; }
-			private set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref therapyPlaces, value);
-			}
+			get { return therapyPlaces; }			
 		}
 
 		public MedicalPractice SelectedMedicalPractice { get; set; }

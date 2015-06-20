@@ -1,14 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<eventStreams>
-  <eventStream count="3" date="08.06.2015" configVersion="1" medicalPracticeId="ada3ae31-f9ed-496f-80f3-13ea7787e5be">
-    <event aggregateVersion="1" userId="7db20666-5107-4637-97dc-70d64aedb06f" timeStampDate="20.06.2015" timeStampTime="15:57:34">
-      <appointmentAddedEvent patientId="e0e817bb-18a2-428f-9847-6eb4b8d867a0" description="first Appointment through cqrs system" startTime="10:00:00" endTime="12:00:00" therapyPlaceId="265c32a4-fafe-4aad-8ff2-6c2814d837f2" />
-    </event>
-    <event aggregateVersion="2" userId="7db20666-5107-4637-97dc-70d64aedb06f" timeStampDate="20.06.2015" timeStampTime="15:57:34">
-      <appointmentAddedEvent patientId="e0e817bb-18a2-428f-9847-6eb4b8d867a0" description="first Appointment through cqrs system" startTime="13:00:00" endTime="15:00:00" therapyPlaceId="265c32a4-fafe-4aad-8ff2-6c2814d837f2" />
-    </event>
-    <event aggregateVersion="3" userId="7db20666-5107-4637-97dc-70d64aedb06f" timeStampDate="20.06.2015" timeStampTime="15:57:34">
-      <appointmentAddedEvent patientId="e0e817bb-18a2-428f-9847-6eb4b8d867a0" description="first Appointment through cqrs system" startTime="16:00:00" endTime="18:00:00" therapyPlaceId="265c32a4-fafe-4aad-8ff2-6c2814d837f2" />
-    </event>
-  </eventStream>
-</eventStreams>
+<eventStreams />

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.OnkoTePla.Contracts.Config;
@@ -13,7 +14,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 		IEnumerable<MedicalPractice> MedicalPractices { get; }
 		IEnumerable<User> Users { get; }
 		IEnumerable<Patient> Patients { get; }
-		IEnumerable<TherapyPlace> TherapyPlaces { get; }
+		ObservableCollection<TherapyPlace> TherapyPlaces { get; }
 
 		MedicalPractice SelectedMedicalPractice { get; set; }
 		string          SelectedDateAsString    { get; set; }

@@ -7,11 +7,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 	{
 		public MainWindowViewModelSampleData ()
 		{			
-			PatientSelectorViewModel = new PatientSelectorViewModelSampleData();
+			//PatientSelectorViewModel = new PatientSelectorViewModelSampleData();
 			AddAppointmentTestViewModel = new AddAppointmentTestViewModelSampleData();
 		}
 		
-		public IPatientSelectorViewModel    PatientSelectorViewModel    { get; private set; }
+		//public IPatientSelectorViewModel    PatientSelectorViewModel    { get; private set; }
 		public IAddAppointmentTestViewModel AddAppointmentTestViewModel { get; private set; }
 	}
 }
