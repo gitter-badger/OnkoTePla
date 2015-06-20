@@ -31,16 +31,8 @@ namespace bytePassion.Lib.TimeLib
 		public byte Minute { get { return minute; }}
 		public byte Second { get { return second; }}
 
-		public override bool Equals (object obj)
-		{
-			return this.Equals(obj, (time1, time2) => time1.hour == time2.hour &&
-													  time1.minute == time2.minute);
-		}
 
-		public override int GetHashCode ()
-		{
-			return hour.GetHashCode() ^ minute.GetHashCode();
-		}
+		#region operators
 
 		public static bool operator ==(Time t1, Time t2)
 		{
@@ -52,10 +44,50 @@ namespace bytePassion.Lib.TimeLib
 			return !(t1 == t2);
 		}
 
+		public static bool operator <(Time t1, Time t2)
+		{
+			return t1.SecondsFromDayBegin < t2.SecondsFromDayBegin;
+		}
+
+		public static bool operator >(Time t1, Time t2)
+		{
+			return t1.SecondsFromDayBegin > t2.SecondsFromDayBegin;
+		}
+
+		public static bool operator <=(Time t1, Time t2)
+		{
+			return t1 < t2 || t1 == t2;
+		}
+
+		public static bool operator >=(Time t1, Time t2)
+		{
+			return t1 > t2 || t1 == t2;
+		}
+
+		#endregion
+
+		private int SecondsFromDayBegin
+		{
+			get { return Hour*3600 + Minute*60 + Second; }
+		}
+
 		public static Duration GetDurationBetween(Time t1, Time t2)
 		{
 			throw new NotImplementedException();
-		}		
+		}
+
+		#region ToString / Equals / GetHashCOde
+
+		public override bool Equals (object obj)
+		{
+			return this.Equals(obj, (time1, time2) => time1.hour == time2.hour &&
+													  time1.minute == time2.minute);
+		}
+
+		public override int GetHashCode ()
+		{
+			return hour.GetHashCode() ^ minute.GetHashCode();
+		}
 
 		public override string ToString ()
 		{
@@ -80,6 +112,11 @@ namespace bytePassion.Lib.TimeLib
 
 			return builder.ToString();
 		}
+
+		#endregion
+
+
+		#region static: Parse / IsDummy
 
 		public static Time Parse(string s)
 		{
@@ -109,5 +146,7 @@ namespace bytePassion.Lib.TimeLib
 		{
 			return t == Dummy;
 		}
+
+		#endregion
 	}
 }
