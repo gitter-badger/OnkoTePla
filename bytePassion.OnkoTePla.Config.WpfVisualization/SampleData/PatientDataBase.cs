@@ -5,6 +5,7 @@ using System.Linq;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 
@@ -15,7 +16,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void TestLoad()
 		{
-			IPersistenceService<IEnumerable<Patient>> persistenceService = new XmlPatientDataStore("patients.xml");
+			IPersistenceService<IEnumerable<Patient>> persistenceService = new XmlPatientDataStore(GlobalConstants.PatientPersistenceFile);
 			PatientRepository repo = new PatientRepository(persistenceService);
 
 			repo.LoadRepository();
@@ -23,7 +24,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void GenerateXmlPatientsFile(int patientCount)
 		{
-			IPersistenceService<IEnumerable<Patient>> persistenceService = new XmlPatientDataStore("patients.xml");
+			IPersistenceService<IEnumerable<Patient>> persistenceService = new XmlPatientDataStore(GlobalConstants.PatientPersistenceFile);
 			PatientRepository repo = new PatientRepository(persistenceService);
 
 			var patients = GeneratePatients(patientCount);

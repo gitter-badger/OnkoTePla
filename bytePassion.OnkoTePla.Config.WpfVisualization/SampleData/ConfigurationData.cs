@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
@@ -14,7 +15,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void TestLoad()
 		{
-			IPersistenceService<Configuration> persistenceService = new XmlConfigurationDataStore("config.xml");
+			IPersistenceService<Configuration> persistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
 			ConfigurationRepository repo = new ConfigurationRepository(persistenceService);
 
 			repo.LoadRepository();
@@ -22,7 +23,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void ConfigToXml()
 		{
-			IPersistenceService<Configuration> persistenceService = new XmlConfigurationDataStore("config.xml");
+			IPersistenceService<Configuration> persistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
 			ConfigurationRepository repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());			
 
 			repo.PersistRepository();

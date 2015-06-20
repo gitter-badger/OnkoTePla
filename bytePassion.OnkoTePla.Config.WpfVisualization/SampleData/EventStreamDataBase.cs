@@ -13,6 +13,7 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
@@ -25,15 +26,15 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void GenerateExampleEventStream()
 		{			
-			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new XmlPatientDataStore("patients.xml");
+			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new XmlPatientDataStore(GlobalConstants.PatientPersistenceFile);
 			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
 			patientRepository.LoadRepository();
 
-			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore("config.xml");
+			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
 			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
-			IPersistenceService<IEnumerable<EventStream>> eventStorePersistenceService = new XmlEventStreamDataStore("eventHistory.xml");
+			IPersistenceService<IEnumerable<EventStream>> eventStorePersistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 
 			IEventBus eventBus = new EventBus();
