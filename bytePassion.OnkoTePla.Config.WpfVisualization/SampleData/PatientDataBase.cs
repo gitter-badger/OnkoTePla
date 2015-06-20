@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		private static readonly Random Rand = new Random();
 
 
-		public static IEnumerable<Patient> GeneratePatients (int count)
+		private static IEnumerable<Patient> GeneratePatients (int count)
 		{
 			IReadOnlyList<string> firstNames = FirstNames();
 			IReadOnlyList<string> surNames   = SurNames();
@@ -65,7 +65,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		}
 
 
-		public static void GenerateNamesList()
+		private static void GenerateNamesList()
 		{
 			IReadOnlyList<string> firstNames = FirstNames();
 			IReadOnlyList<string> surNames   = SurNames();			
@@ -109,7 +109,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			return Rand.NextDouble() > 0.2;
 		}
 
-		public static void SeperateFirstAndSurNames()
+		private static void SeperateFirstAndSurNames()
 		{
 			var names = NamesGeneratedByOnlineNameGenerator();
 
@@ -202,7 +202,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 				"Howard Davis", "Christina	Coleman", "Mildred	Lewis", "Jonathan	Nelson", "Kathryn	Perry","Mark	Evans", "Joshua	Scott",
 				"Charles Thompson","William	Hughes", "Randy	Howard", "Andrea	Williams", "Carl	Carter", "Michael	Jenkins","Walter	Torres",
 				"Henry White","Diana	Martinez","Jean	Perez","Nicole	Price","Kathy	Brooks","Kelly	Harris","Bonnie	Ward","Jack	Johnson",
-				"Jennifer Patterson","Chris	Bailey","Billy	Baker","Michelle	Gonzalez","Melissa	Morgan","Norma	Rodriguez","Frances	Kelly","Paul	Roberts",
+				"Jennifer Patterson","Chris	Bailey","Billy	Baker","Michelle	Gonzalez","Melissa	Morgan","Norma	Rodriguez","Frances	Kelly","Paul Roberts",
 				"Eugene Young","Aaron	Rivera","Keith	Collins","Jason	Robinson","Marilyn	Morris","Kenneth	Watson","Rose	Bell","Clarence	Richardson",
 				"Jane James","Sean	Ross","Steven	Walker","Anna	Flores","Aaron	Carter","Tina	Thomas","Juan	Ward","Cynthia	Miller",
 				"Patrick Diaz","Nicholas	Powell","Raymond	Collins","Julie	Johnson","Martin	Harris","Robert	Bailey","Wanda	Peterson",

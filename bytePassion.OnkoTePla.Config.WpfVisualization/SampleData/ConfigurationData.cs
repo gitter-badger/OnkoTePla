@@ -28,7 +28,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			repo.PersistRepository();
 		}
 
-		public static Configuration GetMedicalPracticeSample()
+		private static Configuration GetMedicalPracticeSample()
 		{
 			var type1 = new TherapyPlaceType("therapieStuhl", TherapyPlaceIconType.ChairType1, Guid.NewGuid());
 			var type2 = new TherapyPlaceType("therapieBett",  TherapyPlaceIconType.BedType1,   Guid.NewGuid());
@@ -50,12 +50,12 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 			var rooms = new List<Room>
 			{
-				new Room(Guid.NewGuid(), therapyPlacesRoom1), 
-				new Room(Guid.NewGuid(), therapyPlacesRoom2)				
+				new Room(Guid.NewGuid(), "A12", therapyPlacesRoom1), 
+				new Room(Guid.NewGuid(), "A13", therapyPlacesRoom2)				
 			};
 
-			var medPrac1 = MedicalPractice.CreateNeMedicalPractice(rooms, "examplePractice1");
-			medPrac1 = medPrac1.AddRoom(new Room(Guid.NewGuid(), therapyPlacesRoom3));
+			var medPrac1 = MedicalPractice.CreateNewMedicalPractice(rooms, "examplePractice1");
+			medPrac1 = medPrac1.AddRoom(new Room(Guid.NewGuid(), "A14", therapyPlacesRoom3));
 
 			var therapyPlacesRoom4 = new List<TherapyPlace>();
 			var therapyPlacesRoom5 = new List<TherapyPlace>();
@@ -70,11 +70,11 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 					
 			var rooms2 = new List<Room>
 			{
-				new Room(Guid.NewGuid(), therapyPlacesRoom4), 
-				new Room(Guid.NewGuid(), therapyPlacesRoom5) 				
+				new Room(Guid.NewGuid(), "B2", therapyPlacesRoom4), 
+				new Room(Guid.NewGuid(), "B3", therapyPlacesRoom5) 				
 			};
 
-			var medPrac2 = MedicalPractice.CreateNeMedicalPractice(rooms2, "examplePractice2");
+			var medPrac2 = MedicalPractice.CreateNewMedicalPractice(rooms2, "examplePractice2");
 
 			var user1 = new User("exampleUser1", new List<Guid> { medPrac1.Id              }, "1234", Guid.NewGuid());
 			var user2 = new User("exampleUser2", new List<Guid> { medPrac1.Id, medPrac2.Id }, "2345", Guid.NewGuid());

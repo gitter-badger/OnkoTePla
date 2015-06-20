@@ -1,4 +1,5 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
@@ -69,6 +70,42 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 
 		// TODO: MoveStartTimeAndKeepEndTime
 		// TODO: MoveEndTimeAndKeepStartTime
+
+		#endregion
+
+		#region ToString / HashCode / Equals
+
+		public override string ToString()
+		{
+			return "[" + patient + 
+						" am " + day +
+						" von " + startTime +
+						" bis " + endTime +
+						" in raum " + room +
+						" an platz " + therapyPlace + "]";
+		}
+
+		public override bool Equals(object obj)
+		{
+			return this.Equals(obj, (appointment1, appointment2) => appointment1.Patient.Equals(appointment2.Patient) &&
+																    appointment1.Description.Equals(appointment2.Description) &&
+																	appointment1.Day.Equals(appointment2.Day) &&
+																	appointment1.StartTime.Equals(appointment2.StartTime) &&
+																	appointment1.EndTime.Equals(appointment2.EndTime) &&
+																	appointment1.TherapyPlace.Equals(appointment2.TherapyPlace) &&
+																	appointment1.Room.Equals(appointment2.Room));
+		}
+
+		public override int GetHashCode()
+		{
+			return Patient.GetHashCode() ^
+			       Description.GetHashCode() ^
+			       Day.GetHashCode() ^
+			       StartTime.GetHashCode() ^
+			       EndTime.GetHashCode() ^
+			       TherapyPlace.GetHashCode() ^
+			       Room.GetHashCode();
+		}
 
 		#endregion
 	}

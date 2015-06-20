@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 
 
@@ -27,6 +29,39 @@ namespace bytePassion.OnkoTePla.Contracts.Patients
 		public bool   Alive      { get { return alive;      }}
 		public Date   Birthday   { get { return birthday;   }}
 		public Guid   Id         { get { return id;         }}
-		public string ExternalId { get { return externalId; }}		
+		public string ExternalId { get { return externalId; }}
+
+
+		#region ToString / HashCode / Equals
+
+		public override string ToString ()
+		{
+			return Name + " (* " + Birthday + ")";
+		}
+
+		public override bool Equals (object obj)
+		{
+			return this.Equals(obj, (patient1, patient2) => patient1.Id == patient2.Id);
+		}
+
+		public override int GetHashCode ()
+		{
+			return id.GetHashCode();
+		}
+
+		#endregion
+
+		public static IComparer<Patient> GetNameComparer()
+		{
+			return new PatientNameSorter();
+		}
+
+		private class PatientNameSorter : IComparer<Patient>
+		{
+			public int Compare(Patient x, Patient y)
+			{
+				return String.Compare(x.Name, y.Name, StringComparison.Ordinal);
+			}
+		}
 	}
 }

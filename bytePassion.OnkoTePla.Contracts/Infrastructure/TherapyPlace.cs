@@ -1,6 +1,5 @@
-﻿
-
-using System;
+﻿using System;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
@@ -20,6 +19,26 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 
 		public Guid             Id   { get { return id;   }}
 		public string           Name { get { return name; }}
-		public TherapyPlaceType Type { get { return type; }}		
+		public TherapyPlaceType Type { get { return type; }}
+		
+		#region ToString / HashCode / Equals
+
+		public override string ToString ()
+		{
+			return Name;
+		}
+
+		public override bool Equals (object obj)
+		{
+			return this.Equals(obj, (therapyPlace1, therapyPlace2) => therapyPlace1.Id == therapyPlace2.Id);
+		}
+
+		public override int GetHashCode ()
+		{
+			return id.GetHashCode();
+		}
+
+		#endregion
+	
 	}
 }

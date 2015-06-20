@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
@@ -14,7 +15,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		private readonly MedicalPractice previousVersion;
 
 
-		public static MedicalPractice CreateNeMedicalPractice(IReadOnlyList<Room> rooms, string name)
+		public static MedicalPractice CreateNewMedicalPractice(IReadOnlyList<Room> rooms, string name)
 		{
 			return new MedicalPractice(rooms, name, 0, Guid.NewGuid(), null);
 		}
@@ -38,6 +39,8 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		{
 			get { return PreviousVersion != null; }
 		}
+
+		#region modify rooms
 
 		public MedicalPractice AddRoom(Room newRoom)
 		{
@@ -65,12 +68,20 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this);
 		}
 
+		#endregion
+
+		#region rename
+
 		public MedicalPractice Rename(string newName)
 		{
 			var updatedVersion = Version + 1;
 
 			return new MedicalPractice(Rooms, newName, updatedVersion, Id, this);
 		}
+
+		#endregion
+
+		#region access previousVersions / therapyPlaces / Romms
 
 		public MedicalPractice GetVersion(uint requestedVersion)
 		{
@@ -92,6 +103,27 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		public Room GetRoomById(Guid roomId)
 		{
 			return rooms.FirstOrDefault(room => room.Id == roomId);
-		}	
+		}
+
+		#endregion
+
+		#region ToString / HashCode / Equals
+
+		public override string ToString ()
+		{
+			return Name + " (v:" + Version + ")";
+		}
+
+		public override bool Equals (object obj)
+		{
+			return this.Equals(obj, (med1, med2) => med1.Id == med2.Id && med1.Version == med2.Version);
+		}
+
+		public override int GetHashCode ()
+		{
+			return id.GetHashCode() ^ version.GetHashCode();
+		}
+
+		#endregion
 	}
 }
