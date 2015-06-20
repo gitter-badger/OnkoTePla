@@ -155,7 +155,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 
 			writer.WriteAttributeString(IdAttribute, therapyPlace.Id.ToString());
 			writer.WriteAttributeString(NameAttribute, therapyPlace.Name);
-			writer.WriteAttributeString(TherapyPlaceTypeAttribute, therapyPlace.Type.Name);
+			writer.WriteAttributeString(TherapyPlaceTypeAttribute, therapyPlace.Type.Id.ToString());
 			
 			writer.WriteEndElement();
 		}
@@ -174,7 +174,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 
 		Configuration IPersistenceService<Configuration>.Load()
 		{
-			IDictionary<string, TherapyPlaceType> therapyPlaceTypes = new Dictionary<string, TherapyPlaceType>();
+			IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes = new Dictionary<Guid, TherapyPlaceType>();
 			IList<MedicalPractice> practices = new List<MedicalPractice>();
 			IList<User> users = new List<User>();
 
@@ -200,7 +200,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 						}
 
 						var types = AcceptTherapyPlaceTypes(reader, therapyPlaceTypesCount);
-						therapyPlaceTypes = types.ToDictionary(type => type.Name, type => type);
+						therapyPlaceTypes = types.ToDictionary(type => type.Id, type => type);
 					}
 
 					if (reader.NodeType == XmlNodeType.Element && reader.Name == MedicalPractices)
@@ -284,7 +284,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 
 		
 		private static IList<MedicalPractice> AcceptMedicalPractices(XmlReader reader, 
-																	 IDictionary<string, TherapyPlaceType> therapyPlaceTypes, 
+																	 IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes, 
 																	 int medicalPracticesCount)
 		{
 			IList<MedicalPractice> medicalPractices = new List<MedicalPractice>();
@@ -297,14 +297,14 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				if (reader.NodeType != XmlNodeType.Element || reader.Name != MedicalPractice) continue;
 				i++;
 
-				var medicalPractice = AcceptMedivalPractice(reader, therapyPlaceTypes);				
+				var medicalPractice = AcceptMedicalPractice(reader, therapyPlaceTypes);				
 				medicalPractices.Add(medicalPractice);
 			}
 			return medicalPractices;			
 		}
 
-		private static MedicalPractice AcceptMedivalPractice (XmlReader reader,
-															 IDictionary<string, TherapyPlaceType> therapyPlaceTypes)
+		private static MedicalPractice AcceptMedicalPractice (XmlReader reader,
+															 IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes)
 		{
 			var name = String.Empty;
 			var version = 0u;
@@ -332,7 +332,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				while (reader.Read())
 				{
 					if (reader.NodeType != XmlNodeType.Element || reader.Name != MedicalPractice) continue;
-					previousVersion = AcceptMedivalPractice(reader, therapyPlaceTypes);
+					previousVersion = AcceptMedicalPractice(reader, therapyPlaceTypes);
 					break;
 				}
 			}
@@ -341,7 +341,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		}
 
 		private static IReadOnlyList<Room> AcceptRooms (XmlReader reader, 
-														IDictionary<string, TherapyPlaceType> therapyPlaceTypes, 
+														IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes, 
 														int roomCount)
 		{
 			IList<Room> rooms = new List<Room>();
@@ -375,7 +375,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		}
 
 		private static IReadOnlyList<TherapyPlace> AcceptTherapyPlace(XmlReader reader, 
-																	  IDictionary<string, TherapyPlaceType> therapyPlaceTypes, 
+																	  IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes, 
 																	  int placeCount)
 		{
 			IList<TherapyPlace> therapyPlaces  = new List<TherapyPlace>();
@@ -389,20 +389,20 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				i++;
 
 				var id = new Guid();
-				var type = String.Empty;
+				var typeId = new Guid();
 				var name = String.Empty;
 
 				if (reader.HasAttributes)
 				{
 					while (reader.MoveToNextAttribute())
 					{
-						if (reader.Name == IdAttribute)               id   = Guid.Parse(reader.Value);
-						if (reader.Name == TherapyPlaceTypeAttribute) type = reader.Value;
-						if (reader.Name == NameAttribute)             name = reader.Value;
+						if (reader.Name == IdAttribute)               id     = Guid.Parse(reader.Value);
+						if (reader.Name == TherapyPlaceTypeAttribute) typeId = Guid.Parse(reader.Value);
+						if (reader.Name == NameAttribute)             name   = reader.Value;
 					}
 				}
 
-				var therapyPlace = new TherapyPlace(id, therapyPlaceTypes[type], name);
+				var therapyPlace = new TherapyPlace(id, therapyPlaceTypes[typeId], name);
 				therapyPlaces.Add(therapyPlace);
 			}
 
