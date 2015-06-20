@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.OnkoTePla.Contracts.Config
 {
@@ -23,5 +24,24 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 		public string              Name                             { get { return name;                             }}		
 		public string              Password                         { get { return password;                         }}
 		public Guid                Id                               { get { return id;                               }}
+
+		#region ToString / HashCode / Equals
+
+		public override string ToString ()
+		{
+			return Name;
+		}
+
+		public override bool Equals (object obj)
+		{
+			return this.Equals(obj, (user1, user2) => user1.Id.Equals(user2.Id));
+		}
+
+		public override int GetHashCode ()
+		{
+			return Id.GetHashCode();
+		}
+
+		#endregion
 	}
 }
