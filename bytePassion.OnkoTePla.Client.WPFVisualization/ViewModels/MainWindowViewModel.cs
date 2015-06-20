@@ -8,12 +8,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		
 		//private readonly IPatientSelectorViewModel    patientSelectorViewModel;
 		private readonly IAddAppointmentTestViewModel addAppointmentTestViewModel;
+		private readonly IAppointmentOverViewModel appointmentOverViewModel;
 
 		public MainWindowViewModel (/*IPatientSelectorViewModel patientSelectorViewModel, */
-									IAddAppointmentTestViewModel addAppointmentTestViewModel)
+									IAddAppointmentTestViewModel addAppointmentTestViewModel, 
+									IAppointmentOverViewModel appointmentOverViewModel)
 		{
 			//this.patientSelectorViewModel = patientSelectorViewModel;
 			this.addAppointmentTestViewModel = addAppointmentTestViewModel;
+			this.appointmentOverViewModel = appointmentOverViewModel;
 		}
 
 		//public IPatientSelectorViewModel PatientSelectorViewModel
@@ -24,6 +27,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public IAddAppointmentTestViewModel AddAppointmentTestViewModel
 		{
 			get { return addAppointmentTestViewModel; }
+		}
+
+		public IAppointmentOverViewModel AppointmentOverViewModel
+		{
+			get { return appointmentOverViewModel; }
 		}
 	}
 }
