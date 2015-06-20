@@ -13,19 +13,21 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
 		private readonly Time   startTime;
 		private readonly Time   endTime;
 		private readonly Guid   therapyPlaceId;
+		private readonly Guid   appointmendId;
 
 		public AppointmentAdded(AggregateIdentifier aggregateID, uint aggregateVersion, 
 								Guid userId, Tuple<Date, Time> timeStamp,
 							    Guid patientId, string description, 
 								Time startTime, Time endTime, 
-								Guid therapyPlaceId)
+								Guid therapyPlaceId, Guid appointmendId)
 			: base(aggregateID, aggregateVersion, userId, timeStamp)
 		{
 			this.patientId      = patientId;
 			this.description    = description;			
 			this.startTime      = startTime;
 			this.endTime        = endTime;
-			this.therapyPlaceId = therapyPlaceId;		
+			this.therapyPlaceId = therapyPlaceId;
+			this.appointmendId  = appointmendId;
 		}
 
 		public Guid   PatientId      { get { return patientId;        }}
@@ -34,5 +36,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
 		public Time   StartTime      { get { return startTime;        }}
 		public Time   EndTime        { get { return endTime;          }}
 		public Guid   TherapyPlaceId { get { return therapyPlaceId;   }}
+		public Guid   AppointmentId  { get { return appointmendId;    }}
 	}
 }

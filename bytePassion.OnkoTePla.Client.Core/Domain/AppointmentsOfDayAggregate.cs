@@ -34,10 +34,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
 			var medicalPractice = config.GetMedicalPracticeByIdAndVersion(Id.MedicalPracticeId, Id.PracticeVersion);
 
-			appointments.Add(new Appointment(patientRepository.GetPatientById(@event.PatientId), 
+			appointments.Add(new Appointment(patientRepository.GetPatientById(@event.PatientId), @event.Description,
 											 medicalPractice.GetTherapyPlaceById(@event.TherapyPlaceId), 
-											 medicalPractice.GetRoomForTherapyPlace(@event.TherapyPlaceId), 
-											 @event.Day, @event.StartTime, @event.EndTime));
+											 @event.Day, @event.StartTime, @event.EndTime, Guid.NewGuid()));
 
 			Version = @event.AggregateVersion;
 		}
@@ -63,7 +62,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
  			ApplyChange(new AppointmentAdded(Id, newAggregateVersion, userId,TimeTools.GetCurrentTimeStamp(), 
 											 patientId, description, startTime, endTime, 
-											 therapyPlaceId));
+											 therapyPlaceId, Guid.NewGuid()));
 		}
 	}
 }

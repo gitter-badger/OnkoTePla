@@ -64,12 +64,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			var medicalPractice = config.GetMedicalPracticeByIdAndVersion(domainEvent.AggregateId.MedicalPracticeId, 
 																		  domainEvent.AggregateId.PracticeVersion);
 
-			var appointment = new Appointment(patientsRepository.GetPatientById(domainEvent.PatientId), 
-											  medicalPractice.GetTherapyPlaceById(domainEvent.TherapyPlaceId),
-											  medicalPractice.GetRoomForTherapyPlace(domainEvent.TherapyPlaceId),
+			var appointment = new Appointment(patientsRepository.GetPatientById(domainEvent.PatientId), domainEvent.Description,
+											  medicalPractice.GetTherapyPlaceById(domainEvent.TherapyPlaceId),											  
 											  domainEvent.Day,
 											  domainEvent.StartTime,
-											  domainEvent.EndTime);
+											  domainEvent.EndTime, domainEvent.AppointmentId);
 			
 			appointments.Add(appointment);
 			
