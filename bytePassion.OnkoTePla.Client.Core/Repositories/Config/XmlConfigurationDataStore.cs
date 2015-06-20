@@ -97,7 +97,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			writer.Close();
 		}
 
-		#region writerMethods
+		#region 
 		private void WriteUser(XmlWriter writer, User user)
 		{
 			writer.WriteStartElement(User);
@@ -140,6 +140,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			writer.WriteStartElement(Room);
 			writer.WriteAttributeString(IdAttribute, room.Id.ToString());
 			writer.WriteAttributeString(CountAttribute, room.TherapyPlaces.Count.ToString());
+			writer.WriteAttributeString(NameAttribute, room.Name);
 
 			foreach (var therapyPlace in room.TherapyPlaces)
 			{
@@ -169,7 +170,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			writer.WriteAttributeString(IdAttribute, therapyPlaceType.Id.ToString());
 
 			writer.WriteEndElement();
-		}
+		} 
 		#endregion
 
 		Configuration IPersistenceService<Configuration>.Load()
@@ -355,6 +356,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				i++;
 				
 				var id = new Guid();
+				var name = String.Empty;
 				var placeCount = 0;
 
 				if (reader.HasAttributes)
@@ -363,12 +365,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 					{
 						if (reader.Name == IdAttribute)                id         = Guid.Parse(reader.Value);
 						if (reader.Name == CountAttribute) placeCount = Int32.Parse(reader.Value);
-						
+						if (reader.Name == NameAttribute) name = reader.Value;
+
 					}
 				}
 
 				IReadOnlyList<TherapyPlace> therapyPlaces = AcceptTherapyPlace(reader, therapyPlaceTypes, placeCount);
-				rooms.Add(new Room(id, therapyPlaces));
+				rooms.Add(new Room(id, name, therapyPlaces));
 			}
 
 			return rooms.ToList();
