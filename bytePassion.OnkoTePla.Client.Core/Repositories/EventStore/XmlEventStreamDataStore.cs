@@ -41,8 +41,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private const string DescriptionAttribute	      = "description";
 		private const string StartTimeAttribute		      = "startTime";
 		private const string EndTimeAttribute		      = "endTime";
-		private const string TherapyPlaceIdAttribute      = "therapyPlaceId";
-		private const string RoomIdAttribute		      = "roomId";
+		private const string TherapyPlaceIdAttribute      = "therapyPlaceId";		
 		private const string UserIdAttribute              = "userId";
 		private const string TimeStampTimeAttribute       = "timeStampTime";
 		private const string TimeStampDateAttribute       = "timeStampDate";
@@ -116,7 +115,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.WriteAttributeString(StartTimeAttribute,      @event.StartTime.ToString());
 			writer.WriteAttributeString(EndTimeAttribute,        @event.EndTime.ToString());
 			writer.WriteAttributeString(TherapyPlaceIdAttribute, @event.TherapyPlaceId.ToString());
-			writer.WriteAttributeString(RoomIdAttribute,         @event.RoomId.ToString());
 
 			writer.WriteEndElement();
 		} 

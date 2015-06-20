@@ -100,6 +100,16 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 				        .FirstOrDefault(therapyPlace => therapyPlace.Id == therapyPlaceId);
 		}
 
+		public IEnumerable<TherapyPlace> GetAllTherapyPlaces()
+		{
+			return rooms.SelectMany(room => room.TherapyPlaces);
+		}
+
+		public Room GetRoomForTherapyPlace(Guid therapyPlaceId)
+		{
+			return rooms.FirstOrDefault(room => room.TherapyPlaces.Contains(GetTherapyPlaceById(therapyPlaceId)));
+		}
+
 		public Room GetRoomById(Guid roomId)
 		{
 			return rooms.FirstOrDefault(room => room.Id == roomId);

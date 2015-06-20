@@ -36,7 +36,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
 			appointments.Add(new Appointment(patientRepository.GetPatientById(@event.PatientId), 
 											 medicalPractice.GetTherapyPlaceById(@event.TherapyPlaceId), 
-											 medicalPractice.GetRoomById(@event.RoomId), 
+											 medicalPractice.GetRoomForTherapyPlace(@event.TherapyPlaceId), 
 											 @event.Day, @event.StartTime, @event.EndTime));
 
 			Version = @event.AggregateVersion;
@@ -53,7 +53,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 		public void AddAppointment(Guid userId, uint forAggregateVersion,
 								   Guid patientId, string description, 
 								   Time startTime, Time endTime,
-								   Guid therapyPlaceId, Guid roomId)
+								   Guid therapyPlaceId)
 		{
 
 			if (forAggregateVersion != Version)
@@ -63,7 +63,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
  			ApplyChange(new AppointmentAdded(Id, newAggregateVersion, userId,TimeTools.GetCurrentTimeStamp(), 
 											 patientId, description, startTime, endTime, 
-											 therapyPlaceId, roomId ));
+											 therapyPlaceId));
 		}
 	}
 }
