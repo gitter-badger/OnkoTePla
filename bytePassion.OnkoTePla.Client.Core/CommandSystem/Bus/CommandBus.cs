@@ -1,7 +1,7 @@
-﻿using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.CommandBase;
+﻿using bytePassion.OnkoTePla.Client.Core.CommandSystem.Base;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
+namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus
 {
 
 	public class CommandBus : ICommandBus

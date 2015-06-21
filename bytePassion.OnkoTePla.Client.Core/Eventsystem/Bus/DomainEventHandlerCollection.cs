@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
+namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus
 {
 
 	public class DomainEventHandlerCollection : IDomainEventHandlerCollection

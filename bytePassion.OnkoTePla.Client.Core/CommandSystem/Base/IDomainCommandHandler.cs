@@ -1,4 +1,4 @@
-﻿namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
+﻿namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.Base
 {
 
 	public interface IDomainCommandHandler<TCommand>

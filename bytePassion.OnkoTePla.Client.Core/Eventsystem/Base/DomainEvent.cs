@@ -3,7 +3,7 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase
+namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.Base
 {
 	public class DomainEvent
 	{

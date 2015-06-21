@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;

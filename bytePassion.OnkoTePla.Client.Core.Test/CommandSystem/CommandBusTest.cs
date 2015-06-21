@@ -1,8 +1,9 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem.Base;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using Xunit;
 
 namespace bytePassion.OnkoTePla.Client.Core.Test.CommandSystem

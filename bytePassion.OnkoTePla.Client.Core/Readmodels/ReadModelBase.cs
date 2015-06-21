@@ -1,7 +1,8 @@
 ﻿using System;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
+using bytePassion.OnkoTePla.Client.Core.Domain.Events;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Readmodels
