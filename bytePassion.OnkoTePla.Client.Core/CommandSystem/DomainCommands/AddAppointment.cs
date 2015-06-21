@@ -2,17 +2,14 @@
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.CommandBase;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands
 {
 	public class AddAppointment : DomainCommand
 	{
-		private readonly Guid   patientId;
-		private readonly string description;		
-		private readonly Time   startTime;
-		private readonly Time   endTime;
-		private readonly Guid   therapyPlaceId;		
+		private readonly CreateAppointmentData createAppointmentData;		
 
 		public AddAppointment(AggregateIdentifier aggregateId, uint aggregateVersion, Guid userId, 
 							  Guid patientId, string description, 
@@ -20,18 +17,14 @@ namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands
 							  Guid therapyPlaceId)
 			: base(aggregateId, aggregateVersion, userId)
 		{
-			this.patientId      = patientId;
-			this.description    = description;			
-			this.startTime      = startTime;
-			this.endTime        = endTime;
-			this.therapyPlaceId = therapyPlaceId;
+			createAppointmentData = new CreateAppointmentData(patientId, description, 
+															  startTime, endTime, AggregateId.Date, 
+															  therapyPlaceId, Guid.NewGuid());
 		}
 
-		public Guid   PatientId      { get { return patientId;        }}
-		public string Description    { get { return description;      }}
-		public Date   Day            { get { return AggregateId.Date; }}
-		public Time   StartTime      { get { return startTime;        }}
-		public Time   EndTime        { get { return endTime;          }}
-		public Guid   TherapyPlaceId { get { return therapyPlaceId;   }}		
+		public CreateAppointmentData CreateAppointmentData
+		{
+			get { return createAppointmentData; }
+		}	
 	}
 }

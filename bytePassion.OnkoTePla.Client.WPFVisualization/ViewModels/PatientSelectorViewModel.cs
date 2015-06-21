@@ -58,7 +58,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
         public PatientListItem SelectedPatient
 			{
             get { return selectedPatient; }
-            set { PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value); PropertyChanged.Notify(this, "Appointments");}
+            set { PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value); PropertyChanged.Notify(this, "ObservableAppointments");}
 		}	
 
 		public string FilterString

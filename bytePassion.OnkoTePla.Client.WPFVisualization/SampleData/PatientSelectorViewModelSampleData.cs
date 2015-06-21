@@ -20,7 +20,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 	    {
 	        get
 	        {
-	            //return CommunicationSampleData.Appointments.Where(a => a.Patient.Id == SelectedPatient.Patient.Id).ToList();
+	            //return CommunicationSampleData.ObservableAppointments.Where(a => a.Patient.Id == SelectedPatient.Patient.Id).ToList();
 				return new List<Appointment>();
 	        }
 	    }

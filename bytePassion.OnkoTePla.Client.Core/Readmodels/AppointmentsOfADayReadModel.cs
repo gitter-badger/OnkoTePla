@@ -14,34 +14,27 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 
 namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 {
-	public class AppointmentsOfADayReadModel : IDisposable, INotifyAppointmentChanged,
-															IDomainEventHandler<AppointmentAdded>, 
-												            IDomainEventHandler<AppointmentModified>, 
-												            IDomainEventHandler<AppointmentRemoved>
+	public class AppointmentsOfADayReadModel : ReadModelBase
 	{
 
-		public event EventHandler<AppointmentChangedEventArgs> AppointmentChanged; 
-
-		private readonly IEventBus eventBus;
-		private readonly IConfigurationReadRepository config;
-		private readonly IPatientReadRepository patientsRepository;
+		public override event EventHandler<AppointmentChangedEventArgs> AppointmentChanged
+		{
+			add    { appointmentSet.ObservableAppointments.AppointmentChanged += value; }
+			remove { appointmentSet.ObservableAppointments.AppointmentChanged -= value; }
+		}
+		
 		private readonly AggregateIdentifier identifier;
-
-		private readonly IList<Appointment> appointments;
+		private readonly AppointmentSet      appointmentSet;
 
 		public AppointmentsOfADayReadModel(IEventBus eventBus, 
 								           IConfigurationReadRepository config, 
 								           IPatientReadRepository patientsRepository,
 										   AggregateIdentifier identifier)
-		{
-			this.eventBus = eventBus;
-			this.config = config;
-			this.patientsRepository = patientsRepository;
+			: base(eventBus)
+		{			
 			this.identifier = identifier;
 
-			appointments = new List<Appointment>();
-
-			RegisterAtEventBus();
+			appointmentSet = new AppointmentSet(patientsRepository, config);			
 		}
 
 		public uint AggregateVersion { private set; get; }
@@ -55,66 +48,35 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		public IEnumerable<Appointment> Appointments
 		{
-			get { return appointments; }
+			get { return appointmentSet.AppointmentList; }
 		}
 
-		public void Handle(AppointmentAdded domainEvent)
+		public override void Handle(AppointmentAdded domainEvent)
 		{
 			if (domainEvent.AggregateId != identifier) return;
 
 			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
 				throw new VersionNotApplicapleException("@handle appointmentAdded @readmodel");
-
-			var medicalPractice = config.GetMedicalPracticeByIdAndVersion(domainEvent.AggregateId.MedicalPracticeId,
-				domainEvent.AggregateId.PracticeVersion);
-
-			var appointment = new Appointment(patientsRepository.GetPatientById(domainEvent.PatientId), domainEvent.Description,
-				medicalPractice.GetTherapyPlaceById(domainEvent.TherapyPlaceId),
-				domainEvent.Day,
-				domainEvent.StartTime,
-				domainEvent.EndTime, domainEvent.AppointmentId);
-
-			appointments.Add(appointment);
-
-			var handler = AppointmentChanged;
-			if (handler != null)
-				handler(this, new AppointmentChangedEventArgs(appointment, ChangeAction.Added));
+			
+			appointmentSet.AddAppointment(domainEvent.AggregateId.MedicalPracticeId,
+										  domainEvent.AggregateId.PracticeVersion,
+										  domainEvent.CreateAppointmentData);	
 
 			AggregateVersion = domainEvent.AggregateVersion;
 		}
 
-		public void Handle (AppointmentModified domainEvent)
+		public override void Handle (AppointmentModified domainEvent)
 		{
 			if (domainEvent.AggregateId != identifier) return;
 
 			throw new NotImplementedException();
 		}
 
-		public void Handle (AppointmentRemoved domainEvent)
+		public override void Handle (AppointmentRemoved domainEvent)
 		{
 			if (domainEvent.AggregateId != identifier) return;
 
 			throw new NotImplementedException();
-		}
-
-
-		public void Dispose()
-		{
-			DeregisterAtEventBus();
-		}
-
-		private void RegisterAtEventBus()
-		{
-			eventBus.RegisterEventHandler<AppointmentAdded>   (this);
-			eventBus.RegisterEventHandler<AppointmentModified>(this);
-			eventBus.RegisterEventHandler<AppointmentRemoved> (this);
-		}
-
-		private void DeregisterAtEventBus()
-		{
-			eventBus.DeregisterEventHandler<AppointmentAdded>   (this);
-			eventBus.DeregisterEventHandler<AppointmentModified>(this);
-			eventBus.DeregisterEventHandler<AppointmentRemoved> (this);
 		}		
 	}
 }

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
 using bytePassion.OnkoTePla.Client.Core.Exceptions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Contracts.Appointments;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Domain
@@ -13,18 +12,14 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 	public class AppointmentsOfDayAggregate : AggregateRootBase<AggregateIdentifier>
 	{
 
-		private readonly IList<Appointment> appointments;
-		private readonly IPatientReadRepository patientRepository;
-		private readonly IConfigurationReadRepository config;
+		private readonly AppointmentSet appointments;		
 
 		public AppointmentsOfDayAggregate(AggregateIdentifier id, 
 										  IPatientReadRepository patientRepository, 
 										  IConfigurationReadRepository config) 
 			: base(id, 0)
-		{
-			this.patientRepository = patientRepository;
-			this.config = config;
-			appointments = new List<Appointment>();
+		{			
+			appointments = new AppointmentSet(patientRepository, config);
 		}
 
 		public void Apply (AppointmentAdded @event)
@@ -32,11 +27,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			if (Version + 1 != @event.AggregateVersion)
 				throw new VersionNotApplicapleException("@apply AppointmentAdded");
 
-			var medicalPractice = config.GetMedicalPracticeByIdAndVersion(Id.MedicalPracticeId, Id.PracticeVersion);
-
-			appointments.Add(new Appointment(patientRepository.GetPatientById(@event.PatientId), @event.Description,
-											 medicalPractice.GetTherapyPlaceById(@event.TherapyPlaceId), 
-											 @event.Day, @event.StartTime, @event.EndTime, Guid.NewGuid()));
+			appointments.AddAppointment(@event.AggregateId.MedicalPracticeId, 
+										@event.AggregateId.PracticeVersion, 
+										@event.CreateAppointmentData);
 
 			Version = @event.AggregateVersion;
 		}
@@ -49,20 +42,17 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 		{			
 		}
 		
-		public void AddAppointment(Guid userId, uint forAggregateVersion,
-								   Guid patientId, string description, 
-								   Time startTime, Time endTime,
-								   Guid therapyPlaceId)
+		public void AddAppointment(Guid userId, uint forAggregateVersion, CreateAppointmentData createAppointmentData)
 		{
 
 			if (forAggregateVersion != Version)
 				throw new VersionNotApplicapleException("@addAppointmen");
-
+			
 			var newAggregateVersion = Version + 1;
 
- 			ApplyChange(new AppointmentAdded(Id, newAggregateVersion, userId,TimeTools.GetCurrentTimeStamp(), 
-											 patientId, description, startTime, endTime, 
-											 therapyPlaceId, Guid.NewGuid()));
+ 			ApplyChange(new AppointmentAdded(Id, newAggregateVersion, 
+											 userId,TimeTools.GetCurrentTimeStamp(), 
+											 createAppointmentData));
 		}
 	}
 }

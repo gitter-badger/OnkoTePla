@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
 
@@ -111,12 +112,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		{
 			writer.WriteStartElement(AppointmentAddedEvent);
 
-			writer.WriteAttributeString(PatientIdAttribute,      @event.PatientId.ToString());
-			writer.WriteAttributeString(DescriptionAttribute,    @event.Description);
-			writer.WriteAttributeString(TherapyPlaceIdAttribute, @event.TherapyPlaceId.ToString());
-			writer.WriteAttributeString(StartTimeAttribute,      @event.StartTime.ToString());
-			writer.WriteAttributeString(EndTimeAttribute,        @event.EndTime.ToString());
-			writer.WriteAttributeString(AppointmentIdAttribute,  @event.AppointmentId.ToString());
+			writer.WriteAttributeString(PatientIdAttribute,      @event.CreateAppointmentData.PatientId.ToString());
+			writer.WriteAttributeString(DescriptionAttribute,    @event.CreateAppointmentData.Description);
+			writer.WriteAttributeString(TherapyPlaceIdAttribute, @event.CreateAppointmentData.TherapyPlaceId.ToString());
+			writer.WriteAttributeString(StartTimeAttribute,      @event.CreateAppointmentData.StartTime.ToString());
+			writer.WriteAttributeString(EndTimeAttribute,        @event.CreateAppointmentData.EndTime.ToString());
+			writer.WriteAttributeString(AppointmentIdAttribute,  @event.CreateAppointmentData.AppointmentId.ToString());
 			
 
 			writer.WriteEndElement();
@@ -243,8 +244,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 				}
 			}
 
-			return new AppointmentAdded(identifier, aggregateVersion, userId, timeStamp, 
-										patientId, description, startTime, endTime, therpyPlaceId, appointmentId);
+			var createAppointmentData = new CreateAppointmentData(patientId, description, startTime, endTime, identifier.Date,
+																  therpyPlaceId, appointmentId);
+
+			return new AppointmentAdded(identifier, aggregateVersion, userId, timeStamp, createAppointmentData);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
-using bytePassion.Lib.TimeLib;
+using System.Collections.Generic;
+using System.Linq;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -25,21 +26,25 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 			appointmentCollection = new ObservableAppointmentCollection();
 		}
 
-		public ObservableAppointmentCollection Appointments
+		public ObservableAppointmentCollection ObservableAppointments
 		{
 			get { return appointmentCollection; }
 		}
 
-		public void AddAppointment(Guid patientId, string description, 
-								   Guid medicalPracticeId, uint medicalPracticeVersion, 
-								   Guid therapyPlaceId, Date day, 
-								   Time startTime, Time endTime, Guid appointmentId)
+		public IEnumerable<Appointment> AppointmentList
 		{
-			var patient = patientRepository.GetPatientById(patientId);
-			var therapyPlace = configurationRepository.GetMedicalPracticeByIdAndVersion(medicalPracticeId, medicalPracticeVersion)
-													  .GetTherapyPlaceById(therapyPlaceId);
+			get { return appointmentCollection.Appointments.ToList(); }
+		} 
 
-			var newAppointment = new Appointment(patient, description, therapyPlace, day, startTime, endTime, appointmentId);
+		public void AddAppointment(Guid medicalPracticeId, uint medicalPracticeVersion, CreateAppointmentData appointmentData)
+		{
+			var patient = patientRepository.GetPatientById(appointmentData.PatientId);
+			var therapyPlace = configurationRepository.GetMedicalPracticeByIdAndVersion(medicalPracticeId, medicalPracticeVersion)
+													  .GetTherapyPlaceById(appointmentData.TherapyPlaceId);
+
+			var newAppointment = new Appointment(patient, appointmentData.Description, therapyPlace, 
+												 appointmentData.Day, appointmentData.StartTime, appointmentData.EndTime, 
+												 appointmentData.AppointmentId);
 
 			appointmentCollection.AddAppointment(newAppointment);
 			//appointmentLookUp.Add(appointmentId, newAppointment);

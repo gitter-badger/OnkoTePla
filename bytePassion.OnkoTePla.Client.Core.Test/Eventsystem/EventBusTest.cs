@@ -1,6 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents;
 using Xunit;
@@ -12,7 +13,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 
 		private static AppointmentAdded GetAppointmentAddedDummy()
 		{
-			return new AppointmentAdded(new AggregateIdentifier(Date.Dummy, new Guid()),0, new Guid(),null,new Guid(), null, Time.Dummy, Time.Dummy, new Guid(), new Guid());
+			return new AppointmentAdded(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), null, new CreateAppointmentData(new Guid(),null, new Time(),new Time(),new Date(), new Guid(),new Guid()));
 		}
 
 		private class TestSingleEventHandler : IDomainEventHandler<AppointmentAdded>

@@ -47,11 +47,13 @@
     <Compile Include="CommandSystem\IDomainCommandHandler.cs" />
     <Compile Include="CommandSystem\IDomainCommandHandlerCollection.cs" />
     <Compile Include="Domain\AppointmentLogic\AppointmentSet.cs" />
+    <Compile Include="Domain\AppointmentLogic\CreateAppointmentData.cs" />
     <Compile Include="Domain\AppointmentLogic\ObservableAppointmentCollection.cs" />
     <Compile Include="Domain\CommandHandler\AddAppointmentCommandHandler.cs" />
     <Compile Include="Exceptions\AppointmentRuleIsNotApplicableException.cs" />
     <Compile Include="Exceptions\VersionNotApplicapleException.cs" />
     <Compile Include="Domain\AppointmentLogic\INotifyAppointmentChanged.cs" />
+    <Compile Include="Readmodels\ReadModelBase.cs" />
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationWriteRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationReadRepository.cs" />

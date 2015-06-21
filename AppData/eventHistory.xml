@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <eventStreams>
-  <eventStream count="2" date="20.06.2015" configVersion="1" medicalPracticeId="ada3ae31-f9ed-496f-80f3-13ea7787e5be">
+  <eventStream count="3" date="20.06.2015" configVersion="1" medicalPracticeId="ada3ae31-f9ed-496f-80f3-13ea7787e5be">
     <event aggregateVersion="1" userId="7db20666-5107-4637-97dc-70d64aedb06f" timeStampDate="20.06.2015" timeStampTime="22:40:56">
       <appointmentAddedEvent patientId="aa26e1fc-6b5d-48fe-beed-3805970cc2db" description="first Test" therapyPlaceId="5dedc752-8817-4598-9d81-151eaffef70e" startTime="10:00:00" endTime="12:00:00" appointmentId="0b89bf5b-4ad0-4789-ab10-3be584735c57" />
     </event>
     <event aggregateVersion="2" userId="7db20666-5107-4637-97dc-70d64aedb06f" timeStampDate="20.06.2015" timeStampTime="22:41:28">
       <appointmentAddedEvent patientId="aa26e1fc-6b5d-48fe-beed-3805970cc2db" description="second Test" therapyPlaceId="6bec2738-0197-4bfc-8a4b-bf18e4ecf116" startTime="13:00:00" endTime="15:00:00" appointmentId="e1ce96c4-00c5-4eeb-8349-3a6a84e205bf" />
+    </event>
+    <event aggregateVersion="3" userId="22ea63b2-8e1a-402e-8b54-8cebb99d3662" timeStampDate="21.06.2015" timeStampTime="11:31:37">
+      <appointmentAddedEvent patientId="bc1a008f-4519-4ae0-b4f2-cd03e8aaf636" description="blubb" therapyPlaceId="2b863280-d8b9-4289-b792-647589622632" startTime="09:30:00" endTime="11:30:00" appointmentId="2667c251-3d97-47d6-b34d-27accb00573d" />
     </event>
   </eventStream>
 </eventStreams>
