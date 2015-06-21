@@ -10,7 +10,7 @@ using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 {
-	public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream>>
+	public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
 	{
 
 		private static XmlWriterSettings WriterSettings
@@ -38,6 +38,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private const string AggregateVersionAttribute    = "aggregateVersion";		
 
 		private const string AppointmentAddedEvent        = "appointmentAddedEvent";
+		private const string AppointmentModifiedEvent     = "appointmentModifiedEvent";
 		private const string PatientIdAttribute		      = "patientId";
 		private const string AppointmentIdAttribute       = "appointmentId";
 		private const string DescriptionAttribute	      = "description";
@@ -55,7 +56,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			this.filename = filename;			
 		}
 
-		public void Persist(IEnumerable<EventStream> eventStreams)
+		public void Persist (IEnumerable<EventStream<AggregateIdentifier>> eventStreams)
 		{
 			var writer = XmlWriter.Create(filename, WriterSettings);
 
@@ -74,7 +75,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.Close();
 		}
 
-		private static void WriteEventStream(XmlWriter writer, EventStream eventStream)
+		private static void WriteEventStream (XmlWriter writer, EventStream<AggregateIdentifier> eventStream)
 		{
 			writer.WriteStartElement(EventStream);
 			writer.WriteAttributeString(CountAttribute, eventStream.EventCount.ToString());
@@ -95,6 +96,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.WriteStartElement(Event);			
 			writer.WriteAttributeString(AggregateVersionAttribute, @event.AggregateVersion.ToString());	
 			writer.WriteAttributeString(UserIdAttribute,           @event.UserId.ToString());
+			writer.WriteAttributeString(PatientIdAttribute,        @event.PatientId.ToString());
 			writer.WriteAttributeString(TimeStampDateAttribute,    @event.TimeStamp.Item1.ToString());
 			writer.WriteAttributeString(TimeStampTimeAttribute,    @event.TimeStamp.Item2.ToString());			
 
@@ -111,22 +113,20 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private static void WriteEvent(XmlWriter writer, AppointmentAdded @event)
 		{
 			writer.WriteStartElement(AppointmentAddedEvent);
-
-			writer.WriteAttributeString(PatientIdAttribute,      @event.CreateAppointmentData.PatientId.ToString());
+			
 			writer.WriteAttributeString(DescriptionAttribute,    @event.CreateAppointmentData.Description);
 			writer.WriteAttributeString(TherapyPlaceIdAttribute, @event.CreateAppointmentData.TherapyPlaceId.ToString());
 			writer.WriteAttributeString(StartTimeAttribute,      @event.CreateAppointmentData.StartTime.ToString());
 			writer.WriteAttributeString(EndTimeAttribute,        @event.CreateAppointmentData.EndTime.ToString());
 			writer.WriteAttributeString(AppointmentIdAttribute,  @event.CreateAppointmentData.AppointmentId.ToString());
 			
-
 			writer.WriteEndElement();
-		} 
+		}
 
-		public IEnumerable<EventStream> Load ()
+		public IEnumerable<EventStream<AggregateIdentifier>> Load ()
 		{
 
-			IList<EventStream> eventStreams = new List<EventStream>();			
+			IList<EventStream<AggregateIdentifier>> eventStreams = new List<EventStream<AggregateIdentifier>>();			
 
 			var reader = XmlReader.Create(filename);
 
@@ -134,8 +134,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			{
 				if (reader.NodeType != XmlNodeType.Element || reader.Name != XmlRoot) continue;
 
+				if (reader.IsEmptyElement) return eventStreams;
+
 				while (reader.Read())
 				{
+					
+
 					if (reader.NodeType != XmlNodeType.Element || reader.Name != EventStream) continue;
 					if (!reader.HasAttributes) continue;
 
@@ -157,7 +161,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 					var id = new AggregateIdentifier(date, medicalPractiveId, configVersion);
 					var events = AcceptEventStream(reader,eventCount, id);
-					eventStreams.Add(new EventStream(id, events)); 
+					eventStreams.Add(new EventStream<AggregateIdentifier>(id, events)); 
 				}
 			}
 			reader.Close();
@@ -179,6 +183,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 				var aggrevateVersion = 1u;
 				var userId = new Guid();
+				var patientId = new Guid();
 				var timeStampDate = String.Empty;
 				var timeStampTime = String.Empty;				
 
@@ -188,6 +193,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 					{
 						if (reader.Name == AggregateVersionAttribute) aggrevateVersion = UInt32.Parse(reader.Value);
 						if (reader.Name == UserIdAttribute) userId = Guid.Parse(reader.Value);
+						if (reader.Name == PatientIdAttribute) patientId = Guid.Parse(reader.Value);
 						if (reader.Name == TimeStampDateAttribute) timeStampDate = reader.Value;
 						if (reader.Name == TimeStampTimeAttribute) timeStampTime = reader.Value;
 					
@@ -202,9 +208,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 					{
 						switch (reader.Name)
 						{
-							case AppointmentAddedEvent:	domainEvent = AcceptAppointmentAddedEvent(reader, id, aggrevateVersion, userId, 
+							case AppointmentAddedEvent:	domainEvent = AcceptAppointmentAddedEvent(reader, id, aggrevateVersion, userId, patientId,
 																								  new Tuple<Date, Time>(Date.Parse(timeStampDate), 
 																							 							Time.Parse(timeStampTime)));
+														break;
+							case AppointmentModifiedEvent: domainEvent = AcceptAppointmentModifiedEvent(reader, id, aggrevateVersion, userId, patientId, 
+																										new Tuple<Date, Time>(Date.Parse(timeStampDate),
+																															  Time.Parse(timeStampTime)));
 														break;
 						}
 
@@ -217,11 +227,17 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			return events;
 		}
 
-		private static AppointmentAdded AcceptAppointmentAddedEvent(XmlReader reader, AggregateIdentifier identifier,
-																	uint aggregateVersion, Guid userId,
-																	Tuple<Date, Time> timeStamp)
+		private static AppointmentModified AcceptAppointmentModifiedEvent(XmlReader reader, AggregateIdentifier identifier,
+																		  uint aggregateVersion, Guid userId, Guid patientId,
+																		  Tuple<Date, Time> timeStamp)
 		{
-			var patientId     = new Guid();
+			throw new NotImplementedException();
+		}
+
+		private static AppointmentAdded AcceptAppointmentAddedEvent(XmlReader reader, AggregateIdentifier identifier,
+																	uint aggregateVersion, Guid userId, Guid patientId,
+																	Tuple<Date, Time> timeStamp)
+		{			
 			var description   = String.Empty;
 			var startTime     = new Time();
 			var endTime       = new Time();

@@ -7,6 +7,7 @@ using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 {

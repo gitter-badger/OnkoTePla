@@ -1,24 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 {
-	public class EventStream
+	public class EventStream<TIdentifier>
 	{
-		private readonly AggregateIdentifier id;
+		private readonly TIdentifier id;
 		private readonly List<DomainEvent> events; 
 
-		public EventStream(AggregateIdentifier id, IEnumerable<DomainEvent> initialEventStream = null)
+		public EventStream(TIdentifier id, IEnumerable<DomainEvent> initialEventStream = null)
 		{
 			this.id = id;
 			events = initialEventStream == null ? new List<DomainEvent>() : initialEventStream.ToList();
 		}
 
 
-		public AggregateIdentifier      Id     { get { return id;              }}
+		public TIdentifier              Id     { get { return id;              }}
 		public IEnumerable<DomainEvent> Events { get { return events.ToList(); }}
 
 		public void AddEvents(IEnumerable<DomainEvent> newEvents)

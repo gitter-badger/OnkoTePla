@@ -38,7 +38,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			return uncommitedEvents;
 		}		
 
-		public void LoadFromEventStream(EventStream eventStream)
+		public void LoadFromEventStream(EventStream<TIdentifier> eventStream)
 		{
 			foreach (var domainEvent in eventStream.Events)
 			{

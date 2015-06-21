@@ -17,13 +17,14 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 
+#pragma warning disable 0067
+
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {
 	public class AddAppointmentTestViewModel : IAddAppointmentTestViewModel
 	{
 		private readonly IConfigurationReadRepository config;
 		private readonly IPatientReadRepository patients;
-
 
 		// ReSharper disable NotAccessedField.Local
 		private readonly ICommandBus commandBus;		

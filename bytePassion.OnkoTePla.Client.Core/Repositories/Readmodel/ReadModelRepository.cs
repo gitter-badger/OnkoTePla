@@ -1,4 +1,5 @@
 ﻿
+using System;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
@@ -12,15 +13,15 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel
 	public class ReadModelRepository : IReadModelRepository
 	{
 		private readonly IEventBus eventBus;
-		private readonly IEventStore eventstore;
+		private readonly IEventStore eventStore;
 		private readonly IConfigurationReadRepository config;
 		private readonly IPatientReadRepository patientsRepository;
 
-		public ReadModelRepository(IEventBus eventBus, IEventStore eventstore,
+		public ReadModelRepository(IEventBus eventBus, IEventStore eventStore,
  								   IPatientReadRepository patientsRepository,
 								   IConfigurationReadRepository config)
 		{
-			this.eventstore = eventstore;
+			this.eventStore = eventStore;
 			this.config = config;
 			this.patientsRepository = patientsRepository;
 			this.eventBus = eventBus;
@@ -28,11 +29,19 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel
 
 		public AppointmentsOfADayReadModel GetAppointmentsOfADayReadModel(AggregateIdentifier id)
 		{
-			var eventStream = eventstore.GetEventStream(id);
+			var eventStream = eventStore.GetEventStream(id);
 			var readmodel = new AppointmentsOfADayReadModel(eventBus, config, patientsRepository, eventStream.Id);
 			readmodel.LoadFromEventStream(eventStream);
 
 			return readmodel;
+		}
+
+		public AppointmentsOfAPatientReadModel GetAppointmentsOfAPatientReadModel(Guid patientId)
+		{
+			var readModel = new AppointmentsOfAPatientReadModel(patientId, eventBus, config, patientsRepository);
+			readModel.LoadFromEventStream(eventStore.GetEventStreamForAPatient(patientId));
+
+			return readModel;
 		}
 	}
 }

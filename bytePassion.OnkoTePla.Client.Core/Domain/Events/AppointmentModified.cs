@@ -7,8 +7,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.Events
 {
 	public class AppointmentModified : DomainEvent
 	{
-		public AppointmentModified (AggregateIdentifier aggregateID, uint aggregateVersion,Guid userId, Tuple<Date, Time> timeStamp)
-			: base(aggregateID, aggregateVersion, userId, timeStamp)
+		public AppointmentModified (AggregateIdentifier aggregateID, uint aggregateVersion,Guid userId, Guid patientId, Tuple<Date, Time> timeStamp)
+			: base(aggregateID, aggregateVersion, userId, patientId, timeStamp)
 		{
 			
 		}

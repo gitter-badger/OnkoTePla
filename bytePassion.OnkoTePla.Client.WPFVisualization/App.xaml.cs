@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
@@ -47,7 +48,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// EventStore
 
-			IPersistenceService<IEnumerable<EventStream>> eventStorePersistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
+			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 			eventStore.LoadRepository(); 
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
@@ -24,19 +23,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			remove { appointmentSet.ObservableAppointments.AppointmentChanged -= value; }
 		}
 
-		private readonly Patient patient;		
-		private readonly AggregateIdentifier identifier;
+		private readonly Patient patient;				
 
 		private readonly AppointmentSet appointmentSet;
 
 		public AppointmentsOfAPatientReadModel (Guid patientId,
 												IEventBus eventBus,
 												IConfigurationReadRepository config,
-												IPatientReadRepository patientsRepository,
-												AggregateIdentifier identifier) 
+												IPatientReadRepository patientsRepository) 
 			: base(eventBus)
-		{			
-			this.identifier = identifier;
+		{						
 
 			patient = patientsRepository.GetPatientById(patientId);
 
@@ -44,10 +40,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		}
 
-		public uint AggregateVersion { private set; get; }
-		public AggregateIdentifier Identifier { get { return identifier; } }
+		public uint AggregateVersion { private set; get; }		
 
-		public void LoadFromEventStream (EventStream eventStream)
+		public void LoadFromEventStream (EventStream<Guid> eventStream)
 		{
 			foreach (var domainEvent in eventStream.Events)
 				(this as dynamic).Handle(Converter.ChangeTo(domainEvent, domainEvent.GetType()));

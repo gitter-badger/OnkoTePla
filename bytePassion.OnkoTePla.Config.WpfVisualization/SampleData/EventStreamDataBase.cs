@@ -34,7 +34,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
-			IPersistenceService<IEnumerable<EventStream>> eventStorePersistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
+			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 
 			IEventBus eventBus = new EventBus();

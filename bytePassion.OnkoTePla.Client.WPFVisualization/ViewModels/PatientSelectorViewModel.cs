@@ -7,7 +7,6 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {

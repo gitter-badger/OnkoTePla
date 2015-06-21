@@ -40,7 +40,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		public uint AggregateVersion { private set; get; }
 		public AggregateIdentifier Identifier { get { return identifier; }}
 
-		public void LoadFromEventStream(EventStream eventStream)
+		public void LoadFromEventStream (EventStream<AggregateIdentifier> eventStream)
 		{			
 			foreach (var domainEvent in eventStream.Events)			
 				(this as dynamic).Handle(Converter.ChangeTo(domainEvent, domainEvent.GetType()));			
