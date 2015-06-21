@@ -41,7 +41,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 					displayedAppointments.Clear();
 
 					if (readModel != null)
+					{
 						readModel.AppointmentChanged -= OnAppointmentChanged;
+						readModel.Dispose();
+					}
 
 					var date = Date.Parse(SelectedDateAsString);
 					var identifier = new AggregateIdentifier(date, SelectedMedicalPractice.Id);
