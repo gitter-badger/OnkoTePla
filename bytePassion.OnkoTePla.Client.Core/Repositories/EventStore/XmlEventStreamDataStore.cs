@@ -30,7 +30,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private const string CountAttribute			      = "count";
 		private const string EventStream  		          = "eventStream";
 		private const string ConfigVersionAttribute       = "configVersion";
-		private const string EventElement			      = "event";
+		private const string Event       			      = "event";
 		private const string AggregateIdAttribute	      = "aggregateId";
 		private const string DateAttribute				  = "date";
 		private const string MedicalPracticeAttribute     = "medicalPracticeId";
@@ -91,7 +91,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 		private static void WriteEvent(XmlWriter writer, DomainEvent @event)
 		{
-			writer.WriteStartElement(EventElement);			
+			writer.WriteStartElement(Event);			
 			writer.WriteAttributeString(AggregateVersionAttribute, @event.AggregateVersion.ToString());	
 			writer.WriteAttributeString(UserIdAttribute,           @event.UserId.ToString());
 			writer.WriteAttributeString(TimeStampDateAttribute,    @event.TimeStamp.Item1.ToString());
@@ -125,7 +125,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		public IEnumerable<EventStream> Load ()
 		{
 
-			IList<EventStream> eventStreams = null;			
+			IList<EventStream> eventStreams = new List<EventStream>();			
 
 			var reader = XmlReader.Create(filename);
 
@@ -155,7 +155,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 					}
 
 					var id = new AggregateIdentifier(date, medicalPractiveId, configVersion);
-					var events = AcceptEventStream(reader,eventCount);
+					var events = AcceptEventStream(reader,eventCount, id);
 					eventStreams.Add(new EventStream(id, events)); 
 				}
 			}
@@ -164,9 +164,87 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			return eventStreams;
 		}		
 
-		private IEnumerable<DomainEvent> AcceptEventStream(XmlReader reader, int eventStreamElementCount)
+		private static IEnumerable<DomainEvent> AcceptEventStream(XmlReader reader, int eventStreamElementCount, AggregateIdentifier id)
 		{
-			throw new NotImplementedException();
-		}	
+			IList<DomainEvent> events = new List<DomainEvent>();
+
+			int i = 0;
+			while (i < eventStreamElementCount)
+			{
+				reader.Read();
+
+				if (reader.NodeType != XmlNodeType.Element || reader.Name != Event) continue;
+				i++;
+
+				var aggrevateVersion = 1u;
+				var userId = new Guid();
+				var timeStampDate = String.Empty;
+				var timeStampTime = String.Empty;				
+
+				if (reader.HasAttributes)
+				{
+					while (reader.MoveToNextAttribute())
+					{
+						if (reader.Name == AggregateVersionAttribute) aggrevateVersion = UInt32.Parse(reader.Value);
+						if (reader.Name == UserIdAttribute) userId = Guid.Parse(reader.Value);
+						if (reader.Name == TimeStampDateAttribute) timeStampDate = reader.Value;
+						if (reader.Name == TimeStampTimeAttribute) timeStampTime = reader.Value;
+					
+					}
+				}
+
+				DomainEvent domainEvent = null;
+
+				while (reader.Read())
+				{
+					if (reader.NodeType == XmlNodeType.Element)
+					{
+						switch (reader.Name)
+						{
+							case AppointmentAddedEvent:	domainEvent = AcceptAppointmentAddedEvent(reader, id, aggrevateVersion, userId, 
+																								  new Tuple<Date, Time>(Date.Parse(timeStampDate), 
+																							 							Time.Parse(timeStampTime)));
+														break;
+						}
+
+						events.Add(domainEvent);
+						break;
+					}					
+				}
+			}
+
+			return events;
+		}
+
+		private static AppointmentAdded AcceptAppointmentAddedEvent(XmlReader reader, AggregateIdentifier identifier,
+																	uint aggregateVersion, Guid userId,
+																	Tuple<Date, Time> timeStamp)
+		{
+			var patientId     = new Guid();
+			var description   = String.Empty;
+			var startTime     = new Time();
+			var endTime       = new Time();
+			var therpyPlaceId = new Guid();
+			var appointmentId = new Guid();
+
+			if (reader.HasAttributes)
+			{
+				while (reader.MoveToNextAttribute())
+				{
+					switch (reader.Name)
+					{
+						case PatientIdAttribute:      patientId     = Guid.Parse(reader.Value); break;
+						case DescriptionAttribute:    description   = reader.Value;             break;
+						case TherapyPlaceIdAttribute: therpyPlaceId = Guid.Parse(reader.Value); break;
+						case StartTimeAttribute:      startTime     = Time.Parse(reader.Value); break;
+						case EndTimeAttribute:        endTime       = Time.Parse(reader.Value); break;
+						case AppointmentIdAttribute:  appointmentId = Guid.Parse(reader.Value); break;
+					}										
+				}
+			}
+
+			return new AppointmentAdded(identifier, aggregateVersion, userId, timeStamp, 
+										patientId, description, startTime, endTime, therpyPlaceId, appointmentId);
+		}
 	}
 }

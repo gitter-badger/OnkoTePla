@@ -97,7 +97,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			writer.Close();
 		}
 
-		#region 
+		#region writer methods
 		private void WriteUser(XmlWriter writer, User user)
 		{
 			writer.WriteStartElement(User);

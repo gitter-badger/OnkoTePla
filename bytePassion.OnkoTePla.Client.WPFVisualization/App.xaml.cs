@@ -49,7 +49,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			IPersistenceService<IEnumerable<EventStream>> eventStorePersistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
-			// eventStore.LoadRepository(); // TODO: not implemented yet
+			eventStore.LoadRepository(); 
 
 			// Event- and CommandBus
 
@@ -85,7 +85,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			///////////////////////////////////////////////////////////////////////////////////////////////
 			////////                                                                             //////////
-			////////                    Clean Up after main Window was closed                    //////////
+			////////             Clean Up and store data after main Window was closed            //////////
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
 
