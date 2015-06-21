@@ -44,16 +44,16 @@
 				</Grid>
 			</TabItem>
 			<TabItem Header="Suchen">
-<!--				<Grid>-->
-<!--					<Grid.ColumnDefinitions>-->
-<!--						<ColumnDefinition Width="Auto" />-->
-<!--						<ColumnDefinition Width="*" />-->
-<!--					</Grid.ColumnDefinitions>-->
-<!--					<views:PatientSelector Grid.Column="0" DataContext="{Binding PatientSelectorViewModel}" />-->
-<!--					<views:PatientDetailView Grid.Column="1"-->
-<!--					                         Margin="20"-->
-<!--					                         DataContext="{Binding PatientSelectorViewModel}" />-->
-<!--				</Grid>-->
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<views:PatientSelector Grid.Column="0" DataContext="{Binding PatientSelectorViewModel}" />
+					<views:PatientDetailView Grid.Column="1"
+					                         Margin="20"
+					                         DataContext="{Binding PatientSelectorViewModel}" />
+				</Grid>
 			</TabItem>
 
 		</TabControl>

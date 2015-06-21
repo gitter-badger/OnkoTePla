@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Globalization;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 {
-	internal class BirthdayToStringConverter : GenericValueConverter<DateTime, string>
+	internal class BirthdayToStringConverter : GenericValueConverter<Date, string>
 	{
-		protected override string Convert(DateTime date, CultureInfo culture)
+		protected override string Convert(Date date, CultureInfo culture)
 		{
 			// TODO: CultureInfo nicht hard coden!
-			return date.ToString("d", new CultureInfo("de-DE"));
+		    return date.GetDisplayString(CultureInfo.CurrentCulture);
 		}
 
-		protected override DateTime ConvertBack(string value, CultureInfo culture)
+		protected override Date ConvertBack(string value, CultureInfo culture)
 		{
 			throw new NotImplementedException();
 		}

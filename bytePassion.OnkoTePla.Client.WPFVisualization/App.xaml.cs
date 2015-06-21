@@ -72,8 +72,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			var addAppointmentTestViewModel = new AddAppointmentTestViewModel(configReadRepository, patientRepository, readModelRepository, commandBus);
 			var appointmentOverViewModel = new AppointmentOverViewModel(readModelRepository, configReadRepository);
+            var patientsViewModel = new PatientSelectorViewModel(patientRepository);
 
-			var mainWindowViewModel = new MainWindowViewModel(addAppointmentTestViewModel, appointmentOverViewModel);
+			var mainWindowViewModel = new MainWindowViewModel(patientsViewModel, addAppointmentTestViewModel, appointmentOverViewModel);
 
 			var mainWindow = new MainWindow
 			{

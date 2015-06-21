@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -14,14 +15,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 	{
 	    private readonly IReadOnlyList<Appointment> appointments;
 	    private string filterstring;
-		private readonly IReadOnlyList<PatientListItem> patients;
+		private readonly IPatientReadRepository patients;
 		private bool isListEmpty;
         private PatientListItem selectedPatient;
 
-		public PatientSelectorViewModel(IReadOnlyList<Patient> patients, IReadOnlyList<Appointment> appointments )
+		public PatientSelectorViewModel(IPatientReadRepository patients)
 		{
-		    this.appointments = appointments;
-		    this.patients = PatientListItem.ConvertPatientList(patients);
+		    this.patients = patients;
 			filterstring = "";
 
 			IsListEmpty = Patients.Count == 0;
@@ -29,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		public IReadOnlyList<PatientListItem> Patients
 		{
-			get { return patients; }
+			get { return PatientListItem.ConvertPatientList(patients.GetAllPatients().ToList()); }
 		}
 
 	    public IReadOnlyList<Appointment> Appointments
