@@ -1,5 +1,5 @@
-﻿using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands;
+﻿using bytePassion.OnkoTePla.Client.Core.CommandSystem.Base;
+using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate;
 
 

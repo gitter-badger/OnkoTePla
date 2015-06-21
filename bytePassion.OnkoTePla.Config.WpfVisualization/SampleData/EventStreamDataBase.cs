@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;

@@ -1,11 +1,10 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents.Eventbase;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.DomainEvents
+namespace bytePassion.OnkoTePla.Client.Core.Domain.Events
 {
 	public class AppointmentAdded : DomainEvent
 	{

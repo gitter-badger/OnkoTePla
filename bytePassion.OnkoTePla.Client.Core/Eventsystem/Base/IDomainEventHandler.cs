@@ -1,6 +1,6 @@
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
+namespace bytePassion.OnkoTePla.Client.Core.Eventsystem.Base
 {
 	public interface IDomainEventHandler<in TEvent>
 	{

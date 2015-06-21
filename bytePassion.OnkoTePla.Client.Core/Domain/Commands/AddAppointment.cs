@@ -1,11 +1,10 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands.CommandBase;
-using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem.Base;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.DomainCommands
+namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands
 {
 	public class AddAppointment : DomainCommand
 	{
