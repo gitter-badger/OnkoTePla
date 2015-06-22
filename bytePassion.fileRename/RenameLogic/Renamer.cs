@@ -127,6 +127,8 @@ namespace bytePassion.FileRename.RenameLogic
 						var oldName = currentFile.Name;
 						var newName = fileReplaceFunc(currentFile.Name);
 
+						while (File.Exists(currentFile.DirectoryName + "\\" + newName))
+							newName = Path.GetFileNameWithoutExtension(newName) + "_2" + Path.GetExtension(newName);
 
 						currentFile.MoveTo(currentFile.DirectoryName + "\\" + newName);
 
@@ -170,6 +172,9 @@ namespace bytePassion.FileRename.RenameLogic
 						{
 							var fullOldName = directory.Parent.FullName + "\\" + oldName;
 							var fullNewName = directory.Parent.FullName + "\\" + newName;
+
+							while (Directory.Exists(fullNewName))
+								fullNewName += "_2";
 
 							directory.MoveTo(fullNewName);
 
