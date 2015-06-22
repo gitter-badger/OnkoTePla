@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using bytePassion.FileRename.Enums;
 
@@ -31,7 +32,7 @@ namespace bytePassion.FileRename.RenameLogic
 		private static Func<string, bool> CreateFuncToSearchForWhitespaces()
 		{
 			return s => s.Contains(' ');
-		}
+		}	
 
 		private static Func<string, bool> CreateFuncToSearchForSpezialEnding()
 		{
@@ -42,8 +43,14 @@ namespace bytePassion.FileRename.RenameLogic
 			//	- more numbers than letters
 
 			return s =>
-			{
-				var fileNameWithoutFileExtension = s.Substring(0, s.Length - 4);
+			{				
+				var fileNameWithoutFileExtension= Path.GetFileNameWithoutExtension(s);
+
+				if (fileNameWithoutFileExtension == null)
+					return false;
+
+				if (fileNameWithoutFileExtension.Length < 5)
+					return false;
 
 				int i = fileNameWithoutFileExtension.Length - 1;
 				while (i > 2)
@@ -80,7 +87,7 @@ namespace bytePassion.FileRename.RenameLogic
 						
 					}
 
-					if (numberCount > letterCount)
+					if (numberCount*2 > letterCount)
 						return true;
 				}
 
