@@ -17,12 +17,12 @@
                  FontFamily="{StaticResource StandardFontFamily}"
                  FontSize="17"
                  Margin="0,5"
-				 Text="{Binding FilterString, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle1}" />
+				 Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle1}" />
 		
 		<ListBox DockPanel.Dock="Top"
 				 HorizontalContentAlignment="Stretch"
                  ItemTemplate="{StaticResource PatientDataTemplate}"
                  SelectedValue="{Binding SelectedPatient}"
-                 ItemsSource="{Binding Patients}" />
+                 ItemsSource="{Binding Patients.View}" />
 	</DockPanel>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Data;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -11,7 +12,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 		public PatientSelectorViewModelSampleData()
 		{			
 			//Patients = PatientListItem.ConvertPatientList(CommunicationSampleData.PatientList);
-		    SelectedPatient = Patients.FirstOrDefault();
+		    SelectedPatient = null;
 			IsListEmpty = false;
 			FilterString = "";
 		}
@@ -26,7 +27,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 	    }
 
 	    public PatientListItem SelectedPatient { get; set; }
-		public IReadOnlyList<PatientListItem> Patients { get; private set; }
+		public CollectionViewSource Patients { get; private set; }
 		public bool IsListEmpty { get; private set; }
 		public string FilterString { get; set; }
 	}

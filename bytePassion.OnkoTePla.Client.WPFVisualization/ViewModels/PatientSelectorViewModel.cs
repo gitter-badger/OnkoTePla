@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
@@ -17,69 +18,59 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private readonly IPatientReadRepository patients;
 		private bool isListEmpty;
         private PatientListItem selectedPatient;
+	    private string searchFilter;
 
-		public PatientSelectorViewModel(IPatientReadRepository patients)
+	    public PatientSelectorViewModel(IPatientReadRepository patients)
 		{
-		    this.patients = patients;
-			filterstring = "";
-
-			IsListEmpty = Patients.Count == 0;
+		    Patients = new CollectionViewSource();
+	        Patients.Filter += Filter;
+		    Patients.Source = PatientListItem.ConvertPatientList(patients.GetAllPatients().ToList());
 		}
 
-		public IReadOnlyList<PatientListItem> Patients
-		{
-			get { return PatientListItem.ConvertPatientList(patients.GetAllPatients().ToList()); }
-		}
+        public CollectionViewSource Patients { get; set; }
 
-	    public IReadOnlyList<Appointment> Appointments
+        public string SearchFilter
+        {
+            get { return searchFilter; }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    searchFilter = value;
+
+                }
+
+                Patients.View.Refresh();
+            }
+        }
+
+        public IReadOnlyList<Appointment> Appointments
 	    {
             get
             {
-                if (selectedPatient != null)
-                    return appointments.Where(a => a.Patient.Id == SelectedPatient.Patient.Id).ToList();
                 return null;
             }
 	    }
-
-	    private static bool IsMatch(string patientName, string filterString)
-		{
-			var seperatedPatientNames = patientName.Split(' ');
-
-			return seperatedPatientNames.Any(namepart => namepart.ToLower().StartsWith(filterString));
-		}
-
-		public bool IsListEmpty
-		{
-            get { return isListEmpty; }
-            private set { PropertyChanged.ChangeAndNotify(this, ref isListEmpty, value); }
-			}
 
         public PatientListItem SelectedPatient
 			{
             get { return selectedPatient; }
             set { PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value); PropertyChanged.Notify(this, "ObservableAppointments");}
-		}	
-
-		public string FilterString
-		{
-			set
-			{
-				var trimmedValue = value.Trim();
-
-				if (String.Equals(filterstring, trimmedValue, StringComparison.CurrentCultureIgnoreCase)) return;
-				filterstring = value.ToLower();
-
-				if (String.IsNullOrEmpty(filterstring))
-				{
-					foreach (var patientListItem in Patients)
-						patientListItem.IsCurrentVisibleInList = true;
-				}
-
-				foreach (var patientListItem in Patients)
-					patientListItem.IsCurrentVisibleInList = IsMatch(patientListItem.Patient.Name, filterstring);
-			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;		
-	}
+	    public bool IsListEmpty { get; }
+	    public string FilterString { get; set; }
+
+	    public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Filter(object sender, FilterEventArgs e)
+        {
+            // see Notes on Filter Methods:
+            var src = e.Item as PatientListItem;
+            if (string.IsNullOrEmpty(SearchFilter))
+                e.Accepted = false;
+            else if (!src.Patient.Name.ToLower().Contains(SearchFilter)) 
+                e.Accepted = false;
+        }
+    }
 }
