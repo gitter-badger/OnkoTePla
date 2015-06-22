@@ -11,7 +11,5 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 		CollectionViewSource Patients { get; }
         IReadOnlyList<Appointment> Appointments { get; }
         PatientListItem SelectedPatient { get; set; }
-		bool IsListEmpty { get; }
-		string FilterString { set; }
 	}
 }

@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             >
 
 	<d:UserControl.DataContext>
 		<sampleData:PatientSelectorViewModelSampleData/>
@@ -17,7 +17,7 @@
                  FontFamily="{StaticResource StandardFontFamily}"
                  FontSize="17"
                  Margin="0,5"
-				 Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle1}" />
+				 Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}" />
 		
 		<ListBox DockPanel.Dock="Top"
 				 HorizontalContentAlignment="Stretch"

@@ -46,7 +46,7 @@
 			<TabItem Header="Suchen">
 				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="250" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<views:PatientSelector Grid.Column="0" DataContext="{Binding PatientSelectorViewModel}" />
