@@ -31,9 +31,7 @@
 		<TabControl>
 			<TabItem Header="Übersicht">
 				<Grid>
-					<views:AppointmentOverView Width="600" 
-											   Height="400"
-											   DataContext="{Binding AppointmentOverViewModel}"/>
+					<views:AppointmentOverView DataContext="{Binding AppointmentOverViewModel}"/>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Hinzufügen">

@@ -3,10 +3,83 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" 
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
-             d:DesignHeight="200"
-             d:DesignWidth="700"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate x:Key="compactNavigation">
+            <Border Width="100" Background="#FF1E2C5D" BorderBrush="Black" BorderThickness="0,0,2,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="2">
+                        <TextBlock Text="Datum" FontSize="24" FontWeight="Bold" Foreground="White" TextAlignment="Center"/>
+                        <TextBlock Text="23. November 2015" FontSize="18" Foreground="White" TextWrapping="Wrap" TextAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Width="40" Margin="5" Name="leftArrowButton">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <ed:BlockArrow Fill="White" Height="30" Orientation="Left" Name="leftArrow">
+                                        </ed:BlockArrow>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=leftArrowButton, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Stroke"  TargetName="leftArrow" Value="Black"></Setter>
+                                                <Setter Property="StrokeThickness"  TargetName="leftArrow" Value="1"></Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=leftArrowButton, Path=IsPressed}" Value="True">
+                                                <Setter Property="Fill"  TargetName="leftArrow" Value="Black"></Setter>
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <Button Width="40" Margin="5" Name="rightArrowButton">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <ed:BlockArrow Fill="White" Height="30" Orientation="Right" Name="rightArrow"/>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=rightArrowButton, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Stroke"  TargetName="rightArrow" Value="Black"></Setter>
+                                                <Setter Property="StrokeThickness"  TargetName="rightArrow" Value="1"></Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=rightArrowButton, Path=IsPressed}" Value="True">
+                                                <Setter Property="Fill"  TargetName="rightArrow" Value="Black"></Setter>
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="ExpandedNavigation">
+            <Border Width="200" Background="#FF1E2C5D" BorderThickness="0,0,2,0" BorderBrush="Black">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Calendar Grid.Row="2"  VerticalAlignment="Top" d:LayoutOverrides="Width"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <Storyboard x:Key="FadeUpAndFlash">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0.3"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.8"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
 
 	<d:UserControl.DataContext>
 		<sampleData:AppointmentOverViewModelSampleData />
@@ -19,8 +92,12 @@
 				<RowDefinition Height="40" />
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
-
-			<StackPanel Orientation="Horizontal">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
 				<Label Margin="3,3,10,3"
 				       VerticalAlignment="Center"
 				       Content="Date:" />
@@ -47,8 +124,31 @@
 				        Content="LoadReadModel" />
 			</StackPanel>
 
-			<ListBox Grid.Row="1" ItemsSource="{Binding Appointments}" />
-		</Grid>
+			<ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Appointments}" />
+
+            <Grid Grid.Column="0" Grid.RowSpan="2" Background="Black">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <ContentControl x:Name="contentControl" Grid.RowSpan="2">
+                    <ContentControl.Style>
+                        <Style TargetType="{x:Type ContentControl}">
+                            <Setter Property="ContentTemplate" Value="{DynamicResource compactNavigation}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsChecked, ElementName=ToggleButton}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard Storyboard="{StaticResource FadeUpAndFlash}"/>
+                                    </DataTrigger.EnterActions>
+                                    <Setter Property="ContentTemplate" Value="{StaticResource ExpandedNavigation}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+                <ToggleButton HorizontalAlignment="Left" Margin="20" x:Name="ToggleButton" Grid.Row="1" Width="50" Height="50" IsChecked="False"/>
+            </Grid>
+        </Grid>
 	</Border>
 
 </UserControl>
