@@ -209,8 +209,8 @@ namespace bytePassion.FileRename.ViewModel
 				UseDescriptionForTitle = true
 			};
 			
-			var showDialog = dialog.ShowDialog(null);
-			if (showDialog != null && (bool)showDialog)
+			var showDialogResult = dialog.ShowDialog(null);
+			if (showDialogResult != null && (bool)showDialogResult)
 				StartDirectory = dialog.SelectedPath;
 		}		
 
