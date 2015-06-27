@@ -6,6 +6,7 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
                       xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
+                      xmlns:appointment="clr-namespace:bytePassion.OnkoTePla.CustomControls.Appointment;assembly=bytePassion.OnkoTePla.CustomControls.Appointment"
                       Title="OnkoTePla - 0.1"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1,0,1,1"
@@ -32,6 +33,22 @@
 			<TabItem Header="Übersicht">
 				<Grid>
 					<views:AppointmentOverView DataContext="{Binding AppointmentOverViewModel}"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Übersicht__Experiment">
+				<Grid>
+					<appointment:AppointmentControl Width="200" Height="100" >
+
+						<appointment:AppointmentControl.Style>
+							<Style TargetType="appointment:AppointmentControl">
+								<Setter Property="BorderBrush" Value="Chartreuse"/>
+								<Setter Property="BorderThickness" Value="3"/>
+								<Setter Property="Background" Value="BlueViolet"/>
+								<Setter Property="Foreground" Value="Black"/>
+							</Style>
+						</appointment:AppointmentControl.Style>
+
+					</appointment:AppointmentControl>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Hinzufügen">
