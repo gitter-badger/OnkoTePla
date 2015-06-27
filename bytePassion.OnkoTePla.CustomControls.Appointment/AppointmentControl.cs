@@ -12,40 +12,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using bytePassion.Lib.TimeLib;
 
 namespace bytePassion.OnkoTePla.CustomControls.Appointment
 {
-    /// <summary>
-    /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
-    ///
-    /// Step 1a) Using this custom control in a XAML file that exists in the current project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:bytePassion.OnkoTePla.CustomControls.Appointment"
-    ///
-    ///
-    /// Step 1b) Using this custom control in a XAML file that exists in a different project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:bytePassion.OnkoTePla.CustomControls.Appointment;assembly=bytePassion.OnkoTePla.CustomControls.Appointment"
-    ///
-    /// You will also need to add a project reference from the project where the XAML file lives
-    /// to this project and Rebuild to avoid compilation errors:
-    ///
-    ///     Right click on the target project in the Solution Explorer and
-    ///     "Add Reference"->"Projects"->[Select this project]
-    ///
-    ///
-    /// Step 2)
-    /// Go ahead and use your control in the XAML file.
-    ///
-    ///     <MyNamespace:AppointmentControl/>
-    ///
-    /// </summary>
+    
     public class AppointmentControl : Control
     {
+
+	    public static readonly DependencyProperty StartTimeProperty = 
+			DependencyProperty.Register("StartTime", 
+										typeof (Time),
+										typeof (AppointmentControl), 
+										new PropertyMetadata(Time.Dummy));
+
+	    public Time StartTime
+	    {
+		    get { return (Time) GetValue(StartTimeProperty); }
+		    set { SetValue(StartTimeProperty, value); }
+	    }
+
+	    public static readonly DependencyProperty EndTimeProperty = 
+			DependencyProperty.Register("EndTime", 
+										typeof (Time), 
+										typeof (AppointmentControl), 
+										new PropertyMetadata(default(Time)));
+
+	    public Time EndTime
+	    {
+		    get { return (Time) GetValue(EndTimeProperty); }
+		    set { SetValue(EndTimeProperty, value); }
+	    }
+
         static AppointmentControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(AppointmentControl), new FrameworkPropertyMetadata(typeof(AppointmentControl)));

@@ -79,6 +79,12 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
+      <Project>{825B03A5-FD0F-417A-ADC5-D3A0AAD2C36B}</Project>
+      <Name>bytePassion.Lib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

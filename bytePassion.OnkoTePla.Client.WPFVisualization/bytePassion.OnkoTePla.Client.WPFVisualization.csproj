@@ -74,13 +74,16 @@
     <Compile Include="Converter\TimeFromDateConverter.cs" />
     <Compile Include="SampleData\AddAppointmentTestViewModelSampleData.cs" />
     <Compile Include="SampleData\AppointmentOverViewModelSampleData.cs" />
+    <Compile Include="SampleData\AppointmentViewModelSampleData.cs" />
     <Compile Include="SampleData\MainWindowViewModelSampleData.cs" />
     <Compile Include="SampleData\PatientSelectorViewModelSampleData.cs" />
     <Compile Include="ViewModels\AddAppointmentTestViewModel.cs" />
     <Compile Include="ViewModels\AppointmentOverViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentViewModel.cs" />
     <Compile Include="ViewModels\Helper\PatientListItem.cs" />
     <Compile Include="ViewModels\Interfaces\IAddAppointmentTestViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IAppointmentOverViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IAppointmentViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPatientSelectorViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -91,8 +94,14 @@
     <Compile Include="Views\AddAppointmentTestView.xaml.cs">
       <DependentUpon>AddAppointmentTestView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AppointmentGrid.xaml.cs">
+      <DependentUpon>AppointmentGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AppointmentOverView.xaml.cs">
       <DependentUpon>AppointmentOverView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppointmentView.xaml.cs">
+      <DependentUpon>AppointmentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginDialogView.xaml.cs">
       <DependentUpon>LoginDialogView.xaml</DependentUpon>
@@ -123,7 +132,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AppointmentGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AppointmentOverView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppointmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
