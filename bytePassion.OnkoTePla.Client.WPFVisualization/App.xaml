@@ -12,6 +12,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WPFVisualization;component/Views/Templates/CompactNavigationTemplate.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WPFVisualization;component/Views/Templates/ExpandedNavigationTemplate.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WPFVisualization;component/Views/Templates/NavBarIcons.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converter:AliveDeadToImageConverter x:Key="AliveDeadToImageConverter" />
             <converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter" />
