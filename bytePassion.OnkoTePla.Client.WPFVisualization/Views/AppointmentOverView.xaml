@@ -12,11 +12,17 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.8" />
                 <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1" />
             </DoubleAnimationUsingKeyFrames>
+
         </Storyboard>
-        <Storyboard x:Key="ToggleButtonMouseOver">
-            <ColorAnimationUsingKeyFrames Storyboard.TargetName="ToggleButton" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
-                <EasingColorKeyFrame KeyTime="0:0:0.5" Value="Black" />
-            </ColorAnimationUsingKeyFrames>
+        <Storyboard x:Key="ToggleButtonChecked">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="180"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="ToggleButtonUnchecked">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
 
@@ -63,7 +69,15 @@
                               Width="50"
                               Height="50"
                               Margin="20"
-                              IsChecked="False">
+                              IsChecked="False" RenderTransformOrigin="0.5,0.5">
+                    <ToggleButton.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ToggleButton.RenderTransform>
 
                     <ToggleButton.Style>
                         <Style TargetType="{x:Type ToggleButton}">
@@ -84,10 +98,19 @@
                                 </Setter.Value>
                             </Setter>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ToggleButton.IsMouseOver}" Value="True">
+                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=ToggleButton}" Value="True">
+                                    <Setter Property="Foreground" Value="Black" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=ToggleButton}" Value="False">
+                                    <Setter Property="Foreground" Value="White" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsChecked, ElementName=ToggleButton}" Value="True">
                                     <DataTrigger.EnterActions>
-                                        <BeginStoryboard Storyboard="{StaticResource ToggleButtonMouseOver}" />
+                                        <BeginStoryboard Storyboard="{StaticResource ToggleButtonChecked}" />
                                     </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard Storyboard="{StaticResource ToggleButtonUnchecked}" />
+                                    </DataTrigger.ExitActions>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
