@@ -13,6 +13,13 @@ namespace bytePassion.Lib.TimeLib
 		private readonly byte minute;
 		private readonly byte second;
 
+		public Time(Time time)
+		{
+			hour   = time.Hour;
+			minute = time.Minute;
+			second = time.Second;
+		}
+
 		public Time(DateTime time)
 		{
 			hour   = (byte) time.Hour;
@@ -27,12 +34,20 @@ namespace bytePassion.Lib.TimeLib
 			this.second = second;
 		}
 
+		#region Properties: Hour / Minute / Second / SecondsFromDayBegin
+
 		public byte Hour   { get { return hour;   }}
 		public byte Minute { get { return minute; }}
 		public byte Second { get { return second; }}
 
+		private uint SecondsFromDayBegin
+		{
+			get { return (uint)(Hour*3600 + Minute*60 + Second); }
+		}
 
-		#region operators
+		#endregion
+
+		#region operators: == , != , < , > . <= , >= , + , -
 
 		public static bool operator ==(Time t1, Time t2)
 		{
@@ -64,17 +79,17 @@ namespace bytePassion.Lib.TimeLib
 			return t1 > t2 || t1 == t2;
 		}
 
-		#endregion
-
-		private int SecondsFromDayBegin
+		public static Time operator +(Time t, Duration d)
 		{
-			get { return Hour*3600 + Minute*60 + Second; }
+			return GetTimeFromSecondsSinceBeginOfTheDay(t.SecondsFromDayBegin + d.Seconds);
 		}
 
-		public static Duration GetDurationBetween(Time t1, Time t2)
+		public static Time operator -(Time t, Duration d)
 		{
-			throw new NotImplementedException();
+			return GetTimeFromSecondsSinceBeginOfTheDay(t.SecondsFromDayBegin - d.Seconds);
 		}
+
+		#endregion			
 
 		#region ToString / Equals / GetHashCOde
 
@@ -115,8 +130,12 @@ namespace bytePassion.Lib.TimeLib
 
 		#endregion
 
+		#region static: GetDurationBetween / Parse / IsDummy / GetTimeFromSecondsSinceBeginOfTheDay
 
-		#region static: Parse / IsDummy
+		public static Duration GetDurationBetween (Time t1, Time t2)
+		{
+			return new Duration((uint)(Math.Abs((int)t1.SecondsFromDayBegin-(int)t2.SecondsFromDayBegin)));
+		}
 
 		public static Time Parse(string s)
 		{
@@ -145,6 +164,18 @@ namespace bytePassion.Lib.TimeLib
 		public static bool IsDummy(Time t)
 		{
 			return t == Dummy;
+		}
+
+		public static Time GetTimeFromSecondsSinceBeginOfTheDay(uint seconds)
+		{
+			var timeSeconds = seconds % 60;
+			var restTime    = (seconds - timeSeconds) / 60;
+			var timeMinutes = restTime % 60;
+			var timeHour    = (restTime - timeMinutes) / 60;
+
+			return new Time((byte) timeHour, 
+							(byte) timeMinutes, 
+							(byte) timeSeconds);
 		}
 
 		#endregion

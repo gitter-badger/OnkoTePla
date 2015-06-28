@@ -7,33 +7,33 @@ namespace bytePassion.Lib.TimeLib
 
 	public class Duration
 	{
-		private readonly int minutes;
+		private readonly uint seconds;
 
 		public Duration(TimeSpan timeSpan)
 		{
-			minutes = timeSpan.Minutes;
+			seconds = (uint) timeSpan.Seconds;
 		}
 
-		public Duration(int minutes)
+		public Duration(uint seconds)
 		{
-			this.minutes = minutes;
+			this.seconds = seconds;
 		}
 	
-		public int Minutes { get { return minutes; }}
+		public uint Seconds { get { return seconds; }}
 
 		public override bool Equals (object obj)
 		{		
-			return this.Equals(obj, (duration1, duration2) => duration1.minutes == duration2.minutes);			
+			return this.Equals(obj, (duration1, duration2) => duration1.seconds == duration2.seconds);			
 		}
 
 		public override int GetHashCode ()
 		{
-			return Minutes.GetHashCode();
+			return Seconds.GetHashCode();
 		}
 
 		public override string ToString ()
 		{
-			return Minutes.ToString();
+			return Seconds.ToString();
 		}
 	}
 }
