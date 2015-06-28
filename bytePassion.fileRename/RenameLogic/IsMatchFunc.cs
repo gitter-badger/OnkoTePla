@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using bytePassion.FileRename.Enums;
@@ -9,8 +10,7 @@ namespace bytePassion.FileRename.RenameLogic
 	public static class IsMatchFunc
 	{
 		public static Func<string, bool> Create(SearchType searchType, bool caseSensitiv, string searchString)
-		{
-
+		{			
 			switch (searchType)
 			{
 				case SearchType.Characters: return CreateFuncToSearchForCharacterSubsequence(caseSensitiv, searchString);
@@ -19,14 +19,39 @@ namespace bytePassion.FileRename.RenameLogic
 			}
 
 			throw new ArgumentException();
-		}
+		}		
 
 		private static Func<string, bool> CreateFuncToSearchForCharacterSubsequence(bool caseSensitiv, string searchString)
-		{
+		{			
 			if (caseSensitiv)
-				return s => s.Contains(searchString);
+				return s => SplitSearchString(s).Any(s.Contains);
 			else
-				return s => s.ToLower().Contains(searchString.ToLower());	
+				return s => SplitSearchString(s).Any(searchPart => s.ToLower().Contains(searchPart.ToLower()));	
+		}
+
+		private static IEnumerable<string> SplitSearchString(string searchString)
+		{
+			if (IsMultipleSearch(searchString))
+			{
+				return searchString.Split(',')
+								   .Select(part => part.Substring(1, part.Length - 2))
+								   .ToList();
+			}
+			else
+			{
+				return new List<string> {searchString};
+			}
+		}
+
+		private static bool IsMultipleSearch (string searchString)
+		{
+			var parts = searchString.Split(',');
+
+			if (parts.Length < 2) return false;
+
+			return parts.Select(substring => substring.Trim())
+						.All(trimmedPart => trimmedPart[0] == '"' && 
+											trimmedPart[trimmedPart.Length - 1] == '"');
 		}
 
 		private static Func<string, bool> CreateFuncToSearchForWhitespaces()
@@ -65,7 +90,6 @@ namespace bytePassion.FileRename.RenameLogic
 
 					i--;
 				}
-
 				if (i == 2)
 					return false;
 
