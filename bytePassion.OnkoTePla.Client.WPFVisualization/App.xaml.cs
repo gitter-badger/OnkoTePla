@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
@@ -75,7 +77,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			var appointmentOverViewModel = new AppointmentOverViewModel(readModelRepository, configReadRepository);
             var patientsViewModel = new PatientSelectorViewModel(patientRepository);
 
-			var mainWindowViewModel = new MainWindowViewModel(patientsViewModel, addAppointmentTestViewModel, appointmentOverViewModel);
+			var identifier = new AggregateIdentifier(new Date(28, 6, 2015), configReadRepository.GetAllMedicalPractices().First().Id);
+			var readModelFrom28062015 = readModelRepository.GetAppointmentsOfADayReadModel(identifier);
+			var appointmentGridViewModel = new AppointmentGridViewModel(new Time(8,0),new Time(18,0), readModelFrom28062015); 																		
+
+			var mainWindowViewModel = new MainWindowViewModel(patientsViewModel, 
+															  addAppointmentTestViewModel, 
+															  appointmentOverViewModel, 
+															  appointmentGridViewModel);
 
 			var mainWindow = new MainWindow
 			{

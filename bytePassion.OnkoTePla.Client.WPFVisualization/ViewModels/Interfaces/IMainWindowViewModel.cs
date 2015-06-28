@@ -3,9 +3,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
 	internal interface IMainWindowViewModel
 	{		
-		//IPatientSelectorViewModel PatientSelectorViewModel { get; }
-
+		IPatientSelectorViewModel    PatientSelectorViewModel    { get; }
 		IAddAppointmentTestViewModel AddAppointmentTestViewModel { get; }
-		IAppointmentOverViewModel AppointmentOverViewModel { get; }
+		IAppointmentOverViewModel    AppointmentOverViewModel    { get; }
+		IAppointmentGridViewModel    AppointmentGridViewModel    { get; }
 	}
 }

@@ -67,27 +67,35 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
+    <Compile Include="Behaviors\SizeReportingBehavior.cs" />
+    <Compile Include="Converter\AddOffsetToDoubleConverter.cs" />
     <Compile Include="Converter\NullToVisibilityConverter.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
     <Compile Include="Converter\TherapyPlaceToStringConverter.cs" />
     <Compile Include="Converter\TimeFromDateConverter.cs" />
     <Compile Include="SampleData\AddAppointmentTestViewModelSampleData.cs" />
+    <Compile Include="SampleData\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="SampleData\AppointmentOverViewModelSampleData.cs" />
     <Compile Include="SampleData\AppointmentViewModelSampleData.cs" />
     <Compile Include="SampleData\MainWindowViewModelSampleData.cs" />
     <Compile Include="SampleData\PatientSelectorViewModelSampleData.cs" />
     <Compile Include="ViewModels\AddAppointmentTestViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentGridViewModel.cs" />
     <Compile Include="ViewModels\AppointmentOverViewModel.cs" />
     <Compile Include="ViewModels\AppointmentViewModel.cs" />
+    <Compile Include="ViewModels\Base\IViewModelBase.cs" />
     <Compile Include="ViewModels\Helper\PatientListItem.cs" />
     <Compile Include="ViewModels\Interfaces\IAddAppointmentTestViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IAppointmentGridViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IAppointmentOverViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IAppointmentViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPatientSelectorViewModel.cs" />
+    <Compile Include="ViewModels\Helper\TimeSlotLabel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PatientSelectorViewModel.cs" />
+    <Compile Include="ViewModels\Helper\TimeSlotLine.cs" />
     <Compile Include="Views\ActionBar.xaml.cs">
       <DependentUpon>ActionBar.xaml</DependentUpon>
     </Compile>

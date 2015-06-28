@@ -37,18 +37,17 @@
 			</TabItem>
 			<TabItem Header="Übersicht__Experiment">
 				<Grid>
-					<appointment:AppointmentControl Width="200" Height="100" >
-
-						<appointment:AppointmentControl.Style>
-							<Style TargetType="appointment:AppointmentControl">
-								<Setter Property="BorderBrush" Value="Chartreuse"/>
-								<Setter Property="BorderThickness" Value="3"/>
-								<Setter Property="Background" Value="BlueViolet"/>
-								<Setter Property="Foreground" Value="Black"/>
-							</Style>
-						</appointment:AppointmentControl.Style>
-
-					</appointment:AppointmentControl>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="50" />
+					</Grid.ColumnDefinitions>
+					
+					<Rectangle Grid.Column="0"
+							   Fill="Blue"/>
+					
+					<views:AppointmentGrid Grid.Column="1"
+										   DataContext="{Binding AppointmentGridViewModel}"/>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Hinzufügen">
