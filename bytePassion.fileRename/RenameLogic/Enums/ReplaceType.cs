@@ -1,5 +1,5 @@
 ﻿
-namespace bytePassion.FileRename.Enums
+namespace bytePassion.FileRename.RenameLogic.Enums
 {
 	public enum ReplaceType
 	{

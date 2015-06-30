@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using bytePassion.FileRename.Enums;
+using bytePassion.FileRename.RenameLogic.Enums;
 using bytePassion.Lib.FrameworkExtensions;
 
 

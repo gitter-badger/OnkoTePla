@@ -1,17 +1,18 @@
 ﻿
+using bytePassion.FileRename.RenameLogic.Enums;
+
+
 namespace bytePassion.FileRename.RenameLogic
 {
 	public class ChangeAction
-	{
-		public enum ChangeType { File, Directory }
-
+	{		
 		private readonly string originalFileOrDirectoryName;
 		private readonly string renamedFileOrDirectoryName;
-		private readonly ChangeType changedNameType;
+		private readonly ItemType changedNameType;
 
 		public ChangeAction (string originalFileOrDirectoryName,
 							string renamedFileOrDirectoryName,
-							ChangeType changedNameType)
+							ItemType changedNameType)
 		{
 			this.originalFileOrDirectoryName = originalFileOrDirectoryName;
 			this.renamedFileOrDirectoryName = renamedFileOrDirectoryName;
@@ -20,6 +21,6 @@ namespace bytePassion.FileRename.RenameLogic
 
 		public string OriginalFileOrDirectoryName { get { return originalFileOrDirectoryName; } }
 		public string RenamedFileOrDirectoryName { get { return renamedFileOrDirectoryName; } }
-		public ChangeType ChangedNameType { get { return changedNameType; } }
+		public ItemType ChangedNameType { get { return changedNameType; } }
 	}
 }

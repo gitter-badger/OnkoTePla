@@ -1,16 +1,17 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.FileRename.Enums;
+using bytePassion.FileRename.RenameLogic.Enums;
 using bytePassion.Lib.FrameworkExtensions;
 
+#pragma warning disable 0067
 
 namespace bytePassion.FileRename.ViewModel.SampleData
 {
 	public class RenamerViewModelSampleData : IRenamerViewModel
 	{
 		public RenamerViewModelSampleData()
-		{
+		{		
 			IsProcessStartable = true;
 			IsProcessAbortable = false;
 			IsProcessUndoable  = true;

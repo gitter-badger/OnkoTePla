@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using bytePassion.FileRename.RenameLogic.Enums;
 
 
 namespace bytePassion.FileRename.RenameLogic
@@ -10,40 +11,30 @@ namespace bytePassion.FileRename.RenameLogic
 	public class Renamer
 	{
 		
-
 		private readonly Tuple<bool, string> abortReturn = new Tuple<bool, string>(false, "Manuell abgebrochen");
 
 		private readonly DirectoryInfo startFolder;
-
-		private readonly Func<string, bool>   nameIsMatchFunc;
-		private readonly Func<string, string> fileReplaceFunc;
-		private readonly Func<string, string> directoryReplaceFunc;
-		
+		private readonly RenameProcessor renameProcessor;		
 		private readonly bool includeSubfolders;
 		private readonly bool changeFolderNames;
 
 		private volatile bool abortSearch;
-
 		private readonly IList<ChangeAction> changes;		
 
-		public delegate void ItemProcessedEventHandler (string directory, string oldFileName, string newFilename);
+		public delegate void ItemProcessedEventHandler(string directory, string oldFileName, string newFilename);
 		public delegate void ProcessFinishedEventHandler(bool finishedSuccessful, string errorMessage);
 
 		public event ItemProcessedEventHandler ItemProcessed;
 		public event ProcessFinishedEventHandler ProcessFinished;
 
 		public Renamer(DirectoryInfo startFolder,
-					   Func<string, bool> nameIsMatchFunc, 
-					   Func<string, string> fileReplaceFunc, 
-					   Func<string, string> directoryReplaceFunc, 
+					   RenameProcessor renameProcessor, 
 					   bool includeSubfolders, bool changeFolderNames)
 		{
-			this.startFolder = startFolder;
-			this.nameIsMatchFunc = nameIsMatchFunc;			
+			this.startFolder       = startFolder;
+			this.renameProcessor   = renameProcessor;				
 			this.includeSubfolders = includeSubfolders;
-			this.changeFolderNames = changeFolderNames;
-			this.fileReplaceFunc = fileReplaceFunc;
-			this.directoryReplaceFunc = directoryReplaceFunc;
+			this.changeFolderNames = changeFolderNames;			
 
 			changes = new List<ChangeAction>();
 
@@ -83,7 +74,7 @@ namespace bytePassion.FileRename.RenameLogic
 
 				foreach (var changeAction in changes.Reverse())
 				{
-					if (changeAction.ChangedNameType == ChangeAction.ChangeType.File)
+					if (changeAction.ChangedNameType == ItemType.File)
 						File.Move(changeAction.RenamedFileOrDirectoryName, changeAction.OriginalFileOrDirectoryName);
 					else
 						Directory.Move(changeAction.RenamedFileOrDirectoryName, changeAction.OriginalFileOrDirectoryName);											
@@ -95,13 +86,13 @@ namespace bytePassion.FileRename.RenameLogic
 
 		private void AddFileToLastChanges(string originalFileName, string renamedFileName)
 		{
-			changes.Add(new ChangeAction(originalFileName, renamedFileName, ChangeAction.ChangeType.File));			
+			changes.Add(new ChangeAction(originalFileName, renamedFileName, ItemType.File));			
 			UndoAvailable = true;
 		}
 
 		private void AddDirectoryToLastChanges(string originalDirectoryName, string renamedDirectoryName)
 		{
-			changes.Add(new ChangeAction(originalDirectoryName, renamedDirectoryName, ChangeAction.ChangeType.Directory));		
+			changes.Add(new ChangeAction(originalDirectoryName, renamedDirectoryName, ItemType.Directory));		
 			UndoAvailable = true;
 		}
 
@@ -122,10 +113,10 @@ namespace bytePassion.FileRename.RenameLogic
 					if (abortSearch)
 						return abortReturn;
 
-					if (nameIsMatchFunc(currentFile.Name))
+					if (renameProcessor.IsMatch(currentFile.Name))
 					{
 						var oldName = currentFile.Name;
-						var newName = fileReplaceFunc(currentFile.Name);
+						var newName = renameProcessor.RefactoredName(currentFile.Name, ItemType.File);
 
 						while (File.Exists(currentFile.DirectoryName + "\\" + newName))
 							newName = Path.GetFileNameWithoutExtension(newName) + "_2" + Path.GetExtension(newName);
@@ -163,10 +154,10 @@ namespace bytePassion.FileRename.RenameLogic
 					return abortReturn;
 
 				if (changeFolderNames)
-					if (nameIsMatchFunc(directory.Name))
+					if (renameProcessor.IsMatch(directory.Name))
 					{
 						var oldName = directory.Name;
-						var newName = directoryReplaceFunc(directory.Name);
+						var newName = renameProcessor.RefactoredName(directory.Name, ItemType.Directory);
 						
 						if (directory.Parent != null)
 						{

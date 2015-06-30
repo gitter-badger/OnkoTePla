@@ -6,8 +6,8 @@ using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using bytePassion.FileRename.Enums;
 using bytePassion.FileRename.RenameLogic;
+using bytePassion.FileRename.RenameLogic.Enums;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
 using Ookii.Dialogs.Wpf;
@@ -121,9 +121,8 @@ namespace bytePassion.FileRename.ViewModel
 		private void SetUpRenamingProcess()
 		{
 			renamer = new Renamer(new DirectoryInfo(StartDirectory), 
-								  IsMatchFunc.Create(SearchType, SearchParameterCaseSensitivity, SearchString), 
-								  ReplaceFunc.CreateFileReplaceFunc(SearchType, ReplaceType, SearchString, ReplaceString, SearchParameterCaseSensitivity),
-								  ReplaceFunc.CreateDirectoryReplaceFunc(SearchType, ReplaceType, SearchString, ReplaceString, SearchParameterCaseSensitivity),
+								  RenameProcessorBuilder.Build(SearchType, SearchString, SearchParameterCaseSensitivity, 
+															   ReplaceType, ReplaceString),
 								  SearchParameterIncludeSubfolders, 
 								  SearchParameterChangeFolderNames);
 

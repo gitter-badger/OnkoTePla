@@ -6,9 +6,9 @@
 		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 		xmlns:sampleData="clr-namespace:bytePassion.FileRename.ViewModel.SampleData"
 		xmlns:converter="clr-namespace:bytePassion.FileRename.Converter"
-		xmlns:enum="clr-namespace:bytePassion.FileRename.Enums"
         xmlns:behaviors="clr-namespace:bytePassion.FileRename.Behaviors"
         xmlns:lib="clr-namespace:bytePassion.Lib.FrameworkExtensions;assembly=bytePassion.Lib"
+        xmlns:enum="clr-namespace:bytePassion.FileRename.RenameLogic.Enums"
 
         mc:Ignorable="d"
         Title="bytePassion - FileRenameTool" Height="699.8" Width="885" MinHeight="440" MinWidth="820">

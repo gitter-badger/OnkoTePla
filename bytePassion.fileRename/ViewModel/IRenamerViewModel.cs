@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.FileRename.Enums;
+using bytePassion.FileRename.RenameLogic.Enums;
 using bytePassion.Lib.FrameworkExtensions;
 
 
