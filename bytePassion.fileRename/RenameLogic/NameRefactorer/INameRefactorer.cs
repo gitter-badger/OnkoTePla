@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace bytePassion.FileRename.RenameLogic
+namespace bytePassion.FileRename.RenameLogic.NameRefactorer
 {
 
 	public interface INameRefactorer

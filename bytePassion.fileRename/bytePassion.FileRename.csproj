@@ -72,8 +72,8 @@
     <Compile Include="RenameLogic\Enums\SearchType.cs" />
     <Compile Include="RenameLogic\ChangeAction.cs" />
     <Compile Include="RenameLogic\Enums\ItemType.cs" />
-    <Compile Include="RenameLogic\INameAnalyzer.cs" />
-    <Compile Include="RenameLogic\INameRefactorer.cs" />
+    <Compile Include="RenameLogic\NameAnalyzer\INameAnalyzer.cs" />
+    <Compile Include="RenameLogic\NameRefactorer\INameRefactorer.cs" />
     <Compile Include="RenameLogic\Helper\IndexSearcher.cs" />
     <Compile Include="RenameLogic\NameAnalyzer\NonCaseSensitiveStringAnalyzer.cs" />
     <Compile Include="RenameLogic\NameAnalyzer\CaseSensitiveStringAnalyzer.cs" />

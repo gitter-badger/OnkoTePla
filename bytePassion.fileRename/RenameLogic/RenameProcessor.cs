@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using bytePassion.FileRename.RenameLogic.Enums;
+using bytePassion.FileRename.RenameLogic.NameAnalyzer;
+using bytePassion.FileRename.RenameLogic.NameRefactorer;
 
 
 namespace bytePassion.FileRename.RenameLogic
