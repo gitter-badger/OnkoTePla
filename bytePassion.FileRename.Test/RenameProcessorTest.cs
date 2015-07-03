@@ -15,7 +15,7 @@ namespace bytePassion.FileRename.Test
 
 		    const string filename = "my file.txt";
 
-		    bool isMatch = sut.IsMatch(filename);
+		    bool isMatch = sut.IsMatch(filename, ItemType.File);
 		    var refactoredFilename = sut.RefactoredName(filename, ItemType.File);
 
 			Assert.True(isMatch);
@@ -29,7 +29,7 @@ namespace bytePassion.FileRename.Test
 			var sut = RenameProcessorBuilder.Build(SearchType.WhiteSpace, "", false, ReplaceType.Delete, "");
 			
 
-			bool isMatch = sut.IsMatch(filename);
+			bool isMatch = sut.IsMatch(filename, ItemType.File);
 			var refactoredFilename = sut.RefactoredName(filename, ItemType.File);
 
 			Assert.True(isMatch);
