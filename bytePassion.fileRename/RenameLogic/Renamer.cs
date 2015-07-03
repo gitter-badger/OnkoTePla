@@ -113,7 +113,7 @@ namespace bytePassion.FileRename.RenameLogic
 					if (abortSearch)
 						return abortReturn;
 
-					if (renameProcessor.IsMatch(currentFile.Name))
+					if (renameProcessor.IsMatch(currentFile.Name, ItemType.File))
 					{
 						var oldName = currentFile.Name;
 						var newName = renameProcessor.RefactoredName(currentFile.Name, ItemType.File);
@@ -154,7 +154,7 @@ namespace bytePassion.FileRename.RenameLogic
 					return abortReturn;
 
 				if (changeFolderNames)
-					if (renameProcessor.IsMatch(directory.Name))
+					if (renameProcessor.IsMatch(directory.Name, ItemType.Directory))
 					{
 						var oldName = directory.Name;
 						var newName = renameProcessor.RefactoredName(directory.Name, ItemType.Directory);

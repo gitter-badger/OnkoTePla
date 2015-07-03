@@ -17,9 +17,17 @@ namespace bytePassion.FileRename.RenameLogic
 			this.refactorer = refactorer;			
 		}
 
-		public bool IsMatch(string name)
+		public bool IsMatch(string name, ItemType type)
 		{
-			return analyzer.IsMatch(name);
+			if (type == ItemType.Directory)
+			{
+				return analyzer.IsMatch(name);
+			}
+			else // (type == ItemType.File)
+			{				
+				var nameWithoutExtension = Path.GetFileNameWithoutExtension(name);
+				return analyzer.IsMatch(nameWithoutExtension);
+			}
 		}
 
 		public string RefactoredName(string name, ItemType type)
