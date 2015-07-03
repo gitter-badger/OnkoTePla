@@ -71,8 +71,7 @@ namespace bytePassion.FileRename.Test
 				new object[]{ "myfile", "\"file\", \"foo\"" , new List<Tuple<int, int>> { new Tuple<int, int>(2, 6) }},				
 				new object[]{ "myfile", "\"f\", \"e\""      , new List<Tuple<int, int>> { new Tuple<int, int>(2, 3), new Tuple<int, int>(5, 6) }},
 				new object[]{ "myfile", "\"my\", \"yfi\"" , new List<Tuple<int, int>> { new Tuple<int, int>(0, 2) }},	
-				new object[]{ "foooobar", "\"oo\", \"foo\"" , new List<Tuple<int, int>> { new Tuple<int, int>(0, 3), new Tuple<int, int>(3,5) }}
-//				new object[]{ "myFiLe", "\"fIle\", \"foo\"" , true  },			
+				new object[]{ "foooobar", "\"oo\", \"foo\"" , new List<Tuple<int, int>> { new Tuple<int, int>(0, 3), new Tuple<int, int>(3,5) }}		
 			};
 
 	}
