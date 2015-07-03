@@ -16,11 +16,12 @@ namespace bytePassion.FileRename.Test
 			var resultList = IndexSearcher.GetReplacementIndexTuples(name, search);
 			Assert.Equal(resultList.Count(), 0);
 		}
-
+		
 		public static readonly IEnumerable<object[]> TestDataForIndexSearcherFindsNoIndexTuplesTest = 
 			new[]
 			{
-				new object[]{ "myfile", "myt"}								
+				new object[]{ "myfile", "myt"},
+				new object[]{ "myt",    "myfile"}
 			};
 
 
