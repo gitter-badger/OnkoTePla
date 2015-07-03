@@ -22,11 +22,18 @@ namespace bytePassion.FileRename.Test
 		public static readonly IEnumerable<object[]> TestDataForSpezialEndingRecognitionTest = 
 			new[]
 			{
-				new object[]{ "myfile",    false  },
-				new object[]{ "f-34",      false  },
-				new object[]{ "file-2344", true   },				
-				new object[]{ "file-23aa", true   },
-				new object[]{ "file-2baa", false   },
+				new object[]{ "myfile",    false },
+				new object[]{ "f-34",      false },
+				new object[]{ "file-2344", true  },								
+				new object[]{ "file-2baa", true  },
+				new object[]{ "file-2bnm", false },
+				new object[]{ "file-8476930938", true },
+				new object[]{ "file-84a69c209t", true },
+				new object[]{ "file-84ac9b209t", true },
+				new object[]{ "file-8qutr9r09t", false },				
+				new object[]{ "file-84a69r20879t", false },
+				new object[]{ "file_84ac9b209t", true },
+				new object[]{ "file_8qutr9r09t", false }
 			};
 	}
 }

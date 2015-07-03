@@ -116,7 +116,7 @@
 							
 							<RadioButton Margin="5,2" 
 										 GroupName="3" 
-										 Content="Spezialendung (z.B. -34g56c8933 oder __34g56c8933)"
+										 Content="Spezialendung [hexadezimalzahl] (z.B. -34a56c8933 oder __34f56c)"
 										 IsChecked="{Binding SearchType, 
 															 Mode=TwoWay, 
 															 Converter={StaticResource SearchTypeToBoolConverter}, 

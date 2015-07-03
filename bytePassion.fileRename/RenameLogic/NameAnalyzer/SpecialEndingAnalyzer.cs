@@ -12,7 +12,7 @@ namespace bytePassion.FileRename.RenameLogic.NameAnalyzer
 		//	- the special ending beginns with '-' or '_'
 		//	- minimal length 4
 		//	- maximal length 10
-		//	- more numbers than letters
+		//	- more hex-numbers than letters
 
 		public bool IsMatch(string name)
 		{
@@ -34,18 +34,19 @@ namespace bytePassion.FileRename.RenameLogic.NameAnalyzer
 
 			var specialEnding = name.Substring(i);
 
-			if (specialEnding.Length > 3 || specialEnding.Length < 10)
+			if (specialEnding.Length > 4 && specialEnding.Length < 12)
 			{
 				var numberCount = 0;
 				var letterCount = 0;
 
 				foreach (char c in specialEnding.ToLower())
 				{
-					     if (c >= 'a' && c <= 'z') letterCount++;					
+					     if (c >= 'a' && c <= 'f') numberCount++;					
 					else if (c >= '0' && c <= '9') numberCount++;
+					else if (c >= 'g' && c <= 'z') letterCount++;
 				}
 
-				if (numberCount*2 > letterCount)
+				if (numberCount > letterCount)
 					return true;
 			}
 
