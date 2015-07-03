@@ -7,13 +7,13 @@ namespace bytePassion.FileRename.RenameLogic.Helper
 {
 	public static class StringReplacer
 	{
-		public static string GetReplacedString(string name, string replacement, IEnumerable<Tuple<int, int>> indecies)
+		public static string GetReplacedString(string name, string replacement, IEnumerable<Tuple<int, int>> replacementIndecies)
 		{
 			var stringBuilder = new StringBuilder();
 
 			int currentIndex = 0;
 
-			foreach (var indexTuple in indecies)
+			foreach (var indexTuple in replacementIndecies)
 			{
 				int startIndex = indexTuple.Item1;
 				int endIndex = indexTuple.Item2;

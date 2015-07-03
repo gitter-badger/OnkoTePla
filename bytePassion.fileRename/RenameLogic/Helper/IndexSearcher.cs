@@ -6,7 +6,7 @@ namespace bytePassion.FileRename.RenameLogic.Helper
 {
 	public static class IndexSearcher
 	{
-		public static IEnumerable<Tuple<int, int>> GetIndecies(string name, string search)
+		public static IEnumerable<Tuple<int, int>> GetReplacementIndexTuples(string name, string search)
 		{
 			IList<Tuple<int, int>> indecies = new List<Tuple<int, int>>();
 

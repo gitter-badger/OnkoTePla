@@ -13,7 +13,7 @@ namespace bytePassion.FileRename.Test
 		[MemberData("TestDataForIndexSearcherFindsNoIndexTuplesTest")]
 		public void IndexSearcherFindsNoIndexTuples(string name, string search)
 		{
-			var resultList = IndexSearcher.GetIndecies(name, search);
+			var resultList = IndexSearcher.GetReplacementIndexTuples(name, search);
 			Assert.Equal(resultList.Count(), 0);
 		}
 
@@ -28,7 +28,7 @@ namespace bytePassion.FileRename.Test
 		[MemberData("TestDataForIndexSearcherFindsOneIndexTupleTest")]
 		public void IndexSearcherFindsOneIndexTuple (string name, string search, Tuple<int, int> indexTuple)
 		{
-			IReadOnlyList<Tuple<int, int>> resultList = IndexSearcher.GetIndecies(name, search).ToList();	
+			IReadOnlyList<Tuple<int, int>> resultList = IndexSearcher.GetReplacementIndexTuples(name, search).ToList();	
 		
 			Assert.Equal(resultList.Count, 1);
 			Assert.Equal(resultList[0], indexTuple);
@@ -50,7 +50,7 @@ namespace bytePassion.FileRename.Test
 		public void IndexSearcherFindsTwoIndexTuples (string name, string search, 
 													  Tuple<int, int> indexTuple1, Tuple<int, int> indexTuple2)
 		{
-			IReadOnlyList<Tuple<int, int>> resultList = IndexSearcher.GetIndecies(name, search).ToList();
+			IReadOnlyList<Tuple<int, int>> resultList = IndexSearcher.GetReplacementIndexTuples(name, search).ToList();
 
 			Assert.Equal(resultList.Count, 2);
 			Assert.Equal(resultList[0], indexTuple1);

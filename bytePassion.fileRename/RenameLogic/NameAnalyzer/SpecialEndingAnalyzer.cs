@@ -8,6 +8,7 @@ namespace bytePassion.FileRename.RenameLogic.NameAnalyzer
 	{
 		// conditions for special ending
 		//  - complete name has more than 4 characters
+		//  - name without ending has more than 2 character
 		//	- the special ending beginns with '-' or '_'
 		//	- minimal length 4
 		//	- maximal length 10
@@ -33,7 +34,7 @@ namespace bytePassion.FileRename.RenameLogic.NameAnalyzer
 
 			var specialEnding = name.Substring(i);
 
-			if (specialEnding.Length > 4 || specialEnding.Length < 10)
+			if (specialEnding.Length > 3 || specialEnding.Length < 10)
 			{
 				var numberCount = 0;
 				var letterCount = 0;
