@@ -75,8 +75,8 @@
     <Compile Include="RenameLogic\NameAnalyzer\INameAnalyzer.cs" />
     <Compile Include="RenameLogic\NameRefactorer\INameRefactorer.cs" />
     <Compile Include="RenameLogic\Helper\IndexSearcher.cs" />
-    <Compile Include="RenameLogic\NameAnalyzer\NonCaseSensitiveStringAnalyzer.cs" />
-    <Compile Include="RenameLogic\NameAnalyzer\CaseSensitiveStringAnalyzer.cs" />
+    <Compile Include="RenameLogic\NameAnalyzer\SingleStringAnalyzer.cs" />
+    <Compile Include="RenameLogic\NameAnalyzer\MultiStringAnalyzer.cs" />
     <Compile Include="RenameLogic\NameAnalyzer\SpecialEndingAnalyzer.cs" />
     <Compile Include="RenameLogic\NameAnalyzer\WhiteSpaceAnalyzer.cs" />
     <Compile Include="RenameLogic\NameRefactorer\StringRefactorer.cs" />

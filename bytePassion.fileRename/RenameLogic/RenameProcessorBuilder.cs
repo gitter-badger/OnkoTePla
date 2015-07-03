@@ -1,4 +1,5 @@
-﻿using bytePassion.FileRename.RenameLogic.Enums;
+﻿using System.Linq;
+using bytePassion.FileRename.RenameLogic.Enums;
 using bytePassion.FileRename.RenameLogic.NameAnalyzer;
 using bytePassion.FileRename.RenameLogic.NameRefactorer;
 
@@ -18,10 +19,15 @@ namespace bytePassion.FileRename.RenameLogic
 				case SearchType.Special:    { nameAnalyzer = new SpecialEndingAnalyzer(); break; }	
 				case SearchType.Characters:
 				{
-					if (searchCaseSensitive)
-						nameAnalyzer = new CaseSensitiveStringAnalyzer(searchString);
+					
+					var isMultiSearch = searchString.Split(',')
+													.Select(split => split.Trim())
+													.All(split => split.StartsWith("\"") && split.EndsWith("\""));
+
+					if (isMultiSearch)
+						nameAnalyzer = new MultiStringAnalyzer (searchString, searchCaseSensitive);
 					else
-						nameAnalyzer = new NonCaseSensitiveStringAnalyzer(searchString);
+						nameAnalyzer = new SingleStringAnalyzer(searchString, searchCaseSensitive);
 					break;
 				}							
 			}
