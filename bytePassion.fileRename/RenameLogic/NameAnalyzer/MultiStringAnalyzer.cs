@@ -14,11 +14,12 @@ namespace bytePassion.FileRename.RenameLogic.NameAnalyzer
 		public MultiStringAnalyzer(string searchString, bool searchCaseSensitive)
 		{
 			this.searchCaseSensitive = searchCaseSensitive;
-			
-			searchStrings = searchString.Split(',')
-			                            .Select(split => split.Trim())
-										.Select(split => split.Substring(1, split.Length-2));
-			
+
+			var actualSearchString = searchCaseSensitive ? searchString : searchString.ToLower();
+
+			searchStrings = actualSearchString.Split(',')
+											  .Select(split => split.Trim())
+											  .Select(split => split.Substring(1, split.Length-2));			
 		}
 
 		public bool IsMatch(string name)
