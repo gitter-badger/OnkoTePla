@@ -86,6 +86,24 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 				DataContext = mainWindowViewModel
 			};
 
+			//			// TODO: justForTesting ////////////////////////////////////////////
+			//
+			//			addAppointmentTestViewModel.SelectedDateAsString = "3.7.2015";
+			//			addAppointmentTestViewModel.SelectedMedicalPractice = configReadRepository.GetAllMedicalPractices().First();
+			//			addAppointmentTestViewModel.SelectedUser = configReadRepository.GetAllUsers().First();
+			//			addAppointmentTestViewModel.Description = "blubb234";
+			//			addAppointmentTestViewModel.StartTimeAsString = "10:00";
+			//			addAppointmentTestViewModel.EndTimeAsString = "14:00";
+			//
+			//			addAppointmentTestViewModel.LoadReadModel.Execute(null);
+			//
+			//			////////////////////////////////////////////////////////////////////
+			//
+			//			appointmentOverViewModel.SelectedDateAsString = "3.7.2015";
+			//			appointmentOverViewModel.SelectedMedicalPractice = configReadRepository.GetAllMedicalPractices().First();
+			//
+			//			////////////////////////////////////////////////////////////////////
+
 			mainWindow.ShowDialog();
 
 

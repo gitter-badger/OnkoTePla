@@ -69,10 +69,10 @@
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
     <Compile Include="Behaviors\SizeReportingBehavior.cs" />
     <Compile Include="Converter\AddOffsetToDoubleConverter.cs" />
+    <Compile Include="Converter\ComputeAppointmentPosition.cs" />
     <Compile Include="Converter\NullToVisibilityConverter.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
-    <Compile Include="Converter\TestConverter.cs" />
     <Compile Include="Converter\TherapyPlaceToStringConverter.cs" />
     <Compile Include="Converter\TimeFromDateConverter.cs" />
     <Compile Include="SampleData\AddAppointmentTestViewModelSampleData.cs" />

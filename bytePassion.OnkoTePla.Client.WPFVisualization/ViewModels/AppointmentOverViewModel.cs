@@ -34,7 +34,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			this.readModelRepository = readModelRepository;
 			this.configurationReadRepository = configurationReadRepository;
 			displayedAppointments = new ObservableCollection<Appointment>();
-			medicalPractices = new ObservableCollection<MedicalPractice>(configurationReadRepository.GetAllMedicalPractices());
+			medicalPractices = new ObservableCollection<MedicalPractice>(configurationReadRepository.GetAllMedicalPractices());			
 
 			loadReadModelCommand = new Command(
 				() =>

@@ -76,7 +76,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			{
 				case ChangeAction.Added:
 				{
-					// TODO;
+					var appointment = appointmentChangedEventArgs.Appointment;
+					appointmentsOnGrid[appointment.TherapyPlace.Id].Add(new AppointmentViewModel(appointment));
 					break;
 				}
 			}
@@ -103,15 +104,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 			therapyPlaceRows.Clear();
 
-			foreach (var room in medicalPractice.Rooms)
+			foreach (var room in medicalPractice.Rooms)  
 				foreach (var therapyPlace in room.TherapyPlaces)
 				{
 					var appointmentListForTherapyPlace = new ObservableCollection<IAppointmentViewModel>();
+					appointmentsOnGrid.Add(therapyPlace.Id, appointmentListForTherapyPlace);
 					therapyPlaceRows.Add(new TherapyPlaceRowViewModel(appointmentListForTherapyPlace, therapyPlace,room.DisplayedColor, startTime, endTime));
 				}
 
-			// Add Appointments to List
-
+			foreach (var appointment in appointmentReadModel.Appointments)			
+				appointmentsOnGrid[appointment.TherapyPlace.Id].Add(new AppointmentViewModel(appointment));
+			
 			RecomputeGrid();
 		}
 

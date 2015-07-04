@@ -4,9 +4,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
+             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
+             xmlns:viewModels="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels"
+             xmlns:interfaces="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces"
+             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              d:DesignHeight="30"
              d:DesignWidth="600"
              mc:Ignorable="d">	
+	
+	<UserControl.Resources>
+		<converter:ComputeAppointmentPosition x:Key="ComputeAppointmentPosition"/>
+	</UserControl.Resources>
 	
 	<d:UserControl.DataContext>
 		<sampleData:TherapyPlaceRowViewModelSampleData />
@@ -38,7 +48,53 @@
 		<Border Grid.Column="2"
 		        BorderBrush="Black"
 		        BorderThickness="1"
-		        CornerRadius="3" />
+		        CornerRadius="3" >
+
+			<i:Interaction.Behaviors>
+				<behaviors:SizeReportingBehavior CurrentWidth= "{Binding TimeSlotWidth, 
+																		 Mode=OneWayToSource, 
+																		 UpdateSourceTrigger=PropertyChanged}"/>
+			</i:Interaction.Behaviors>
+
+			<ItemsControl ItemsSource="{Binding Appointments}">
+				
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+<!--						<Canvas/>-->
+						<StackPanel Orientation="Horizontal"></StackPanel>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<views:AppointmentView>
+							<views:AppointmentView.Width>
+								100
+							</views:AppointmentView.Width>
+						</views:AppointmentView>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+
+				<!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
+<!--				<ItemsControl.ItemContainerStyle>-->
+<!--					<Style>-->
+<!--						<Setter Property="Canvas.Top" Value="0"/>-->
+<!--						<Setter Property="Canvas.Left">-->
+<!--							<Setter.Value>-->
+<!--								<MultiBinding Converter="{StaticResource ComputeAppointmentPosition}">-->
+<!--									<Binding Path="StartTime"/>-->
+<!--									<Binding Path="SlotTimeStart"   RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}"/>-->
+<!--									<Binding Path="LengthOfOneHour" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}"/>									-->
+<!--								</MultiBinding>-->
+<!--							</Setter.Value>-->
+<!--						</Setter>-->
+<!--					</Style>-->
+<!--				</ItemsControl.ItemContainerStyle>-->
+				<!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
+				
+			</ItemsControl>
+			
+		</Border>
 	</Grid>
 
 </UserControl>

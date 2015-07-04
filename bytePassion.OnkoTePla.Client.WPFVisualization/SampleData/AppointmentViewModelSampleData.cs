@@ -16,14 +16,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 		public AppointmentViewModelSampleData(Time startTime, Time endTime)
 		{
 			PatientDisplayName = "Jerry Black";
-			FrameworkElementWidth = 300;
+			Duration = new Duration(3600);
 
 			StartTime = startTime == default(Time) ? new Time(7, 30) : startTime;
 			EndTime   = endTime   == default(Time) ? new Time(7, 30) : endTime;
 		}
 
 		public string PatientDisplayName    { get; private set; }
-		public double FrameworkElementWidth { get; private set; }
+		public Duration Duration { get; private set; }
 
 		public Time StartTime { get; set; }
 		public Time EndTime   { get; set; }

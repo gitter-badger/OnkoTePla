@@ -19,7 +19,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			get { return appointment.Patient.Name; }
 		}
 
-		public double FrameworkElementWidth { get; private set; }
+		public Duration Duration { get; private set; }
 
 		public Time StartTime { get; set; }
 		public Time EndTime   { get; set; }

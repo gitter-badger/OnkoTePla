@@ -5,17 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="{Binding FrameworkElementWidth}">
+             d:DesignHeight="50" d:DesignWidth="200">
 	
 	<d:UserControl.DataContext>
 		<sampleData:AppointmentViewModelSampleData/>
 	</d:UserControl.DataContext>
 	
-	<Border CornerRadius="6"
+	<Border CornerRadius="3"
 			BorderThickness="1"
 			Background="Beige"
-			BorderBrush="Black"
-			Width="{Binding FrameworkElementWidth}">
+			BorderBrush="Black">
 
 		<TextBlock HorizontalAlignment="Center" 
 				   VerticalAlignment="Center" 

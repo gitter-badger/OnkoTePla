@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
              mc:Ignorable="d" 
-             d:DesignHeight="370" d:DesignWidth="300">
+             d:DesignHeight="370" d:DesignWidth="300"
+			 Background="White">
 
 	<d:UserControl.DataContext>
 		<sampleData:AddAppointmentTestViewModelSampleData/>

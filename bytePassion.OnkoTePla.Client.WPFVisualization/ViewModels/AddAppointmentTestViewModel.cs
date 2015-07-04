@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.TimeLib;
@@ -47,6 +48,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			this.commandBus = commandBus;
 			this.readModelRepository = readModelRepository;
 			therapyPlaces = new ObservableCollection<TherapyPlace>();
+			
 
 			loadReadModelCommand = new Command(
 				() =>
@@ -75,7 +77,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 													   Description, 
 													   Time.Parse(StartTimeAsString), Time.Parse(EndTimeAsString), 
 													   SelectedTherapyPlace.Id));
-				});
+				});			
 		}
 
 		public IEnumerable<MedicalPractice> MedicalPractices
@@ -90,7 +92,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		public IEnumerable<Patient> Patients
 		{
-			get { return patients.GetAllPatients(); }
+			get { return patients.GetAllPatients().Take(100); }
 		}
 
 		public ObservableCollection<TherapyPlace> TherapyPlaces
