@@ -8,32 +8,38 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
 	public sealed class MedicalPractice
 	{
-		private readonly IReadOnlyList<Room> rooms;
+		private readonly Guid id;
 		private readonly string name;
 		private readonly uint version;
-		private readonly Guid id;
+
+		private readonly IReadOnlyList<Room> rooms;
+		private readonly HoursOfOpening hoursOfOpening;
 		private readonly MedicalPractice previousVersion;
 
 
-		public static MedicalPractice CreateNewMedicalPractice(IReadOnlyList<Room> rooms, string name)
+		public static MedicalPractice CreateNewMedicalPractice(IReadOnlyList<Room> rooms, string name, HoursOfOpening hoursOfOpening)
 		{
-			return new MedicalPractice(rooms, name, 0, Guid.NewGuid(), null);
+			return new MedicalPractice(rooms, name, 0, Guid.NewGuid(), null, hoursOfOpening);
 		}
 
-		public MedicalPractice(IEnumerable<Room> rooms, string name, uint version, Guid id, MedicalPractice previousVersion)
+		public MedicalPractice(IEnumerable<Room> rooms, string name, uint version, Guid id, 
+							   MedicalPractice previousVersion, HoursOfOpening hoursOfOpening)
 		{
 			this.rooms = rooms.ToList();
 			this.name = name;
 			this.version = version;
 			this.id = id;
 			this.previousVersion = previousVersion;
+			this.hoursOfOpening = hoursOfOpening;
 		}
 
-		public uint              Version         { get { return version;         }}
-		public IEnumerable<Room> Rooms           { get { return rooms.ToList();  }}
-		public string            Name            { get { return name;            }}
 		public Guid              Id              { get { return id;              }}
+		public string            Name            { get { return name;            }}
+		public uint              Version         { get { return version;         }}
+		public IEnumerable<Room> Rooms           { get { return rooms.ToList();  }}		
+		public HoursOfOpening    HoursOfOpening  { get { return hoursOfOpening;  }}
 		public MedicalPractice   PreviousVersion { get { return previousVersion; }}
+		
 
 		public bool HasPreviousVersion
 		{
@@ -47,7 +53,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 			var updatedRoomList = Rooms.Concat(new List<Room> {newRoom}).ToList();
 			var updatedVersion = Version + 1;
 
-			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this);
+			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this, HoursOfOpening);
 		}
 
 		public MedicalPractice RemoveRoom(Guid roomToRemove)
@@ -55,7 +61,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 			var updatedRoomList = Rooms.Where(room => room.Id != roomToRemove).ToList();
 			var updatedVersion = Version + 1;
 
-			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this);
+			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this, HoursOfOpening);
 		}
 
 		public MedicalPractice UpdateRoom(Guid roomToUpdate, Room newRoomVariant)
@@ -65,23 +71,32 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 									   .ToList();
 			var updatedVersion = Version + 1;
 
-			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this);
+			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this, HoursOfOpening);
 		}
 
 		#endregion
 
-		#region rename
+		#region modify name
 
 		public MedicalPractice Rename(string newName)
 		{
 			var updatedVersion = Version + 1;
-
-			return new MedicalPractice(Rooms, newName, updatedVersion, Id, this);
+			return new MedicalPractice(Rooms, newName, updatedVersion, Id, this, HoursOfOpening);
 		}
 
 		#endregion
 
-		#region access previousVersions / therapyPlaces / Romms
+		#region modify hoursOfOpening
+
+		public MedicalPractice SetNewHoursOfOpening(HoursOfOpening newHoursOfOpening)
+		{
+			var updatedVersion = Version + 1;
+			return new MedicalPractice(Rooms, Name, updatedVersion, Id, this, newHoursOfOpening);
+		}
+
+		#endregion
+
+		#region access previousVersions / therapyPlaces / Rooms
 
 		public MedicalPractice GetVersion(uint requestedVersion)
 		{

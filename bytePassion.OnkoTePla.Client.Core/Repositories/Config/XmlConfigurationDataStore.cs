@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
@@ -49,8 +50,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		private const string Users = "users";
 		private const string User  = "user";
 
-		private const string Room         = "room";
-		private const string TherapyPlace = "therapyPlace";
+		private const string Room                 = "room";
+		private const string TherapyPlace         = "therapyPlace";
+		private const string HoursOfOpening       = "hoursOfOpening";
+		private const string AdditionalOpenedDays  = "additionalOpendDays";
+		private const string AdditionalClosedDays = "additionalClosedDays";
+		private const string Day                  = "day";
 
 		private const string IconTypeAttribute            = "iconType";			
 		private const string MPVersionAttribute           = "version";						
@@ -58,6 +63,32 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		private const string PassworAttribute             = "password";
 		private const string AccessablePratice            = "accessablePractice";
 		private const string HasPreviousVersionsAttribute = "hasPreviousVersions";
+
+		private const string DateAttribute = "date";
+
+		private const string OpeningTimeMondayAttribute    = "openingTimeMonday";
+		private const string OpeningTimeTuesdayAttribute   = "openingTimeTuesday";
+		private const string OpeningTimeWednesdayAttribute = "openingTimeWednesday";
+		private const string OpeningTimeThursdayAttribute  = "openingTimeThursday";
+		private const string OpeningTimeFridayAttribute    = "openingTimeFriday";
+		private const string OpeningTimeSaturdayAttribute  = "openingTimeSaturday";
+		private const string OpeningTimeSundayAttribute    = "openingTimeSunday";
+
+		private const string ClosingTimeMondayAttribute    = "closingTimeMonday";
+		private const string ClosingTimeTuesdayAttribute   = "closingTimeTuesday";
+		private const string ClosingTimeWednesdayAttribute = "closingTimeWednesday";
+		private const string ClosingTimeThursdayAttribute  = "closingTimeThursday";
+		private const string ClosingTimeFridayAttribute    = "closingTimeFriday";
+		private const string ClosingTimeSaturdayAttribute  = "closingTimeSaturday";
+		private const string ClosingTimeSundayAttribute    = "closingTimeSunday";
+
+		private const string IsOpenOnMondayAttribute    = "isOpenOnMonday";
+		private const string IsOpenOnTuesdayAttribute   = "isOpenOnTuesday";
+		private const string IsOpenOnWednesdayAttribute = "isOpenOnWednesday";
+		private const string IsOpenOnThursdayAttribute  = "isOpenOnThursday";
+		private const string IsOpenOnFridayAttribute    = "isOpenOnFriday";
+		private const string IsOpenOnSaturdayAttribute  = "isOpenOnSaturday";
+		private const string IsOpenOnSundayAttribute    = "isOpenOnSunday";
 		#endregion
 
 		public void Persist(Configuration config)
@@ -105,7 +136,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			writer.WriteAttributeString(PassworAttribute, user.Password);
 			writer.WriteAttributeString(IdAttribute, user.Id.ToString());
 
-			int index = 0;
+			var index = 0;
 			foreach (var id in user.ListOfAccessableMedicalPractices)
 			{
 				writer.WriteAttributeString(AccessablePratice + (index++), id.ToString());
@@ -129,9 +160,78 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				WriteRoom(writer, room);
 			}
 
+			WriteHoursOfOpening(writer, medicalPractice.HoursOfOpening);
+
 			if (medicalPractice.HasPreviousVersion)
 				WriteMedicalPractice(writer, medicalPractice.PreviousVersion);
 
+			writer.WriteEndElement();
+		}
+
+		private static void WriteHoursOfOpening(XmlWriter writer, HoursOfOpening hoursOfOpening)
+		{
+			writer.WriteStartElement(HoursOfOpening);
+
+			writer.WriteAttributeString(OpeningTimeMondayAttribute,    hoursOfOpening.OpeningTimeMonday.ToString());
+			writer.WriteAttributeString(OpeningTimeTuesdayAttribute,   hoursOfOpening.OpeningTimeTuesday.ToString());
+			writer.WriteAttributeString(OpeningTimeWednesdayAttribute, hoursOfOpening.OpeningTimeWednesday.ToString());
+			writer.WriteAttributeString(OpeningTimeThursdayAttribute,  hoursOfOpening.OpeningTimeThursday.ToString());
+			writer.WriteAttributeString(OpeningTimeFridayAttribute,    hoursOfOpening.OpeningTimeFriday.ToString());
+			writer.WriteAttributeString(OpeningTimeSaturdayAttribute,  hoursOfOpening.OpeningTimeSaturday.ToString());
+			writer.WriteAttributeString(OpeningTimeSundayAttribute,    hoursOfOpening.OpeningTimeSunday.ToString());
+
+			writer.WriteAttributeString(ClosingTimeMondayAttribute,    hoursOfOpening.ClosingTimeMonday.ToString());
+			writer.WriteAttributeString(ClosingTimeTuesdayAttribute,   hoursOfOpening.ClosingTimeTuesday.ToString());
+			writer.WriteAttributeString(ClosingTimeWednesdayAttribute, hoursOfOpening.ClosingTimeWednesday.ToString());
+			writer.WriteAttributeString(ClosingTimeThursdayAttribute,  hoursOfOpening.ClosingTimeThursday.ToString());
+			writer.WriteAttributeString(ClosingTimeFridayAttribute,    hoursOfOpening.ClosingTimeFriday.ToString());
+			writer.WriteAttributeString(ClosingTimeSaturdayAttribute,  hoursOfOpening.ClosingTimeSaturday.ToString());
+			writer.WriteAttributeString(ClosingTimeSundayAttribute,    hoursOfOpening.ClosingTimeSunday.ToString());
+
+			writer.WriteAttributeString(IsOpenOnMondayAttribute,    hoursOfOpening.IsOpenOnMonday.ToString());
+			writer.WriteAttributeString(IsOpenOnTuesdayAttribute,   hoursOfOpening.IsOpenOnTuesday.ToString());
+			writer.WriteAttributeString(IsOpenOnWednesdayAttribute, hoursOfOpening.IsOpenOnWednesday.ToString());
+			writer.WriteAttributeString(IsOpenOnThursdayAttribute,  hoursOfOpening.IsOpenOnThursday.ToString());
+			writer.WriteAttributeString(IsOpenOnFridayAttribute,    hoursOfOpening.IsOpenOnFriday.ToString());
+			writer.WriteAttributeString(IsOpenOnSaturdayAttribute,  hoursOfOpening.IsOpenOnSaturday.ToString());
+			writer.WriteAttributeString(IsOpenOnSundayAttribute,    hoursOfOpening.IsOpenOnSunday.ToString());
+
+			WriteAdditionalOpenedDays(writer, hoursOfOpening.AdditionalOpenedDays);
+			WriteAdditionalClosedDays(writer, hoursOfOpening.AdditionalClosedDays);
+
+			writer.WriteEndElement();
+		}
+
+		private static void WriteAdditionalClosedDays(XmlWriter writer, IReadOnlyList<Date> additionalClosedDays)
+		{
+			writer.WriteStartElement(AdditionalClosedDays);
+			writer.WriteAttributeString(CountAttribute, additionalClosedDays.Count.ToString());
+
+			foreach (var day in additionalClosedDays)
+			{
+				WriteDay(writer, day);
+			}
+
+			writer.WriteEndElement();
+		}
+
+		private static void WriteAdditionalOpenedDays(XmlWriter writer, IReadOnlyList<Date> additionalOpenedDays)
+		{
+			writer.WriteStartElement(AdditionalOpenedDays);
+			writer.WriteAttributeString(CountAttribute, additionalOpenedDays.Count.ToString());
+
+			foreach (var day in additionalOpenedDays)
+			{
+				WriteDay(writer, day);
+			}
+
+			writer.WriteEndElement();
+		}
+
+		private static void WriteDay(XmlWriter writer, Date day)
+		{
+			writer.WriteStartElement(Day);
+			writer.WriteAttributeString(DateAttribute, day.ToString());
 			writer.WriteEndElement();
 		}
 
@@ -247,7 +347,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		{
 			IList<User> users = new List<User>();
 
-			int i = 0;
+			var i = 0;
 			while (i < userCount)
 			{
 				reader.Read();
@@ -290,7 +390,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		{
 			IList<MedicalPractice> medicalPractices = new List<MedicalPractice>();
 
-			int i = 0;
+			var i = 0;
 			while (i < medicalPracticesCount)
 			{
 				reader.Read();
@@ -327,6 +427,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 
 			var rooms = AcceptRooms(reader, therapyPlaceTypes, roomCount);
 
+			var hoursOfOpening = AcceptHoursOfOpening(reader);
+
 			MedicalPractice previousVersion = null;
 			if (hasPreviousVersion)
 			{
@@ -338,7 +440,143 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				}
 			}
 
-			return new MedicalPractice(rooms, name, version,id, previousVersion);
+			return new MedicalPractice(rooms, name, version,id, previousVersion, hoursOfOpening);
+		}
+
+		private static HoursOfOpening AcceptHoursOfOpening(XmlReader reader)
+		{
+			while (reader.Read())
+			{
+				if (reader.NodeType != XmlNodeType.Element || reader.Name != HoursOfOpening) continue;
+
+				var openingTimeMonday    = Time.Dummy;
+				var openingTimeTuesday   = Time.Dummy;
+				var openingTimeWednesday = Time.Dummy;
+				var openingTimeThursday  = Time.Dummy;
+				var openingTimeFriday    = Time.Dummy;
+				var openingTimeSaturday  = Time.Dummy;
+				var openingTimeSunday    = Time.Dummy;
+
+				var closingTimeMonday    = Time.Dummy;
+				var closingTimeTuesday   = Time.Dummy;
+				var closingTimeWednesday = Time.Dummy;
+				var closingTimeThursday  = Time.Dummy;
+				var closingTimeFriday    = Time.Dummy;
+				var closingTimeSaturday  = Time.Dummy;
+				var closingTimeSunday    = Time.Dummy;
+
+				var isOpenOnMonday    = false;
+				var isOpenOnTuesday   = false;
+				var isOpenOnWednesday = false;
+				var isOpenOnThursday  = false;
+				var isOpenOnFriday    = false;
+				var isOpenOnSaturday  = false;
+				var isOpenOnSunday    = false;
+
+				if (reader.HasAttributes)
+				{
+					while (reader.MoveToNextAttribute())
+					{
+						switch (reader.Name)
+						{
+							case OpeningTimeMondayAttribute:    openingTimeMonday    = Time.Parse(reader.Value); break;
+							case OpeningTimeTuesdayAttribute:   openingTimeTuesday   = Time.Parse(reader.Value); break;
+							case OpeningTimeWednesdayAttribute: openingTimeWednesday = Time.Parse(reader.Value); break;
+							case OpeningTimeThursdayAttribute:  openingTimeThursday  = Time.Parse(reader.Value); break;
+							case OpeningTimeFridayAttribute:    openingTimeFriday    = Time.Parse(reader.Value); break;
+							case OpeningTimeSaturdayAttribute:  openingTimeSaturday  = Time.Parse(reader.Value); break;
+							case OpeningTimeSundayAttribute:    openingTimeSunday    = Time.Parse(reader.Value); break;
+
+							case ClosingTimeMondayAttribute:    closingTimeMonday    = Time.Parse(reader.Value); break;
+							case ClosingTimeTuesdayAttribute:   closingTimeTuesday   = Time.Parse(reader.Value); break;
+							case ClosingTimeWednesdayAttribute: closingTimeWednesday = Time.Parse(reader.Value); break;
+							case ClosingTimeThursdayAttribute:  closingTimeThursday  = Time.Parse(reader.Value); break;
+							case ClosingTimeFridayAttribute:    closingTimeFriday    = Time.Parse(reader.Value); break;
+							case ClosingTimeSaturdayAttribute:  closingTimeSaturday  = Time.Parse(reader.Value); break;
+							case ClosingTimeSundayAttribute:    closingTimeSunday    = Time.Parse(reader.Value); break;
+
+							case IsOpenOnMondayAttribute:    isOpenOnMonday    = Boolean.Parse(reader.Value); break;
+							case IsOpenOnTuesdayAttribute:   isOpenOnTuesday   = Boolean.Parse(reader.Value); break;
+							case IsOpenOnWednesdayAttribute: isOpenOnWednesday = Boolean.Parse(reader.Value); break;
+							case IsOpenOnThursdayAttribute:  isOpenOnThursday  = Boolean.Parse(reader.Value); break;
+							case IsOpenOnFridayAttribute:    isOpenOnFriday    = Boolean.Parse(reader.Value); break;
+							case IsOpenOnSaturdayAttribute:  isOpenOnSaturday  = Boolean.Parse(reader.Value); break;
+							case IsOpenOnSundayAttribute:    isOpenOnSunday    = Boolean.Parse(reader.Value); break;
+						}
+					}
+				}
+
+				var additionalOpenedDays = AcceptAdditionalOpenedDays(reader);
+				var additionalClosedDays = AcceptAdditionalClosedDays(reader);
+
+				return new HoursOfOpening(openingTimeMonday, openingTimeTuesday, openingTimeWednesday, openingTimeThursday, 
+							  openingTimeFriday, openingTimeSaturday, openingTimeSunday, 
+							  closingTimeMonday, closingTimeTuesday, closingTimeWednesday, closingTimeThursday,
+							  closingTimeFriday, closingTimeSaturday, closingTimeSunday, 
+							  isOpenOnMonday, isOpenOnTuesday, isOpenOnWednesday, isOpenOnThursday, 
+							  isOpenOnFriday, isOpenOnSaturday, isOpenOnSunday, 
+							  additionalClosedDays, additionalOpenedDays);
+				
+			}
+
+			throw new XmlException();
+		}
+
+		private static IReadOnlyList<Date> AcceptAdditionalOpenedDays(XmlReader reader)
+		{
+			while (reader.Read())
+			{
+				if (reader.NodeType != XmlNodeType.Element || reader.Name != AdditionalOpenedDays) continue;
+
+				int dayCount = 0;
+
+				if (reader.HasAttributes)				
+					while (reader.MoveToNextAttribute())					
+						if (reader.Name == CountAttribute) dayCount = Int32.Parse(reader.Value);						
+									
+				return AcceptDayList(reader, dayCount);
+			}
+			throw new XmlException();
+		}		
+
+		private static IReadOnlyList<Date> AcceptAdditionalClosedDays (XmlReader reader)
+		{
+			while (reader.Read())
+			{
+				if (reader.NodeType != XmlNodeType.Element || reader.Name != AdditionalClosedDays) continue;
+
+				int dayCount = 0;
+
+				if (reader.HasAttributes)
+					while (reader.MoveToNextAttribute())
+						if (reader.Name == CountAttribute) dayCount = Int32.Parse(reader.Value);
+
+				return AcceptDayList(reader, dayCount);
+			}
+			throw new XmlException();
+		}
+
+		private static IReadOnlyList<Date> AcceptDayList (XmlReader reader, int dayCount)
+		{
+			var days = new List<Date>();
+
+			var i = 0;
+			while (i < dayCount)
+			{
+				reader.Read();
+
+				if (reader.NodeType != XmlNodeType.Element || reader.Name != Day) continue;
+				i++;
+
+				var date = Date.Dummy;
+
+				if (reader.HasAttributes)
+					while (reader.MoveToNextAttribute())
+						if (reader.Name == DateAttribute) date = Date.Parse(reader.Value);
+
+				days.Add(date);
+			}
+			return days;			
 		}
 
 		private static IReadOnlyList<Room> AcceptRooms (XmlReader reader, 
@@ -347,7 +585,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		{
 			IList<Room> rooms = new List<Room>();
 
-			int i = 0;
+			var i = 0;
 			while (i < roomCount)
 			{
 				reader.Read();
@@ -370,7 +608,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 					}
 				}
 
-				IReadOnlyList<TherapyPlace> therapyPlaces = AcceptTherapyPlace(reader, therapyPlaceTypes, placeCount);
+				var therapyPlaces = AcceptTherapyPlace(reader, therapyPlaceTypes, placeCount);
 				rooms.Add(new Room(id, name, therapyPlaces));
 			}
 
@@ -383,7 +621,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		{
 			IList<TherapyPlace> therapyPlaces  = new List<TherapyPlace>();
 
-			int i = 0;
+			var i = 0;
 			while (i < placeCount)
 			{
 				reader.Read();
@@ -417,7 +655,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 
 			IList<TherapyPlaceType> therapyPlaceTypes = new List<TherapyPlaceType>();
 
-			int i = 0;
+			var i = 0;
 			while (i < therapyPlaceTypesCount)
 			{
 				reader.Read();

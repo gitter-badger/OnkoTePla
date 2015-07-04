@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Resources;
@@ -55,7 +56,13 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 				new Room(Guid.NewGuid(), "A13", therapyPlacesRoom2)				
 			};
 
-			var medPrac1 = MedicalPractice.CreateNewMedicalPractice(rooms, "examplePractice1");
+			var hoursOfOpening = new HoursOfOpening(new Time( 8,0), new Time( 8,0), new Time( 8,0), new Time( 8,0), new Time( 8,0), Time.Dummy, Time.Dummy,
+													new Time(17,0), new Time(17,0), new Time(17,0), new Time(17,0), new Time(17,0), Time.Dummy, Time.Dummy,
+													true,           true,           true,           true,           true,           false,      false,
+													new List<Date> { new Date( 7,7,2015), new Date(8,7,2015) }, 
+													new List<Date> { new Date(18,7,2015) });
+
+			var medPrac1 = MedicalPractice.CreateNewMedicalPractice(rooms, "examplePractice1", hoursOfOpening);
 			medPrac1 = medPrac1.AddRoom(new Room(Guid.NewGuid(), "A14", therapyPlacesRoom3));
 
 			var therapyPlacesRoom4 = new List<TherapyPlace>();
@@ -75,7 +82,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 				new Room(Guid.NewGuid(), "B3", therapyPlacesRoom5) 				
 			};
 
-			var medPrac2 = MedicalPractice.CreateNewMedicalPractice(rooms2, "examplePractice2");
+			var medPrac2 = MedicalPractice.CreateNewMedicalPractice(rooms2, "examplePractice2", hoursOfOpening);
 
 			var user1 = new User("exampleUser1", new List<Guid> { medPrac1.Id              }, "1234", Guid.NewGuid());
 			var user2 = new User("exampleUser2", new List<Guid> { medPrac1.Id, medPrac2.Id }, "2345", Guid.NewGuid());
