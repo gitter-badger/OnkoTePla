@@ -36,11 +36,11 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		private readonly IReadOnlyList<Date> additionalClosedDays;
 		private readonly IReadOnlyList<Date> additionalOpenedDays;
 
-		public HoursOfOpening(Time openingTimeMonday, Time openingTimeTuesday, Time openingTimeWednesday, Time openingTimeThursday, 
+		public HoursOfOpening(Time openingTimeMonday, Time openingTimeTuesday,  Time openingTimeWednesday, Time openingTimeThursday, 
 							  Time openingTimeFriday, Time openingTimeSaturday, Time openingTimeSunday, 
-							  Time closingTimeMonday, Time closingTimeTuesday, Time closingTimeWednesday, Time closingTimeThursday,
+							  Time closingTimeMonday, Time closingTimeTuesday,  Time closingTimeWednesday, Time closingTimeThursday,
 							  Time closingTimeFriday, Time closingTimeSaturday, Time closingTimeSunday, 
-							  bool isOpenOnMonday, bool isOpenOnTuesday, bool isOpenOnWednesday, bool isOpenOnThursday, 
+							  bool isOpenOnMonday, bool isOpenOnTuesday,  bool isOpenOnWednesday, bool isOpenOnThursday, 
 							  bool isOpenOnFriday, bool isOpenOnSaturday, bool isOpenOnSunday, 
 							  IReadOnlyList<Date> additionalClosedDays, IReadOnlyList<Date> additionalOpenedDays)
 		{
