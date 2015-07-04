@@ -10,6 +10,8 @@
                       Title="OnkoTePla - 0.1"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1,0,1,1"
+					  MinHeight="500"
+					  MinWidth="600"
                       mc:Ignorable="d">
 
 	<Window.Resources>
