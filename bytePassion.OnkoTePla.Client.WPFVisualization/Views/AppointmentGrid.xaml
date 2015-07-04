@@ -7,6 +7,7 @@
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
              xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
              xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
+             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="900">
 	
@@ -26,10 +27,8 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="150"/>
 			<ColumnDefinition/>
-		</Grid.ColumnDefinitions>
+		</Grid.ColumnDefinitions>				
 		
-		<TextBlock Text="{Binding CurrentGridWidth}"/>
-
 		<Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
 			<i:Interaction.Behaviors>
 				<behaviors:SizeReportingBehavior CurrentWidth= "{Binding CurrentGridWidth, 
@@ -41,12 +40,23 @@
 			</i:Interaction.Behaviors>
 		</Border>
 		
+
+		<Button Grid.Column="0"
+				Grid.Row="0"
+				Margin="10,5"
+				Click="ButtonBase_OnClick">
+			<TextBlock>
+				TestLoad (3.7.2015)<LineBreak/>
+				examplePractice1
+			</TextBlock>
+		</Button>
+
 		
 		<ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding TimeSlotLabels}">
 			<!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
 			<ItemsControl.ItemContainerStyle>
 				<Style>
-					<Setter Property="Canvas.Left" Value="{Binding XCoord}"/>					
+					<Setter Property="Canvas.Left" Value="{Binding XCoord, Converter={StaticResource AddOffsetToDouble}, ConverterParameter=-8}"/>					
 					<Setter Property="Canvas.Top"  Value="{Binding YCoord}"/>					
 				</Style>
 			</ItemsControl.ItemContainerStyle>
@@ -71,7 +81,8 @@
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
 					<Line Stroke="Black"
-						  StrokeThickness="2"
+						  StrokeThickness="1"
+						  StrokeDashArray="3,1"
 						  X1="{Binding XCoord}"
 						  X2="{Binding XCoord}"
 						  Y1="{Binding YCoordTop}"
@@ -85,6 +96,29 @@
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
 		</ItemsControl>
+
+		<ScrollViewer Grid.Row="1" 
+					  Grid.Column="0"
+					  Grid.ColumnSpan="2"
+					  Margin="0,15,0,0"
+					  HorizontalScrollBarVisibility="Disabled"
+					  VerticalScrollBarVisibility="Hidden">
 		
-    </Grid>
+			<ItemsControl ItemsSource="{Binding TherapyPlaceRows}">
+			
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+			
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<views:TherapyPlaceRowView Margin="0,3"/>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			
+			</ItemsControl>
+		</ScrollViewer>
+	</Grid>
 </UserControl>

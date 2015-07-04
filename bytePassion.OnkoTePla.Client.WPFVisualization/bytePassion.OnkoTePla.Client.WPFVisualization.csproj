@@ -72,6 +72,7 @@
     <Compile Include="Converter\NullToVisibilityConverter.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
+    <Compile Include="Converter\TestConverter.cs" />
     <Compile Include="Converter\TherapyPlaceToStringConverter.cs" />
     <Compile Include="Converter\TimeFromDateConverter.cs" />
     <Compile Include="SampleData\AddAppointmentTestViewModelSampleData.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="SampleData\AppointmentViewModelSampleData.cs" />
     <Compile Include="SampleData\MainWindowViewModelSampleData.cs" />
     <Compile Include="SampleData\PatientSelectorViewModelSampleData.cs" />
+    <Compile Include="SampleData\TherapyPlaceRowViewModelSampleData.cs" />
     <Compile Include="ViewModels\AddAppointmentTestViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGridViewModel.cs" />
     <Compile Include="ViewModels\AppointmentOverViewModel.cs" />
@@ -93,9 +95,11 @@
     <Compile Include="ViewModels\Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPatientSelectorViewModel.cs" />
     <Compile Include="ViewModels\Helper\TimeSlotLabel.cs" />
+    <Compile Include="ViewModels\Interfaces\ITherapyPlaceRowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PatientSelectorViewModel.cs" />
     <Compile Include="ViewModels\Helper\TimeSlotLine.cs" />
+    <Compile Include="ViewModels\TherapyPlaceRowViewModel.cs" />
     <Compile Include="Views\ActionBar.xaml.cs">
       <DependentUpon>ActionBar.xaml</DependentUpon>
     </Compile>
@@ -119,6 +123,9 @@
     </Compile>
     <Compile Include="Views\PatientSelector.xaml.cs">
       <DependentUpon>PatientSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TherapyPlaceRowView.xaml.cs">
+      <DependentUpon>TherapyPlaceRowView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -175,6 +182,10 @@
     <Page Include="Views\Templates\NavBarIcons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TherapyPlaceRowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

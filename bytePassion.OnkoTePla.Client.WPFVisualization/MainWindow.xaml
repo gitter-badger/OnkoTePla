@@ -42,13 +42,14 @@
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="200" />
 						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="20" />
 					</Grid.ColumnDefinitions>
 					
 					<Rectangle Grid.Column="0"
 							   Fill="Blue"/>
 					
 					<views:AppointmentGrid Grid.Column="1"
+										   Margin="5"
 										   DataContext="{Binding AppointmentGridViewModel}"/>
 				</Grid>
 			</TabItem>

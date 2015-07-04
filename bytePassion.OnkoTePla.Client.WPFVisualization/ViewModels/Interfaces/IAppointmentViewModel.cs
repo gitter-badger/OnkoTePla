@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
+
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
-	public interface IAppointmentViewModel
+	public interface IAppointmentViewModel : IViewModelBase
 	{
 		string PatientDisplayName { get; }
 		double FrameworkElementWidth { get; }
+
+		Time StartTime { get; set; }
+		Time EndTime { get; set; }
 	}
 }
