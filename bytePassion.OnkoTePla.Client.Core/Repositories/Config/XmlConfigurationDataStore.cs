@@ -608,8 +608,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 						if (reader.Name == IdAttribute)    id         = Guid.Parse(reader.Value);
 						if (reader.Name == CountAttribute) placeCount = Int32.Parse(reader.Value);
 						if (reader.Name == NameAttribute)  name       = reader.Value;
-						if (reader.Name == ColorAttribute) color      = (Color)ColorConverter.ConvertFromString("#FFDFD991");
-
+						if (reader.Name == ColorAttribute) color      = (Color)ColorConverter.ConvertFromString(reader.Value);
 					}
 				}
 
