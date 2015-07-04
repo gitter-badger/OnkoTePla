@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
 using bytePassion.Lib.FrameworkExtensions;
@@ -42,8 +43,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public double TimeSlotWidth {
 			set
 			{
-				timeSlotWidth  = value;
-				LengthOfOneHour = timeSlotWidth / (Time.GetDurationBetween(endTime, startTime).Seconds * 3600);				
+				timeSlotWidth  = value;				
+				LengthOfOneHour = timeSlotWidth / (Time.GetDurationBetween(endTime, startTime).Seconds / 3600.0);				
 			}
 			private get { return timeSlotWidth; }
 		}
@@ -57,6 +58,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		}
 
 		public Color  RoomColor        { get { return roomDisplayColor;  }}
+
+		public Guid TherapyPlaceId
+		{
+			get { return therapyPlace.Id; }
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

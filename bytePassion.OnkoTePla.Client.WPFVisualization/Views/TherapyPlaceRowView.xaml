@@ -60,36 +60,23 @@
 				
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-<!--						<Canvas/>-->
-						<StackPanel Orientation="Horizontal"></StackPanel>
+						<Canvas/>					
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
 				
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<views:AppointmentView>
-							<views:AppointmentView.Width>
-								100
-							</views:AppointmentView.Width>
-						</views:AppointmentView>
+						<views:AppointmentView Width="{Binding ViewElementLength}" Height="30"/>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 
 				<!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
-<!--				<ItemsControl.ItemContainerStyle>-->
-<!--					<Style>-->
-<!--						<Setter Property="Canvas.Top" Value="0"/>-->
-<!--						<Setter Property="Canvas.Left">-->
-<!--							<Setter.Value>-->
-<!--								<MultiBinding Converter="{StaticResource ComputeAppointmentPosition}">-->
-<!--									<Binding Path="StartTime"/>-->
-<!--									<Binding Path="SlotTimeStart"   RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}"/>-->
-<!--									<Binding Path="LengthOfOneHour" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}"/>									-->
-<!--								</MultiBinding>-->
-<!--							</Setter.Value>-->
-<!--						</Setter>-->
-<!--					</Style>-->
-<!--				</ItemsControl.ItemContainerStyle>-->
+				<ItemsControl.ItemContainerStyle>
+					<Style>
+						<Setter Property="Canvas.Top" Value="-1"/>
+						<Setter Property="Canvas.Left" Value="{Binding CanvasPosition}"/>						
+					</Style>
+				</ItemsControl.ItemContainerStyle>
 				<!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
 				
 			</ItemsControl>

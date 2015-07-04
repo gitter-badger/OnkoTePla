@@ -13,7 +13,7 @@
 	
 	<Border CornerRadius="3"
 			BorderThickness="1"
-			Background="Beige"
+			Background="Orange"
 			BorderBrush="Black">
 
 		<TextBlock HorizontalAlignment="Center" 

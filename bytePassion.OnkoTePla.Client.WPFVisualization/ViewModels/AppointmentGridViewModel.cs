@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
@@ -77,7 +78,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				case ChangeAction.Added:
 				{
 					var appointment = appointmentChangedEventArgs.Appointment;
-					appointmentsOnGrid[appointment.TherapyPlace.Id].Add(new AppointmentViewModel(appointment));
+					appointmentsOnGrid[appointment.TherapyPlace.Id].Add(new AppointmentViewModel(appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id)));
 					break;
 				}
 			}
@@ -112,8 +113,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 					therapyPlaceRows.Add(new TherapyPlaceRowViewModel(appointmentListForTherapyPlace, therapyPlace,room.DisplayedColor, startTime, endTime));
 				}
 
-			foreach (var appointment in appointmentReadModel.Appointments)			
-				appointmentsOnGrid[appointment.TherapyPlace.Id].Add(new AppointmentViewModel(appointment));
+			foreach (var appointment in appointmentReadModel.Appointments)
+				appointmentsOnGrid[appointment.TherapyPlace.Id].Add(new AppointmentViewModel(appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id)));
 			
 			RecomputeGrid();
 		}

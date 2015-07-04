@@ -9,6 +9,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 		string PatientDisplayName { get; }
 		Duration Duration { get; }
 
+		double CanvasPosition    { get; set; }
+		double ViewElementLength { get; set; }
+
 		Time StartTime { get; set; }
 		Time EndTime { get; set; }
 	}
