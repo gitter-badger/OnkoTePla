@@ -17,6 +17,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			return new AppointmentAdded(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), null, new CreateAppointmentData(new Guid(),null, new Time(),new Time(),new Date(), new Guid(),new Guid()));
 		}
 
+		private static AppointmentRemoved GetAppointmentRemovedDummy()
+		{
+			return new AppointmentRemoved(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), new Guid(), new Tuple<Date, Time>(Date.Dummy, Time.Dummy));
+		}
+
 		private class TestSingleEventHandler : IDomainEventHandler<AppointmentAdded>
 		{
 
@@ -83,7 +88,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.False(testEventHandler.HandleRemovedEvent);
 
-			eventBus.Publish(GetAppointmentAddedDummy());
+			eventBus.Publish(GetAppointmentRemovedDummy());
 
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.True(testEventHandler.HandleRemovedEvent);
@@ -135,7 +140,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.False(testEventHandler2.HandledEvent);
 
-			eventBus.Publish(GetAppointmentAddedDummy());
+			eventBus.Publish(GetAppointmentRemovedDummy());
 
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.True(testEventHandler2.HandledEvent);
