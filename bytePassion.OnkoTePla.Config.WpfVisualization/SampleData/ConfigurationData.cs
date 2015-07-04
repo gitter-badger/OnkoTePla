@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Media;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
@@ -52,8 +53,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 			var rooms = new List<Room>
 			{
-				new Room(Guid.NewGuid(), "A12", therapyPlacesRoom1), 
-				new Room(Guid.NewGuid(), "A13", therapyPlacesRoom2)				
+				new Room(Guid.NewGuid(), "A12", therapyPlacesRoom1, Colors.LightGreen), 
+				new Room(Guid.NewGuid(), "A13", therapyPlacesRoom2, Colors.LightPink)				
 			};
 
 			var hoursOfOpening = new HoursOfOpening(new Time( 8,0), new Time( 8,0), new Time( 8,0), new Time( 8,0), new Time( 8,0), Time.Dummy, Time.Dummy,
@@ -63,7 +64,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 													new List<Date> { new Date(18,7,2015) });
 
 			var medPrac1 = MedicalPractice.CreateNewMedicalPractice(rooms, "examplePractice1", hoursOfOpening);
-			medPrac1 = medPrac1.AddRoom(new Room(Guid.NewGuid(), "A14", therapyPlacesRoom3));
+			medPrac1 = medPrac1.AddRoom(new Room(Guid.NewGuid(), "A14", therapyPlacesRoom3, Colors.LightBlue));
 
 			var therapyPlacesRoom4 = new List<TherapyPlace>();
 			var therapyPlacesRoom5 = new List<TherapyPlace>();
@@ -78,8 +79,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 					
 			var rooms2 = new List<Room>
 			{
-				new Room(Guid.NewGuid(), "B2", therapyPlacesRoom4), 
-				new Room(Guid.NewGuid(), "B3", therapyPlacesRoom5) 				
+				new Room(Guid.NewGuid(), "B2", therapyPlacesRoom4, Colors.LightGreen), 
+				new Room(Guid.NewGuid(), "B3", therapyPlacesRoom5, Colors.LightSkyBlue) 				
 			};
 
 			var medPrac2 = MedicalPractice.CreateNewMedicalPractice(rooms2, "examplePractice2", hoursOfOpening);

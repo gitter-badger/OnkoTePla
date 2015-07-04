@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media;
 using System.Xml;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Config;
@@ -63,6 +64,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		private const string PassworAttribute             = "password";
 		private const string AccessablePratice            = "accessablePractice";
 		private const string HasPreviousVersionsAttribute = "hasPreviousVersions";
+		private const string ColorAttribute               = "color";
 
 		private const string DateAttribute = "date";
 
@@ -129,7 +131,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		}
 
 		#region writer methods
-		private void WriteUser(XmlWriter writer, User user)
+		private static void WriteUser(XmlWriter writer, User user)
 		{
 			writer.WriteStartElement(User);
 			writer.WriteAttributeString(NameAttribute, user.Name);
@@ -241,6 +243,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			writer.WriteAttributeString(IdAttribute, room.Id.ToString());
 			writer.WriteAttributeString(CountAttribute, room.TherapyPlaces.Count.ToString());
 			writer.WriteAttributeString(NameAttribute, room.Name);
+			writer.WriteAttributeString(ColorAttribute, room.DisplayedColor.ToString());
 
 			foreach (var therapyPlace in room.TherapyPlaces)
 			{
@@ -596,6 +599,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				var id = new Guid();
 				var name = String.Empty;
 				var placeCount = 0;
+				var color = new Color();
 
 				if (reader.HasAttributes)
 				{
@@ -604,12 +608,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 						if (reader.Name == IdAttribute)    id         = Guid.Parse(reader.Value);
 						if (reader.Name == CountAttribute) placeCount = Int32.Parse(reader.Value);
 						if (reader.Name == NameAttribute)  name       = reader.Value;
+						if (reader.Name == ColorAttribute) color      = (Color)ColorConverter.ConvertFromString("#FFDFD991");
 
 					}
 				}
 
 				var therapyPlaces = AcceptTherapyPlace(reader, therapyPlaceTypes, placeCount);
-				rooms.Add(new Room(id, name, therapyPlaces));
+				rooms.Add(new Room(id, name, therapyPlaces, color));
 			}
 
 			return rooms.ToList();
