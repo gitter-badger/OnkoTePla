@@ -84,6 +84,8 @@ namespace bytePassion.Lib.TimeLib
 		public byte   Month { get { return month; }}
 		public ushort Year  { get { return year;  }}
 
+		#region static: Parse, IsDummy, GetDayOfWeekFrom
+
 		public static Date Parse(string s)
 		{
 			var elements = s.Split('.');
@@ -98,9 +100,16 @@ namespace bytePassion.Lib.TimeLib
 			return new Date(day, month, year);
 		}
 
-		public static bool IsDumme(Date d)
+		public static bool IsDummy(Date d)
 		{
 			return d == Dummy;
 		}
+
+		public static DayOfWeek GetDayOfWeekFrom(Date d)
+		{
+			return new DateTime(d.Year, d.Month, d.Day).DayOfWeek;
+		}		
+
+		#endregion
 	}
 }
