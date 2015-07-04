@@ -52,6 +52,8 @@
     <Compile Include="FrameworkExtensions\Converter.cs" />
     <Compile Include="FrameworkExtensions\GenericExtensions.cs" />
     <Compile Include="FrameworkExtensions\GenericParameterizedValueConverter.cs" />
+    <Compile Include="FrameworkExtensions\GenericThreeToOneValueConverter.cs" />
+    <Compile Include="FrameworkExtensions\GenericTwoToOneValueConverter.cs" />
     <Compile Include="FrameworkExtensions\GenericValueConverter.cs" />
     <Compile Include="FrameworkExtensions\GridViewColumns.cs" />
     <Compile Include="TimeLib\Date.cs" />
