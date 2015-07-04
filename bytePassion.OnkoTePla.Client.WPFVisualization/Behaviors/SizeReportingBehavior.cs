@@ -34,28 +34,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 		protected override void OnAttached()
 		{
-			base.OnAttached();
-			//AssociatedObject.LayoutUpdated += OnLayoutUpdated;
-			AssociatedObject.SizeChanged   += OnSizeChanged;
+			base.OnAttached();			
+			AssociatedObject.SizeChanged += OnSizeChanged;
+			AssociatedObject.Loaded      += OnLoaded;
 		}
 
-		void OnSizeChanged (object sender, SizeChangedEventArgs e)
-		{
-			CurrentWidth  = ((FrameworkElement) sender).ActualWidth;
-			CurrentHeight = ((FrameworkElement) sender).ActualHeight;
-		}
-
-		protected override void OnDetaching()
+		protected override void OnDetaching ()
 		{
 			base.OnDetaching();
-			//AssociatedObject.LayoutUpdated -= OnLayoutUpdated;
-			AssociatedObject.SizeChanged   -= OnSizeChanged;
-		}
+			AssociatedObject.SizeChanged -= OnSizeChanged;
+			AssociatedObject.Loaded      -= OnLoaded;
+		}		
 
-		private void OnLayoutUpdated(object sender, EventArgs eventArgs)
+		private void OnLoaded      (object sender, RoutedEventArgs e)      { ReportSize((FrameworkElement)sender); }
+		private void OnSizeChanged (object sender, SizeChangedEventArgs e) { ReportSize((FrameworkElement)sender); }
+
+		private void ReportSize(FrameworkElement sender)
 		{
-			CurrentWidth = AssociatedObject.ActualWidth;
-			CurrentHeight = AssociatedObject.ActualHeight;
+			CurrentWidth  = sender.ActualWidth;
+			CurrentHeight = sender.ActualHeight;
 		}
 	}
 }
