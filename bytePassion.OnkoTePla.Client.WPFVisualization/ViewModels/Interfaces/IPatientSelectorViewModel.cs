@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Data;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
-	internal interface IPatientSelectorViewModel
+	internal interface IPatientSelectorViewModel : IViewModelBase
 	{
 		CollectionViewSource Patients { get; }
         IReadOnlyList<Appointment> Appointments { get; }

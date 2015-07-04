@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
@@ -8,6 +9,7 @@ using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 {
@@ -37,6 +39,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 
 		public ICommand LoadReadModel { get; set; }
 
-		
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

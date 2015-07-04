@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
@@ -11,7 +10,7 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {
-    internal class PatientSelectorViewModel : IPatientSelectorViewModel, INotifyPropertyChanged
+    internal class PatientSelectorViewModel : IPatientSelectorViewModel
     {
         private readonly IReadOnlyList<Appointment> appointments;
         private readonly IPatientReadRepository patients;

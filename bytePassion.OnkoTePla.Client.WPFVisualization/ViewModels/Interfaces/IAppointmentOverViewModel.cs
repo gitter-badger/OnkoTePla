@@ -1,12 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
-	interface IAppointmentOverViewModel
+	interface IAppointmentOverViewModel : IViewModelBase
 	{
 		ObservableCollection<Appointment>     Appointments     { get; }
 		ObservableCollection<MedicalPractice> MedicalPractices { get;  }	

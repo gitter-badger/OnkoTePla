@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Data;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 {
@@ -25,5 +28,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 
 	    public PatientListItem SelectedPatient { get; set; }
 		public CollectionViewSource Patients { get; private set; }
+
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

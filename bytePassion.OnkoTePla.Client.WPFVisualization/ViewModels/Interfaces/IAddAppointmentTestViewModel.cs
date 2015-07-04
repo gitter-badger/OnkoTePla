@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Input;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -9,7 +9,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
-	public interface IAddAppointmentTestViewModel : INotifyPropertyChanged
+	public interface IAddAppointmentTestViewModel : IViewModelBase
 	{
 		IEnumerable<MedicalPractice> MedicalPractices { get; }
 		IEnumerable<User> Users { get; }

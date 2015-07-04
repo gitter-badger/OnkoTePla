@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.TimeLib;
@@ -71,6 +72,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public MedicalPractice SelectedMedicalPractice { set; private get; }
 		public string          SelectedDateAsString    { set; private get; }
 
-		public ICommand LoadReadModel { get { return loadReadModelCommand; }}		
+		public ICommand LoadReadModel { get { return loadReadModelCommand; }}
+
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }
