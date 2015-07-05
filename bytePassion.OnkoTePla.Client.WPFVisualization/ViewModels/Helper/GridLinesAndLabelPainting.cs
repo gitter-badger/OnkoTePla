@@ -74,7 +74,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 			int roundedTimeSlotCount = (int)Math.Floor(excactTimeSlotCount);
 			var timeSlotWidth        = gridWidth / excactTimeSlotCount;
 
-			if (forceCreation || newGridViewDivision != gridViewDivision || TimeSlotLines.Count==0)
+			if (forceCreation || newGridViewDivision != gridViewDivision || TimeSlotLabels.Count == 0)
 			{
 				gridViewDivision = newGridViewDivision;
 				CreateGridDrawing(roundedTimeSlotCount, excactTimeSlotCount,

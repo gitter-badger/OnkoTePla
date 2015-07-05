@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
+using MahApps.Metro;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService
@@ -20,9 +24,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService
 			this.image = image;
 		}
 
-		public MessageBoxResult ShowDialog()
+		public async Task<MessageDialogResult> ShowMahAppsDialog()
 		{
-			return MessageBox.Show(messageText, caption, buttons, image);
-		}
+			//return MessageBox.Show(messageText, caption, buttons, image);
+		    return await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync(caption, messageText, MessageDialogStyle.AffirmativeAndNegative);
+        }
 	}
 }
