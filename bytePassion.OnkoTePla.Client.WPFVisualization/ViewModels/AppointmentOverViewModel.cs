@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.TimeLib;
@@ -15,12 +14,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {
 	public class AppointmentOverViewModel : IAppointmentOverViewModel
-	{
-
-		// ReSharper disable once NotAccessedField.Local
-		private readonly IReadModelRepository readModelRepository;
-		private readonly IConfigurationReadRepository configurationReadRepository;
-
+	{			
 		private readonly Command loadReadModelCommand;
 		private readonly ObservableCollection<Appointment> displayedAppointments;
 		private readonly ObservableCollection<MedicalPractice> medicalPractices; 
@@ -30,9 +24,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		public AppointmentOverViewModel(IReadModelRepository readModelRepository, 
 										IConfigurationReadRepository configurationReadRepository)
-		{
-			this.readModelRepository = readModelRepository;
-			this.configurationReadRepository = configurationReadRepository;
+		{		
 			displayedAppointments = new ObservableCollection<Appointment>();
 			medicalPractices = new ObservableCollection<MedicalPractice>(configurationReadRepository.GetAllMedicalPractices());			
 
