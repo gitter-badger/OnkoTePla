@@ -23,9 +23,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 	{
 		private enum GridViewDivision { QuarterHours, HalfHours, Hours, TwoHours}
 
-		private const double ThresholdQuarterHoursToHalfHours = 800;
-		private const double ThresholdHalfHoursToHours        = 600;
-		private const double ThresholdHoursToTwoHours         = 400;
+		private const double ThresholdQuarterHoursToHalfHours = 1400;
+		private const double ThresholdHalfHoursToHours        = 1000;
+		private const double ThresholdHoursToTwoHours         =  600;
 
 		// DataAccess //////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,6 +37,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		private double currentGridWidth;
 		private double currentGridHeight;
+
+		private GridViewDivision currentGridViewDivision;
 
 		private Time startTime;
 		private Time endTime;
@@ -75,6 +77,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			appointmentsOnGrid = new ConcurrentDictionary<Guid, ObservableCollection<IAppointmentViewModel>>();			
 			
 			loadReamodelCommand = new ParameterrizedCommand<AggregateIdentifier>(LoadReadModelFromId);
+
+			CreateGridDrawing(GridViewDivision.TwoHours);
 		}
 
 		private void OnAppointmentChanged(object sender, AppointmentChangedEventArgs appointmentChangedEventArgs)
@@ -109,6 +113,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			startTime = medicalPractice.HoursOfOpening.GetOpeningTime(updatedId.Date);
 			endTime   = medicalPractice.HoursOfOpening.GetClosingTime(updatedId.Date);
 
+			CreateGridDrawing(GetDevisionForWidth(CurrentGridWidth));
+
 			therapyPlaceRows.Clear();
 
 			foreach (var room in medicalPractice.Rooms)  
@@ -120,9 +126,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				}
 
 			foreach (var appointment in appointmentReadModel.Appointments)
-				appointmentsOnGrid[appointment.TherapyPlace.Id].Add(new AppointmentViewModel(appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id)));
-			
-			RecomputeGrid();
+				appointmentsOnGrid[appointment.TherapyPlace.Id].Add(new AppointmentViewModel(appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id)));								
 		}
 
 		public ICommand LoadReadModel
@@ -159,9 +163,21 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			if (CurrentGridWidth < 200)
 				return;
 
-			const uint slotLengthInSeconds = 1800;
+			var gridViewDivision    = GetDevisionForWidth(CurrentGridWidth);			
+
+			if (gridViewDivision == currentGridViewDivision)
+				UpdateGridDrawing(gridViewDivision);
+			else			
+				CreateGridDrawing(gridViewDivision);						
+		}
+
+		private void CreateGridDrawing(GridViewDivision gridViewDivision)
+		{
+			currentGridViewDivision = gridViewDivision;
 
 			var duration = Time.GetDurationBetween(endTime, startTime);
+
+			var slotLengthInSeconds = GetSlotLengthInSeconds(gridViewDivision);
 
 			var timeSlotCount = duration.Seconds / slotLengthInSeconds;
 			var timeSlotWidth = CurrentGridWidth / timeSlotCount;
@@ -176,10 +192,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 																							  .Substring(0, 5);
 
 				timeSlotLabels.Add(new TimeSlotLabel(timeCaption)
-								{
-									XCoord = slot * timeSlotWidth,
-									YCoord = 30
-								});
+				{
+					XCoord = slot * timeSlotWidth,
+					YCoord = 30
+				});
 
 				timeSlotLines.Add(new TimeSlotLine()
 				{
@@ -187,6 +203,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 					YCoordTop = 60,
 					YCoordBottom = CurrentGridHeight
 				});
+			}			
+		}
+
+		private void UpdateGridDrawing(GridViewDivision gridViewDivision)
+		{
+			var duration            = Time.GetDurationBetween(endTime, startTime);
+			var slotLengthInSeconds = GetSlotLengthInSeconds(gridViewDivision);
+			var timeSlotCount       = duration.Seconds / slotLengthInSeconds;
+			var timeSlotWidth       = CurrentGridWidth / timeSlotCount;
+
+			for (int slot = 0; slot < timeSlotCount + 1; slot++)
+			{
+				var xCoord = slot*timeSlotWidth;
+
+				timeSlotLabels[slot].XCoord = xCoord;
+				timeSlotLines[slot].XCoord  = xCoord;
+				timeSlotLines[slot].YCoordBottom = CurrentGridHeight;
 			}
 		}
 
@@ -198,6 +231,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 			return GridViewDivision.QuarterHours;
 		}
+
+		private uint GetSlotLengthInSeconds(GridViewDivision gridViewDivision)
+		{
+			switch (gridViewDivision)
+			{
+				case GridViewDivision.QuarterHours: return  900;
+				case GridViewDivision.HalfHours:    return 1800;
+				case GridViewDivision.Hours:        return 3600;				
+				case GridViewDivision.TwoHours:     return 7200;
+			}
+			throw new ArgumentException();
+		}	
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
