@@ -12,20 +12,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 	{
 		private readonly ICommandBus commandBus;
 		private readonly Appointment appointment;
-		private ITherapyPlaceRowViewModel containerViewModel;
+
+		private ITherapyPlaceRowViewModel containerRow;
+		private IAppointmentGridViewModel containerGrid;
 
 		private double canvasPosition;
 		private double viewElementLength;
 
-		public AppointmentViewModel(ICommandBus commandBus, Appointment appointment, ITherapyPlaceRowViewModel containerViewModel)
+		public AppointmentViewModel(ICommandBus commandBus, Appointment appointment, 
+									ITherapyPlaceRowViewModel containerRow, IAppointmentGridViewModel containerGrid)
 		{
-			this.appointment = appointment;
-			this.containerViewModel = containerViewModel;
+			this.containerRow = containerRow;
+			this.containerGrid = containerGrid;
+
+			this.appointment = appointment;			
 			this.commandBus = commandBus;
 
-			containerViewModel.PropertyChanged += OnContainerChanged;
+			containerRow.PropertyChanged += OnContainerChanged;
 
-			OnContainerChanged(containerViewModel, null);
+			OnContainerChanged(containerRow, null);
 		}
 
 		private void OnContainerChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
