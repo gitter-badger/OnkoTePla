@@ -8,90 +8,98 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 {
 	public class GridLinesAndLabelPainting
 	{
-		private enum GridViewDivision { QuarterHours, HalfHours, Hours, TwoHours }
+		private enum GridViewDivision
+		{
+			QuarterHours,
+			HalfHours,
+			Hours,
+			TwoHours
+		}
 
-		private const double ThresholdQuarterHoursToHalfHours = 1400;
-		private const double ThresholdHalfHoursToHours        = 1000;
-		private const double ThresholdHoursToTwoHours         =  600;
+		private const double ThresholdGridWidthQuarterHoursToHalfHours = 1400;
+		private const double ThresholdGridWidthHalfHoursToHours        = 1000;
+		private const double ThresholdGridWidthHoursToTwoHours         =  600;
 
-		private double currentGridWidth;
-		private double currentGridHeight;
+		private double gridWidth;
+		private double gridHeight;
 
-		private GridViewDivision currentGridViewDivision;
+		private GridViewDivision gridViewDivision;
 
-		private Time startTime;
-		private Time endTime;
+		private Time timeSlotStart;
+		private Time timeSlotEnd;
 
 		private readonly ObservableCollection<TimeSlotLabel> timeSlotLabels;
 		private readonly ObservableCollection<TimeSlotLine>  timeSlotLines;
 
-		public GridLinesAndLabelPainting()
+		public GridLinesAndLabelPainting ()
 		{
-			startTime = new Time(7, 0);
-			endTime   = new Time(16, 0);
+			timeSlotStart = new Time(7, 0);
+			timeSlotEnd   = new Time(16, 0);
 
 			timeSlotLabels = new ObservableCollection<TimeSlotLabel>();
 			timeSlotLines  = new ObservableCollection<TimeSlotLine>();
 
-			CreateGridDrawing(GridViewDivision.TwoHours);
+			RecomputeGrid(true);
 		}
 
-		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get { return timeSlotLabels; }}
-		public ObservableCollection<TimeSlotLine>  TimeSlotLines  { get { return timeSlotLines;  }}
+		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get { return timeSlotLabels; } }
+		public ObservableCollection<TimeSlotLine> TimeSlotLines { get { return timeSlotLines; } }
 
-		public void SetNewTimeSpan(Time newStartTime, Time newEndTime)
+		public void SetNewTimeSpan (Time newStartTime, Time newEndTime)
 		{
-			startTime = newStartTime;
-			endTime = newEndTime;
+			timeSlotStart = newStartTime;
+			timeSlotEnd = newEndTime;
 
-			CreateGridDrawing(GetDevisionForWidth(currentGridWidth));
+			RecomputeGrid(true);
 		}
 
-		public void SetNewGridWidth(double gridWidth)
+		public void SetNewGridWidth (double newGridWidth)
 		{
-			currentGridWidth = gridWidth;
-			RecomputeGrid();
+			gridWidth = newGridWidth;
+			RecomputeGrid(false);
 		}
 
-		public void SetNewGridHeight(double gridHeight)
+		public void SetNewGridHeight (double newGridHeight)
 		{
-			currentGridHeight = gridHeight;
-			RecomputeGrid();
+			gridHeight = newGridHeight;
+			RecomputeGrid(false);
 		}
 
-		private void RecomputeGrid ()
+		private void RecomputeGrid (bool forceCreation)
 		{
-			if (currentGridWidth < 200)
+			if (gridWidth < 200)
 				return;
 
-			var gridViewDivision    = GetDevisionForWidth(currentGridWidth);
+			var newGridViewDivision  = GetDevisionForWidth(gridWidth);
+			var slotLengthInSeconds  = GetSlotLengthInSeconds(newGridViewDivision);
+			var timeSlotDuration     = Time.GetDurationBetween(timeSlotEnd, timeSlotStart);
+			var excactTimeSlotCount  = (double)timeSlotDuration.Seconds / slotLengthInSeconds;
+			int roundedTimeSlotCount = (int)Math.Floor(excactTimeSlotCount);
+			var timeSlotWidth        = gridWidth / excactTimeSlotCount;
 
-			if (gridViewDivision == currentGridViewDivision)
-				UpdateGridDrawing(gridViewDivision);
+			if (forceCreation || newGridViewDivision != gridViewDivision)
+			{
+				gridViewDivision = newGridViewDivision;
+				CreateGridDrawing(roundedTimeSlotCount, excactTimeSlotCount,
+								  slotLengthInSeconds, timeSlotWidth);
+			}
 			else
-				CreateGridDrawing(gridViewDivision);
+			{
+				UpdateGridDrawing(roundedTimeSlotCount, excactTimeSlotCount,
+								  slotLengthInSeconds, timeSlotWidth);
+			}
 		}
 
-		private void CreateGridDrawing (GridViewDivision gridViewDivision)
+		private void CreateGridDrawing (int roundedTimeSlotCount, double excactTimeSlotCount,
+										uint slotLengthInSeconds, double timeSlotWidth)
 		{
-			currentGridViewDivision = gridViewDivision;
-
-			var duration = Time.GetDurationBetween(endTime, startTime);
-
-			var slotLengthInSeconds = GetSlotLengthInSeconds(gridViewDivision);
-
-			double excactTimeSlotCount = (double)duration.Seconds / slotLengthInSeconds;
-			int roundedTimeSlotCount = (int)Math.Floor(excactTimeSlotCount);
-
-			var timeSlotWidth = currentGridWidth / excactTimeSlotCount;
-
 			timeSlotLabels.Clear();
 			timeSlotLines.Clear();
 
 			for (uint slot = 0; slot < roundedTimeSlotCount + 1; slot++)
 			{
 
-				var timeCaption = new Time(startTime + new Duration(slot*slotLengthInSeconds)).ToString()
+				var timeCaption = new Time(timeSlotStart + new Duration(slot*slotLengthInSeconds)).ToString()
 																							  .Substring(0, 5);
 
 				timeSlotLabels.Add(new TimeSlotLabel(timeCaption)
@@ -104,75 +112,68 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 				{
 					XCoord = slot * timeSlotWidth,
 					YCoordTop = 60,
-					YCoordBottom = currentGridHeight
+					YCoordBottom = gridHeight
 				});
 			}
 
 			if (!MathLibExtension.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
 			{
-				var timeCaption = endTime.ToString().Substring(0, 5);
+				var timeCaption = timeSlotEnd.ToString().Substring(0, 5);
 
 				timeSlotLabels.Add(new TimeSlotLabel(timeCaption)
 				{
-					XCoord = currentGridWidth,
+					XCoord = gridWidth,
 					YCoord = 30
 				});
 
 				timeSlotLines.Add(new TimeSlotLine()
 				{
-					XCoord = currentGridWidth,
+					XCoord = gridWidth,
 					YCoordTop = 60,
-					YCoordBottom = currentGridHeight
+					YCoordBottom = gridHeight
 				});
 			}
 		}
 
-		private void UpdateGridDrawing (GridViewDivision gridViewDivision)
+		private void UpdateGridDrawing (int roundedTimeSlotCount, double excactTimeSlotCount,
+										uint slotLengthInSeconds, double timeSlotWidth)
 		{
-			var duration            = Time.GetDurationBetween(endTime, startTime);
-			var slotLengthInSeconds = GetSlotLengthInSeconds(gridViewDivision);
-
-			double excactTimeSlotCount = (double)duration.Seconds / slotLengthInSeconds;
-			int roundedTimeSlotCount   = (int)Math.Floor(excactTimeSlotCount);
-
-			var timeSlotWidth = currentGridWidth / excactTimeSlotCount;
-
 			for (int slot = 0; slot < roundedTimeSlotCount + 1; slot++)
 			{
 				var xCoord = slot*timeSlotWidth;
 
 				timeSlotLabels[slot].XCoord = xCoord;
 				timeSlotLines[slot].XCoord  = xCoord;
-				timeSlotLines[slot].YCoordBottom = currentGridHeight;
+				timeSlotLines[slot].YCoordBottom = gridHeight;
 			}
 
 			if (!MathLibExtension.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
 			{
-				timeSlotLabels[roundedTimeSlotCount + 1].XCoord      = currentGridWidth;
-				timeSlotLines[roundedTimeSlotCount + 1].XCoord       = currentGridWidth;
-				timeSlotLines[roundedTimeSlotCount + 1].YCoordBottom = currentGridHeight;
+				timeSlotLabels[roundedTimeSlotCount + 1].XCoord       = gridWidth;
+				timeSlotLines[roundedTimeSlotCount + 1].XCoord       = gridWidth;
+				timeSlotLines[roundedTimeSlotCount + 1].YCoordBottom = gridHeight;
 			}
 		}
 
-		private GridViewDivision GetDevisionForWidth (double width)
+		private static GridViewDivision GetDevisionForWidth (double width)
 		{
-			if (width < ThresholdHoursToTwoHours)         return GridViewDivision.TwoHours;
-			if (width < ThresholdHalfHoursToHours)        return GridViewDivision.Hours;
-			if (width < ThresholdQuarterHoursToHalfHours) return GridViewDivision.HalfHours;
+			if (width < ThresholdGridWidthHoursToTwoHours) return GridViewDivision.TwoHours;
+			if (width < ThresholdGridWidthHalfHoursToHours) return GridViewDivision.Hours;
+			if (width < ThresholdGridWidthQuarterHoursToHalfHours) return GridViewDivision.HalfHours;
 
 			return GridViewDivision.QuarterHours;
 		}
 
-		private uint GetSlotLengthInSeconds (GridViewDivision gridViewDivision)
+		private static uint GetSlotLengthInSeconds (GridViewDivision gridViewDivision)
 		{
 			switch (gridViewDivision)
 			{
-				case GridViewDivision.QuarterHours: return  900;
-				case GridViewDivision.HalfHours:    return 1800;
-				case GridViewDivision.Hours:        return 3600;
-				case GridViewDivision.TwoHours:     return 7200;
+			case GridViewDivision.QuarterHours: return 900;
+			case GridViewDivision.HalfHours: return 1800;
+			case GridViewDivision.Hours: return 3600;
+			case GridViewDivision.TwoHours: return 7200;
 			}
 			throw new ArgumentException();
-		}	
+		}
 	}
 }
