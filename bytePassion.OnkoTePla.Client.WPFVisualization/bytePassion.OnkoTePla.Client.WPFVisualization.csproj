@@ -87,6 +87,7 @@
     <Compile Include="ViewModels\AppointmentOverViewModel.cs" />
     <Compile Include="ViewModels\AppointmentViewModel.cs" />
     <Compile Include="ViewModels\Base\IViewModelBase.cs" />
+    <Compile Include="ViewModels\Helper\GridLinesAndLabelPainting.cs" />
     <Compile Include="ViewModels\Helper\PatientListItem.cs" />
     <Compile Include="ViewModels\Interfaces\IAddAppointmentTestViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IAppointmentGridViewModel.cs" />
