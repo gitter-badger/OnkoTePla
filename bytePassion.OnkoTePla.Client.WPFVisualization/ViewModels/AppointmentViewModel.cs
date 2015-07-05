@@ -9,6 +9,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {
@@ -16,8 +17,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 	{		
 		private readonly Appointment appointment;
 
-		private ITherapyPlaceRowViewModel containerRow;
-		private IAppointmentGridViewModel containerGrid;
+		private readonly ITherapyPlaceRowViewModel containerRow;
+		private readonly IAppointmentGridViewModel containerGrid;
 
 		private double canvasPosition;
 		private double viewElementLength;
@@ -51,22 +52,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				}
 			);
 
-			deleteAppointmentCommand = new Command(
-				() =>
+			deleteAppointmentCommand = new Command(async () =>
 				{
 					var dialog = new UserDialogBox("", "Wollen Sie den Termin wirklich löschen?", 
 												   MessageBoxButton.OKCancel, MessageBoxImage.Question);
-					var result = dialog.ShowDialog();
+					var result = await dialog.ShowDialog();
 
-					switch (result)
-					{
-						case MessageBoxResult.OK: 
-						{
-							containerGrid.DeleteAppointment(this, appointment, containerRow);
-							break;
-						}
-						case MessageBoxResult.Cancel:return;
-					}
+				    if (result == MessageDialogResult.Affirmative)
+				    {
+				        containerGrid.DeleteAppointment(this, appointment, containerRow);
+				    }
 				}
 			);
 		}
