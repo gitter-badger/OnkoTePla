@@ -32,14 +32,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 		private readonly ObservableCollection<TimeSlotLine>  timeSlotLines;
 
 		public GridLinesAndLabelPainting ()
-		{
-			timeSlotStart = new Time(7, 0);
-			timeSlotEnd   = new Time(16, 0);
-
+		{			
 			timeSlotLabels = new ObservableCollection<TimeSlotLabel>();
 			timeSlotLines  = new ObservableCollection<TimeSlotLine>();
 
-			RecomputeGrid(true);
+			SetNewTimeSpan(new Time(7, 0), new Time(16, 0));
 		}
 
 		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get { return timeSlotLabels; }}
@@ -149,8 +146,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 			if (!MathLibExtension.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
 			{
 				timeSlotLabels[roundedTimeSlotCount + 1].XCoord       = gridWidth;
-				timeSlotLines[roundedTimeSlotCount + 1].XCoord       = gridWidth;
-				timeSlotLines[roundedTimeSlotCount + 1].YCoordBottom = gridHeight;
+				timeSlotLines [roundedTimeSlotCount + 1].XCoord       = gridWidth;
+				timeSlotLines [roundedTimeSlotCount + 1].YCoordBottom = gridHeight;
 			}
 		}
 
@@ -167,7 +164,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 		{
 			switch (gridViewDivision)
 			{
-				case GridViewDivision.QuarterHours: return 900;
+				case GridViewDivision.QuarterHours: return  900;
 				case GridViewDivision.HalfHours:    return 1800;
 				case GridViewDivision.Hours:        return 3600;
 				case GridViewDivision.TwoHours:     return 7200;
