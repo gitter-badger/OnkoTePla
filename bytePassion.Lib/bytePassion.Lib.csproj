@@ -56,6 +56,11 @@
     <Compile Include="FrameworkExtensions\GenericTwoToOneValueConverter.cs" />
     <Compile Include="FrameworkExtensions\GenericValueConverter.cs" />
     <Compile Include="FrameworkExtensions\GridViewColumns.cs" />
+    <Compile Include="Math\Angle.cs" />
+    <Compile Include="Math\AngleInterval.cs" />
+    <Compile Include="Math\AngleUnit.cs" />
+    <Compile Include="Math\Constants.cs" />
+    <Compile Include="Math\MathLibExtension.cs" />
     <Compile Include="TimeLib\Date.cs" />
     <Compile Include="TimeLib\Time.cs" />
     <Compile Include="TimeLib\Duration.cs" />
