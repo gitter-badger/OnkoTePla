@@ -254,7 +254,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			{
 				while (reader.MoveToNextAttribute())
 				{
-					if (reader.Name == PatientIdAttribute) removedAppointmentId = Guid.Parse(reader.Value); 					
+					if (reader.Name == AppointmentIdAttribute) removedAppointmentId = Guid.Parse(reader.Value); 					
 				}
 			}
 
