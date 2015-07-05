@@ -42,13 +42,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 			RecomputeGrid(true);
 		}
 
-		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get { return timeSlotLabels; } }
-		public ObservableCollection<TimeSlotLine> TimeSlotLines { get { return timeSlotLines; } }
+		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get { return timeSlotLabels; }}
+		public ObservableCollection<TimeSlotLine>  TimeSlotLines  { get { return timeSlotLines;  }}
 
 		public void SetNewTimeSpan (Time newStartTime, Time newEndTime)
 		{
 			timeSlotStart = newStartTime;
-			timeSlotEnd = newEndTime;
+			timeSlotEnd   = newEndTime;
 
 			RecomputeGrid(true);
 		}
@@ -85,8 +85,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 			}
 			else
 			{
-				UpdateGridDrawing(roundedTimeSlotCount, excactTimeSlotCount,
-								  slotLengthInSeconds, timeSlotWidth);
+				UpdateGridDrawing(roundedTimeSlotCount, excactTimeSlotCount, timeSlotWidth);
 			}
 		}
 
@@ -100,7 +99,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 			{
 
 				var timeCaption = new Time(timeSlotStart + new Duration(slot*slotLengthInSeconds)).ToString()
-																							  .Substring(0, 5);
+																							      .Substring(0, 5);
 
 				timeSlotLabels.Add(new TimeSlotLabel(timeCaption)
 				{
@@ -118,7 +117,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 
 			if (!MathLibExtension.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
 			{
-				var timeCaption = timeSlotEnd.ToString().Substring(0, 5);
+				var timeCaption = timeSlotEnd.ToString()
+											 .Substring(0, 5);
 
 				timeSlotLabels.Add(new TimeSlotLabel(timeCaption)
 				{
@@ -135,9 +135,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 			}
 		}
 
-		private void UpdateGridDrawing (int roundedTimeSlotCount, double excactTimeSlotCount,
-										uint slotLengthInSeconds, double timeSlotWidth)
-		{
+		private void UpdateGridDrawing (int roundedTimeSlotCount, double excactTimeSlotCount, double timeSlotWidth)
+		{ 
 			for (int slot = 0; slot < roundedTimeSlotCount + 1; slot++)
 			{
 				var xCoord = slot*timeSlotWidth;
@@ -157,8 +156,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 
 		private static GridViewDivision GetDevisionForWidth (double width)
 		{
-			if (width < ThresholdGridWidthHoursToTwoHours) return GridViewDivision.TwoHours;
-			if (width < ThresholdGridWidthHalfHoursToHours) return GridViewDivision.Hours;
+			if (width < ThresholdGridWidthHoursToTwoHours)         return GridViewDivision.TwoHours;
+			if (width < ThresholdGridWidthHalfHoursToHours)        return GridViewDivision.Hours;
 			if (width < ThresholdGridWidthQuarterHoursToHalfHours) return GridViewDivision.HalfHours;
 
 			return GridViewDivision.QuarterHours;
@@ -168,10 +167,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 		{
 			switch (gridViewDivision)
 			{
-			case GridViewDivision.QuarterHours: return 900;
-			case GridViewDivision.HalfHours: return 1800;
-			case GridViewDivision.Hours: return 3600;
-			case GridViewDivision.TwoHours: return 7200;
+				case GridViewDivision.QuarterHours: return 900;
+				case GridViewDivision.HalfHours:    return 1800;
+				case GridViewDivision.Hours:        return 3600;
+				case GridViewDivision.TwoHours:     return 7200;
 			}
 			throw new ArgumentException();
 		}
