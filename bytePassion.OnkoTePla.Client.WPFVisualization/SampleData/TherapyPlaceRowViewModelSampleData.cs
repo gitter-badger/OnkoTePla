@@ -22,8 +22,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 
 			Appointments = new ObservableCollection<IAppointmentViewModel>
 			{
-				new AppointmentViewModelSampleData(new Time(8,0),new Time(10,0), 10, 150),
-				new AppointmentViewModelSampleData(new Time(8,0),new Time(10,0), 200, 150)
+				new AppointmentViewModelSampleData( 10, 150),
+				new AppointmentViewModelSampleData(200, 150)
 			};
 		}
 

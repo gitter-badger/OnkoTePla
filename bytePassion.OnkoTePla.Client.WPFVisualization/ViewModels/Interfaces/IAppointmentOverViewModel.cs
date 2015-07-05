@@ -7,7 +7,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
-	interface IAppointmentOverViewModel : IViewModelBase
+	interface IAppointmentOverViewModel
 	{
 		ObservableCollection<Appointment>     Appointments     { get; }
 		ObservableCollection<MedicalPractice> MedicalPractices { get;  }	

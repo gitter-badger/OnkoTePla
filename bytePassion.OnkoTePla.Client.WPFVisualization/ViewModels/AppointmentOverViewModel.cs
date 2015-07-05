@@ -72,8 +72,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public MedicalPractice SelectedMedicalPractice { set; private get; }
 		public string          SelectedDateAsString    { set; private get; }
 
-		public ICommand LoadReadModel { get { return loadReadModelCommand; }}
-
-		public event PropertyChangedEventHandler PropertyChanged;		
+		public ICommand LoadReadModel { get { return loadReadModelCommand; }}	
 	}
 }

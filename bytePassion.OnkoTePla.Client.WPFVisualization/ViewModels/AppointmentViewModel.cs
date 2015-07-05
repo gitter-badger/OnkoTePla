@@ -20,7 +20,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private double viewElementLength;
 
 		public AppointmentViewModel(ICommandBus commandBus, Appointment appointment, 
-									ITherapyPlaceRowViewModel containerRow, IAppointmentGridViewModel containerGrid)
+									ITherapyPlaceRowViewModel containerRow, 
+									IAppointmentGridViewModel containerGrid)
 		{
 			this.containerRow = containerRow;
 			this.containerGrid = containerGrid;
@@ -52,9 +53,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public string PatientDisplayName
 		{
 			get { return appointment.Patient.Name; }
-		}
-
-		public Duration Duration { get; private set; }
+		}		
 
 		public double CanvasPosition
 		{
@@ -66,10 +65,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		{
 			get { return viewElementLength; }
 			set { PropertyChanged.ChangeAndNotify(this, ref viewElementLength, value); }
-		}
-
-		public Time StartTime { get; set; }
-		public Time EndTime   { get; set; }
+		}		
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}
