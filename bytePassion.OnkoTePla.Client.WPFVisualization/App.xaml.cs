@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Domain;
@@ -11,6 +12,7 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Client.Resources;
+using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -54,7 +56,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Event- and CommandBus
 
-			IEventBus eventBus = new EventBus();
+			IEventBus   eventBus   = new EventBus();
 			ICommandBus commandBus = new CommandBus();
 
 
@@ -67,19 +69,27 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			// Register CommandHandler
 
 			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
+			commandBus.RegisterCommandHandler(new DeleteAppointmentCommandHandler(aggregateRepository));
 
+			// SessionInformation
+
+			var sessionInformation = new SessionInformation
+			{
+				LoggedInUser = configReadRepository.GetAllUsers().First()
+			};
 
 			// create ViewModels
 
 			var addAppointmentTestViewModel = new AddAppointmentTestViewModel(configReadRepository, patientRepository, readModelRepository, commandBus);
 			var appointmentOverViewModel    = new AppointmentOverViewModel(readModelRepository, configReadRepository);
             var patientsViewModel           = new PatientSelectorViewModel(patientRepository);
-			var appointmentGridViewModel    = new AppointmentGridViewModel(readModelRepository, configReadRepository, commandBus); 		
+			var appointmentGridViewModel    = new AppointmentGridViewModel(readModelRepository, configReadRepository, commandBus, sessionInformation); 		
 
 			var mainWindowViewModel = new MainWindowViewModel(patientsViewModel, 
 															  addAppointmentTestViewModel, 
 															  appointmentOverViewModel, 
-															  appointmentGridViewModel);
+															  appointmentGridViewModel,
+															  sessionInformation);
 
 			var mainWindow = new MainWindow
 			{

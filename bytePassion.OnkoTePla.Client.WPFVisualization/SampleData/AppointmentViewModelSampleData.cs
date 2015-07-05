@@ -34,6 +34,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 
 		public OperatingMode OperatingMode  { get; set; }
 
-		public event PropertyChangedEventHandler PropertyChanged;		
+		public event PropertyChangedEventHandler PropertyChanged;
+		public void Dispose() {}
 	}
 }

@@ -11,11 +11,14 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
+using bytePassion.OnkoTePla.Contracts.Appointments;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
@@ -28,7 +31,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private readonly IReadModelRepository         readModelRepository;
 		private readonly IConfigurationReadRepository configuration;
 		private readonly ICommandBus                  commandBus;
-
+		private readonly SessionInformation           sessionInformation;
 
 		// GridDrawing /////////////////////////////////////////////////////////////////////////////////////
 
@@ -45,7 +48,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private AppointmentsOfADayReadModel appointmentReadModel;
 		
 		private readonly ObservableCollection<ITherapyPlaceRowViewModel> therapyPlaceRows;
-		private readonly IDictionary<Guid, ObservableCollection<IAppointmentViewModel>> appointmentsOnGrid;		
+		private readonly IDictionary<Guid, ObservableCollection<IAppointmentViewModel>> appointmentsOnGrid;
+		private readonly IDictionary<Guid, IAppointmentViewModel> appointmentCache; 
 
 
 		// Commands ////////////////////////////////////////////////////////////////////////////////////////
@@ -53,15 +57,19 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private readonly ParameterrizedCommand<AggregateIdentifier> loadReamodelCommand;
 		private IAppointmentViewModel editingObject;
 		private OperatingMode operatingMode;
+		private Command commitChangesCommand;
+		private Command discardChangesCommand;
 
 
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
 										IConfigurationReadRepository configuration,
-										ICommandBus commandBus)
+										ICommandBus commandBus, 
+										SessionInformation sessionInformation)
 		{
 			this.readModelRepository = readModelRepository;
 			this.configuration = configuration;
 			this.commandBus = commandBus;
+			this.sessionInformation = sessionInformation;
 
 			editingObject = null;
 			operatingMode = OperatingMode.View;
@@ -70,27 +78,35 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 			appointmentReadModel = null;			
 			therapyPlaceRows = new ObservableCollection<ITherapyPlaceRowViewModel>();
-			appointmentsOnGrid = new ConcurrentDictionary<Guid, ObservableCollection<IAppointmentViewModel>>();			
+			appointmentsOnGrid = new ConcurrentDictionary<Guid, ObservableCollection<IAppointmentViewModel>>();
+			appointmentCache = new Dictionary<Guid, IAppointmentViewModel>();
+
 			
-			loadReamodelCommand = new ParameterrizedCommand<AggregateIdentifier>(LoadReadModelFromId);			
+			loadReamodelCommand = new ParameterrizedCommand<AggregateIdentifier>(LoadReadModelFromId);	
+		
+			commitChangesCommand  = new Command(CommitAllChanges);
+			discardChangesCommand = new Command(DiscardAllChanges);
 		}
 
 		private void OnAppointmentChanged(object sender, AppointmentChangedEventArgs appointmentChangedEventArgs)
 		{
 			switch (appointmentChangedEventArgs.ChangeAction)
 			{
-				case ChangeAction.Added:
-				{
-					var appointment = appointmentChangedEventArgs.Appointment;
-					appointmentsOnGrid[appointment.TherapyPlace.Id].Add(
-						new AppointmentViewModel(commandBus, 
-												 appointment, 
-												 therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id),
-												 this)
-					);
-					break;
-				}
+				case ChangeAction.Added:   { AddAppointmentToGrid     (appointmentChangedEventArgs.Appointment); break; }
+				case ChangeAction.Deleted: { RemoveAppointmentFromGrid(appointmentChangedEventArgs.Appointment); break; }
 			}
+		}
+
+		private void CommitAllChanges()
+		{
+			// TODO
+			OperatingMode = OperatingMode.View;
+		}
+
+		private void DiscardAllChanges()
+		{
+			// TODO
+			OperatingMode = OperatingMode.View;
 		}
 
 		private void LoadReadModelFromId(AggregateIdentifier id)
@@ -131,17 +147,53 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				}
 
 			foreach (var appointment in appointmentReadModel.Appointments)
-				appointmentsOnGrid[appointment.TherapyPlace.Id].Add(
-					new AppointmentViewModel(commandBus, 
-											 appointment, 
-											 therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id),
-											 this)
-				);								
+				AddAppointmentToGrid(appointment);					
+		}
+
+		private void AddAppointmentToGrid(Appointment appointment)
+		{			
+			var appointmentViewModel = new AppointmentViewModel(appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id), this);
+
+			appointmentsOnGrid[appointment.TherapyPlace.Id].Add(appointmentViewModel);
+			appointmentCache.Add(appointment.Id, appointmentViewModel);
+		}
+
+		private void RemoveAppointmentFromGrid (Appointment appointment)
+		{			
+			var appointmentViewModel = appointmentCache[appointment.Id];
+			appointmentsOnGrid[appointment.TherapyPlace.Id].Remove(appointmentViewModel);
+			appointmentCache.Remove(appointment.Id);
 		}
 
 		public ICommand LoadReadModel
 		{
 			get { return loadReamodelCommand; }
+		}
+
+		public ICommand CommitChanges
+		{
+			get { return commitChangesCommand; }
+		}
+
+		public ICommand DiscardChanges
+		{
+			get { return discardChangesCommand; }
+		}
+
+		public AggregateIdentifier ReadModelIdentifier
+		{
+			get { return appointmentReadModel.Identifier; }
+		}
+
+		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment, ITherapyPlaceRowViewModel containerRow)
+		{			
+			appointmentsOnGrid[containerRow.TherapyPlaceId].Remove(appointmentViewModel);
+
+			commandBus.Send(new DeleteAppointment(appointmentReadModel.Identifier, appointmentReadModel.AggregateVersion, 
+												  sessionInformation.LoggedInUser.Id, appointment.Id, appointment.Patient.Id));
+
+			appointmentViewModel.Dispose();
+			OperatingMode = OperatingMode.View;
 		}
 
 		public ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get { return gridLinesAndLabelPainting.TimeSlotLabels;   }}

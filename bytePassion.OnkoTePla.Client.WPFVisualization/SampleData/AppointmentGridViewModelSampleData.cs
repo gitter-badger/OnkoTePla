@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
+using bytePassion.OnkoTePla.Contracts.Appointments;
 
 #pragma warning disable 0067
 
@@ -32,13 +33,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 			};
 
 			CurrentGridWidth  = 800;
-			CurrentGridHeight = 400;
+			CurrentGridHeight = 400;			
 
-			OperatingMode = ViewModels.Helper.OperatingMode.View;
+			OperatingMode = OperatingMode.View;
 		}
 
-		public ICommand LoadReadModel { get { return null; }}
+		public ICommand LoadReadModel  { get { return null; }}
+		public ICommand CommitChanges  { get { return null; }}
+		public ICommand DiscardChanges { get { return null; }}
 
+		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment, ITherapyPlaceRowViewModel containerRow) {}
+		
 		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; private set; }
 		public ObservableCollection<TimeSlotLine> TimeSlotLines   { get; private set; }
 

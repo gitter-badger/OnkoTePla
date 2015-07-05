@@ -1,11 +1,12 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
-	public interface IAppointmentViewModel : IViewModelBase
+	public interface IAppointmentViewModel : IViewModelBase, IDisposable
 	{
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }

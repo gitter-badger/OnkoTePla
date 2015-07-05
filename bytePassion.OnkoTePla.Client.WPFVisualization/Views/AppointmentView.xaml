@@ -12,6 +12,7 @@
 	
 	<UserControl.Resources>
 		<converter:OperatingModeToBackgroundBrush x:Key="OperatingModeToBackgroundBrush"/>
+		<converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter"/>
 	</UserControl.Resources>
 	
 	<d:UserControl.DataContext>
@@ -27,13 +28,49 @@
 		<i:Interaction.Behaviors>
 			<behaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode}"/>
 		</i:Interaction.Behaviors>
-
-		<TextBlock HorizontalAlignment="Center" 
-				   VerticalAlignment="Center" 
-				   FontFamily="Sigoe Ui Light" 
-				   Foreground="Black" 
-				   FontSize="18"
-				   Text="{Binding PatientDisplayName}"/>
 		
+		<Canvas>
+
+			<Line Canvas.Left="51"
+				  Canvas.Top="-20"
+				  X1="0"
+				  X2="0"
+			      Y1="0"
+				  Y2="20"
+				  Stroke="Black"
+				  StrokeThickness="1"
+				  Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}"/>
+
+			<Button Canvas.Left="40"
+					Canvas.Top="-30"
+					Command="{Binding DeleteAppointment}"
+					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}">				
+				<Button.Template>
+					<ControlTemplate>
+						<Grid>
+							<Ellipse Width="20"
+									 Height="20"
+									 Fill="Transparent"></Ellipse>
+							<Viewbox Width="20" 
+									 Height="20">
+								<Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,
+											2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,
+											15.59L13.41,12L17,8.41L15.59,7Z" 
+									  Fill="Red" />
+							</Viewbox>					  
+						</Grid>
+					</ControlTemplate>
+				</Button.Template>											
+			</Button>
+
+			<TextBlock Canvas.Top="4"
+					   Canvas.Left="5"
+					   FontFamily="Sigoe Ui Light" 
+					   Foreground="Black" 
+					   FontSize="18"
+					   Text="{Binding PatientDisplayName}"/>
+			
+		</Canvas>
+
 	</Border>
 </UserControl>

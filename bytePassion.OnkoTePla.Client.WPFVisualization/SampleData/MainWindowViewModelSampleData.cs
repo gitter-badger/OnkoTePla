@@ -16,6 +16,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 		public IPatientSelectorViewModel    PatientSelectorViewModel    { get; private set; }
 		public IAddAppointmentTestViewModel AddAppointmentTestViewModel { get; private set; }
 		public IAppointmentOverViewModel    AppointmentOverViewModel    { get; private set; }
-		public IAppointmentGridViewModel    AppointmentGridViewModel    { get; private set; }
+		public IAppointmentGridViewModel    AppointmentGridViewModel    { get; private set; }		
 	}
 }

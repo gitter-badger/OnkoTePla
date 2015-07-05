@@ -1,4 +1,5 @@
-﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
+﻿using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
@@ -11,15 +12,21 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private readonly IAppointmentOverViewModel appointmentOverViewModel;
 		private readonly IAppointmentGridViewModel appointmentGridViewModel;
 
+		private readonly SessionInformation sessionInformation;
+
 		public MainWindowViewModel (IPatientSelectorViewModel patientSelectorViewModel,
 									IAddAppointmentTestViewModel addAppointmentTestViewModel, 
 									IAppointmentOverViewModel appointmentOverViewModel, 
-									IAppointmentGridViewModel appointmentGridViewModel)
+									IAppointmentGridViewModel appointmentGridViewModel,
+									
+									SessionInformation sessionInformation)
 		{
 		    this.patientSelectorViewModel    = patientSelectorViewModel;
 			this.addAppointmentTestViewModel = addAppointmentTestViewModel;
 			this.appointmentOverViewModel    = appointmentOverViewModel;
 			this.appointmentGridViewModel    = appointmentGridViewModel;
+
+			this.sessionInformation = sessionInformation;
 		}
 
 		public IPatientSelectorViewModel    PatientSelectorViewModel    { get { return patientSelectorViewModel;    }}
