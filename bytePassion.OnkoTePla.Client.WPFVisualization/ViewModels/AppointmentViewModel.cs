@@ -20,14 +20,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			this.containerViewModel = containerViewModel;
 
 			containerViewModel.PropertyChanged += OnContainerChanged;
+
+			OnContainerChanged(containerViewModel, null);
 		}
 
 		private void OnContainerChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
 			var container = (ITherapyPlaceRowViewModel) sender;
 
-			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, container.TimeSlotStart);
-			var durationInHours = (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
+			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, container.TimeSlotStart);			
 			CanvasPosition =  container.LengthOfOneHour * (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
 			
 			var durationOfAppointment = Time.GetDurationBetween(appointment.StartTime, appointment.EndTime);
