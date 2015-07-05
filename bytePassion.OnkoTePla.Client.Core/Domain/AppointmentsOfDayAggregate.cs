@@ -34,12 +34,18 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			Version = @event.AggregateVersion;
 		}
 
-		public void Apply(AppointmentModified @event)
+		public void Apply(AppointmentReplaced @event)
 		{			
 		}
 
-		public void Apply(AppointmentRemoved @event)
-		{			
+		public void Apply(AppointmentDeleted @event)
+		{
+			if (Version + 1 != @event.AggregateVersion)
+				throw new VersionNotApplicapleException("@apply AppointmentDeleted");
+
+			appointments.DeleteAppointment(@event.RemovedAppointmentId);
+
+			Version = @event.AggregateVersion;
 		}
 		
 		public void AddAppointment(Guid userId, uint forAggregateVersion, CreateAppointmentData createAppointmentData)
@@ -53,6 +59,18 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
  			ApplyChange(new AppointmentAdded(Id, newAggregateVersion, 
 											 userId,TimeTools.GetCurrentTimeStamp(), 
 											 createAppointmentData));
+		}
+
+		public void DeleteAppointment(Guid userId, uint forAggregateVersion, Guid patientId, Guid appointmentToRemoveId)
+		{
+			if (forAggregateVersion != Version)
+				throw new VersionNotApplicapleException("@deleteAppointmen");
+
+			var newAggregateVersion = Version + 1;
+
+			ApplyChange(new AppointmentDeleted(Id, newAggregateVersion, 
+											   userId, patientId, TimeTools.GetCurrentTimeStamp(), 
+											   appointmentToRemoveId));
 		}
 	}
 }

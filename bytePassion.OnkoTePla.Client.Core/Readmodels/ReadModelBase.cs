@@ -9,8 +9,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 {
 	public abstract class ReadModelBase : IDisposable, INotifyAppointmentChanged,
 													   IDomainEventHandler<AppointmentAdded>,
-													   IDomainEventHandler<AppointmentModified>,
-													   IDomainEventHandler<AppointmentRemoved>
+													   IDomainEventHandler<AppointmentReplaced>,
+													   IDomainEventHandler<AppointmentDeleted>
 	{
 
 		public abstract event EventHandler<AppointmentChangedEventArgs> AppointmentChanged;
@@ -25,8 +25,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		}
 		
 		public abstract void Handle(AppointmentAdded    domainEvent);
-		public abstract void Handle(AppointmentModified domainEvent);
-		public abstract void Handle(AppointmentRemoved  domainEvent);
+		public abstract void Handle(AppointmentReplaced domainEvent);
+		public abstract void Handle(AppointmentDeleted  domainEvent);
 
 
 
@@ -60,15 +60,15 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		private void RegisterAtEventBus ()
 		{
 			eventBus.RegisterEventHandler<AppointmentAdded>(this);
-			eventBus.RegisterEventHandler<AppointmentModified>(this);
-			eventBus.RegisterEventHandler<AppointmentRemoved>(this);
+			eventBus.RegisterEventHandler<AppointmentReplaced>(this);
+			eventBus.RegisterEventHandler<AppointmentDeleted>(this);
 		}
 
 		private void DeregisterAtEventBus ()
 		{
 			eventBus.DeregisterEventHandler<AppointmentAdded>(this);
-			eventBus.DeregisterEventHandler<AppointmentModified>(this);
-			eventBus.DeregisterEventHandler<AppointmentRemoved>(this);
+			eventBus.DeregisterEventHandler<AppointmentReplaced>(this);
+			eventBus.DeregisterEventHandler<AppointmentDeleted>(this);
 		}
 	}
 }

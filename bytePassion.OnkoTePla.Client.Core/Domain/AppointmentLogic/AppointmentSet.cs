@@ -49,5 +49,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 			appointmentCollection.AddAppointment(newAppointment);
 			//appointmentLookUp.Add(appointmentId, newAppointment);
 		}
+
+		public void DeleteAppointment(Guid removedAppointmentId)
+		{
+			appointmentCollection.DeleteAppointment(removedAppointmentId);
+		}
 	}	
 }

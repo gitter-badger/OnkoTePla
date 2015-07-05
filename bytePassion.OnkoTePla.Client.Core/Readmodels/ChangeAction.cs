@@ -4,6 +4,6 @@
 	{
 		Added,
 		Modified,
-		Removed
+		Deleted
 	}
 }

@@ -17,9 +17,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			return new AppointmentAdded(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), null, new CreateAppointmentData(new Guid(),null, new Time(),new Time(),new Date(), new Guid(),new Guid()));
 		}
 
-		private static AppointmentRemoved GetAppointmentRemovedDummy()
+		private static AppointmentDeleted GetAppointmentRemovedDummy()
 		{
-			return new AppointmentRemoved(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), new Guid(), new Tuple<Date, Time>(Date.Dummy, Time.Dummy));
+			return new AppointmentDeleted(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), new Guid(), new Tuple<Date, Time>(Date.Dummy, Time.Dummy), new Guid());
 		}
 
 		private class TestSingleEventHandler : IDomainEventHandler<AppointmentAdded>
@@ -52,7 +52,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 		
 		
 		private class TestDoubleEventHandler : IDomainEventHandler<AppointmentAdded>,
-											   IDomainEventHandler<AppointmentRemoved>
+											   IDomainEventHandler<AppointmentDeleted>
 		{
 			public TestDoubleEventHandler()
 			{
@@ -65,7 +65,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 				HandleAddedEvent = true;
 			}
 
-			public void Handle(AppointmentRemoved domainEvent)
+			public void Handle(AppointmentDeleted domainEvent)
 			{
 				HandleRemovedEvent = true;
 			}
@@ -81,7 +81,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			var testEventHandler = new TestDoubleEventHandler();
 
 			eventBus.RegisterEventHandler<AppointmentAdded>(testEventHandler);
-			eventBus.RegisterEventHandler<AppointmentRemoved>(testEventHandler);
+			eventBus.RegisterEventHandler<AppointmentDeleted>(testEventHandler);
 
 			eventBus.Publish(GetAppointmentAddedDummy());
 
@@ -109,7 +109,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			Assert.True(testEventHandler2.HandledEvent);
 		}
 
-		private class TestAnotherSingleEventHandler : IDomainEventHandler<AppointmentRemoved>
+		private class TestAnotherSingleEventHandler : IDomainEventHandler<AppointmentDeleted>
 		{
 
 			public TestAnotherSingleEventHandler ()
@@ -117,7 +117,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 				HandledEvent = false;
 			}		
 			
-			public void Handle(AppointmentRemoved domainEvent)
+			public void Handle(AppointmentDeleted domainEvent)
 			{
 				HandledEvent = true;
 			}

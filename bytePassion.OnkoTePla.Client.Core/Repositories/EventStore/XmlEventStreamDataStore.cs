@@ -38,7 +38,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private const string AggregateVersionAttribute    = "aggregateVersion";		
 
 		private const string AppointmentAddedEvent        = "appointmentAddedEvent";
-		private const string AppointmentModifiedEvent     = "appointmentModifiedEvent";
+		private const string AppointmentReplacedEvent     = "appointmentReplacedEvent";
+		private const string AppointmentDeletedEvent      = "appointmentDeletedEvent";
+
 		private const string PatientIdAttribute		      = "patientId";
 		private const string AppointmentIdAttribute       = "appointmentId";
 		private const string DescriptionAttribute	      = "description";
@@ -100,12 +102,23 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.WriteAttributeString(TimeStampDateAttribute,    @event.TimeStamp.Item1.ToString());
 			writer.WriteAttributeString(TimeStampTimeAttribute,    @event.TimeStamp.Item2.ToString());			
 
-			if (@event is AppointmentAdded) WriteEvent(writer, (AppointmentAdded) @event);			
+			if (@event is AppointmentAdded)    WriteEvent(writer, (AppointmentAdded)   @event);
+			if (@event is AppointmentReplaced) WriteEvent(writer, (AppointmentReplaced)@event);
+			if (@event is AppointmentDeleted)  WriteEvent(writer, (AppointmentDeleted) @event);
 					
 			writer.WriteEndElement();
 		}
 
-		private static void WriteEvent(XmlWriter writer, AppointmentModified @event)
+		private static void WriteEvent(XmlWriter writer, AppointmentDeleted @event)
+		{
+			writer.WriteStartElement(AppointmentDeletedEvent);
+
+			writer.WriteAttributeString(AppointmentIdAttribute, @event.RemovedAppointmentId.ToString());
+
+			writer.WriteEndElement();
+		}
+
+		private static void WriteEvent(XmlWriter writer, AppointmentReplaced @event)
 		{
 			throw new NotImplementedException();
 		}
@@ -212,7 +225,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 																								  new Tuple<Date, Time>(Date.Parse(timeStampDate), 
 																							 							Time.Parse(timeStampTime)));
 														break;
-							case AppointmentModifiedEvent: domainEvent = AcceptAppointmentModifiedEvent(reader, id, aggrevateVersion, userId, patientId, 
+							case AppointmentReplacedEvent: domainEvent = AcceptAppointmentModifiedEvent(reader, id, aggrevateVersion, userId, patientId, 
+																										new Tuple<Date, Time>(Date.Parse(timeStampDate),
+																															  Time.Parse(timeStampTime)));
+														break;
+							case AppointmentDeletedEvent: domainEvent = AcceptAppointmentDeletedEvent(reader, id, aggrevateVersion, userId, patientId,
 																										new Tuple<Date, Time>(Date.Parse(timeStampDate),
 																															  Time.Parse(timeStampTime)));
 														break;
@@ -227,7 +244,24 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			return events;
 		}
 
-		private static AppointmentModified AcceptAppointmentModifiedEvent(XmlReader reader, AggregateIdentifier identifier,
+		private static DomainEvent AcceptAppointmentDeletedEvent(XmlReader reader, AggregateIdentifier identifier, 
+																 uint aggrevateVersion, Guid userId, Guid patientId, 
+																 Tuple<Date, Time> timeStamp)
+		{
+			var removedAppointmentId = new Guid();
+
+			if (reader.HasAttributes)
+			{
+				while (reader.MoveToNextAttribute())
+				{
+					if (reader.Name == PatientIdAttribute) removedAppointmentId = Guid.Parse(reader.Value); 					
+				}
+			}
+
+			return new AppointmentDeleted(identifier, aggrevateVersion, userId, patientId, timeStamp, removedAppointmentId);
+		}
+
+		private static AppointmentReplaced AcceptAppointmentModifiedEvent(XmlReader reader, AggregateIdentifier identifier,
 																		  uint aggregateVersion, Guid userId, Guid patientId,
 																		  Tuple<Date, Time> timeStamp)
 		{
@@ -249,8 +283,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 				while (reader.MoveToNextAttribute())
 				{
 					switch (reader.Name)
-					{
-						case PatientIdAttribute:      patientId     = Guid.Parse(reader.Value); break;
+					{						
 						case DescriptionAttribute:    description   = reader.Value;             break;
 						case TherapyPlaceIdAttribute: therpyPlaceId = Guid.Parse(reader.Value); break;
 						case StartTimeAttribute:      startTime     = Time.Parse(reader.Value); break;

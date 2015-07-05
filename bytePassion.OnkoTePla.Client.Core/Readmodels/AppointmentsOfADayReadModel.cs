@@ -65,18 +65,20 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			AggregateVersion = domainEvent.AggregateVersion;
 		}
 
-		public override void Handle (AppointmentModified domainEvent)
+		public override void Handle (AppointmentReplaced domainEvent)
 		{
 			if (domainEvent.AggregateId != identifier) return;
 
 			throw new NotImplementedException();
 		}
 
-		public override void Handle (AppointmentRemoved domainEvent)
+		public override void Handle (AppointmentDeleted domainEvent)
 		{
 			if (domainEvent.AggregateId != identifier) return;
 
-			throw new NotImplementedException();
+			appointmentSet.DeleteAppointment(domainEvent.RemovedAppointmentId);
+
+			AggregateVersion = domainEvent.AggregateVersion;
 		}		
 	}
 }

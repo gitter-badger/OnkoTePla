@@ -5,9 +5,9 @@ using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
 
 namespace bytePassion.OnkoTePla.Client.Core.Domain.Events
 {
-	public class AppointmentModified : DomainEvent
+	public class AppointmentReplaced : DomainEvent
 	{
-		public AppointmentModified (AggregateIdentifier aggregateID, uint aggregateVersion,Guid userId, Guid patientId, Tuple<Date, Time> timeStamp)
+		public AppointmentReplaced (AggregateIdentifier aggregateID, uint aggregateVersion,Guid userId, Guid patientId, Tuple<Date, Time> timeStamp)
 			: base(aggregateID, aggregateVersion, userId, patientId, timeStamp)
 		{
 			
