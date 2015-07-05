@@ -44,10 +44,26 @@
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="20" />
 					</Grid.ColumnDefinitions>
-					
-					<Rectangle Grid.Column="0"
-							   Fill="Blue"/>
-					
+
+					<Grid Grid.Column="0"
+						  Background="Blue">
+						
+						<Grid.RowDefinitions>
+							<RowDefinition Height="50"/>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+
+						<Button Margin="5"
+								Click="ButtonBase_OnClick">
+							<TextBlock>
+								TestLoad (3.7.2015)<LineBreak/>
+								examplePractice1
+							</TextBlock>
+						</Button>
+					</Grid>
+									
 					<views:AppointmentGrid Grid.Column="1"
 										   Margin="5"
 										   DataContext="{Binding AppointmentGridViewModel}"/>

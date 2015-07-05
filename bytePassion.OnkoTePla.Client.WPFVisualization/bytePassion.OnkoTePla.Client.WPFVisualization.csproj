@@ -69,6 +69,7 @@
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
     <Compile Include="Behaviors\SizeReportingBehavior.cs" />
     <Compile Include="Converter\AddOffsetToDoubleConverter.cs" />
+    <Compile Include="Converter\AppointmentGridModeToVisibilityConverter.cs" />
     <Compile Include="Converter\ComputeAppointmentPosition.cs" />
     <Compile Include="Converter\NullToVisibilityConverter.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="ViewModels\AppointmentOverViewModel.cs" />
     <Compile Include="ViewModels\AppointmentViewModel.cs" />
     <Compile Include="ViewModels\Base\IViewModelBase.cs" />
+    <Compile Include="ViewModels\Helper\AppointmentGridViewMode.cs" />
     <Compile Include="ViewModels\Helper\GridLinesAndLabelPainting.cs" />
     <Compile Include="ViewModels\Helper\PatientListItem.cs" />
     <Compile Include="ViewModels\Interfaces\IAddAppointmentTestViewModel.cs" />

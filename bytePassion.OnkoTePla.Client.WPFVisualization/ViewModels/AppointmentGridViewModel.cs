@@ -9,6 +9,7 @@ using System.Windows.Input;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
@@ -22,10 +23,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 	public class AppointmentGridViewModel : IAppointmentGridViewModel
 	{
 
-		// DataAccess //////////////////////////////////////////////////////////////////////////////////////
+		// FrameworkAccess //////////////////////////////////////////////////////////////////////////////////////
 
 		private readonly IReadModelRepository         readModelRepository;
 		private readonly IConfigurationReadRepository configuration;
+		private readonly ICommandBus                  commandBus;
 
 
 		// GridDrawing /////////////////////////////////////////////////////////////////////////////////////
@@ -48,15 +50,21 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		// Commands ////////////////////////////////////////////////////////////////////////////////////////
 
-		private readonly ParameterrizedCommand<AggregateIdentifier> loadReamodelCommand; 
-
+		private readonly ParameterrizedCommand<AggregateIdentifier> loadReamodelCommand;
+		private IAppointmentViewModel editingObject;
+		private AppointmentGridViewMode operatingMode;
 
 
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
-										IConfigurationReadRepository configuration)
+										IConfigurationReadRepository configuration,
+										ICommandBus commandBus)
 		{
 			this.readModelRepository = readModelRepository;
 			this.configuration = configuration;
+			this.commandBus = commandBus;
+
+			editingObject = null;
+			operatingMode = AppointmentGridViewMode.View;
 
 			gridLinesAndLabelPainting = new GridLinesAndLabelPainting();
 
@@ -74,7 +82,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				case ChangeAction.Added:
 				{
 					var appointment = appointmentChangedEventArgs.Appointment;
-					appointmentsOnGrid[appointment.TherapyPlace.Id].Add(new AppointmentViewModel(appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id)));
+					appointmentsOnGrid[appointment.TherapyPlace.Id].Add(
+						new AppointmentViewModel(commandBus, appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id))
+					);
 					break;
 				}
 			}
@@ -83,7 +93,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private void LoadReadModelFromId(AggregateIdentifier id)
 		{
 			if (appointmentReadModel != null)
+			{
 				appointmentReadModel.AppointmentChanged -= OnAppointmentChanged;
+				appointmentReadModel.Dispose();
+
+				therapyPlaceRows.Clear();
+				appointmentsOnGrid.Clear();
+			}
 
 			appointmentReadModel = readModelRepository.GetAppointmentsOfADayReadModel(id);
 			appointmentReadModel.AppointmentChanged += OnAppointmentChanged;
@@ -113,7 +129,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 			foreach (var appointment in appointmentReadModel.Appointments)
 				appointmentsOnGrid[appointment.TherapyPlace.Id].Add(
-					new AppointmentViewModel(appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id))
+					new AppointmentViewModel(commandBus, appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id))
 				);								
 		}
 
@@ -144,6 +160,24 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				gridLinesAndLabelPainting.SetNewGridHeight(currentGridHeight);
 			}
 			get { return currentGridHeight; }
+		}
+
+		public IAppointmentViewModel EditingObject
+		{
+			get { return editingObject; }
+			set
+			{				
+				// lock day
+
+				OperatingMode = value == null ? AppointmentGridViewMode.View : AppointmentGridViewMode.Edit;
+				PropertyChanged.ChangeAndNotify(this, ref editingObject, value);
+			}
+		}
+
+		public AppointmentGridViewMode OperatingMode
+		{
+			get { return operatingMode; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref operatingMode, value);}
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

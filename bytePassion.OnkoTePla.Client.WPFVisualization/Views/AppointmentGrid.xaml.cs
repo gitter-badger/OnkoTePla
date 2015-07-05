@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels;
+﻿using System.Windows.Controls;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Views
@@ -13,17 +11,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Views
 		public AppointmentGrid ()
 		{
 			InitializeComponent();
-		}
-
-		///////////////////////////////////////////////////////////////////////////////////////////////
-		/////////                                                                           ///////////
-		/////////                                  TestArea                                 ///////////
-		/////////                                                                           ///////////
-		///////////////////////////////////////////////////////////////////////////////////////////////
-
-		private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-		{
-			((AppointmentGridViewModel)DataContext).TestLoad();
-		}
+		}		
 	}
 }

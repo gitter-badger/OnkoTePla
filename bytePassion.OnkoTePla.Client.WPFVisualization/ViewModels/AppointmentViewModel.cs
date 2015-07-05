@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
@@ -8,16 +10,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {
 	public class AppointmentViewModel : IAppointmentViewModel
 	{
+		private readonly ICommandBus commandBus;
 		private readonly Appointment appointment;
 		private ITherapyPlaceRowViewModel containerViewModel;
 
 		private double canvasPosition;
 		private double viewElementLength;
 
-		public AppointmentViewModel(Appointment appointment, ITherapyPlaceRowViewModel containerViewModel)
+		public AppointmentViewModel(ICommandBus commandBus, Appointment appointment, ITherapyPlaceRowViewModel containerViewModel)
 		{
 			this.appointment = appointment;
 			this.containerViewModel = containerViewModel;
+			this.commandBus = commandBus;
 
 			containerViewModel.PropertyChanged += OnContainerChanged;
 
@@ -33,6 +37,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			
 			var durationOfAppointment = Time.GetDurationBetween(appointment.StartTime, appointment.EndTime);
 			ViewElementLength = container.LengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
+		}
+
+		public ICommand DeleteAppointment
+		{
+			get { throw new System.NotImplementedException(); }
 		}
 
 		public string PatientDisplayName

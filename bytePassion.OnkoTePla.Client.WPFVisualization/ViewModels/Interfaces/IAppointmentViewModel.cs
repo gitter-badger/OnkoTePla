@@ -1,4 +1,5 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using System.Windows.Input;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 
@@ -6,6 +7,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
 	public interface IAppointmentViewModel : IViewModelBase
 	{
+		ICommand DeleteAppointment { get; }
+
 		string PatientDisplayName { get; }
 		Duration Duration { get; }
 

@@ -10,11 +10,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 	{
 		ICommand LoadReadModel { get; }
 
-		ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; }
-		ObservableCollection<TimeSlotLine>  TimeSlotLines {  get; }
+		ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get; }
+		ObservableCollection<TimeSlotLine>              TimeSlotLines    { get; }
 		ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get; } 
 
-		double CurrentGridWidth { set; get; }
+		double CurrentGridWidth  { set; get; }
 		double CurrentGridHeight { set; get; }
+
+		IAppointmentViewModel   EditingObject { get; set; }
+		AppointmentGridViewMode OperatingMode { get; }
 	}
 }

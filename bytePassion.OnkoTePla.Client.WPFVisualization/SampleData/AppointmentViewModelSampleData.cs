@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 
@@ -25,6 +26,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 			CanvasPosition = canvasPosition;
 			ViewElementLength = viewElementLength;
 		}
+
+		public ICommand DeleteAppointment { get { return null; }}
 
 		public string   PatientDisplayName  { get; private set; }
 		public Duration Duration            { get; private set; }
