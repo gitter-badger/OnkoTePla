@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
+using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
@@ -18,6 +20,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		private double canvasPosition;
 		private double viewElementLength;
+		private OperatingMode operatingMode;
+
+		private readonly Command switchToEditModeCommand;
 
 		public AppointmentViewModel(ICommandBus commandBus, Appointment appointment, 
 									ITherapyPlaceRowViewModel containerRow, 
@@ -32,6 +37,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			containerRow.PropertyChanged += OnContainerChanged;
 
 			OnContainerChanged(containerRow, null);
+
+			switchToEditModeCommand = new Command(
+				() =>
+				{
+					if (containerGrid.OperatingMode == OperatingMode.View)
+					{
+						containerGrid.EditingObject = this;
+						OperatingMode = OperatingMode.Edit;
+					}
+
+				}
+			);
 		}
 
 		private void OnContainerChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -50,6 +67,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			get { throw new System.NotImplementedException(); }
 		}
 
+		public ICommand SwitchToEditMode
+		{
+			get { return switchToEditModeCommand; }
+		}
+
 		public string PatientDisplayName
 		{
 			get { return appointment.Patient.Name; }
@@ -65,7 +87,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		{
 			get { return viewElementLength; }
 			set { PropertyChanged.ChangeAndNotify(this, ref viewElementLength, value); }
-		}		
+		}
+
+		public OperatingMode OperatingMode
+		{
+			get { return operatingMode; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref operatingMode, value); }
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

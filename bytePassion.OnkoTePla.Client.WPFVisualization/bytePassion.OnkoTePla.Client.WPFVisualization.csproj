@@ -66,9 +66,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\ExecuteCommandOnClickBehavior.cs" />
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
     <Compile Include="Behaviors\SizeReportingBehavior.cs" />
     <Compile Include="Converter\AddOffsetToDoubleConverter.cs" />
+    <Compile Include="Converter\OperatingModeToBackgroundBrush.cs" />
     <Compile Include="Converter\OperatingModeToVisibilityConverter.cs" />
     <Compile Include="Converter\ComputeAppointmentPosition.cs" />
     <Compile Include="Converter\NullToVisibilityConverter.cs" />

@@ -3,9 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
+             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="200">
+	
+	<UserControl.Resources>
+		<converter:OperatingModeToBackgroundBrush x:Key="OperatingModeToBackgroundBrush"/>
+	</UserControl.Resources>
 	
 	<d:UserControl.DataContext>
 		<sampleData:AppointmentViewModelSampleData/>
@@ -13,8 +20,13 @@
 	
 	<Border CornerRadius="3"
 			BorderThickness="1"
-			Background="Orange"
+			Background="{Binding OperatingMode, 
+								 Converter={StaticResource OperatingModeToBackgroundBrush}}"
 			BorderBrush="Black">
+
+		<i:Interaction.Behaviors>
+			<behaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode}"/>
+		</i:Interaction.Behaviors>
 
 		<TextBlock HorizontalAlignment="Center" 
 				   VerticalAlignment="Center" 
