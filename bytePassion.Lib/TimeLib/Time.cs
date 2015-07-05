@@ -134,7 +134,7 @@ namespace bytePassion.Lib.TimeLib
 
 		public static Duration GetDurationBetween (Time t1, Time t2)
 		{
-			return new Duration((uint)(Math.Abs((int)t1.SecondsFromDayBegin-(int)t2.SecondsFromDayBegin)));
+			return new Duration((uint)(System.Math.Abs((int)t1.SecondsFromDayBegin-(int)t2.SecondsFromDayBegin)));
 		}
 
 		public static Time Parse(string s)

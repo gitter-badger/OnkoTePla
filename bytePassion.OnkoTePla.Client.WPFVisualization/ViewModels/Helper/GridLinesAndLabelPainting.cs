@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using bytePassion.Lib.Math;
 using bytePassion.Lib.TimeLib;
 
 
@@ -79,13 +80,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 
 			var slotLengthInSeconds = GetSlotLengthInSeconds(gridViewDivision);
 
-			var timeSlotCount = duration.Seconds / slotLengthInSeconds;
-			var timeSlotWidth = currentGridWidth / timeSlotCount;
+			double excactTimeSlotCount = (double)duration.Seconds / slotLengthInSeconds;
+			int roundedTimeSlotCount = (int)Math.Floor(excactTimeSlotCount);
+
+			var timeSlotWidth = currentGridWidth / excactTimeSlotCount;
 
 			timeSlotLabels.Clear();
 			timeSlotLines.Clear();
 
-			for (uint slot = 0; slot < timeSlotCount + 1; slot++)
+			for (uint slot = 0; slot < roundedTimeSlotCount + 1; slot++)
 			{
 
 				var timeCaption = new Time(startTime + new Duration(slot*slotLengthInSeconds)).ToString()
@@ -104,16 +107,37 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 					YCoordBottom = currentGridHeight
 				});
 			}
+
+			if (!MathLibExtension.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
+			{
+				var timeCaption = endTime.ToString().Substring(0, 5);
+
+				timeSlotLabels.Add(new TimeSlotLabel(timeCaption)
+				{
+					XCoord = currentGridWidth,
+					YCoord = 30
+				});
+
+				timeSlotLines.Add(new TimeSlotLine()
+				{
+					XCoord = currentGridWidth,
+					YCoordTop = 60,
+					YCoordBottom = currentGridHeight
+				});
+			}
 		}
 
 		private void UpdateGridDrawing (GridViewDivision gridViewDivision)
 		{
 			var duration            = Time.GetDurationBetween(endTime, startTime);
 			var slotLengthInSeconds = GetSlotLengthInSeconds(gridViewDivision);
-			var timeSlotCount       = duration.Seconds / slotLengthInSeconds;
-			var timeSlotWidth       = currentGridWidth / timeSlotCount;
 
-			for (int slot = 0; slot < timeSlotCount + 1; slot++)
+			double excactTimeSlotCount = (double)duration.Seconds / slotLengthInSeconds;
+			int roundedTimeSlotCount   = (int)Math.Floor(excactTimeSlotCount);
+
+			var timeSlotWidth = currentGridWidth / excactTimeSlotCount;
+
+			for (int slot = 0; slot < roundedTimeSlotCount + 1; slot++)
 			{
 				var xCoord = slot*timeSlotWidth;
 
@@ -121,12 +145,19 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 				timeSlotLines[slot].XCoord  = xCoord;
 				timeSlotLines[slot].YCoordBottom = currentGridHeight;
 			}
+
+			if (!MathLibExtension.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
+			{
+				timeSlotLabels[roundedTimeSlotCount + 1].XCoord      = currentGridWidth;
+				timeSlotLines[roundedTimeSlotCount + 1].XCoord       = currentGridWidth;
+				timeSlotLines[roundedTimeSlotCount + 1].YCoordBottom = currentGridHeight;
+			}
 		}
 
 		private GridViewDivision GetDevisionForWidth (double width)
 		{
-			if (width < ThresholdHoursToTwoHours) return GridViewDivision.TwoHours;
-			if (width < ThresholdHalfHoursToHours) return GridViewDivision.Hours;
+			if (width < ThresholdHoursToTwoHours)         return GridViewDivision.TwoHours;
+			if (width < ThresholdHalfHoursToHours)        return GridViewDivision.Hours;
 			if (width < ThresholdQuarterHoursToHalfHours) return GridViewDivision.HalfHours;
 
 			return GridViewDivision.QuarterHours;
@@ -136,10 +167,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 		{
 			switch (gridViewDivision)
 			{
-			case GridViewDivision.QuarterHours: return 900;
-			case GridViewDivision.HalfHours: return 1800;
-			case GridViewDivision.Hours: return 3600;
-			case GridViewDivision.TwoHours: return 7200;
+				case GridViewDivision.QuarterHours: return  900;
+				case GridViewDivision.HalfHours:    return 1800;
+				case GridViewDivision.Hours:        return 3600;
+				case GridViewDivision.TwoHours:     return 7200;
 			}
 			throw new ArgumentException();
 		}	
