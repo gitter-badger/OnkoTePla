@@ -56,7 +56,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				{
 					var dialog = new UserDialogBox("", "Wollen Sie den Termin wirklich löschen?", 
 												   MessageBoxButton.OKCancel, MessageBoxImage.Question);
-					var result = await dialog.ShowDialog();
+					var result = await dialog.ShowMahAppsDialog();
 
 				    if (result == MessageDialogResult.Affirmative)
 				    {
