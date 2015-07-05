@@ -1,20 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <eventStreams>
-  <eventStream count="5" date="03.07.2015" configVersion="1" medicalPracticeId="934f564d-22e4-4688-af2c-469e502b5f5b">
-    <event aggregateVersion="1" userId="ddb94d99-63a3-44ec-a848-57da2e52d88f" patientId="50629492-d509-4bff-ab2c-4f5c782a9e63" timeStampDate="04.07.2015" timeStampTime="17:23:36">
-      <appointmentAddedEvent description="b lubb" therapyPlaceId="81b2be95-84d5-4dd2-b63a-380c16f6aebc" startTime="10:00:00" endTime="12:00:00" appointmentId="5f327dfa-f628-469c-877c-08f5bd1f2afa" />
+  <eventStream count="2" date="03.07.2015" configVersion="1" medicalPracticeId="9c6119db-79c7-401c-99f1-f82e06ab7673">
+    <event aggregateVersion="1" userId="02ee0fee-9e8a-43b1-8004-91056adaa4ea" patientId="d2aa37b8-6ce6-4f27-8361-def579adeae4" timeStampDate="05.07.2015" timeStampTime="08:35:42">
+      <appointmentAddedEvent description="blubb" therapyPlaceId="014f128e-53a1-431f-b3d7-4ea875cd0cbb" startTime="10:30:00" endTime="12:45:00" appointmentId="f4eefa73-1f55-4051-a75c-06691c5a84b2" />
     </event>
-    <event aggregateVersion="2" userId="ddb94d99-63a3-44ec-a848-57da2e52d88f" patientId="50629492-d509-4bff-ab2c-4f5c782a9e63" timeStampDate="04.07.2015" timeStampTime="17:24:02">
-      <appointmentAddedEvent description="b lubb" therapyPlaceId="8b8ceb36-8df8-461e-88b5-26796a1ebabf" startTime="10:00:00" endTime="12:00:00" appointmentId="1a07f10c-da64-4306-9f8a-272e7688d937" />
-    </event>
-    <event aggregateVersion="3" userId="ddb94d99-63a3-44ec-a848-57da2e52d88f" patientId="c0a193c9-f254-4dd6-9754-772e41336751" timeStampDate="04.07.2015" timeStampTime="17:24:09">
-      <appointmentAddedEvent description="b lubb" therapyPlaceId="1235faf6-093a-4bfc-adc6-bd9eec3fd540" startTime="10:00:00" endTime="12:00:00" appointmentId="25bf27cd-eb59-4105-8fd8-64c5b49eae7e" />
-    </event>
-    <event aggregateVersion="4" userId="ddb94d99-63a3-44ec-a848-57da2e52d88f" patientId="7441a48d-d2ad-4c25-8387-89f3e08ce00d" timeStampDate="04.07.2015" timeStampTime="17:24:31">
-      <appointmentAddedEvent description="b lubb" therapyPlaceId="fddb4502-5b33-4731-b70e-3a7d08951e41" startTime="14:00:00" endTime="16:00:00" appointmentId="f7dad613-17e0-41eb-a5ee-a75e0f51e282" />
-    </event>
-    <event aggregateVersion="5" userId="ddb94d99-63a3-44ec-a848-57da2e52d88f" patientId="dcd587c5-5cc1-41dc-be00-9405a701dd2c" timeStampDate="04.07.2015" timeStampTime="17:25:01">
-      <appointmentAddedEvent description="b lubb" therapyPlaceId="fddb4502-5b33-4731-b70e-3a7d08951e41" startTime="10:00:00" endTime="11:00:00" appointmentId="c7126d57-174c-4e48-b397-f1c6282f802b" />
+    <event aggregateVersion="2" userId="02ee0fee-9e8a-43b1-8004-91056adaa4ea" patientId="aa26e1fc-6b5d-48fe-beed-3805970cc2db" timeStampDate="05.07.2015" timeStampTime="08:36:22">
+      <appointmentAddedEvent description="blubb" therapyPlaceId="2b08077a-eaa3-41a7-b8f0-209c8f0fb958" startTime="10:00:00" endTime="12:00:00" appointmentId="47872037-ce68-405a-b6c7-d2d4061857b9" />
     </event>
   </eventStream>
 </eventStreams>

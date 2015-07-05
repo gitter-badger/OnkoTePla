@@ -21,6 +21,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 {
 	public class AppointmentGridViewModel : IAppointmentGridViewModel
 	{
+		private enum GridViewDivision { QuarterHours, HalfHours, Hours, TwoHours}
+
+		private const double ThresholdQuarterHoursToHalfHours = 800;
+		private const double ThresholdHalfHoursToHours        = 600;
+		private const double ThresholdHoursToTwoHours         = 400;
+
 		// DataAccess //////////////////////////////////////////////////////////////////////////////////////
 
 		private readonly IReadModelRepository         readModelRepository;
@@ -166,9 +172,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			for (uint slot = 0; slot < timeSlotCount + 1; slot++)
 			{
 
-				var timeCaption = new Time(startTime + new Duration(slot*slotLengthInSeconds))
-									.ToString()
-									.Substring(0, 5);
+				var timeCaption = new Time(startTime + new Duration(slot*slotLengthInSeconds)).ToString()
+																							  .Substring(0, 5);
 
 				timeSlotLabels.Add(new TimeSlotLabel(timeCaption)
 								{
@@ -183,7 +188,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 					YCoordBottom = CurrentGridHeight
 				});
 			}
-		}	
+		}
+
+		private GridViewDivision GetDevisionForWidth(double width)
+		{
+			if (width < ThresholdHoursToTwoHours)         return GridViewDivision.TwoHours;
+			if (width < ThresholdHalfHoursToHours)        return GridViewDivision.Hours;
+			if (width < ThresholdQuarterHoursToHalfHours) return GridViewDivision.HalfHours;
+
+			return GridViewDivision.QuarterHours;
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
