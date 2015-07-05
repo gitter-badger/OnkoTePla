@@ -34,7 +34,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 			CurrentGridWidth  = 800;
 			CurrentGridHeight = 400;
 
-			OperatingMode = AppointmentGridViewMode.View;
+			OperatingMode = ViewModels.Helper.OperatingMode.View;
 		}
 
 		public ICommand LoadReadModel { get { return null; }}
@@ -47,8 +47,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 		public double CurrentGridWidth  { set; get; }
 		public double CurrentGridHeight { set; get; }
 
-		public IAppointmentViewModel   EditingObject { set; get; }
-		public AppointmentGridViewMode OperatingMode { get; private set; }
+		public IAppointmentViewModel EditingObject { set; get; }
+		public OperatingMode         OperatingMode { get; private set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

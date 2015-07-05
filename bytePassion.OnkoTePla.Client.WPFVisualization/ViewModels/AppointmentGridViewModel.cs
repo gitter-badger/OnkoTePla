@@ -52,7 +52,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		private readonly ParameterrizedCommand<AggregateIdentifier> loadReamodelCommand;
 		private IAppointmentViewModel editingObject;
-		private AppointmentGridViewMode operatingMode;
+		private OperatingMode operatingMode;
 
 
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
@@ -64,7 +64,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			this.commandBus = commandBus;
 
 			editingObject = null;
-			operatingMode = AppointmentGridViewMode.View;
+			operatingMode = OperatingMode.View;
 
 			gridLinesAndLabelPainting = new GridLinesAndLabelPainting();
 
@@ -175,12 +175,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			{				
 				// lock day
 
-				OperatingMode = value == null ? AppointmentGridViewMode.View : AppointmentGridViewMode.Edit;
+				OperatingMode = value == null ? OperatingMode.View : OperatingMode.Edit;
 				PropertyChanged.ChangeAndNotify(this, ref editingObject, value);
 			}
 		}
 
-		public AppointmentGridViewMode OperatingMode
+		public OperatingMode OperatingMode
 		{
 			get { return operatingMode; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref operatingMode, value);}

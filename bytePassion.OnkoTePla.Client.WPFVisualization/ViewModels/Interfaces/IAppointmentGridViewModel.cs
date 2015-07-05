@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 		double CurrentGridWidth  { set; get; }
 		double CurrentGridHeight { set; get; }
 
-		IAppointmentViewModel   EditingObject { get; set; }
-		AppointmentGridViewMode OperatingMode { get; }
+		IAppointmentViewModel EditingObject { get; set; }
+		OperatingMode         OperatingMode { get; }
 	}
 }

@@ -17,7 +17,7 @@
 	
 	<UserControl.Resources>
 		<converter:AddOffsetToDoubleConverter x:Key="AddOffsetToDouble"/>
-		<converter:AppointmentGridModeToVisibilityConverter x:Key="AppointmentGridModeToVisibilityConverter"/>
+		<converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter"/>
 	</UserControl.Resources>
 
 	<Grid Background="White">
@@ -45,7 +45,7 @@
 			  Grid.Row="0" 
 			  Margin="2"
 			  Visibility="{Binding OperatingMode, 
-								   Converter={StaticResource AppointmentGridModeToVisibilityConverter}}">
+								   Converter={StaticResource OperatingModeToVisibilityConverter}}">
 						
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition/>
