@@ -89,7 +89,7 @@
     <Compile Include="Readmodels\AppointmentsOfADayReadModel.cs" />
     <Compile Include="Repositories\Aggregate\AggregateRepository.cs" />
     <Compile Include="Repositories\Aggregate\IAggregateRepository.cs" />
-    <Compile Include="Repositories\Patients\XmlPatientDataStore_test.cs" />
+    <Compile Include="Repositories\Patients\JSonPatientDataStore.cs" />
     <Compile Include="Repositories\Patients\XmlPatientDataStore.cs" />
     <Compile Include="Repositories\Readmodel\IReadModelRepository.cs" />
     <Compile Include="Repositories\Readmodel\ReadModelRepository.cs" />
