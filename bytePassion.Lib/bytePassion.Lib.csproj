@@ -46,6 +46,7 @@
     <Compile Include="Adorner\AdornedControl.cs" />
     <Compile Include="Adorner\AdornerPlacement.cs" />
     <Compile Include="Adorner\FrameworkElementAdorner.cs" />
+    <Compile Include="Commands\UpdateCommandInformation.cs" />
     <Compile Include="FrameworkExtensions\ClonableList.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ParameterrizedCommand.cs" />
