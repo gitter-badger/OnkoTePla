@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Patients
 {
-
+    [DataContract]
 	public class Patient
 	{
-		private readonly string name;
-		private readonly bool   alive;
-		private readonly Date   birthday;
-		private readonly Guid   id;
-		private readonly string externalId;
+        [DataMember (Name = "Name")]
+        private readonly string name;
+        [DataMember(Name = "Alive")]
+        private readonly bool   alive;
+        [DataMember(Name = "Birthday")]
+        private readonly Date   birthday;
+        [DataMember(Name = "Id")]
+        private readonly Guid   id;
+        [DataMember(Name = "ExternalId")]
+        private readonly string externalId;
 
 		public Patient(string name, Date birthday, bool alive, 
 					   Guid id, string externalId)
@@ -25,11 +31,11 @@ namespace bytePassion.OnkoTePla.Contracts.Patients
 			this.externalId = externalId;
 		}
 
-		public string Name       { get { return name;       }}		
-		public bool   Alive      { get { return alive;      }}
-		public Date   Birthday   { get { return birthday;   }}
-		public Guid   Id         { get { return id;         }}
-		public string ExternalId { get { return externalId; }}
+		public string Name       { get { return name;       }  }
+        public bool   Alive      { get { return alive;      }  }
+        public Date   Birthday   { get { return birthday;   } }
+        public Guid   Id         { get { return id;         } }
+        public string ExternalId { get { return externalId; } }
 
 
 		#region ToString / HashCode / Equals

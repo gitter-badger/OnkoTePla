@@ -37,7 +37,22 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			repo.PersistRepository();
 		}
 
-		private static readonly Random Rand = new Random();
+        public static void GenerateJSONPatientsFile(int patientCount)
+        {
+            IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStore(GlobalConstants.PatientJSONPersistenceFile);
+            PatientRepository repo = new PatientRepository(persistenceService);
+
+            var patients = GeneratePatients(patientCount);
+
+            foreach (var patient in patients)
+            {
+                repo.AddPatient(patient.Name, patient.Birthday, patient.Alive, patient.ExternalId);
+            }
+
+            repo.PersistRepository();
+        }
+
+        private static readonly Random Rand = new Random();
 
 
 		private static IEnumerable<Patient> GeneratePatients (int count)

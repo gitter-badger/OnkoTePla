@@ -1,18 +1,29 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime.Serialization;
 using System.Text;
 using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
 {
-	public struct Date
+    [DataContract]
+	public class Date
 	{		
 		public static readonly Date Dummy = new Date(0,0,0);
 
+        [DataMember(Name = "Day")]
 		private readonly byte day;
-		private readonly byte month;
-		private readonly ushort year;
+        [DataMember(Name = "Month")]
+
+        private readonly byte month;
+        [DataMember(Name = "Year")]
+        private readonly ushort year;
+
+	    public Date()
+	    {
+	        
+	    }
 
 		public Date(DateTime dateTime)
 		{			
