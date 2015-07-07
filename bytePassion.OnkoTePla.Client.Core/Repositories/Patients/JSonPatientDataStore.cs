@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using Jil;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 {
@@ -18,11 +20,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 
         public void Persist(IEnumerable<Patient> data)
         {
-            using (var stream = new FileStream(filename,FileMode.Create))
+
+            using (var output = new StringWriter())
             {
-                var settings = new DataContractJsonSerializerSettings();
-                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Patient>),settings);
-                serializer.WriteObject(stream,data.ToList());
+                JSON.Serialize(data, output, Options.PrettyPrint);
+                File.WriteAllText(filename,output.ToString());
             }
         }
 
