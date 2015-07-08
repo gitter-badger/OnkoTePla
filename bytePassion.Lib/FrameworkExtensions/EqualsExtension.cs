@@ -3,7 +3,7 @@
 
 namespace bytePassion.Lib.FrameworkExtensions
 {
-	public static class EqualsExtensions
+	public static class EqualsExtension
 	{
 		public static bool Equals<T>(this T obj1, object obj2, Func<T, T, bool> compareFunc)
 		{						

@@ -19,7 +19,7 @@ namespace bytePassion.Lib.Utils
 		[AttachedPropertyBrowsableForType(typeof (GridView))]
 		public static object GetColumnsSource(DependencyObject obj)
 		{
-			return (object) obj.GetValue(ColumnsSourceProperty);
+			return obj.GetValue(ColumnsSourceProperty);
 		}
 
 		public static void SetColumnsSource(DependencyObject obj, object value)
@@ -97,18 +97,18 @@ namespace bytePassion.Lib.Utils
 			}
 		}
 
-		private static IDictionary<ICollectionView, List<GridView>> _gridViewsByColumnsSource =
+		private static readonly IDictionary<ICollectionView, List<GridView>> GridViewsByColumnsSource =
 			new Dictionary<ICollectionView, List<GridView>>();
 
 		private static List<GridView> GetGridViewsForColumnSource(ICollectionView columnSource)
 		{
 			List<GridView> gridViews;
 
-			if (_gridViewsByColumnsSource.TryGetValue(columnSource, out gridViews)) 
+			if (GridViewsByColumnsSource.TryGetValue(columnSource, out gridViews)) 
 				return gridViews;
 
 			gridViews = new List<GridView>();
-			_gridViewsByColumnsSource.Add(columnSource, gridViews);
+			GridViewsByColumnsSource.Add(columnSource, gridViews);
 			return gridViews;
 		}
 

@@ -60,7 +60,7 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ParameterrizedCommand.cs" />
     <Compile Include="Utils\Converter.cs" />
-    <Compile Include="FrameworkExtensions\EqualsExtensions.cs" />
+    <Compile Include="FrameworkExtensions\EqualsExtension.cs" />
     <Compile Include="GenericValueConverter\GenericParameterizedValueConverter.cs" />
     <Compile Include="GenericValueConverter\GenericThreeToOneValueConverter.cs" />
     <Compile Include="GenericValueConverter\GenericTwoToOneValueConverter.cs" />
