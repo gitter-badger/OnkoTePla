@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 
 
-namespace funkwerk.phx.smp.map
+namespace bytePassion.Lib.GenericValueConverter
 {
 	public abstract class GenericThreeToOneValueConverter<TFrom1, TFrom2, TFrom3, TTo> : IMultiValueConverter
 	{

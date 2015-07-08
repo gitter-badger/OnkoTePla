@@ -36,11 +36,14 @@ namespace bytePassion.Lib.Utils
 
 	    public void FixCurrentVersion()
 	    {
-		    versions.Clear();
-		    versions.AddFirst(new LinkedListNode<T>(currentVersionPointer.Value));
-		    currentVersionPointer = versions.First;
+		    lock (this)
+		    {
+			    versions.Clear();
+			    versions.AddFirst(new LinkedListNode<T>(currentVersionPointer.Value));
+			    currentVersionPointer = versions.First;
 
-			CheckIfUndoAndRedoIsPossible();
+				CheckIfUndoAndRedoIsPossible();
+		    }		    
 	    }
 
 	    public bool UndoPossible
@@ -125,9 +128,9 @@ namespace bytePassion.Lib.Utils
 		}
 
 	    private void CheckIfUndoAndRedoIsPossible()
-	    {
+	    {		   
 		    UndoPossible = currentVersionPointer.Previous != null;
-		    RedoPossible = currentVersionPointer.Next     != null;
+		    RedoPossible = currentVersionPointer.Next     != null;		   
 	    }
 
 		private void RemoveAllFromEndTo (LinkedListNode<T> node)

@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace bytePassion.Lib.FrameworkExtensions
+
+namespace bytePassion.Lib.Utils
 {
 	public static class Converter
 	{

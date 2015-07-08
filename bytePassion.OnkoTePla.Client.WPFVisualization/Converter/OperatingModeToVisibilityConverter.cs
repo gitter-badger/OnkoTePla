@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows;
-using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.GenericValueConverter;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 
 

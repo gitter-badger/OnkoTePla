@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;

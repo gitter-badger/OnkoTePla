@@ -37,12 +37,12 @@ namespace bytePassion.Lib.Commands
 			if (canExecute == null)
 				return true;
 
-			return canExecute((parameter == null) ? default(T) : (T)Convert.ChangeType(parameter, typeof(T)));
+			return canExecute((parameter == null) ? default(T) : (T)parameter);
 		}
 
 		public void Execute (object parameter)
 		{
-			execute((parameter == null) ? default(T) : (T)Convert.ChangeType(parameter, typeof(T)));
+			execute((parameter == null) ? default(T) : (T)parameter);
 		}
 
 		public event EventHandler CanExecuteChanged;

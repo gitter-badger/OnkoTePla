@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 
 
-namespace bytePassion.Lib.FrameworkExtensions
+namespace bytePassion.Lib.Utils
 {
 	public class ColumnDescriptor
 	{ 

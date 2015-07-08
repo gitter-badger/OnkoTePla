@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.GenericValueConverter;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter

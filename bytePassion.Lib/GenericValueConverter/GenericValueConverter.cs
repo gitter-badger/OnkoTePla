@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 
 
-namespace bytePassion.Lib.FrameworkExtensions
+namespace bytePassion.Lib.GenericValueConverter
 {
     public abstract class GenericValueConverter <TFrom, TTo> : IValueConverter
     {
