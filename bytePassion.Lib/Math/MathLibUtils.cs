@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace bytePassion.Lib.Math
 {
-    public static class MathLibExtension
+    public static class MathLibUtils
     {
 	    
 		public static Func<double, double>  GetLinearFunction(Point p1, Point p2)
