@@ -40,9 +40,22 @@ namespace bytePassion.Lib.Commands
 			return canExecute((parameter == null) ? default(T) : (T)parameter);
 		}
 
+		public bool CanExecute (T parameter)
+		{
+			if (canExecute == null)
+				return true;
+
+			return canExecute(parameter);
+		}
+
 		public void Execute (object parameter)
 		{
 			execute((parameter == null) ? default(T) : (T)parameter);
+		}
+
+		public void Execute (T parameter)
+		{
+			execute(parameter);
 		}
 
 		public event EventHandler CanExecuteChanged;

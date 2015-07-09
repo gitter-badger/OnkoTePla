@@ -30,7 +30,7 @@ namespace bytePassion.Lib.Commands
 			RaiseCanExecuteChanged();
 		}
 
-		public bool CanExecute (object parameter)
+		public bool CanExecute (object parameter=null)
 		{
 			if (canExecute == null)
 				return true;
@@ -38,11 +38,11 @@ namespace bytePassion.Lib.Commands
 			return canExecute();
 		}
 
-		public void Execute (object parameter)
+		public void Execute (object parameter=null)
 		{
 			execute();
 		}
-
+		
 		public event EventHandler CanExecuteChanged;
 
 		public void RaiseCanExecuteChanged ()
