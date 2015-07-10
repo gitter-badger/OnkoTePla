@@ -54,6 +54,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 			eventStore.LoadRepository(); 
 
+
 			// Event- and CommandBus
 
 			IEventBus   eventBus   = new EventBus();
@@ -71,6 +72,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
 			commandBus.RegisterCommandHandler(new DeleteAppointmentCommandHandler(aggregateRepository));
 
+
 			// SessionInformation
 
 			var sessionInformation = new SessionInformation
@@ -78,7 +80,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 				LoggedInUser = configReadRepository.GetAllUsers().First()
 			};
 
-			// create ViewModels
+
+			// create permanent ViewModels
 
 			var addAppointmentTestViewModel = new AddAppointmentTestViewModel(configReadRepository, patientRepository, readModelRepository, commandBus);
 			var appointmentOverViewModel    = new AppointmentOverViewModel(readModelRepository, configReadRepository);
@@ -95,24 +98,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			{
 				DataContext = mainWindowViewModel
 			};
-
-			//			// TODO: justForTesting ////////////////////////////////////////////
-			//
-			//			addAppointmentTestViewModel.SelectedDateAsString = "3.7.2015";
-			//			addAppointmentTestViewModel.SelectedMedicalPractice = configReadRepository.GetAllMedicalPractices().First();
-			//			addAppointmentTestViewModel.SelectedUser = configReadRepository.GetAllUsers().First();
-			//			addAppointmentTestViewModel.Description = "blubb234";
-			//			addAppointmentTestViewModel.StartTimeAsString = "10:00";
-			//			addAppointmentTestViewModel.EndTimeAsString = "14:00";
-			//
-			//			addAppointmentTestViewModel.LoadReadModel.Execute(null);
-			//
-			//			////////////////////////////////////////////////////////////////////
-			//
-			//			appointmentOverViewModel.SelectedDateAsString = "3.7.2015";
-			//			appointmentOverViewModel.SelectedMedicalPractice = configReadRepository.GetAllMedicalPractices().First();
-			//
-			//			////////////////////////////////////////////////////////////////////
+			
 
 			mainWindow.ShowDialog();
 
