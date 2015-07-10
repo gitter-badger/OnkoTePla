@@ -1,7 +1,5 @@
 ﻿
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -48,17 +46,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private AppointmentsOfADayReadModel appointmentReadModel;
 		
 		private readonly ObservableCollection<ITherapyPlaceRowViewModel> therapyPlaceRows;
-		private readonly IDictionary<Guid, ObservableCollection<IAppointmentViewModel>> appointmentsOnGrid;
-		private readonly IDictionary<Guid, IAppointmentViewModel> appointmentCache; 
-
+		private readonly ObservableCollection<IAppointmentViewModel>     appointmentsOnGrid;		
 
 		// Commands ////////////////////////////////////////////////////////////////////////////////////////
 
 		private readonly ParameterrizedCommand<AggregateIdentifier> loadReamodelCommand;
 		private IAppointmentViewModel editingObject;
 		private OperatingMode operatingMode;
-		private Command commitChangesCommand;
-		private Command discardChangesCommand;
+		private readonly Command commitChangesCommand;
+		private readonly Command discardChangesCommand;
 
 
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
@@ -78,9 +74,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 			appointmentReadModel = null;			
 			therapyPlaceRows = new ObservableCollection<ITherapyPlaceRowViewModel>();
-			appointmentsOnGrid = new ConcurrentDictionary<Guid, ObservableCollection<IAppointmentViewModel>>();
-			appointmentCache = new Dictionary<Guid, IAppointmentViewModel>();
-
+			appointmentsOnGrid = new ObservableCollection<IAppointmentViewModel>();			
 			
 			loadReamodelCommand = new ParameterrizedCommand<AggregateIdentifier>(LoadReadModelFromId);	
 		
@@ -88,14 +82,30 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			discardChangesCommand = new Command(DiscardAllChanges);
 		}
 
-		private void OnAppointmentChanged(object sender, AppointmentChangedEventArgs appointmentChangedEventArgs)
+		private void ReadModelOnAppointmentChanged(object sender, AppointmentChangedEventArgs appointmentChangedEventArgs)
 		{
 			switch (appointmentChangedEventArgs.ChangeAction)
 			{
-				case ChangeAction.Added:   { AddAppointmentToGrid     (appointmentChangedEventArgs.Appointment); break; }
-				case ChangeAction.Deleted: { RemoveAppointmentFromGrid(appointmentChangedEventArgs.Appointment); break; }
+				case ChangeAction.Added:
+				{
+					AddAppointmentToGrid(appointmentChangedEventArgs.Appointment);
+					break;
+				}
+				case ChangeAction.Deleted:
+				{
+					var viewModelToRemove = appointmentsOnGrid.FirstOrDefault(
+						appointmentModel => appointmentModel.AppointmentId == appointmentChangedEventArgs.Appointment.Id
+					);
+
+					if (viewModelToRemove != null)
+					{
+						viewModelToRemove.Dispose();
+						appointmentsOnGrid.Remove(viewModelToRemove);
+					}
+					break;
+				}
 			}
-		}
+		}		
 
 		private void CommitAllChanges()
 		{
@@ -113,7 +123,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		{
 			if (appointmentReadModel != null)
 			{
-				appointmentReadModel.AppointmentChanged -= OnAppointmentChanged;
+				appointmentReadModel.AppointmentChanged -= ReadModelOnAppointmentChanged;
 				appointmentReadModel.Dispose();
 
 				therapyPlaceRows.Clear();
@@ -121,7 +131,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			}
 
 			appointmentReadModel = readModelRepository.GetAppointmentsOfADayReadModel(id);
-			appointmentReadModel.AppointmentChanged += OnAppointmentChanged;
+			appointmentReadModel.AppointmentChanged += ReadModelOnAppointmentChanged;
 
 			var updatedId = appointmentReadModel.Identifier;
 
@@ -137,33 +147,21 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			gridLinesAndLabelPainting.SetNewTimeSpan(timeSlotStart, timeSlotEnd);						
 
 			therapyPlaceRows.Clear();
-
+			
 			foreach (var room in medicalPractice.Rooms)  
 				foreach (var therapyPlace in room.TherapyPlaces)
 				{
-					var appointmentListForTherapyPlace = new ObservableCollection<IAppointmentViewModel>();
-					appointmentsOnGrid.Add(therapyPlace.Id, appointmentListForTherapyPlace);
-					therapyPlaceRows.Add(new TherapyPlaceRowViewModel(appointmentListForTherapyPlace, therapyPlace,room.DisplayedColor, timeSlotStart, timeSlotEnd));
+					therapyPlaceRows.Add(new TherapyPlaceRowViewModel(therapyPlace, room.DisplayedColor, timeSlotStart, timeSlotEnd));
 				}
 
 			foreach (var appointment in appointmentReadModel.Appointments)
-				AddAppointmentToGrid(appointment);					
+				AddAppointmentToGrid(appointment);	
 		}
 
 		private void AddAppointmentToGrid(Appointment appointment)
-		{			
-			var appointmentViewModel = new AppointmentViewModel(appointment, therapyPlaceRows.First(row => row.TherapyPlaceId == appointment.TherapyPlace.Id), this);
-
-			appointmentsOnGrid[appointment.TherapyPlace.Id].Add(appointmentViewModel);
-			appointmentCache.Add(appointment.Id, appointmentViewModel);
-		}
-
-		private void RemoveAppointmentFromGrid (Appointment appointment)
-		{			
-			var appointmentViewModel = appointmentCache[appointment.Id];
-			appointmentsOnGrid[appointment.TherapyPlace.Id].Remove(appointmentViewModel);
-			appointmentCache.Remove(appointment.Id);
-		}
+		{					
+			appointmentsOnGrid.Add(new AppointmentViewModel(appointment, therapyPlaceRows, this));			
+		}	
 
 		public ICommand LoadReadModel
 		{
@@ -186,13 +184,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		}
 
 		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment, ITherapyPlaceRowViewModel containerRow)
-		{			
-			appointmentsOnGrid[containerRow.TherapyPlaceId].Remove(appointmentViewModel);
-
+		{						
 			commandBus.Send(new DeleteAppointment(appointmentReadModel.Identifier, appointmentReadModel.AggregateVersion, 
 												  sessionInformation.LoggedInUser.Id, appointment.Id, appointment.Patient.Id));
-
-			appointmentViewModel.Dispose();
+			
 			OperatingMode = OperatingMode.View;
 		}
 

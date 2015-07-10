@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
@@ -17,8 +19,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 	{		
 		private readonly Appointment appointment;
 
-		private readonly ITherapyPlaceRowViewModel containerRow;
+		private readonly IEnumerable<ITherapyPlaceRowViewModel> containerRows;
 		private readonly IAppointmentGridViewModel containerGrid;
+
+		private ITherapyPlaceRowViewModel currentRow;
+
+		// hier wird die row eingetragen
+		// die rows holen sich dann alle appointments und zeigen nur die an, wo die row passt
+		//dfsdf
 
 		private double canvasPosition;
 		private double viewElementLength;
@@ -27,18 +35,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private readonly Command switchToEditModeCommand;
 		private readonly Command deleteAppointmentCommand;
 
-		public AppointmentViewModel(Appointment appointment, 
-									ITherapyPlaceRowViewModel containerRow, 
+		public AppointmentViewModel(Appointment appointment,
+									IEnumerable<ITherapyPlaceRowViewModel> containerRows, 						
 									IAppointmentGridViewModel containerGrid)
 		{
-			this.containerRow = containerRow;
+			this.containerRows = containerRows;
 			this.containerGrid = containerGrid;
+			this.appointment = appointment;
+			CurrentRow = containerRows.First(rowModel => rowModel.TherapyPlaceId == appointment.TherapyPlace.Id);
 
-			this.appointment = appointment;						
-
-			AttachContainerHander();
-
-			OnContainerRowChanged(containerRow, null);
 
 			switchToEditModeCommand = new Command(
 				() =>
@@ -60,18 +65,37 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 				    if (result == MessageDialogResult.Affirmative)
 				    {
-				        containerGrid.DeleteAppointment(this, appointment, containerRow);
+						containerGrid.DeleteAppointment(this, appointment, CurrentRow);
 				    }
 				}
 			);
 		}
 
+		private ITherapyPlaceRowViewModel CurrentRow
+		{
+			get { return currentRow; }
+			set
+			{
+				if (currentRow != null)
+				{
+					currentRow.RemoveAppointment(this);
+					DetachContainerHandler();
+				}
+
+				currentRow = value;
+				
+				currentRow.AddAppointment(this);
+				AttachContainerHander();
+				OnContainerRowChanged(currentRow, null);
+			}
+		}		
+
 		private void OnContainerGridChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
-			if (propertyChangedEventArgs.PropertyName == "OperatingMode")			
-				if (((IAppointmentGridViewModel)sender).OperatingMode == OperatingMode.View)
-					if (OperatingMode == OperatingMode.Edit)
-						OperatingMode = OperatingMode.View;			
+			if (propertyChangedEventArgs.PropertyName == "OperatingMode")						//
+				if (((IAppointmentGridViewModel)sender).OperatingMode == OperatingMode.View)	// Operating Mode to "OperatingMode.View"
+					if (OperatingMode == OperatingMode.Edit)									// is set from the Grid
+						OperatingMode = OperatingMode.View;										//
 		}
 
 		private void OnContainerRowChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -105,6 +129,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			set { PropertyChanged.ChangeAndNotify(this, ref viewElementLength, value); }
 		}
 
+		public Guid AppointmentId  { get { return appointment.Id;              }}
+		public Guid TherapyPlaceId { get { return appointment.TherapyPlace.Id; }}
+
 		public OperatingMode OperatingMode
 		{
 			get { return operatingMode; }
@@ -116,17 +143,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		private void AttachContainerHander()
 		{
-			containerRow.PropertyChanged  += OnContainerRowChanged;
+			CurrentRow.PropertyChanged    += OnContainerRowChanged;
 			containerGrid.PropertyChanged += OnContainerGridChanged;
 		}
 
 		private void DetachContainerHandler()
 		{
-			containerRow.PropertyChanged  -= OnContainerRowChanged;
+			CurrentRow.PropertyChanged    -= OnContainerRowChanged;
 			containerGrid.PropertyChanged -= OnContainerGridChanged;
 		}
 
-		// TODO: richtig so!?!?
+		#region Dispose
 
 		private bool disposed = false;
 		public void Dispose ()
@@ -144,11 +171,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		{
 			if (!disposed)
 			{
-				if (disposing) 
+				if (disposing)
+				{					
 					DetachContainerHandler();
-								
+					currentRow.RemoveAppointment(this);
+				}
+
 			}
-			disposed = true;						
+			disposed = true;
 		}
+
+		#endregion
 	}
 }

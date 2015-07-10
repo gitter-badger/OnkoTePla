@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.Lib.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 
@@ -26,12 +26,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 		}
 
 		public ICommand DeleteAppointment { get { return null; }}
-		public ICommand SwitchToEditMode  { get { return new Command(() => {}); }}
+		public ICommand SwitchToEditMode  { get { return null; } }
 
 		public string   PatientDisplayName  { get; private set; }		
 		public double   CanvasPosition      { get; set; }
 		public double   ViewElementLength   { get; set; }
 
+		public Guid AppointmentId  { get { return new Guid(); }}
+		public Guid TherapyPlaceId { get { return new Guid(); }}
+		
 		public OperatingMode OperatingMode  { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;

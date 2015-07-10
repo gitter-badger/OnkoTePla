@@ -12,11 +12,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 		ObservableCollection<IAppointmentViewModel> Appointments { get; }
 
 		Time TimeSlotStart { get; } 
-		Time TimeSlotEnd { get; }
-		double TimeSlotWidth { set; }
+		Time TimeSlotEnd   { get; }
+		
 		string TherapyPlaceName { get; }
-		double LengthOfOneHour { get; }
-		Color RoomColor { get; }
-		Guid TherapyPlaceId { get; }
+		Color  RoomColor        { get; }
+
+		double LengthOfOneHour { get; }		
+		Guid   TherapyPlaceId  { get; }
+
+		double TimeSlotWidth { set; }
+
+		void AddAppointment   (IAppointmentViewModel newAppointment);
+		void RemoveAppointment(IAppointmentViewModel appointmentToRemove);
 	}
 }

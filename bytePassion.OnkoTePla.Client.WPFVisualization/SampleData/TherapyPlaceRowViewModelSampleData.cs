@@ -32,14 +32,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 		public Time TimeSlotStart { get; private set; }
 		public Time TimeSlotEnd   { get; private set; }
 
+		public string TherapyPlaceName { get; private set; }
+		public Color  RoomColor        { get; private set; }
+
+		public double LengthOfOneHour { get; private set; }
+		public Guid   TherapyPlaceId  { get; private set; }
+
 		public double TimeSlotWidth { set {} }
 
-		public string TherapyPlaceName { get; private set; }
-		public double LengthOfOneHour  { get; private set; }
-
-		public Color RoomColor { get; private set; }
-
-		public Guid TherapyPlaceId { get; private set; }
+		public void AddAppointment   (IAppointmentViewModel newAppointment)      {}
+		public void RemoveAppointment(IAppointmentViewModel appointmentToRemove) {}		
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

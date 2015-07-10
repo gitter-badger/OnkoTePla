@@ -17,25 +17,29 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private double lengthOfOneHour;
 
 		private readonly TherapyPlace therapyPlace;
-		private readonly ObservableCollection<IAppointmentViewModel> appointments;
+		private readonly ObservableCollection<IAppointmentViewModel> appointments;		
 
 		private readonly Color roomDisplayColor;
 
 		private readonly Time startTime;
 		private readonly Time endTime;
 
-		public TherapyPlaceRowViewModel(ObservableCollection<IAppointmentViewModel> appointments,
-										TherapyPlace therapyPlace, Color roomDisplayColor,
+		public TherapyPlaceRowViewModel(TherapyPlace therapyPlace, Color roomDisplayColor,
 										Time startTime, Time endTime)
-		{
-			this.appointments = appointments;
+		{			
 			this.therapyPlace = therapyPlace;
 			this.roomDisplayColor = roomDisplayColor;
 			this.startTime = startTime;
 			this.endTime = endTime;
+
+			appointments = new ObservableCollection<IAppointmentViewModel>();			
 		}
 
-		public ObservableCollection<IAppointmentViewModel> Appointments { get { return appointments; }}
+
+		public ObservableCollection<IAppointmentViewModel> Appointments
+		{
+			get { return appointments; }
+		}
 
 		public Time TimeSlotStart { get { return startTime; }}
 		public Time TimeSlotEnd   { get { return endTime;   }}
@@ -47,6 +51,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				LengthOfOneHour = timeSlotWidth / (Time.GetDurationBetween(endTime, startTime).Seconds / 3600.0);				
 			}
 			private get { return timeSlotWidth; }
+		}
+
+		public void AddAppointment(IAppointmentViewModel newAppointment)
+		{
+			appointments.Add(newAppointment);
+		}
+
+		public void RemoveAppointment(IAppointmentViewModel appointmentToRemove)
+		{
+			appointments.Remove(appointmentToRemove);
 		}
 
 		public string TherapyPlaceName { get { return therapyPlace.Name; }}
@@ -62,7 +76,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public Guid TherapyPlaceId
 		{
 			get { return therapyPlace.Id; }
-		}
+		}		
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

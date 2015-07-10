@@ -15,6 +15,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 		double CanvasPosition     { get; set; }
 		double ViewElementLength  { get; set; }
 
+		Guid AppointmentId  { get; }
+		Guid TherapyPlaceId { get; }
+
 		OperatingMode OperatingMode { get; }
 	}
 }
