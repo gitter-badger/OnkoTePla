@@ -63,20 +63,30 @@ namespace bytePassion.Lib.TimeLib
 
 	    public static bool operator <(Date d1, Date d2)
 	    {
-		    if (d1.Year  > d2.Year)  return false;
-		    if (d1.Month > d2.Month) return false;
-		    if (d1.Day   > d2.Day)   return false;
+		    if (d1.Year < d2.Year) return true;
+			if (d1.Year > d2.Year) return false;
 
-		    return true;
+		    if (d1.Month < d2.Month) return true;
+			if (d1.Month > d2.Month) return false;
+
+		    if (d1.Day < d2.Day) return true;
+			if (d1.Day > d2.Day) return false;
+
+		    return false;
 	    }
 
 		public static bool operator > (Date d1, Date d2)
 		{
-			if (d1.Year  < d2.Year)  return false;
-			if (d1.Month < d2.Month) return false;
-			if (d1.Day   < d2.Day)   return false;
+			if (d1.Year > d2.Year) return true;
+			if (d1.Year < d2.Year) return false;
 
-			return true;
+			if (d1.Month > d2.Month) return true;
+			if (d1.Month < d2.Month) return false;
+
+			if (d1.Day > d2.Day) return true;
+			if (d1.Day < d2.Day) return false;
+
+			return false;
 		}
 
 	    public static bool operator <=(Date d1, Date d2)
