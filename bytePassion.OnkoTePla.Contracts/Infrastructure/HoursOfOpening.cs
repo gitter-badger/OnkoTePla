@@ -102,10 +102,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 
 		public Time GetOpeningTime(Date d)
 		{
-			var weekDay = Date.GetDayOfWeekFrom(d);
-
-			if (!IsOpen(weekDay, d))
-				return Time.Dummy;
+			var weekDay = Date.GetDayOfWeekFrom(d);			
 
 			switch (weekDay)
 			{
