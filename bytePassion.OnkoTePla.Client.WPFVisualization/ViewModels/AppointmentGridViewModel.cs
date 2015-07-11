@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -10,13 +10,13 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
-using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
@@ -24,7 +24,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 	public class AppointmentGridViewModel : IAppointmentGridViewModel
 	{
 
-		// FrameworkAccess //////////////////////////////////////////////////////////////////////////////////////
+		// FrameworkAccess /////////////////////////////////////////////////////////////////////////////////
 
 		private readonly IReadModelRepository         readModelRepository;
 		private readonly IConfigurationReadRepository configuration;
@@ -35,26 +35,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		private double currentGridWidth;
 		private double currentGridHeight;
-
-		private readonly GridLinesAndLabelPainting gridLinesAndLabelPainting;
-
+		
 		// AppointmentData /////////////////////////////////////////////////////////////////////////////////
 
-		private Time timeSlotStart;
-		private Time timeSlotEnd;
-
-		private AppointmentsOfADayReadModel appointmentReadModel;
-		
-		private readonly ObservableCollection<ITherapyPlaceRowViewModel> therapyPlaceRows;
-		private readonly ObservableCollection<IAppointmentViewModel>     appointmentsOnGrid;		
+		private readonly IDictionary<AggregateIdentifier, AppointmentGridDisplayDataSet> appointmentDataSets;
+		private AppointmentGridDisplayDataSet currentlyDisplayedDataSet;				
 
 		// Commands ////////////////////////////////////////////////////////////////////////////////////////
 
-		private readonly ParameterrizedCommand<AggregateIdentifier> loadReamodelCommand;
-		private IAppointmentViewModel editingObject;
-		private OperatingMode operatingMode;
+		private readonly ParameterrizedCommand<AggregateIdentifier> showPracticeAndDateCommand;		
+
 		private readonly Command commitChangesCommand;
 		private readonly Command discardChangesCommand;
+
+		// Grid state //////////////////////////////////////////////////////////////////////////////////////
+
+		private IAppointmentViewModel editingObject;
+		private OperatingMode operatingMode;
 
 
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
@@ -66,46 +63,74 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			this.configuration = configuration;
 			this.commandBus = commandBus;
 			this.sessionInformation = sessionInformation;
-
+			
+			appointmentDataSets = new Dictionary<AggregateIdentifier, AppointmentGridDisplayDataSet>();
+			currentlyDisplayedDataSet = null;
 			editingObject = null;
 			operatingMode = OperatingMode.View;
-
-			gridLinesAndLabelPainting = new GridLinesAndLabelPainting();
-
-			appointmentReadModel = null;			
-			therapyPlaceRows = new ObservableCollection<ITherapyPlaceRowViewModel>();
-			appointmentsOnGrid = new ObservableCollection<IAppointmentViewModel>();			
 			
-			loadReamodelCommand = new ParameterrizedCommand<AggregateIdentifier>(LoadReadModelFromId);	
-		
+			showPracticeAndDateCommand = new ParameterrizedCommand<AggregateIdentifier>(ShowPracticeAndDateOnScreen);			
 			commitChangesCommand  = new Command(CommitAllChanges);
 			discardChangesCommand = new Command(DiscardAllChanges);
+
+			currentGridWidth  = 400;	 // will be overwritten when View is created
+			currentGridHeight = 400;	 // but is nessacary for loading todays dataSet
+
+			var medicalPractice = configuration.GetAllMedicalPractices().First();
+			var lastOpenDay = GetLastOpenDay(medicalPractice);
+
+			ShowPracticeAndDateOnScreen(new AggregateIdentifier(lastOpenDay, medicalPractice.Id));
 		}
 
-		private void ReadModelOnAppointmentChanged(object sender, AppointmentChangedEventArgs appointmentChangedEventArgs)
+		private Date GetLastOpenDay(MedicalPractice medicalPractice)
 		{
-			switch (appointmentChangedEventArgs.ChangeAction)
-			{
-				case ChangeAction.Added:
-				{
-					AddAppointmentToGrid(appointmentChangedEventArgs.Appointment);
-					break;
-				}
-				case ChangeAction.Deleted:
-				{
-					var viewModelToRemove = appointmentsOnGrid.FirstOrDefault(
-						appointmentModel => appointmentModel.AppointmentId == appointmentChangedEventArgs.Appointment.Id
-					);
+			var currentDate = TimeTools.Today();
 
-					if (viewModelToRemove != null)
-					{
-						viewModelToRemove.Dispose();
-						appointmentsOnGrid.Remove(viewModelToRemove);
-					}
-					break;
-				}
+			var securityCounter = 0;
+
+			while (!medicalPractice.HoursOfOpening.IsOpen(currentDate) && (securityCounter++)<1000)
+				currentDate = currentDate.DayBefore();
+
+			if (securityCounter > 990)
+				throw new ArgumentException();
+
+			return currentDate;
+		}
+
+		private void ShowPracticeAndDateOnScreen(AggregateIdentifier identifier)
+		{
+
+			AppointmentGridDisplayDataSet appointmentDataSet;
+
+			if (appointmentDataSets.ContainsKey(identifier))
+			{
+				appointmentDataSet = appointmentDataSets[identifier];
 			}
-		}		
+			else
+			{
+				var appointmentReadModel = readModelRepository.GetAppointmentsOfADayReadModel(identifier);
+				var updatedIdentifier = appointmentReadModel.Identifier;
+				var medicalPractice = configuration.GetMedicalPracticeByIdAndVersion(updatedIdentifier.MedicalPracticeId,
+				                                                                     updatedIdentifier.PracticeVersion);
+
+				appointmentDataSet = new AppointmentGridDisplayDataSet(appointmentReadModel, medicalPractice, this);
+				appointmentDataSets.Add(updatedIdentifier, appointmentDataSet);
+			}
+
+			currentlyDisplayedDataSet = appointmentDataSet;
+			currentlyDisplayedDataSet.SetNewGridHeight(CurrentGridHeight);
+			currentlyDisplayedDataSet.SetNewGridWidth(CurrentGridWidth);
+
+			NotifyViewThatNewDataSetIsLoaded();						
+		}
+
+		private void NotifyViewThatNewDataSetIsLoaded()
+		{
+			PropertyChanged.Notify(this, "TimeSlotLabels");
+			PropertyChanged.Notify(this, "TimeSlotLines");
+			PropertyChanged.Notify(this, "TherapyPlaceRows");
+		}
+
 
 		private void CommitAllChanges()
 		{
@@ -118,89 +143,34 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			// TODO
 			OperatingMode = OperatingMode.View;
 		}
+		
 
-		private void LoadReadModelFromId(AggregateIdentifier id)
-		{
-			if (appointmentReadModel != null)
-			{
-				appointmentReadModel.AppointmentChanged -= ReadModelOnAppointmentChanged;
-				appointmentReadModel.Dispose();
+		public ICommand ShowPracticeAndDate { get { return showPracticeAndDateCommand; }}
+		public ICommand CommitChanges       { get { return commitChangesCommand;       }}
+		public ICommand DiscardChanges      { get { return discardChangesCommand;      }}
 
-				therapyPlaceRows.Clear();
-				appointmentsOnGrid.Clear();
-			}
-
-			appointmentReadModel = readModelRepository.GetAppointmentsOfADayReadModel(id);
-			appointmentReadModel.AppointmentChanged += ReadModelOnAppointmentChanged;
-
-			var updatedId = appointmentReadModel.Identifier;
-
-			var medicalPractice = configuration.GetMedicalPracticeByIdAndVersion(updatedId.MedicalPracticeId,
-																				 updatedId.PracticeVersion);
-
-			if (!medicalPractice.HoursOfOpening.IsOpen(updatedId.Date))
-				throw new ArgumentException();
-
-			timeSlotStart = medicalPractice.HoursOfOpening.GetOpeningTime(updatedId.Date);
-			timeSlotEnd = medicalPractice.HoursOfOpening.GetClosingTime(updatedId.Date);
-
-			gridLinesAndLabelPainting.SetNewTimeSpan(timeSlotStart, timeSlotEnd);						
-
-			therapyPlaceRows.Clear();
-			
-			foreach (var room in medicalPractice.Rooms)  
-				foreach (var therapyPlace in room.TherapyPlaces)
-				{
-					therapyPlaceRows.Add(new TherapyPlaceRowViewModel(therapyPlace, room.DisplayedColor, timeSlotStart, timeSlotEnd));
-				}
-
-			foreach (var appointment in appointmentReadModel.Appointments)
-				AddAppointmentToGrid(appointment);	
-		}
-
-		private void AddAppointmentToGrid(Appointment appointment)
-		{					
-			appointmentsOnGrid.Add(new AppointmentViewModel(appointment, therapyPlaceRows, this));			
-		}	
-
-		public ICommand LoadReadModel
-		{
-			get { return loadReamodelCommand; }
-		}
-
-		public ICommand CommitChanges
-		{
-			get { return commitChangesCommand; }
-		}
-
-		public ICommand DiscardChanges
-		{
-			get { return discardChangesCommand; }
-		}
-
-		public AggregateIdentifier ReadModelIdentifier
-		{
-			get { return appointmentReadModel.Identifier; }
-		}
-
+		
 		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment, ITherapyPlaceRowViewModel containerRow)
-		{						
-			commandBus.Send(new DeleteAppointment(appointmentReadModel.Identifier, appointmentReadModel.AggregateVersion, 
-												  sessionInformation.LoggedInUser.Id, appointment.Id, appointment.Patient.Id));
+		{
+			commandBus.Send(new DeleteAppointment(currentlyDisplayedDataSet.AppointmentReadModel.Identifier, 
+												  currentlyDisplayedDataSet.AppointmentReadModel.AggregateVersion, 
+												  sessionInformation.LoggedInUser.Id, 
+												  appointment.Id, 
+												  appointment.Patient.Id));
 			
 			OperatingMode = OperatingMode.View;
 		}
 
-		public ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get { return gridLinesAndLabelPainting.TimeSlotLabels;   }}
-		public ObservableCollection<TimeSlotLine>              TimeSlotLines    { get { return gridLinesAndLabelPainting.TimeSlotLines;    }}
-		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get { return therapyPlaceRows; }}
+		public ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get { return currentlyDisplayedDataSet.TimeSlotLabels;   }} 
+		public ObservableCollection<TimeSlotLine>              TimeSlotLines    { get { return currentlyDisplayedDataSet.TimeSlotLines;    }} 
+		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get { return currentlyDisplayedDataSet.TherapyPlaceRows; }}
 
 		public double CurrentGridWidth
 		{
 			set
 			{
 				PropertyChanged.ChangeAndNotify(this, ref currentGridWidth, value);
-				gridLinesAndLabelPainting.SetNewGridWidth(currentGridWidth);
+				currentlyDisplayedDataSet.SetNewGridWidth(currentGridWidth);				
 			}
 			get { return currentGridWidth; }
 		}
@@ -209,8 +179,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		{
 			set
 			{
-				PropertyChanged.ChangeAndNotify(this, ref currentGridHeight, value);
-				gridLinesAndLabelPainting.SetNewGridHeight(currentGridHeight);
+				PropertyChanged.ChangeAndNotify(this, ref currentGridHeight, value);				
+				currentlyDisplayedDataSet.SetNewGridHeight(currentGridHeight);
 			}
 			get { return currentGridHeight; }
 		}
@@ -244,7 +214,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public void TestLoad()
 		{
 			var identifier = new AggregateIdentifier(new Date(3, 7, 2015), configuration.GetMedicalPracticeByName("examplePractice1").Id);
-			LoadReadModel.Execute(identifier);
+			ShowPracticeAndDate.Execute(identifier);
 		}
 	}
 }

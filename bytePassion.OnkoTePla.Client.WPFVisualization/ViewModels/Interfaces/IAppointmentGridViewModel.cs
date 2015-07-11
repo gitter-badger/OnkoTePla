@@ -9,7 +9,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
 	public interface IAppointmentGridViewModel : IViewModelBase
 	{
-		ICommand LoadReadModel { get; }
+		ICommand ShowPracticeAndDate { get; }
 
 		ICommand CommitChanges  { get; }
 		ICommand DiscardChanges { get; }

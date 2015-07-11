@@ -88,6 +88,7 @@
     <Compile Include="SessionInfo\SessionInformation.cs" />
     <Compile Include="UserNotificationService\UserDialogBox.cs" />
     <Compile Include="ViewModels\AddAppointmentTestViewModel.cs" />
+    <Compile Include="ViewModels\Helper\AppointmentGridDisplayDataSet.cs" />
     <Compile Include="ViewModels\AppointmentGridViewModel.cs" />
     <Compile Include="ViewModels\AppointmentOverViewModel.cs" />
     <Compile Include="ViewModels\AppointmentViewModel.cs" />

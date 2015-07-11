@@ -38,7 +38,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 			OperatingMode = OperatingMode.View;
 		}
 
-		public ICommand LoadReadModel  { get { return null; }}
+		public ICommand ShowPracticeAndDate  { get { return null; }}
 		public ICommand CommitChanges  { get { return null; }}
 		public ICommand DiscardChanges { get { return null; }}
 

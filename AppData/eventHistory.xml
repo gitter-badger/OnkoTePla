@@ -1,4 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <eventStreams>
-  
+  <eventStream count="3" date="03.07.2015" configVersion="1" medicalPracticeId="9c6119db-79c7-401c-99f1-f82e06ab7673">
+    <event aggregateVersion="1" userId="02ee0fee-9e8a-43b1-8004-91056adaa4ea" patientId="827c98fb-7c47-49e5-bdd6-c49fbd02cc40" timeStampDate="10.07.2015" timeStampTime="14:15:24">
+      <appointmentAddedEvent description="d" therapyPlaceId="2b08077a-eaa3-41a7-b8f0-209c8f0fb958" startTime="09:00:00" endTime="12:00:00" appointmentId="ad14083a-a8bb-4bb8-99b5-c8270a4004ac" />
+    </event>
+    <event aggregateVersion="2" userId="02ee0fee-9e8a-43b1-8004-91056adaa4ea" patientId="827c98fb-7c47-49e5-bdd6-c49fbd02cc40" timeStampDate="10.07.2015" timeStampTime="14:15:50">
+      <appointmentDeletedEvent appointmentId="ad14083a-a8bb-4bb8-99b5-c8270a4004ac" />
+    </event>
+    <event aggregateVersion="3" userId="02ee0fee-9e8a-43b1-8004-91056adaa4ea" patientId="cf93415d-a1c9-42d2-9ff2-4e2ba04401ac" timeStampDate="11.07.2015" timeStampTime="17:29:19">
+      <appointmentAddedEvent description="sd" therapyPlaceId="2b08077a-eaa3-41a7-b8f0-209c8f0fb958" startTime="10:00:00" endTime="12:00:00" appointmentId="6f76d903-7544-4efb-b761-aac8bcfc3f1a" />
+    </event>
+  </eventStream>
+  <eventStream count="0" date="10.07.2015" configVersion="1" medicalPracticeId="9c6119db-79c7-401c-99f1-f82e06ab7673" />
 </eventStreams>
