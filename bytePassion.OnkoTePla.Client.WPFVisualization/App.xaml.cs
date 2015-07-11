@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
@@ -11,6 +12,7 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Client.Core.State;
 using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels;
@@ -80,13 +82,21 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 				LoggedInUser = configReadRepository.GetAllUsers().First()
 			};
 
+			// GlobalStates
+
+			IStateEngine stateEngine = new StateEngine();
+
+			stateEngine.RegisterState<Date>(GlobalConstants.GlobalStateMainGridSelectedDate);
+
+			var mainGridSelectedDateState = stateEngine.GetState<Date>(GlobalConstants.GlobalStateMainGridSelectedDate);
 
 			// create permanent ViewModels
 
 			var addAppointmentTestViewModel = new AddAppointmentTestViewModel(configReadRepository, patientRepository, readModelRepository, commandBus);
 			var appointmentOverViewModel    = new AppointmentOverViewModel(readModelRepository, configReadRepository);
             var patientsViewModel           = new PatientSelectorViewModel(patientRepository);
-			var appointmentGridViewModel    = new AppointmentGridViewModel(readModelRepository, configReadRepository, commandBus, sessionInformation); 		
+			var appointmentGridViewModel    = new AppointmentGridViewModel(readModelRepository, configReadRepository, commandBus, 
+																		   sessionInformation, mainGridSelectedDateState); 		
 
 			var mainWindowViewModel = new MainWindowViewModel(patientsViewModel, 
 															  addAppointmentTestViewModel, 

@@ -103,6 +103,7 @@
     <Compile Include="Repositories\Readmodel\IReadModelRepository.cs" />
     <Compile Include="Repositories\Readmodel\ReadModelRepository.cs" />
     <Compile Include="State\GlobalState.cs" />
+    <Compile Include="State\IStateEngine.cs" />
     <Compile Include="State\StateEngine.cs" />
   </ItemGroup>
   <ItemGroup>

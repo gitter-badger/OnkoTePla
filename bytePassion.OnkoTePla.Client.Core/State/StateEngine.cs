@@ -3,12 +3,6 @@
 
 namespace bytePassion.OnkoTePla.Client.Core.State
 {
-	public interface IStateEngine
-	{
-		void RegisterState<T>(string stateIdentifier);
-		T GetState<T> (string stateIdentifier);
-	}
-
 	public class StateEngine : IStateEngine
 	{
 
@@ -24,9 +18,9 @@ namespace bytePassion.OnkoTePla.Client.Core.State
 			states.Add(stateIdentifier, new GlobalState<T>());
 		}
 
-		public T GetState<T> (string stateIdentifier)
+		public GlobalState<T> GetState<T> (string stateIdentifier)
 		{
-			return (T)states[stateIdentifier];
+			return (GlobalState<T>)states[stateIdentifier];
 		}
 	}	
 }

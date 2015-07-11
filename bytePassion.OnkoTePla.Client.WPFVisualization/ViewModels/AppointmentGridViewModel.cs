@@ -12,6 +12,7 @@ using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Client.Core.State;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
@@ -57,13 +58,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
 										IConfigurationReadRepository configuration,
 										ICommandBus commandBus, 
-										SessionInformation sessionInformation)
+										SessionInformation sessionInformation, 
+										GlobalState<Date> selectedDate)
 		{
 			this.readModelRepository = readModelRepository;
 			this.configuration = configuration;
 			this.commandBus = commandBus;
 			this.sessionInformation = sessionInformation;
-			
+
+
 			appointmentDataSets = new Dictionary<AggregateIdentifier, AppointmentGridDisplayDataSet>();
 			currentlyDisplayedDataSet = null;
 			editingObject = null;
@@ -79,7 +82,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			var medicalPractice = configuration.GetAllMedicalPractices().First();
 			var lastOpenDay = GetLastOpenDay(medicalPractice);
 
+			selectedDate.StateChanged += OnSelectedDateChanged;
+
 			ShowPracticeAndDateOnScreen(new AggregateIdentifier(lastOpenDay, medicalPractice.Id));
+		}
+
+		private void OnSelectedDateChanged(Date date)
+		{
+			var currentIdentifier = currentlyDisplayedDataSet.AppointmentReadModel.Identifier;
+
+			ShowPracticeAndDateOnScreen(new AggregateIdentifier(date, 
+																currentIdentifier.MedicalPracticeId, 
+																currentIdentifier.PracticeVersion));
 		}
 
 		private Date GetLastOpenDay(MedicalPractice medicalPractice)
