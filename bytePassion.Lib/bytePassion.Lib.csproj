@@ -59,6 +59,7 @@
     <Compile Include="Clonable\ClonableList.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ParameterrizedCommand.cs" />
+    <Compile Include="TimeLib\TimeExtensions.cs" />
     <Compile Include="Utils\Converter.cs" />
     <Compile Include="FrameworkExtensions\EqualsExtension.cs" />
     <Compile Include="GenericValueConverter\GenericParameterizedValueConverter.cs" />

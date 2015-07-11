@@ -9,6 +9,11 @@ namespace bytePassion.Lib.TimeLib
 			var currentTime = DateTime.Now;
 
 			return new Tuple<Date, Time>(new Date(currentTime), new Time(currentTime));
-		} 
+		}
+
+		public static Date Today()
+		{
+			return new Date(DateTime.Now);
+		}
 	}
 }
