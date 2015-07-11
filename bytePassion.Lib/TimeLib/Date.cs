@@ -61,6 +61,34 @@ namespace bytePassion.Lib.TimeLib
 			return !(d1 == d2);
 		}
 
+	    public static bool operator <(Date d1, Date d2)
+	    {
+		    if (d1.Year  > d2.Year)  return false;
+		    if (d1.Month > d2.Month) return false;
+		    if (d1.Day   > d2.Day)   return false;
+
+		    return true;
+	    }
+
+		public static bool operator > (Date d1, Date d2)
+		{
+			if (d1.Year  < d2.Year)  return false;
+			if (d1.Month < d2.Month) return false;
+			if (d1.Day   < d2.Day)   return false;
+
+			return true;
+		}
+
+	    public static bool operator <=(Date d1, Date d2)
+	    {
+		    return d1 < d2 || d1 == d2;
+	    }
+
+		public static bool operator >= (Date d1, Date d2)
+		{
+			return d1 > d2 || d1 == d2;
+		}
+
 		/// <summary>
 		/// return Date as String in format: dd.mm.yyyy
 		/// </summary>

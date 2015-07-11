@@ -5,8 +5,10 @@ using bytePassion.Lib.FrameworkExtensions;
 namespace bytePassion.Lib.TimeLib
 {
 
-	public class Duration
+	public struct Duration
 	{
+		public static readonly Duration Zero = new Duration(0);
+
 		private readonly uint seconds;
 
 		public Duration(TimeSpan timeSpan)
