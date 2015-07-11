@@ -57,8 +57,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 				new Room(Guid.NewGuid(), "A13", therapyPlacesRoom2, Colors.LightPink)				
 			};
 
-			var hoursOfOpening = new HoursOfOpening(new Time( 8, 0), new Time( 8, 0), new Time( 8, 0), new Time( 8, 0), new Time( 8, 0), new Time( 8, 0), new Time( 8, 0),
-													new Time(17, 0), new Time(17, 0), new Time(17, 0), new Time(17, 0), new Time(17, 0), new Time(17, 0), new Time(17, 0),
+			var hoursOfOpening = new HoursOfOpening(new Time( 8, 0), new Time( 8, 0), new Time( 8, 0), new Time( 9, 0), new Time(10, 0), new Time( 8, 0), new Time( 8, 0),
+													new Time(15, 0), new Time(16, 0), new Time(17, 0), new Time(18, 0), new Time(20, 0), new Time(17, 0), new Time(17, 0),
 													true,            true,            true,            true,            true,            false,           false,
 													new List<Date> { new Date( 7,7,2015), new Date(8,7,2015) }, 
 													new List<Date> { new Date(18,7,2015) });
