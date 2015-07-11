@@ -1,41 +1,32 @@
-﻿using System;
+﻿using System.Collections;
+
 
 namespace bytePassion.OnkoTePla.Client.Core.State
 {
-	public class StateEngine
+	public interface IStateEngine
 	{
-
-		public void  CreateNewState(Type stateType, string stateName)
-		{
-			
-		}
+		void RegisterState<T>(string stateIdentifier);
+		T GetState<T> (string stateIdentifier);
 	}
 
-	public class State <T>
+	public class StateEngine : IStateEngine
 	{
-		public event Action<T> StateChanged;
 
-		private T stateValue;
+		private readonly IDictionary states;
 
-		public State()
+		public StateEngine()
 		{
-			stateValue = default(T);
+			states = new Hashtable();
 		}
 
-		public T Value
+		public void RegisterState<T>(string stateIdentifier)
 		{
-			get { return stateValue; }
-			set
-			{
-				if (value.Equals(stateValue)) return;
+			states.Add(stateIdentifier, new GlobalState<T>());
+		}
 
-				stateValue = value;					
-				var handlers = StateChanged;
-
-				if (handlers != null)				
-					handlers(stateValue);
-				
-			}
-		}		
-	}
+		public T GetState<T> (string stateIdentifier)
+		{
+			return (T)states[stateIdentifier];
+		}
+	}	
 }

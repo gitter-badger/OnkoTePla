@@ -102,12 +102,17 @@
     <Compile Include="Repositories\Patients\XmlPatientDataStore.cs" />
     <Compile Include="Repositories\Readmodel\IReadModelRepository.cs" />
     <Compile Include="Repositories\Readmodel\ReadModelRepository.cs" />
+    <Compile Include="State\GlobalState.cs" />
     <Compile Include="State\StateEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
       <Project>{825B03A5-FD0F-417A-ADC5-D3A0AAD2C36B}</Project>
       <Name>bytePassion.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Client.Resources\bytePassion.OnkoTePla.Client.Resources.csproj">
+      <Project>{1FF3C490-8680-46A5-AB65-6329863326DC}</Project>
+      <Name>bytePassion.OnkoTePla.Client.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Contracts\bytePassion.OnkoTePla.Contracts.csproj">
       <Project>{85958036-dfef-4c68-abf4-fd241eaab47f}</Project>
