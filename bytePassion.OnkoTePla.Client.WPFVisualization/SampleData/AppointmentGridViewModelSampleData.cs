@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -36,6 +37,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 			CurrentGridHeight = 400;			
 
 			OperatingMode = OperatingMode.View;
+			CurrentlyDisplayedDate = TimeTools.Today().DayBefore().DayBefore();
 		}
 
 		public ICommand ShowPracticeAndDate  { get { return null; }}
@@ -52,8 +54,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.SampleData
 		public double CurrentGridWidth  { set; get; }
 		public double CurrentGridHeight { set; get; }
 
-		public IAppointmentViewModel EditingObject { set; get; }
-		public OperatingMode         OperatingMode { get; private set; }
+		public IAppointmentViewModel EditingObject          { set; get; }
+		public OperatingMode         OperatingMode          { get; private set; }
+		public Date                  CurrentlyDisplayedDate { get; private set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

@@ -23,10 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private readonly IAppointmentGridViewModel containerGrid;
 
 		private ITherapyPlaceRowViewModel currentRow;
-
-		// hier wird die row eingetragen
-		// die rows holen sich dann alle appointments und zeigen nur die an, wo die row passt
-		//dfsdf
+		
 
 		private double canvasPosition;
 		private double viewElementLength;

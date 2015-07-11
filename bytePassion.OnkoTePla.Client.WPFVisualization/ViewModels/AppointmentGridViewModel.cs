@@ -82,9 +82,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			var medicalPractice = configuration.GetAllMedicalPractices().First();
 			var lastOpenDay = GetLastOpenDay(medicalPractice);
 
+			selectedDate.Value = lastOpenDay;
 			selectedDate.StateChanged += OnSelectedDateChanged;
 
-			ShowPracticeAndDateOnScreen(new AggregateIdentifier(lastOpenDay, medicalPractice.Id));
+			ShowPracticeAndDateOnScreen(new AggregateIdentifier(selectedDate.Value, medicalPractice.Id));
 		}
 
 		private void OnSelectedDateChanged(Date date)
@@ -109,7 +110,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				throw new ArgumentException();
 
 			return currentDate;
-		}
+		}				
 
 		private void ShowPracticeAndDateOnScreen(AggregateIdentifier identifier)
 		{
@@ -143,6 +144,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			PropertyChanged.Notify(this, "TimeSlotLabels");
 			PropertyChanged.Notify(this, "TimeSlotLines");
 			PropertyChanged.Notify(this, "TherapyPlaceRows");
+			PropertyChanged.Notify(this, "CurrentlyDisplayedDate");
 		}
 
 
@@ -215,6 +217,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		{
 			get { return operatingMode; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref operatingMode, value);}
+		}
+
+		public Date CurrentlyDisplayedDate
+		{
+			get { return currentlyDisplayedDataSet.AppointmentReadModel.Identifier.Date; }
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

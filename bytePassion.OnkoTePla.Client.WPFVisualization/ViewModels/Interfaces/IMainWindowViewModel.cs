@@ -1,6 +1,4 @@
 ﻿
-
-
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 {
 	internal interface IMainWindowViewModel
@@ -9,5 +7,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 		IAddAppointmentTestViewModel AddAppointmentTestViewModel { get; }
 		IAppointmentOverViewModel    AppointmentOverViewModel    { get; }
 		IAppointmentGridViewModel    AppointmentGridViewModel    { get; }
+		IDateSelectorViewModel       DateSelectorViewModel       { get; }
 	}
 }

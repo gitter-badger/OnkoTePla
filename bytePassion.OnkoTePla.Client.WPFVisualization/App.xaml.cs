@@ -89,6 +89,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			stateEngine.RegisterState<Date>(GlobalConstants.GlobalStateMainGridSelectedDate);
 
 			var mainGridSelectedDateState = stateEngine.GetState<Date>(GlobalConstants.GlobalStateMainGridSelectedDate);
+			mainGridSelectedDateState.Value = TimeTools.Today();
 
 			// create permanent ViewModels
 
@@ -96,12 +97,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			var appointmentOverViewModel    = new AppointmentOverViewModel(readModelRepository, configReadRepository);
             var patientsViewModel           = new PatientSelectorViewModel(patientRepository);
 			var appointmentGridViewModel    = new AppointmentGridViewModel(readModelRepository, configReadRepository, commandBus, 
-																		   sessionInformation, mainGridSelectedDateState); 		
+																		   sessionInformation, mainGridSelectedDateState);
+			var dateSelectorViewModel        = new DateSelectorViewModel(mainGridSelectedDateState);
 
 			var mainWindowViewModel = new MainWindowViewModel(patientsViewModel, 
 															  addAppointmentTestViewModel, 
 															  appointmentOverViewModel, 
 															  appointmentGridViewModel,
+															  dateSelectorViewModel,
 															  sessionInformation);
 
 			var mainWindow = new MainWindow

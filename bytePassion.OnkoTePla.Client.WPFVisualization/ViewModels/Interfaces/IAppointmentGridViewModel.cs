@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -23,7 +24,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces
 		double CurrentGridWidth  { set; get; }
 		double CurrentGridHeight { set; get; }
 
-		IAppointmentViewModel EditingObject { get; set; }
-		OperatingMode         OperatingMode { get; }
+		IAppointmentViewModel EditingObject          { get; set; }
+		OperatingMode         OperatingMode          { get; }
+		Date                  CurrentlyDisplayedDate { get; }
 	}
 }
