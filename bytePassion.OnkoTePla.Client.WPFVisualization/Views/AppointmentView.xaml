@@ -7,6 +7,7 @@
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
              xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
+             xmlns:enu="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="200">
 	
@@ -20,37 +21,107 @@
 	</d:UserControl.DataContext>
 	
 	<Border>
-        <Border.Style>
-            <Style TargetType="{x:Type Border}">
-                
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding OperatingMode}" Value="OperatingMode.Edit">
-                        <Setter Property="Opacity" Value="0.7"></Setter>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Border.Style>
+       
 
 		<i:Interaction.Behaviors>
 			<behaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode}"/>
 		</i:Interaction.Behaviors>
 		
         <Grid>
-           <Grid.ColumnDefinitions>
-               <ColumnDefinition Width="30"></ColumnDefinition>
-               <ColumnDefinition></ColumnDefinition>
-           </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" BorderThickness="2,2,0,2" BorderBrush="#404148" Background="#0ead9a"></Border>
-            <Border Grid.Column="1" BorderThickness="2" BorderBrush="#404148" Background="#ecf0f1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.ToolTip>
+                       <Grid>
+                           <Grid.RowDefinitions>
+                               <RowDefinition Height="10"></RowDefinition>
+                               <RowDefinition Height="Auto"></RowDefinition>
+                               <RowDefinition Height="15"></RowDefinition>
+                               <RowDefinition Height="Auto"></RowDefinition>
+                               <RowDefinition Height="15"></RowDefinition>
+                               <RowDefinition Height="Auto"></RowDefinition>
+                               <RowDefinition Height="15"></RowDefinition>
+                               <RowDefinition Height="Auto"></RowDefinition>
+                               <RowDefinition Height="10"></RowDefinition>
+                           </Grid.RowDefinitions>
+                           <Grid.ColumnDefinitions>
+                               <ColumnDefinition Width="10"></ColumnDefinition>
+                               <ColumnDefinition Width="250"></ColumnDefinition>
+                               <ColumnDefinition Width="10"></ColumnDefinition>
+                           </Grid.ColumnDefinitions>
+                           <TextBlock Text="{Binding PatientDisplayName}" Grid.Column="1" Grid.Row="1"></TextBlock> 
+                           <StackPanel Grid.Column="1" Grid.Row="3">
+                        <TextBlock Text="{Binding AppointmentDate}" ></TextBlock>
+                        <TextBlock Text="{Binding TimeSpan}" ></TextBlock>
+                    </StackPanel>
+                           <StackPanel Grid.Column="1" Grid.Row="5">
+                        <TextBlock Text="{Binding Room}"></TextBlock>
+                           </StackPanel>
+                           <TextBlock Text="{Binding Description}" Grid.Column="1" Grid.Row="7"></TextBlock>
+                </Grid>
+            </Grid.ToolTip>
+            <Border Grid.Column="1"  BorderBrush="#CC119EDA" Background="#ffffff">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Setters>
+                            <Setter Property="Opacity" Value="1.0"></Setter>
+                            <Setter Property="BorderThickness" Value="0,2"></Setter>
+                        </Style.Setters>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                <Setter Property="Opacity" Value="0.6"></Setter>
+                                <Setter Property="BorderThickness" Value="2"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 <TextBlock 
-					   Foreground="Black" 
+					   Foreground="#404148" 
                        TextTrimming="CharacterEllipsis"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
 					   FontSize="18"
 					   Text="{Binding PatientDisplayName}" FontFamily="Segoe UI Semibold"/>
             </Border>
-            <Button Command="{Binding DeleteAppointment}"
+            <Border Grid.Column="0" BorderThickness="2,2,0,2" BorderBrush="#CC119EDA">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Setters>
+                            <Setter Property="Background" Value="#ffffff"></Setter>
+                        </Style.Setters>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                <Setter Property="Background" Value="#CC119EDA"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Height="20" Width="1" Margin="2,0,0,0" Fill="#ffffff" VerticalAlignment="Center"></Rectangle>
+                    <Rectangle Height="20" Width="1" Margin="2,0,0,0" Fill="#ffffff" VerticalAlignment="Center"></Rectangle>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="2" BorderThickness="0,2,2,2" BorderBrush="#CC119EDA">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Setters>
+                            <Setter Property="Background" Value="#ffffff"></Setter>
+                        </Style.Setters>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                <Setter Property="Background" Value="#CC119EDA"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Height="20" Width="1" Margin="2,0,0,0" Fill="#ffffff" VerticalAlignment="Center"></Rectangle>
+                    <Rectangle Height="20" Width="1" Margin="2,0,0,0" Fill="#ffffff" VerticalAlignment="Center"></Rectangle>
+                </StackPanel>
+            </Border>
+            <!--<Button Command="{Binding DeleteAppointment}"
 					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}">
                 <Button.Template>
                     <ControlTemplate>
@@ -68,7 +139,7 @@
                         </Grid>
                     </ControlTemplate>
                 </Button.Template>
-            </Button>
+            </Button>-->
         </Grid>
 
 	</Border>

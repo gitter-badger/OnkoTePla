@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
@@ -109,12 +110,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public ICommand DeleteAppointment { get { return deleteAppointmentCommand; }}
 		public ICommand SwitchToEditMode  { get { return switchToEditModeCommand;  }}
 
-		public string PatientDisplayName
-		{
-			get { return appointment.Patient.Name; }
-		}		
+		public string PatientDisplayName => appointment.Patient.Name;
 
-		public double CanvasPosition
+	    public string TimeSpan => appointment.StartTime + " - " + appointment.EndTime;
+
+	    public string AppointmentDate => appointment.Day.ToString();
+
+	    public string Description => appointment.Description;
+
+	    public string Room => appointment.TherapyPlace.Name;
+
+	    public double CanvasPosition
 		{
 			get { return canvasPosition; }
 			set { PropertyChanged.ChangeAndNotify(this, ref canvasPosition, value); }
@@ -153,7 +159,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		#region Dispose
 
 		private bool disposed = false;
-		public void Dispose ()
+	    private readonly StringBuilder stringBuilder = new StringBuilder();
+
+	    public void Dispose ()
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
