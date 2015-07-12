@@ -10,6 +10,7 @@ using bytePassion.FileRename.RenameLogic;
 using bytePassion.FileRename.RenameLogic.Enums;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.Utils;
 using Ookii.Dialogs.Wpf;
 
 

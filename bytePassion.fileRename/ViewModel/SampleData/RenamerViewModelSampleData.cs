@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.FileRename.RenameLogic.Enums;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.Utils;
 
 #pragma warning disable 0067
 

@@ -9,6 +9,7 @@
         xmlns:behaviors="clr-namespace:bytePassion.FileRename.Behaviors"
         xmlns:lib="clr-namespace:bytePassion.Lib.FrameworkExtensions;assembly=bytePassion.Lib"
         xmlns:enum="clr-namespace:bytePassion.FileRename.RenameLogic.Enums"
+        xmlns:utils="clr-namespace:bytePassion.Lib.Utils;assembly=bytePassion.Lib"
 
         mc:Ignorable="d"
         Title="bytePassion - FileRenameTool" Height="699.8" Width="885" MinHeight="440" MinWidth="820">
@@ -190,9 +191,9 @@
 
 		<ListView Grid.Row="2" x:Name="ListViewProgress" Margin="5" ItemsSource="{Binding ListItems}">
 			<ListView.View>
-				<GridView lib:GridViewColumns.HeaderTextMember="Header"
-                          lib:GridViewColumns.DisplayMemberMember="DisplayMember"
-                          lib:GridViewColumns.ColumnsSource="{Binding Columns}"/>
+				<GridView utils:GridViewColumns.HeaderTextMember="Header"
+                          utils:GridViewColumns.DisplayMemberMember="DisplayMember"
+                          utils:GridViewColumns.ColumnsSource="{Binding Columns}"/>
 			</ListView.View>
 
 			<i:Interaction.Behaviors>

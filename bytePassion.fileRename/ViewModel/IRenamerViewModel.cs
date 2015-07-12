@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.FileRename.RenameLogic.Enums;
-using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.Utils;
 
 
 namespace bytePassion.FileRename.ViewModel
