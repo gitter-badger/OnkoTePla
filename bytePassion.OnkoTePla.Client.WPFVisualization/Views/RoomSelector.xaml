@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.RoomSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
+             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
+             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="300">
+	
+	<d:UserControl.DataContext>
+		<sampleData:RoomSelectorViewModelSampleData/>
+	</d:UserControl.DataContext>
+	
+	<UserControl.Resources>
+		<converter:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
+	</UserControl.Resources>
+	
+    <Grid>
+        <Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="35"/>
+		</Grid.RowDefinitions>   
+		
+		<ItemsControl Grid.Row="0"
+					  ItemsSource="{Binding AvailableRoomData}">
+			
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>			
+			
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<ToggleButton Margin="50,5,5,5"
+							Content="{Binding Room.Name}"
+							Background="{Binding Room.DisplayedColor, Converter={StaticResource ColorToSolidColorBrushConverter}}">							
+
+						<i:Interaction.Behaviors>
+							<behaviors:ExecuteCommandWhenToggleButtonGetsCheckedBehavior Command="{Binding SelectRoomCommand}"/>
+							<behaviors:ToggleButtonAsRadioButtonBehavior SelectedOption="{Binding Path=DataContext.SelectedOption, 
+																								  RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+																								  Mode=TwoWay}"
+																		 ButtonAssociatedOption="{Binding}"/>
+						</i:Interaction.Behaviors>
+						
+					</ToggleButton>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+			
+		</ItemsControl>
+		
+		<ToggleButton Grid.Row="1"
+				      Margin="5"
+				      Content="Show all Rooms">
+
+			<i:Interaction.Behaviors>
+				<behaviors:ExecuteCommandWhenToggleButtonGetsCheckedBehavior Command="{Binding SelectAllRooms}"/>
+				<behaviors:ToggleButtonAsRadioButtonBehavior SelectedOption="{Binding SelectedOption, 
+																					  Mode=TwoWay}"
+															 ButtonAssociatedOption="{x:Static helper:RoomSelectorData.Dummy}"/>
+			</i:Interaction.Behaviors>
+
+		</ToggleButton>
+    </Grid>
+	
+</UserControl>

@@ -8,6 +8,9 @@ namespace bytePassion.OnkoTePla.Client.Resources
 		public const string ConfigPersistenceFile       = @"..\..\..\AppData\config.xml";
 		public const string EventHistoryPersistenceFile = @"..\..\..\AppData\eventHistory.xml";
 
-		public const string GlobalStateMainGridSelectedDate = "mainGridSelectedDate";
+		public const string GlobalStateMainGridSelectedDate      = "mainGridSelectedDate";
+		public const string GlobalStateMainGridDisplayedPractice = "mainGridDisplayedPractice";
+		public const string GlobalStateMainGridSelectedRoom      = "mainGridSelectedRoom";
+		public const string GlobalStateSideBarState              = "sideBarState";
 	}
 }

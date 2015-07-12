@@ -7,11 +7,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 	internal class MainWindowViewModel : IMainWindowViewModel
 	{
 		
-		private readonly IPatientSelectorViewModel    patientSelectorViewModel;
-		private readonly IAddAppointmentTestViewModel addAppointmentTestViewModel;
-		private readonly IAppointmentOverViewModel    appointmentOverViewModel;
-		private readonly IAppointmentGridViewModel    appointmentGridViewModel;
-		private readonly IDateSelectorViewModel       dateSelectorViewModel;
+		private readonly IPatientSelectorViewModel         patientSelectorViewModel;
+		private readonly IAddAppointmentTestViewModel      addAppointmentTestViewModel;
+		private readonly IAppointmentOverViewModel         appointmentOverViewModel;
+		private readonly IAppointmentGridViewModel         appointmentGridViewModel;
+		private readonly IDateSelectorViewModel            dateSelectorViewModel;
+		private readonly IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel;
+		private readonly IRoomSelectorViewModel            roomSelectorViewModel;
 
 		private readonly SessionInformation sessionInformation;
 		
@@ -21,22 +23,28 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 									IAppointmentOverViewModel appointmentOverViewModel, 
 									IAppointmentGridViewModel appointmentGridViewModel,
 									IDateSelectorViewModel dateSelectorViewModel,
+									IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel,
+									IRoomSelectorViewModel roomSelectorViewModel,
 									SessionInformation sessionInformation)
 		{
-		    this.patientSelectorViewModel    = patientSelectorViewModel;
-			this.addAppointmentTestViewModel = addAppointmentTestViewModel;
-			this.appointmentOverViewModel    = appointmentOverViewModel;
-			this.appointmentGridViewModel    = appointmentGridViewModel;
-			this.dateSelectorViewModel       = dateSelectorViewModel;
+		    this.patientSelectorViewModel         = patientSelectorViewModel;
+			this.addAppointmentTestViewModel      = addAppointmentTestViewModel;
+			this.appointmentOverViewModel         = appointmentOverViewModel;
+			this.appointmentGridViewModel         = appointmentGridViewModel;
+			this.dateSelectorViewModel            = dateSelectorViewModel;
+			this.medicalPracticeSelectorViewModel = medicalPracticeSelectorViewModel;
+			this.roomSelectorViewModel            = roomSelectorViewModel;
 
 			this.sessionInformation = sessionInformation;
 			
 		}
 
-		public IPatientSelectorViewModel    PatientSelectorViewModel    { get { return patientSelectorViewModel;    }}
-		public IAddAppointmentTestViewModel AddAppointmentTestViewModel { get { return addAppointmentTestViewModel; }}
-		public IAppointmentOverViewModel    AppointmentOverViewModel    { get { return appointmentOverViewModel;    }}
-		public IAppointmentGridViewModel    AppointmentGridViewModel    { get { return appointmentGridViewModel;    }}
-		public IDateSelectorViewModel       DateSelectorViewModel       { get { return dateSelectorViewModel;       }}
+		public IPatientSelectorViewModel         PatientSelectorViewModel         { get { return patientSelectorViewModel;         }}
+		public IAddAppointmentTestViewModel      AddAppointmentTestViewModel      { get { return addAppointmentTestViewModel;      }}
+		public IAppointmentOverViewModel         AppointmentOverViewModel         { get { return appointmentOverViewModel;         }}
+		public IAppointmentGridViewModel         AppointmentGridViewModel         { get { return appointmentGridViewModel;         }}
+		public IDateSelectorViewModel            DateSelectorViewModel            { get { return dateSelectorViewModel;            }}
+		public IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get { return medicalPracticeSelectorViewModel; }}
+		public IRoomSelectorViewModel            RoomSelectorViewModel            { get { return roomSelectorViewModel;            }}
 	}
 }

@@ -166,5 +166,20 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 
 			throw new ArgumentException();
 		}
+
+		public Date GetLastOpenDayFromToday()
+		{
+			var currentDate = TimeTools.Today();
+
+			var securityCounter = 0;
+
+			while (!IsOpen(currentDate) && (securityCounter++)<1000)
+				currentDate = currentDate.DayBefore();
+
+			if (securityCounter > 990)
+				throw new ArgumentException();
+
+			return currentDate;
+		}			
 	}
 }

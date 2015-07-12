@@ -9,9 +9,10 @@ namespace bytePassion.OnkoTePla.Client.Core.State
 
 		private T stateValue;
 
+
 		public GlobalState()
 		{
-			stateValue = default(T);
+			stateValue = default(T);			
 		}
 
 		public T Value

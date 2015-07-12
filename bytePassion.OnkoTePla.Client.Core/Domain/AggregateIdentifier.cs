@@ -47,8 +47,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
 		public override int GetHashCode()
 		{
-			return Date.GetHashCode() ^ 
-				   (practiceVersion != null ? PracticeVersion.GetHashCode() : 0) ^ 
+			return Date.GetHashCode() ^ 				   
 			       MedicalPracticeId.GetHashCode();
 		}
 

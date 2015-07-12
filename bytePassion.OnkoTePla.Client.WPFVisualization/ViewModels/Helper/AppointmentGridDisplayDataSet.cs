@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
+using bytePassion.OnkoTePla.Client.Core.State;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
@@ -14,22 +16,27 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 
 		private readonly IAppointmentGridViewModel appointmentGridViewModel;
 		private readonly AppointmentsOfADayReadModel appointmentReadModel;
-		private readonly ObservableCollection<IAppointmentViewModel> displayedAppointments;
-		private readonly ObservableCollection<ITherapyPlaceRowViewModel> therapyPlaceRows;
+		private readonly ObservableCollection<IAppointmentViewModel> displayedAppointments;		
+		private readonly IList<ITherapyPlaceRowViewModel> allTherapyPlaceRows;
+		private readonly MedicalPractice medicalPractice;
 
 		private readonly GridLinesAndLabelPainting gridLinesAndLabelPainting;
+		private readonly ObservableCollection<ITherapyPlaceRowViewModel> displayedTherapyPlaceRows;
 
 		public AppointmentGridDisplayDataSet (AppointmentsOfADayReadModel appointmentReadModel, 
-			MedicalPractice medicalPractice, 
-			IAppointmentGridViewModel appointmentGridViewModel)
+			                                  MedicalPractice medicalPractice, 
+			                                  IAppointmentGridViewModel appointmentGridViewModel,
+											  GlobalState<Guid?> selectedRoomState)
 		{
 			var identifier = appointmentReadModel.Identifier;
 
 			this.appointmentReadModel = appointmentReadModel;
 			this.appointmentGridViewModel = appointmentGridViewModel;
+			this.medicalPractice = medicalPractice;
+
 			appointmentReadModel.AppointmentChanged += ReadModelOnAppointmentChanged;
 
-			therapyPlaceRows = new ObservableCollection<ITherapyPlaceRowViewModel>();
+			displayedTherapyPlaceRows = new ObservableCollection<ITherapyPlaceRowViewModel>();
 			displayedAppointments = new ObservableCollection<IAppointmentViewModel>();					
 
 			if (!medicalPractice.HoursOfOpening.IsOpen(identifier.Date))
@@ -41,20 +48,45 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 			gridLinesAndLabelPainting = new GridLinesAndLabelPainting();
 			gridLinesAndLabelPainting.SetNewTimeSpan(timeSlotStart, timeSlotEnd);
 
+			allTherapyPlaceRows = new List<ITherapyPlaceRowViewModel>();
+
 			foreach (var room in medicalPractice.Rooms)
 				foreach (var therapyPlace in room.TherapyPlaces)
 				{
-					therapyPlaceRows.Add(new TherapyPlaceRowViewModel(therapyPlace, room.DisplayedColor, timeSlotStart, timeSlotEnd));
+					allTherapyPlaceRows.Add(new TherapyPlaceRowViewModel(therapyPlace, room.DisplayedColor, timeSlotStart, timeSlotEnd));
 				}
 
 			foreach (var appointment in appointmentReadModel.Appointments)
 				AddAppointmentToGrid(appointment);
+
+			selectedRoomState.StateChanged += OnSelectedRoomStateChanged;
+
+			OnSelectedRoomStateChanged(selectedRoomState.Value);
 		}
 
+		private void OnSelectedRoomStateChanged(Guid? selectedRoomId)
+		{
+			displayedTherapyPlaceRows.Clear();
 
-		public ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get { return gridLinesAndLabelPainting.TimeSlotLabels;   }}
-		public ObservableCollection<TimeSlotLine>              TimeSlotLines    { get { return gridLinesAndLabelPainting.TimeSlotLines;    }}
-		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get { return therapyPlaceRows;                           }}
+			if (selectedRoomId == null)
+			{
+				foreach (var therapyPlaceRowViewModel in allTherapyPlaceRows)
+					displayedTherapyPlaceRows.Add(therapyPlaceRowViewModel);
+			}
+			else
+			{				
+				var filteredPlaces = allTherapyPlaceRows.Where
+					(model => medicalPractice.GetRoomForTherapyPlace(model.TherapyPlaceId).Id == selectedRoomId.Value
+				);
+
+				foreach (var therapyPlaceRowViewModel in filteredPlaces)
+					displayedTherapyPlaceRows.Add(therapyPlaceRowViewModel);
+			}
+		}
+
+		public ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get { return gridLinesAndLabelPainting.TimeSlotLabels; }}
+		public ObservableCollection<TimeSlotLine>              TimeSlotLines    { get { return gridLinesAndLabelPainting.TimeSlotLines;  }}
+		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get { return displayedTherapyPlaceRows;                }}
 
 		public AppointmentsOfADayReadModel AppointmentReadModel
 		{
@@ -98,7 +130,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper
 
 		private void AddAppointmentToGrid (Appointment appointment)
 		{
-			displayedAppointments.Add(new AppointmentViewModel(appointment, therapyPlaceRows, appointmentGridViewModel));
+			displayedAppointments.Add(new AppointmentViewModel(appointment, allTherapyPlaceRows, appointmentGridViewModel));
 		}	
 
 		private bool disposed = false;

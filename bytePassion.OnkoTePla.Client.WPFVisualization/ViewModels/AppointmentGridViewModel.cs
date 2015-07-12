@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
@@ -17,7 +16,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Interfaces;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
@@ -54,18 +52,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private IAppointmentViewModel editingObject;
 		private OperatingMode operatingMode;
 
+		private readonly GlobalState<Guid?> selectedRoomState;
+		private readonly GlobalState<Tuple<Guid, uint>> displayedPracticeState;
+		private readonly GlobalState<Date> selectedDateState; 
 
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
 										IConfigurationReadRepository configuration,
 										ICommandBus commandBus, 
 										SessionInformation sessionInformation, 
-										GlobalState<Date> selectedDate)
+										GlobalState<Date> selectedDateState,
+										GlobalState<Tuple<Guid, uint>> displayedPracticeState,
+										GlobalState<Guid?> selectedRoomState )
 		{
 			this.readModelRepository = readModelRepository;
 			this.configuration = configuration;
 			this.commandBus = commandBus;
 			this.sessionInformation = sessionInformation;
-
+			this.selectedRoomState = selectedRoomState;
+			this.displayedPracticeState = displayedPracticeState;
+			this.selectedDateState = selectedDateState;
 
 			appointmentDataSets = new Dictionary<AggregateIdentifier, AppointmentGridDisplayDataSet>();
 			currentlyDisplayedDataSet = null;
@@ -77,40 +82,33 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			discardChangesCommand = new Command(DiscardAllChanges);
 
 			currentGridWidth  = 400;	 // will be overwritten when View is created
-			currentGridHeight = 400;	 // but is nessacary for loading todays dataSet
+			currentGridHeight = 400;	 // but is nessacary for loading intial dataSet						
 
-			var medicalPractice = configuration.GetAllMedicalPractices().First();
-			var lastOpenDay = GetLastOpenDay(medicalPractice);
+			selectedDateState.StateChanged      += OnSelectedDateChanged;
+			displayedPracticeState.StateChanged += OnDisplayedPracticeChanged;
 
-			selectedDate.Value = lastOpenDay;
-			selectedDate.StateChanged += OnSelectedDateChanged;
-
-			ShowPracticeAndDateOnScreen(new AggregateIdentifier(selectedDate.Value, medicalPractice.Id));
+			ShowPracticeAndDateOnScreen(new AggregateIdentifier(selectedDateState.Value, displayedPracticeState.Value.Item1));
 		}
 
-		private void OnSelectedDateChanged(Date date)
+		private void OnDisplayedPracticeChanged(Tuple<Guid, uint> practiceInfo)
 		{
 			var currentIdentifier = currentlyDisplayedDataSet.AppointmentReadModel.Identifier;
 
+			if (practiceInfo.Item1 != currentIdentifier.MedicalPracticeId)
+				ShowPracticeAndDateOnScreen(new AggregateIdentifier(currentIdentifier.Date,
+																	practiceInfo.Item1));
+		}	
+
+		private void OnSelectedDateChanged(Date date)
+		{			
+			if (currentlyDisplayedDataSet.AppointmentReadModel.Identifier.Date == date) 
+				return;
+
+			var currentIdentifier = currentlyDisplayedDataSet.AppointmentReadModel.Identifier;
+
 			ShowPracticeAndDateOnScreen(new AggregateIdentifier(date, 
-																currentIdentifier.MedicalPracticeId, 
-																currentIdentifier.PracticeVersion));
-		}
-
-		private Date GetLastOpenDay(MedicalPractice medicalPractice)
-		{
-			var currentDate = TimeTools.Today();
-
-			var securityCounter = 0;
-
-			while (!medicalPractice.HoursOfOpening.IsOpen(currentDate) && (securityCounter++)<1000)
-				currentDate = currentDate.DayBefore();
-
-			if (securityCounter > 990)
-				throw new ArgumentException();
-
-			return currentDate;
-		}				
+																currentIdentifier.MedicalPracticeId));
+		}			
 
 		private void ShowPracticeAndDateOnScreen(AggregateIdentifier identifier)
 		{
@@ -128,14 +126,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 				var medicalPractice = configuration.GetMedicalPracticeByIdAndVersion(updatedIdentifier.MedicalPracticeId,
 				                                                                     updatedIdentifier.PracticeVersion);
 
-				appointmentDataSet = new AppointmentGridDisplayDataSet(appointmentReadModel, medicalPractice, this);
+				appointmentDataSet = new AppointmentGridDisplayDataSet(appointmentReadModel, medicalPractice, this, selectedRoomState);
 				appointmentDataSets.Add(updatedIdentifier, appointmentDataSet);
 			}
 
 			currentlyDisplayedDataSet = appointmentDataSet;
 			currentlyDisplayedDataSet.SetNewGridHeight(CurrentGridHeight);
 			currentlyDisplayedDataSet.SetNewGridWidth(CurrentGridWidth);
-
+			
 			NotifyViewThatNewDataSetIsLoaded();						
 		}
 
@@ -143,8 +141,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		{
 			PropertyChanged.Notify(this, "TimeSlotLabels");
 			PropertyChanged.Notify(this, "TimeSlotLines");
+			PropertyChanged.Notify(this, "displayedTherapyPlaceRows");
 			PropertyChanged.Notify(this, "TherapyPlaceRows");
-			PropertyChanged.Notify(this, "CurrentlyDisplayedDate");
 		}
 
 
@@ -206,7 +204,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			get { return editingObject; }
 			set
 			{				
-				// lock day
+				// TODO lock day
 
 				OperatingMode = value == null ? OperatingMode.View : OperatingMode.Edit;
 				PropertyChanged.ChangeAndNotify(this, ref editingObject, value);
