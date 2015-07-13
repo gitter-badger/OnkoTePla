@@ -97,12 +97,12 @@
                 </Grid>
             </Grid.ToolTip>
             <Border Grid.Column="0"
-                    BorderBrush="#CC119EDA"
+                    BorderBrush="#FF119EDA"
                     BorderThickness="1,1,0,1">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Setters>
-                            <Setter Property="Background" Value="#ffffff" />
+                            <Setter Property="Background" Value="#FF119EDA" />
                         </Style.Setters>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
@@ -112,21 +112,45 @@
                     </Style>
                 </Border.Style>
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="1"
-                               Height="20"
-                               Margin="1,0,0,0"
-                               VerticalAlignment="Center"
-                               Fill="#ffffff" />
-                    <Rectangle Width="1"
-                               Height="20"
-                               Margin="1,0,0,0"
-                               VerticalAlignment="Center"
-                               Fill="#ffffff" />
+                    <Border Width="1"
+                            Height="20"
+                            Margin="1,0,0,0"
+                            VerticalAlignment="Center">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Setters>
+                                    <Setter Property="Background" Value="#FF119EDA" />
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                        <Setter Property="Background" Value="#ffffff" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
+                    <Border Width="1"
+                            Height="20"
+                            Margin="1,0,0,0"
+                            VerticalAlignment="Center">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Setters>
+                                    <Setter Property="Background" Value="#FF119EDA" />
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                        <Setter Property="Background" Value="#ffffff" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
                 </StackPanel>
             </Border>
             <Border Grid.Column="1"
-                    Background="#ffffff"
-                    BorderBrush="#CC119EDA">
+                    Background="#FF119EDA"
+                    BorderBrush="#FF119EDA">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Setters>
@@ -145,17 +169,17 @@
                            VerticalAlignment="Center"
                            FontFamily="Segoe UI Semibold"
                            FontSize="18"
-                           Foreground="#404148"
+                           Foreground="#FFE4EBEC"
                            Text="{Binding PatientDisplayName}"
                            TextTrimming="CharacterEllipsis" />
             </Border>
             <Border Grid.Column="2"
-                    BorderBrush="#CC119EDA"
+                    BorderBrush="#FF119EDA"
                     BorderThickness="0,1,1,1">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Setters>
-                            <Setter Property="Background" Value="#ffffff" />
+                            <Setter Property="Background" Value="#FF119EDA" />
                         </Style.Setters>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
@@ -165,16 +189,41 @@
                     </Style>
                 </Border.Style>
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="1"
-                               Height="20"
-                               Margin="1,0,0,0"
-                               VerticalAlignment="Center"
-                               Fill="#ffffff" />
-                    <Rectangle Width="1"
-                               Height="20"
-                               Margin="1,0,0,0"
-                               VerticalAlignment="Center"
-                               Fill="#ffffff" />
+                    <Border Width="1"
+                            Height="20"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Setters>
+                                    <Setter Property="Background" Value="#FF119EDA" />
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                        <Setter Property="Background" Value="#ffffff" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                    </Border>
+                    <Border Width="1"
+                            Height="20"
+                            Margin="1,0,0,0"
+                            VerticalAlignment="Center">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Setters>
+                                    <Setter Property="Background" Value="#FF119EDA" />
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                        <Setter Property="Background" Value="#ffffff" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
                 </StackPanel>
             </Border>
             <!--<Button Command="{Binding DeleteAppointment}"
