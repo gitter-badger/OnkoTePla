@@ -108,7 +108,7 @@
 
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
-					<Line Stroke="Black"
+                    <Line Stroke="#99A9A9A9"
 						  StrokeThickness="1"
 						  StrokeDashArray="3,1"
 						  X1="{Binding XCoord}"

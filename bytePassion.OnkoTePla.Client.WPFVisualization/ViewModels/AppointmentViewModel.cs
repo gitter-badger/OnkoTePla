@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -117,7 +118,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		public string TimeSpan
 		{
-			get { return appointment.StartTime + " - " + appointment.EndTime; }
+			get { return appointment.StartTime.ToString().Substring(0, 5) + " - " + appointment.EndTime.ToString().Substring(0, 5); }
 		}
 
 		public string AppointmentDate
@@ -135,6 +136,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			get { return appointment.TherapyPlace.Name; }
 		}
 
+	    public Color CurrentColor
+	    {
+	        get { return CurrentRow.RoomColor; }
+	    }
 		public double CanvasPosition
 		{
 			get { return canvasPosition; }
