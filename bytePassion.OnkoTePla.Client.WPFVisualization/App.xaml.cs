@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using bytePassion.Lib.Messaging;
+using bytePassion.Lib.Messaging.HandlerCollection;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
@@ -60,8 +62,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Event- and CommandBus
 
-			IEventBus   eventBus   = new EventBus();
-			ICommandBus commandBus = new CommandBus();
+			IHandlerCollection<DomainEvent>   eventHandlerCollection   = new MultiHandlerCollection <DomainEvent>();
+			IHandlerCollection<DomainCommand> commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
+
+			IMessageBus<DomainEvent>   eventBus   = new LocalMessageBus<DomainEvent>  (eventHandlerCollection);			
+			IMessageBus<DomainCommand> commandBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
 
 
 			// Aggregate- and Readmodel-Repositories
@@ -72,8 +77,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Register CommandHandler
 
-			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
-			commandBus.RegisterCommandHandler(new DeleteAppointmentCommandHandler(aggregateRepository));
+			commandBus.RegisterMessageHandler(new AddAppointmentCommandHandler(aggregateRepository));
+			commandBus.RegisterMessageHandler(new DeleteAppointmentCommandHandler(aggregateRepository));
 
 
 			// SessionInformation
@@ -89,10 +94,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			var initialMedicalPractice = configReadRepository.GetAllMedicalPractices().First();  // TODO set last usage
 			
-			var        selectedDateInitialValue            = initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday();
-			var        displayedPracticeInitialValue       = new Tuple<Guid, uint>(initialMedicalPractice.Id, initialMedicalPractice.Version); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
-			Guid?      selectedRoomInitialValue            = null;
-			const bool sideBarStateInitialValue            = true;
+			var        selectedDateInitialValue      = initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday();
+			var        displayedPracticeInitialValue = new Tuple<Guid, uint>(initialMedicalPractice.Id, initialMedicalPractice.Version); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
+			Guid?      selectedRoomInitialValue      = null;
+			const bool sideBarStateInitialValue      = true;
 
 			stateEngine.RegisterState(GlobalConstants.GlobalStateMainGridSelectedDate,      selectedDateInitialValue);			
 			stateEngine.RegisterState(GlobalConstants.GlobalStateMainGridDisplayedPractice, displayedPracticeInitialValue);

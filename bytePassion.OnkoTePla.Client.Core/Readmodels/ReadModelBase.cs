@@ -1,8 +1,8 @@
 ﻿using System;
+using bytePassion.Lib.Messaging;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Readmodels
@@ -15,22 +15,32 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		public abstract event EventHandler<AppointmentChangedEventArgs> AppointmentChanged;
 
-		private readonly IEventBus eventBus;
+		private readonly IMessageBus<DomainEvent> eventBus;
 
-		protected ReadModelBase(IEventBus eventBus)
+		protected ReadModelBase (IMessageBus<DomainEvent> eventBus)
 		{
 			this.eventBus = eventBus;
 
 			RegisterAtEventBus();
 		}
 		
-		public abstract void Handle(AppointmentAdded    domainEvent);
-		public abstract void Handle(AppointmentReplaced domainEvent);
-		public abstract void Handle(AppointmentDeleted  domainEvent);
+		public abstract void Process(AppointmentAdded    domainEvent);
+		public abstract void Process(AppointmentReplaced domainEvent);
+		public abstract void Process(AppointmentDeleted  domainEvent);
+				
+		private void RegisterAtEventBus ()
+		{
+			eventBus.RegisterMessageHandler<AppointmentAdded>(this);
+			eventBus.RegisterMessageHandler<AppointmentReplaced>(this);
+			eventBus.RegisterMessageHandler<AppointmentDeleted>(this);
+		}
 
-
-
-		// TODO: richtig so!?!?
+		private void DeregisterAtEventBus ()
+		{
+			eventBus.DeregisterMessageHander<AppointmentAdded>(this);
+			eventBus.DeregisterMessageHander<AppointmentReplaced>(this);
+			eventBus.DeregisterMessageHander<AppointmentDeleted>(this);
+		}
 
 		private bool disposed = false;
 		public void Dispose ()
@@ -38,8 +48,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
-		 
-		~ReadModelBase()
+
+		~ReadModelBase ()
 		{
 			Dispose(false);
 		}
@@ -48,27 +58,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		{
 			if (!disposed)
 			{
-				if (disposing)				
+				if (disposing)
 					DeregisterAtEventBus();
-								
+
 			}
-			disposed = true;						
-		}
-
-		
-
-		private void RegisterAtEventBus ()
-		{
-			eventBus.RegisterEventHandler<AppointmentAdded>(this);
-			eventBus.RegisterEventHandler<AppointmentReplaced>(this);
-			eventBus.RegisterEventHandler<AppointmentDeleted>(this);
-		}
-
-		private void DeregisterAtEventBus ()
-		{
-			eventBus.DeregisterEventHandler<AppointmentAdded>(this);
-			eventBus.DeregisterEventHandler<AppointmentReplaced>(this);
-			eventBus.DeregisterEventHandler<AppointmentDeleted>(this);
+			disposed = true;
 		}
 	}
 }

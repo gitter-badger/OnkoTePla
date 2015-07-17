@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using bytePassion.Lib.Messaging;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Exceptions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
@@ -28,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		private readonly AppointmentSet appointmentSet;
 
 		public AppointmentsOfAPatientReadModel (Guid patientId,
-												IEventBus eventBus,
+												IMessageBus<DomainEvent> eventBus,
 												IConfigurationReadRepository config,
 												IPatientReadRepository patientsRepository) 
 			: base(eventBus)
@@ -45,7 +46,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		public void LoadFromEventStream (EventStream<Guid> eventStream)
 		{
 			foreach (var domainEvent in eventStream.Events)
-				(this as dynamic).Handle(Converter.ChangeTo(domainEvent, domainEvent.GetType()));
+				(this as dynamic).Process(Converter.ChangeTo(domainEvent, domainEvent.GetType()));
 		}
 
 		public IEnumerable<Appointment> Appointments
@@ -53,7 +54,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			get { return appointmentSet.AppointmentList; }
 		}
 
-		public override void Handle (AppointmentAdded domainEvent)
+		public override void Process (AppointmentAdded domainEvent)
 		{
 			if (domainEvent.CreateAppointmentData.PatientId != patient.Id) return;
 
@@ -67,12 +68,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			AggregateVersion = domainEvent.AggregateVersion;
 		}
 
-		public override void Handle (AppointmentReplaced domainEvent)
+		public override void Process (AppointmentReplaced domainEvent)
 		{			
 			throw new NotImplementedException();
 		}
-
-		public override void Handle (AppointmentDeleted domainEvent)
+		 
+		public override void Process (AppointmentDeleted domainEvent)
 		{
 			if (domainEvent.PatientId != patient.Id) return;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Domain.Events

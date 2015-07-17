@@ -49,15 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandSystem\Base\DomainCommand.cs" />
-    <Compile Include="CommandSystem\Bus\CommandBus.cs" />
-    <Compile Include="CommandSystem\Bus\DomainCommandHandlerCollection.cs" />
+    <Compile Include="CommandSystem\DomainCommand.cs" />
     <Compile Include="Domain\CommandHandler\DeleteAppointmentCommandHandler.cs" />
     <Compile Include="Domain\Commands\DeleteAppointment.cs" />
     <Compile Include="Domain\Commands\AddAppointment.cs" />
-    <Compile Include="CommandSystem\Bus\ICommandBus.cs" />
-    <Compile Include="CommandSystem\Base\IDomainCommandHandler.cs" />
-    <Compile Include="CommandSystem\Bus\IDomainCommandHandlerCollection.cs" />
+    <Compile Include="CommandSystem\IDomainCommandHandler.cs" />
     <Compile Include="Domain\AppointmentLogic\AppointmentSet.cs" />
     <Compile Include="Domain\AppointmentLogic\CreateAppointmentData.cs" />
     <Compile Include="Domain\AppointmentLogic\ObservableAppointmentCollection.cs" />
@@ -82,15 +78,11 @@
     <Compile Include="Repositories\EventStore\IEventStore.cs" />
     <Compile Include="Repositories\IPersistenceService.cs" />
     <Compile Include="Repositories\EventStore\XmlEventStreamDataStore.cs" />
-    <Compile Include="Eventsystem\Bus\DomainEventHandlerCollection.cs" />
-    <Compile Include="Eventsystem\Base\IDomainEventHandler.cs" />
-    <Compile Include="Eventsystem\Bus\EventBus.cs" />
-    <Compile Include="Eventsystem\Base\DomainEvent.cs" />
+    <Compile Include="Eventsystem\IDomainEventHandler.cs" />
+    <Compile Include="Eventsystem\DomainEvent.cs" />
     <Compile Include="Domain\Events\AppointmentAdded.cs" />
     <Compile Include="Domain\Events\AppointmentReplaced.cs" />
     <Compile Include="Domain\Events\AppointmentDeleted.cs" />
-    <Compile Include="Eventsystem\Bus\IDomainEventHandlerCollection.cs" />
-    <Compile Include="Eventsystem\Bus\IEventBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Readmodels\AppointmentChangedEventArgs.cs" />
     <Compile Include="Readmodels\AppointmentsOfAPatientReadModel.cs" />

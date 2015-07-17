@@ -1,10 +1,11 @@
 ﻿using System;
+using bytePassion.Lib.Messaging;
+using bytePassion.Lib.Messaging.HandlerCollection;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using Xunit;
 
 namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
@@ -30,7 +31,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 				HandledEvent = false;
 			}
 
-			public void Handle(AppointmentAdded domainEvent)
+			public void Process(AppointmentAdded domainEvent)
 			{
 				HandledEvent = true;
 			}
@@ -41,11 +42,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 		[Fact]
 		public void SingleSubscribscriptionTest()
 		{
-			IEventBus eventBus = new EventBus();
+			IHandlerCollection<DomainEvent> eventHandlerCollection = new MultiHandlerCollection<DomainEvent>();
+			IMessageBus<DomainEvent> eventBus = new LocalMessageBus<DomainEvent>(eventHandlerCollection);
 			var testEventHandler = new TestSingleEventHandler();
 
-			eventBus.RegisterEventHandler(testEventHandler);
-			eventBus.Publish(GetAppointmentAddedDummy());
+			eventBus.RegisterMessageHandler(testEventHandler);
+			eventBus.Send(GetAppointmentAddedDummy());
 
 			Assert.True(testEventHandler.HandledEvent);
 		}
@@ -59,13 +61,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 				HandleAddedEvent = false;
 				HandleRemovedEvent = false;
 			}
-			
-			public void Handle(AppointmentAdded domainEvent)
+
+			public void Process (AppointmentAdded domainEvent)
 			{
 				HandleAddedEvent = true;
 			}
 
-			public void Handle(AppointmentDeleted domainEvent)
+			public void Process (AppointmentDeleted domainEvent)
 			{
 				HandleRemovedEvent = true;
 			}
@@ -77,18 +79,20 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 		[Fact]
 		public void DoubleSubscriptionTest()
 		{
-			IEventBus eventBus = new EventBus();
+			IHandlerCollection<DomainEvent> eventHandlerCollection = new MultiHandlerCollection<DomainEvent>();
+			IMessageBus<DomainEvent> eventBus = new LocalMessageBus<DomainEvent>(eventHandlerCollection);
+
 			var testEventHandler = new TestDoubleEventHandler();
 
-			eventBus.RegisterEventHandler<AppointmentAdded>(testEventHandler);
-			eventBus.RegisterEventHandler<AppointmentDeleted>(testEventHandler);
+			eventBus.RegisterMessageHandler<AppointmentAdded>(testEventHandler);
+			eventBus.RegisterMessageHandler<AppointmentDeleted>(testEventHandler);
 
-			eventBus.Publish(GetAppointmentAddedDummy());
+			eventBus.Send(GetAppointmentAddedDummy());
 
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.False(testEventHandler.HandleRemovedEvent);
 
-			eventBus.Publish(GetAppointmentRemovedDummy());
+			eventBus.Send(GetAppointmentRemovedDummy());
 
 			Assert.True(testEventHandler.HandleAddedEvent);
 			Assert.True(testEventHandler.HandleRemovedEvent);
@@ -97,14 +101,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 		[Fact]
 		public void SubscriptionOfTwoHandlerTest()
 		{
-			IEventBus eventBus = new EventBus();
+			IHandlerCollection<DomainEvent> eventHandlerCollection = new MultiHandlerCollection<DomainEvent>();
+			IMessageBus<DomainEvent> eventBus = new LocalMessageBus<DomainEvent>(eventHandlerCollection);
+
 			var testEventHandler1 = new TestSingleEventHandler();
 			var testEventHandler2 = new TestSingleEventHandler();
 
-			eventBus.RegisterEventHandler(testEventHandler1);
-			eventBus.RegisterEventHandler(testEventHandler2);
+			eventBus.RegisterMessageHandler(testEventHandler1);
+			eventBus.RegisterMessageHandler(testEventHandler2);
 
-			eventBus.Publish(GetAppointmentAddedDummy());
+			eventBus.Send(GetAppointmentAddedDummy());
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.True(testEventHandler2.HandledEvent);
 		}
@@ -115,9 +121,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 			public TestAnotherSingleEventHandler ()
 			{
 				HandledEvent = false;
-			}		
-			
-			public void Handle(AppointmentDeleted domainEvent)
+			}
+
+			public void Process (AppointmentDeleted domainEvent)
 			{
 				HandledEvent = true;
 			}
@@ -128,19 +134,21 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 		[Fact]
 		public void SubscriptionOfTwoDistinctHandlerTest ()
 		{
-			IEventBus eventBus = new EventBus();
+			IHandlerCollection<DomainEvent> eventHandlerCollection = new MultiHandlerCollection<DomainEvent>();
+			IMessageBus<DomainEvent> eventBus = new LocalMessageBus<DomainEvent>(eventHandlerCollection);
+
 			var testEventHandler1 = new TestSingleEventHandler();
 			var testEventHandler2 = new TestAnotherSingleEventHandler();
 
-			eventBus.RegisterEventHandler(testEventHandler1);
-			eventBus.RegisterEventHandler(testEventHandler2);
+			eventBus.RegisterMessageHandler(testEventHandler1);
+			eventBus.RegisterMessageHandler(testEventHandler2);
 
-			eventBus.Publish(GetAppointmentAddedDummy());
+			eventBus.Send(GetAppointmentAddedDummy());
 
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.False(testEventHandler2.HandledEvent);
 
-			eventBus.Publish(GetAppointmentRemovedDummy());
+			eventBus.Send(GetAppointmentRemovedDummy());
 
 			Assert.True(testEventHandler1.HandledEvent);
 			Assert.True(testEventHandler2.HandledEvent);

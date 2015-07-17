@@ -5,8 +5,9 @@ using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.Messaging;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
@@ -27,7 +28,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		private readonly IReadModelRepository         readModelRepository;
 		private readonly IConfigurationReadRepository configuration;
-		private readonly ICommandBus                  commandBus;
+		private readonly IMessageBus<DomainCommand>   commandBus;
 		private readonly SessionInformation           sessionInformation;
 
 		// GridDrawing /////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +59,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
 										IConfigurationReadRepository configuration,
-										ICommandBus commandBus, 
+										IMessageBus<DomainCommand> commandBus, 
 										SessionInformation sessionInformation, 
 										GlobalState<Date> selectedDateState,
 										GlobalState<Tuple<Guid, uint>> displayedPracticeState,

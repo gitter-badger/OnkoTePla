@@ -59,6 +59,12 @@
     <Compile Include="Clonable\ClonableList.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ParameterrizedCommand.cs" />
+    <Compile Include="Messaging\HandlerCollection\SingleHandlerCollection.cs" />
+    <Compile Include="Messaging\HandlerCollection\IHandlerCollection.cs" />
+    <Compile Include="Messaging\IMessageBus.cs" />
+    <Compile Include="Messaging\IMessageHandler.cs" />
+    <Compile Include="Messaging\LocalMessageBus.cs" />
+    <Compile Include="Messaging\HandlerCollection\MultiHandlerCollection.cs" />
     <Compile Include="TimeLib\TimeExtensions.cs" />
     <Compile Include="Utils\Converter.cs" />
     <Compile Include="FrameworkExtensions\EqualsExtension.cs" />

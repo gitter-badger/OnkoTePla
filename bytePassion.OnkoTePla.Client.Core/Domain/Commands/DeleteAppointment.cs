@@ -1,5 +1,5 @@
 ﻿using System;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.Base;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands

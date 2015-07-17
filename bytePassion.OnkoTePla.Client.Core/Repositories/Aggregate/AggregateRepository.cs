@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using bytePassion.Lib.Messaging;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
@@ -12,11 +13,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate
 	public class AggregateRepository : IAggregateRepository
 	{				
 		private readonly IEventStore eventStore;		
-		private readonly IEventBus   eventBus;
+		private readonly IMessageBus<DomainEvent> eventBus;
 		private readonly IPatientReadRepository patientRepository;
 		private readonly IConfigurationReadRepository config;
 
-		public AggregateRepository(IEventBus eventBus, IEventStore eventStore, 
+		public AggregateRepository(IMessageBus<DomainEvent> eventBus, IEventStore eventStore, 
 								   IPatientReadRepository patientRepository, 
 								   IConfigurationReadRepository config)
 		{ 
@@ -42,7 +43,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate
 			eventStore.AddEventsToEventStream(aggregate.Id, uncommittedChanges);
 
 			foreach (var @event in uncommittedChanges)			
-				eventBus.Publish(Converter.ChangeTo(@event, @event.GetType()));							
+				eventBus.Send(Converter.ChangeTo(@event, @event.GetType()));							
 		}
 	}
 }
