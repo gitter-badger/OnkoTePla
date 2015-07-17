@@ -35,7 +35,7 @@ namespace bytePassion.Lib.Math
 
 		#region properties (Value/ValueAsRad/PosValue/Sin/Cos)
 
-		public double Value { get { return value; } }
+		public double Value      { get { return value; } }
 		public double ValueAsRad { get { return valueAsRad = Double.IsNaN(valueAsRad) ? (SysMath.PI/180.0)*Value : valueAsRad; } }
 
 		public Angle PosValue { get { return Value >= 0 ? this : new Angle(360 + Value); } }
@@ -68,20 +68,20 @@ namespace bytePassion.Lib.Math
 
 		#region operators ( > >= < <= == != + - * / )
 
-		public static bool operator > (Angle a1, Angle a2) { return a1.Value > a2.Value; }
+		public static bool operator >  (Angle a1, Angle a2) { return a1.Value > a2.Value; }
 		public static bool operator >= (Angle a1, Angle a2) { return a1 > a2 || a1 == a2; }
-		public static bool operator < (Angle a1, Angle a2) { return !(a1 >= a2); }
-		public static bool operator <= (Angle a1, Angle a2) { return !(a1 > a2); }
-		public static bool operator == (Angle a1, Angle a2) { return a1.Equals(a2); }
-		public static bool operator != (Angle a1, Angle a2) { return !(a1 == a2); }
+		public static bool operator <  (Angle a1, Angle a2) { return !(a1 >= a2);         }
+		public static bool operator <= (Angle a1, Angle a2) { return !(a1 > a2);          }
+		public static bool operator == (Angle a1, Angle a2) { return a1.Equals(a2);       }
+		public static bool operator != (Angle a1, Angle a2) { return !(a1 == a2);         }
 
-		public static Angle operator + (Angle a1, Angle a2) { return new Angle(a1.Value + a2.Value); }
-		public static Angle operator - (Angle a1, Angle a2) { return a1 + (-a2); }
-		public static Angle operator - (Angle a) { return new Angle(-a.Value); }
-		public static Angle operator * (Angle a, double d) { return new Angle(a.Value*d); }
-		public static Angle operator * (double d, Angle a) { return a*d; }
-		public static Angle operator / (Angle a, double d) { return a*(1.0/d); }
-		public static double operator / (Angle a1, Angle a2) { return a1.Value/a2.Value; }
+		public static Angle  operator + (Angle a1, Angle a2) { return new Angle(a1.Value + a2.Value); }
+		public static Angle  operator - (Angle a1, Angle a2) { return a1 + (-a2);                     }
+		public static Angle  operator - (Angle a)            { return new Angle(-a.Value);            }
+		public static Angle  operator * (Angle a, double d)  { return new Angle(a.Value*d);           }
+		public static Angle  operator * (double d, Angle a)  { return a*d;                            }
+		public static Angle  operator / (Angle a, double d)  { return a*(1.0/d);                      }
+		public static double operator / (Angle a1, Angle a2) { return a1.Value/a2.Value;              }
 
 		#endregion
 
