@@ -1,4 +1,4 @@
-﻿using bytePassion.OnkoTePla.Client.Core.CommandSystem.Base;
+﻿using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate;
 
@@ -14,8 +14,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 		{
 			this.repository = repository;
 		}
-
-		public void Execute(AddAppointment command)
+		
+		public void Process(AddAppointment command)
 		{
 			var aggregate = repository.GetById(command.AggregateId);
 

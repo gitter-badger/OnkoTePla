@@ -4,8 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
+using bytePassion.Lib.Messaging;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
@@ -28,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		private readonly IPatientReadRepository patients;
 
 		// ReSharper disable NotAccessedField.Local
-		private readonly ICommandBus commandBus;		
+		private readonly IMessageBus<DomainCommand> commandBus;		
 		private readonly IReadModelRepository readModelRepository;
 		// ReSharper restore NotAccessedField.Local
 
@@ -41,7 +42,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public AddAppointmentTestViewModel(IConfigurationReadRepository config, 
 										   IPatientReadRepository patients, 
 										   IReadModelRepository readModelRepository,
-										   ICommandBus commandBus )
+										   IMessageBus<DomainCommand> commandBus)
 		{
 			this.config = config;
 			this.patients = patients;

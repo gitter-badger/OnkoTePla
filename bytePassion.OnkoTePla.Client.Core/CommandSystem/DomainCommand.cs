@@ -2,7 +2,7 @@
 using bytePassion.OnkoTePla.Client.Core.Domain;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.CommandSystem.Base
+namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
 {
 	public class DomainCommand
 	{

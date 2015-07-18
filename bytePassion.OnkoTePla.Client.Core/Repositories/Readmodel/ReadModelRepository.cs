@@ -1,7 +1,8 @@
 ﻿
 using System;
+using bytePassion.Lib.Messaging;
 using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
@@ -12,12 +13,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel
 {
 	public class ReadModelRepository : IReadModelRepository
 	{
-		private readonly IEventBus eventBus;
+		private readonly IMessageBus<DomainEvent> eventBus;
 		private readonly IEventStore eventStore;
 		private readonly IConfigurationReadRepository config;
 		private readonly IPatientReadRepository patientsRepository;
 
-		public ReadModelRepository(IEventBus eventBus, IEventStore eventStore,
+		public ReadModelRepository (IMessageBus<DomainEvent> eventBus, IEventStore eventStore,
  								   IPatientReadRepository patientsRepository,
 								   IConfigurationReadRepository config)
 		{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore

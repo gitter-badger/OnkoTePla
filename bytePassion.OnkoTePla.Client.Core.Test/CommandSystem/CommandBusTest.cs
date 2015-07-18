@@ -1,7 +1,8 @@
 ﻿using System;
+using bytePassion.Lib.Messaging;
+using bytePassion.Lib.Messaging.HandlerCollection;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.Base;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using Xunit;
@@ -18,7 +19,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.CommandSystem
 				CommandExecuted = false;
 			}
 
-			public void Execute(AddAppointment command)
+			public void Process(AddAppointment command)
 			{
 				CommandExecuted = true;
 			}
@@ -29,12 +30,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.CommandSystem
 		[Fact]
 		public void CommandRegistrationAndExecutionTest()
 		{
-			ICommandBus commandBus = new CommandBus();
+			IHandlerCollection<DomainCommand> commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
+			IMessageBus<DomainCommand> commandBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
 			var testCommandHandler = new TestCommandHandler();
 
 			Assert.False(testCommandHandler.CommandExecuted);
 
-			commandBus.RegisterCommandHandler(testCommandHandler);
+			commandBus.RegisterMessageHandler(testCommandHandler);
 			commandBus.Send(new AddAppointment(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), new Guid(), null, Time.Dummy, Time.Dummy, new Guid()));
 
 			Assert.True(testCommandHandler.CommandExecuted);

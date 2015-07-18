@@ -1,6 +1,6 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.Base;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 
 

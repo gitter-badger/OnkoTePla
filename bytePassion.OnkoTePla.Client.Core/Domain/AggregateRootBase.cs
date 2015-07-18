@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Base;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 
 

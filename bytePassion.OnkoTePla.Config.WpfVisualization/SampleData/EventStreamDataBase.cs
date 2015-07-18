@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using bytePassion.Lib.Messaging;
+using bytePassion.Lib.Messaging.HandlerCollection;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem.Bus;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate;
@@ -66,7 +68,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 									  therapyPlaceId);			
 		}
 
-		private static void GenerateAppointments (ICommandBus commandBus, AppointmentsOfADayReadModel readModel, 
+		private static void GenerateAppointments (IMessageBus<DomainCommand> commandBus, AppointmentsOfADayReadModel readModel, 
 												  MedicalPractice medicalPractice, User user, 
 												  IReadOnlyList<Patient> patients, Date date)
 		{
@@ -105,13 +107,17 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 
-			IEventBus   eventBus   = new EventBus();
-			ICommandBus commandBus = new CommandBus();
+			IHandlerCollection<DomainEvent> eventHandlerCollection = new MultiHandlerCollection<DomainEvent>();
+			IMessageBus<DomainEvent> eventBus = new LocalMessageBus<DomainEvent>(eventHandlerCollection);
+
+
+			IHandlerCollection<DomainCommand> commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
+			IMessageBus<DomainCommand> commandBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
 
 			IAggregateRepository aggregateRepository = new AggregateRepository(eventBus, eventStore, patientRepository, configReadRepository);
 			IReadModelRepository readModelRepository = new ReadModelRepository(eventBus, eventStore, patientRepository, configReadRepository);
 
-			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
+			commandBus.RegisterMessageHandler(new AddAppointmentCommandHandler(aggregateRepository));
 
 
 			//////////////////////////////
