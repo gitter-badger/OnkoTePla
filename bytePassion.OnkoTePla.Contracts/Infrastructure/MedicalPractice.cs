@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
+    [DataContract]
 	public sealed class MedicalPractice
 	{
+        [DataMember(Name = "Id")]
 		private readonly Guid id;
+        [DataMember(Name = "Name")]
 		private readonly string name;
+        [DataMember(Name = "Version")]
 		private readonly uint version;
 
+        [DataMember(Name = "Rooms")]
 		private readonly IReadOnlyList<Room> rooms;
+
+        [DataMember(Name = "HoursOfOpening")]
 		private readonly HoursOfOpening hoursOfOpening;
-		private readonly MedicalPractice previousVersion;
+
+        [DataMember(Name = "PreviousVersion")]
+        private readonly MedicalPractice previousVersion;
 
 
 		public static MedicalPractice CreateNewMedicalPractice(IReadOnlyList<Room> rooms, string name, HoursOfOpening hoursOfOpening)

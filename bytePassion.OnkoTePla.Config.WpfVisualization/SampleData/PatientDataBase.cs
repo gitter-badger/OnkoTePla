@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
         public static void GenerateJSONPatientsFile(int patientCount)
         {
-            IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStore(GlobalConstants.PatientJSONPersistenceFile);
+            IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
             PatientRepository repo = new PatientRepository(persistenceService);
 
             var patients = GeneratePatients(patientCount);

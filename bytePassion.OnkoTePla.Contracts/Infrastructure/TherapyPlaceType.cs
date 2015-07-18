@@ -1,14 +1,22 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Contracts.Enums;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
+    [DataContract]
 	public class TherapyPlaceType
 	{
+
+        [DataMember(Name = "Id")]
 		private readonly Guid id;
+
+        [DataMember(Name = "Name")]
 		private readonly string name;
+
+        [DataMember(Name = "IconType")]
 		private readonly TherapyPlaceIconType iconType;
 
 		public TherapyPlaceType(string name, TherapyPlaceIconType iconType, Guid id)

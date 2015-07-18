@@ -27694,4 +27694,5 @@
       <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="6681d803-1c98-4824-ad13-e49bf7cabbba" startTime="10:45:00" endTime="13:30:00" appointmentId="df95979f-6e96-4937-b487-7b400e84f9ec" />
     </event>
   </eventStream>
+  <eventStream count="0" date="10.07.2015" configVersion="0" medicalPracticeId="ca477f17-d950-4e3f-aa0b-5976061f9d4f" />
 </eventStreams>

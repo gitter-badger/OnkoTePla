@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Patient-Repository
 
-			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJSONPersistenceFile);
+			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
 			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
 			patientRepository.LoadRepository();
 

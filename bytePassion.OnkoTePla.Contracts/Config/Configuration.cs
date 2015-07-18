@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Config
 {
+    [DataContract]
 	public class Configuration
 	{
+        [DataMember (Name = "ConfiguredTherapyPlaceTypes")]
 		private readonly IList<TherapyPlaceType> configuredTherapyPlaceTypes;
+
+        [DataMember(Name = "ConfiguredMedicalPractices")]
 		private readonly IList<MedicalPractice>  configuredMedicalPractices;
+
+        [DataMember(Name = "ConfiguredUsers")]
 		private readonly IList<User>			 configuredUsers; 
 		
 

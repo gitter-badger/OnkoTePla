@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.OnkoTePla.Contracts.Config
 {
+    [DataContract]
 	public class User
 	{
+        [DataMember(Name = "Id")]
 		private readonly Guid   id;
+
+        [DataMember(Name = "Name")]
 		private readonly string name;
+
+        [DataMember(Name = "ListOfAccessableMedicalPractices")]
 		private readonly IReadOnlyList<Guid> listOfAccessableMedicalPractices;
+
+        [DataMember(Name = "Password")]
 		private readonly string password;
 
 		public User(string name, IReadOnlyList<Guid> listOfAccessableMedicalPractices, 

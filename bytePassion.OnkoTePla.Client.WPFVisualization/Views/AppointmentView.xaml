@@ -97,7 +97,7 @@
                 </Grid>
             </Grid.ToolTip>
             <Border Grid.Column="0"
-                    BorderBrush="#FF119EDA"
+                    BorderBrush="DarkSlateGray"
                     BorderThickness="1,1,0,1">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
@@ -150,7 +150,7 @@
             </Border>
             <Border Grid.Column="1"
                     Background="#FF119EDA"
-                    BorderBrush="#FF119EDA">
+                    BorderBrush="DarkSlateGray">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Setters>
@@ -160,7 +160,7 @@
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
                                 <Setter Property="Opacity" Value="0.6" />
-                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderThickness" Value="0,1" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -174,7 +174,7 @@
                            TextTrimming="CharacterEllipsis" />
             </Border>
             <Border Grid.Column="2"
-                    BorderBrush="#FF119EDA"
+                    BorderBrush="DarkSlateGray"
                     BorderThickness="0,1,1,1">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">

@@ -94,7 +94,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void GenerateExampleEventStream()
 		{			
-			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJSONPersistenceFile);
+			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
 			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
 			patientRepository.LoadRepository();
 

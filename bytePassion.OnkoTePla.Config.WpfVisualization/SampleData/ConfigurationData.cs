@@ -31,6 +31,15 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			repo.PersistRepository();
 		}
 
+
+        public static void ConfigToJson()
+        {
+            IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
+            ConfigurationRepository repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());
+
+            repo.PersistRepository();
+        }
+
 		private static Configuration GetMedicalPracticeSample()
 		{
 			var type1 = new TherapyPlaceType("therapieStuhl", TherapyPlaceIconType.ChairType1, Guid.NewGuid());

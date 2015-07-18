@@ -1,16 +1,23 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Text;
 using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
 {
+    [DataContract]
 	public struct Time
 	{
 		public static readonly Time Dummy = new Time(0,0);
 
+        [DataMember(Name = "Hour")]
 		private readonly byte hour;
-		private readonly byte minute;
+
+        [DataMember(Name = "Minute")]
+        private readonly byte minute;
+
+        [DataMember(Name = "Second")]
 		private readonly byte second;
 
 		public Time(Time time)
