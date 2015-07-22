@@ -13,11 +13,35 @@ using Jil;
 
 namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 {
-
 	[DataContract]
-	public class Patient2
+	public class PatientSerializationDouble
 	{
-				
+		public PatientSerializationDouble(Patient2 originalPatient)
+		{
+			// the constructor is called with "null" during serialization-process ... why?!?
+
+			if (originalPatient != null) 
+			{
+				Name = originalPatient.Name;
+				Alive = originalPatient.Alive;
+				Birthday = originalPatient.Birthday;
+				Id = originalPatient.Id;
+				ExternalId = originalPatient.ExternalId;
+			}
+		}
+
+		[DataMember(Name = "Name")]       public string Name       { get; set; }
+		[DataMember(Name = "Alive")]      public bool   Alive      { get; set; }
+		[DataMember(Name = "Birthday")]   public Date   Birthday   { get; set; }
+		[DataMember(Name = "Id")]         public Guid   Id         { get; set; }
+		[DataMember(Name = "ExternalId")] public string ExternalId { get; set; }
+
+		public Patient2 GetPatient() => new Patient2(Name, Birthday, Alive, Id, ExternalId);
+	}
+
+	
+	public class Patient2
+	{				
 		public Patient2 (string name, Date birthday, bool alive,
 					   Guid id, string externalId)
 		{
@@ -28,11 +52,11 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			ExternalId = externalId;
 		}
 		
-		[DataMember(Name = "Name")]       public string Name       { get; }
-		[DataMember(Name = "Alive")]      public bool   Alive      { get; }
-		[DataMember(Name = "Birthday")]   public Date   Birthday   { get; }
-		[DataMember(Name = "Id")]         public Guid   Id         { get; }
-		[DataMember(Name = "ExternalId")] public string ExternalId { get; }
+		public string Name       { get; }
+		public bool   Alive      { get; }
+		public Date   Birthday   { get; }
+		public Guid   Id         { get; }
+		public string ExternalId { get; }
 
 
 		#region ToString / HashCode / Equals
@@ -69,25 +93,26 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		public void Persist (IEnumerable<Patient2> data)
 		{
 
+			var serializableData = data.Select(patient2 => new PatientSerializationDouble(patient2)).ToList();
+
 			using (var output = new StringWriter())
 			{
-				JSON.Serialize(data, output, Options.PrettyPrint);
+				JSON.Serialize(serializableData, output, Options.PrettyPrint);
 				File.WriteAllText(filename, output.ToString());
 			}
 		}
 
 		public IEnumerable<Patient2> Load ()
 		{
-			List<Patient2> patients;
+			List<PatientSerializationDouble> patients;
 			
 			using (var stream = new FileStream(filename, FileMode.Open))
 			{
 				var settings = new DataContractJsonSerializerSettings();
-				DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Patient2>), settings);
-				patients = (List<Patient2>)serializer.ReadObject(stream);
+				DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<PatientSerializationDouble>), settings);
+				patients = (List<PatientSerializationDouble>)serializer.ReadObject(stream);
 			}
-			return patients;
-
+			return patients.Select(patientSerializationDouble => patientSerializationDouble.GetPatient());
 		}
 	}
 
