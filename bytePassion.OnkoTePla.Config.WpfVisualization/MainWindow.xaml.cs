@@ -34,5 +34,15 @@ namespace bytePassion.OnkoTePla.Config.WpfClient
 			//PatientDataBase.GenerateXmlPatientsFile(20000);
 			PatientDataBase.GenerateJSONPatientsFile(20000);
 		}
+
+		private void ButtonBase_OnClick5 (object sender, RoutedEventArgs e)
+		{			
+			PatientDataBaseTest.GenerateJSONPatientsFile();
+		}
+
+		private void ButtonBase_OnClick6 (object sender, RoutedEventArgs e)
+		{
+			PatientDataBaseTest.TestLoad();
+		}
 	}
 }
