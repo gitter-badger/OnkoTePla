@@ -1,4 +1,5 @@
 ﻿using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.Communication.MessageBus
@@ -26,14 +27,8 @@ namespace bytePassion.Lib.Communication.MessageBus
 		public void Send<TMessage>(TMessage message) 
 			where TMessage : TMessageBase
 		{
-			var messageHandlerList = handlerCollection.GetMessageHandler<TMessage>();
-
-			if (messageHandlerList == null) return;
-
-			foreach (var messageHandler in messageHandlerList)
-			{
-				messageHandler.Process(message);
-			}
-		}
+			handlerCollection.GetMessageHandler<TMessage>()
+							?.Do(handler => handler.Process(message));
+        }
 	}
 }

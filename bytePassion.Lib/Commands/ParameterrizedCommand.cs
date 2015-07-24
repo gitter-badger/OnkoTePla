@@ -29,7 +29,7 @@ namespace bytePassion.Lib.Commands
 
 		private void CanExecuteChangedRequired (object sender, EventArgs eventArgs)
 		{
-			RaiseCanExecuteChanged();
+			CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		public bool CanExecute (object parameter)
@@ -42,10 +42,7 @@ namespace bytePassion.Lib.Commands
 
 		public bool CanExecute (T parameter)
 		{
-			if (canExecute == null)
-				return true;
-
-			return canExecute(parameter);
+			return canExecute == null || canExecute(parameter);
 		}
 
 		public void Execute (object parameter)
@@ -59,13 +56,7 @@ namespace bytePassion.Lib.Commands
 		}
 
 		public event EventHandler CanExecuteChanged;
-
-		public void RaiseCanExecuteChanged ()
-		{
-			var handler = CanExecuteChanged;
-			if (handler != null)
-				handler(this, EventArgs.Empty);
-		}
+	
 
 		private bool disposed = false;
 		public void Dispose ()

@@ -4,6 +4,9 @@ using bytePassion.Lib.FrameworkExtensions;
 
 using SysMath = System.Math;
 
+using static System.Double;
+using static System.String;
+
 namespace bytePassion.Lib.Math
 {
 	public struct Angle
@@ -12,8 +15,6 @@ namespace bytePassion.Lib.Math
 		private static readonly IFormatProvider Numberformat = CultureInfo.CreateSpecificCulture("en-US");
 
 		public static readonly Angle Zero = new Angle(0);
-
-		private readonly double value;
 
 		private double valueAsRad;		//
 		private double sin;				//	variables to avoid
@@ -25,63 +26,53 @@ namespace bytePassion.Lib.Math
 			if (representation == AngleUnit.Radians)
 				angle = (180.0/SysMath.PI)*angle;
 
-			value = angle%360.0;
+			Value = angle%360.0;
 
-			valueAsRad = Double.NaN;
-			sin = Double.NaN;
-			cos = Double.NaN;
-			tan = Double.NaN;
+			valueAsRad = NaN;
+			sin = NaN;
+			cos = NaN;
+			tan = NaN;
 		}
 
 		#region properties (Value/ValueAsRad/PosValue/Sin/Cos)
 
-		public double Value      { get { return value; } }
-		public double ValueAsRad { get { return valueAsRad = Double.IsNaN(valueAsRad) ? (SysMath.PI/180.0)*Value : valueAsRad; } }
+		public double Value { get; }
 
-		public Angle PosValue { get { return Value >= 0 ? this : new Angle(360 + Value); } }
-		public Angle Inverted { get { return new Angle(-Value); } }
+		public double ValueAsRad => valueAsRad = IsNaN(valueAsRad) ? (SysMath.PI/180.0)*Value : valueAsRad;
 
-		public double Sin { get { return sin = Double.IsNaN(sin) ? SysMath.Sin(ValueAsRad) : sin; } }
-		public double Cos { get { return cos = Double.IsNaN(cos) ? SysMath.Cos(ValueAsRad) : cos; } }
-		public double Tan { get { return tan = Double.IsNaN(cos) ? SysMath.Tan(ValueAsRad) : tan; } }
+		public Angle PosValue => Value >= 0 ? this : new Angle(360 + Value);
+		public Angle Inverted => new Angle(-Value);
+
+		public double Sin => sin = IsNaN(sin) ? SysMath.Sin(ValueAsRad) : sin;
+		public double Cos => cos = IsNaN(cos) ? SysMath.Cos(ValueAsRad) : cos;
+		public double Tan => tan = IsNaN(cos) ? SysMath.Tan(ValueAsRad) : tan;
 
 		#endregion
 
 		#region Equals,ToString,HashCode
 
-		public override bool Equals (object obj)
-		{
-			return this.Equals(obj, (angle1, angle2) => MathLibUtils.DoubleEquals(angle1.PosValue.Value, angle2.PosValue.Value));
-		}
-
-		public override int GetHashCode ()
-		{
-			return Value.GetHashCode();
-		}
-
-		public override string ToString ()
-		{
-			return String.Format(Numberformat, "{0:0.000000} deg", Value);
-		}
+		public override bool   Equals (object obj) => this.Equals(obj, (angle1, angle2) => MathLibUtils.DoubleEquals(angle1.PosValue.Value, angle2.PosValue.Value));
+		public override int    GetHashCode ()      => Value.GetHashCode();
+		public override string ToString ()         => Format(Numberformat, "{0:0.000000} deg", Value);
 
 		#endregion
 
 		#region operators ( > >= < <= == != + - * / )
 
-		public static bool operator >  (Angle a1, Angle a2) { return a1.Value > a2.Value; }
-		public static bool operator >= (Angle a1, Angle a2) { return a1 > a2 || a1 == a2; }
-		public static bool operator <  (Angle a1, Angle a2) { return !(a1 >= a2);         }
-		public static bool operator <= (Angle a1, Angle a2) { return !(a1 > a2);          }
-		public static bool operator == (Angle a1, Angle a2) { return a1.Equals(a2);       }
-		public static bool operator != (Angle a1, Angle a2) { return !(a1 == a2);         }
+		public static bool operator >  (Angle a1, Angle a2) => a1.Value > a2.Value;
+		public static bool operator >= (Angle a1, Angle a2) => a1 > a2 || a1 == a2;
+		public static bool operator <  (Angle a1, Angle a2) => !(a1 >= a2);
+		public static bool operator <= (Angle a1, Angle a2) => !(a1 > a2);
+		public static bool operator == (Angle a1, Angle a2) => a1.Equals(a2);
+		public static bool operator != (Angle a1, Angle a2) => !(a1 == a2);
 
-		public static Angle  operator + (Angle a1, Angle a2) { return new Angle(a1.Value + a2.Value); }
-		public static Angle  operator - (Angle a1, Angle a2) { return a1 + (-a2);                     }
-		public static Angle  operator - (Angle a)            { return new Angle(-a.Value);            }
-		public static Angle  operator * (Angle a, double d)  { return new Angle(a.Value*d);           }
-		public static Angle  operator * (double d, Angle a)  { return a*d;                            }
-		public static Angle  operator / (Angle a, double d)  { return a*(1.0/d);                      }
-		public static double operator / (Angle a1, Angle a2) { return a1.Value/a2.Value;              }
+		public static Angle  operator + (Angle a1, Angle a2) => new Angle(a1.Value + a2.Value);
+		public static Angle  operator - (Angle a1, Angle a2) => a1 + (-a2);
+		public static Angle  operator - (Angle a)            => new Angle(-a.Value);
+		public static Angle  operator * (Angle a, double d)  => new Angle(a.Value*d);
+		public static Angle  operator * (double d, Angle a)  => a*d;
+		public static Angle  operator / (Angle a, double d)  => a*(1.0/d);
+		public static double operator / (Angle a1, Angle a2) => a1.Value/a2.Value;
 
 		#endregion
 

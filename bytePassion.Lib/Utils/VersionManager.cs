@@ -6,7 +6,8 @@ using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.Lib.Utils
 {
-	public class VersionManager<T> : INotifyPropertyChanged
+
+	public class VersionManager<T> : INotifyPropertyChanged where T : class
 	{
 		public event EventHandler<T> CurrentVersionChanged;
 
@@ -18,7 +19,7 @@ namespace bytePassion.Lib.Utils
 		private bool undoPossible;
 		private bool redoPossible;
 
-		public VersionManager (uint maximalSavedVersions)
+		public VersionManager(uint maximalSavedVersions)
 		{
 			this.maximalSavedVersions = maximalSavedVersions;
 			versions = new LinkedList<T>();
@@ -27,13 +28,13 @@ namespace bytePassion.Lib.Utils
 			CheckIfUndoAndRedoIsPossible();
 		}
 
-		public VersionManager (uint maximalSavedVersions, T initialVersion)
+		public VersionManager(uint maximalSavedVersions, T initialVersion)
 			: this(maximalSavedVersions)
 		{
 			AddnewVersion(initialVersion);
 		}
 
-		public void FixCurrentVersion ()
+		public void FixCurrentVersion()
 		{
 			lock (this)
 			{
@@ -56,7 +57,7 @@ namespace bytePassion.Lib.Utils
 			private set { PropertyChanged.ChangeAndNotify(this, ref redoPossible, value); }
 		}
 
-		public void AddnewVersion (T newVersion)
+		public void AddnewVersion(T newVersion)
 		{
 			lock (this)
 			{
@@ -66,7 +67,7 @@ namespace bytePassion.Lib.Utils
 				versions.AddLast(newVersionNode);
 				CurrentVersionPointer = newVersionNode;
 
-				if (versions.Count == maximalSavedVersions+1)
+				if (versions.Count == maximalSavedVersions + 1)
 					versions.RemoveFirst();
 			}
 		}
@@ -77,9 +78,7 @@ namespace bytePassion.Lib.Utils
 			{
 				lock (this)
 				{
-					return CurrentVersionPointer != null // TODO c# 6.0: .?
-						? CurrentVersionPointer.Value 
-						: default(T);
+					return CurrentVersionPointer?.Value;
 				}
 			}
 		}
@@ -97,16 +96,14 @@ namespace bytePassion.Lib.Utils
 
 					if (CurrentVersionPointer != null)
 					{
-
 						var handler = CurrentVersionChanged;
-						if (handler != null)
-							handler(this, CurrentVersion);
+						handler?.Invoke(this, CurrentVersion);
 					}
 				}
 			}
 		}
 
-		public void Undo ()
+		public void Undo()
 		{
 			lock (this)
 			{
@@ -117,7 +114,7 @@ namespace bytePassion.Lib.Utils
 			}
 		}
 
-		public void Redo ()
+		public void Redo()
 		{
 			lock (this)
 			{
@@ -128,12 +125,12 @@ namespace bytePassion.Lib.Utils
 			}
 		}
 
-		private void CheckIfUndoAndRedoIsPossible ()
+		private void CheckIfUndoAndRedoIsPossible()
 		{
 			if (CurrentVersionPointer != null)
 			{
 				UndoPossible = CurrentVersionPointer.Previous != null;
-				RedoPossible = CurrentVersionPointer.Next     != null;
+				RedoPossible = CurrentVersionPointer.Next != null;
 			}
 			else
 			{
@@ -142,7 +139,7 @@ namespace bytePassion.Lib.Utils
 			}
 		}
 
-		private void RemoveAllFromEndTo (LinkedListNode<T> node)
+		private void RemoveAllFromEndTo(LinkedListNode<T> node)
 		{
 			while (versions.Last != node)
 				versions.RemoveLast();

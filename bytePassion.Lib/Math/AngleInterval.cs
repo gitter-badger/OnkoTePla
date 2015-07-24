@@ -4,25 +4,16 @@ namespace bytePassion.Lib.Math
 {
     public class AngleInterval
     {
-	    private readonly Angle from;
-		private readonly Angle to;
-
 	    public AngleInterval(Angle from, Angle to)
 	    {
-		    this.from = from;
-		    this.to = to;
+		    From = from;
+		    To = to;
 	    }
 
-		public Angle From { get { return from; }}
-		public Angle To   { get { return to;   }}
+		public Angle From { get; }
+	    public Angle To { get; }
 
-	    public Angle AbsolutAngleValue
-	    {
-		    get
-		    {
-				return (From < To) ? To - From : new Angle(360 - From.Value + To.Value);
-		    }
-	    }
+	    public Angle AbsolutAngleValue => (From < To) ? To - From : new Angle(360 - From.Value + To.Value);
 
 	    public bool IsAngleWithin(Angle a)
 	    {
@@ -34,9 +25,9 @@ namespace bytePassion.Lib.Math
 	    public bool IsOverlappingWith(AngleInterval ai)
 	    {			
 			if (IsAngleWithin(ai.From)) return true;
-			if (IsAngleWithin(ai.To)) return true;
+			if (IsAngleWithin(ai.To))   return true;
 			if (ai.IsAngleWithin(From)) return true;
-			if (ai.IsAngleWithin(To)) return true;
+			if (ai.IsAngleWithin(To))   return true;
 			
 			if (this == ai) return true;
 
@@ -73,29 +64,11 @@ namespace bytePassion.Lib.Math
 	    }
 
 
-	    public override bool Equals(object obj)
-	    {
-		    return this.Equals(obj, (ai1, ai2) => true); // TODO!!!!!!!!!!
-	    }
+	    public override bool   Equals(object obj) => this.Equals(obj, (ai1, ai2) => true); // TODO !!!!!!!!!!!
+	    public override int    GetHashCode()      => From.GetHashCode() ^ To.GetHashCode();
+	    public override string ToString()         => $"[{From};{To}]";
 
-	    public override int GetHashCode()
-	    {
-		    return From.GetHashCode() ^ To.GetHashCode();
-	    }
-
-	    public override string ToString()
-	    {
-		    return "[" + From + ";" + To + "]";
-	    }
-
-		public static bool operator == (AngleInterval a1, AngleInterval a2)
-		{
-			return a1 != null && a1.Equals(a2);
-		}
-
-		public static bool operator != (AngleInterval a1, AngleInterval a2)
-		{
-			return !(a1 == a2);
-		}	     	    	    
+	    public static bool operator == (AngleInterval a1, AngleInterval a2) => a1 != null && a1.Equals(a2);
+	    public static bool operator != (AngleInterval a1, AngleInterval a2) => !(a1 == a2);
     }
 }

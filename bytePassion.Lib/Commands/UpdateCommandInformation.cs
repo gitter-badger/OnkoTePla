@@ -37,9 +37,7 @@ namespace bytePassion.Lib.Commands
 			var propertyList = propertysLists[(INotifyPropertyChanged)sender];
 			if (propertyList.Contains(propertyChangedEventArgs.PropertyName))
 			{
-				var handler = UpdateOfCanExecuteChangedRequired;
-				if (handler != null)
-					handler(this, new EventArgs());
+				UpdateOfCanExecuteChangedRequired?.Invoke(this, new EventArgs());
 			}
 		}
 

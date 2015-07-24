@@ -14,20 +14,12 @@ namespace bytePassion.Lib.FrameworkExtensions
 
 			field = value;
 
-			var tmpHandler = handler;
-			if (tmpHandler != null)
-			{
-				tmpHandler(sender, new PropertyChangedEventArgs(propertyName));
-			}
+			handler?.Invoke(sender, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public static void Notify (this PropertyChangedEventHandler handler, object sender, string propertyName)
 		{
-			var tmpHandler = handler;
-			if (tmpHandler != null)
-			{
-				tmpHandler(sender, new PropertyChangedEventArgs(propertyName));
-			}
+			handler?.Invoke(sender, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
