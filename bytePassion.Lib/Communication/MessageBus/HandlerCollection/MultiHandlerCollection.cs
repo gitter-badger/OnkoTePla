@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace bytePassion.Lib.Messaging.HandlerCollection
+namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 {
 
 	public class MultiHandlerCollection<TMessageBase> : IHandlerCollection<TMessageBase>

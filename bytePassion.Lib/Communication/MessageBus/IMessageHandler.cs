@@ -1,4 +1,4 @@
-﻿namespace bytePassion.Lib.Messaging
+﻿namespace bytePassion.Lib.Communication.MessageBus
 {
 	public interface IMessageHandler<in TMessage>
 	{

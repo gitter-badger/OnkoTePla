@@ -1,6 +1,4 @@
-
-
-using bytePassion.Lib.Messaging;
+using bytePassion.Lib.Communication.MessageBus;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Eventsystem

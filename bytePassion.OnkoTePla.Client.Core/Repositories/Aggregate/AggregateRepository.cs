@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using bytePassion.Lib.Messaging;
+using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;

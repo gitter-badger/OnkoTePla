@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
-using bytePassion.Lib.Messaging;
+using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;

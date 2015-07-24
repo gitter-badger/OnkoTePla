@@ -1,7 +1,7 @@
-﻿using bytePassion.Lib.Messaging.HandlerCollection;
+﻿using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 
 
-namespace bytePassion.Lib.Messaging
+namespace bytePassion.Lib.Communication.MessageBus
 {
 	public class LocalMessageBus<TMessageBase> : IMessageBus<TMessageBase>
 	{

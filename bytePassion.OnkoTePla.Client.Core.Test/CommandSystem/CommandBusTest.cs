@@ -1,6 +1,6 @@
 ﻿using System;
-using bytePassion.Lib.Messaging;
-using bytePassion.Lib.Messaging.HandlerCollection;
+using bytePassion.Lib.Communication.MessageBus;
+using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;

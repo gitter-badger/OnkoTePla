@@ -1,6 +1,6 @@
 ﻿
 using System;
-using bytePassion.Lib.Messaging;
+using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;

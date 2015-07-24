@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace bytePassion.Lib.Messaging.HandlerCollection
+namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 {
 
 	public class SingleHandlerCollection<TMessageBase> : IHandlerCollection<TMessageBase>

@@ -1,5 +1,5 @@
 ﻿using System;
-using bytePassion.Lib.Messaging;
+using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
