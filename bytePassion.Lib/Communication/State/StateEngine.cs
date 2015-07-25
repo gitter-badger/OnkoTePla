@@ -11,16 +11,11 @@ namespace bytePassion.Lib.Communication.State
 		public StateEngine()
 		{
 			states = new Hashtable();
-		}
+		}	
 
-		public void RegisterState<T> (string stateIdentifier)
+		public void RegisterState<T> (string stateIdentifier, T initialValue = default (T))
 		{
 			states.Add(stateIdentifier, new GlobalState<T>());
-		}
-
-		public void RegisterState<T> (string stateIdentifier, T initialValue)
-		{
-			RegisterState<T>(stateIdentifier);
 
 			var state = GetState<T>(stateIdentifier);
 			state.Value = initialValue;

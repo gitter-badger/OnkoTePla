@@ -2,8 +2,7 @@
 {
 	public interface IStateEngine
 	{
-		void RegisterState<T>(string stateIdentifier);
-		void RegisterState<T>(string stateIdentifier, T initialValue);
+		void RegisterState<T>(string stateIdentifier, T initialValue = default(T));
 
 		GlobalState<T> GetState<T>(string stateIdentifier);
 		
