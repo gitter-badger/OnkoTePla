@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
@@ -13,11 +12,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate
 	public class AggregateRepository : IAggregateRepository
 	{				
 		private readonly IEventStore eventStore;		
-		private readonly IMessageBus<DomainEvent> eventBus;
+		private readonly IEventBus eventBus;
 		private readonly IPatientReadRepository patientRepository;
 		private readonly IConfigurationReadRepository config;
 
-		public AggregateRepository(IMessageBus<DomainEvent> eventBus, IEventStore eventStore, 
+		public AggregateRepository(IEventBus eventBus, IEventStore eventStore, 
 								   IPatientReadRepository patientRepository, 
 								   IConfigurationReadRepository config)
 		{ 
@@ -43,7 +42,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate
 			eventStore.AddEventsToEventStream(aggregate.Id, uncommittedChanges);
 
 			foreach (var @event in uncommittedChanges)			
-				eventBus.Send(Converter.ChangeTo(@event, @event.GetType()));							
+				eventBus.PublishEvent(Converter.ChangeTo(@event, @event.GetType()));							
 		}
 	}
 }

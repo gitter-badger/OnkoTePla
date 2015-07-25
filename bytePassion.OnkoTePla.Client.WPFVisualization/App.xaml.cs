@@ -65,8 +65,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			IHandlerCollection<DomainEvent>   eventHandlerCollection   = new MultiHandlerCollection <DomainEvent>();
 			IHandlerCollection<DomainCommand> commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
 
-			IMessageBus<DomainEvent>   eventBus   = new LocalMessageBus<DomainEvent>  (eventHandlerCollection);			
-			IMessageBus<DomainCommand> commandBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
+			IMessageBus<DomainEvent>   eventMessageBus   = new LocalMessageBus<DomainEvent>  (eventHandlerCollection);			
+			IMessageBus<DomainCommand> commandMessageBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
+
+			IEventBus   eventBus   = new EventBus(eventMessageBus);
+			ICommandBus commandBus = new CommandBus(commandMessageBus);
 
 
 			// Aggregate- and Readmodel-Repositories
@@ -77,8 +80,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Register CommandHandler
 
-			commandBus.RegisterMessageHandler(new AddAppointmentCommandHandler(aggregateRepository));
-			commandBus.RegisterMessageHandler(new DeleteAppointmentCommandHandler(aggregateRepository));
+			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
+			commandBus.RegisterCommandHandler(new DeleteAppointmentCommandHandler(aggregateRepository));
 
 
 			// SessionInformation

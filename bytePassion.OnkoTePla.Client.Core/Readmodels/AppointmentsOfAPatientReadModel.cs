@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
@@ -29,7 +28,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		private readonly AppointmentSet appointmentSet;
 
 		public AppointmentsOfAPatientReadModel (Guid patientId,
-												IMessageBus<DomainEvent> eventBus,
+												IEventBus eventBus,
 												IConfigurationReadRepository config,
 												IPatientReadRepository patientsRepository) 
 			: base(eventBus)

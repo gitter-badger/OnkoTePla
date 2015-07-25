@@ -53,7 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandSystem\CommandBus.cs" />
     <Compile Include="CommandSystem\DomainCommand.cs" />
+    <Compile Include="CommandSystem\ICommandBus.cs" />
     <Compile Include="Domain\CommandHandler\DeleteAppointmentCommandHandler.cs" />
     <Compile Include="Domain\Commands\DeleteAppointment.cs" />
     <Compile Include="Domain\Commands\AddAppointment.cs" />
@@ -62,6 +64,8 @@
     <Compile Include="Domain\AppointmentLogic\CreateAppointmentData.cs" />
     <Compile Include="Domain\AppointmentLogic\ObservableAppointmentCollection.cs" />
     <Compile Include="Domain\CommandHandler\AddAppointmentCommandHandler.cs" />
+    <Compile Include="Eventsystem\EventBus.cs" />
+    <Compile Include="Eventsystem\IEventBus.cs" />
     <Compile Include="Exceptions\AppointmentRuleIsNotApplicableException.cs" />
     <Compile Include="Exceptions\VersionNotApplicapleException.cs" />
     <Compile Include="Domain\AppointmentLogic\INotifyAppointmentChanged.cs" />
@@ -99,9 +103,6 @@
     <Compile Include="Repositories\Patients\XmlPatientDataStore.cs" />
     <Compile Include="Repositories\Readmodel\IReadModelRepository.cs" />
     <Compile Include="Repositories\Readmodel\ReadModelRepository.cs" />
-    <Compile Include="State\GlobalState.cs" />
-    <Compile Include="State\IStateEngine.cs" />
-    <Compile Include="State\StateEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">

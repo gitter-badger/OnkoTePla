@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
-using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
@@ -27,14 +26,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 	{
 		private readonly IConfigurationReadRepository config;
 		private readonly IPatientReadRepository patients;
-
-		// ReSharper disable NotAccessedField.Local
-		private readonly IMessageBus<DomainCommand> commandBus;		
-		private readonly IReadModelRepository readModelRepository;
-		// ReSharper restore NotAccessedField.Local
-
+				
 		private AppointmentsOfADayReadModel readModel;
-		private ObservableCollection<TherapyPlace> therapyPlaces; 
+		private readonly ObservableCollection<TherapyPlace> therapyPlaces; 
 
 		private readonly Command loadReadModelCommand;
 		private readonly Command addAppointmentCommmand;
@@ -42,12 +36,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		public AddAppointmentTestViewModel(IConfigurationReadRepository config, 
 										   IPatientReadRepository patients, 
 										   IReadModelRepository readModelRepository,
-										   IMessageBus<DomainCommand> commandBus)
+										   ICommandBus commandBus)
 		{
 			this.config = config;
 			this.patients = patients;
-			this.commandBus = commandBus;
-			this.readModelRepository = readModelRepository;
+			
 			therapyPlaces = new ObservableCollection<TherapyPlace>();
 			
 
@@ -72,12 +65,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 			addAppointmentCommmand = new Command(
 				() =>
 				{
-					commandBus.Send(new AddAppointment(readModel.Identifier, readModel.AggregateVersion, 
-													   SelectedUser.Id, 
-													   SelectedPatient.Id, 
-													   Description, 
-													   Time.Parse(StartTimeAsString), Time.Parse(EndTimeAsString), 
-													   SelectedTherapyPlace.Id));
+					commandBus.SendCommand(new AddAppointment(readModel.Identifier, readModel.AggregateVersion, 
+															  SelectedUser.Id, 
+															  SelectedPatient.Id, 
+															  Description, 
+															  Time.Parse(StartTimeAsString), Time.Parse(EndTimeAsString), 
+															  SelectedTherapyPlace.Id));
 				});			
 		}
 

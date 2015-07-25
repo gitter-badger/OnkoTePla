@@ -68,7 +68,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 									  therapyPlaceId);			
 		}
 
-		private static void GenerateAppointments (IMessageBus<DomainCommand> commandBus, AppointmentsOfADayReadModel readModel, 
+		private static void GenerateAppointments (ICommandBus commandBus, AppointmentsOfADayReadModel readModel, 
 												  MedicalPractice medicalPractice, User user, 
 												  IReadOnlyList<Patient> patients, Date date)
 		{
@@ -85,7 +85,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 				while (currrentTime + new Duration(60*60) < closingTime)
 				{
 					var nextCommand = CreateAppointmentData(readModel, patients, currrentTime, closingTime, therapyPlace.Id, user.Id);
-					commandBus.Send(nextCommand);
+					commandBus.SendCommand(nextCommand);
 
 					currrentTime += Time.GetDurationBetween(nextCommand.CreateAppointmentData.StartTime,nextCommand.CreateAppointmentData.EndTime);
 					currrentTime += RandomTimeInterval(0);
@@ -108,16 +108,20 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 
 			IHandlerCollection<DomainEvent> eventHandlerCollection = new MultiHandlerCollection<DomainEvent>();
-			IMessageBus<DomainEvent> eventBus = new LocalMessageBus<DomainEvent>(eventHandlerCollection);
+			IMessageBus<DomainEvent> eventMessageBus = new LocalMessageBus<DomainEvent>(eventHandlerCollection);
 
 
 			IHandlerCollection<DomainCommand> commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
-			IMessageBus<DomainCommand> commandBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
+			IMessageBus<DomainCommand> commandMessageBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
+
+
+			IEventBus   eventBus   = new EventBus(eventMessageBus);
+			ICommandBus commandBus = new CommandBus(commandMessageBus);
 
 			IAggregateRepository aggregateRepository = new AggregateRepository(eventBus, eventStore, patientRepository, configReadRepository);
 			IReadModelRepository readModelRepository = new ReadModelRepository(eventBus, eventStore, patientRepository, configReadRepository);
 
-			commandBus.RegisterMessageHandler(new AddAppointmentCommandHandler(aggregateRepository));
+			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
 
 
 			//////////////////////////////

@@ -1,5 +1,4 @@
 ﻿using System;
-using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
@@ -15,9 +14,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		public abstract event EventHandler<AppointmentChangedEventArgs> AppointmentChanged;
 
-		private readonly IMessageBus<DomainEvent> eventBus;
+		private readonly IEventBus eventBus;
 
-		protected ReadModelBase (IMessageBus<DomainEvent> eventBus)
+		protected ReadModelBase (IEventBus eventBus)
 		{
 			this.eventBus = eventBus;
 
@@ -30,16 +29,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 				
 		private void RegisterAtEventBus ()
 		{
-			eventBus.RegisterMessageHandler<AppointmentAdded>(this);
-			eventBus.RegisterMessageHandler<AppointmentReplaced>(this);
-			eventBus.RegisterMessageHandler<AppointmentDeleted>(this);
+			eventBus.RegisterEventHandler<AppointmentAdded>(this);
+			eventBus.RegisterEventHandler<AppointmentReplaced>(this);
+			eventBus.RegisterEventHandler<AppointmentDeleted>(this);
 		}
 
 		private void DeregisterAtEventBus ()
 		{
-			eventBus.DeregisterMessageHander<AppointmentAdded>(this);
-			eventBus.DeregisterMessageHander<AppointmentReplaced>(this);
-			eventBus.DeregisterMessageHander<AppointmentDeleted>(this);
+			eventBus.DeregisterEventHander<AppointmentAdded>(this);
+			eventBus.DeregisterEventHander<AppointmentReplaced>(this);
+			eventBus.DeregisterEventHander<AppointmentDeleted>(this);
 		}
 
 		private bool disposed = false;

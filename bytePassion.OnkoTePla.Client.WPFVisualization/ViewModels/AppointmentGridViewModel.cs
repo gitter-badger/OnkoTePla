@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.Lib.Commands;
-using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -28,7 +27,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		private readonly IReadModelRepository         readModelRepository;
 		private readonly IConfigurationReadRepository configuration;
-		private readonly IMessageBus<DomainCommand>   commandBus;
+		private readonly ICommandBus                  commandBus;
 		private readonly SessionInformation           sessionInformation;
 
 		// GridDrawing /////////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +58,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
 										IConfigurationReadRepository configuration,
-										IMessageBus<DomainCommand> commandBus, 
+										ICommandBus commandBus, 
 										SessionInformation sessionInformation, 
 										GlobalState<Date> selectedDateState,
 										GlobalState<Tuple<Guid, uint>> displayedPracticeState,
@@ -167,11 +166,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
 		
 		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment, ITherapyPlaceRowViewModel containerRow)
 		{
-			commandBus.Send(new DeleteAppointment(currentlyDisplayedDataSet.AppointmentReadModel.Identifier, 
-												  currentlyDisplayedDataSet.AppointmentReadModel.AggregateVersion, 
-												  sessionInformation.LoggedInUser.Id, 
-												  appointment.Id, 
-												  appointment.Patient.Id));
+			commandBus.SendCommand(new DeleteAppointment(currentlyDisplayedDataSet.AppointmentReadModel.Identifier, 
+														 currentlyDisplayedDataSet.AppointmentReadModel.AggregateVersion, 
+														 sessionInformation.LoggedInUser.Id, 
+														 appointment.Id, 
+														 appointment.Patient.Id));
 			
 			OperatingMode = OperatingMode.View;
 		}
