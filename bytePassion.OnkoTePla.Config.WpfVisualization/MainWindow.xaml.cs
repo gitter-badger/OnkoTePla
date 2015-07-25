@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using bytePassion.OnkoTePla.Config.WpfVisualization.SampleData;
+using bytePassion.OnkoTePla.Config.WpfVisualization.Test;
 
 
 namespace bytePassion.OnkoTePla.Config.WpfClient
@@ -43,6 +44,14 @@ namespace bytePassion.OnkoTePla.Config.WpfClient
 		private void ButtonBase_OnClick6 (object sender, RoutedEventArgs e)
 		{
 			PatientDataBaseTest.TestLoad();
+		}
+
+		private void ButtonBase_OnClick7(object sender, RoutedEventArgs e)
+		{
+			var test = new MessageBusTest();
+
+			test.SingleSubscribscriptionTest();
+			test.NoSubscribscriptionTest();
 		}
 	}
 }

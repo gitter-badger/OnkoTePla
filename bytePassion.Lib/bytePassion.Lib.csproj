@@ -59,6 +59,7 @@
     <Compile Include="Clonable\ClonableList.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ParameterrizedCommand.cs" />
+    <Compile Include="Communication\ViewModel\ViewModelComunication.cs" />
     <Compile Include="FrameworkExtensions\LinqExtension.cs" />
     <Compile Include="Communication\MessageBus\HandlerCollection\SingleHandlerCollection.cs" />
     <Compile Include="Communication\MessageBus\HandlerCollection\IHandlerCollection.cs" />

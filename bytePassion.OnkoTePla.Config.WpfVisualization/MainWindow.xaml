@@ -4,13 +4,14 @@
         Title="MainWindow" Height="350" Width="525">
 
     <Grid>
-		<StackPanel>
+		<UniformGrid>
 			<Button Content="ConfigToXML"         Height="50" Width="150" Click="ButtonBase_OnClick1"/>
 			<Button Content="TestLoad"            Height="50" Width="150" Click="ButtonBase_OnClick2"/>
 			<Button Content="Create Appointments" Height="50" Width="150" Click="ButtonBase_OnClick3"/>
 			<Button Content="Create Patients"     Height="50" Width="150" Click="ButtonBase_OnClick4"/>
 			<Button Content="CreatePatients_Test" Height="50" Width="150" Click="ButtonBase_OnClick5"/>
             <Button Content="LoadPatients_Test"   Height="50" Width="150" Click="ButtonBase_OnClick6"/>
-        </StackPanel>        
+            <Button Content="TestMessageBus"      Height="50" Width="150" Click="ButtonBase_OnClick7"/>
+        </UniformGrid>        
     </Grid>
 </Window>
