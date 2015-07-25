@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Config.WpfClient
 
 		private void ButtonBase_OnClick1(object sender, RoutedEventArgs e)
 		{
-			ConfigurationData.ConfigToJson();
+			ConfigurationData.ConfigToXml();
 		}
 
 		private void ButtonBase_OnClick2(object sender, RoutedEventArgs e)

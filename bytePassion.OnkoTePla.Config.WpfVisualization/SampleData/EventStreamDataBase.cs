@@ -129,8 +129,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			var medicalPratice = configReadRepository.GetMedicalPracticeByName("examplePractice1");				
 			var user = configReadRepository.GetUserByName("exampleUser1");
 
-			var startCreation = new Date(1,  6, 2015);
-			var endCreation   = new Date(1, 12, 2015);
+			var startCreation = new Date(1,  7, 2015);
+			var endCreation   = new Date(1, 10, 2015);
 
 			for (var date = startCreation; date < endCreation; date = date.DayAfter())
 			{

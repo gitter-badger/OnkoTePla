@@ -1,45 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <therapyPlaceTypes count="2">
-    <therapyPlaceType name="therapieStuhl" iconType="ChairType1" id="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-    <therapyPlaceType name="therapieBett" iconType="BedType1" id="5dea4773-42f1-4ae4-810a-20dfaa19909e" />
+    <therapyPlaceType name="therapieStuhl" iconType="ChairType1" id="969702a7-391c-4a1c-808d-60825b200614" />
+    <therapyPlaceType name="therapieBett" iconType="BedType1" id="51aa457a-1686-4aea-97e5-0d8679d12a80" />
   </therapyPlaceTypes>
   <medicalPractices count="2">
-    <medicalPractice name="examplePractice1" count="3" version="1" id="f46f8f6c-a594-4383-95d3-e4b3a3894d2f" hasPreviousVersions="True">
-      <room id="5b537cc7-3858-4f8f-9972-d86fa44f44b5" count="20" name="A12" color="#FF90EE90">
-        <therapyPlace id="4fbc9163-3627-4e4e-a794-80d03554ad4c" name="1" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="0b28599a-6288-41cc-9a8c-40e7d2a1cfb5" name="2" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="ae0c1446-0da2-4860-a7c3-2979b884eabd" name="3" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="533ae726-76eb-4d74-a79f-57c651fe8b68" name="4" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="d242b8be-6ee9-4adf-b8df-855b21b8c3e8" name="5" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="1ce26a70-4d43-42b9-b737-7f4eaff19b1d" name="6" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="1e7aff8f-5dd6-4809-a0c2-7feda809d355" name="7" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="88ca67c3-9c75-444c-9f3a-a73c894322da" name="8" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="e53a16c8-f683-4b18-9955-d9b171d872c8" name="9" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="7cea3a4b-2878-4c38-8b20-f5c3b5ac062a" name="10" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="e85cb841-d083-4532-a743-dd686f023a95" name="11" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="1afa6eec-7be0-48b0-9b65-fc9e8f9fbc14" name="12" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="9e47583f-cb57-471d-971a-21ab8399c8c1" name="13" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="9b84ad4f-3715-450d-b4e9-2f81932852d5" name="14" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="1cb34604-9ab5-4332-bdfe-cd55314d51cf" name="15" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="8aae367d-7960-4e41-91b9-aad0dbf4fffd" name="16" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="f390d911-53a4-4c0c-8175-9494d6ffb03d" name="17" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="4f6f7f94-c8f5-436e-accb-dcc29d0a78ee" name="18" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="4605eb10-0606-44d1-ad26-a0d7fc68cdaf" name="19" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="191cf696-5723-451c-9eab-0e06d5c0af16" name="20" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
+    <medicalPractice name="examplePractice1" count="3" version="1" id="66380951-9850-4b79-8eea-4b78d489a604" hasPreviousVersions="True">
+      <room id="dbf7e1b8-74d8-4915-b1a3-8a79c15f3da0" count="20" name="A12" color="#FF90EE90">
+        <therapyPlace id="01cb2dda-7dd1-4e77-baa3-3270c4e8058b" name="1" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="7d4d207c-9e23-49b5-9c10-26827b165c0d" name="2" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="ebb84351-43ec-4bd0-95e4-5e90b3486f51" name="3" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="964294fd-481f-4cfa-bee5-ce5ae7be06a5" name="4" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="24fd8309-7562-4c25-9ea2-53b1b69f628e" name="5" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="e3b0f355-a47f-4ff7-87a6-d156ce391c54" name="6" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="80f0c3be-f4a4-4399-8911-ce8e1a6d6469" name="7" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="064a2968-c220-450d-aa3e-1463b12baba2" name="8" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="b6759846-61f4-4754-871e-1a1865f75d53" name="9" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="0be1156a-9e3f-495a-a916-442bb889bd11" name="10" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="1df33a19-92c9-4cb6-885b-f812ddd60da2" name="11" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="4a5f75ee-342a-4c9c-aeae-616e04c1fdc0" name="12" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="d1110fb7-516d-4b58-86c5-29f8c8c30c1e" name="13" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="fbf60903-3b79-46b2-a600-1346567692c0" name="14" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="34c7e27d-d9be-4bc0-8b91-063e10e1c4d7" name="15" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="6222b9d0-574b-4d2f-932c-6e71c61de255" name="16" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="a29b87c8-102f-409c-b0d2-4d0753d7c4db" name="17" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="128f7efa-25d2-4111-9d7e-1726e2e13340" name="18" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="15c0b24f-fc7f-4e4e-9bfc-8b6d8d57dd78" name="19" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="5279adc6-dcd1-450c-a9dc-93b601167f72" name="20" type="969702a7-391c-4a1c-808d-60825b200614" />
       </room>
-      <room id="f6ea289e-b5ea-44b6-8d60-0052413d2045" count="6" name="A13" color="#FFFFB6C1">
-        <therapyPlace id="fdd1a1bc-f250-49e1-a4e8-1e6933b9f015" name="21" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="b4edd897-dd46-4a1c-999e-d44306c0f4a8" name="22" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="cd29af5a-1d5a-4710-a185-468865e61d37" name="23" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="46ab377d-c9df-4ddc-9f04-4e7e106da918" name="24" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="cf2845fa-7568-453f-be99-232554882b3b" name="25" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="7afda5ab-ddd2-4280-984c-fa06cb6df7a7" name="26" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
+      <room id="dd7976fb-dcba-464f-a705-766c48bb9355" count="6" name="A13" color="#FFFFB6C1">
+        <therapyPlace id="78469b5d-9bcb-4948-b24c-97ef0cfafd68" name="21" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="912e2bc0-3240-4f38-8d0a-4e78dea6b871" name="22" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="ee31ac1a-dd9f-4b6a-abf7-0fd008e0215f" name="23" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="1fa30d25-2f24-4f66-8251-01875f1968be" name="24" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="8c644375-6ffd-4952-92ee-11c8eafc7909" name="25" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="109c21cd-3940-4e13-81c2-30963cd35029" name="26" type="969702a7-391c-4a1c-808d-60825b200614" />
       </room>
-      <room id="afee986c-7ca3-4e4e-8938-8d9d244855be" count="3" name="A14" color="#FFADD8E6">
-        <therapyPlace id="62ae2dc3-9866-450b-9c20-3b9cc1e88227" name="27" type="5dea4773-42f1-4ae4-810a-20dfaa19909e" />
-        <therapyPlace id="b9adf1a7-3b89-4c02-8383-2563cb4c5dba" name="28" type="5dea4773-42f1-4ae4-810a-20dfaa19909e" />
-        <therapyPlace id="6681d803-1c98-4824-ad13-e49bf7cabbba" name="29" type="5dea4773-42f1-4ae4-810a-20dfaa19909e" />
+      <room id="1daf5179-f9d0-46fb-a841-c41645dae070" count="3" name="A14" color="#FFADD8E6">
+        <therapyPlace id="a86fa51b-bf24-4533-934e-80bf31e62707" name="27" type="51aa457a-1686-4aea-97e5-0d8679d12a80" />
+        <therapyPlace id="fe0f6c22-cc49-4722-8046-eda03c553727" name="28" type="51aa457a-1686-4aea-97e5-0d8679d12a80" />
+        <therapyPlace id="fe64dd15-71de-4da9-9a29-8f1e9ccc923b" name="29" type="51aa457a-1686-4aea-97e5-0d8679d12a80" />
       </room>
       <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="09:00:00" openingTimeFriday="10:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="15:00:00" closingTimeTuesday="16:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="18:00:00" closingTimeFriday="20:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
         <additionalOpendDays count="1">
@@ -50,36 +50,36 @@
           <day date="08.07.2015" />
         </additionalClosedDays>
       </hoursOfOpening>
-      <medicalPractice name="examplePractice1" count="2" version="0" id="f46f8f6c-a594-4383-95d3-e4b3a3894d2f" hasPreviousVersions="False">
-        <room id="5b537cc7-3858-4f8f-9972-d86fa44f44b5" count="20" name="A12" color="#FF90EE90">
-          <therapyPlace id="4fbc9163-3627-4e4e-a794-80d03554ad4c" name="1" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="0b28599a-6288-41cc-9a8c-40e7d2a1cfb5" name="2" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="ae0c1446-0da2-4860-a7c3-2979b884eabd" name="3" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="533ae726-76eb-4d74-a79f-57c651fe8b68" name="4" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="d242b8be-6ee9-4adf-b8df-855b21b8c3e8" name="5" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="1ce26a70-4d43-42b9-b737-7f4eaff19b1d" name="6" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="1e7aff8f-5dd6-4809-a0c2-7feda809d355" name="7" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="88ca67c3-9c75-444c-9f3a-a73c894322da" name="8" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="e53a16c8-f683-4b18-9955-d9b171d872c8" name="9" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="7cea3a4b-2878-4c38-8b20-f5c3b5ac062a" name="10" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="e85cb841-d083-4532-a743-dd686f023a95" name="11" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="1afa6eec-7be0-48b0-9b65-fc9e8f9fbc14" name="12" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="9e47583f-cb57-471d-971a-21ab8399c8c1" name="13" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="9b84ad4f-3715-450d-b4e9-2f81932852d5" name="14" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="1cb34604-9ab5-4332-bdfe-cd55314d51cf" name="15" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="8aae367d-7960-4e41-91b9-aad0dbf4fffd" name="16" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="f390d911-53a4-4c0c-8175-9494d6ffb03d" name="17" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="4f6f7f94-c8f5-436e-accb-dcc29d0a78ee" name="18" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="4605eb10-0606-44d1-ad26-a0d7fc68cdaf" name="19" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="191cf696-5723-451c-9eab-0e06d5c0af16" name="20" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
+      <medicalPractice name="examplePractice1" count="2" version="0" id="66380951-9850-4b79-8eea-4b78d489a604" hasPreviousVersions="False">
+        <room id="dbf7e1b8-74d8-4915-b1a3-8a79c15f3da0" count="20" name="A12" color="#FF90EE90">
+          <therapyPlace id="01cb2dda-7dd1-4e77-baa3-3270c4e8058b" name="1" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="7d4d207c-9e23-49b5-9c10-26827b165c0d" name="2" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="ebb84351-43ec-4bd0-95e4-5e90b3486f51" name="3" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="964294fd-481f-4cfa-bee5-ce5ae7be06a5" name="4" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="24fd8309-7562-4c25-9ea2-53b1b69f628e" name="5" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="e3b0f355-a47f-4ff7-87a6-d156ce391c54" name="6" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="80f0c3be-f4a4-4399-8911-ce8e1a6d6469" name="7" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="064a2968-c220-450d-aa3e-1463b12baba2" name="8" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="b6759846-61f4-4754-871e-1a1865f75d53" name="9" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="0be1156a-9e3f-495a-a916-442bb889bd11" name="10" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="1df33a19-92c9-4cb6-885b-f812ddd60da2" name="11" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="4a5f75ee-342a-4c9c-aeae-616e04c1fdc0" name="12" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="d1110fb7-516d-4b58-86c5-29f8c8c30c1e" name="13" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="fbf60903-3b79-46b2-a600-1346567692c0" name="14" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="34c7e27d-d9be-4bc0-8b91-063e10e1c4d7" name="15" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="6222b9d0-574b-4d2f-932c-6e71c61de255" name="16" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="a29b87c8-102f-409c-b0d2-4d0753d7c4db" name="17" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="128f7efa-25d2-4111-9d7e-1726e2e13340" name="18" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="15c0b24f-fc7f-4e4e-9bfc-8b6d8d57dd78" name="19" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="5279adc6-dcd1-450c-a9dc-93b601167f72" name="20" type="969702a7-391c-4a1c-808d-60825b200614" />
         </room>
-        <room id="f6ea289e-b5ea-44b6-8d60-0052413d2045" count="6" name="A13" color="#FFFFB6C1">
-          <therapyPlace id="fdd1a1bc-f250-49e1-a4e8-1e6933b9f015" name="21" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="b4edd897-dd46-4a1c-999e-d44306c0f4a8" name="22" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="cd29af5a-1d5a-4710-a185-468865e61d37" name="23" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="46ab377d-c9df-4ddc-9f04-4e7e106da918" name="24" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="cf2845fa-7568-453f-be99-232554882b3b" name="25" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-          <therapyPlace id="7afda5ab-ddd2-4280-984c-fa06cb6df7a7" name="26" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
+        <room id="dd7976fb-dcba-464f-a705-766c48bb9355" count="6" name="A13" color="#FFFFB6C1">
+          <therapyPlace id="78469b5d-9bcb-4948-b24c-97ef0cfafd68" name="21" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="912e2bc0-3240-4f38-8d0a-4e78dea6b871" name="22" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="ee31ac1a-dd9f-4b6a-abf7-0fd008e0215f" name="23" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="1fa30d25-2f24-4f66-8251-01875f1968be" name="24" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="8c644375-6ffd-4952-92ee-11c8eafc7909" name="25" type="969702a7-391c-4a1c-808d-60825b200614" />
+          <therapyPlace id="109c21cd-3940-4e13-81c2-30963cd35029" name="26" type="969702a7-391c-4a1c-808d-60825b200614" />
         </room>
         <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="09:00:00" openingTimeFriday="10:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="15:00:00" closingTimeTuesday="16:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="18:00:00" closingTimeFriday="20:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
           <additionalOpendDays count="1">
@@ -92,30 +92,30 @@
         </hoursOfOpening>
       </medicalPractice>
     </medicalPractice>
-    <medicalPractice name="examplePractice2" count="2" version="0" id="ca477f17-d950-4e3f-aa0b-5976061f9d4f" hasPreviousVersions="False">
-      <room id="2573356a-3c62-44aa-9210-a1ce905c2387" count="10" name="B2" color="#FF90EE90">
-        <therapyPlace id="df2c111b-4f7b-43a0-8b1b-2388bc4c1e79" name="1" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="52f683c9-7e17-46b2-8339-c2bfa4c56e1e" name="2" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="09705422-2a6f-4815-b70d-28d36dd1cecf" name="3" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="a4bf20d2-d594-44bd-8cd7-e09d129410a1" name="4" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="b9e9d67e-6b98-4166-8025-86471c44102d" name="5" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="860ad801-fa22-4f59-a065-89fb54b572d4" name="6" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="3184e021-190e-4c4a-9684-a973dd99c84a" name="7" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="1e9bf749-952e-4375-8398-ddfe9427af30" name="8" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="4163b84e-2fc7-4f93-b188-d541b984b226" name="9" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="5aecc00a-64f1-48f2-be69-d6df70509209" name="10" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
+    <medicalPractice name="examplePractice2" count="2" version="0" id="62b58900-a255-408f-84c3-4c038ddeeda8" hasPreviousVersions="False">
+      <room id="a1b8a7ed-22cd-4599-bde8-27b61bcf3686" count="10" name="B2" color="#FF90EE90">
+        <therapyPlace id="b8171b9b-4a33-43a6-bd18-4a25bae3d01b" name="1" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="53a143c3-8c98-4643-9194-b8c791684e5d" name="2" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="f5c14bf1-c92c-430f-b736-a52ce68f6939" name="3" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="a2bb0127-2894-4090-a9dc-803ea9608339" name="4" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="4c9b208f-aa74-462d-bbb5-59c352b045ad" name="5" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="ee047756-d218-452d-af69-aec66529e38f" name="6" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="2d0a474e-2918-44e6-8406-b28021b42d71" name="7" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="24e2d69d-a830-4a29-aaf6-ac1dce9ce512" name="8" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="e43ceb91-89b8-4b4f-be26-5334db3e401e" name="9" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="bd628110-b79f-4a76-b66c-77461a8726b0" name="10" type="969702a7-391c-4a1c-808d-60825b200614" />
       </room>
-      <room id="52a5bcaa-a065-4015-8a95-594d0b1ad12b" count="10" name="B3" color="#FF87CEFA">
-        <therapyPlace id="e7a46ac8-f972-4ba5-88d2-79e3ccfcf045" name="11" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="1f526fee-93f9-492f-8e40-9eaa5c0b1980" name="12" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="23d27536-cd2d-45bd-b590-2da93e59d3e5" name="13" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="211931f4-2e8c-4af3-bc04-40221c53fcdc" name="14" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="d3c04f59-bf66-4634-b94f-5ed91d13db6e" name="15" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="fedb5d0f-f0f0-40c4-91bd-fafc470db5c8" name="16" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="ba2bb993-665c-4d23-8f7c-d5a600014447" name="17" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="e6ae1e8d-668c-4dd3-93b9-25a38d3cc328" name="18" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="e803e6a1-10c2-42f0-bba1-c58bee2ba39c" name="19" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
-        <therapyPlace id="3823850c-7f15-4056-9892-8cef4896f8c8" name="20" type="dd06d910-3ec4-4776-b384-25d83c6b246f" />
+      <room id="fd47a0b8-603a-4c54-ba95-ddd5d09cfc05" count="10" name="B3" color="#FF87CEFA">
+        <therapyPlace id="6c9c4415-6627-49c0-aa68-b9bc2a987c85" name="11" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="4318322c-31f6-415f-856e-4d0c85de98f3" name="12" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="67dfde8b-5b9b-4b8e-baf0-87cfbdee3cfb" name="13" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="f35c84fa-2d03-489e-af4a-bdc2d4508068" name="14" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="33e5b8c7-161a-47e6-a861-be2b4d083f24" name="15" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="cb1c0bc2-5a8d-4efb-b2b6-83202dd01ec7" name="16" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="13620f3f-ca75-4f97-baff-420573ac6553" name="17" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="6eb78e80-4ff6-492a-bce5-a75cb50e6bdb" name="18" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="9ccb2aec-3389-4d61-b96b-cf0c5dda0ffc" name="19" type="969702a7-391c-4a1c-808d-60825b200614" />
+        <therapyPlace id="9c5af9fc-3625-4a2b-807f-58f671bd86f1" name="20" type="969702a7-391c-4a1c-808d-60825b200614" />
       </room>
       <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="09:00:00" openingTimeFriday="10:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="15:00:00" closingTimeTuesday="16:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="18:00:00" closingTimeFriday="20:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
         <additionalOpendDays count="1">
@@ -129,7 +129,7 @@
     </medicalPractice>
   </medicalPractices>
   <users count="2">
-    <user name="exampleUser1" password="1234" id="7daa3949-7d6a-4812-9e11-1e3178cda258" accessablePractice0="f46f8f6c-a594-4383-95d3-e4b3a3894d2f" />
-    <user name="exampleUser2" password="2345" id="bf9c1c24-ca55-46d9-b39d-76e62982d579" accessablePractice0="f46f8f6c-a594-4383-95d3-e4b3a3894d2f" accessablePractice1="ca477f17-d950-4e3f-aa0b-5976061f9d4f" />
+    <user name="exampleUser1" password="1234" id="af95def9-375c-4c21-9d46-6b30952ac490" accessablePractice0="66380951-9850-4b79-8eea-4b78d489a604" />
+    <user name="exampleUser2" password="2345" id="12b759d8-8947-4bb5-b30b-95388d5d4136" accessablePractice0="66380951-9850-4b79-8eea-4b78d489a604" accessablePractice1="62b58900-a255-408f-84c3-4c038ddeeda8" />
   </users>
 </configuration>
