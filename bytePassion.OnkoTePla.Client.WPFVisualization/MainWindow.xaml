@@ -4,9 +4,7 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
-                      xmlns:appointment="clr-namespace:bytePassion.OnkoTePla.CustomControls.Appointment;assembly=bytePassion.OnkoTePla.CustomControls.Appointment"
-                      xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
+                      xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"                                            
                       xmlns:mainWindowViewModel="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindowViewModel"
                       Title="OnkoTePla - 0.1"
                       BorderBrush="{DynamicResource AccentColorBrush}"
@@ -17,16 +15,16 @@
 					  d:DesignHeight="700">
 
 	<Window.Resources>
-		<ControlTemplate x:Key="ActionBarViewSwitchToggleButton" TargetType="{x:Type ToggleButton}">
-			<Border Background="Transparent"
-			        BorderBrush="White"
-			        BorderThickness="2"
-			        CornerRadius="16">
-				<Image Margin="6" Source="{TemplateBinding Content}" />
-			</Border>
-		</ControlTemplate>
+<!--		<ControlTemplate x:Key="ActionBarViewSwitchToggleButton" TargetType="{x:Type ToggleButton}">-->
+<!--			<Border Background="Transparent"-->
+<!--			        BorderBrush="White"-->
+<!--			        BorderThickness="2"-->
+<!--			        CornerRadius="16">-->
+<!--				<Image Margin="6" Source="{TemplateBinding Content}" />-->
+<!--			</Border>-->
+<!--		</ControlTemplate>-->
 
-		<converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter"/>
+<!--		<converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter"/>-->
 	</Window.Resources>
 
 	<d:Window.DataContext>		
@@ -51,39 +49,24 @@
 
 					<Grid Grid.Column="0"
 						  Background="Blue">
-						
-						<Grid.RowDefinitions>
-							<RowDefinition Height="50"/>
-							<RowDefinition Height="25"/>
-							<RowDefinition Height="35"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition/>
-						</Grid.RowDefinitions>
 
-						<Button Margin="5"
-								Click="ButtonBase_OnClick">
-							<TextBlock>
-								TestLoad (3.7.2015)<LineBreak/>
-								examplePractice1
-							</TextBlock>
-						</Button>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-						<TextBlock Grid.Row="1"
-								   Foreground="White"
-								   HorizontalAlignment="Center"
-								   VerticalAlignment="Center"
-								   Text="{Binding AppointmentGridViewModel.CurrentlyDisplayedDate, 
-												  Converter={StaticResource BirthdayToStringConverter}}"/>
-						<views:MedicalPracticeSelector Grid.Row="2"
+
+                        <views:MedicalPracticeSelector Grid.Row="0"
 													   Margin="5"
 													   DataContext="{Binding MedicalPracticeSelectorViewModel}"/>
 						
-						<views:RoomSelector Grid.Row="3"
+						<views:RoomSelector Grid.Row="1"
 											Margin="5"											
 											DataContext="{Binding RoomSelectorViewModel}"/>
 						
-						<views:DateSelector Grid.Row="4"
+						<views:DateSelector Grid.Row="2"
 											DataContext="{Binding DateSelectorViewModel}"/>
 						
 					</Grid>
