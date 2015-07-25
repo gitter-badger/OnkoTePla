@@ -5,6 +5,7 @@ using System.Windows;
 using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
@@ -17,10 +18,12 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Client.Resources;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentTestViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentOverViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelectorViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindowViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelectorViewModel;
@@ -99,6 +102,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			};
 
 			// GlobalStates registration
+
+			IHandlerCollection<ViewModelMessageBase> handlerCollection = new MultiHandlerCollection<ViewModelMessageBase>();
+			IMessageBus<ViewModelMessageBase> viewModelMessageBus = new LocalMessageBus<ViewModelMessageBase>(handlerCollection);
+			IStateEngine viewModelStateEngine = new StateEngine();
+
+			GlobalAccess.ViewModelCommunication = new ViewModelCommunication<ViewModelMessageBase>(viewModelMessageBus,
+																								  viewModelStateEngine);
 
 			IStateEngine stateEngine = new StateEngine();
 
