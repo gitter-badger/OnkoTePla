@@ -9,7 +9,6 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 
 namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
@@ -67,10 +66,12 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		public void Persist (IEnumerable<Patient2> data)
 		{
 
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.Formatting = Formatting.Indented;
-
-            using (var output = new StringWriter())
+			var serializer = new JsonSerializer
+			{
+				Formatting = Formatting.Indented
+			};
+			
+			using (var output = new StringWriter())
 			{
 				serializer.Serialize(output, data);
 				File.WriteAllText(filename, output.ToString());
@@ -80,7 +81,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		public IEnumerable<Patient2> Load ()
 		{
 			List<Patient2> patients;
-            JsonSerializer serializer = new JsonSerializer();
+            var serializer = new JsonSerializer();
 
             using (StreamReader file = File.OpenText(filename))
 			{

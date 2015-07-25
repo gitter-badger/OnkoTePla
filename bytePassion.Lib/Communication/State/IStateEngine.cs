@@ -1,4 +1,4 @@
-﻿namespace bytePassion.OnkoTePla.Client.Core.State
+﻿namespace bytePassion.Lib.Communication.State
 {
 	public interface IStateEngine
 	{

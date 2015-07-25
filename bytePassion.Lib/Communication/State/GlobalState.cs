@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.State
+namespace bytePassion.Lib.Communication.State
 {
 	public class GlobalState<T>
 	{
