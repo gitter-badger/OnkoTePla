@@ -4,10 +4,10 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
                       xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
                       xmlns:appointment="clr-namespace:bytePassion.OnkoTePla.CustomControls.Appointment;assembly=bytePassion.OnkoTePla.CustomControls.Appointment"
                       xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
+                      xmlns:mainWindowViewModel="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindowViewModel"
                       Title="OnkoTePla - 0.1"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1,0,1,1"
@@ -30,7 +30,7 @@
 	</Window.Resources>
 
 	<d:Window.DataContext>		
-		<sampleData:MainWindowViewModelSampleData />
+		<mainWindowViewModel:MainWindowViewModelSampleData />
 	</d:Window.DataContext>
 
 	<controls:MetroContentControl>

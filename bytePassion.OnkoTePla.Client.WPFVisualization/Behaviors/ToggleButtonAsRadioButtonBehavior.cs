@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interactivity;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelectorViewModel.Helper;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors

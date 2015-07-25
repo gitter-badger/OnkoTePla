@@ -4,15 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
              xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
-             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper"
+             xmlns:roomSelectorViewModel="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelectorViewModel"
+             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelectorViewModel.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
 	
 	<d:UserControl.DataContext>
-		<sampleData:RoomSelectorViewModelSampleData/>
+		<roomSelectorViewModel:RoomSelectorViewModelSampleData/>
 	</d:UserControl.DataContext>
 	
 	<UserControl.Resources>

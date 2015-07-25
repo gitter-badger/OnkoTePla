@@ -82,46 +82,47 @@
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
     <Compile Include="Converter\TherapyPlaceToStringConverter.cs" />
     <Compile Include="Converter\TimeFromDateConverter.cs" />
-    <Compile Include="SampleData\AddAppointmentTestViewModelSampleData.cs" />
-    <Compile Include="SampleData\AppointmentGridViewModelSampleData.cs" />
-    <Compile Include="SampleData\AppointmentOverViewModelSampleData.cs" />
-    <Compile Include="SampleData\AppointmentViewModelSampleData.cs" />
-    <Compile Include="SampleData\DateSelectorViewModelSampleData.cs" />
-    <Compile Include="SampleData\MainWindowViewModelSampleData.cs" />
-    <Compile Include="SampleData\MedicalPracticeSelectorViewModelSampleData.cs" />
-    <Compile Include="SampleData\PatientSelectorViewModelSampleData.cs" />
-    <Compile Include="SampleData\RoomSelectorViewModelSampleData.cs" />
-    <Compile Include="SampleData\TherapyPlaceRowViewModelSampleData.cs" />
+    <Compile Include="ViewModels\AddAppointmentTestViewModel\AddAppointmentTestViewModelSampleData.cs" />
+    <Compile Include="ViewModels\AppointmentGridViewModel\AppointmentGridViewModelSampleData.cs" />
+    <Compile Include="ViewModels\AppointmentOverViewModel\AppointmentOverViewModelSampleData.cs" />
+    <Compile Include="ViewModels\AppointmentViewModel\AppointmentViewModelSampleData.cs" />
+    <Compile Include="ViewModels\DateSelectorViewModel\DateSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel\MainWindowViewModelSampleData.cs" />
+    <Compile Include="ViewModels\MedicalPracticeSelectorViewModel\MedicalPracticeSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\PatientSelectorViewModel\PatientSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\RoomSelectorViewModel\RoomSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\TherapyPlaceRowViewModel\TherapyPlaceRowViewModelSampleData.cs" />
     <Compile Include="SessionInfo\SessionInformation.cs" />
     <Compile Include="UserNotificationService\UserDialogBox.cs" />
-    <Compile Include="ViewModels\AddAppointmentTestViewModel.cs" />
-    <Compile Include="ViewModels\DateSelectorViewModel.cs" />
-    <Compile Include="ViewModels\Helper\AppointmentGridDisplayDataSet.cs" />
-    <Compile Include="ViewModels\AppointmentGridViewModel.cs" />
-    <Compile Include="ViewModels\AppointmentOverViewModel.cs" />
-    <Compile Include="ViewModels\AppointmentViewModel.cs" />
+    <Compile Include="ViewModels\AddAppointmentTestViewModel\AddAppointmentTestViewModel.cs" />
+    <Compile Include="ViewModels\DateSelectorViewModel\DateSelectorViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentGridViewModel\Helper\AppointmentGridDisplayDataSet.cs" />
+    <Compile Include="ViewModels\AppointmentGridViewModel\AppointmentGridViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentOverViewModel\AppointmentOverViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentViewModel\AppointmentViewModel.cs" />
     <Compile Include="ViewModels\Base\IViewModelBase.cs" />
-    <Compile Include="ViewModels\Helper\OperatingMode.cs" />
-    <Compile Include="ViewModels\Helper\GridLinesAndLabelPainting.cs" />
-    <Compile Include="ViewModels\Helper\PatientListItem.cs" />
-    <Compile Include="ViewModels\Interfaces\IAddAppointmentTestViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IAppointmentGridViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IAppointmentOverViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IAppointmentViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IDateSelectorViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IMainWindowViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IMedicalPracticeSelectorViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IPatientSelectorViewModel.cs" />
-    <Compile Include="ViewModels\Helper\TimeSlotLabel.cs" />
-    <Compile Include="ViewModels\Interfaces\IRoomSelectorViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\ITherapyPlaceRowViewModel.cs" />
-    <Compile Include="ViewModels\Helper\RoomSelectorData.cs" />
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\MedicalPracticeSelectorViewModel.cs" />
-    <Compile Include="ViewModels\PatientSelectorViewModel.cs" />
-    <Compile Include="ViewModels\Helper\TimeSlotLine.cs" />
-    <Compile Include="ViewModels\RoomSelectorViewModel.cs" />
-    <Compile Include="ViewModels\TherapyPlaceRowViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentGridViewModel\Helper\OperatingMode.cs" />
+    <Compile Include="ViewModels\AppointmentGridViewModel\Helper\GridLinesAndLabelPainting.cs" />
+    <Compile Include="ViewModels\PatientSelectorViewModel\Helper\PatientListItem.cs" />
+    <Compile Include="ViewModels\AddAppointmentTestViewModel\IAddAppointmentTestViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentGridViewModel\IAppointmentGridViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentOverViewModel\IAppointmentOverViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentViewModel\IAppointmentViewModel.cs" />
+    <Compile Include="ViewModels\DateSelectorViewModel\IDateSelectorViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel\IMainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MedicalPracticeSelectorViewModel\IMedicalPracticeSelectorViewModel.cs" />
+    <Compile Include="ViewModels\PatientSelectorViewModel\IPatientSelectorViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentGridViewModel\Helper\TimeSlotLabel.cs" />
+    <Compile Include="ViewModels\RoomSelectorViewModel\IRoomSelectorViewModel.cs" />
+    <Compile Include="ViewModels\TherapyPlaceRowViewModel\ITherapyPlaceRowViewModel.cs" />
+    <Compile Include="ViewModels\RoomSelectorViewModel\Helper\RoomSelectorData.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MedicalPracticeSelectorViewModel\MedicalPracticeSelectorViewModel.cs" />
+    <Compile Include="ViewModels\Base\ViewModelMessageBase.cs" />
+    <Compile Include="ViewModels\PatientSelectorViewModel\PatientSelectorViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentGridViewModel\Helper\TimeSlotLine.cs" />
+    <Compile Include="ViewModels\RoomSelectorViewModel\RoomSelectorViewModel.cs" />
+    <Compile Include="ViewModels\TherapyPlaceRowViewModel\TherapyPlaceRowViewModel.cs" />
     <Compile Include="Views\ActionBar.xaml.cs">
       <DependentUpon>ActionBar.xaml</DependentUpon>
     </Compile>
@@ -281,6 +282,7 @@
       <Name>bytePassion.OnkoTePla.CustomControls.Appointment</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

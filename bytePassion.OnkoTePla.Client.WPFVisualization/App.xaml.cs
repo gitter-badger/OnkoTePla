@@ -18,14 +18,21 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentTestViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentOverViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelectorViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindowViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelectorViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelectorViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelectorViewModel;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization
 {
-	
+
 	public partial class App : Application
 	{
 		protected override void OnStartup (StartupEventArgs e)

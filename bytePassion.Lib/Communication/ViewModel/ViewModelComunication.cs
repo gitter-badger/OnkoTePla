@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using bytePassion.Lib.Communication.MessageBus;
+﻿using bytePassion.Lib.Communication.MessageBus;
+using bytePassion.Lib.Communication.State;
 
 
 namespace bytePassion.Lib.Communication.ViewModel
@@ -11,10 +7,14 @@ namespace bytePassion.Lib.Communication.ViewModel
 	public class ViewModelComunication<TMessageBase>
 	{
 		private readonly IMessageBus<TMessageBase> viewModelMessageBus;
+		private readonly IStateEngine viewModelStateEngine;
 
-		public ViewModelComunication(IMessageBus<TMessageBase> viewModelMessageBus)
+		public ViewModelComunication(IMessageBus<TMessageBase> viewModelMessageBus, 
+									 IStateEngine viewModelStateEngine)
 		{
 			this.viewModelMessageBus = viewModelMessageBus;
+			this.viewModelStateEngine = viewModelStateEngine;
 		}
+
 	}
 }

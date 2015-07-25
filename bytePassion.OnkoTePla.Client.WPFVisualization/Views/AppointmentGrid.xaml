@@ -4,15 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.SampleData"
              xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
              xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
+             xmlns:appointmentGridViewModel="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="900">
 	
 	<d:UserControl.DataContext>
-		<sampleData:AppointmentGridViewModelSampleData/>
+		<appointmentGridViewModel:AppointmentGridViewModelSampleData/>
 	</d:UserControl.DataContext>
 	
 	<UserControl.Resources>
