@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Media;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewModel;
@@ -26,7 +25,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			appointments = new ObservableCollection<IAppointmentViewModel>();			
 		}
 
-
 		public ObservableCollection<IAppointmentViewModel> Appointments
 		{
 			get { return appointments; }
@@ -48,8 +46,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public Color  RoomColor { get; }
 
 		public Guid   TherapyPlaceId   => therapyPlace.Id;
-		public string TherapyPlaceName => therapyPlace.Name;
-
-		public event PropertyChangedEventHandler PropertyChanged;		
+		public string TherapyPlaceName => therapyPlace.Name;	
 	}
 }

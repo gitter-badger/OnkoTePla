@@ -3,12 +3,11 @@ using System.Collections.ObjectModel;
 using System.Windows.Media;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowViewModel
 {
-	public interface ITherapyPlaceRowViewModel : IViewModelBase
+	public interface ITherapyPlaceRowViewModel
 	{
 		ObservableCollection<IAppointmentViewModel> Appointments { get; }
 

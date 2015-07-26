@@ -12,8 +12,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 {
     internal class PatientSelectorViewModel : IPatientSelectorViewModel
     {
-        private readonly IReadOnlyList<Appointment> appointments;
-        private readonly IPatientReadRepository patients;
+        //private readonly IReadOnlyList<Appointment> appointments;
+        //private readonly IPatientReadRepository patients;
         private PatientListItem selectedPatient;
         private string searchFilter;
 

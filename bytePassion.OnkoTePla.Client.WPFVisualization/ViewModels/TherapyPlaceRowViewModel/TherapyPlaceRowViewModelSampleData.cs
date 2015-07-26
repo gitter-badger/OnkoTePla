@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Media;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewModel;
 
-#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowViewModel
 {
@@ -39,7 +37,5 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 
 		public void AddAppointment   (IAppointmentViewModel newAppointment)      {}
 		public void RemoveAppointment(IAppointmentViewModel appointmentToRemove) {}		
-
-		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }
