@@ -1,6 +1,6 @@
 ﻿using System.Windows;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindowViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow;
 using MahApps.Metro.Controls;
 
 

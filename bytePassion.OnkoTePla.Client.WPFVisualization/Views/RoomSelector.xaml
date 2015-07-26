@@ -6,13 +6,13 @@
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
-             xmlns:roomSelectorViewModel="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelectorViewModel"
-             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelectorViewModel.Helper"
+             xmlns:roomSelector="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector"
+             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
 	
 	<d:UserControl.DataContext>
-		<roomSelectorViewModel:RoomSelectorViewModelSampleData/>
+		<roomSelector:RoomSelectorViewModelSampleData/>
 	</d:UserControl.DataContext>
 	
 	<UserControl.Resources>

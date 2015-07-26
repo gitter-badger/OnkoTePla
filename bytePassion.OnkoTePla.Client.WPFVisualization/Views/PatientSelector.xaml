@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 		
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:patientSelectorViewModel="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelectorViewModel"
+             xmlns:patientSelector="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector"
              mc:Ignorable="d" 
              >
 
 	<d:UserControl.DataContext>
-		<patientSelectorViewModel:PatientSelectorViewModelSampleData/>
+		<patientSelector:PatientSelectorViewModelSampleData/>
 	</d:UserControl.DataContext>
 
 	<DockPanel>

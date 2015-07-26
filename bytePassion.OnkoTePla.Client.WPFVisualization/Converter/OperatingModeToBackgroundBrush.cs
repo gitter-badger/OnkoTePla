@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Media;
 using bytePassion.Lib.GenericValueConverter;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter

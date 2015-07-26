@@ -6,8 +6,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:appointmentViewModel="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewModel"
-             xmlns:enu="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel.Helper"
+             xmlns:appointmentView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"
+             xmlns:enu="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper"
              d:DesignHeight="30"
              d:DesignWidth="200"
              mc:Ignorable="d">
@@ -18,7 +18,7 @@
     </UserControl.Resources>
 
     <d:UserControl.DataContext>
-        <appointmentViewModel:AppointmentViewModelSampleData />
+        <appointmentView:AppointmentViewModelSampleData />
     </d:UserControl.DataContext>
 
     <Border>

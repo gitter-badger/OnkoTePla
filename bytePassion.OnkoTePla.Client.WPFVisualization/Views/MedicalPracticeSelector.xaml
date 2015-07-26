@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:infrastructure="clr-namespace:bytePassion.OnkoTePla.Contracts.Infrastructure;assembly=bytePassion.OnkoTePla.Contracts"
-             xmlns:medicalPracticeSelectorViewModel="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelectorViewModel"
+             xmlns:medicalPracticeSelector="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="300">
 	
 	<d:UserControl.DataContext>
-		<medicalPracticeSelectorViewModel:MedicalPracticeSelectorViewModelSampleData/>
+		<medicalPracticeSelector:MedicalPracticeSelectorViewModelSampleData/>
 	</d:UserControl.DataContext>
 	
     <ComboBox ItemsSource="{Binding AvailableMedicalPractices}"

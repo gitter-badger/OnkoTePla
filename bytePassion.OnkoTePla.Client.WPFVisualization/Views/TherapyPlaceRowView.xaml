@@ -6,13 +6,13 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
-             xmlns:therapyPlaceRowViewModel="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowViewModel"
+             xmlns:therapyPlaceRowView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView"
              d:DesignHeight="30"
              d:DesignWidth="600"
              mc:Ignorable="d">
 
     <d:UserControl.DataContext>
-        <therapyPlaceRowViewModel:TherapyPlaceRowViewModelSampleData />
+        <therapyPlaceRowView:TherapyPlaceRowViewModelSampleData />
     </d:UserControl.DataContext>
 
     <Grid Height="30">
