@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel.Helper;
@@ -70,6 +70,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				    }
 				}
 			);
+			
+			var globalWidthVariable  = GlobalAccess.ViewModelCommunication.GetGlobalViewModelVariable<double>(GlobalVariables.AppointmentGridWidthVariable);		
+			globalWidthVariable.StateChanged  += OnGridWidthChanged;
+
+			OnGridWidthChanged(globalWidthVariable.Value);			
+		}		
+
+		private void OnGridWidthChanged(double newGridWidth)
+		{
+			var lengthOfOneHour = newGridWidth / (Time.GetDurationBetween(CurrentRow.TimeSlotEnd, CurrentRow.TimeSlotStart).Seconds / 3600.0);
+			
+
+			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, CurrentRow.TimeSlotStart);
+			CanvasPosition =  lengthOfOneHour * (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
+
+			var durationOfAppointment = Time.GetDurationBetween(appointment.StartTime, appointment.EndTime);
+			ViewElementLength = lengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
 		}
 
 		private ITherapyPlaceRowViewModel CurrentRow
@@ -86,8 +103,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				currentRow = value;
 				
 				currentRow.AddAppointment(this);
-				AttachContainerHander();
-				OnContainerRowChanged(currentRow, null);
+				AttachContainerHander();				
 			}
 		}		
 
@@ -97,18 +113,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				if (((IAppointmentGridViewModel)sender).OperatingMode == OperatingMode.View)	// Operating Mode to "OperatingMode.View"
 					if (OperatingMode == OperatingMode.Edit)									// is set from the Grid
 						OperatingMode = OperatingMode.View;										//
-		}
-
-		private void OnContainerRowChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-		{
-			var container = (ITherapyPlaceRowViewModel) sender;
-
-			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, container.TimeSlotStart);			
-			CanvasPosition =  container.LengthOfOneHour * (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
-			
-			var durationOfAppointment = Time.GetDurationBetween(appointment.StartTime, appointment.EndTime);
-			ViewElementLength = container.LengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
-		}
+		}		
 
 		public ICommand DeleteAppointment { get { return deleteAppointmentCommand; }}
 		public ICommand SwitchToEditMode  { get { return switchToEditModeCommand;  }}
@@ -123,25 +128,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			get { return appointment.StartTime.ToString().Substring(0, 5) + " - " + appointment.EndTime.ToString().Substring(0, 5); }
 		}
 
-		public string AppointmentDate
-		{
-			get { return appointment.Day.ToString(); }
-		}
+		public string AppointmentDate => appointment.Day.ToString();
+		public string Description     => appointment.Description;
+		public string Room            => appointment.TherapyPlace.Name;		
 
-		public string Description
-		{
-			get { return appointment.Description; }
-		}
-
-		public string Room
-		{
-			get { return appointment.TherapyPlace.Name; }
-		}
-
-	    public Color CurrentColor
-	    {
-	        get { return CurrentRow.RoomColor; }
-	    }
 		public double CanvasPosition
 		{
 			get { return canvasPosition; }
@@ -167,14 +157,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 
 		private void AttachContainerHander()
-		{
-			CurrentRow.PropertyChanged    += OnContainerRowChanged;
+		{			
 			containerGrid.PropertyChanged += OnContainerGridChanged;
 		}
 
 		private void DetachContainerHandler()
-		{
-			CurrentRow.PropertyChanged    -= OnContainerRowChanged;
+		{			
 			containerGrid.PropertyChanged -= OnContainerGridChanged;
 		}
 

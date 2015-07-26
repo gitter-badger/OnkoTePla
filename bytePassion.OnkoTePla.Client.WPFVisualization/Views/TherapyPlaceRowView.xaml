@@ -46,11 +46,7 @@
         <Border Grid.Column="3"
                 BorderBrush="#99A9A9A9"
                 BorderThickness="1">
-
-            <i:Interaction.Behaviors>
-                <behaviors:SizeReportingBehavior CurrentWidth="{Binding TimeSlotWidth, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
-            </i:Interaction.Behaviors>
-
+            
             <ItemsControl ItemsSource="{Binding Appointments}">
 
                 <ItemsControl.ItemsPanel>

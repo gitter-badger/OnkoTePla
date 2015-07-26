@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
-using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewModel;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
@@ -12,25 +11,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 {
 	public class TherapyPlaceRowViewModel : ITherapyPlaceRowViewModel
 	{
-
-		private double timeSlotWidth;
-		private double lengthOfOneHour;
-
+			
 		private readonly TherapyPlace therapyPlace;
-		private readonly ObservableCollection<IAppointmentViewModel> appointments;		
-
-		private readonly Color roomDisplayColor;
-
-		private readonly Time startTime;
-		private readonly Time endTime;
+		private readonly ObservableCollection<IAppointmentViewModel> appointments;
 
 		public TherapyPlaceRowViewModel(TherapyPlace therapyPlace, Color roomDisplayColor,
 										Time startTime, Time endTime)
 		{			
 			this.therapyPlace = therapyPlace;
-			this.roomDisplayColor = roomDisplayColor;
-			this.startTime = startTime;
-			this.endTime = endTime;
+			RoomColor = roomDisplayColor;
+			TimeSlotStart = startTime;
+			TimeSlotEnd = endTime;
 
 			appointments = new ObservableCollection<IAppointmentViewModel>();			
 		}
@@ -41,17 +32,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			get { return appointments; }
 		}
 
-		public Time TimeSlotStart { get { return startTime; }}
-		public Time TimeSlotEnd   { get { return endTime;   }}
-
-		public double TimeSlotWidth {
-			set
-			{
-				timeSlotWidth  = value;				
-				LengthOfOneHour = timeSlotWidth / (Time.GetDurationBetween(endTime, startTime).Seconds / 3600.0);				
-			}
-			private get { return timeSlotWidth; }
-		}
+		public Time TimeSlotStart { get; }
+		public Time TimeSlotEnd   { get; }		
 
 		public void AddAppointment(IAppointmentViewModel newAppointment)
 		{
@@ -62,21 +44,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		{
 			appointments.Remove(appointmentToRemove);
 		}
+	
+		public Color  RoomColor { get; }
 
-		public string TherapyPlaceName { get { return therapyPlace.Name; }}
-
-		public double LengthOfOneHour
-		{
-			get { return lengthOfOneHour; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref lengthOfOneHour, value); }
-		}
-
-		public Color  RoomColor        { get { return roomDisplayColor;  }}
-
-		public Guid TherapyPlaceId
-		{
-			get { return therapyPlace.Id; }
-		}		
+		public Guid   TherapyPlaceId   => therapyPlace.Id;
+		public string TherapyPlaceName => therapyPlace.Name;
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

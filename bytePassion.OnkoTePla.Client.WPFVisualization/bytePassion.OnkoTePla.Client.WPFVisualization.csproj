@@ -70,7 +70,6 @@
     <Compile Include="Behaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
     <Compile Include="Behaviors\ReportGridSizeBehavior.cs" />
-    <Compile Include="Behaviors\SizeReportingBehavior.cs" />
     <Compile Include="Behaviors\ToggleButtonAsRadioButtonBehavior.cs" />
     <Compile Include="Converter\AddOffsetToDoubleConverter.cs" />
     <Compile Include="Converter\ColorToSolidColorBrushConverter.cs" />

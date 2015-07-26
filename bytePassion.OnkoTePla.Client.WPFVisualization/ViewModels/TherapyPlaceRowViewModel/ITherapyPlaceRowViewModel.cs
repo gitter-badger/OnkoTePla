@@ -17,11 +17,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		
 		string TherapyPlaceName { get; }
 		Color  RoomColor        { get; }
-
-		double LengthOfOneHour { get; }		
-		Guid   TherapyPlaceId  { get; }
-
-		double TimeSlotWidth { set; }
+			
+		Guid   TherapyPlaceId  { get; }		
 
 		void AddAppointment   (IAppointmentViewModel newAppointment);
 		void RemoveAppointment(IAppointmentViewModel appointmentToRemove);

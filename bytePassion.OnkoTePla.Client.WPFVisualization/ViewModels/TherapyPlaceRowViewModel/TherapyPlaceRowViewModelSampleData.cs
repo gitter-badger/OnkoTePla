@@ -15,7 +15,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		{
 			TherapyPlaceName = "place 1";
 			RoomColor = Colors.LightBlue;
-			LengthOfOneHour = 200;
+			
 			TimeSlotStart = new Time(7,0);
 			TimeSlotEnd   = new Time(16,0);
 			TherapyPlaceId = new Guid();
@@ -27,18 +27,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			};
 		}
 
-		public ObservableCollection<IAppointmentViewModel> Appointments { get; private set; }
+		public ObservableCollection<IAppointmentViewModel> Appointments { get; }
 
-		public Time TimeSlotStart { get; private set; }
-		public Time TimeSlotEnd   { get; private set; }
+		public Time TimeSlotStart { get; }
+		public Time TimeSlotEnd   { get; }
 
-		public string TherapyPlaceName { get; private set; }
-		public Color  RoomColor        { get; private set; }
-
-		public double LengthOfOneHour { get; private set; }
-		public Guid   TherapyPlaceId  { get; private set; }
-
-		public double TimeSlotWidth { set {} }
+		public string TherapyPlaceName { get; }
+		public Color  RoomColor        { get; }
+		
+		public Guid   TherapyPlaceId  { get; }		
 
 		public void AddAppointment   (IAppointmentViewModel newAppointment)      {}
 		public void RemoveAppointment(IAppointmentViewModel appointmentToRemove) {}		
