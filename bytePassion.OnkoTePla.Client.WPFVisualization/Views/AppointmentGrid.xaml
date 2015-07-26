@@ -32,12 +32,7 @@
 		
 		<Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
 			<i:Interaction.Behaviors>
-				<behaviors:SizeReportingBehavior CurrentWidth= "{Binding CurrentGridWidth, 
-																		 Mode=OneWayToSource, 
-																		 UpdateSourceTrigger=PropertyChanged}"
-												 CurrentHeight="{Binding CurrentGridHeight,
-																		 Mode=OneWayToSource,
-																		 UpdateSourceTrigger=PropertyChanged}"/>
+				<behaviors:ReportGridSizeBehavior/>
 			</i:Interaction.Behaviors>
 		</Border>
 
@@ -51,11 +46,7 @@
 				<ColumnDefinition/>
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
-			
-			<TextBlock Grid.Column="0"
-				   Grid.ColumnSpan="2"
-				   Margin="5"
-				   Text="{Binding CurrentLoadedDate}"/>
+						
 			
 			<Button Grid.Column="0"
 					Margin="5"

@@ -18,7 +18,12 @@ namespace bytePassion.Lib.Communication.ViewModel
 
 		public void RegisterGlobalViewModelVariable<TVariableType>(string identifier, TVariableType initialValue = default(TVariableType))
 		{
-			
+			viewModelStateEngine.RegisterState(identifier, initialValue);
 		}
+
+		public GlobalState<TVariableType> GetGlobalViewModelVariable<TVariableType>(string identifier)
+		{
+			return viewModelStateEngine.GetState<TVariableType>(identifier);
+		} 
 	}
 }

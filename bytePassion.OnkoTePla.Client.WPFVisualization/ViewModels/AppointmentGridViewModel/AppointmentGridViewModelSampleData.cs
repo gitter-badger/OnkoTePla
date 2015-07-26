@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowViewModel;
@@ -33,12 +32,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				new TherapyPlaceRowViewModelSampleData(),
 				new TherapyPlaceRowViewModelSampleData(),
 			};
+					
 
-			CurrentGridWidth  = 800;
-			CurrentGridHeight = 400;			
-
-			OperatingMode = OperatingMode.View;
-			CurrentlyDisplayedDate = TimeTools.Today().DayBefore().DayBefore();
+			OperatingMode = OperatingMode.View;			
 		}
 
 		public ICommand ShowPracticeAndDate  { get { return null; }}
@@ -50,15 +46,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; private set; }
 		public ObservableCollection<TimeSlotLine> TimeSlotLines   { get; private set; }
 
-		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get; private set; }
-
-		public double CurrentGridWidth  { set; get; }
-		public double CurrentGridHeight { set; get; }
+		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get; private set; }		
 
 		public IAppointmentViewModel EditingObject          { set; get; }
 		public OperatingMode         OperatingMode          { get; private set; }
-		public Date                  CurrentlyDisplayedDate { get; private set; }
-
+		
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

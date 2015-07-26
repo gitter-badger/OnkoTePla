@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using bytePassion.Lib.Math;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGridViewModel.Helper
@@ -28,19 +29,37 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		private Time timeSlotStart;
 		private Time timeSlotEnd;
 
-		private readonly ObservableCollection<TimeSlotLabel> timeSlotLabels;
-		private readonly ObservableCollection<TimeSlotLine>  timeSlotLines;
-
 		public GridLinesAndLabelPainting ()
 		{			
-			timeSlotLabels = new ObservableCollection<TimeSlotLabel>();
-			timeSlotLines  = new ObservableCollection<TimeSlotLine>();
+			TimeSlotLabels = new ObservableCollection<TimeSlotLabel>();
+			TimeSlotLines  = new ObservableCollection<TimeSlotLine>();
 
 			SetNewTimeSpan(new Time(7, 0), new Time(16, 0));
+
+			var globalHeightVariable = GlobalAccess.ViewModelCommunication.GetGlobalViewModelVariable<double>(GlobalVariables.AppointmentGridHeightVariable);
+			var globalWidthVariable  = GlobalAccess.ViewModelCommunication.GetGlobalViewModelVariable<double>(GlobalVariables.AppointmentGridWidthVariable);
+
+			gridWidth = globalWidthVariable.Value;
+			gridHeight = globalHeightVariable.Value;
+
+			globalWidthVariable.StateChanged  += OnGridWidthChanged;
+			globalHeightVariable.StateChanged += OnGridHeightChanged;
 		}
 
-		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get { return timeSlotLabels; }}
-		public ObservableCollection<TimeSlotLine>  TimeSlotLines  { get { return timeSlotLines;  }}
+		private void OnGridWidthChanged(double newGridWidth)
+		{
+			gridWidth = newGridWidth;
+			RecomputeGrid(false);
+		}
+
+		private void OnGridHeightChanged (double newGridHeight)
+		{
+			gridHeight = newGridHeight;
+			RecomputeGrid(false);
+		}
+
+		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; }
+		public ObservableCollection<TimeSlotLine>  TimeSlotLines  { get; }
 
 		public void SetNewTimeSpan (Time newStartTime, Time newEndTime)
 		{
@@ -48,19 +67,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			timeSlotEnd   = newEndTime;
 
 			RecomputeGrid(true);
-		}
-
-		public void SetNewGridWidth (double newGridWidth)
-		{
-			gridWidth = newGridWidth;
-			RecomputeGrid(false);
-		}
-
-		public void SetNewGridHeight (double newGridHeight)
-		{
-			gridHeight = newGridHeight;
-			RecomputeGrid(false);
-		}
+		}		
 
 		private void RecomputeGrid (bool forceCreation)
 		{
@@ -89,8 +96,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		private void CreateGridDrawing (int roundedTimeSlotCount, double excactTimeSlotCount,
 										uint slotLengthInSeconds, double timeSlotWidth)
 		{
-			timeSlotLabels.Clear();
-			timeSlotLines.Clear();
+			TimeSlotLabels.Clear();
+			TimeSlotLines.Clear();
 
 			for (uint slot = 0; slot < roundedTimeSlotCount + 1; slot++)
 			{
@@ -98,13 +105,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				var timeCaption = new Time(timeSlotStart + new Duration(slot*slotLengthInSeconds)).ToString()
 																							      .Substring(0, 5);
 
-				timeSlotLabels.Add(new TimeSlotLabel(timeCaption)
+				TimeSlotLabels.Add(new TimeSlotLabel(timeCaption)
 				{
 					XCoord = slot * timeSlotWidth,
 					YCoord = 30
 				});
 
-				timeSlotLines.Add(new TimeSlotLine()
+				TimeSlotLines.Add(new TimeSlotLine()
 				{
 					XCoord = slot * timeSlotWidth,
 					YCoordTop = 60,
@@ -117,13 +124,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				var timeCaption = timeSlotEnd.ToString()
 											 .Substring(0, 5);
 
-				timeSlotLabels.Add(new TimeSlotLabel(timeCaption)
+				TimeSlotLabels.Add(new TimeSlotLabel(timeCaption)
 				{
 					XCoord = gridWidth,
 					YCoord = 30
 				});
 
-				timeSlotLines.Add(new TimeSlotLine()
+				TimeSlotLines.Add(new TimeSlotLine()
 				{
 					XCoord = gridWidth,
 					YCoordTop = 60,
@@ -138,16 +145,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			{
 				var xCoord = slot*timeSlotWidth;
 
-				timeSlotLabels[slot].XCoord = xCoord;
-				timeSlotLines[slot].XCoord  = xCoord;
-				timeSlotLines[slot].YCoordBottom = gridHeight;
+				TimeSlotLabels[slot].XCoord = xCoord;
+				TimeSlotLines[slot].XCoord  = xCoord;
+				TimeSlotLines[slot].YCoordBottom = gridHeight;
 			}
 
 			if (!MathLibUtils.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
 			{
-				timeSlotLabels[roundedTimeSlotCount + 1].XCoord       = gridWidth;
-				timeSlotLines [roundedTimeSlotCount + 1].XCoord       = gridWidth;
-				timeSlotLines [roundedTimeSlotCount + 1].YCoordBottom = gridHeight;
+				TimeSlotLabels[roundedTimeSlotCount + 1].XCoord       = gridWidth;
+				TimeSlotLines [roundedTimeSlotCount + 1].XCoord       = gridWidth;
+				TimeSlotLines [roundedTimeSlotCount + 1].YCoordBottom = gridHeight;
 			}
 		}
 

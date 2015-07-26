@@ -69,6 +69,7 @@
     <Compile Include="Behaviors\ExecuteCommandOnClickBehavior.cs" />
     <Compile Include="Behaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
+    <Compile Include="Behaviors\ReportGridSizeBehavior.cs" />
     <Compile Include="Behaviors\SizeReportingBehavior.cs" />
     <Compile Include="Behaviors\ToggleButtonAsRadioButtonBehavior.cs" />
     <Compile Include="Converter\AddOffsetToDoubleConverter.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Converter\TherapyPlaceToStringConverter.cs" />
     <Compile Include="Converter\TimeFromDateConverter.cs" />
     <Compile Include="Global\GlobalAccess.cs" />
+    <Compile Include="Global\GlobalVariables.cs" />
     <Compile Include="ViewModels\AddAppointmentTestViewModel\AddAppointmentTestViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentGridViewModel\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentOverViewModel\AppointmentOverViewModelSampleData.cs" />

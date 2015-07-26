@@ -23,18 +23,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 {
 	public class AppointmentGridViewModel : IAppointmentGridViewModel
 	{
-
+			
 		// FrameworkAccess /////////////////////////////////////////////////////////////////////////////////
 
 		private readonly IReadModelRepository         readModelRepository;
 		private readonly IConfigurationReadRepository configuration;
 		private readonly ICommandBus                  commandBus;
-		private readonly SessionInformation           sessionInformation;
-
-		// GridDrawing /////////////////////////////////////////////////////////////////////////////////////
-
-		private double currentGridWidth;
-		private double currentGridHeight;
+		private readonly SessionInformation           sessionInformation;		
 		
 		// AppointmentData /////////////////////////////////////////////////////////////////////////////////
 
@@ -64,7 +59,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 										GlobalState<Date> selectedDateState,
 										GlobalState<Tuple<Guid, uint>> displayedPracticeState,
 										GlobalState<Guid?> selectedRoomState )
-		{
+		{			
 			this.readModelRepository = readModelRepository;
 			this.configuration = configuration;
 			this.commandBus = commandBus;
@@ -80,10 +75,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			
 			showPracticeAndDateCommand = new ParameterrizedCommand<AggregateIdentifier>(ShowPracticeAndDateOnScreen);			
 			commitChangesCommand  = new Command(CommitAllChanges);
-			discardChangesCommand = new Command(DiscardAllChanges);
-
-			currentGridWidth  = 400;	 // will be overwritten when View is created
-			currentGridHeight = 400;	 // but is nessacary for loading intial dataSet						
+			discardChangesCommand = new Command(DiscardAllChanges);				
 
 			selectedDateState.StateChanged      += OnSelectedDateChanged;
 			displayedPracticeState.StateChanged += OnDisplayedPracticeChanged;
@@ -131,9 +123,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				appointmentDataSets.Add(updatedIdentifier, appointmentDataSet);
 			}
 
-			currentlyDisplayedDataSet = appointmentDataSet;
-			currentlyDisplayedDataSet.SetNewGridHeight(CurrentGridHeight);
-			currentlyDisplayedDataSet.SetNewGridWidth(CurrentGridWidth);
+			currentlyDisplayedDataSet = appointmentDataSet;			
 			
 			NotifyViewThatNewDataSetIsLoaded();						
 		}
@@ -145,7 +135,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			PropertyChanged.Notify(this, "displayedTherapyPlaceRows");
 			PropertyChanged.Notify(this, "TherapyPlaceRows");
 		}
-
 
 		private void CommitAllChanges()
 		{
@@ -178,27 +167,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		public ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get { return currentlyDisplayedDataSet.TimeSlotLabels;   }} 
 		public ObservableCollection<TimeSlotLine>              TimeSlotLines    { get { return currentlyDisplayedDataSet.TimeSlotLines;    }} 
-		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get { return currentlyDisplayedDataSet.TherapyPlaceRows; }}
-
-		public double CurrentGridWidth
-		{
-			set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref currentGridWidth, value);
-				currentlyDisplayedDataSet.SetNewGridWidth(currentGridWidth);				
-			}
-			get { return currentGridWidth; }
-		}
-
-		public double CurrentGridHeight
-		{
-			set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref currentGridHeight, value);				
-				currentlyDisplayedDataSet.SetNewGridHeight(currentGridHeight);
-			}
-			get { return currentGridHeight; }
-		}
+		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get { return currentlyDisplayedDataSet.TherapyPlaceRows; }}		
 
 		public IAppointmentViewModel EditingObject
 		{

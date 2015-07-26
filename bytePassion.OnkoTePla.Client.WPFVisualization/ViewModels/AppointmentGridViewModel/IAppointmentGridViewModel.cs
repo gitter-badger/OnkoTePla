@@ -17,17 +17,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		ICommand CommitChanges  { get; }
 		ICommand DiscardChanges { get; }
 
+
 		void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment, ITherapyPlaceRowViewModel containerRow);
 		
 		ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get; }
 		ObservableCollection<TimeSlotLine>              TimeSlotLines    { get; }
-		ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get; } 
-
-		double CurrentGridWidth  { set; get; }
-		double CurrentGridHeight { set; get; }
+		ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get; } 		
 
 		IAppointmentViewModel EditingObject          { get; set; }
 		OperatingMode         OperatingMode          { get; }
-		Date                  CurrentlyDisplayedDate { get; }
 	}
 }

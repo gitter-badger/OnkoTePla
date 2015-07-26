@@ -108,7 +108,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			IStateEngine viewModelStateEngine = new StateEngine();
 
 			GlobalAccess.ViewModelCommunication = new ViewModelCommunication<ViewModelMessageBase>(viewModelMessageBus,
-																								  viewModelStateEngine);
+																								   viewModelStateEngine);
+			GlobalVariables.RegisterAllGlobalVariables();
+
+
+
+
+
+
+
+
+
+
+
+
 
 			IStateEngine stateEngine = new StateEngine();
 

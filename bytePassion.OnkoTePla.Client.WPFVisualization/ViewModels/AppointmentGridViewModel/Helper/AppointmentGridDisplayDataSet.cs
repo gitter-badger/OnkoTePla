@@ -117,17 +117,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 					break;
 				}
 			}
-		}
-
-		public void SetNewGridWidth(double newGridWidth)
-		{
-			gridLinesAndLabelPainting.SetNewGridWidth(newGridWidth);
-		}
-
-		public void SetNewGridHeight(double newGridHeight)
-		{
-			gridLinesAndLabelPainting.SetNewGridHeight(newGridHeight);
-		}
+		}		
 
 		private void AddAppointmentToGrid (Appointment appointment)
 		{
