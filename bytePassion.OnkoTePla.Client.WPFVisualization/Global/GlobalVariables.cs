@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Windows;
 using static bytePassion.Lib.Utils.Converter;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Global
@@ -23,8 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Global
 
 		}
 
-		public const string AppointmentGridWidthVariable  = "AppointmentGridWidth";
-		public const string AppointmentGridHeightVariable = "AppointmentGridHeight";
+		public const string AppointmentGridSizeVariable  = "AppointmentGridSize";
 
 		private static IEnumerable<VariableInfo> Names()
 		{	
@@ -34,8 +33,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Global
 
 			return new List<VariableInfo>
 			{
-				new VariableInfo(AppointmentGridWidthVariable,  typeof(double), 400),
-				new VariableInfo(AppointmentGridHeightVariable, typeof(double), 400),
+				new VariableInfo(AppointmentGridSizeVariable,  typeof(Size), new Size(400,400)),
 			};
 		}
 

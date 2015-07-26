@@ -71,17 +71,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				}
 			);
 			
-			var globalWidthVariable  = GlobalAccess.ViewModelCommunication.GetGlobalViewModelVariable<double>(GlobalVariables.AppointmentGridWidthVariable);		
-			globalWidthVariable.StateChanged  += OnGridWidthChanged;
+			var globalGridSizeVariable  = GlobalAccess.ViewModelCommunication.GetGlobalViewModelVariable<Size>(GlobalVariables.AppointmentGridSizeVariable);
+			globalGridSizeVariable.StateChanged  += OnGridSizeChanged;
 
-			OnGridWidthChanged(globalWidthVariable.Value);			
+			OnGridSizeChanged(globalGridSizeVariable.Value);			
 		}		
 
-		private void OnGridWidthChanged(double newGridWidth)
+		private void OnGridSizeChanged(Size newGridSize)
 		{
-			var lengthOfOneHour = newGridWidth / (Time.GetDurationBetween(CurrentRow.TimeSlotEnd, CurrentRow.TimeSlotStart).Seconds / 3600.0);
+			var lengthOfOneHour = newGridSize.Width / (Time.GetDurationBetween(CurrentRow.TimeSlotEnd, CurrentRow.TimeSlotStart).Seconds / 3600.0);
 			
-
 			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, CurrentRow.TimeSlotStart);
 			CanvasPosition =  lengthOfOneHour * (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
 
