@@ -7,6 +7,8 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 
+using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;
+
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 {
@@ -17,23 +19,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 		private readonly GlobalState<Date> selectedDateState;
 		private readonly GlobalState<Tuple<Guid, uint>> displayedPracticeState;
 
-		private readonly ICommand selectTodayCommand;
-
 		private Date selectedDate;
 
-		public DateSelectorViewModel(GlobalState<Date> selectedDateState,
-									 GlobalState<Tuple<Guid, uint>> displayedPracticeState,
-									 IConfigurationReadRepository configuration)
+		public DateSelectorViewModel(IConfigurationReadRepository configuration)
 		{
-			this.selectedDateState = selectedDateState;
-			this.displayedPracticeState = displayedPracticeState;
+			selectedDateState      = ViewModelCommunication.GetGlobalViewModelVariable<Date>             (AppointmentGridSelectedDateVariable);
+			displayedPracticeState = ViewModelCommunication.GetGlobalViewModelVariable<Tuple<Guid, uint>>(AppointmentGridDisplayedPracticeVariable);
+
 			this.configuration = configuration;
 
 			this.selectedDateState.StateChanged += OnSelectedDateChanged;
 
 			SelectedDate = selectedDateState.Value;
 
-			selectTodayCommand = new Command(() => SelectedDate = TimeTools.Today());
+			SelectToday = new Command(() => SelectedDate = TimeTools.Today());
 		}
 
 		private void OnSelectedDateChanged(Date date)
@@ -59,10 +58,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 			}
 		}
 
-		public ICommand SelectToday
-		{
-			get { return selectTodayCommand; }
-		}
+		public ICommand SelectToday { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}

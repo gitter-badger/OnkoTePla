@@ -10,6 +10,8 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
+using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;
+
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 {
@@ -25,13 +27,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 		private ObservableCollection<RoomSelectorData> availableRoomData;
 		private RoomSelectorData selectedOption;
 
-		public RoomSelectorViewModel(GlobalState<Guid?> selectedRoomState,
-									 GlobalState<Tuple<Guid, uint>> displayedPracticeState,									
-									 IConfigurationReadRepository configuration)
+		public RoomSelectorViewModel(IConfigurationReadRepository configuration)
 		{
-			this.selectedRoomState = selectedRoomState;
-			this.displayedPracticeState = displayedPracticeState;
 			this.configuration = configuration;
+
+			selectedRoomState      = ViewModelCommunication.GetGlobalViewModelVariable<Guid?>            (AppointmentGridSelectedRoomVariable);			
+			displayedPracticeState = ViewModelCommunication.GetGlobalViewModelVariable<Tuple<Guid, uint>>(AppointmentGridDisplayedPracticeVariable);			
 
 			displayedPracticeState.StateChanged += OnDisplayedPracticeStateChanged;
 			

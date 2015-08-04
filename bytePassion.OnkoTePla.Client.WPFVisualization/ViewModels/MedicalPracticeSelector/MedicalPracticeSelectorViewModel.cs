@@ -5,6 +5,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector
@@ -18,11 +19,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 
 		private MedicalPractice selectedPractice;
 
-		public MedicalPracticeSelectorViewModel (IConfigurationReadRepository configuration,
-												 GlobalState<Tuple<Guid, uint>> displayedPracticeState)
+		public MedicalPracticeSelectorViewModel (IConfigurationReadRepository configuration)
 		{
 			this.configuration = configuration;
-			this.displayedPracticeState = displayedPracticeState;
+			displayedPracticeState = ViewModelCommunication.GetGlobalViewModelVariable<Tuple<Guid, uint>>(AppointmentGridDisplayedPracticeVariable);
 
 			displayedPracticeState.StateChanged += OnDisplayedPracticeStateChanged;
 

@@ -82,8 +82,9 @@
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
     <Compile Include="Converter\TherapyPlaceToStringConverter.cs" />
     <Compile Include="Converter\TimeFromDateConverter.cs" />
-    <Compile Include="Global\GlobalAccess.cs" />
-    <Compile Include="Global\GlobalVariables.cs" />
+    <Compile Include="GlobalAccess\ViewModelCollections.cs" />
+    <Compile Include="GlobalAccess\ViewModelCommunication.cs" />
+    <Compile Include="GlobalAccess\Variables.cs" />
     <Compile Include="ViewModels\AddAppointmentTestView\AddAppointmentTestViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentOverView\AppointmentOverViewModelSampleData.cs" />

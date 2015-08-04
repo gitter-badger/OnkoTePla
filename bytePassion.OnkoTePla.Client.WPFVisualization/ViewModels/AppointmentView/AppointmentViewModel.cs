@@ -8,7 +8,7 @@ using System.Windows.Input;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
+using bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
@@ -71,7 +71,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				}
 			);
 			
-			var globalGridSizeVariable  = GlobalAccess.ViewModelCommunication.GetGlobalViewModelVariable<Size>(GlobalVariables.AppointmentGridSizeVariable);
+			var globalGridSizeVariable  = Global.ViewModelCommunication.GetGlobalViewModelVariable<Size>(Global.AppointmentGridSizeVariable);
 			globalGridSizeVariable.StateChanged  += OnGridSizeChanged;
 
 			OnGridSizeChanged(globalGridSizeVariable.Value);			

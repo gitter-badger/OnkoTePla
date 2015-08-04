@@ -18,7 +18,7 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Client.Resources;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
+using bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentTestView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
@@ -29,14 +29,17 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Patients;
+
+using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization
 {
 
-	public partial class App : Application
+	public partial class App //: Application
 	{
 		protected override void OnStartup (StartupEventArgs e)
 		{
@@ -103,40 +106,35 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// GlobalStates registration
 
+			var initialMedicalPractice = configReadRepository.GetAllMedicalPractices().First();  // TODO set last usage
+
+
 			IHandlerCollection<ViewModelMessageBase> handlerCollection = new MultiHandlerCollection<ViewModelMessageBase>();
 			IMessageBus<ViewModelMessageBase> viewModelMessageBus = new LocalMessageBus<ViewModelMessageBase>(handlerCollection);
 			IStateEngine viewModelStateEngine = new StateEngine();
+			IViewModelCollections viewModelCollections = new ViewModelCollections();
 
-			GlobalAccess.ViewModelCommunication = new ViewModelCommunication<ViewModelMessageBase>(viewModelMessageBus,
-																								   viewModelStateEngine);
-			GlobalVariables.RegisterAllGlobalVariables();
+			ViewModelCommunication = new ViewModelCommunication<ViewModelMessageBase>(viewModelMessageBus,
+																					  viewModelStateEngine,
+																					  viewModelCollections);
 
-
-
-
-
-
-
-
-
-
-
-
-
-			IStateEngine stateEngine = new StateEngine();
-
-			var initialMedicalPractice = configReadRepository.GetAllMedicalPractices().First();  // TODO set last usage
-			
+			var        gridSizeInitialValue          = new Size(400,400);
 			var        selectedDateInitialValue      = initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday();
-			var        displayedPracticeInitialValue = new Tuple<Guid, uint>(initialMedicalPractice.Id, initialMedicalPractice.Version); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
-			Guid?      selectedRoomInitialValue      = null;
-			const bool sideBarStateInitialValue      = true;
+			var        displayedPracticeInitialValue = new Tuple<Guid, uint>(initialMedicalPractice.Id, initialMedicalPractice.Version); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört			
 
-			stateEngine.RegisterState(GlobalConstants.GlobalStateMainGridSelectedDate,      selectedDateInitialValue);			
-			stateEngine.RegisterState(GlobalConstants.GlobalStateMainGridDisplayedPractice, displayedPracticeInitialValue);
-			stateEngine.RegisterState(GlobalConstants.GlobalStateMainGridSelectedRoom,      selectedRoomInitialValue);	// when selectedRoomID == null --> all rooms are selected
-			stateEngine.RegisterState(GlobalConstants.GlobalStateSideBarState,              sideBarStateInitialValue);	// true --> full width; false --> minimized
-			// stateEngine.RegisterState<CurrentEditingDomain> ..... // IDEE !!! <<<<
+
+			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSizeVariable, gridSizeInitialValue);
+
+
+			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedDateVariable,      selectedDateInitialValue);
+			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridDisplayedPracticeVariable, displayedPracticeInitialValue); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
+			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedRoomVariable,      (Guid?) null);                  // when selectedRoomID == null --> all rooms are selected
+			ViewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable,                     true);                          // true --> full width; false --> minimized
+
+
+			ViewModelCommunication.CreateViewModelCollection<TherapyPlaceRowViewModel, Guid>(TherapyPlaceRowViewModelCollection,
+																							 (viewModel, therapyPlaceId) => viewModel.TherapyPlaceId == therapyPlaceId);
+
 
 
 			// create permanent ViewModels
@@ -144,19 +142,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			var addAppointmentTestViewModel      = new AddAppointmentTestViewModel(configReadRepository, patientRepository, readModelRepository, commandBus);
 			var appointmentOverViewModel         = new AppointmentOverViewModel(readModelRepository, configReadRepository);
             var patientsViewModel                = new PatientSelectorViewModel(patientRepository);
-			var appointmentGridViewModel         = new AppointmentGridViewModel(readModelRepository, configReadRepository, commandBus, 
-											     							    sessionInformation, 
-											     							    stateEngine.GetState<Date>(GlobalConstants.GlobalStateMainGridSelectedDate),
-																				stateEngine.GetState<Tuple<Guid, uint>>(GlobalConstants.GlobalStateMainGridDisplayedPractice),
-																			    stateEngine.GetState<Guid?>(GlobalConstants.GlobalStateMainGridSelectedRoom));
-			var dateSelectorViewModel            = new DateSelectorViewModel(stateEngine.GetState<Date>(GlobalConstants.GlobalStateMainGridSelectedDate),
-																			 stateEngine.GetState<Tuple<Guid, uint>>(GlobalConstants.GlobalStateMainGridDisplayedPractice), 
-																			 configReadRepository);
-			var medicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModel(configReadRepository,
-																						stateEngine.GetState<Tuple<Guid, uint>>(GlobalConstants.GlobalStateMainGridDisplayedPractice));
-			var roomSelectorViewModel            = new RoomSelectorViewModel(stateEngine.GetState<Guid?>(GlobalConstants.GlobalStateMainGridSelectedRoom),
-																			 stateEngine.GetState<Tuple<Guid, uint>>(GlobalConstants.GlobalStateMainGridDisplayedPractice),
-																			 configReadRepository);
+			var appointmentGridViewModel         = new AppointmentGridViewModel(readModelRepository, configReadRepository, commandBus, sessionInformation);
+			var dateSelectorViewModel            = new DateSelectorViewModel(configReadRepository);
+			var medicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModel(configReadRepository);
+			var roomSelectorViewModel            = new RoomSelectorViewModel(configReadRepository);
 
 			var mainWindowViewModel = new MainWindowViewModel(patientsViewModel, 
 															  addAppointmentTestViewModel, 

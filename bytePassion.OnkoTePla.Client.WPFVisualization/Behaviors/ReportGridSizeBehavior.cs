@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.State;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
+using bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
@@ -13,7 +13,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 		private GlobalState<Size> MainGridSize  => mainGridSize  ?? (mainGridSize  = GetSizeVariable());		
 		private GlobalState<Size> GetSizeVariable()
 		{
-			return GlobalAccess.ViewModelCommunication.GetGlobalViewModelVariable<Size>(GlobalVariables.AppointmentGridSizeVariable);
+			return Global.ViewModelCommunication.GetGlobalViewModelVariable<Size>(Global.AppointmentGridSizeVariable);
 		}
 		
 		protected override void OnAttached()

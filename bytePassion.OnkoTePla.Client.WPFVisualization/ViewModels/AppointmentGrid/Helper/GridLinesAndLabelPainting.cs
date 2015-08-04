@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using bytePassion.Lib.Math;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
+using bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
@@ -37,7 +37,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 			SetNewTimeSpan(new Time(7, 0), new Time(16, 0));
 
-			var globalGridSizeVariable = GlobalAccess.ViewModelCommunication.GetGlobalViewModelVariable<Size>(GlobalVariables.AppointmentGridSizeVariable);
+			var globalGridSizeVariable = Global.ViewModelCommunication.GetGlobalViewModelVariable<Size>(Global.AppointmentGridSizeVariable);
 			gridSize = globalGridSizeVariable.Value;
 			globalGridSizeVariable.StateChanged += OnGridSizeChanged;
 		}

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 
 namespace bytePassion.Lib.Communication.State
@@ -6,11 +7,11 @@ namespace bytePassion.Lib.Communication.State
 	public class StateEngine : IStateEngine
 	{
 
-		private readonly IDictionary states;
+		private readonly IDictionary<string, object> states;
 
 		public StateEngine()
 		{
-			states = new Hashtable();
+			states = new Dictionary<string, object>();
 		}	
 
 		public void RegisterState<T> (string stateIdentifier, T initialValue = default (T))

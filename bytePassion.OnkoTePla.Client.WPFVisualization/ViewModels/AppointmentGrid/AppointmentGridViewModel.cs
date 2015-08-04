@@ -18,6 +18,8 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
+using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;
+
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
 {
@@ -55,18 +57,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
 										IConfigurationReadRepository configuration,
 										ICommandBus commandBus, 
-										SessionInformation sessionInformation, 
-										GlobalState<Date> selectedDateState,
-										GlobalState<Tuple<Guid, uint>> displayedPracticeState,
-										GlobalState<Guid?> selectedRoomState )
+										SessionInformation sessionInformation)
 		{			
 			this.readModelRepository = readModelRepository;
 			this.configuration = configuration;
 			this.commandBus = commandBus;
 			this.sessionInformation = sessionInformation;
-			this.selectedRoomState = selectedRoomState;
-			this.displayedPracticeState = displayedPracticeState;
-			this.selectedDateState = selectedDateState;
+
+			selectedRoomState      = ViewModelCommunication.GetGlobalViewModelVariable<Guid?>            (AppointmentGridSelectedRoomVariable);
+			selectedDateState      = ViewModelCommunication.GetGlobalViewModelVariable<Date>             (AppointmentGridSelectedDateVariable);
+			displayedPracticeState = ViewModelCommunication.GetGlobalViewModelVariable<Tuple<Guid, uint>>(AppointmentGridDisplayedPracticeVariable);			
 
 			appointmentDataSets = new Dictionary<AggregateIdentifier, AppointmentGridDisplayDataSet>();
 			currentlyDisplayedDataSet = null;

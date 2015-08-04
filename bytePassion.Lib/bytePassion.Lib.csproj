@@ -62,6 +62,10 @@
     <Compile Include="Communication\State\GlobalState.cs" />
     <Compile Include="Communication\State\IStateEngine.cs" />
     <Compile Include="Communication\State\StateEngine.cs" />
+    <Compile Include="Communication\ViewModel\IViewModelCollections.cs" />
+    <Compile Include="Communication\ViewModel\IViewModelMessageHandler.cs" />
+    <Compile Include="Communication\ViewModel\ViewModelCollection.cs" />
+    <Compile Include="Communication\ViewModel\ViewModelCollections.cs" />
     <Compile Include="Communication\ViewModel\ViewModelCommunication.cs" />
     <Compile Include="FrameworkExtensions\LinqExtension.cs" />
     <Compile Include="Communication\MessageBus\HandlerCollection\SingleHandlerCollection.cs" />
