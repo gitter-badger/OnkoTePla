@@ -11,6 +11,7 @@
         xmlns:computations="clr-namespace:bytePassion.Lib.WpfUtils.Computations;assembly=bytePassion.Lib"
         xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
         xmlns:behaviors="clr-namespace:bytePassion.Lib.WpfUtils.Behaviors;assembly=bytePassion.Lib"
+        xmlns:wpfUtils="clr-namespace:bytePassion.Lib.WpfUtils;assembly=bytePassion.Lib"
 
         mc:Ignorable="d"
         Title="bytePassion - FileRenameTool" Height="699.8" Width="885" MinHeight="440" MinWidth="820">
@@ -192,9 +193,9 @@
 
 		<ListView Grid.Row="2" x:Name="ListViewProgress" Margin="5" ItemsSource="{Binding ListItems}">
 			<ListView.View>
-				<GridView utils:GridViewColumns.HeaderTextMember="Header"
-                          utils:GridViewColumns.DisplayMemberMember="DisplayMember"
-                          utils:GridViewColumns.ColumnsSource="{Binding Columns}"/>
+				<GridView wpfUtils:GridViewColumns.HeaderTextMember="Header"
+                          wpfUtils:GridViewColumns.DisplayMemberMember="DisplayMember"
+                          wpfUtils:GridViewColumns.ColumnsSource="{Binding Columns}"/>
 			</ListView.View>
 
 			<i:Interaction.Behaviors>
