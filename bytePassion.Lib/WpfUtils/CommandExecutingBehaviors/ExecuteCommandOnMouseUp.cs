@@ -53,7 +53,8 @@ namespace bytePassion.Lib.WpfUtils.CommandExecutingBehaviors
 			    if (Command != null)
 				    if (Command.CanExecute(CommandParameter))
 					    Command.Execute(CommandParameter);
-		    
+
+		    activated = false;
 	    }	   
 
 	    private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)

@@ -39,6 +39,12 @@ namespace bytePassion.Lib.WpfUtils.CommandExecutingBehaviors
 			AssociatedObject.Checked += OnButtonChecked;			
 		}
 
+		protected override void OnDetaching ()
+		{
+			base.OnDetaching();
+			AssociatedObject.Checked -= OnButtonChecked;
+		}
+
 		private void OnButtonChecked(object sender, RoutedEventArgs e)
 		{
 			if (Command != null)
@@ -46,10 +52,6 @@ namespace bytePassion.Lib.WpfUtils.CommandExecutingBehaviors
 					Command.Execute(CommandParameter);
 		}
 
-		protected override void OnDetaching ()
-		{
-			base.OnDetaching();
-			AssociatedObject.Checked -= OnButtonChecked;			
-		}
+		
 	}
 }
