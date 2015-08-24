@@ -6,7 +6,6 @@ using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
@@ -18,13 +17,13 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Client.Resources;
-using bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentTestView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentOverView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
@@ -132,8 +131,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			ViewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable,                     true);                          // true --> full width; false --> minimized
 
 
-			ViewModelCommunication.CreateViewModelCollection<TherapyPlaceRowViewModel, Guid>(TherapyPlaceRowViewModelCollection,
-																							 (viewModel, therapyPlaceId) => viewModel.TherapyPlaceId == therapyPlaceId);
+			ViewModelCommunication.CreateViewModelCollection<TherapyPlaceRowViewModel, AppointmentLocalisation>(
+				TherapyPlaceRowViewModelCollection,
+				(viewModel, therapyPlaceLocalisation) => viewModel.LocalisationIdentifier == therapyPlaceLocalisation
+			);
 
 
 
@@ -155,6 +156,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 															  medicalPracticeSelectorViewModel,
 															  roomSelectorViewModel,
 															  sessionInformation);
+
+			// create and show main Window
 
 			var mainWindow = new MainWindow
 			{

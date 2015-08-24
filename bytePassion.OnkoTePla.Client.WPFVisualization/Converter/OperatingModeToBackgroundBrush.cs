@@ -1,7 +1,6 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Media;
-using bytePassion.Lib.GenericValueConverter;
+using bytePassion.Lib.WpfUtils.ConverterBase;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
 
 
@@ -12,11 +11,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 		protected override SolidColorBrush Convert(OperatingMode value, CultureInfo culture)
 		{
 			return value == OperatingMode.Edit ? new SolidColorBrush(Colors.Firebrick) : new SolidColorBrush(Colors.Orange);
-		}
-
-		protected override OperatingMode ConvertBack(SolidColorBrush value, CultureInfo culture)
-		{
-			throw new NotImplementedException();
 		}		
 	}
 }

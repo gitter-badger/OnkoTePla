@@ -8,6 +8,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:appointmentView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"
              xmlns:enu="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper"
+             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"
              d:DesignHeight="30"
              d:DesignWidth="200"
              mc:Ignorable="d">
@@ -25,7 +26,7 @@
 
 
         <i:Interaction.Behaviors>
-            <behaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode}" />
+            <commandExecutingBehaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode}" />
         </i:Interaction.Behaviors>
 
         <Grid>

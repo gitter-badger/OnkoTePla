@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
-using bytePassion.Lib.GenericValueConverter;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.WpfUtils.ConverterBase;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter

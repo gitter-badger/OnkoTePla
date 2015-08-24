@@ -24,16 +24,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			OperatingMode = OperatingMode.Edit;
 		}
 
-		public ICommand DeleteAppointment { get { return null; }}
-		public ICommand SwitchToEditMode  { get { return null; } }
+		public ICommand DeleteAppointment => null;
+		public ICommand SwitchToEditMode  => null;
 
-		public string   PatientDisplayName  { get; private set; }		
+		public string   PatientDisplayName  { get; }		
 		public double   CanvasPosition      { get; set; }
 		public double   ViewElementLength   { get; set; }
 
-		public Guid AppointmentId  { get { return new Guid(); }}
-		public Guid TherapyPlaceId { get { return new Guid(); }}
-		
+		public Guid AppointmentId  => new Guid();
+		public Guid TherapyPlaceId => new Guid();
+
 		public OperatingMode OperatingMode  { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;

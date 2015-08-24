@@ -9,7 +9,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var date = value as DateTime?;
-            return date.HasValue ? date.Value.ToString("H:mm") : "-";
+            return date?.ToString("H:mm") ?? "-";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

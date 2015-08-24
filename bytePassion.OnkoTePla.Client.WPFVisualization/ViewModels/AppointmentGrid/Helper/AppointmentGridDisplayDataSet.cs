@@ -5,6 +5,7 @@ using System.Linq;
 using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
@@ -16,7 +17,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 	{
 
 		private readonly IAppointmentGridViewModel appointmentGridViewModel;
-		private readonly AppointmentsOfADayReadModel appointmentReadModel;
 		private readonly ObservableCollection<IAppointmentViewModel> displayedAppointments;		
 		private readonly IList<ITherapyPlaceRowViewModel> allTherapyPlaceRows;
 		private readonly MedicalPractice medicalPractice;
@@ -31,7 +31,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		{
 			var identifier = appointmentReadModel.Identifier;
 
-			this.appointmentReadModel = appointmentReadModel;
+			AppointmentReadModel = appointmentReadModel;
 			this.appointmentGridViewModel = appointmentGridViewModel;
 			this.medicalPractice = medicalPractice;
 
@@ -54,7 +54,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			foreach (var room in medicalPractice.Rooms)
 				foreach (var therapyPlace in room.TherapyPlaces)
 				{
-					allTherapyPlaceRows.Add(new TherapyPlaceRowViewModel(therapyPlace, room.DisplayedColor, timeSlotStart, timeSlotEnd));
+					allTherapyPlaceRows.Add(new TherapyPlaceRowViewModel(therapyPlace, 
+																		 room.DisplayedColor, 
+																		 timeSlotStart, 
+																		 timeSlotEnd, 
+																		 new AppointmentLocalisation(identifier, therapyPlace.Id)));
 				}
 
 			foreach (var appointment in appointmentReadModel.Appointments)
@@ -77,7 +81,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			else
 			{				
 				var filteredPlaces = allTherapyPlaceRows.Where
-					(model => medicalPractice.GetRoomForTherapyPlace(model.TherapyPlaceId).Id == selectedRoomId.Value
+					(model => medicalPractice.GetRoomForTherapyPlace(model.LocalisationIdentifier.TherapyPlaceRowId).Id == selectedRoomId.Value
 				);
 
 				foreach (var therapyPlaceRowViewModel in filteredPlaces)
@@ -85,14 +89,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			}
 		}
 
-		public ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get { return gridLinesAndLabelPainting.TimeSlotLabels; }}
-		public ObservableCollection<TimeSlotLine>              TimeSlotLines    { get { return gridLinesAndLabelPainting.TimeSlotLines;  }}
-		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get { return displayedTherapyPlaceRows;                }}
+		public ObservableCollection<TimeSlotLabel>             TimeSlotLabels   => gridLinesAndLabelPainting.TimeSlotLabels;
+		public ObservableCollection<TimeSlotLine>              TimeSlotLines    => gridLinesAndLabelPainting.TimeSlotLines;
+		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows => displayedTherapyPlaceRows;
 
-		public AppointmentsOfADayReadModel AppointmentReadModel
-		{
-			get { return appointmentReadModel; }
-		}
+		public AppointmentsOfADayReadModel AppointmentReadModel { get; }
 
 		private void ReadModelOnAppointmentChanged (object sender, AppointmentChangedEventArgs appointmentChangedEventArgs)
 		{
@@ -121,7 +122,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		private void AddAppointmentToGrid (Appointment appointment)
 		{
-			displayedAppointments.Add(new AppointmentViewModel(appointment, allTherapyPlaceRows, appointmentGridViewModel));
+			displayedAppointments.Add(new AppointmentViewModel(appointment, 
+															   new AppointmentLocalisation(AppointmentReadModel.Identifier, 
+																						   appointment.TherapyPlace.Id), 
+															   appointmentGridViewModel));
 		}	
 
 		private bool disposed = false;
@@ -142,8 +146,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			{
 				if (disposing)
 				{
-					appointmentReadModel.AppointmentChanged -= ReadModelOnAppointmentChanged;
-					appointmentReadModel.Dispose();
+					AppointmentReadModel.AppointmentChanged -= ReadModelOnAppointmentChanged;
+					AppointmentReadModel.Dispose();
 				}
 
 			}

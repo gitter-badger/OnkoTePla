@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		ICommand DiscardChanges { get; }
 
 
-		void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment, ITherapyPlaceRowViewModel containerRow);
+		void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment);
 		
 		ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get; }
 		ObservableCollection<TimeSlotLine>              TimeSlotLines    { get; }

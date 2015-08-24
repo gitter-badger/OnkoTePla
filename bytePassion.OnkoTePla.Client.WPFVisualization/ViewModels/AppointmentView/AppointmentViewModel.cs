@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess;
+using bytePassion.Lib.WpfUtils.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using MahApps.Metro.Controls.Dialogs;
+using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
@@ -22,11 +19,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 	public class AppointmentViewModel : IAppointmentViewModel
 	{		
 		private readonly Appointment appointment;
-
-		private readonly IEnumerable<ITherapyPlaceRowViewModel> containerRows;
+		
 		private readonly IAppointmentGridViewModel containerGrid;
-
-		private ITherapyPlaceRowViewModel currentRow;
+		
 		
 
 		private double canvasPosition;
@@ -37,13 +32,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private readonly Command deleteAppointmentCommand;
 
 		public AppointmentViewModel(Appointment appointment,
-									IEnumerable<ITherapyPlaceRowViewModel> containerRows, 						
+									AppointmentLocalisation initialLocalisation, 						
 									IAppointmentGridViewModel containerGrid)
 		{
-			this.containerRows = containerRows;
+			
 			this.containerGrid = containerGrid;
 			this.appointment = appointment;
-			CurrentRow = containerRows.First(rowModel => rowModel.TherapyPlaceId == appointment.TherapyPlace.Id);
+			
 
 
 			switchToEditModeCommand = new Command(
@@ -66,12 +61,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 				    if (result == MessageDialogResult.Affirmative)
 				    {
-						containerGrid.DeleteAppointment(this, appointment, CurrentRow);
+						containerGrid.DeleteAppointment(this, appointment);
 				    }
 				}
 			);
 			
-			var globalGridSizeVariable  = Global.ViewModelCommunication.GetGlobalViewModelVariable<Size>(Global.AppointmentGridSizeVariable);
+			var globalGridSizeVariable  = ViewModelCommunication.GetGlobalViewModelVariable<Size>(AppointmentGridSizeVariable);
+
 			globalGridSizeVariable.StateChanged  += OnGridSizeChanged;
 
 			OnGridSizeChanged(globalGridSizeVariable.Value);			
@@ -79,32 +75,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		private void OnGridSizeChanged(Size newGridSize)
 		{
-			var lengthOfOneHour = newGridSize.Width / (Time.GetDurationBetween(CurrentRow.TimeSlotEnd, CurrentRow.TimeSlotStart).Seconds / 3600.0);
-			
-			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, CurrentRow.TimeSlotStart);
-			CanvasPosition =  lengthOfOneHour * (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
-
-			var durationOfAppointment = Time.GetDurationBetween(appointment.StartTime, appointment.EndTime);
-			ViewElementLength = lengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
+//			var lengthOfOneHour = newGridSize.Width / (Time.GetDurationBetween(CurrentRow.TimeSlotEnd, CurrentRow.TimeSlotStart).Seconds / 3600.0);
+//			
+//			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, CurrentRow.TimeSlotStart);
+//			CanvasPosition =  lengthOfOneHour * (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
+//
+//			var durationOfAppointment = Time.GetDurationBetween(appointment.StartTime, appointment.EndTime);
+//			ViewElementLength = lengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
 		}
 
-		private ITherapyPlaceRowViewModel CurrentRow
-		{
-			get { return currentRow; }
-			set
-			{
-				if (currentRow != null)
-				{
-					currentRow.RemoveAppointment(this);
-					DetachContainerHandler();
-				}
-
-				currentRow = value;
-				
-				currentRow.AddAppointment(this);
-				AttachContainerHander();				
-			}
-		}		
+		
 
 		private void OnContainerGridChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
@@ -188,7 +168,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				if (disposing)
 				{					
 					DetachContainerHandler();
-					currentRow.RemoveAppointment(this);
+					//currentRow.RemoveAppointment(this);
 				}
 
 			}

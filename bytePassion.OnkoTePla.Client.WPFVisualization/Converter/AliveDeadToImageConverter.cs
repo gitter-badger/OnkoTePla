@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Media.Imaging;
-using bytePassion.Lib.GenericValueConverter;
+using bytePassion.Lib.WpfUtils.ConverterBase;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
@@ -14,11 +14,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 				return new BitmapImage(new Uri(@"pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;Component/Icons/AliveDead/alive.png"));
 			else
 				return new BitmapImage(new Uri(@"pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;Component/Icons/AliveDead/dead.png"));
-		}
-
-		protected override bool ConvertBack(BitmapImage value, CultureInfo culture)
-		{
-			throw new NotImplementedException();
-		}				
+		}		
 	}
 }

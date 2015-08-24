@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.Lib.Commands;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.WpfUtils.Commands;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;

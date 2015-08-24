@@ -8,6 +8,7 @@
              xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              xmlns:appointmentGrid="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid"
+             xmlns:computations="clr-namespace:bytePassion.Lib.WpfUtils.Computations;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="900">
 	
@@ -16,7 +17,7 @@
 	</d:UserControl.DataContext>
 	
 	<UserControl.Resources>
-		<converter:AddOffsetToDoubleConverter x:Key="AddOffsetToDouble"/>
+		<computations:AddOffsetToDoubleConverter x:Key="AddOffsetToDouble"/>
 		<converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter"/>
 	</UserControl.Resources>
 

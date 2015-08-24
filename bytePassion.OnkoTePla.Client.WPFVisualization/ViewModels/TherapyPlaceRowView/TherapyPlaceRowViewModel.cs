@@ -1,43 +1,56 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Media;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Messages;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
 {
-	public class TherapyPlaceRowViewModel : ITherapyPlaceRowViewModel
-	{
+	public class TherapyPlaceRowViewModel : ITherapyPlaceRowViewModel,
+											IViewModelMessageHandler<AddAppointmentToTherapyPlaceRow>,
+											IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>
+	{		
+
 		public TherapyPlaceRowViewModel(TherapyPlace therapyPlace, Color roomDisplayColor,
-										Time startTime, Time endTime)
-		{			
+										Time startTime, Time endTime,
+										AppointmentLocalisation localisationIdentifier)
+		{
+			
 			RoomColor = roomDisplayColor;
+
 			TimeSlotStart = startTime;
-			TimeSlotEnd = endTime;
-			TherapyPlaceId = therapyPlace.Id;
+			TimeSlotEnd   = endTime;
+			LocalisationIdentifier = localisationIdentifier;
+
+			
 			TherapyPlaceName = therapyPlace.Name;
 
 			Appointments = new ObservableCollection<IAppointmentViewModel>();			
 		}
 
+		public AppointmentLocalisation LocalisationIdentifier { get; }
+
 		public ObservableCollection<IAppointmentViewModel> Appointments { get; }
+		
 
 		public Time   TimeSlotStart    { get; }
 		public Time   TimeSlotEnd      { get; }
 		public Color  RoomColor        { get; }
-		public Guid   TherapyPlaceId   { get; }
+		
 		public string TherapyPlaceName { get; }
-
-		public void AddAppointment(IAppointmentViewModel newAppointment)
+	
+		public void Process(AddAppointmentToTherapyPlaceRow message)
 		{
-			Appointments.Add(newAppointment);
+			Appointments.Add(message.AppointmentViewModelToAdd);
 		}
 
-		public void RemoveAppointment(IAppointmentViewModel appointmentToRemove)
+		public void Process(RemoveAppointmentFromTherapyPlaceRow message)
 		{
-			Appointments.Remove(appointmentToRemove);
-		}				
+			Appointments.Remove(message.AppointmentViewModelToRemove);
+		}
 	}
 }

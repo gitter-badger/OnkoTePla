@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.Lib.Commands;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.WpfUtils.Commands;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
@@ -154,8 +154,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public ICommand DiscardChanges      { get { return discardChangesCommand;      }}
 
 		
-		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment, ITherapyPlaceRowViewModel containerRow)
-		{
+		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment)
+		{ 
 			commandBus.SendCommand(new DeleteAppointment(currentlyDisplayedDataSet.AppointmentReadModel.Identifier, 
 														 currentlyDisplayedDataSet.AppointmentReadModel.AggregateVersion, 
 														 sessionInformation.LoggedInUser.Id, 

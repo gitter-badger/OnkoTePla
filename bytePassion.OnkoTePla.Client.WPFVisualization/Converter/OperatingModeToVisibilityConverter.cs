@@ -1,7 +1,6 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
-using bytePassion.Lib.GenericValueConverter;
+using bytePassion.Lib.WpfUtils.ConverterBase;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
 
 
@@ -12,11 +11,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 		protected override Visibility Convert(OperatingMode value, CultureInfo culture)
 		{
 			return value == OperatingMode.Edit ? Visibility.Visible : Visibility.Collapsed;
-		}
-
-		protected override OperatingMode ConvertBack(Visibility value, CultureInfo culture)
-		{
-			throw new NotImplementedException();
-		}
+		}		
 	}
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
+﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 
@@ -8,16 +6,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 {
 	public class AddAppointmentToTherapyPlaceRow : ViewModelMessageBase
 	{
-		public AddAppointmentToTherapyPlaceRow(AppointmentViewModel appointmentViewModelToAdd, 
-											   Date destinationDay, Guid destinationRow)
+		public AddAppointmentToTherapyPlaceRow(AppointmentViewModel appointmentViewModelToAdd)
 		{
-			AppointmentViewModelToAdd = appointmentViewModelToAdd;
-			DestinationDay = destinationDay;
-			DestinationRow = destinationRow;
+			AppointmentViewModelToAdd = appointmentViewModelToAdd;			
 		}
 
-		public AppointmentViewModel AppointmentViewModelToAdd { get; }
-		public Date DestinationDay { get; }
-		public Guid DestinationRow { get; }
+		public AppointmentViewModel AppointmentViewModelToAdd { get; }		
 	}
 }

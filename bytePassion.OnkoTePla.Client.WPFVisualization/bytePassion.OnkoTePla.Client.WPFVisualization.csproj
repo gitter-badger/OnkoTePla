@@ -66,13 +66,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behaviors\ExecuteCommandOnClickBehavior.cs" />
-    <Compile Include="Behaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
     <Compile Include="Behaviors\ReportGridSizeBehavior.cs" />
     <Compile Include="Behaviors\ToggleButtonAsRadioButtonBehavior.cs" />
-    <Compile Include="Converter\AddOffsetToDoubleConverter.cs" />
-    <Compile Include="Converter\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="Converter\DateToDateTimeConverter.cs" />
     <Compile Include="Converter\OperatingModeToBackgroundBrush.cs" />
     <Compile Include="Converter\OperatingModeToVisibilityConverter.cs" />
@@ -90,10 +86,12 @@
     <Compile Include="ViewModels\AppointmentOverView\AppointmentOverViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentView\AppointmentViewModelSampleData.cs" />
     <Compile Include="ViewModels\DateSelector\DateSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\Helper\AppointmentLocalisation.cs" />
     <Compile Include="ViewModels\MainWindow\MainWindowViewModelSampleData.cs" />
     <Compile Include="ViewModels\MedicalPracticeSelector\MedicalPracticeSelectorViewModelSampleData.cs" />
     <Compile Include="ViewModels\PatientSelector\PatientSelectorViewModelSampleData.cs" />
     <Compile Include="ViewModels\RoomSelector\RoomSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\TherapyPlaceRowView\Messages\RemoveAppointmentFromTherapyPlaceRow.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\Messages\AddAppointmentToTherapyPlaceRow.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\TherapyPlaceRowViewModelSampleData.cs" />
     <Compile Include="SessionInfo\SessionInformation.cs" />

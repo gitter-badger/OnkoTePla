@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"             
              xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
              xmlns:roomSelector="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector"
              xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper"
+             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"
+             xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
 	
@@ -16,7 +17,7 @@
 	</d:UserControl.DataContext>
 	
 	<UserControl.Resources>
-		<converter:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
+		<converterLib:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
 	</UserControl.Resources>
 	
     <Grid>
@@ -41,7 +42,8 @@
 							Background="{Binding Room.DisplayedColor, Converter={StaticResource ColorToSolidColorBrushConverter}}">							
 
 						<i:Interaction.Behaviors>
-							<behaviors:ExecuteCommandWhenToggleButtonGetsCheckedBehavior Command="{Binding SelectRoomCommand}"/>
+							<commandExecutingBehaviors:ExecuteCommandWhenToggleButtonGetsCheckedBehavior Command="{Binding SelectRoomCommand}"/>
+							
 							<behaviors:ToggleButtonAsRadioButtonBehavior SelectedOption="{Binding Path=DataContext.SelectedOption, 
 																								  RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
 																								  Mode=TwoWay}"
@@ -59,7 +61,7 @@
 				      Content="Show all Rooms">
 
 			<i:Interaction.Behaviors>
-				<behaviors:ExecuteCommandWhenToggleButtonGetsCheckedBehavior Command="{Binding SelectAllRooms}"/>
+				<commandExecutingBehaviors:ExecuteCommandWhenToggleButtonGetsCheckedBehavior Command="{Binding SelectAllRooms}"/>
 				<behaviors:ToggleButtonAsRadioButtonBehavior SelectedOption="{Binding SelectedOption, 
 																					  Mode=TwoWay}"
 															 ButtonAssociatedOption="{x:Static helper:RoomSelectorData.Dummy}"/>

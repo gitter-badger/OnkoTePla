@@ -37,19 +37,19 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			OperatingMode = OperatingMode.View;			
 		}
 
-		public ICommand ShowPracticeAndDate  { get { return null; }}
-		public ICommand CommitChanges  { get { return null; }}
-		public ICommand DiscardChanges { get { return null; }}
+		public ICommand ShowPracticeAndDate => null;
+		public ICommand CommitChanges       => null;
+		public ICommand DiscardChanges      => null;
 
-		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment, ITherapyPlaceRowViewModel containerRow) {}
+		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment) {}
 		
-		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; private set; }
-		public ObservableCollection<TimeSlotLine> TimeSlotLines   { get; private set; }
+		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; }
+		public ObservableCollection<TimeSlotLine> TimeSlotLines   { get; }
 
-		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get; private set; }		
+		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get; }		
 
 		public IAppointmentViewModel EditingObject          { set; get; }
-		public OperatingMode         OperatingMode          { get; private set; }
+		public OperatingMode         OperatingMode          { get; }
 		
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

@@ -7,15 +7,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 {
 	public struct AggregateIdentifier 
 	{
-		private readonly Date  date;
 		private readonly uint? practiceVersion;
-		private readonly Guid  medicalPracticeId;
 
 		public AggregateIdentifier (Date date, Guid medicalPracticeId, uint? practiceVersion=null)
 		{
-			this.date = date;
+			Date = date;
 			this.practiceVersion = practiceVersion;
-			this.medicalPracticeId = medicalPracticeId;
+			MedicalPracticeId = medicalPracticeId;
 		}
 
 		public uint PracticeVersion
@@ -32,8 +30,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			}
 		}
 
-		public Guid MedicalPracticeId { get { return medicalPracticeId; }}
-		public Date Date              { get { return date;              }}
+		public Guid MedicalPracticeId { get; }
+		public Date Date              { get; }
 
 		public override bool Equals(object obj)
 		{
@@ -53,17 +51,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
 		public override string ToString()
 		{
-			return "[" + date + ", " + practiceVersion + ", " + MedicalPracticeId + "]";
+			return $"[{Date},{practiceVersion},{MedicalPracticeId}]";
 		}
 
-		public static bool operator ==(AggregateIdentifier id1, AggregateIdentifier id2)
-		{
-			return id1.Equals(id2);
-		}
-
-		public static bool operator != (AggregateIdentifier id1, AggregateIdentifier id2)
-		{
-			return !(id1 == id2);
-		}
+		public static bool operator == (AggregateIdentifier id1, AggregateIdentifier id2) => id1.Equals(id2);
+		public static bool operator != (AggregateIdentifier id1, AggregateIdentifier id2) => !(id1 == id2);
 	}
 }

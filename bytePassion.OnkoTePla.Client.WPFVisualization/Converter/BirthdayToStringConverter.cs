@@ -1,7 +1,6 @@
-﻿using System;
-using System.Globalization;
-using bytePassion.Lib.GenericValueConverter;
+﻿using System.Globalization;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.WpfUtils.ConverterBase;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
@@ -12,11 +11,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 		{
 			// TODO: CultureInfo nicht hard coden!
 		    return date.GetDisplayString(CultureInfo.CurrentCulture);
-		}
-
-		protected override Date ConvertBack(string value, CultureInfo culture)
-		{
-			throw new NotImplementedException();
-		}
+		}		
 	}
 }
