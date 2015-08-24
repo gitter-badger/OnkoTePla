@@ -45,9 +45,8 @@ namespace bytePassion.FileRename.RenameLogic
 		public async void StartRenaming()
 		{
 			var result = await RecursiveRenamerAsync(startFolder);
-			
-			if (ProcessFinished != null) 
-				ProcessFinished(result.Item1, result.Item2);
+
+			ProcessFinished?.Invoke(result.Item1, result.Item2);
 		}
 
 		public void AbortRenaming()
@@ -63,8 +62,7 @@ namespace bytePassion.FileRename.RenameLogic
 
 			var result = await UndoRenamingAsync();
 
-			if (ProcessFinished != null)
-				ProcessFinished(result.Item1, result.Item2);
+			ProcessFinished?.Invoke(result.Item1, result.Item2);
 		}
 
 		private Task<Tuple<bool, string>> UndoRenamingAsync ()
@@ -126,13 +124,11 @@ namespace bytePassion.FileRename.RenameLogic
 						AddFileToLastChanges(currentFile.DirectoryName + "\\" + oldName,
 											 currentFile.DirectoryName + "\\" + newName);
 
-						if (ItemProcessed != null) 
-							ItemProcessed(directory.FullName, oldName, newName);
+						ItemProcessed?.Invoke(directory.FullName, oldName, newName);
 					}
 					else
 					{
-						if (ItemProcessed != null) 
-							ItemProcessed(directory.FullName, currentFile.Name, "Name nicht geändert");
+						ItemProcessed?.Invoke(directory.FullName, currentFile.Name, "Name nicht geändert");
 					}
 				}
 
@@ -141,7 +137,7 @@ namespace bytePassion.FileRename.RenameLogic
 					if (abortSearch)
 						return abortReturn;
 
-					foreach (DirectoryInfo currentDirectory in directory.GetDirectories())
+					foreach (var currentDirectory in directory.GetDirectories())
 					{
 						var retVal = RecursiveRenamer(currentDirectory);
 
@@ -172,8 +168,7 @@ namespace bytePassion.FileRename.RenameLogic
 							AddDirectoryToLastChanges(fullOldName, fullNewName);						
 						}
 
-						if (ItemProcessed != null)
-							ItemProcessed(directory.FullName + "\t [Ordnername geändert]", oldName, newName);
+						ItemProcessed?.Invoke(directory.FullName + "\t [Ordnername geändert]", oldName, newName);
 					}				
 			}
 			catch (Exception except)

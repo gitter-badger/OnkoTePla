@@ -1,5 +1,5 @@
 ﻿
-namespace bytePassion.FileRename.ViewModel
+namespace bytePassion.FileRename.ViewModel.Helper
 {
 	public class FileListItem
 	{

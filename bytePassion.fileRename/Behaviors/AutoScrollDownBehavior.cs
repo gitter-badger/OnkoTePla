@@ -14,6 +14,12 @@ namespace bytePassion.FileRename.Behaviors
 			 ((INotifyCollectionChanged)AssociatedObject.Items).CollectionChanged += OnCollectionChanged;
 		}
 
+		protected override void OnDetaching()
+		{
+			base.OnDetaching();
+			((INotifyCollectionChanged)AssociatedObject.Items).CollectionChanged -= OnCollectionChanged;
+		}
+
 		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 		{
 			var listView  = AssociatedObject;

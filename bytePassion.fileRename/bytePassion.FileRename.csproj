@@ -63,7 +63,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\AutoScrollDownBehavior.cs" />
-    <Compile Include="Behaviors\GridViewColumnBehavior.cs" />
+    <Compile Include="Behaviors\GridViewSplitColumnsEqualyBehavior.cs" />
     <Compile Include="Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Converter\BoolInverter.cs" />
     <Compile Include="Converter\ReplaceTypeToBoolConverter.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="Repository\ILastUsedStartFoldersRepository.cs" />
     <Compile Include="Repository\LastUsedStartFoldersRepository.cs" />
     <Compile Include="Repository\XmlStringDataStore.cs" />
-    <Compile Include="ViewModel\FileListItem.cs" />
+    <Compile Include="ViewModel\Helper\FileListItem.cs" />
     <Compile Include="ViewModel\SampleData\RenamerViewModelSampleData.cs" />
     <Compile Include="ViewModel\IRenamerViewModel.cs" />
     <Compile Include="ViewModel\RenamerViewModel.cs" />

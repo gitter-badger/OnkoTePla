@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -8,10 +7,13 @@ using System.Windows;
 using System.Windows.Input;
 using bytePassion.FileRename.RenameLogic;
 using bytePassion.FileRename.RenameLogic.Enums;
+using bytePassion.FileRename.ViewModel.Helper;
 using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using Ookii.Dialogs.Wpf;
+
+using static System.String;
 
 
 namespace bytePassion.FileRename.ViewModel
@@ -37,10 +39,6 @@ namespace bytePassion.FileRename.ViewModel
 		private readonly Command selectFolderCommand;
 		private readonly Command undoLastRenamingCommand;
 
-		private readonly ObservableCollection<ColumnDescriptor> columns;
-		private readonly ObservableCollection<FileListItem>     listItems;
-		private readonly ObservableCollection<string>           lastExecutedStartFolders;
-
 		private bool isProcessStartable;
 		private bool isProcessAbortable;
 		private bool isProcessUndoable;
@@ -54,7 +52,7 @@ namespace bytePassion.FileRename.ViewModel
 				() => { 
 
 					SetUpRenamingProcess(); 
-					listItems.Clear();
+					ListItems.Clear();
 					renamer.StartRenaming();
 
 					LastExecutedStartFolders.Add(StartDirectory);
@@ -67,22 +65,30 @@ namespace bytePassion.FileRename.ViewModel
 				() => {
 
 					if (!IsProcessStartable) return false;
-					if (SearchType == SearchType.Characters && String.IsNullOrEmpty(SearchString)) return false;
-					if (ReplaceType == ReplaceType.Characters && String.IsNullOrEmpty(ReplaceString)) return false;
-					if (String.IsNullOrEmpty(StartDirectory)) return false;
+					if (SearchType   == SearchType.Characters && IsNullOrEmpty(SearchString))  return false;
+					if (ReplaceType == ReplaceType.Characters && IsNullOrEmpty(ReplaceString)) return false;
+					if (IsNullOrEmpty(StartDirectory)) return false;
 
 					return true;
-				}
+				},
+				new UpdateCommandInformation(this, nameof(IsProcessStartable), 
+												   nameof(IsProcessStartable),
+												   nameof(ReplaceString),
+												   nameof(ReplaceType),
+												   nameof(SearchType),
+												   nameof(SearchString))
 			);
 
 			abortCommand = new Command(
 				() =>  renamer.AbortRenaming(),						
-				() =>  IsProcessAbortable
+				() =>  IsProcessAbortable,
+				new UpdateCommandInformation(this, nameof(IsProcessAbortable))
 			);
 
 			selectFolderCommand = new Command(
 				ShowDirectoryDialog,
-				() => !IsProcessRunning
+				() => !IsProcessRunning,
+				new UpdateCommandInformation(this, nameof(IsProcessRunning))
 			);
 
 			undoLastRenamingCommand = new Command(
@@ -93,18 +99,19 @@ namespace bytePassion.FileRename.ViewModel
 					IsProcessAbortable = false;
 					IsProcessRunning = true;
 				},
-				() => IsProcessUndoable
+				() => IsProcessUndoable,
+				new UpdateCommandInformation(this, nameof(IsProcessUndoable))
 			);
 
-			columns = new ObservableCollection<ColumnDescriptor>()
+			Columns = new ObservableCollection<ColumnDescriptor>()
 			{
 				new ColumnDescriptor { Header = "Aktueller Ordner", DisplayMember = FileListItem.CurrentDirectoryVariableName },
 				new ColumnDescriptor { Header = "Alter Dateiname",  DisplayMember = FileListItem.OldFileNameVariableName      },
 				new ColumnDescriptor { Header = "Neuer DateiName",  DisplayMember = FileListItem.NewFileNameVariableName      }
 			};
 
-			listItems = new ObservableCollection<FileListItem>();
-			this.lastExecutedStartFolders = new ObservableCollection<string>(lastExecutedStartFolders);
+			ListItems = new ObservableCollection<FileListItem>();
+			this.LastExecutedStartFolders = new ObservableCollection<string>(lastExecutedStartFolders);
 
 			IsProcessAbortable = false;
 			IsProcessStartable = true;
@@ -134,16 +141,16 @@ namespace bytePassion.FileRename.ViewModel
 
 			renamer.ProcessFinished += (successful, message) =>
 			{
-				StringBuilder builder = new StringBuilder();
+				var stringBuilder = new StringBuilder();
 
-				builder.Append(successful
+				stringBuilder.Append(successful
 					               ? "Der Prozess wurde erfolgreich beendet"
 					               : "Der Prozess wurde mit folgender Meldung abgebrochen");
 
-				if (!String.IsNullOrEmpty(message))
-					builder.Append(":\n\n" + message);
+				if (!IsNullOrEmpty(message))
+					stringBuilder.Append(":\n\n" + message);
 
-				MessageBox.Show(builder.ToString());
+				MessageBox.Show(stringBuilder.ToString());
 
 				IsProcessUndoable = renamer.UndoAvailable;
 				IsProcessStartable = true;
@@ -155,50 +162,34 @@ namespace bytePassion.FileRename.ViewModel
 		}
 	
 
-		public ICommand Start            { get { return startCommand;            }}
-		public ICommand Abort            { get { return abortCommand;            }}
-		public ICommand SelectFolder     { get { return selectFolderCommand;     }}
-		public ICommand UndoLastRenaming { get { return undoLastRenamingCommand; }}
+		public ICommand Start            => startCommand;
+		public ICommand Abort            => abortCommand;
+		public ICommand SelectFolder     => selectFolderCommand;
+		public ICommand UndoLastRenaming => undoLastRenamingCommand;
 
 
 		public bool IsProcessRunning
 		{
 			get { return isProcessRunning;}
-			private set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref isProcessRunning, value);
-				selectFolderCommand.RaiseCanExecuteChanged();
-			}
+			private set { PropertyChanged.ChangeAndNotify(this, ref isProcessRunning, value); }
 		}
 
 		public bool IsProcessStartable
 		{
 			get { return isProcessStartable; }
-			private set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref isProcessStartable, value);
-				startCommand.RaiseCanExecuteChanged();				
-			}
+			private set { PropertyChanged.ChangeAndNotify(this, ref isProcessStartable, value);	}
 		}
 
 		public bool IsProcessAbortable
 		{
 			get { return isProcessAbortable; }
-			private set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref isProcessAbortable, value);
-				abortCommand.RaiseCanExecuteChanged();
-			}
+			private set { PropertyChanged.ChangeAndNotify(this, ref isProcessAbortable, value); }
 		}
 
 		public bool IsProcessUndoable
 		{
 			get { return isProcessUndoable; }
-			private set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref isProcessUndoable, value);
-				undoLastRenamingCommand.RaiseCanExecuteChanged();
-			}
+			private set { PropertyChanged.ChangeAndNotify(this, ref isProcessUndoable, value); }
 		}
 
 		private void ShowDirectoryDialog()
@@ -222,49 +213,31 @@ namespace bytePassion.FileRename.ViewModel
 				PropertyChanged.ChangeAndNotify(this, ref startDirectory, value);
 
 				IsProcessStartable = Directory.Exists(StartDirectory);
-
-				startCommand.RaiseCanExecuteChanged();
 			}
 		}
 
 		public string SearchString
 		{
 			get { return searchString; }
-			set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref searchString, value);
-				startCommand.RaiseCanExecuteChanged();
-			}
+			set { PropertyChanged.ChangeAndNotify(this, ref searchString, value); }
 		}
 
 		public string ReplaceString
 		{
 			get { return replaceWidthString; }
-			set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref replaceWidthString, value);
-				startCommand.RaiseCanExecuteChanged();
-			}
+			set { PropertyChanged.ChangeAndNotify(this, ref replaceWidthString, value);	}
 		}
 
 		public SearchType SearchType
 		{
 			get { return searchType; }
-			set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref searchType, value);
-				startCommand.RaiseCanExecuteChanged();
-			}
+			set { PropertyChanged.ChangeAndNotify(this, ref searchType, value); }
 		}
 
 		public ReplaceType ReplaceType 
 		{
 			get { return replaceType; }
-			set
-			{
-				PropertyChanged.ChangeAndNotify(this, ref replaceType, value);
-				startCommand.RaiseCanExecuteChanged();
-			} 
+			set { PropertyChanged.ChangeAndNotify(this, ref replaceType, value); } 
 		}
 
 		public bool SearchParameterCaseSensitivity
@@ -285,9 +258,9 @@ namespace bytePassion.FileRename.ViewModel
 			set { PropertyChanged.ChangeAndNotify(this, ref searchParameterChangeFolderNames, value); }
 		}
 
-		public ObservableCollection<ColumnDescriptor> Columns                  { get { return columns;                  }}
-		public ObservableCollection<FileListItem>     ListItems                { get { return listItems;                }}
-		public ObservableCollection<string>           LastExecutedStartFolders { get { return lastExecutedStartFolders; }}
+		public ObservableCollection<ColumnDescriptor> Columns                  { get; }
+		public ObservableCollection<FileListItem>     ListItems                { get; }
+		public ObservableCollection<string>           LastExecutedStartFolders { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

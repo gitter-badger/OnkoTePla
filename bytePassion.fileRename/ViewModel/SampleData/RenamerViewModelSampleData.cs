@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.FileRename.RenameLogic.Enums;
-using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.FileRename.ViewModel.Helper;
 using bytePassion.Lib.Utils;
 
 #pragma warning disable 0067
@@ -36,15 +36,15 @@ namespace bytePassion.FileRename.ViewModel.SampleData
 			                           };
 		}
 
-		public ICommand Start            { get { return null; }}
-		public ICommand Abort            { get { return null; }}
-		public ICommand SelectFolder     { get { return null; }}
-		public ICommand UndoLastRenaming { get { return null; }}
+		public ICommand Start            => null;
+		public ICommand Abort            => null;
+		public ICommand SelectFolder     => null;
+		public ICommand UndoLastRenaming => null;
 
-		public bool IsProcessStartable { get; set; }
-		public bool IsProcessAbortable { get; set; }
-		public bool IsProcessUndoable  { get; set; }
-		public bool IsProcessRunning   { get; set; }					
+		public bool IsProcessStartable { get; }
+		public bool IsProcessAbortable { get; }
+		public bool IsProcessUndoable  { get; }
+		public bool IsProcessRunning   { get; }					
 
 		public string StartDirectory { get; set; }
 
@@ -61,7 +61,7 @@ namespace bytePassion.FileRename.ViewModel.SampleData
 		public ObservableCollection<ColumnDescriptor> Columns   { get; set; }
 		public ObservableCollection<FileListItem>     ListItems { get; set; }
 
-		public ObservableCollection<string> LastExecutedStartFolders { get; set; }
+		public ObservableCollection<string> LastExecutedStartFolders { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

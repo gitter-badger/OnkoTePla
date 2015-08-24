@@ -8,7 +8,7 @@ namespace bytePassion.FileRename.RenameLogic
 {
 	public class RenameProcessor
 	{		
-		private readonly INameAnalyzer analyzer;
+		private readonly INameAnalyzer   analyzer;
 		private readonly INameRefactorer refactorer;
 
 		public RenameProcessor(INameAnalyzer analyzer, INameRefactorer refactorer)

@@ -19,10 +19,15 @@ namespace bytePassion.FileRename.RenameLogic
 				case SearchType.Special:    { nameAnalyzer = new SpecialEndingAnalyzer(); break; }	
 				case SearchType.Characters:
 				{
+
+					var splitParts = searchString.Split(',')
+					                             .Select(split => split.Trim());
+
+					var isMultiSearch = false;
 					
-					var isMultiSearch = searchString.Split(',')
-													.Select(split => split.Trim())
-													.All(split => split.StartsWith("\"") && split.EndsWith("\""));
+					if (splitParts.Count() > 1)
+						if (splitParts.All(split => split.StartsWith("\"") && split.EndsWith("\"")))
+							isMultiSearch = true;
 
 					if (isMultiSearch)
 						nameAnalyzer = new MultiStringAnalyzer (searchString, searchCaseSensitive);

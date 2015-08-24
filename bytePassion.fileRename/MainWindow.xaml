@@ -7,7 +7,6 @@
 		xmlns:sampleData="clr-namespace:bytePassion.FileRename.ViewModel.SampleData"
 		xmlns:converter="clr-namespace:bytePassion.FileRename.Converter"
         xmlns:behaviors="clr-namespace:bytePassion.FileRename.Behaviors"
-        xmlns:lib="clr-namespace:bytePassion.Lib.FrameworkExtensions;assembly=bytePassion.Lib"
         xmlns:enum="clr-namespace:bytePassion.FileRename.RenameLogic.Enums"
         xmlns:utils="clr-namespace:bytePassion.Lib.Utils;assembly=bytePassion.Lib"
 
@@ -197,7 +196,7 @@
 			</ListView.View>
 
 			<i:Interaction.Behaviors>
-				<behaviors:GridViewColumnBehavior/>
+				<behaviors:GridViewSplitColumnsEqualyBehavior/>
 				<behaviors:AutoScollDownBehavior/>
 			</i:Interaction.Behaviors>
 		</ListView>

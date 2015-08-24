@@ -6,7 +6,7 @@ using System.Windows.Interactivity;
 
 namespace bytePassion.FileRename.Behaviors
 {
-	public class GridViewColumnBehavior : Behavior<ListView>
+	public class GridViewSplitColumnsEqualyBehavior : Behavior<ListView>
 	{
 		protected override void OnAttached ()
 		{
@@ -16,6 +16,13 @@ namespace bytePassion.FileRename.Behaviors
 			((INotifyCollectionChanged)AssociatedObject.Items).CollectionChanged += OnCollectionChanged;
 
 			initIsDeregistered = false;
+		}
+
+		protected override void OnDetaching()
+		{
+			base.OnDetaching();
+
+			AssociatedObject.SizeChanged -= OnSizeChanged;			
 		}
 
 		private bool initIsDeregistered; 
