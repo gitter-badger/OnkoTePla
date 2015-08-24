@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
-using bytePassion.Lib.GenericValueConverter;
+using bytePassion.Lib.WpfUtils.ConverterBase;
 
 
-namespace bytePassion.FileRename.Converter
+namespace bytePassion.Lib.WpfUtils.Computations
 {
 	public class BoolInverter : GenericValueConverter<bool, bool>
 	{

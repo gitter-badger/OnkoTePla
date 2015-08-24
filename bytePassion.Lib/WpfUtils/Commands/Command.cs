@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace bytePassion.Lib.Commands
+
+namespace bytePassion.Lib.WpfUtils.Commands
 {
 	public class Command : ICommand, IDisposable
 	{

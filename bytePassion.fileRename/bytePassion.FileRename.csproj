@@ -62,10 +62,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behaviors\AutoScrollDownBehavior.cs" />
-    <Compile Include="Behaviors\GridViewSplitColumnsEqualyBehavior.cs" />
-    <Compile Include="Converter\BoolToVisibilityConverter.cs" />
-    <Compile Include="Converter\BoolInverter.cs" />
     <Compile Include="Converter\ReplaceTypeToBoolConverter.cs" />
     <Compile Include="Converter\SearchTypeToBoolConverter.cs" />
     <Compile Include="RenameLogic\Enums\ReplaceType.cs" />
@@ -143,6 +139,7 @@
       <Name>bytePassion.Lib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

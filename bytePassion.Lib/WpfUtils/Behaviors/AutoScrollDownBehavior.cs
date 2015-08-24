@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Interactivity;
 
 
-namespace bytePassion.FileRename.Behaviors
+namespace bytePassion.Lib.WpfUtils.Behaviors
 {
 	public class AutoScollDownBehavior : Behavior<ListView>
 	{

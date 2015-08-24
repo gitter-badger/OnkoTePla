@@ -2,7 +2,7 @@
 using System.Windows.Input;
 
 
-namespace bytePassion.Lib.Commands
+namespace bytePassion.Lib.WpfUtils.Commands
 {
 
 	public class ParameterrizedCommand<T> : ICommand, IDisposable

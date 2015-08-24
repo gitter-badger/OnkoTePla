@@ -8,9 +8,9 @@ using System.Windows.Input;
 using bytePassion.FileRename.RenameLogic;
 using bytePassion.FileRename.RenameLogic.Enums;
 using bytePassion.FileRename.ViewModel.Helper;
-using bytePassion.Lib.Commands;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
+using bytePassion.Lib.WpfUtils.Commands;
 using Ookii.Dialogs.Wpf;
 
 using static System.String;

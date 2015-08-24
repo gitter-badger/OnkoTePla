@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 
 
-namespace bytePassion.Lib.Commands
+namespace bytePassion.Lib.WpfUtils.Commands
 {
 
 	public class UpdateCommandInformation : IDisposable

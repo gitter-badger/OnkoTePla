@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using bytePassion.FileRename.RenameLogic.Enums;
-using bytePassion.Lib.GenericValueConverter;
+using bytePassion.Lib.WpfUtils.ConverterBase;
 
 
 namespace bytePassion.FileRename.Converter
