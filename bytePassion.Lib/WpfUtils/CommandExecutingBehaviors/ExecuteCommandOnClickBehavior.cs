@@ -3,7 +3,7 @@ using System.Windows.Input;
 using System.Windows.Interactivity;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
+namespace bytePassion.Lib.WpfUtils.CommandExecutingBehaviors
 {
 	public class ExecuteCommandOnClickBehavior : Behavior<FrameworkElement>
 	{

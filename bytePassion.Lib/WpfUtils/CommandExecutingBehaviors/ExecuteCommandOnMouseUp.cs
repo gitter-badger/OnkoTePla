@@ -3,7 +3,7 @@ using System.Windows.Input;
 using System.Windows.Interactivity;
 
 
-namespace bytePassion.Lib.WpfUtils.Behaviors
+namespace bytePassion.Lib.WpfUtils.CommandExecutingBehaviors
 {
     public class ExecuteCommandOnMouseUp : Behavior<FrameworkElement>
     {

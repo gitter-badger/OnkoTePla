@@ -57,6 +57,8 @@
     <Compile Include="WpfUtils\Adorner\AdornerPlacement.cs" />
     <Compile Include="WpfUtils\Adorner\FrameworkElementAdorner.cs" />
     <Compile Include="WpfUtils\Behaviors\AutoScrollDownBehavior.cs" />
+    <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandOnClickBehavior.cs" />
+    <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
     <Compile Include="WpfUtils\Behaviors\GridViewSplitColumnsEqualyBehavior.cs" />
     <Compile Include="WpfUtils\Commands\UpdateCommandInformation.cs" />
     <Compile Include="Clonable\ClonableList.cs" />
@@ -80,7 +82,7 @@
     <Compile Include="TimeLib\TimeExtensions.cs" />
     <Compile Include="Utils\Converter.cs" />
     <Compile Include="FrameworkExtensions\EqualsExtension.cs" />
-    <Compile Include="Utils\GridViewColumns.cs" />
+    <Compile Include="WpfUtils\GridViewColumns.cs" />
     <Compile Include="Math\Angle.cs" />
     <Compile Include="Math\AngleInterval.cs" />
     <Compile Include="Math\AngleUnit.cs" />
@@ -96,10 +98,11 @@
     <Compile Include="TimeLib\TimeTools.cs" />
     <Compile Include="Utils\VersionManager.cs" />
     <Compile Include="WpfUtils\Behaviors\DisableRightClickBehavior.cs" />
-    <Compile Include="WpfUtils\Behaviors\ExecuteCommandOnEnter.cs" />
-    <Compile Include="WpfUtils\Behaviors\ExecuteCommandOnMouseUp.cs" />
+    <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandOnEnter.cs" />
+    <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandOnMouseUp.cs" />
     <Compile Include="WpfUtils\Behaviors\SizeReportingBehavior.cs" />
     <Compile Include="WpfUtils\Behaviors\ZoomOnMouseWheelBehavior.cs" />
+    <Compile Include="WpfUtils\Computations\AddOffsetToDoubleConverter.cs" />
     <Compile Include="WpfUtils\Computations\AngleInverter.cs" />
     <Compile Include="WpfUtils\Computations\BoolInverter.cs" />
     <Compile Include="WpfUtils\Computations\DivideAngleBy2.cs" />
@@ -111,6 +114,7 @@
     <Compile Include="WpfUtils\ConverterBase\GenericValueConverter.cs" />
     <Compile Include="WpfUtils\Converter\AngleToDoubleConverter.cs" />
     <Compile Include="WpfUtils\Converter\BoolToCollapsedVisibilityConverter.cs" />
+    <Compile Include="WpfUtils\Converter\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="WpfUtils\Converter\InvertedBoolToCollapsedVisibilityConverter.cs" />
     <Compile Include="WpfUtils\SharedResourceDictionary.cs" />
   </ItemGroup>
