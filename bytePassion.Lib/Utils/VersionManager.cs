@@ -142,7 +142,12 @@ namespace bytePassion.Lib.Utils
 		private void RemoveAllFromEndTo(LinkedListNode<T> node)
 		{
 			while (versions.Last != node)
+			{
 				versions.RemoveLast();
+
+				if (versions.Count == 0)
+					throw new InvalidOperationException();
+			}
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
