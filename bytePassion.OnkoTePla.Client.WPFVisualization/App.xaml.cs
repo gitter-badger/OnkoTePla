@@ -1,8 +1,30 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using bytePassion.Lib.Communication.MessageBus;
+using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
+using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.OnkoTePla.Client.Core.Repositories;
+using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Client.Resources;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
+using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Patients;
+
+using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization
@@ -23,16 +45,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Patient-Repository
 
-//			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
-//			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
-//			patientRepository.LoadRepository();
+			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
+			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
+			patientRepository.LoadRepository();
 
 
 			// Config-Repository
 
-//			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
-//			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
-//			configReadRepository.LoadRepository();
+			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
+			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
+			configReadRepository.LoadRepository();
 
 
 			// EventStore
@@ -75,36 +97,36 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// GlobalStates registration
 
-//			var initialMedicalPractice = configReadRepository.GetAllMedicalPractices().First();  // TODO set last usage
-//
-//
-//			IHandlerCollection<ViewModelMessageBase> handlerCollection = new MultiHandlerCollection<ViewModelMessageBase>();
-//			IMessageBus<ViewModelMessageBase> viewModelMessageBus = new LocalMessageBus<ViewModelMessageBase>(handlerCollection);
-//			IStateEngine viewModelStateEngine = new StateEngine();
-//			IViewModelCollections viewModelCollections = new ViewModelCollections();
-//
-//			ViewModelCommunication = new ViewModelCommunication<ViewModelMessageBase>(viewModelMessageBus,
-//																					  viewModelStateEngine,
-//																					  viewModelCollections);
-//
-//			var        gridSizeInitialValue          = new Size(400,400);
-//			var        selectedDateInitialValue      = initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday();
-//			var        displayedPracticeInitialValue = new Tuple<Guid, uint>(initialMedicalPractice.Id, initialMedicalPractice.Version); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört			
-//
-//
-//			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSizeVariable, gridSizeInitialValue);
-//
-//
-//			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedDateVariable,      selectedDateInitialValue);
-//			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridDisplayedPracticeVariable, displayedPracticeInitialValue); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
-//			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedRoomVariable,      (Guid?) null);                  // when selectedRoomID == null --> all rooms are selected
-//			ViewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable,                     true);                          // true --> full width; false --> minimized
-//
-//
-//			ViewModelCommunication.CreateViewModelCollection<TherapyPlaceRowViewModel, AppointmentLocalisation>(
-//				TherapyPlaceRowViewModelCollection,
-//				(viewModel, therapyPlaceLocalisation) => viewModel.LocalisationIdentifier == therapyPlaceLocalisation
-//			);
+			var initialMedicalPractice = configReadRepository.GetAllMedicalPractices().First();  // TODO set last usage
+
+
+			IHandlerCollection<ViewModelMessageBase> handlerCollection = new MultiHandlerCollection<ViewModelMessageBase>();
+			IMessageBus<ViewModelMessageBase> viewModelMessageBus = new LocalMessageBus<ViewModelMessageBase>(handlerCollection);
+			IStateEngine viewModelStateEngine = new StateEngine();
+			IViewModelCollections viewModelCollections = new ViewModelCollections();
+
+			ViewModelCommunication = new ViewModelCommunication<ViewModelMessageBase>(viewModelMessageBus,
+																					  viewModelStateEngine,
+																					  viewModelCollections);
+
+			var        gridSizeInitialValue          = new Size(400,400);
+			var        selectedDateInitialValue      = initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday();
+			var        displayedPracticeInitialValue = new Tuple<Guid, uint>(initialMedicalPractice.Id, initialMedicalPractice.Version); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört			
+
+
+			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSizeVariable, gridSizeInitialValue);
+
+
+			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedDateVariable,      selectedDateInitialValue);
+			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridDisplayedPracticeVariable, displayedPracticeInitialValue); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
+			ViewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedRoomVariable,      (Guid?) null);                  // when selectedRoomID == null --> all rooms are selected
+			ViewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable,                     true);                          // true --> full width; false --> minimized
+
+
+			ViewModelCommunication.CreateViewModelCollection<TherapyPlaceRowViewModel, AppointmentLocalisation>(
+				TherapyPlaceRowViewModelCollection,
+				(viewModel, therapyPlaceLocalisation) => viewModel.LocalisationIdentifier == therapyPlaceLocalisation
+			);
 
 
 
@@ -134,7 +156,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 //				DataContext = mainWindowViewModel
 //			};			
 
-			var overviewPageViewModel = new OverviewPageViewModel();
+
+			var medicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModel(configReadRepository);
+			var roomSelectorViewModel = new RoomSelectorViewModel(configReadRepository);
+			var dateSelectorViewModel = new DateSelectorViewModel(configReadRepository);
+			var gridContainerViewModel = new GridContainerViewModel();
+
+			var overviewPageViewModel = new OverviewPageViewModel(medicalPracticeSelectorViewModel, 
+																  roomSelectorViewModel, 
+																  dateSelectorViewModel, 
+																  gridContainerViewModel);
 			var searchPageViewModel   = new SearchPageViewModel();
 			var optionsPageViewModel  = new OptionsPageViewModel();
 

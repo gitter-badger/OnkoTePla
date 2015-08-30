@@ -7,11 +7,11 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />-->
+<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />-->
+<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />-->
+<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />-->
+<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WPFVisualization;component/Views/Templates/CompactNavigationTemplate.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WPFVisualization;component/Views/Templates/ExpandedNavigationTemplate.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WPFVisualization;component/Views/Templates/NavBarIcons.xaml" />
@@ -21,6 +21,17 @@
             <converter:TherapyPlaceToStringConverter x:Key="TherapyPlaceToStringConverter" />
             <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <converter:TimeFromDateConverter x:Key="TimeFromDateConverter" />
+
+
+            <Style TargetType="Button">
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderThickness" Value="3"/>
+                    </Trigger>
+                </Style.Triggers>
+
+            </Style>
 
             <FontFamily x:Key="StandardFontFamily">Segoe UI Light</FontFamily>
 

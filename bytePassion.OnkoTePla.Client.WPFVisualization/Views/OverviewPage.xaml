@@ -6,15 +6,45 @@
              xmlns:local="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              xmlns:overviewPage="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="900">
 
     <d:UserControl.DataContext>
         <overviewPage:OverviewPageViewModelSampleData/>
     </d:UserControl.DataContext>
 
     <Grid>
-          <TextBlock Text="This is the OverviewPage"
-					 HorizontalAlignment="Center"
-					 VerticalAlignment="Center"/>  
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0"
+			  Background="Blue">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <local:MedicalPracticeSelector Grid.Row="0"
+										   Margin="5"
+										   DataContext="{Binding MedicalPracticeSelectorViewModel}"/>
+
+            <local:RoomSelector Grid.Row="1"
+								Margin="5"											
+								DataContext="{Binding RoomSelectorViewModel}"/>
+
+            <local:DateSelector Grid.Row="2"
+								DataContext="{Binding DateSelectorViewModel}"/>
+
+        </Grid>
+
+        <local:GridContainer Grid.Column="1"
+							 Margin="5"
+							 DataContext="{Binding GridContainerViewModel}"/>
     </Grid>
 </UserControl>

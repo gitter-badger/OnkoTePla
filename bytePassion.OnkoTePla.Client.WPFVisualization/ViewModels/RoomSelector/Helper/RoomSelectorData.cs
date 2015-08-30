@@ -1,35 +1,19 @@
-﻿using System.Windows.Input;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
-
+﻿using System;
+using System.Windows.Media;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper
 {
 	public class RoomSelectorData
-	{
-		public static readonly RoomSelectorData Dummy = new RoomSelectorData(null, null);
-
-		private readonly Room room;
-		private readonly ICommand selectRoomCommand;
-
-		public RoomSelectorData(Room room, ICommand selectRoomCommand)
+	{				
+		public RoomSelectorData(string roomName, Guid? roomId, Color displayedColor)
 		{
-			this.room = room;
-			this.selectRoomCommand = selectRoomCommand;
+			RoomName       = roomName;
+			RoomId         = roomId;
+			DisplayedColor = displayedColor;
 		}
 
-		public Room Room
-		{
-			get { return room; }
-		}
-
-		public ICommand SelectRoomCommand
-		{
-			get { return selectRoomCommand; }
-		}
-
-		public bool IsDummy
-		{
-			get { return Equals(Dummy); }
-		}
+		public string RoomName     { get; }
+		public Guid?  RoomId       { get; }
+		public Color  DisplayedColor { get; }
 	}
 }
