@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"			 
              xmlns:roomSelector="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector"           
              xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
+             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
 	
@@ -31,7 +32,7 @@
 			</ListBox.ItemsPanel>
 
             <ListBox.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate DataType="helper:RoomSelectorData">
                     <TextBlock Text="{Binding RoomName}"							  
 							   Foreground="Black"
 							   Background="{Binding DisplayedColor, 

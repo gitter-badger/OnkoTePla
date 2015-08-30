@@ -13,7 +13,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 	public class MedicalPracticeSelectorViewModel : IMedicalPracticeSelectorViewModel
 	{
 		private readonly IConfigurationReadRepository          configuration;
-		private readonly ObservableCollection<MedicalPractice> availableMedicalPractices;
 		private readonly GlobalState<Tuple<Guid, uint>>        displayedPracticeState; 
 
 
@@ -26,7 +25,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 
 			displayedPracticeState.StateChanged += OnDisplayedPracticeStateChanged;
 
-			availableMedicalPractices = new ObservableCollection<MedicalPractice>(configuration.GetAllMedicalPractices());
+			AvailableMedicalPractices = new ObservableCollection<MedicalPractice>(configuration.GetAllMedicalPractices());
 
 			SelectedMedicalPractice = configuration.GetMedicalPracticeById(displayedPracticeState.Value.Item1);
 		}
@@ -50,9 +49,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 			}
 		}
 
-		public ObservableCollection<MedicalPractice> AvailableMedicalPractices
-		{
-			get { return availableMedicalPractices; }
-		}
+		public ObservableCollection<MedicalPractice> AvailableMedicalPractices { get; }
 	}
 }

@@ -67,6 +67,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 			get { return selectedOption; }
 			set
 			{
+				if (value == null) return; // TODO: weiß nicht genau warum das hier nötig ist ......
+
 				if (value != selectedOption)
 				{
 					selectedRoomState.Value = value.RoomId;
