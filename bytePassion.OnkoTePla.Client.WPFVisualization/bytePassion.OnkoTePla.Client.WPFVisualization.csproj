@@ -45,6 +45,8 @@
     <Reference Include="Microsoft.Expression.Drawing, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -81,16 +83,34 @@
     <Compile Include="GlobalAccess\ViewModelCollections.cs" />
     <Compile Include="GlobalAccess\ViewModelCommunication.cs" />
     <Compile Include="GlobalAccess\Variables.cs" />
+    <Compile Include="NewMainWindow.xaml.cs">
+      <DependentUpon>NewMainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AddAppointmentTestView\AddAppointmentTestViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentOverView\AppointmentOverViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentView\AppointmentViewModelSampleData.cs" />
     <Compile Include="ViewModels\DateSelector\DateSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\GridContainer\GridContainerViewModel.cs" />
+    <Compile Include="ViewModels\GridContainer\GridContainerViewModelSampleData.cs" />
+    <Compile Include="ViewModels\GridContainer\IGridContainerViewModel.cs" />
     <Compile Include="ViewModels\Helper\AppointmentLocalisation.cs" />
     <Compile Include="ViewModels\MainWindow\MainWindowViewModelSampleData.cs" />
     <Compile Include="ViewModels\MedicalPracticeSelector\MedicalPracticeSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\NewMainWindow\INewMainWindowViewModel.cs" />
+    <Compile Include="ViewModels\NewMainWindow\NewMainWindowViewModelSampleData.cs" />
+    <Compile Include="ViewModels\NewMainWindow\NewMainWindowViewModel.cs" />
+    <Compile Include="ViewModels\OptionsPage\IOptionsPageViewModel.cs" />
+    <Compile Include="ViewModels\OptionsPage\OptionsPageViewModel.cs" />
+    <Compile Include="ViewModels\OptionsPage\OptionPageViewModelSampleData.cs" />
+    <Compile Include="ViewModels\OverviewPage\IOverviewPageViewModel.cs" />
+    <Compile Include="ViewModels\OverviewPage\OverviewPageViewModel.cs" />
+    <Compile Include="ViewModels\OverviewPage\OverviewPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\PatientSelector\PatientSelectorViewModelSampleData.cs" />
     <Compile Include="ViewModels\RoomSelector\RoomSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\SearchPage\ISearchPageViewModel.cs" />
+    <Compile Include="ViewModels\SearchPage\SearchPageViewModel.cs" />
+    <Compile Include="ViewModels\SearchPage\SearchPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\Messages\RemoveAppointmentFromTherapyPlaceRow.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\Messages\AddAppointmentToTherapyPlaceRow.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\TherapyPlaceRowViewModelSampleData.cs" />
@@ -143,11 +163,20 @@
     <Compile Include="Views\DateSelector.xaml.cs">
       <DependentUpon>DateSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GridContainer.xaml.cs">
+      <DependentUpon>GridContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginDialogView.xaml.cs">
       <DependentUpon>LoginDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MedicalPracticeSelector.xaml.cs">
       <DependentUpon>MedicalPracticeSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OptionsPage.xaml.cs">
+      <DependentUpon>OptionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OverviewPage.xaml.cs">
+      <DependentUpon>OverviewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PatientDetailView.xaml.cs">
       <DependentUpon>PatientDetailView.xaml</DependentUpon>
@@ -157,6 +186,9 @@
     </Compile>
     <Compile Include="Views\RoomSelector.xaml.cs">
       <DependentUpon>RoomSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TherapyPlaceRowView.xaml.cs">
       <DependentUpon>TherapyPlaceRowView.xaml</DependentUpon>
@@ -173,6 +205,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ActionBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -197,11 +233,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\GridContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MedicalPracticeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OptionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OverviewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RoomSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
