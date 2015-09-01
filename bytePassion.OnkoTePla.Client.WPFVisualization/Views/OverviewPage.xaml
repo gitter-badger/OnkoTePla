@@ -12,7 +12,7 @@
         <overviewPage:OverviewPageViewModelSampleData/>
     </d:UserControl.DataContext>
 
-    <Grid>
+    <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />

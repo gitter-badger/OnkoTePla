@@ -12,7 +12,7 @@
         <searchPage:SearchPageViewModelSampleData/>
 	</d:DesignData.DataContext>
 	
-    <Grid>
+    <Grid Background="White">
         <TextBlock Text="This is the SearchPage"
 				   HorizontalAlignment="Center"
 				   VerticalAlignment="Center"/>

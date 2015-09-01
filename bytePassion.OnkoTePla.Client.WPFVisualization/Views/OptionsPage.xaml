@@ -12,7 +12,7 @@
         <optionsPage:OptionsPageViewModelSampleData/>
     </d:UserControl.DataContext>
 
-    <Grid>
+    <Grid Background="White">
         <TextBlock Text="This is the OptionsPage"
 					 HorizontalAlignment="Center"
 					 VerticalAlignment="Center"/>
