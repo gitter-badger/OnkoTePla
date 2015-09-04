@@ -53,11 +53,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="WpfUtils\Adorner\AdornedControl.cs" />
     <Compile Include="WpfUtils\Adorner\AdornerPlacement.cs" />
     <Compile Include="WpfUtils\Adorner\FrameworkElementAdorner.cs" />
     <Compile Include="WpfUtils\Behaviors\AutoScrollDownBehavior.cs" />
+    <Compile Include="WpfUtils\Behaviors\HeightWidthReportingBehavior.cs" />
     <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandOnClickBehavior.cs" />
     <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
     <Compile Include="WpfUtils\Behaviors\GridViewSplitColumnsEqualyBehavior.cs" />

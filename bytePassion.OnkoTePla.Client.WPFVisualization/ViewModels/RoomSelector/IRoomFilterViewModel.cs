@@ -5,10 +5,10 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Help
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 {
-	public interface IRoomSelectorViewModel : IViewModelBase
+	public interface IRoomFilterViewModel : IViewModel
 	{
-		ObservableCollection<RoomSelectorData> AvailableRoomData { get; }
+		ObservableCollection<RoomSelectorData> AvailableRoomFilters { get; }
 
-		RoomSelectorData SelectedOption { get; set; }
+		RoomSelectorData SelectedRoomFilter { get; set; }
 	}
 }

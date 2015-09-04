@@ -45,7 +45,7 @@
                 BorderBrush="#99A9A9A9"
                 BorderThickness="1">
             
-            <ItemsControl ItemsSource="{Binding Appointments}">
+            <ItemsControl ItemsSource="{Binding AppointmentViewModels}">
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -63,7 +63,7 @@
                 <ItemsControl.ItemContainerStyle>
                     <Style>
                         <Setter Property="Canvas.Top" Value="-1" />
-                        <Setter Property="Canvas.Left" Value="{Binding CanvasPosition}" />
+                        <Setter Property="Canvas.Left" Value="{Binding CanvasLeftPosition}" />
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <!--  ReSharper restore Xaml.BindingWithContextNotResolved  -->

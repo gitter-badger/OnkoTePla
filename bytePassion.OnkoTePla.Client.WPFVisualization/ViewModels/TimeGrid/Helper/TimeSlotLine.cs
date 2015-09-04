@@ -2,7 +2,7 @@
 using bytePassion.Lib.FrameworkExtensions;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper
 {
 	public class TimeSlotLine : INotifyPropertyChanged
 	{

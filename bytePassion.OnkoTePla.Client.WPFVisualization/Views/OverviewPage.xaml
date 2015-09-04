@@ -36,7 +36,7 @@
 
             <local:RoomSelector Grid.Row="1"
 								Margin="5"											
-								DataContext="{Binding RoomSelectorViewModel}"/>
+								DataContext="{Binding RoomFilterViewModel}"/>
 
             <local:DateSelector Grid.Row="2"
 								DataContext="{Binding DateSelectorViewModel}"/>

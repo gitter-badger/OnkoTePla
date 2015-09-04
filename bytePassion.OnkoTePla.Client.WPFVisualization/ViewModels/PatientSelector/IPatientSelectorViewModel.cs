@@ -7,7 +7,7 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector
 {
-	internal interface IPatientSelectorViewModel : IViewModelBase
+	internal interface IPatientSelectorViewModel : IViewModel
 	{
 		CollectionViewSource Patients { get; }
         IReadOnlyList<Appointment> Appointments { get; }

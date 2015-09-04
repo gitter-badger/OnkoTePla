@@ -5,7 +5,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 {
-	public interface IDateSelectorViewModel : IViewModelBase
+	public interface IDateSelectorViewModel : IViewModel
 	{
 		Date SelectedDate { get; set; }
 

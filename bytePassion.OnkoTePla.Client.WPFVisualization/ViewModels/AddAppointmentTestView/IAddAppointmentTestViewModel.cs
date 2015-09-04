@@ -9,7 +9,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentTestView
 {
-	public interface IAddAppointmentTestViewModel : IViewModelBase
+	public interface IAddAppointmentTestViewModel : IViewModel
 	{
 		IEnumerable<MedicalPractice> MedicalPractices { get; }
 		IEnumerable<User> Users { get; }

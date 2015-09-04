@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Math;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess;
+using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Messages;
+using Constants = bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 {
-	public class GridLinesAndLabelPainting
+	public class TimeGridViewModel : ITimeGridViewModel, IViewModelMessageHandler<NewSizeAvailable>
 	{
+		
 		private enum GridViewDivisionState
 		{
 			QuarterHours,
@@ -19,47 +26,54 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			TwoHours
 		}
 
-		private const double ThresholdGridWidthQuarterHoursToHalfHours = 1400;
-		private const double ThresholdGridWidthHalfHoursToHours        = 1000;
-		private const double ThresholdGridWidthHoursToTwoHours         =  600;
+		private Size gridSize;
 
-		private Size gridSize;		
-		
 		private GridViewDivisionState gridViewDivisionState;
 
-		private Time timeSlotStart;
-		private Time timeSlotEnd;
+		private readonly Time timeSlotStart;
+		private readonly Time timeSlotEnd;
 
-		public GridLinesAndLabelPainting ()
-		{			
-			TimeSlotLabels = new ObservableCollection<TimeSlotLabel>();
+		public TimeGridViewModel(AggregateIdentifier identifierWithCorrectMedPracVersion,
+								 ViewModelCommunication<ViewModelMessage> viewModelCommunication,
+                                 IDataCenter dataCenter,
+								 Size initalSize)
+		{
+
+			viewModelCommunication.RegisterViewModelAtCollection<TimeGridViewModel, AggregateIdentifier>(
+				Constants.TimeGridViewModelCollection,
+				this
+			);
+
+			Identifier = identifierWithCorrectMedPracVersion;
+			var medicalPractice = dataCenter.Configuration.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
+																							Identifier.PracticeVersion);
+			
+			timeSlotStart = medicalPractice.HoursOfOpening.GetOpeningTime(identifierWithCorrectMedPracVersion.Date);
+			timeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(identifierWithCorrectMedPracVersion.Date);
+
 			TimeSlotLines  = new ObservableCollection<TimeSlotLine>();
+			TimeSlotLabels = new ObservableCollection<TimeSlotLabel>();
 
-			SetNewTimeSpan(new Time(7, 0), new Time(16, 0));
-
-			var globalGridSizeVariable = Global.ViewModelCommunication.GetGlobalViewModelVariable<Size>(Global.AppointmentGridSizeVariable);
-			gridSize = globalGridSizeVariable.Value;
-			globalGridSizeVariable.StateChanged += OnGridSizeChanged;
+			SetnewSize(initalSize);						
 		}
 
-		private void OnGridSizeChanged(Size newGridSize)
+		public void Process (NewSizeAvailable message)
+		{
+			SetnewSize(message.NewSize);
+		}
+
+		private void SetnewSize(Size newGridSize)
 		{
 			gridSize = newGridSize;
-			RecomputeGrid(false);
+			RecomputeGrid();
 		}
-		
+
 		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; }
 		public ObservableCollection<TimeSlotLine>  TimeSlotLines  { get; }
 
-		public void SetNewTimeSpan (Time newStartTime, Time newEndTime)
-		{
-			timeSlotStart = newStartTime;
-			timeSlotEnd   = newEndTime;
+		public AggregateIdentifier Identifier { get; }
 
-			RecomputeGrid(true);
-		}		
-
-		private void RecomputeGrid (bool forceCreation)
+		private void RecomputeGrid ()
 		{
 			if (gridSize.Width < 200)
 				return;
@@ -71,7 +85,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			int roundedTimeSlotCount = (int)Math.Floor(excactTimeSlotCount);
 			var timeSlotWidth        = gridSize.Width / excactTimeSlotCount;
 
-			if (forceCreation || newGridViewDivision != gridViewDivisionState || TimeSlotLabels.Count == 0)
+			if (newGridViewDivision != gridViewDivisionState || TimeSlotLabels.Count == 0)
 			{
 				gridViewDivisionState = newGridViewDivision;
 				CreateGridDrawing(roundedTimeSlotCount, excactTimeSlotCount,
@@ -93,7 +107,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			{
 
 				var timeCaption = new Time(timeSlotStart + new Duration(slot*slotLengthInSeconds)).ToString()
-																							      .Substring(0, 5);
+																								  .Substring(0, 5);
 
 				TimeSlotLabels.Add(new TimeSlotLabel(timeCaption)
 				{
@@ -130,14 +144,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		}
 
 		private void UpdateGridDrawing (int roundedTimeSlotCount, double excactTimeSlotCount, double timeSlotWidth)
-		{ 
+		{
 			for (int slot = 0; slot < roundedTimeSlotCount + 1; slot++)
 			{
 				var xCoord = slot*timeSlotWidth;
 
-				TimeSlotLabels[slot].XCoord = xCoord;
-				TimeSlotLines[slot].XCoord  = xCoord;
-				TimeSlotLines[slot].YCoordBottom = gridSize.Height;
+				TimeSlotLabels[slot].XCoord       = xCoord;
+				TimeSlotLines [slot].XCoord       = xCoord;
+				TimeSlotLines [slot].YCoordBottom = gridSize.Height;
 			}
 
 			if (!MathLibUtils.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
@@ -149,10 +163,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		}
 
 		private static GridViewDivisionState GetDevisionForWidth (double width)
-		{
-			if (width < ThresholdGridWidthHoursToTwoHours)         return GridViewDivisionState.TwoHours;
-			if (width < ThresholdGridWidthHalfHoursToHours)        return GridViewDivisionState.Hours;
-			if (width < ThresholdGridWidthQuarterHoursToHalfHours) return GridViewDivisionState.HalfHours;
+		{ 
+			if (width < Constants.ThresholdGridWidthHoursToTwoHours)         return GridViewDivisionState.TwoHours;
+			if (width < Constants.ThresholdGridWidthHalfHoursToHours)        return GridViewDivisionState.Hours;
+			if (width < Constants.ThresholdGridWidthQuarterHoursToHalfHours) return GridViewDivisionState.HalfHours;
 
 			return GridViewDivisionState.QuarterHours;
 		}
@@ -161,12 +175,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		{
 			switch (gridViewDivisionState)
 			{
-				case GridViewDivisionState.QuarterHours: return  900;
+				case GridViewDivisionState.QuarterHours: return 900;
 				case GridViewDivisionState.HalfHours:    return 1800;
 				case GridViewDivisionState.Hours:        return 3600;
 				case GridViewDivisionState.TwoHours:     return 7200;
 			}
 			throw new ArgumentException();
-		}
+		}		
 	}
 }

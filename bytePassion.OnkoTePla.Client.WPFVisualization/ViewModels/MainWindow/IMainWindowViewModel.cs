@@ -17,6 +17,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 		IAppointmentGridViewModel         AppointmentGridViewModel         { get; }
 		IDateSelectorViewModel            DateSelectorViewModel            { get; }
 		IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }
-		IRoomSelectorViewModel            RoomSelectorViewModel            { get; }
+		IRoomFilterViewModel            RoomFilterViewModel            { get; }
 	}
 }

@@ -1,13 +1,17 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 {
-	public interface IGridContainerViewModel
+	public interface IGridContainerViewModel : IViewModel
 	{
-		ObservableCollection<AppointmentGridViewModel> LoadedAppointmentGrids { get; }
+		ObservableCollection<IAppointmentGridViewModel> LoadedAppointmentGrids { get; }
+		
+		int CurrentDisplayedAppointmentGridIndex { get; }
 
-		AppointmentGridViewModel CurrentDisplayedAppointmentGridViewModel { get; }
+		Size ReportedGridSize { set; get; }
 	}
 }

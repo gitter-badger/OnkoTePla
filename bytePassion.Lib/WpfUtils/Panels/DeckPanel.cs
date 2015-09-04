@@ -22,7 +22,8 @@ namespace bytePassion.Lib.WpfUtils.Panels
 				
 		protected override Size MeasureOverride (Size availableSize)
 		{
-			
+			if (Children == null || Children.Count == 0)
+				return availableSize;
 
 			var visibleChild = Children[SelectedLayer];
 			visibleChild.Measure(availableSize);

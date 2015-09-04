@@ -6,7 +6,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 {
-	interface INewMainWindowViewModel : IViewModelBase
+	interface INewMainWindowViewModel : IViewModel
 	{
 		int SelectedPage { get; }
 

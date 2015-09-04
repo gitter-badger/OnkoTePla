@@ -10,7 +10,7 @@
              d:DesignHeight="150" d:DesignWidth="300">
 	
 	<d:UserControl.DataContext>
-		<roomSelector:RoomSelectorViewModelSampleData/>
+		<roomSelector:RoomFilterViewModelSampleData/>
 	</d:UserControl.DataContext>
 	
 	<UserControl.Resources>
@@ -19,9 +19,9 @@
 	
     <Grid>
 
-        <ListBox ItemsSource="{Binding AvailableRoomData}"
+        <ListBox ItemsSource="{Binding AvailableRoomFilters}"
 				 SelectionMode="Single"
-				 SelectedItem="{Binding SelectedOption, 
+				 SelectedItem="{Binding SelectedRoomFilter, 
 										Mode=TwoWay, 
 										UpdateSourceTrigger=PropertyChanged}">
 			

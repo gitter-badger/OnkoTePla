@@ -1,209 +1,187 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Input;
+using System.Windows;
 using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.TimeLib;
-using bytePassion.Lib.WpfUtils.Commands;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
+using bytePassion.OnkoTePla.Client.Core.Readmodels;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Messages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Messages;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Messages;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-
-using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;
-
+using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
 {
-	public class AppointmentGridViewModel : IAppointmentGridViewModel
+	public class AppointmentGridViewModel : IAppointmentGridViewModel, 
+											IDisposable,
+											IViewModelMessageHandler<ActivateAppointmentGridViewModel>,
+											IViewModelMessageHandler<DeactivateAppointmentGridViewModel>
 	{
-			
-		// FrameworkAccess /////////////////////////////////////////////////////////////////////////////////
+		private bool viewModelIsActive;
 
-		private readonly IReadModelRepository         readModelRepository;
-		private readonly IConfigurationReadRepository configuration;
-		private readonly ICommandBus                  commandBus;
-		private readonly SessionInformation           sessionInformation;		
-		
-		// AppointmentData /////////////////////////////////////////////////////////////////////////////////
+		private readonly IDataCenter dataCenter;
+		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
 
-		private readonly IDictionary<AggregateIdentifier, AppointmentGridDisplayDataSet> appointmentDataSets;
-		private AppointmentGridDisplayDataSet currentlyDisplayedDataSet;				
+		private readonly AppointmentsOfADayReadModel readModel;
+		private readonly GlobalState<Size> globalGridSizeVariable;
 
-		// Commands ////////////////////////////////////////////////////////////////////////////////////////
-
-		private readonly ParameterrizedCommand<AggregateIdentifier> showPracticeAndDateCommand;		
-
-		private readonly Command commitChangesCommand;
-		private readonly Command discardChangesCommand;
-
-		// Grid state //////////////////////////////////////////////////////////////////////////////////////
-
-		private IAppointmentViewModel editingObject;
-		private OperatingMode operatingMode;
-
-		private readonly GlobalState<Guid?> selectedRoomState;
-		private readonly GlobalState<Tuple<Guid, uint>> displayedPracticeState;
-		private readonly GlobalState<Date> selectedDateState; 
-
-		public AppointmentGridViewModel(IReadModelRepository readModelRepository, 
-										IConfigurationReadRepository configuration,
-										ICommandBus commandBus, 
-										SessionInformation sessionInformation)
-		{			
-			this.readModelRepository = readModelRepository;
-			this.configuration = configuration;
-			this.commandBus = commandBus;
-			this.sessionInformation = sessionInformation;
-
-			selectedRoomState      = ViewModelCommunication.GetGlobalViewModelVariable<Guid?>            (AppointmentGridSelectedRoomVariable);
-			selectedDateState      = ViewModelCommunication.GetGlobalViewModelVariable<Date>             (AppointmentGridSelectedDateVariable);
-			displayedPracticeState = ViewModelCommunication.GetGlobalViewModelVariable<Tuple<Guid, uint>>(AppointmentGridDisplayedPracticeVariable);			
-
-			appointmentDataSets = new Dictionary<AggregateIdentifier, AppointmentGridDisplayDataSet>();
-			currentlyDisplayedDataSet = null;
-			editingObject = null;
-			operatingMode = OperatingMode.View;
-			
-			showPracticeAndDateCommand = new ParameterrizedCommand<AggregateIdentifier>(ShowPracticeAndDateOnScreen);			
-			commitChangesCommand  = new Command(CommitAllChanges);
-			discardChangesCommand = new Command(DiscardAllChanges);				
-
-			selectedDateState.StateChanged      += OnSelectedDateChanged;
-			displayedPracticeState.StateChanged += OnDisplayedPracticeChanged;
-
-			ShowPracticeAndDateOnScreen(new AggregateIdentifier(selectedDateState.Value, displayedPracticeState.Value.Item1));
-		}
-
-		private void OnDisplayedPracticeChanged(Tuple<Guid, uint> practiceInfo)
+		public AppointmentGridViewModel(AggregateIdentifier identifier, 
+									    IDataCenter dataCenter, 
+										ViewModelCommunication<ViewModelMessage> viewModelCommunication)
 		{
-			var currentIdentifier = currentlyDisplayedDataSet.AppointmentReadModel.Identifier;
+			this.dataCenter = dataCenter;
+			this.viewModelCommunication = viewModelCommunication;
 
-			if (practiceInfo.Item1 != currentIdentifier.MedicalPracticeId)
-				ShowPracticeAndDateOnScreen(new AggregateIdentifier(currentIdentifier.Date,
-																	practiceInfo.Item1));
-		}	
+			viewModelIsActive = false;
+			
+			globalGridSizeVariable = viewModelCommunication.GetGlobalViewModelVariable<Size>(
+				AppointmentGridSizeVariable
+				);
+			globalGridSizeVariable.StateChanged += OnGridSizeChanged;
 
-		private void OnSelectedDateChanged(Date date)
-		{			
-			if (currentlyDisplayedDataSet.AppointmentReadModel.Identifier.Date == date) 
-				return;
+			viewModelCommunication.RegisterViewModelAtCollection<AppointmentGridViewModel, AggregateIdentifier>(
+				AppointmentGridViewModelCollection,
+				this					
+			);
 
-			var currentIdentifier = currentlyDisplayedDataSet.AppointmentReadModel.Identifier;
+			readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(identifier);
 
-			ShowPracticeAndDateOnScreen(new AggregateIdentifier(date, 
-																currentIdentifier.MedicalPracticeId));
-		}			
+			Identifier = readModel.Identifier; // because now the identifier contains the correct Version
 
-		private void ShowPracticeAndDateOnScreen(AggregateIdentifier identifier)
-		{
+			readModel.AppointmentChanged += OnReadModelAppointmentChanged;
 
-			AppointmentGridDisplayDataSet appointmentDataSet;
 
-			if (appointmentDataSets.ContainsKey(identifier))
+			TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication, 
+													  dataCenter, globalGridSizeVariable.Value);
+
+			var medicalPractice = dataCenter.Configuration.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
+			                                                                                Identifier.PracticeVersion);
+
+			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();
+
+			foreach (var room in medicalPractice.Rooms)
 			{
-				appointmentDataSet = appointmentDataSets[identifier];
+				foreach (var therapyPlace in room.TherapyPlaces)
+				{
+					var location = new TherapyPlaceRowIdentifier(Identifier, therapyPlace.Id);
+					TherapyPlaceRowViewModels.Add(new TherapyPlaceRowViewModel(viewModelCommunication, therapyPlace, 
+																			   room.DisplayedColor, location));
+				}
 			}
-			else
+
+			foreach (var appointment in readModel.Appointments)
 			{
-				var appointmentReadModel = readModelRepository.GetAppointmentsOfADayReadModel(identifier);
-				var updatedIdentifier = appointmentReadModel.Identifier;
-				var medicalPractice = configuration.GetMedicalPracticeByIdAndVersion(updatedIdentifier.MedicalPracticeId,
-				                                                                     updatedIdentifier.PracticeVersion);
-
-				appointmentDataSet = new AppointmentGridDisplayDataSet(appointmentReadModel, medicalPractice, this, selectedRoomState);
-				appointmentDataSets.Add(updatedIdentifier, appointmentDataSet);
-			}
-
-			currentlyDisplayedDataSet = appointmentDataSet;			
-			
-			NotifyViewThatNewDataSetIsLoaded();						
-		}
-
-		private void NotifyViewThatNewDataSetIsLoaded()
-		{
-			PropertyChanged.Notify(this, "TimeSlotLabels");
-			PropertyChanged.Notify(this, "TimeSlotLines");
-			PropertyChanged.Notify(this, "displayedTherapyPlaceRows");
-			PropertyChanged.Notify(this, "TherapyPlaceRows");
-		}
-
-		private void CommitAllChanges()
-		{
-			// TODO
-			OperatingMode = OperatingMode.View;
-		}
-
-		private void DiscardAllChanges()
-		{
-			// TODO
-			OperatingMode = OperatingMode.View;
-		}
-		
-
-		public ICommand ShowPracticeAndDate { get { return showPracticeAndDateCommand; }}
-		public ICommand CommitChanges       { get { return commitChangesCommand;       }}
-		public ICommand DiscardChanges      { get { return discardChangesCommand;      }}
-
-		
-		public void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment)
-		{ 
-			commandBus.SendCommand(new DeleteAppointment(currentlyDisplayedDataSet.AppointmentReadModel.Identifier, 
-														 currentlyDisplayedDataSet.AppointmentReadModel.AggregateVersion, 
-														 sessionInformation.LoggedInUser.Id, 
-														 appointment.Id, 
-														 appointment.Patient.Id));
-			
-			OperatingMode = OperatingMode.View;
-		}
-
-		public ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get { return currentlyDisplayedDataSet.TimeSlotLabels;   }} 
-		public ObservableCollection<TimeSlotLine>              TimeSlotLines    { get { return currentlyDisplayedDataSet.TimeSlotLines;    }} 
-		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get { return currentlyDisplayedDataSet.TherapyPlaceRows; }}		
-
-		public IAppointmentViewModel EditingObject
-		{
-			get { return editingObject; }
-			set
-			{				
-				// TODO lock day
-
-				OperatingMode = value == null ? OperatingMode.View : OperatingMode.Edit;
-				PropertyChanged.ChangeAndNotify(this, ref editingObject, value);
+				AddAppointment(appointment);
 			}
 		}
 
-		public OperatingMode OperatingMode
+		private void OnReadModelAppointmentChanged(object sender, AppointmentChangedEventArgs appointmentChangedEventArgs)
 		{
-			get { return operatingMode; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref operatingMode, value);}
+			switch (appointmentChangedEventArgs.ChangeAction)
+			{
+				case ChangeAction.Added:   { AddAppointment(appointmentChangedEventArgs.Appointment);    break; }
+				case ChangeAction.Deleted: { RemoveAppointment(appointmentChangedEventArgs.Appointment); break; }				
+				case ChangeAction.Modified:
+				{
+					// TODO: das geht bestimmt besser!!
+					RemoveAppointment(appointmentChangedEventArgs.Appointment);
+					AddAppointment(appointmentChangedEventArgs.Appointment);
+					break;
+				}
+			}
 		}
 
-		public Date CurrentlyDisplayedDate
+		private void AddAppointment(Appointment newAppointment)
 		{
-			get { return currentlyDisplayedDataSet.AppointmentReadModel.Identifier.Date; }
+			var location = new TherapyPlaceRowIdentifier(Identifier, newAppointment.TherapyPlace.Id);
+			new AppointmentViewModel(newAppointment, viewModelCommunication, dataCenter, location);			
+		}
+		
+		private void RemoveAppointment(Appointment appointmentToRemove)
+		{
+			viewModelCommunication.SendTo<AppointmentViewModel, Guid, DisposeAppointmentViewModel>(
+				AppointmentViewModelCollection,
+				appointmentToRemove.Id,
+				new DisposeAppointmentViewModel()	
+			);
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		///////////////////////////////////////////////////////////////////////////////////////////////
-		/////////                                                                           ///////////
-		/////////                                  TestArea                                 ///////////
-		/////////                                                                           ///////////
-		///////////////////////////////////////////////////////////////////////////////////////////////
-
-		public void TestLoad()
+		private void OnGridSizeChanged(Size newGridSize)
 		{
-			var identifier = new AggregateIdentifier(new Date(3, 7, 2015), configuration.GetMedicalPracticeByName("examplePractice1").Id);
-			ShowPracticeAndDate.Execute(identifier);
+			if (viewModelIsActive)
+			{
+				viewModelCommunication.SendTo<TimeGridViewModel, AggregateIdentifier, NewSizeAvailable>(
+					TimeGridViewModelCollection,
+					Identifier,
+					new NewSizeAvailable(newGridSize)	
+				);
+
+				foreach (var appointment in readModel.Appointments)
+				{
+					viewModelCommunication.SendTo<AppointmentViewModel, Guid, NewSizeAvailable>(
+						AppointmentViewModelCollection,
+						appointment.Id,
+						new NewSizeAvailable(newGridSize)
+					);
+				}							
+			}
+		}
+
+		public AggregateIdentifier Identifier { get; }
+	
+		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; }
+
+		public ITimeGridViewModel TimeGridViewModel { get; }
+				
+		
+		public void Process(ActivateAppointmentGridViewModel message)
+		{
+			viewModelIsActive = true;
+			OnGridSizeChanged(globalGridSizeVariable.Value);
+		}
+
+		public void Process(DeactivateAppointmentGridViewModel message)
+		{
+			viewModelIsActive = false;
+		}
+
+		private bool disposed = false;		
+
+		public void Dispose ()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		~AppointmentGridViewModel ()
+		{
+			Dispose(false);
+		}
+		
+		private void Dispose (bool disposing)
+		{
+			if (!disposed)
+			{
+				if (disposing)
+				{
+//					AppointmentReadModel.AppointmentChanged -= ReadModelOnAppointmentChanged;
+//					AppointmentReadModel.Dispose();
+
+					viewModelCommunication.DeregisterViewModelAtCollection<AppointmentGridViewModel, AggregateIdentifier>(
+						AppointmentGridViewModelCollection,
+						this					
+					);
+				}
+
+			}
+			disposed = true;
 		}
 	}
 }

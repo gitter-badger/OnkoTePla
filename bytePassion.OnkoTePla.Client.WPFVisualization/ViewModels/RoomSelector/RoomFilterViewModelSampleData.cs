@@ -7,23 +7,23 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Help
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 {
-	class RoomSelectorViewModelSampleData : IRoomSelectorViewModel
+	class RoomFilterViewModelSampleData : IRoomFilterViewModel
 	{
-		public RoomSelectorViewModelSampleData()
+		public RoomFilterViewModelSampleData()
 		{
-			AvailableRoomData = new ObservableCollection<RoomSelectorData>
+			AvailableRoomFilters = new ObservableCollection<RoomSelectorData>
 			{
 				new RoomSelectorData("room 01",    null, Colors.Aqua),
 				new RoomSelectorData("room 02",    null, Colors.Coral),
 				new RoomSelectorData("alle Räume", null, Colors.DarkGreen)
 			};
 
-			SelectedOption = AvailableRoomData[0];
+			SelectedRoomFilter = AvailableRoomFilters[0];
 		}
 
-		public ObservableCollection<RoomSelectorData> AvailableRoomData { get; }
+		public ObservableCollection<RoomSelectorData> AvailableRoomFilters { get; }
 
-		public RoomSelectorData SelectedOption { get; set;  }		
+		public RoomSelectorData SelectedRoomFilter { get; set;  }		
 
 		public event PropertyChangedEventHandler PropertyChanged;	
 	}

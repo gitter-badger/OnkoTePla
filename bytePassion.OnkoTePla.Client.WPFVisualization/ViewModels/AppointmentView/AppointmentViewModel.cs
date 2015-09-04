@@ -1,59 +1,71 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfUtils.Commands;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Messages;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Messages;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Messages;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using MahApps.Metro.Controls.Dialogs;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.GlobalAccess.Global;
+
+using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
 {
-	public class AppointmentViewModel : IAppointmentViewModel
+	public class AppointmentViewModel : DisposingObject, 
+										IAppointmentViewModel, 
+										IViewModelMessageHandler<DisposeAppointmentViewModel>,
+										IViewModelMessageHandler<NewSizeAvailable>
 	{		
-		private readonly Appointment appointment;
-		
-		private readonly IAppointmentGridViewModel containerGrid;
-		
-		
+		private readonly Appointment appointment;		
+		private readonly IDataCenter dataCenter;
+		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
 
-		private double canvasPosition;
+		private double canvasLeftPosition;
 		private double viewElementLength;
+
 		private OperatingMode operatingMode;
 
-		private readonly Command switchToEditModeCommand;
-		private readonly Command deleteAppointmentCommand;
+		private Time timeSlotStart;
+		private Time timeSlotEnd;
+
+		private TherapyPlaceRowIdentifier currentLocation;
 
 		public AppointmentViewModel(Appointment appointment,
-									AppointmentLocalisation initialLocalisation, 						
-									IAppointmentGridViewModel containerGrid)
-		{
-			
-			this.containerGrid = containerGrid;
+									ViewModelCommunication<ViewModelMessage> viewModelCommunication,
+									IDataCenter dataCenter,
+									TherapyPlaceRowIdentifier initialLocalisation)
+		{ 						
 			this.appointment = appointment;
-			
+			this.viewModelCommunication = viewModelCommunication;
+			this.dataCenter = dataCenter;
 
 
-			switchToEditModeCommand = new Command(
+			viewModelCommunication.RegisterViewModelAtCollection<AppointmentViewModel, Guid>(
+				AppointmentViewModelCollection,
+				this	
+			);
+
+			SwitchToEditMode = new Command(
 				() =>
 				{
-					if (containerGrid.OperatingMode == OperatingMode.View)
-					{
-						containerGrid.EditingObject = this;
-						OperatingMode = OperatingMode.Edit;
-					}
+
 
 				}
 			);
 
-			deleteAppointmentCommand = new Command(async () =>
+			DeleteAppointment = new Command(async () =>
 				{
 					var dialog = new UserDialogBox("", "Wollen Sie den Termin wirklich löschen?", 
 												   MessageBoxButton.OKCancel, MessageBoxImage.Question);
@@ -61,60 +73,74 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 				    if (result == MessageDialogResult.Affirmative)
 				    {
-						containerGrid.DeleteAppointment(this, appointment);
+					//	containerGrid.DeleteAppointment(this, appointment);
 				    }
 				}
 			);
-			
-			var globalGridSizeVariable  = ViewModelCommunication.GetGlobalViewModelVariable<Size>(AppointmentGridSizeVariable);
-
-			globalGridSizeVariable.StateChanged  += OnGridSizeChanged;
-
-			OnGridSizeChanged(globalGridSizeVariable.Value);			
+												
+			SetNewLocation(initialLocalisation, true);		
 		}		
-
-		private void OnGridSizeChanged(Size newGridSize)
-		{
-//			var lengthOfOneHour = newGridSize.Width / (Time.GetDurationBetween(CurrentRow.TimeSlotEnd, CurrentRow.TimeSlotStart).Seconds / 3600.0);
-//			
-//			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, CurrentRow.TimeSlotStart);
-//			CanvasPosition =  lengthOfOneHour * (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
-//
-//			var durationOfAppointment = Time.GetDurationBetween(appointment.StartTime, appointment.EndTime);
-//			ViewElementLength = lengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
-		}
-
 		
 
-		private void OnContainerGridChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+		private void SetNewLocation(TherapyPlaceRowIdentifier therapyPlaceRowIdentifier, bool isInitialLocation)
 		{
-			if (propertyChangedEventArgs.PropertyName == "OperatingMode")						//
-				if (((IAppointmentGridViewModel)sender).OperatingMode == OperatingMode.View)	// Operating Mode to "OperatingMode.View"
-					if (OperatingMode == OperatingMode.Edit)									// is set from the Grid
-						OperatingMode = OperatingMode.View;										//
-		}		
+			if (!isInitialLocation)
+			{
+				viewModelCommunication.SendTo<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier, RemoveAppointmentFromTherapyPlaceRow>(
+					TherapyPlaceRowViewModelCollection,
+					currentLocation,
+					new RemoveAppointmentFromTherapyPlaceRow(this)
+				);
+			}
 
-		public ICommand DeleteAppointment { get { return deleteAppointmentCommand; }}
-		public ICommand SwitchToEditMode  { get { return switchToEditModeCommand;  }}
+			currentLocation = therapyPlaceRowIdentifier;
 
-		public string PatientDisplayName
-		{
-			get {return appointment.Patient.Name; }
+			var medicalPractice = dataCenter.GetMedicalPracticeByDateAndId(therapyPlaceRowIdentifier.PlaceAndDate.Date,
+																		   therapyPlaceRowIdentifier.PlaceAndDate.MedicalPracticeId);
+
+			timeSlotStart = medicalPractice.HoursOfOpening.GetOpeningTime(therapyPlaceRowIdentifier.PlaceAndDate.Date);
+			timeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(therapyPlaceRowIdentifier.PlaceAndDate.Date);
+
+
+			viewModelCommunication.SendTo<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier, AddAppointmentToTherapyPlaceRow>(
+				TherapyPlaceRowViewModelCollection,
+				therapyPlaceRowIdentifier,
+				new AddAppointmentToTherapyPlaceRow(this)	
+			);
+
+			var globalGridSizeVariable  = viewModelCommunication.GetGlobalViewModelVariable<Size>(
+				AppointmentGridSizeVariable
+			);
+
+			SetNewGridSize(globalGridSizeVariable.Value);
 		}
 
-		public string TimeSpan
+		private void SetNewGridSize(Size newGridSize)
 		{
-			get { return appointment.StartTime.ToString().Substring(0, 5) + " - " + appointment.EndTime.ToString().Substring(0, 5); }
+			var lengthOfOneHour = newGridSize.Width / (Time.GetDurationBetween(timeSlotEnd, timeSlotStart).Seconds / 3600.0);
+			
+			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, timeSlotStart);
+			CanvasLeftPosition =  lengthOfOneHour * (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
+
+			var durationOfAppointment = Time.GetDurationBetween(appointment.StartTime, appointment.EndTime);
+			ViewElementLength = lengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
 		}
 
-		public string AppointmentDate => appointment.Day.ToString();
-		public string Description     => appointment.Description;
-		public string Room            => appointment.TherapyPlace.Name;		
+		public Guid Identifier => appointment.Id;
+		
+		public ICommand DeleteAppointment { get; }
+		public ICommand SwitchToEditMode  { get; }
 
-		public double CanvasPosition
+		public string PatientDisplayName => appointment.Patient.Name;
+		public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
+		public string AppointmentDate    => appointment.Day.ToString();
+		public string Description        => appointment.Description;
+		public string Room               => appointment.TherapyPlace.Name;		
+
+		public double CanvasLeftPosition
 		{
-			get { return canvasPosition; }
-			set { PropertyChanged.ChangeAndNotify(this, ref canvasPosition, value); }
+			get { return canvasLeftPosition; }
+			set { PropertyChanged.ChangeAndNotify(this, ref canvasLeftPosition, value); }
 		}
 
 		public double ViewElementLength
@@ -122,59 +148,38 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			get { return viewElementLength; }
 			set { PropertyChanged.ChangeAndNotify(this, ref viewElementLength, value); }
 		}
-
-		public Guid AppointmentId  { get { return appointment.Id;              }}
-		public Guid TherapyPlaceId { get { return appointment.TherapyPlace.Id; }}
+	
 
 		public OperatingMode OperatingMode
 		{
 			get { return operatingMode; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref operatingMode, value); }
-		}
+		}		
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
-
-		private void AttachContainerHander()
-		{			
-			containerGrid.PropertyChanged += OnContainerGridChanged;
-		}
-
-		private void DetachContainerHandler()
-		{			
-			containerGrid.PropertyChanged -= OnContainerGridChanged;
-		}
-
-		#region Dispose
-
-		private bool disposed = false;
-	    private readonly StringBuilder stringBuilder = new StringBuilder();
-
-	    public void Dispose ()
+		public void Process (DisposeAppointmentViewModel message)
 		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
+			Dispose();
 		}
-		 
-		~AppointmentViewModel()
+
+		public void Process (NewSizeAvailable message)
 		{
-			Dispose(false);
+			SetNewGridSize(message.NewSize);
 		}
 
-		private void Dispose (bool disposing)
+		public override void CleanUp()
 		{
-			if (!disposed)
-			{
-				if (disposing)
-				{					
-					DetachContainerHandler();
-					//currentRow.RemoveAppointment(this);
-				}
+			viewModelCommunication.DeregisterViewModelAtCollection<AppointmentViewModel, Guid>(
+				AppointmentViewModelCollection,
+				this
+			);
 
-			}
-			disposed = true;
+			viewModelCommunication.SendTo<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier, RemoveAppointmentFromTherapyPlaceRow>(
+				TherapyPlaceRowViewModelCollection,
+				currentLocation,
+				new RemoveAppointmentFromTherapyPlaceRow(this)
+			);
 		}
 
-		#endregion
-	}
+		public event PropertyChangedEventHandler PropertyChanged;		
+	}	
 }

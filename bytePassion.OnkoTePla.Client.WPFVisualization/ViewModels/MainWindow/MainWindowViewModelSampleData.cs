@@ -19,7 +19,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 			AppointmentGridViewModel         = new AppointmentGridViewModelSampleData();
 			DateSelectorViewModel            = new DateSelectorViewModelSampleData();
 			MedicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModelSampleData();
-			RoomSelectorViewModel            = new RoomSelectorViewModelSampleData();
+			RoomFilterViewModel            = new RoomFilterViewModelSampleData();
 		}
 		
 		public IPatientSelectorViewModel         PatientSelectorViewModel         { get; private set; }
@@ -28,6 +28,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 		public IAppointmentGridViewModel         AppointmentGridViewModel         { get; private set; }
 		public IDateSelectorViewModel            DateSelectorViewModel            { get; private set; }
 		public IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; private set; }
-		public IRoomSelectorViewModel            RoomSelectorViewModel            { get; private set; }
+		public IRoomFilterViewModel            RoomFilterViewModel            { get; private set; }
 	}
 }

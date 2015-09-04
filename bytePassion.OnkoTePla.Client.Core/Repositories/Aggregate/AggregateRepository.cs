@@ -16,7 +16,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate
 		private readonly IPatientReadRepository patientRepository;
 		private readonly IConfigurationReadRepository config;
 
-		public AggregateRepository(IEventBus eventBus, IEventStore eventStore, 
+		public AggregateRepository(IEventBus eventBus, 
+								   IEventStore eventStore, 
 								   IPatientReadRepository patientRepository, 
 								   IConfigurationReadRepository config)
 		{ 

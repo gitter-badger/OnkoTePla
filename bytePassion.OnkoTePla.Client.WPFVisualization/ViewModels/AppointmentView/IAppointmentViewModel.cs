@@ -6,17 +6,19 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
 {
-	public interface IAppointmentViewModel : IViewModelBase, IDisposable
+	public interface IAppointmentViewModel : IViewModel, IDisposable
 	{
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }
-
-		string PatientDisplayName { get; }		
-		double CanvasPosition     { get; set; }
+		
+		double CanvasLeftPosition { get; set; }
 		double ViewElementLength  { get; set; }
 
-		Guid AppointmentId  { get; }
-		Guid TherapyPlaceId { get; }
+		string PatientDisplayName { get; }
+		string TimeSpan           { get; }
+		string AppointmentDate    { get; }
+		string Description        { get; }
+		string Room               { get; }
 
 		OperatingMode OperatingMode { get; }
 	}

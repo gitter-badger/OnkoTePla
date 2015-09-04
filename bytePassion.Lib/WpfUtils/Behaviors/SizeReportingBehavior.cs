@@ -6,31 +6,19 @@ namespace bytePassion.Lib.WpfUtils.Behaviors
 {
 	public class SizeReportingBehavior : Behavior<FrameworkElement>
 	{
-
-		public static readonly DependencyProperty CurrentHeightProperty = 
-			DependencyProperty.Register("CurrentHeight", 
-										typeof (double), 
-										typeof (SizeReportingBehavior), 
-										new PropertyMetadata(default(double)));
-
-		public static readonly DependencyProperty CurrentWidthProperty = 
-			DependencyProperty.Register("CurrentWidth", 
-										typeof (double), 
-										typeof (SizeReportingBehavior), 
-										new PropertyMetadata(default(double)));
-
-		public double CurrentHeight
-		{
-			get { return (double) GetValue(CurrentHeightProperty); }
-			set { SetValue(CurrentHeightProperty, value); }
-		}
 		
-		public double CurrentWidth
-		{
-			get { return (double) GetValue(CurrentWidthProperty); }
-			set { SetValue(CurrentWidthProperty, value); }
-		}
+		public static readonly DependencyProperty ReportedSizeProperty = 
+			DependencyProperty.Register("ReportedSize", 
+										typeof (Size), 
+										typeof (SizeReportingBehavior), 
+										new PropertyMetadata(default(Size)));
 
+		public Size ReportedSize
+		{
+			get { return (Size) GetValue(ReportedSizeProperty); }
+			set { SetValue(ReportedSizeProperty, value); }
+		}
+				
 		protected override void OnAttached()
 		{
 			base.OnAttached();			
@@ -47,18 +35,17 @@ namespace bytePassion.Lib.WpfUtils.Behaviors
 
 		private void OnLoaded (object sender, RoutedEventArgs routedEventArgs)
 		{
-			ReportSize((FrameworkElement) sender);
+			ReportSize((UIElement) sender);
 		}
 
 		private void OnSizeChanged (object sender, SizeChangedEventArgs sizeChangedEventArgs)
 		{
-			ReportSize((FrameworkElement)sender);
+			ReportSize((UIElement)sender);
 		}
 
-		private void ReportSize(FrameworkElement sender)
+		private void ReportSize(UIElement sender)
 		{
-			CurrentHeight = sender.ActualHeight;
-			CurrentWidth  = sender.ActualWidth;
+			ReportedSize = sender.RenderSize;			
 		}
 	}
 }

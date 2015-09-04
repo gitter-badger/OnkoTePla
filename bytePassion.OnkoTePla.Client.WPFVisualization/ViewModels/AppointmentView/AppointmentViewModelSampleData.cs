@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
 
@@ -14,12 +13,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{			
 		}
 
-		public AppointmentViewModelSampleData(double canvasPosition, double viewElementLength)
+		public AppointmentViewModelSampleData(double canvasLeftPosition, double viewElementLength)
 		{
-			PatientDisplayName = "Jerry Black";			
+			PatientDisplayName = "Jerry Black";
+			TimeSpan = "";
+			AppointmentDate = "";
+			Description = "";
+			Room = "";		
 
-			CanvasPosition = canvasPosition;
-			ViewElementLength = viewElementLength;
+			CanvasLeftPosition = canvasLeftPosition;
+			ViewElementLength  = viewElementLength;
 
 			OperatingMode = OperatingMode.Edit;
 		}
@@ -27,12 +30,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public ICommand DeleteAppointment => null;
 		public ICommand SwitchToEditMode  => null;
 
-		public string   PatientDisplayName  { get; }		
-		public double   CanvasPosition      { get; set; }
-		public double   ViewElementLength   { get; set; }
+		public string PatientDisplayName { get; }
+		public string TimeSpan           { get; }
+		public string AppointmentDate    { get; }
+		public string Description        { get; }
+		public string Room               { get; }
 
-		public Guid AppointmentId  => new Guid();
-		public Guid TherapyPlaceId => new Guid();
+		public double CanvasLeftPosition { get; set; }
+		public double ViewElementLength  { get; set; }
+		
 
 		public OperatingMode OperatingMode  { get; set; }
 

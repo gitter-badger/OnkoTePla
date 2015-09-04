@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization
@@ -14,17 +11,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 		public MainWindow ()
 		{
 			InitializeComponent();
-		}
-
-		///////////////////////////////////////////////////////////////////////////////////////////////
-		/////////                                                                           ///////////
-		/////////                                  TestArea                                 ///////////
-		/////////                                                                           ///////////
-		///////////////////////////////////////////////////////////////////////////////////////////////
-
-		private void ButtonBase_OnClick (object sender, RoutedEventArgs e)
-		{
-			((AppointmentGridViewModel)((MainWindowViewModel)DataContext).AppointmentGridViewModel).TestLoad();
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 		private readonly IAppointmentGridViewModel         appointmentGridViewModel;
 		private readonly IDateSelectorViewModel            dateSelectorViewModel;
 		private readonly IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel;
-		private readonly IRoomSelectorViewModel            roomSelectorViewModel;
+		private readonly IRoomFilterViewModel            roomFilterViewModel;
 
 		private readonly SessionInformation sessionInformation;
 		
@@ -30,7 +30,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 									IAppointmentGridViewModel appointmentGridViewModel,
 									IDateSelectorViewModel dateSelectorViewModel,
 									IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel,
-									IRoomSelectorViewModel roomSelectorViewModel,
+									IRoomFilterViewModel roomFilterViewModel,
 									SessionInformation sessionInformation)
 		{
 		    this.patientSelectorViewModel         = patientSelectorViewModel;
@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 			this.appointmentGridViewModel         = appointmentGridViewModel;
 			this.dateSelectorViewModel            = dateSelectorViewModel;
 			this.medicalPracticeSelectorViewModel = medicalPracticeSelectorViewModel;
-			this.roomSelectorViewModel            = roomSelectorViewModel;
+			this.roomFilterViewModel            = roomFilterViewModel;
 
 			this.sessionInformation = sessionInformation;
 			
@@ -51,6 +51,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 		public IAppointmentGridViewModel         AppointmentGridViewModel         { get { return appointmentGridViewModel;         }}
 		public IDateSelectorViewModel            DateSelectorViewModel            { get { return dateSelectorViewModel;            }}
 		public IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get { return medicalPracticeSelectorViewModel; }}
-		public IRoomSelectorViewModel            RoomSelectorViewModel            { get { return roomSelectorViewModel;            }}
+		public IRoomFilterViewModel            RoomFilterViewModel            { get { return roomFilterViewModel;            }}
 	}
 }

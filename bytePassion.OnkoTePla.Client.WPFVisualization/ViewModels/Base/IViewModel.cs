@@ -2,7 +2,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base
 {
-	public interface IViewModelBase : INotifyPropertyChanged
+	public interface IViewModel : INotifyPropertyChanged
 	{
 	}
 }

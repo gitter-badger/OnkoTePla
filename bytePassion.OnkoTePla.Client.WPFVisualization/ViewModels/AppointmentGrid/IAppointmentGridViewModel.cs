@@ -1,29 +1,14 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
-using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
 {
-	public interface IAppointmentGridViewModel : IViewModelBase
-	{
-		ICommand ShowPracticeAndDate { get; }
-
-		ICommand CommitChanges  { get; }
-		ICommand DiscardChanges { get; }
-
-
-		void DeleteAppointment(IAppointmentViewModel appointmentViewModel, Appointment appointment);
+	public interface IAppointmentGridViewModel
+	{						
+		ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; } 	
 		
-		ObservableCollection<TimeSlotLabel>             TimeSlotLabels   { get; }
-		ObservableCollection<TimeSlotLine>              TimeSlotLines    { get; }
-		ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRows { get; } 		
-
-		IAppointmentViewModel EditingObject          { get; set; }
-		OperatingMode         OperatingMode          { get; }
+		ITimeGridViewModel 	TimeGridViewModel { get; }
 	}
 }

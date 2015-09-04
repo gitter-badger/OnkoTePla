@@ -9,6 +9,6 @@
 			where TMessage : TMessageBase;
 
 		void Send<TMessage>(TMessage message) 
-			where TMessage : TMessageBase;
+			where TMessage : TMessageBase;		
 	}
 }

@@ -29,6 +29,6 @@ namespace bytePassion.Lib.Communication.MessageBus
 		{
 			handlerCollection.GetMessageHandler<TMessage>()
 							?.Do(handler => handler.Process(message));
-        }
+        }		
 	}
 }

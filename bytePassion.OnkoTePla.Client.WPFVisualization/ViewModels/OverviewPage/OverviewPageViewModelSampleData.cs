@@ -10,13 +10,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 		public OverviewPageViewModelSampleData()
 		{
 			MedicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModelSampleData();
-			RoomSelectorViewModel            = new RoomSelectorViewModelSampleData();
+			RoomFilterViewModel            = new RoomFilterViewModelSampleData();
 			DateSelectorViewModel            = new DateSelectorViewModelSampleData();
 			GridContainerViewModel           = new GridContainerViewModelSampleData();
 		}
 
 		public IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }
-		public IRoomSelectorViewModel            RoomSelectorViewModel            { get; }
+		public IRoomFilterViewModel            RoomFilterViewModel            { get; }
 		public IDateSelectorViewModel            DateSelectorViewModel            { get; }
 		public IGridContainerViewModel           GridContainerViewModel           { get; }
 	}

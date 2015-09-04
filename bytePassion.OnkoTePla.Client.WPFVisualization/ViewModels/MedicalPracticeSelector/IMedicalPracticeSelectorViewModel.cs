@@ -5,7 +5,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector
 {
-	public interface IMedicalPracticeSelectorViewModel : IViewModelBase
+	public interface IMedicalPracticeSelectorViewModel : IViewModel
 	{
 		MedicalPractice SelectedMedicalPractice { get; set; }
 

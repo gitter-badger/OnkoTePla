@@ -2,18 +2,16 @@
 using bytePassion.Lib.FrameworkExtensions;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper
 {
 	public class TimeSlotLabel : INotifyPropertyChanged
 	{
 		private double xCoord;
 		private double yCoord;
 
-		private readonly string caption;
-
 		public TimeSlotLabel(string caption)
 		{
-			this.caption = caption;
+			Caption = caption;
 		}
 
 		public double XCoord
@@ -28,10 +26,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			set { PropertyChanged.ChangeAndNotify(this, ref yCoord, value); }
 		}
 
-		public string Caption
-		{
-			get { return caption; }
-		}
+		public string Caption { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}
