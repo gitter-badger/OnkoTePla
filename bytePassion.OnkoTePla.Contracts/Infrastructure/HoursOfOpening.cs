@@ -10,74 +10,29 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
     [DataContract]
 	public class HoursOfOpening
 	{
-        [DataMember(Name = "OpeningTimeMonday")]
-		private readonly Time openingTimeMonday;
-
-        [DataMember(Name = "OpeningTimeTuesday")]
-		private readonly Time openingTimeTuesday;
-
-        [DataMember(Name = "OpeningTimeWednesday")]
-		private readonly Time openingTimeWednesday;
-
-        [DataMember(Name = "OpeningTimeThursday")]
-		private readonly Time openingTimeThursday;
-
-        [DataMember(Name = "OpeningTimeFriday")]
-		private readonly Time openingTimeFriday;
-
-        [DataMember(Name = "OpeningTimeSaturday")]
-		private readonly Time openingTimeSaturday;
-
-        [DataMember(Name = "OpeningTimeSunday")]
-		private readonly Time openingTimeSunday;
-
-        [DataMember(Name = "ClosingTimeMonday")]
-		private readonly Time closingTimeMonday;
-
-        [DataMember(Name = "ClosingTimeTuesday")]
-		private readonly Time closingTimeTuesday;
-
-        [DataMember(Name = "ClosingTimeWednesday")]
-		private readonly Time closingTimeWednesday;
-
-        [DataMember(Name = "ClosingTimeThursday")]
-		private readonly Time closingTimeThursday;
-
-        [DataMember(Name = "ClosingTimeFriday")]
-		private readonly Time closingTimeFriday;
-
-        [DataMember(Name = "ClosingTimeSaturday")]
-		private readonly Time closingTimeSaturday;
-
-        [DataMember(Name = "ClosingTimeSunday")]
-		private readonly Time closingTimeSunday;
-
-        [DataMember(Name = "IsOpenOnMonday")]
-		private readonly bool isOpenOnMonday;
-
-        [DataMember(Name = "IsOpenOnTuesday")]
-		private readonly bool isOpenOnTuesday;
-
-        [DataMember(Name = "IsOpenOnWednesday")]
-		private readonly bool isOpenOnWednesday;
-
-        [DataMember(Name = "IsOpenOnThursday")]
-		private readonly bool isOpenOnThursday;
-
-        [DataMember(Name = "IsOpenOnFriday")]
-		private readonly bool isOpenOnFriday;
-
-        [DataMember(Name = "IsOpenOnSaturday")]
-		private readonly bool isOpenOnSaturday;
-
-        [DataMember(Name = "IsOpenOnSunday")]
-		private readonly bool isOpenOnSunday;
-
-        [DataMember(Name = "AdditionalClosedDays")]
-		private readonly IReadOnlyList<Date> additionalClosedDays;
-
-        [DataMember(Name = "AdditionalOpenedDays")]
-		private readonly IReadOnlyList<Date> additionalOpenedDays;
+        [DataMember(Name = "OpeningTimeMonday")]    private readonly Time openingTimeMonday;
+        [DataMember(Name = "OpeningTimeTuesday")]   private readonly Time openingTimeTuesday;
+        [DataMember(Name = "OpeningTimeWednesday")] private readonly Time openingTimeWednesday;
+        [DataMember(Name = "OpeningTimeThursday")]  private readonly Time openingTimeThursday;
+        [DataMember(Name = "OpeningTimeFriday")]    private readonly Time openingTimeFriday;
+        [DataMember(Name = "OpeningTimeSaturday")]  private readonly Time openingTimeSaturday;
+        [DataMember(Name = "OpeningTimeSunday")]    private readonly Time openingTimeSunday;
+        [DataMember(Name = "ClosingTimeMonday")]    private readonly Time closingTimeMonday;
+        [DataMember(Name = "ClosingTimeTuesday")]   private readonly Time closingTimeTuesday;
+        [DataMember(Name = "ClosingTimeWednesday")] private readonly Time closingTimeWednesday;
+        [DataMember(Name = "ClosingTimeThursday")]  private readonly Time closingTimeThursday;
+        [DataMember(Name = "ClosingTimeFriday")]    private readonly Time closingTimeFriday;
+        [DataMember(Name = "ClosingTimeSaturday")]  private readonly Time closingTimeSaturday;
+        [DataMember(Name = "ClosingTimeSunday")]    private readonly Time closingTimeSunday;
+        [DataMember(Name = "IsOpenOnMonday")]       private readonly bool isOpenOnMonday;
+        [DataMember(Name = "IsOpenOnTuesday")]      private readonly bool isOpenOnTuesday;
+        [DataMember(Name = "IsOpenOnWednesday")]    private readonly bool isOpenOnWednesday;
+        [DataMember(Name = "IsOpenOnThursday")]     private readonly bool isOpenOnThursday;
+        [DataMember(Name = "IsOpenOnFriday")]       private readonly bool isOpenOnFriday;
+        [DataMember(Name = "IsOpenOnSaturday")]     private readonly bool isOpenOnSaturday;
+        [DataMember(Name = "IsOpenOnSunday")]       private readonly bool isOpenOnSunday;
+        [DataMember(Name = "AdditionalClosedDays")] private readonly IReadOnlyList<Date> additionalClosedDays;
+        [DataMember(Name = "AdditionalOpenedDays")] private readonly IReadOnlyList<Date> additionalOpenedDays;
 
 		public HoursOfOpening(Time openingTimeMonday, Time openingTimeTuesday,  Time openingTimeWednesday, Time openingTimeThursday, 
 							  Time openingTimeFriday, Time openingTimeSaturday, Time openingTimeSunday, 
@@ -116,34 +71,34 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		}
 
 
-		public Time OpeningTimeMonday    { get { return openingTimeMonday;    }}
-		public Time OpeningTimeTuesday   { get { return openingTimeTuesday;   }}
-		public Time OpeningTimeWednesday { get { return openingTimeWednesday; }}
-		public Time OpeningTimeThursday  { get { return openingTimeThursday;  }}
-		public Time OpeningTimeFriday    { get { return openingTimeFriday;    }}
-		public Time OpeningTimeSaturday  { get { return openingTimeSaturday;  }}
-		public Time OpeningTimeSunday    { get { return openingTimeSunday;    }}
-		
-		public Time ClosingTimeMonday	 { get { return closingTimeMonday;    }}
-		public Time ClosingTimeTuesday	 { get { return closingTimeTuesday;   }}
-		public Time ClosingTimeWednesday { get { return closingTimeWednesday; }}
-		public Time ClosingTimeThursday	 { get { return closingTimeThursday;  }}
-		public Time ClosingTimeFriday	 { get { return closingTimeFriday;    }}
-		public Time ClosingTimeSaturday	 { get { return closingTimeSaturday;  }}
-		public Time ClosingTimeSunday	 { get { return closingTimeSunday;    }}
-		
-		public bool IsOpenOnMonday    { get { return isOpenOnMonday;    }}
-		public bool IsOpenOnTuesday	  { get { return isOpenOnTuesday;   }}
-		public bool IsOpenOnWednesday { get { return isOpenOnWednesday; }}
-		public bool IsOpenOnThursday  { get { return isOpenOnThursday;  }}
-		public bool IsOpenOnFriday	  { get { return isOpenOnFriday;    }}
-		public bool IsOpenOnSaturday  { get { return isOpenOnSaturday;  }}
-		public bool IsOpenOnSunday	  { get { return isOpenOnSunday;    }}
+		public Time OpeningTimeMonday    => openingTimeMonday;
+	    public Time OpeningTimeTuesday   => openingTimeTuesday;
+	    public Time OpeningTimeWednesday => openingTimeWednesday;
+	    public Time OpeningTimeThursday  => openingTimeThursday;
+	    public Time OpeningTimeFriday    => openingTimeFriday;
+	    public Time OpeningTimeSaturday  => openingTimeSaturday;
+	    public Time OpeningTimeSunday    => openingTimeSunday;
 
-		public IReadOnlyList<Date> AdditionalClosedDays { get { return additionalClosedDays; }}
-		public IReadOnlyList<Date> AdditionalOpenedDays { get { return additionalOpenedDays; }}
+	    public Time ClosingTimeMonday    => closingTimeMonday;
+	    public Time ClosingTimeTuesday   => closingTimeTuesday;
+	    public Time ClosingTimeWednesday => closingTimeWednesday;
+	    public Time ClosingTimeThursday  => closingTimeThursday;
+	    public Time ClosingTimeFriday    => closingTimeFriday;
+	    public Time ClosingTimeSaturday  => closingTimeSaturday;
+	    public Time ClosingTimeSunday    => closingTimeSunday;
 
-		public Time GetOpeningTime(Date d)
+	    public bool IsOpenOnMonday    => isOpenOnMonday;
+	    public bool IsOpenOnTuesday   => isOpenOnTuesday;
+	    public bool IsOpenOnWednesday => isOpenOnWednesday;
+	    public bool IsOpenOnThursday  => isOpenOnThursday;
+	    public bool IsOpenOnFriday    => isOpenOnFriday;
+	    public bool IsOpenOnSaturday  => isOpenOnSaturday;
+	    public bool IsOpenOnSunday    => isOpenOnSunday;
+
+	    public IReadOnlyList<Date> AdditionalClosedDays => additionalClosedDays;
+	    public IReadOnlyList<Date> AdditionalOpenedDays => additionalOpenedDays;
+
+	    public Time GetOpeningTime(Date d)
 		{
 			var weekDay = Date.GetDayOfWeekFrom(d);			
 

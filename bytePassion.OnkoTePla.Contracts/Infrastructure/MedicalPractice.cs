@@ -10,21 +10,12 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
     [DataContract]
 	public sealed class MedicalPractice
 	{
-        [DataMember(Name = "Id")]
-		private readonly Guid id;
-        [DataMember(Name = "Name")]
-		private readonly string name;
-        [DataMember(Name = "Version")]
-		private readonly uint version;
-
-        [DataMember(Name = "Rooms")]
-		private readonly IReadOnlyList<Room> rooms;
-
-        [DataMember(Name = "HoursOfOpening")]
-		private readonly HoursOfOpening hoursOfOpening;
-
-        [DataMember(Name = "PreviousVersion")]
-        private readonly MedicalPractice previousVersion;
+        [DataMember(Name = "Id")]              private readonly Guid id;
+        [DataMember(Name = "Name")]            private readonly string name;
+        [DataMember(Name = "Version")]         private readonly uint version;
+        [DataMember(Name = "Rooms")]           private readonly IReadOnlyList<Room> rooms;
+        [DataMember(Name = "HoursOfOpening")]  private readonly HoursOfOpening hoursOfOpening;
+        [DataMember(Name = "PreviousVersion")] private readonly MedicalPractice previousVersion;
 
 
 		public static MedicalPractice CreateNewMedicalPractice(IReadOnlyList<Room> rooms, string name, HoursOfOpening hoursOfOpening)
@@ -43,20 +34,17 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 			this.hoursOfOpening = hoursOfOpening;
 		}
 
-		public Guid              Id              { get { return id;              }}
-		public string            Name            { get { return name;            }}
-		public uint              Version         { get { return version;         }}
-		public IEnumerable<Room> Rooms           { get { return rooms.ToList();  }}		
-		public HoursOfOpening    HoursOfOpening  { get { return hoursOfOpening;  }}
-		public MedicalPractice   PreviousVersion { get { return previousVersion; }}
-		
+		public Guid              Id              => id;
+	    public string            Name            => name;
+	    public uint              Version         => version;
+	    public IEnumerable<Room> Rooms           => rooms.ToList();
+	    public HoursOfOpening    HoursOfOpening  => hoursOfOpening;
+	    public MedicalPractice   PreviousVersion => previousVersion;
 
-		public bool HasPreviousVersion
-		{
-			get { return PreviousVersion != null; }
-		}
 
-		#region modify rooms
+	    public bool HasPreviousVersion => PreviousVersion != null;
+
+	    #region modify rooms
 
 		public MedicalPractice AddRoom(Room newRoom)
 		{
@@ -144,21 +132,14 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 
 		#region ToString / HashCode / Equals
 
-		public override string ToString ()
-		{
-			return Name + " (v:" + Version + ")";
-		}
+		public override string ToString    () => Name + " (v:" + Version + ")";
+		public override int    GetHashCode () => id.GetHashCode() ^ version.GetHashCode();
 
 		public override bool Equals (object obj)
 		{
 			return this.Equals(obj, (med1, med2) => med1.Id == med2.Id && med1.Version == med2.Version);
-		}
+		}		
 
-		public override int GetHashCode ()
-		{
-			return id.GetHashCode() ^ version.GetHashCode();
-		}
-
-		#endregion
+	    #endregion
 	}
 }

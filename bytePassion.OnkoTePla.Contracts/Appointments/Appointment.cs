@@ -4,69 +4,49 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
+using static bytePassion.Lib.FrameworkExtensions.EqualsExtension;
+
 
 namespace bytePassion.OnkoTePla.Contracts.Appointments
 {
 	public class Appointment
 	{
-		private readonly Patient      patient;
-
-		private readonly string       description;
-		private readonly Date         day;
-		private readonly Time         startTime;
-		private readonly Time         endTime;
-		private readonly TherapyPlace therapyPlace;
-		private readonly Guid         id;
-	    
-
-	    public Appointment (Patient patient, string description, TherapyPlace therapyPlace, 
+		public Appointment (Patient patient, string description, TherapyPlace therapyPlace, 
 						    Date day, Time startTime, Time endTime, Guid id)
 		{
-			this.patient      = patient;
-			this.therapyPlace = therapyPlace;			
-		    this.day          = day;
-			this.startTime    = startTime;
-			this.endTime      = endTime;
-		    this.description  = description;
-			this.id           = id;
+			Patient      = patient;
+			TherapyPlace = therapyPlace;			
+		    Day          = day;
+			StartTime    = startTime;
+			EndTime      = endTime;
+		    Description  = description;
+			Id           = id;
 		}
+		
+		public Patient      Patient      { get; }
+		public string       Description  { get; }
+		public Date         Day          { get; }
+		public Time         StartTime    { get; }
+		public Time         EndTime      { get; }
+		public TherapyPlace TherapyPlace { get; }
+		public Guid         Id           { get; }				
 
-		#region properties: Patient / Description / Day / StartTime / EndTime / TherapyPlace
+		public Duration Duration => Time.GetDurationBetween(StartTime, EndTime);
+		
+		
+		public static bool operator ==(Appointment a1, Appointment a2) => EqualsForEqualityOperator(a1,a2);
+		public static bool operator !=(Appointment a1, Appointment a2) => !(a1 == a2);
 
-		public Patient      Patient      { get { return patient;      }}
-		public string       Description  { get { return description;  }}
-		public Date         Day          { get { return day;          }}
-		public Time         StartTime    { get { return startTime;    }}
-		public Time         EndTime      { get { return endTime;      }}
-		public TherapyPlace TherapyPlace { get { return therapyPlace; }}
-		public Guid         Id           { get { return id;           }}				
-
-		#endregion
-
-		#region properties: Duration 
-
-		public Duration Duration
-		{
-			get { return Time.GetDurationBetween(StartTime, EndTime); }
-		}
-
-		#endregion
-
-		#region operations
-
-		// TODO hier modifications
-
-		#endregion
-
+		
 		#region ToString / HashCode / Equals
 
 		public override string ToString()
 		{
-			return "[" + patient + 
-						" am " + day +
-						" von " + startTime +
-						" bis " + endTime +						
-						" an platz " + therapyPlace + "]";
+			return "[" + Patient + 
+						" am " + Day +
+						" von " + StartTime +
+						" bis " + EndTime +						
+						" an platz " + TherapyPlace + "]";
 		}
 
 		public override bool Equals(object obj)

@@ -10,14 +10,9 @@ namespace bytePassion.OnkoTePla.Contracts.Config
     [DataContract]
 	public class Configuration
 	{
-        [DataMember (Name = "ConfiguredTherapyPlaceTypes")]
-		private readonly IList<TherapyPlaceType> configuredTherapyPlaceTypes;
-
-        [DataMember(Name = "ConfiguredMedicalPractices")]
-		private readonly IList<MedicalPractice>  configuredMedicalPractices;
-
-        [DataMember(Name = "ConfiguredUsers")]
-		private readonly IList<User>			 configuredUsers; 
+        [DataMember(Name = "ConfiguredTherapyPlaceTypes")] private readonly IList<TherapyPlaceType> configuredTherapyPlaceTypes;
+        [DataMember(Name = "ConfiguredMedicalPractices")]  private readonly IList<MedicalPractice>  configuredMedicalPractices;
+        [DataMember(Name = "ConfiguredUsers")]             private readonly IList<User>			 configuredUsers; 
 		
 
 		public Configuration(IEnumerable<TherapyPlaceType> configuredTherapyPlaceTypes, 
@@ -30,6 +25,7 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 		}
 
 		#region TherapyPlaceTypes
+
 		public TherapyPlaceType GetTherapyPlaceTypeByName(string name)
 		{
 			 return configuredTherapyPlaceTypes.FirstOrDefault(therapyPlace => therapyPlace.Name == name);			
@@ -49,9 +45,12 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 		{
 			configuredTherapyPlaceTypes.Add(newTherapyPlaceType);
 		}
+
 		#endregion
 
+
 		#region MedicalPractice
+
 		public MedicalPractice GetMedicalPracticeByName(string name)
 		{
 			return configuredMedicalPractices.FirstOrDefault(medicalPractice => medicalPractice.Name == name);
@@ -82,9 +81,12 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 		{
 			configuredMedicalPractices.Remove(GetMedicalPracticeById(medicalPracticeId));
 		}
+
 		#endregion
 
+
 		#region User
+
 		public User GetUserByName (string name)
 		{
 			return configuredUsers.FirstOrDefault(user => user.Name == name);
@@ -109,6 +111,7 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 		{
 			configuredUsers.Remove(GetUserById(userId));
 		}
+
 		#endregion		
 	} 
 }
