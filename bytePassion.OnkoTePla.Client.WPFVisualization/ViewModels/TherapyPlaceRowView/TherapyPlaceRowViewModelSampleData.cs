@@ -23,6 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 
 		public string TherapyPlaceName { get; }
 		public Color  RoomColor        { get; }
-			
+
+		public void Dispose() {}
 	}
 }

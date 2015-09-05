@@ -8,7 +8,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 	public class TherapyPlaceRowIdentifier
 	{
 		public TherapyPlaceRowIdentifier(AggregateIdentifier placeAndDate, 
-									   Guid therapyPlaceId)
+									     Guid therapyPlaceId)
 		{
 			PlaceAndDate      = placeAndDate;
 			TherapyPlaceId = therapyPlaceId;
@@ -35,7 +35,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			return $"[{PlaceAndDate}|{TherapyPlaceId}]";
         }
 
-		public static bool operator == (TherapyPlaceRowIdentifier al1, TherapyPlaceRowIdentifier al2) => al1.Equals(al2);
-		public static bool operator != (TherapyPlaceRowIdentifier al1, TherapyPlaceRowIdentifier al2) => !(al1 == al2);
+		public static bool operator == (TherapyPlaceRowIdentifier al1, TherapyPlaceRowIdentifier al2)
+		{
+			return al1 != null && al1.Equals(al2);
+		}
+
+		public static bool operator != (TherapyPlaceRowIdentifier al1, TherapyPlaceRowIdentifier al2)
+		{
+			return !(al1 == al2);
+		}
 	}
 }
