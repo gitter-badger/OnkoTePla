@@ -21,6 +21,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		
 		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; }
 
-		public ITimeGridViewModel TimeGridViewModel { get; }		
+		public ITimeGridViewModel TimeGridViewModel { get; }
+
+		public void Dispose() {}
 	}
 }

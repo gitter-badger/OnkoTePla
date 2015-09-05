@@ -22,8 +22,8 @@ using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
 {
-	public class AppointmentGridViewModel : IAppointmentGridViewModel, 
-											IDisposable,
+	public class AppointmentGridViewModel : DisposingObject,
+											IAppointmentGridViewModel, 											
 											IViewModelMessageHandler<ActivateAppointmentGridViewModel>,
 											IViewModelMessageHandler<DeactivateAppointmentGridViewModel>
 	{
@@ -184,38 +184,24 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public void Process(DeactivateAppointmentGridViewModel message)
 		{
 			viewModelIsActive = false;
-		}
+		}		
 
-		private bool disposed = false;		
+		public override void CleanUp()
+		{			
+			globalGridSizeVariable.StateChanged -= OnGridSizeChanged;			
+			globalRoomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;			
+			readModel.AppointmentChanged -= OnReadModelAppointmentChanged;
 
-		public void Dispose ()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
+			viewModelCommunication.DeregisterViewModelAtCollection<AppointmentGridViewModel, AggregateIdentifier>(
+				AppointmentGridViewModelCollection,
+				this					
+			);
 
-		~AppointmentGridViewModel ()
-		{
-			Dispose(false);
+			foreach (var appointment in readModel.Appointments)
+			{
+				RemoveAppointment(appointment);
+			}
 		}
 		
-		private void Dispose (bool disposing)
-		{
-			if (!disposed)
-			{
-				if (disposing)
-				{
-//					AppointmentReadModel.AppointmentChanged -= ReadModelOnAppointmentChanged;
-//					AppointmentReadModel.Dispose();
-
-					viewModelCommunication.DeregisterViewModelAtCollection<AppointmentGridViewModel, AggregateIdentifier>(
-						AppointmentGridViewModelCollection,
-						this					
-					);
-				}
-
-			}
-			disposed = true;
-		}
 	}
 }
