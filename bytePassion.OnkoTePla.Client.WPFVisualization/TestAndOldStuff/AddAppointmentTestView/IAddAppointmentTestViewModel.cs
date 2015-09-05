@@ -6,8 +6,7 @@ using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
-
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentTestView
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.TestAndOldStuff.AddAppointmentTestView
 {
 	public interface IAddAppointmentTestViewModel : IViewModel
 	{

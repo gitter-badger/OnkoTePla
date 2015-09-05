@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:addAppointmentTestView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentTestView"
+             xmlns:addAppointmentTestView1="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.TestAndOldStuff.AddAppointmentTestView"
              mc:Ignorable="d" 
              d:DesignHeight="370" d:DesignWidth="300"
 			 Background="White">
 
 	<d:UserControl.DataContext>
-		<addAppointmentTestView:AddAppointmentTestViewModelSampleData/>
+		<addAppointmentTestView1:AddAppointmentTestViewModelSampleData/>
 	</d:UserControl.DataContext>
 
 			<Grid>

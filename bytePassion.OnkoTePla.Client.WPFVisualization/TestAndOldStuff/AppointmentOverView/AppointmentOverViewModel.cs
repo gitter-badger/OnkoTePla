@@ -9,8 +9,7 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
-
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentOverView
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.TestAndOldStuff.AppointmentOverView
 {
 	public class AppointmentOverViewModel : IAppointmentOverViewModel
 	{			

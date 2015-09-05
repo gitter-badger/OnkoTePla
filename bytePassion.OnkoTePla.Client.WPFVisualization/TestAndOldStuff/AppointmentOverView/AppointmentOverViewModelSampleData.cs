@@ -7,8 +7,7 @@ using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
-
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentOverView
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.TestAndOldStuff.AppointmentOverView
 {
 	public class AppointmentOverViewModelSampleData : IAppointmentOverViewModel
 	{

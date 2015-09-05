@@ -86,21 +86,21 @@
     <Compile Include="NewMainWindow.xaml.cs">
       <DependentUpon>NewMainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AddAppointmentTestView\AddAppointmentTestViewModelSampleData.cs" />
+    <Compile Include="TestAndOldStuff\AddAppointmentTestView\AddAppointmentTestViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentView\Messages\DisposeAppointmentViewModel.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\Messages\DeactivateAppointmentGridViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\Messages\ActivateAppointmentGridViewModel.cs" />
-    <Compile Include="ViewModels\AppointmentOverView\AppointmentOverViewModelSampleData.cs" />
+    <Compile Include="TestAndOldStuff\AppointmentOverView\AppointmentOverViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentView\AppointmentViewModelSampleData.cs" />
-    <Compile Include="ViewModels\Base\ViewModelRequestMessage.cs" />
+    <Compile Include="TestAndOldStuff\ViewModelRequestMessage.cs" />
     <Compile Include="ViewModels\DateSelector\DateSelectorViewModelSampleData.cs" />
     <Compile Include="ViewModels\GridContainer\GridContainerViewModel.cs" />
     <Compile Include="ViewModels\GridContainer\GridContainerViewModelSampleData.cs" />
     <Compile Include="ViewModels\GridContainer\IGridContainerViewModel.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\Helper\TherapyPlaceRowIdentifier.cs" />
-    <Compile Include="ViewModels\MainWindow\MainWindowViewModelSampleData.cs" />
+    <Compile Include="TestAndOldStuff\MainWindow\MainWindowViewModelSampleData.cs" />
     <Compile Include="ViewModels\MedicalPracticeSelector\MedicalPracticeSelectorViewModelSampleData.cs" />
     <Compile Include="ViewModels\NewMainWindow\INewMainWindowViewModel.cs" />
     <Compile Include="ViewModels\NewMainWindow\NewMainWindowViewModelSampleData.cs" />
@@ -121,27 +121,27 @@
     <Compile Include="ViewModels\TherapyPlaceRowView\TherapyPlaceRowViewModelSampleData.cs" />
     <Compile Include="SessionInfo\SessionInformation.cs" />
     <Compile Include="UserNotificationService\UserDialogBox.cs" />
-    <Compile Include="ViewModels\AddAppointmentTestView\AddAppointmentTestViewModel.cs" />
+    <Compile Include="TestAndOldStuff\AddAppointmentTestView\AddAppointmentTestViewModel.cs" />
     <Compile Include="ViewModels\DateSelector\DateSelectorViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModel.cs" />
-    <Compile Include="ViewModels\AppointmentOverView\AppointmentOverViewModel.cs" />
+    <Compile Include="TestAndOldStuff\AppointmentOverView\AppointmentOverViewModel.cs" />
     <Compile Include="ViewModels\AppointmentView\AppointmentViewModel.cs" />
     <Compile Include="ViewModels\Base\IViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\Helper\OperatingMode.cs" />
     <Compile Include="ViewModels\PatientSelector\Helper\PatientListItem.cs" />
-    <Compile Include="ViewModels\AddAppointmentTestView\IAddAppointmentTestViewModel.cs" />
+    <Compile Include="TestAndOldStuff\AddAppointmentTestView\IAddAppointmentTestViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\IAppointmentGridViewModel.cs" />
-    <Compile Include="ViewModels\AppointmentOverView\IAppointmentOverViewModel.cs" />
+    <Compile Include="TestAndOldStuff\AppointmentOverView\IAppointmentOverViewModel.cs" />
     <Compile Include="ViewModels\AppointmentView\IAppointmentViewModel.cs" />
     <Compile Include="ViewModels\DateSelector\IDateSelectorViewModel.cs" />
-    <Compile Include="ViewModels\MainWindow\IMainWindowViewModel.cs" />
+    <Compile Include="TestAndOldStuff\MainWindow\IMainWindowViewModel.cs" />
     <Compile Include="ViewModels\MedicalPracticeSelector\IMedicalPracticeSelectorViewModel.cs" />
     <Compile Include="ViewModels\PatientSelector\IPatientSelectorViewModel.cs" />
     <Compile Include="ViewModels\TimeGrid\Helper\TimeSlotLabel.cs" />
     <Compile Include="ViewModels\RoomSelector\IRoomFilterViewModel.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\ITherapyPlaceRowViewModel.cs" />
     <Compile Include="ViewModels\RoomSelector\Helper\RoomSelectorData.cs" />
-    <Compile Include="ViewModels\MainWindow\MainWindowViewModel.cs" />
+    <Compile Include="TestAndOldStuff\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MedicalPracticeSelector\MedicalPracticeSelectorViewModel.cs" />
     <Compile Include="ViewModels\Base\ViewModelMessage.cs" />
     <Compile Include="ViewModels\PatientSelector\PatientSelectorViewModel.cs" />
@@ -154,13 +154,13 @@
     <Compile Include="Views\ActionBar.xaml.cs">
       <DependentUpon>ActionBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AddAppointmentTestView.xaml.cs">
+    <Compile Include="TestAndOldStuff\AddAppointmentTestView.xaml.cs">
       <DependentUpon>AddAppointmentTestView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AppointmentGrid.xaml.cs">
       <DependentUpon>AppointmentGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AppointmentOverView.xaml.cs">
+    <Compile Include="TestAndOldStuff\AppointmentOverView.xaml.cs">
       <DependentUpon>AppointmentOverView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AppointmentView.xaml.cs">
@@ -202,7 +202,7 @@
     <Compile Include="Views\TimeGrid.xaml.cs">
       <DependentUpon>TimeGrid.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="TestAndOldStuff\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -210,7 +210,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="TestAndOldStuff\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -222,7 +222,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AddAppointmentTestView.xaml">
+    <Page Include="TestAndOldStuff\AddAppointmentTestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -230,7 +230,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AppointmentOverView.xaml">
+    <Page Include="TestAndOldStuff\AppointmentOverView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

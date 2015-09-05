@@ -8,7 +8,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentTestView
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.TestAndOldStuff.AddAppointmentTestView
 {
 	public class AddAppointmentTestViewModelSampleData : IAddAppointmentTestViewModel
 	{
