@@ -2,13 +2,16 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfUtils.Commands;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
@@ -17,6 +20,7 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 using MahApps.Metro.Controls.Dialogs;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
+using DeleteAppointment = bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages.DeleteAppointment;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
@@ -27,8 +31,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 										IViewModelMessageHandler<NewSizeAvailable>
 	{		
 		private readonly Appointment appointment;		
-		private readonly IDataCenter dataCenter;
+		private readonly IDataCenter dataCenter;		
 		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
+
+		private readonly GlobalState<Appointment> selectedAppointment;
 
 		private double canvasLeftPosition;
 		private double viewElementLength;
@@ -38,16 +44,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private Time timeSlotStart;
 		private Time timeSlotEnd;
 
-		private TherapyPlaceRowIdentifier currentLocation;
+		private TherapyPlaceRowIdentifier currentLocation;		
 
 		public AppointmentViewModel(Appointment appointment,
 									ViewModelCommunication<ViewModelMessage> viewModelCommunication,
-									IDataCenter dataCenter,
+									IDataCenter dataCenter,									
 									TherapyPlaceRowIdentifier initialLocalisation)
 		{ 						
 			this.appointment = appointment;
 			this.viewModelCommunication = viewModelCommunication;
-			this.dataCenter = dataCenter;
+			this.dataCenter = dataCenter;			
+
+			selectedAppointment = viewModelCommunication.GetGlobalViewModelVariable<Appointment>(
+				SelectedAppointment
+			);
 
 
 			viewModelCommunication.RegisterViewModelAtCollection<AppointmentViewModel, Guid>(
@@ -55,11 +65,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				this	
 			);
 
-			SwitchToEditMode = new Command(
-				() =>
+			SwitchToEditMode = new Command(() =>
 				{
-
-
+					if (selectedAppointment.Value == null)
+					{
+						selectedAppointment.Value = appointment;
+						OperatingMode = OperatingMode.Edit;
+						selectedAppointment.StateChanged += OnSelectedAppointmentChanged;
+					}
 				}
 			);
 
@@ -71,14 +84,29 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 				    if (result == MessageDialogResult.Affirmative)
 				    {
-					//	containerGrid.DeleteAppointment(this, appointment);
-				    }
+						selectedAppointment.Value = null;
+
+						viewModelCommunication.SendTo<AppointmentGridViewModel, AggregateIdentifier, DeleteAppointment>(
+							AppointmentGridViewModelCollection,
+							initialLocalisation.PlaceAndDate,
+							new DeleteAppointment(appointment.Id, appointment.Patient.Id)
+						);
+					}					
 				}
 			);
 												
 			SetNewLocation(initialLocalisation, true);		
-		}		
-		
+		}
+
+		private void OnSelectedAppointmentChanged(Appointment newSelectedAppointment)
+		{
+			if (appointment != newSelectedAppointment || newSelectedAppointment == null)
+			{
+				OperatingMode = OperatingMode.View;
+				selectedAppointment.StateChanged -= OnSelectedAppointmentChanged;
+			}
+		}
+
 
 		private void SetNewLocation(TherapyPlaceRowIdentifier therapyPlaceRowIdentifier, bool isInitialLocation)
 		{

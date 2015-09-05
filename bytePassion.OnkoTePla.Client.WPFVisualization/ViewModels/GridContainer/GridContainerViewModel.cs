@@ -7,6 +7,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
@@ -20,7 +21,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 {
 	public class GridContainerViewModel : IGridContainerViewModel										  
 	{
-		private readonly IDataCenter dataCenter;		
+		private readonly IDataCenter dataCenter;
+		private readonly ICommandBus  commandBus;
 
 		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
 
@@ -34,11 +36,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 		private AggregateIdentifier? currentDisplayedAppointmentGridIdentifier;
 		
 		public GridContainerViewModel(IDataCenter dataCenter,
+									  ICommandBus commandBus,
 									  ViewModelCommunication<ViewModelMessage> viewModelCommunication,								  
                                       IEnumerable<AggregateIdentifier> initialGridViewModelsToCache,
 									  int maximumCashedGrids /* TODO */)
 		{
-			this.dataCenter = dataCenter;			
+			// TODO caching implementieren
+
+			this.dataCenter = dataCenter;
+			this.commandBus = commandBus;
 			this.viewModelCommunication = viewModelCommunication;
 
 			LoadedAppointmentGrids          = new ObservableCollection<IAppointmentGridViewModel>();
@@ -87,7 +93,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 		{
 			if (!cachedAppointmentGridViewModels.ContainsKey(identifier))
 			{
-				var gridViewModel = new AppointmentGridViewModel(identifier, dataCenter,viewModelCommunication);
+				var gridViewModel = new AppointmentGridViewModel(identifier, dataCenter, commandBus,viewModelCommunication);
 
 				cachedAppointmentGridViewModels.Add(identifier, gridViewModel);
 				LoadedAppointmentGrids.Add(gridViewModel);

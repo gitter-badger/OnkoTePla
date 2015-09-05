@@ -6,6 +6,7 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
@@ -16,18 +17,23 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowVi
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
+
+using DeleteAppointmentCommand = bytePassion.OnkoTePla.Client.Core.Domain.Commands.DeleteAppointment;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
 {
 	public class AppointmentGridViewModel : DisposingObject,
 											IAppointmentGridViewModel, 											
 											IViewModelMessageHandler<Activate>,
-											IViewModelMessageHandler<Deactivate>
+											IViewModelMessageHandler<Deactivate>,
+											IViewModelMessageHandler<DeleteAppointment>
 	{
 		private bool viewModelIsActive;
 
 		private readonly IDataCenter dataCenter;
+		private readonly ICommandBus commandBus;
 		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
 
 		private readonly IDictionary<Guid, TherapyPlaceRowViewModel> availableTherapyPlaceRowViewModels; 
@@ -38,9 +44,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
+										ICommandBus commandBus,
 										ViewModelCommunication<ViewModelMessage> viewModelCommunication)
 		{
 			this.dataCenter = dataCenter;
+			this.commandBus = commandBus;
 			this.viewModelCommunication = viewModelCommunication;
 
 			viewModelIsActive = false;
@@ -207,6 +215,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			availableTherapyPlaceRowViewModels.Values
 											  .Do(viewModel => viewModel.Dispose());			
 		}
-		
+
+		public void Process(DeleteAppointment message)
+		{
+			commandBus.SendCommand(new DeleteAppointmentCommand(Identifier, 
+																readModel.AggregateVersion, 
+																dataCenter.SessionInfo.LoggedInUser.Id, 
+																message.AppointmentId, 
+																message.PatientId));
+		}
 	}
 }

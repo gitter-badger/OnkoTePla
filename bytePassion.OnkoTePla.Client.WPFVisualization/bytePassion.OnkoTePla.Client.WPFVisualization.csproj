@@ -87,6 +87,7 @@
       <DependentUpon>NewMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestAndOldStuff\AddAppointmentTestView\AddAppointmentTestViewModelSampleData.cs" />
+    <Compile Include="ViewModelMessages\DeleteAppointment.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModelMessages\Dispose.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />

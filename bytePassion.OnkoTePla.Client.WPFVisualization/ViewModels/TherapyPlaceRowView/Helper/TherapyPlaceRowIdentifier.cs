@@ -1,6 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using static bytePassion.Lib.FrameworkExtensions.EqualsExtension;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper
@@ -35,14 +36,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			return $"[{PlaceAndDate}|{TherapyPlaceId}]";
         }
 
-		public static bool operator == (TherapyPlaceRowIdentifier al1, TherapyPlaceRowIdentifier al2)
-		{
-			return al1 != null && al1.Equals(al2);
-		}
-
-		public static bool operator != (TherapyPlaceRowIdentifier al1, TherapyPlaceRowIdentifier al2)
-		{
-			return !(al1 == al2);
-		}
+		public static bool operator == (TherapyPlaceRowIdentifier i1, TherapyPlaceRowIdentifier i2) => EqualsForEqualityOperator(i1,i2);
+		public static bool operator != (TherapyPlaceRowIdentifier i1, TherapyPlaceRowIdentifier i2) => !(i1 == i2);
 	}
 }
