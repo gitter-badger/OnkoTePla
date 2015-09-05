@@ -1,4 +1,5 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using static bytePassion.Lib.FrameworkExtensions.EqualsExtension;
 
 namespace bytePassion.Lib.Math
 {
@@ -68,7 +69,7 @@ namespace bytePassion.Lib.Math
 	    public override int    GetHashCode()      => From.GetHashCode() ^ To.GetHashCode();
 	    public override string ToString()         => $"[{From};{To}]";
 
-	    public static bool operator == (AngleInterval a1, AngleInterval a2) => a1 != null && a1.Equals(a2);
+	    public static bool operator == (AngleInterval a1, AngleInterval a2) => EqualsForEqualityOperator(a1,a2);
 	    public static bool operator != (AngleInterval a1, AngleInterval a2) => !(a1 == a2);
     }
 }

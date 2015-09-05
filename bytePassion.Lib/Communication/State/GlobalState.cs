@@ -20,13 +20,11 @@ namespace bytePassion.Lib.Communication.State
 			get { return stateValue; }
 			set
 			{
-				if (value.Equals(stateValue)) return;
+				if (ReferenceEquals(value, stateValue)) return;
 
 				stateValue = value;					
-				var handlers = StateChanged;
 
-				if (handlers != null)				
-					handlers(stateValue);				
+				StateChanged?.Invoke(stateValue);
 			}
 		}		
 	}

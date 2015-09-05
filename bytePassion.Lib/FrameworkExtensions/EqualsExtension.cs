@@ -15,5 +15,13 @@ namespace bytePassion.Lib.FrameworkExtensions
 
 			return compareFunc(obj1, objectAsType);
 		}
+
+		public static bool EqualsForEqualityOperator(object o1, object o2)
+		{
+			if (o1 == null)
+				return o2 == null;
+
+			return o1.Equals(o2);
+		}
 	}
 }

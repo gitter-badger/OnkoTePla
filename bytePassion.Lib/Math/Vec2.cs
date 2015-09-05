@@ -37,8 +37,8 @@ namespace funkwerk.phx.smp.map
 		public double X { get; }
 		public double Y { get; }
 
-		public double Length        { get { return Math.Sqrt(X * X + Y * Y); }}
-		public double SquaredLength { get { return           X * X + Y * Y;  }}
+		public double Length        => Math.Sqrt(X*X + Y*Y);
+		public double SquaredLength =>           X*X + Y*Y;
 
 		#endregion
 
