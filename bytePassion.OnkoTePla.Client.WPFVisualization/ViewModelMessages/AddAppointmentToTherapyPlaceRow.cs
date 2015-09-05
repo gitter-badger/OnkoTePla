@@ -1,8 +1,7 @@
 ﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
-
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Messages
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
 {
 	public class AddAppointmentToTherapyPlaceRow : ViewModelMessage
 	{

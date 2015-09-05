@@ -1,8 +1,7 @@
 ﻿using System.Windows;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
-
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Messages
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
 {
 	public class NewSizeAvailable : ViewModelMessage
 	{

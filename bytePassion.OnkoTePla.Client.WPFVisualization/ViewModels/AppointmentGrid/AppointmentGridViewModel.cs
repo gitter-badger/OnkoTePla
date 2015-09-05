@@ -9,14 +9,12 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Messages;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Messages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Messages;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
@@ -24,8 +22,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 {
 	public class AppointmentGridViewModel : DisposingObject,
 											IAppointmentGridViewModel, 											
-											IViewModelMessageHandler<ActivateAppointmentGridViewModel>,
-											IViewModelMessageHandler<DeactivateAppointmentGridViewModel>
+											IViewModelMessageHandler<Activate>,
+											IViewModelMessageHandler<Deactivate>
 	{
 		private bool viewModelIsActive;
 
@@ -140,10 +138,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		
 		private void RemoveAppointment(Appointment appointmentToRemove)
 		{
-			viewModelCommunication.SendTo<AppointmentViewModel, Guid, DisposeAppointmentViewModel>(
+			viewModelCommunication.SendTo<AppointmentViewModel, Guid, Dispose>(
 				AppointmentViewModelCollection,
 				appointmentToRemove.Id,
-				new DisposeAppointmentViewModel()	
+				new Dispose()	
 			);
 		}
 
@@ -175,13 +173,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public ITimeGridViewModel TimeGridViewModel { get; }
 				
 		
-		public void Process(ActivateAppointmentGridViewModel message)
+		public void Process(Activate message)
 		{
 			viewModelIsActive = true;
 			OnGridSizeChanged(globalGridSizeVariable.Value);
 		}
 
-		public void Process(DeactivateAppointmentGridViewModel message)
+		public void Process(Deactivate message)
 		{
 			viewModelIsActive = false;
 		}		
@@ -195,6 +193,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			viewModelCommunication.DeregisterViewModelAtCollection<AppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,
 				this					
+			);
+
+			viewModelCommunication.SendTo<TimeGridViewModel, AggregateIdentifier, Dispose>(
+				TimeGridViewModelCollection,
+				Identifier,
+				new Dispose()	
 			);
 
 			readModel.Appointments

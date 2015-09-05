@@ -8,13 +8,11 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfUtils.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Messages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Messages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Messages;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -25,7 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 {
 	public class AppointmentViewModel : DisposingObject, 
 										IAppointmentViewModel, 
-										IViewModelMessageHandler<DisposeAppointmentViewModel>,
+										IViewModelMessageHandler<Dispose>,
 										IViewModelMessageHandler<NewSizeAvailable>
 	{		
 		private readonly Appointment appointment;		
@@ -156,7 +154,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			private set { PropertyChanged.ChangeAndNotify(this, ref operatingMode, value); }
 		}		
 
-		public void Process (DisposeAppointmentViewModel message)
+		public void Process (Dispose message)
 		{
 			Dispose();
 		}

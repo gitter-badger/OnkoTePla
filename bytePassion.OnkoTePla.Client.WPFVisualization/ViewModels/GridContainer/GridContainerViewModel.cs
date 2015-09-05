@@ -9,8 +9,8 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Messages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
@@ -138,18 +138,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 		{
 			viewModelCommunication.SendTo<AppointmentGridViewModel,
 										  AggregateIdentifier,
-										  ActivateAppointmentGridViewModel>(AppointmentGridViewModelCollection,
+										  Activate>(AppointmentGridViewModelCollection,
 																			identifier,
-																			new ActivateAppointmentGridViewModel());
+																			new Activate());
 		}
 
 		private void DeactivateGridViewModel (AggregateIdentifier identifier)
 		{
 			viewModelCommunication.SendTo<AppointmentGridViewModel,
 										  AggregateIdentifier,
-										  DeactivateAppointmentGridViewModel>(AppointmentGridViewModelCollection,
+										  Deactivate>(AppointmentGridViewModelCollection,
 																			  identifier,
-																			  new DeactivateAppointmentGridViewModel());
+																			  new Deactivate());
 		}
 
 		private void ShowGridViewModel(AggregateIdentifier identifier)

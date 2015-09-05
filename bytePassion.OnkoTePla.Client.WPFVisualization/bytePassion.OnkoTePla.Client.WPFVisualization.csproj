@@ -88,10 +88,10 @@
     </Compile>
     <Compile Include="TestAndOldStuff\AddAppointmentTestView\AddAppointmentTestViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
-    <Compile Include="ViewModels\AppointmentView\Messages\DisposeAppointmentViewModel.cs" />
+    <Compile Include="ViewModelMessages\Dispose.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />
-    <Compile Include="ViewModels\AppointmentGrid\Messages\DeactivateAppointmentGridViewModel.cs" />
-    <Compile Include="ViewModels\AppointmentGrid\Messages\ActivateAppointmentGridViewModel.cs" />
+    <Compile Include="ViewModelMessages\Deactivate.cs" />
+    <Compile Include="ViewModelMessages\Activate.cs" />
     <Compile Include="TestAndOldStuff\AppointmentOverView\AppointmentOverViewModelSampleData.cs" />
     <Compile Include="ViewModels\AppointmentView\AppointmentViewModelSampleData.cs" />
     <Compile Include="TestAndOldStuff\ViewModelRequestMessage.cs" />
@@ -116,8 +116,8 @@
     <Compile Include="ViewModels\SearchPage\ISearchPageViewModel.cs" />
     <Compile Include="ViewModels\SearchPage\SearchPageViewModel.cs" />
     <Compile Include="ViewModels\SearchPage\SearchPageViewModelSampleData.cs" />
-    <Compile Include="ViewModels\TherapyPlaceRowView\Messages\RemoveAppointmentFromTherapyPlaceRow.cs" />
-    <Compile Include="ViewModels\TherapyPlaceRowView\Messages\AddAppointmentToTherapyPlaceRow.cs" />
+    <Compile Include="ViewModelMessages\RemoveAppointmentFromTherapyPlaceRow.cs" />
+    <Compile Include="ViewModelMessages\AddAppointmentToTherapyPlaceRow.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\TherapyPlaceRowViewModelSampleData.cs" />
     <Compile Include="SessionInfo\SessionInformation.cs" />
     <Compile Include="UserNotificationService\UserDialogBox.cs" />
@@ -148,7 +148,7 @@
     <Compile Include="ViewModels\TimeGrid\Helper\TimeSlotLine.cs" />
     <Compile Include="ViewModels\RoomSelector\RoomFilterViewModel.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\TherapyPlaceRowViewModel.cs" />
-    <Compile Include="ViewModels\TimeGrid\Messages\NewSizeAvailable.cs" />
+    <Compile Include="ViewModelMessages\NewSizeAvailable.cs" />
     <Compile Include="ViewModels\TimeGrid\TimeGridViewModel.cs" />
     <Compile Include="ViewModels\TimeGrid\TimeGridViewModelSampleData.cs" />
     <Compile Include="Views\ActionBar.xaml.cs">

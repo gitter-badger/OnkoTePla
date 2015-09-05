@@ -7,10 +7,9 @@ using bytePassion.Lib.Math;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Messages;
-
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
@@ -19,7 +18,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 {
 	public class TimeGridViewModel : DisposingObject,
 									 ITimeGridViewModel, 
-									 IViewModelMessageHandler<NewSizeAvailable>
+									 IViewModelMessageHandler<NewSizeAvailable>,
+									 IViewModelMessageHandler<Dispose>
 	{		
 		private enum GridViewDivisionState
 		{
@@ -67,7 +67,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 		{
 			SetnewSize(message.NewSize);
 		}
-		
+
+		public void Process (Dispose message)
+		{
+			Dispose();
+		}
+
 		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; }
 		public ObservableCollection<TimeSlotLine>  TimeSlotLines  { get; }
 
