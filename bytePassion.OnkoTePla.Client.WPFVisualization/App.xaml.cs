@@ -141,7 +141,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedDateVariable,      selectedDateInitialValue);
 			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridDisplayedPracticeVariable, displayedPracticeInitialValue); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
-			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedRoomVariable,      (Guid?) null);                  // when selectedRoomID == null --> all rooms are selected
+			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridRoomFilterVariable,      (Guid?) null);                  // when selectedRoomID == null --> all rooms are selected
 			viewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable,                     true);                          // true --> full width; false --> minimized
 
 

@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 			this.dataCenter = dataCenter;
 
 			roomFilter = viewModelCommunication.GetGlobalViewModelVariable<Guid?>(
-				AppointmentGridSelectedRoomVariable
+				AppointmentGridRoomFilterVariable
 			);
 
 			selectedDate = viewModelCommunication.GetGlobalViewModelVariable<Date>(
