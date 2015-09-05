@@ -102,7 +102,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 				cachedAppointmentGridViewModels.Remove(identifier);
 				LoadedAppointmentGrids.Remove(gridViewModel);
 
-				// gridViewModel.Dispose();
+				gridViewModel.Dispose();
 			}
 		}
 

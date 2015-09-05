@@ -188,19 +188,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		public override void CleanUp()
 		{			
-			globalGridSizeVariable.StateChanged -= OnGridSizeChanged;			
+			globalGridSizeVariable.StateChanged   -= OnGridSizeChanged;			
 			globalRoomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;			
-			readModel.AppointmentChanged -= OnReadModelAppointmentChanged;
+			readModel.AppointmentChanged          -= OnReadModelAppointmentChanged;
 
 			viewModelCommunication.DeregisterViewModelAtCollection<AppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,
 				this					
 			);
 
-			foreach (var appointment in readModel.Appointments)
-			{
-				RemoveAppointment(appointment);
-			}
+			readModel.Appointments
+					 .Do(RemoveAppointment);
+
+			availableTherapyPlaceRowViewModels.Values
+											  .Do(viewModel => viewModel.Dispose());			
 		}
 		
 	}
