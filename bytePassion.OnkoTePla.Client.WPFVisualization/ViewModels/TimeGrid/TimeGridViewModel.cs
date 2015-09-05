@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Math;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
@@ -9,15 +10,17 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Messages;
-using Constants = bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
+
+using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 {
-	public class TimeGridViewModel : ITimeGridViewModel, IViewModelMessageHandler<NewSizeAvailable>
-	{
-		
+	public class TimeGridViewModel : DisposingObject,
+									 ITimeGridViewModel, 
+									 IViewModelMessageHandler<NewSizeAvailable>
+	{		
 		private enum GridViewDivisionState
 		{
 			QuarterHours,
@@ -33,14 +36,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 		private readonly Time timeSlotStart;
 		private readonly Time timeSlotEnd;
 
+		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
+
 		public TimeGridViewModel(AggregateIdentifier identifierWithCorrectMedPracVersion,
 								 ViewModelCommunication<ViewModelMessage> viewModelCommunication,
                                  IDataCenter dataCenter,
 								 Size initalSize)
 		{
+			this.viewModelCommunication = viewModelCommunication;
 
 			viewModelCommunication.RegisterViewModelAtCollection<TimeGridViewModel, AggregateIdentifier>(
-				Constants.TimeGridViewModelCollection,
+				TimeGridViewModelCollection,
 				this
 			);
 
@@ -61,17 +67,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 		{
 			SetnewSize(message.NewSize);
 		}
-
-		private void SetnewSize(Size newGridSize)
-		{
-			gridSize = newGridSize;
-			RecomputeGrid();
-		}
-
+		
 		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; }
 		public ObservableCollection<TimeSlotLine>  TimeSlotLines  { get; }
 
 		public AggregateIdentifier Identifier { get; }
+
+		public override void CleanUp ()
+		{
+			viewModelCommunication.DeregisterViewModelAtCollection<TimeGridViewModel, AggregateIdentifier>(
+				TimeGridViewModelCollection,
+				this
+			);
+		}
+
+		private void SetnewSize (Size newGridSize)
+		{
+			gridSize = newGridSize;
+			RecomputeGrid();
+		}
 
 		private void RecomputeGrid ()
 		{
@@ -164,9 +178,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 
 		private static GridViewDivisionState GetDevisionForWidth (double width)
 		{ 
-			if (width < Constants.ThresholdGridWidthHoursToTwoHours)         return GridViewDivisionState.TwoHours;
-			if (width < Constants.ThresholdGridWidthHalfHoursToHours)        return GridViewDivisionState.Hours;
-			if (width < Constants.ThresholdGridWidthQuarterHoursToHalfHours) return GridViewDivisionState.HalfHours;
+			if (width < ThresholdGridWidthHoursToTwoHours)         return GridViewDivisionState.TwoHours;
+			if (width < ThresholdGridWidthHalfHoursToHours)        return GridViewDivisionState.Hours;
+			if (width < ThresholdGridWidthQuarterHoursToHalfHours) return GridViewDivisionState.HalfHours;
 
 			return GridViewDivisionState.QuarterHours;
 		}
