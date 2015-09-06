@@ -12,7 +12,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Global
 		public const string AppointmentGridDisplayedPracticeVariable = "AppointmentGridDisplayedPractice";
 		public const string AppointmentGridRoomFilterVariable        = "AppointmentGridSelectedRoom";
 		public const string SideBarStateVariable                     = "SideBarState";
-		public const string SelectedAppointment						 = "SelectedAppointment";
+		public const string SelectedAppointmentVariable				 = "SelectedAppointment";
 
 
 		// ViewModel-Collections

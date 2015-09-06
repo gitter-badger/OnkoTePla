@@ -56,7 +56,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			this.dataCenter = dataCenter;			
 
 			selectedAppointment = viewModelCommunication.GetGlobalViewModelVariable<Appointment>(
-				SelectedAppointment
+				SelectedAppointmentVariable
 			);
 
 

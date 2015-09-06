@@ -5,12 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              xmlns:overviewPage="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage"
+             xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900">
 
     <d:UserControl.DataContext>
         <overviewPage:OverviewPageViewModelSampleData/>
     </d:UserControl.DataContext>
+	
+	<UserControl.Resources>
+        <converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+	</UserControl.Resources>
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -27,6 +32,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
 
@@ -40,7 +46,16 @@
 
             <local:DateSelector Grid.Row="2"
 								DataContext="{Binding DateSelectorViewModel}"/>
+			
+			
+			<Grid Grid.Row="4"
+				  Visibility="{Binding ChangeConfirmationVisible, 
+										Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
 
+				<local:ChangeConfirmationView Margin="5"
+                							  DataContext="{Binding ChangeConfirmationViewModel}"/>
+            </Grid>
+			
         </Grid>
 
         <local:GridContainer Grid.Column="1"

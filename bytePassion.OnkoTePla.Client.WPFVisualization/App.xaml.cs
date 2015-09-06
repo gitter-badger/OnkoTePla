@@ -19,9 +19,11 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
@@ -131,8 +133,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 																					  viewModelCollections);
 
 
-
-
 			// Register Global ViewModelVariables
 
 			var gridSizeInitialValue          = new Size(400,400);
@@ -144,7 +144,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridDisplayedPracticeVariable, displayedPracticeInitialValue); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
 			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridRoomFilterVariable,        (Guid?) null);                  // when selectedRoomID == null --> all rooms are selected
 			viewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable,                     true);                          // true --> full width; false --> minimized
-			viewModelCommunication.RegisterGlobalViewModelVariable(SelectedAppointment,                      (Appointment)null);					 // null -> no appointment selected
+			viewModelCommunication.RegisterGlobalViewModelVariable(SelectedAppointmentVariable,                      (Appointment)null);		     // null -> no appointment selected
+
 
 			// Create ViewModelCollection
 
@@ -169,6 +170,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			);
 
 
+			// register viewModelMessageHandler
+
+			viewModelCommunication.RegisterViewModelMessageHandler(new ConfirmChangesMessageHandler(viewModelCommunication));
+			viewModelCommunication.RegisterViewModelMessageHandler(new RejectChangesMessageHandler(viewModelCommunication));
+
 
 			// create permanent ViewModels
 		
@@ -181,10 +187,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 																	new List<AggregateIdentifier>(), 
 																	50);
 
+			var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);
+
 			var overviewPageViewModel = new OverviewPageViewModel(medicalPracticeSelectorViewModel, 
 																  roomSelectorViewModel, 
 																  dateSelectorViewModel, 
-																  gridContainerViewModel);
+																  gridContainerViewModel,
+																  changeConfirmationViewModel,
+																  viewModelCommunication);
 
 			var searchPageViewModel   = new SearchPageViewModel();
 			var optionsPageViewModel  = new OptionsPageViewModel();
