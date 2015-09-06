@@ -24,11 +24,13 @@
     <Grid>
         
 		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
+			<RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-		<Grid Grid.Row="0">
+		<Grid Grid.Row="0"
+			  Height="25"
+			  Margin="120,-32,0,0">
 			
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="130"/>
@@ -38,17 +40,17 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" 
-					Margin="5"
+					Margin="5,0"
 					Content="Übersicht"					
 					Command="{Binding ShowOverviewPage}"/>
 			
             <Button Grid.Column="1" 
-					Margin="5"
+					Margin="5,0"
 					Content="Suchen"
 					Command="{Binding ShowSearchPage}"/>
 			
             <Button Grid.Column="2" 
-					Margin="5"
+					Margin="5,0"
 					Content="Einstellungen"
 					Command="{Binding ShowOptionsPage}"/>
 
