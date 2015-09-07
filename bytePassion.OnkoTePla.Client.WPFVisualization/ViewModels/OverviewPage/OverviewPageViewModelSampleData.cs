@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
@@ -13,6 +14,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 	{
 		public OverviewPageViewModelSampleData()
 		{
+			DateDisplayViewModel             = new DateDisplayViewModelSampleData();
 			MedicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModelSampleData();
 			RoomFilterViewModel              = new RoomFilterViewModelSampleData();
 			DateSelectorViewModel            = new DateSelectorViewModelSampleData();
@@ -22,6 +24,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 			ChangeConfirmationVisible = true;
 		}
 
+		public IDateDisplayViewModel             DateDisplayViewModel             { get; }
 		public IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }
 		public IRoomFilterViewModel              RoomFilterViewModel              { get; }
 		public IDateSelectorViewModel            DateSelectorViewModel            { get; }

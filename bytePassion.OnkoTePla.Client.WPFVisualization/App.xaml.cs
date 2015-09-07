@@ -24,6 +24,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
@@ -173,7 +174,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 
 			// create permanent ViewModels
-		
+
+			var dateDisplayViewModel = new DateDisplayViewModel(viewModelCommunication);
 			var medicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModel(dataCenter, viewModelCommunication);
 			var roomSelectorViewModel = new RoomFilterViewModel(dataCenter, viewModelCommunication);
 			var dateSelectorViewModel = new DateSelectorViewModel(viewModelCommunication);
@@ -184,8 +186,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 																	50);
 
 			var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);
-
-			var overviewPageViewModel = new OverviewPageViewModel(medicalPracticeSelectorViewModel, 
+			
+			var overviewPageViewModel = new OverviewPageViewModel(dateDisplayViewModel,
+																  medicalPracticeSelectorViewModel, 
 																  roomSelectorViewModel, 
 																  dateSelectorViewModel, 
 																  gridContainerViewModel,

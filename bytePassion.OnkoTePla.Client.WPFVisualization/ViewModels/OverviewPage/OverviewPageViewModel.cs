@@ -3,6 +3,7 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
@@ -17,18 +18,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 	{
 		private bool changeConfirmationVisible;
 
-		public OverviewPageViewModel(IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel, 
+		public OverviewPageViewModel(IDateDisplayViewModel dateDisplayViewModel,
+                                     IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel, 
 									 IRoomFilterViewModel roomFilterViewModel, 
 									 IDateSelectorViewModel dateSelectorViewModel, 
 									 IGridContainerViewModel gridContainerViewModel, 
 									 IChangeConfirmationViewModel changeConfirmationViewModel,
 									 ViewModelCommunication<ViewModelMessage> viewModelCommunication)
 		{
+			DateDisplayViewModel = dateDisplayViewModel;
 			MedicalPracticeSelectorViewModel = medicalPracticeSelectorViewModel;
 			RoomFilterViewModel = roomFilterViewModel;
 			DateSelectorViewModel = dateSelectorViewModel;
 			GridContainerViewModel = gridContainerViewModel;
-			ChangeConfirmationViewModel = changeConfirmationViewModel;
+			ChangeConfirmationViewModel = changeConfirmationViewModel;			
 
 			ChangeConfirmationVisible = false;
 
@@ -44,6 +47,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 			ChangeConfirmationVisible = appointment != null;
 		}
 
+		public IDateDisplayViewModel             DateDisplayViewModel             { get; }
 		public IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }
 		public IRoomFilterViewModel              RoomFilterViewModel              { get; }
 		public IDateSelectorViewModel            DateSelectorViewModel            { get; }
