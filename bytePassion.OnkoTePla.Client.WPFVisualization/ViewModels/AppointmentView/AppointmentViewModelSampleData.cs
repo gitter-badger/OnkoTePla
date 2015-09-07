@@ -30,8 +30,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			Identifier = new Guid();
 		}
 
-		public ICommand DeleteAppointment => null;
-		public ICommand SwitchToEditMode  => null;
+		public ICommand DeleteAppointment      => null;
+		public ICommand SwitchToEditMode       => null;
+		
 
 		public string PatientDisplayName { get; }
 		public string TimeSpan           { get; }
@@ -44,6 +45,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		
 
 		public OperatingMode OperatingMode  { get; set; }
+
+
+		public ICommand SaveCanvasLeftPosition => null;
+		public double   CanvasLeftPositionDelta { set {} }
+
 
 		public Guid Identifier { get; }
 

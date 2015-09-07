@@ -42,7 +42,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private Time timeSlotStart;
 		private Time timeSlotEnd;
 
-		private TherapyPlaceRowIdentifier currentLocation;		
+		private TherapyPlaceRowIdentifier currentLocation;
+		
+		private double canvasLeftPositionDelta;
 
 		public AppointmentViewModel(Appointment appointment,
 									ViewModelCommunication<ViewModelMessage> viewModelCommunication,
@@ -92,7 +94,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 					}					
 				}
 			);
-												
+
+			SaveCanvasLeftPosition = new Command(() =>
+			{
+				CanvasLeftPosition = CanvasLeftPosition;
+				ViewElementLength = ViewElementLength;
+				CanvasLeftPositionDelta = 0;
+			}
+			);
+
+			canvasLeftPositionDelta = 0;
+
 			SetNewLocation(initialLocalisation, true);		
 		}
 
@@ -152,8 +164,21 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public Guid Identifier => appointment.Id;
 		
-		public ICommand DeleteAppointment { get; }
-		public ICommand SwitchToEditMode  { get; }
+		public ICommand DeleteAppointment      { get; }
+		public ICommand SwitchToEditMode       { get; }
+		public ICommand SaveCanvasLeftPosition { get; }
+
+		public double CanvasLeftPositionDelta
+		{
+			get { return canvasLeftPositionDelta; }
+			set
+			{
+				canvasLeftPositionDelta = value;
+
+				PropertyChanged.Notify(this, nameof(CanvasLeftPosition));
+				PropertyChanged.Notify(this, nameof(ViewElementLength));
+			}
+		}
 
 		public string PatientDisplayName => appointment.Patient.Name;
 		public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
@@ -163,13 +188,22 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public double CanvasLeftPosition
 		{
-			get { return canvasLeftPosition; }
+			get { return CheckCanvasLeftPosition(canvasLeftPosition + CanvasLeftPositionDelta); }
 			set { PropertyChanged.ChangeAndNotify(this, ref canvasLeftPosition, value); }
+		}
+
+		private double CheckCanvasLeftPosition(double newCanvasLeftPosition)
+		{
+			if (newCanvasLeftPosition < 0)
+				return 0;
+			else
+				return newCanvasLeftPosition;
+
 		}
 
 		public double ViewElementLength
 		{
-			get { return viewElementLength; }
+			get { return viewElementLength - CanvasLeftPositionDelta; }
 			set { PropertyChanged.ChangeAndNotify(this, ref viewElementLength, value); }
 		}
 	

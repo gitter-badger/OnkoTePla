@@ -98,6 +98,9 @@
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModelSampleData.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\IChangeConfirmationViewModel.cs" />
+    <Compile Include="ViewModels\DateDisplay\DateDisplayViewModel.cs" />
+    <Compile Include="ViewModels\DateDisplay\DateDisplayViewModelSampleData.cs" />
+    <Compile Include="ViewModels\DateDisplay\IDateDisplayViewModel.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />
     <Compile Include="ViewModelMessages\Deactivate.cs" />
     <Compile Include="ViewModelMessages\Activate.cs" />
@@ -178,6 +181,9 @@
     <Compile Include="Views\ChangeConfirmationView.xaml.cs">
       <DependentUpon>ChangeConfirmationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DateDisplay.xaml.cs">
+      <DependentUpon>DateDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DateSelector.xaml.cs">
       <DependentUpon>DateSelector.xaml</DependentUpon>
     </Compile>
@@ -251,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ChangeConfirmationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DateDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
