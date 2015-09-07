@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Contr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Config.WpfVisualization", "bytePassion.OnkoTePla.Config.WpfVisualization\bytePassion.OnkoTePla.Config.WpfVisualization.csproj", "{62C6DA20-0932-4CA4-B1CC-F8E3FF6EFE45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.CustomControls.Appointment", "bytePassion.OnkoTePla.CustomControls.Appointment\bytePassion.OnkoTePla.CustomControls.Appointment.csproj", "{90C406F9-EC35-4304-A9F9-BAFB42593739}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,10 +63,6 @@ Global
 		{62C6DA20-0932-4CA4-B1CC-F8E3FF6EFE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62C6DA20-0932-4CA4-B1CC-F8E3FF6EFE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62C6DA20-0932-4CA4-B1CC-F8E3FF6EFE45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90C406F9-EC35-4304-A9F9-BAFB42593739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90C406F9-EC35-4304-A9F9-BAFB42593739}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90C406F9-EC35-4304-A9F9-BAFB42593739}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90C406F9-EC35-4304-A9F9-BAFB42593739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
