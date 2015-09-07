@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
@@ -22,6 +23,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Model
 			Patients = patients;
 			ReadModelRepository = readModelRepository;
 			SessionInfo = sessionInfo;
+
+			dataCache = new Dictionary<Guid, IDictionary<Date, MedicalPractice>>();
 		}
 
 		public IConfigurationReadRepository Configuration       { get; }
@@ -30,12 +33,26 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Model
 		public SessionInformation           SessionInfo         { get; }
 
 
-		public MedicalPractice GetMedicalPracticeByDateAndId(Date date, Guid medicalPracticeId)
-		{
-			// TODO: speed up by caching
+		private readonly IDictionary<Guid, IDictionary<Date, MedicalPractice>> dataCache;
 
-			var readModel = ReadModelRepository.GetAppointmentsOfADayReadModel(new AggregateIdentifier(date, medicalPracticeId));
-			return Configuration.GetMedicalPracticeByIdAndVersion(medicalPracticeId, readModel.Identifier.PracticeVersion);
+		public MedicalPractice GetMedicalPracticeByDateAndId(Date date, Guid medicalPracticeId)
+		{			
+			if (!dataCache.ContainsKey(medicalPracticeId))
+				dataCache.Add(medicalPracticeId, new Dictionary<Date, MedicalPractice>());
+
+			var innerCache = dataCache[medicalPracticeId];
+
+			if (!innerCache.ContainsKey(date))
+			{
+				var readModel = ReadModelRepository.GetAppointmentsOfADayReadModel(new AggregateIdentifier(date, medicalPracticeId));
+				var medicalPractice = Configuration.GetMedicalPracticeByIdAndVersion(medicalPracticeId, readModel.Identifier.PracticeVersion);
+
+				innerCache.Add(date, medicalPractice);
+
+				readModel.Dispose();
+			}
+			
+            return innerCache[date];
 		}
 	}
 }
