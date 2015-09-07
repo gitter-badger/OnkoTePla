@@ -39,8 +39,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		private readonly IDictionary<Guid, TherapyPlaceRowViewModel> availableTherapyPlaceRowViewModels; 
 
 		private readonly AppointmentsOfADayReadModel readModel;
-		private readonly GlobalState<Size> globalGridSizeVariable;
-		private readonly GlobalState<Guid?> globalRoomFilterVariable; 
+		private readonly IGlobalState<Size> globalGridSizeVariable;
+		private readonly IGlobalState<Guid?> globalRoomFilterVariable; 
 
 		public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 

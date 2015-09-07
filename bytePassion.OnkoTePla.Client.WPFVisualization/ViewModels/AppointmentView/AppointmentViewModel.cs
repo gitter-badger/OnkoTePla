@@ -34,7 +34,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private readonly IDataCenter dataCenter;		
 		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
 
-		private readonly GlobalState<Appointment> selectedAppointment;
+		private readonly IGlobalState<Appointment> selectedAppointment;
 
 		private double canvasLeftPosition;
 		private double viewElementLength;

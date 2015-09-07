@@ -19,11 +19,11 @@ namespace bytePassion.Lib.Communication.State
 
 			var state = GetState<T>(stateIdentifier);
 			state.Value = initialValue;
-		}
+		}		
 
-		public GlobalState<T> GetState<T> (string stateIdentifier)
+		public IGlobalState<T> GetState<T> (string stateIdentifier)
 		{
-			return (GlobalState<T>)states[stateIdentifier];
+			return (IGlobalState<T>)states[stateIdentifier];
 		}
 	}	
 }

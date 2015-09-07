@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 	public class MedicalPracticeSelectorViewModel : IMedicalPracticeSelectorViewModel
 	{
 		private readonly IConfigurationReadRepository configuration;		
-		private readonly GlobalState<Guid>            displayedPracticeState; 
+		private readonly IGlobalState<Guid>            displayedPracticeState; 
 
 		private MedicalPractice selectedPractice;
 

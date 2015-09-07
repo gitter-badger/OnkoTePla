@@ -3,7 +3,8 @@
 
 namespace bytePassion.Lib.Communication.State
 {
-	public class GlobalState<T>
+
+	public class GlobalState<T> : IGlobalState<T>
 	{
 		public event Action<T> StateChanged;
 

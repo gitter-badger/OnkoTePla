@@ -10,7 +10,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 {
 	public class ConfirmChangesMessageHandler : IViewModelMessageHandler<ConfirmChanges>
 	{		
-		private readonly GlobalState<Appointment> selectedAppointmentVariable; 
+		private readonly IGlobalState<Appointment> selectedAppointmentVariable; 
 
 		public ConfirmChangesMessageHandler (ViewModelCommunication<ViewModelMessage> viewModelCommunication)
 		{			

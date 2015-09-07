@@ -13,7 +13,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 {
 	public class DateSelectorViewModel : IDateSelectorViewModel
 	{		
-		private readonly GlobalState<Date> selectedDateState;
+		private readonly IGlobalState<Date> selectedDateState;
 
 		private Date selectedDate;
 

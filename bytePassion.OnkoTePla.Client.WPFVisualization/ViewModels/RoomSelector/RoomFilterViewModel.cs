@@ -24,9 +24,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 
 		private readonly IDataCenter dataCenter;		
 
-		private readonly GlobalState<Guid?> roomFilter;
-		private readonly GlobalState<Date>  selectedDate;
-		private readonly GlobalState<Guid>  displayedMedicalPractice;
+		private readonly IGlobalState<Guid?> roomFilter;
+		private readonly IGlobalState<Date>  selectedDate;
+		private readonly IGlobalState<Guid>  displayedMedicalPractice;
 
 		private IList<Room> currentSelectableRoomFilters;
 		private RoomSelectorData selectedRoomFilter;

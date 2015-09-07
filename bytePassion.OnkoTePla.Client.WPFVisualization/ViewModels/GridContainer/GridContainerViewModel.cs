@@ -26,9 +26,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 
 		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
 
-		private readonly GlobalState<Date> selectedDateState;
-		private readonly GlobalState<Guid> displayedPracticeState;
-		private readonly GlobalState<Size> gridSize; 
+		private readonly IGlobalState<Date> selectedDateState;
+		private readonly IGlobalState<Guid> displayedPracticeState;
+		private readonly IGlobalState<Size> gridSize; 
 
 		private readonly IDictionary<AggregateIdentifier, IAppointmentGridViewModel> cachedAppointmentGridViewModels; 
 
