@@ -6,6 +6,7 @@
              xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              xmlns:appointmentGrid="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid"             
              xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Global"
+             xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="900">
 	
@@ -13,6 +14,9 @@
 		<appointmentGrid:AppointmentGridViewModelSampleData/>
 	</d:UserControl.DataContext>
 		
+	<UserControl.Resources>
+        <converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+	</UserControl.Resources>
 
 	<Grid Background="White">
 		<Grid.RowDefinitions>
@@ -53,5 +57,25 @@
 			
 			</ItemsControl>
 		</ScrollViewer>
+
+        <TextBlock Grid.Column="0"
+				   Grid.Row="0"
+				   Grid.ColumnSpan="2"
+				   Grid.RowSpan="2"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Text="Geschlossen"
+				   FontSize="80"
+				   FontFamily="{StaticResource StandardFontFamily}"
+				   Foreground="Red"
+				   RenderTransformOrigin="0.5, 0.5"
+				   Visibility="{Binding PracticeIsClosedAtThisDay, 
+										Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+			
+			<TextBlock.RenderTransform>
+				<RotateTransform Angle="-30"></RotateTransform>
+			</TextBlock.RenderTransform>
+
+        </TextBlock>
 	</Grid>
 </UserControl>

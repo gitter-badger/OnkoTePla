@@ -97,6 +97,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			}
 
 			OnGlobalRoomFilterVariableChanged(globalRoomFilterVariable.Value);
+
+			PracticeIsClosedAtThisDay = false;
 		}
 
 		private void OnGlobalRoomFilterVariableChanged(Guid? newRoomFilter)
@@ -176,8 +178,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; }
 
 		public ITimeGridViewModel TimeGridViewModel { get; }
-				
-		
+
+		public bool PracticeIsClosedAtThisDay { get; }
+
+
 		public void Process(Activate message)
 		{
 			viewModelIsActive = true;
@@ -195,7 +199,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			globalRoomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;			
 			readModel.AppointmentChanged          -= OnReadModelAppointmentChanged;
 
-			viewModelCommunication.DeregisterViewModelAtCollection<AppointmentGridViewModel, AggregateIdentifier>(
+			viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,
 				this					
 			);
@@ -208,6 +212,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 			readModel.Appointments
 					 .Do(RemoveAppointment);
+
+			readModel.Dispose();
 
 			availableTherapyPlaceRowViewModels.Values
 											  .Do(viewModel => viewModel.Dispose());			

@@ -21,12 +21,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			};
 
 			TimeGridViewModel = new TimeGridViewModelSampleData();	
-			Identifier = new AggregateIdentifier(Date.Dummy, new Guid());						
+			Identifier = new AggregateIdentifier(Date.Dummy, new Guid());
+			PracticeIsClosedAtThisDay = true;
 		}
 		
 		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; }
 
 		public ITimeGridViewModel TimeGridViewModel { get; }
+
+		public bool PracticeIsClosedAtThisDay { get; }
 
 		public AggregateIdentifier Identifier { get; }
 

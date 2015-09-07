@@ -18,5 +18,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; } 	
 		
 		ITimeGridViewModel 	TimeGridViewModel { get; }
+
+		bool PracticeIsClosedAtThisDay { get; }
 	}
 }

@@ -93,7 +93,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 		{
 			if (!cachedAppointmentGridViewModels.ContainsKey(identifier))
 			{
-				var gridViewModel = new AppointmentGridViewModel(identifier, dataCenter, commandBus,viewModelCommunication);
+				var medicalPractice = dataCenter.GetMedicalPracticeByDateAndId(identifier.Date, identifier.MedicalPracticeId);
+
+				IAppointmentGridViewModel gridViewModel;
+
+				if (medicalPractice.HoursOfOpening.IsOpen(identifier.Date))
+					gridViewModel = new AppointmentGridViewModel(identifier, dataCenter, commandBus,viewModelCommunication);
+				else
+					gridViewModel = new ClosedDayGridViewModel(identifier, dataCenter, viewModelCommunication);
 
 				cachedAppointmentGridViewModels.Add(identifier, gridViewModel);
 				LoadedAppointmentGrids.Add(gridViewModel);

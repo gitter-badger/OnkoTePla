@@ -94,6 +94,7 @@
     <Compile Include="ViewModelMessages\RejectChanges.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModelMessages\Dispose.cs" />
+    <Compile Include="ViewModels\AppointmentGrid\ClosedDayGridViewModel.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModelSampleData.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\IChangeConfirmationViewModel.cs" />
