@@ -19,7 +19,12 @@ namespace bytePassion.Lib.Communication.State
 
 			var state = GetState<T>(stateIdentifier);
 			state.Value = initialValue;
-		}		
+		}
+
+		public void RegisterState<T>(string stateIdentifier, IGlobalState<T> newGlobalState)
+		{
+			states.Add(stateIdentifier, newGlobalState);
+		}
 
 		public IGlobalState<T> GetState<T> (string stateIdentifier)
 		{
