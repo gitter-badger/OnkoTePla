@@ -62,6 +62,7 @@
     <Compile Include="WpfUtils\Adorner\FrameworkElementAdorner.cs" />
     <Compile Include="WpfUtils\Behaviors\AutoScrollDownBehavior.cs" />
     <Compile Include="WpfUtils\Behaviors\HeightWidthReportingBehavior.cs" />
+    <Compile Include="WpfUtils\Behaviors\MoveHorizontalBehavior.cs" />
     <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandOnClickBehavior.cs" />
     <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
     <Compile Include="WpfUtils\Behaviors\GridViewSplitColumnsEqualyBehavior.cs" />
