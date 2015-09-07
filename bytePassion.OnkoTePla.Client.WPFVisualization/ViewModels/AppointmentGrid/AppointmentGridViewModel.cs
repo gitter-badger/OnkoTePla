@@ -25,10 +25,7 @@ using DeleteAppointmentCommand = bytePassion.OnkoTePla.Client.Core.Domain.Comman
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
 {
 	public class AppointmentGridViewModel : DisposingObject,
-											IAppointmentGridViewModel, 											
-											IViewModelMessageHandler<Activate>,
-											IViewModelMessageHandler<Deactivate>,
-											IViewModelMessageHandler<DeleteAppointment>
+											IAppointmentGridViewModel											
 	{
 		private bool viewModelIsActive;
 
@@ -63,7 +60,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			);
 			globalRoomFilterVariable.StateChanged += OnGlobalRoomFilterVariableChanged;
 
-			viewModelCommunication.RegisterViewModelAtCollection<AppointmentGridViewModel, AggregateIdentifier>(
+			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,
 				this					
 			);
@@ -146,7 +143,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		
 		private void RemoveAppointment(Appointment appointmentToRemove)
 		{
-			viewModelCommunication.SendTo<AppointmentViewModel, Guid, Dispose>(
+			viewModelCommunication.SendTo<IAppointmentViewModel, Guid, Dispose>(
 				AppointmentViewModelCollection,
 				appointmentToRemove.Id,
 				new Dispose()	
@@ -157,7 +154,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		{
 			if (viewModelIsActive)
 			{
-				viewModelCommunication.SendTo<TimeGridViewModel, AggregateIdentifier, NewSizeAvailable>(
+				viewModelCommunication.SendTo<ITimeGridViewModel, AggregateIdentifier, NewSizeAvailable>(
 					TimeGridViewModelCollection,
 					Identifier,
 					new NewSizeAvailable(newGridSize)	
@@ -165,7 +162,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 				foreach (var appointment in readModel.Appointments)
 				{
-					viewModelCommunication.SendTo<AppointmentViewModel, Guid, NewSizeAvailable>(
+					viewModelCommunication.SendTo<IAppointmentViewModel, Guid, NewSizeAvailable>(
 						AppointmentViewModelCollection,
 						appointment.Id,
 						new NewSizeAvailable(newGridSize)
@@ -203,7 +200,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				this					
 			);
 
-			viewModelCommunication.SendTo<TimeGridViewModel, AggregateIdentifier, Dispose>(
+			viewModelCommunication.SendTo<ITimeGridViewModel, AggregateIdentifier, Dispose>(
 				TimeGridViewModelCollection,
 				Identifier,
 				new Dispose()	

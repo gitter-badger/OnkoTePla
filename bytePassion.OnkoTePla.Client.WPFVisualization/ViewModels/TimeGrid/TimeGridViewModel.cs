@@ -17,9 +17,7 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 {
 	public class TimeGridViewModel : DisposingObject,
-									 ITimeGridViewModel, 
-									 IViewModelMessageHandler<NewSizeAvailable>,
-									 IViewModelMessageHandler<Dispose>
+									 ITimeGridViewModel									 
 	{		
 		private enum GridViewDivisionState
 		{
@@ -45,7 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 		{
 			this.viewModelCommunication = viewModelCommunication;
 
-			viewModelCommunication.RegisterViewModelAtCollection<TimeGridViewModel, AggregateIdentifier>(
+			viewModelCommunication.RegisterViewModelAtCollection<ITimeGridViewModel, AggregateIdentifier>(
 				TimeGridViewModelCollection,
 				this
 			);

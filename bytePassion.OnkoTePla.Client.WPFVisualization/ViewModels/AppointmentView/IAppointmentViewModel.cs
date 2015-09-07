@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Windows.Input;
+using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
 {
-	public interface IAppointmentViewModel : IViewModel, IDisposable
+	public interface IAppointmentViewModel : IViewModel,
+											 IViewModelCollectionItem<Guid>,
+											 IDisposable,
+                                             IViewModelMessageHandler<Dispose>,
+											 IViewModelMessageHandler<NewSizeAvailable>                                             
 	{
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }

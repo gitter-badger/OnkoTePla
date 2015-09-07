@@ -13,9 +13,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
 {
 	public class TherapyPlaceRowViewModel : DisposingObject,
-											ITherapyPlaceRowViewModel,
-											IViewModelMessageHandler<AddAppointmentToTherapyPlaceRow>,
-											IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>
+											ITherapyPlaceRowViewModel											
 	{
 		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
 
@@ -31,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 
 			AppointmentViewModels = new ObservableCollection<IAppointmentViewModel>();	
 			
-			viewModelCommunication.RegisterViewModelAtCollection<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
+			viewModelCommunication.RegisterViewModelAtCollection<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
 				Constants.TherapyPlaceRowViewModelCollection,
 				this	
 			);

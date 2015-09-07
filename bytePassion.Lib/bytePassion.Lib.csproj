@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\State\IGlobalState.cs" />
+    <Compile Include="Communication\ViewModel\IViewModelCollectionItem.cs" />
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="WpfUtils\Adorner\AdornedControl.cs" />

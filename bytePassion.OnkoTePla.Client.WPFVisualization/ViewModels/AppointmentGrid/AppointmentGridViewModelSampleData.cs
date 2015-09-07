@@ -1,4 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 
@@ -16,13 +20,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				new TherapyPlaceRowViewModelSampleData(),
 			};
 
-			TimeGridViewModel = new TimeGridViewModelSampleData();							
+			TimeGridViewModel = new TimeGridViewModelSampleData();	
+			Identifier = new AggregateIdentifier(Date.Dummy, new Guid());						
 		}
 		
 		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; }
 
 		public ITimeGridViewModel TimeGridViewModel { get; }
 
+		public AggregateIdentifier Identifier { get; }
+
 		public void Dispose() {}
+
+		public void Process(Activate message) {}
+		public void Process(Deactivate message) {}
+		public void Process(DeleteAppointment message) {}
 	}
 }

@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
 
 #pragma warning disable 0067
@@ -25,6 +27,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			ViewElementLength  = viewElementLength;
 
 			OperatingMode = OperatingMode.Edit;
+			Identifier = new Guid();
 		}
 
 		public ICommand DeleteAppointment => null;
@@ -42,7 +45,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public OperatingMode OperatingMode  { get; set; }
 
-		public event PropertyChangedEventHandler PropertyChanged;
-		public void Dispose() {}
+		public Guid Identifier { get; }
+
+		public void Process (Dispose message) { }
+		public void Process (NewSizeAvailable message) { }
+
+		public void Dispose() {}		
+
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

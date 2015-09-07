@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 
 namespace bytePassion.Lib.Communication.ViewModel
 {
 
-	public class ViewModelCollection <TViewModel, TIdent>
-	{
-		private readonly Func<TViewModel, TIdent, bool> viewModelSelectorFunc;
-
+	public class ViewModelCollection <TViewModel, TIdent> where TViewModel : IViewModelCollectionItem<TIdent>		
+	{		
 		private readonly IList<TViewModel> viewModels;
 
-		public ViewModelCollection(Func<TViewModel, TIdent, bool> viewModelSelectorFunc)
-		{
-			this.viewModelSelectorFunc = viewModelSelectorFunc;
-
+		public ViewModelCollection()
+		{			
 			viewModels = new List<TViewModel>();
 		}
 
@@ -31,7 +26,7 @@ namespace bytePassion.Lib.Communication.ViewModel
 
 		public TViewModel GetViewModel(TIdent identifier)
 		{
-			return viewModels.FirstOrDefault(viewModel => viewModelSelectorFunc(viewModel, identifier));
+			return viewModels.FirstOrDefault(viewModel => viewModel.Identifier.Equals(identifier));
 		}		
 	}
 

@@ -1,4 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper;
 
 
@@ -19,11 +23,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 				new TimeSlotLine {XCoord =  100, YCoordTop = 40, YCoordBottom = 400},
 				new TimeSlotLine {XCoord =  200, YCoordTop = 40, YCoordBottom = 400}
 			};
+
+			Identifier = new AggregateIdentifier(Date.Dummy, new Guid());
 		}
 
 		public ObservableCollection<TimeSlotLabel> TimeSlotLabels { get; }
 		public ObservableCollection<TimeSlotLine>  TimeSlotLines  { get; }
 
-		public void Dispose() {}
+		public AggregateIdentifier Identifier { get; }
+		
+		public void Process(NewSizeAvailable message) {}
+		public void Process(Dispose message) {}
+
+		public void Dispose () {}
 	}
 }

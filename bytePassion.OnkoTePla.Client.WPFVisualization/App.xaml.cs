@@ -149,24 +149,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Create ViewModelCollection
 
-			viewModelCommunication.CreateViewModelCollection<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
-				TherapyPlaceRowViewModelCollection,
-				(viewModel, therapyPlaceLocalisation) => viewModel.Identifier == therapyPlaceLocalisation
+			viewModelCommunication.CreateViewModelCollection<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
+				TherapyPlaceRowViewModelCollection				
 			);
 
-			viewModelCommunication.CreateViewModelCollection<AppointmentGridViewModel, AggregateIdentifier>(
-				AppointmentGridViewModelCollection,
-				(viewModel, identifier) =>  viewModel.Identifier == identifier
+			viewModelCommunication.CreateViewModelCollection<IAppointmentGridViewModel, AggregateIdentifier>(
+				AppointmentGridViewModelCollection				
 			);
 
-			viewModelCommunication.CreateViewModelCollection<TimeGridViewModel, AggregateIdentifier>(
-				TimeGridViewModelCollection,
-				(viewModel, identifier) => viewModel.Identifier == identifier
+			viewModelCommunication.CreateViewModelCollection<ITimeGridViewModel, AggregateIdentifier>(
+				TimeGridViewModelCollection				
 			);
 
-			viewModelCommunication.CreateViewModelCollection<AppointmentViewModel, Guid>(
-				AppointmentViewModelCollection,
-				(viewModel, id) => viewModel.Identifier == id
+			viewModelCommunication.CreateViewModelCollection<IAppointmentViewModel, Guid>(
+				AppointmentViewModelCollection				
 			);
 
 

@@ -1,5 +1,4 @@
-﻿using System;
-using bytePassion.Lib.Communication.MessageBus;
+﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.State;
 
 
@@ -19,9 +18,7 @@ namespace bytePassion.Lib.Communication.ViewModel
 		{
 			this.viewModelMessageBus = viewModelMessageBus;
 			this.viewModelVariableEngine = viewModelVariableEngine;
-			this.viewModelCollections = viewModelCollections;
-
-			//new ViewModelCollection<TestViewModel, string>((model, str) => model.Identifier == str);
+			this.viewModelCollections = viewModelCollections;			
 		}
 
 
@@ -48,21 +45,27 @@ namespace bytePassion.Lib.Communication.ViewModel
 		/////////                                                                                   ///////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public void CreateViewModelCollection<TViewModel, TIdent>(string identifier, 
-																  Func<TViewModel, TIdent, bool> viewModelSelectorFunc)
+		public void CreateViewModelCollection<TViewModel, TIdent>(string identifier)
+			where TViewModel : IViewModelCollectionItem<TIdent>
 		{
-			viewModelCollections.CreateViewModelCollection(identifier, viewModelSelectorFunc);
+			viewModelCollections.CreateViewModelCollection<TViewModel, TIdent>(identifier);
+		}
+
+		public void RemoveViewModelCollection(string identifier)
+		{
+			viewModelCollections.RemoveViewModelCollection(identifier);
 		}
 
 		public void RegisterViewModelAtCollection<TViewModel, TIdent>(string collectionIdentifier, 
 																	  TViewModel viewModel)
+			where TViewModel : IViewModelCollectionItem<TIdent>
 		{
 			var viewModelCollection = viewModelCollections.GetViewModelCollection<TViewModel, TIdent>(collectionIdentifier);
 			viewModelCollection.AddViewModel(viewModel);
 		}
 
-		public void DeregisterViewModelAtCollection<TViewModel, TIdent>(string collectionIdentifier, 
-																		TViewModel viewModel)
+		public void DeregisterViewModelAtCollection<TViewModel, TIdent>(string collectionIdentifier, TViewModel viewModel)
+			where TViewModel : IViewModelCollectionItem<TIdent>
 		{
 			var viewModelCollection = viewModelCollections.GetViewModelCollection<TViewModel, TIdent>(collectionIdentifier);
 			viewModelCollection.RemoveViewModel(viewModel);
@@ -71,7 +74,7 @@ namespace bytePassion.Lib.Communication.ViewModel
 		public void SendTo<TViewModel, TIdent, TMessage>(string viewModelCollectionIdentifier, 
 													     TIdent viewModelIdentifier, 
 													     TMessage message)
-			where TViewModel : IViewModelMessageHandler<TMessage>
+			where TViewModel : IViewModelMessageHandler<TMessage>, IViewModelCollectionItem<TIdent>
 		{
 			var viewModelCollection = viewModelCollections.GetViewModelCollection<TViewModel, TIdent>(viewModelCollectionIdentifier);
 

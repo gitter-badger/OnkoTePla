@@ -1,6 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
@@ -16,7 +21,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			{
 				new AppointmentViewModelSampleData( 10, 150),
 				new AppointmentViewModelSampleData(200, 150)
-			};			
+			};	
+			
+			Identifier = new TherapyPlaceRowIdentifier(new AggregateIdentifier(Date.Dummy, new Guid()), new Guid());		
 		}
 		
 		public ObservableCollection<IAppointmentViewModel> AppointmentViewModels { get; }			
@@ -24,6 +31,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public string TherapyPlaceName { get; }
 		public Color  RoomColor        { get; }
 
-		public void Dispose() {}
+		public TherapyPlaceRowIdentifier Identifier { get; }		
+
+		public void Process(AddAppointmentToTherapyPlaceRow message) {}
+		public void Process(RemoveAppointmentFromTherapyPlaceRow message) {}
+
+		public void Dispose () {}
 	}
 }
