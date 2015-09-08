@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper;

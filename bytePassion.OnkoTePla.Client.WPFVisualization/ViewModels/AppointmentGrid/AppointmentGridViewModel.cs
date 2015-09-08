@@ -12,7 +12,6 @@ using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
@@ -31,7 +30,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		private readonly IDataCenter dataCenter;
 		private readonly ICommandBus commandBus;
-		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
+		private readonly IViewModelCommunication viewModelCommunication;
 
 		private readonly IDictionary<Guid, TherapyPlaceRowViewModel> availableTherapyPlaceRowViewModels; 
 
@@ -42,7 +41,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
 										ICommandBus commandBus,
-										ViewModelCommunication<ViewModelMessage> viewModelCommunication)
+										IViewModelCommunication viewModelCommunication)
 		{
 			this.dataCenter = dataCenter;
 			this.commandBus = commandBus;

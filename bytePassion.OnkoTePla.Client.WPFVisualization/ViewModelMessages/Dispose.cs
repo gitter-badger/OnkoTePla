@@ -1,4 +1,4 @@
-﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
+﻿using bytePassion.Lib.Communication.ViewModel.Messages;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
 {

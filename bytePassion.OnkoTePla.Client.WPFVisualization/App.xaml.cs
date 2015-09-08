@@ -6,6 +6,7 @@ using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
@@ -22,7 +23,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
@@ -129,9 +129,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			IStateEngine viewModelStateEngine = new StateEngine();
 			IViewModelCollections viewModelCollections = new ViewModelCollections();
 
-			var viewModelCommunication = new ViewModelCommunication<ViewModelMessage>(viewModelMessageBus,
-																					  viewModelStateEngine,
-																					  viewModelCollections);
+			IViewModelCommunication viewModelCommunication = new ViewModelCommunication(viewModelMessageBus,
+																	                    viewModelStateEngine,
+																	                    viewModelCollections);
 
 
 			// Register Global ViewModelVariables
@@ -145,7 +145,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridDisplayedPracticeVariable, displayedPracticeInitialValue); // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
 			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridRoomFilterVariable,        (Guid?) null);                  // when selectedRoomID == null --> all rooms are selected
 			viewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable,                     true);                          // true --> full width; false --> minimized
-			viewModelCommunication.RegisterGlobalViewModelVariable(SelectedAppointmentVariable,                      (Appointment)null);		     // null -> no appointment selected
+			viewModelCommunication.RegisterGlobalViewModelVariable(SelectedAppointmentVariable,              (Appointment)null);		     // null -> no appointment selected
 
 
 			// Create ViewModelCollection

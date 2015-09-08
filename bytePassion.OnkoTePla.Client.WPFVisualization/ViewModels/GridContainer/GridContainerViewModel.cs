@@ -12,7 +12,6 @@ using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
@@ -24,7 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 		private readonly IDataCenter dataCenter;
 		private readonly ICommandBus  commandBus;
 
-		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
+		private readonly IViewModelCommunication viewModelCommunication;
 
 		private readonly IGlobalState<Date> selectedDateState;
 		private readonly IGlobalState<Guid> displayedPracticeState;
@@ -37,7 +36,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 		
 		public GridContainerViewModel(IDataCenter dataCenter,
 									  ICommandBus commandBus,
-									  ViewModelCommunication<ViewModelMessage> viewModelCommunication,								  
+									  IViewModelCommunication viewModelCommunication,								  
                                       IEnumerable<AggregateIdentifier> initialGridViewModelsToCache,
 									  int maximumCashedGrids /* TODO */)
 		{

@@ -1,5 +1,5 @@
-﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
+﻿using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
 {

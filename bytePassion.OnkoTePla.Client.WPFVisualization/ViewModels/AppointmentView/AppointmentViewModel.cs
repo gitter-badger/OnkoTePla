@@ -11,7 +11,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using MahApps.Metro.Controls.Dialogs;
@@ -27,7 +26,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 	{		
 		private readonly Appointment appointment;		
 		private readonly IDataCenter dataCenter;		
-		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
+		private readonly IViewModelCommunication viewModelCommunication;
 
 		private readonly IGlobalState<Appointment> selectedAppointment;
 
@@ -44,7 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private double canvasLeftPositionDelta;
 
 		public AppointmentViewModel(Appointment appointment,
-									ViewModelCommunication<ViewModelMessage> viewModelCommunication,
+									IViewModelCommunication viewModelCommunication,
 									IDataCenter dataCenter,									
 									TherapyPlaceRowIdentifier initialLocalisation)
 		{ 						

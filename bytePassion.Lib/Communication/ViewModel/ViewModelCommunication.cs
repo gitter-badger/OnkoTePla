@@ -1,18 +1,20 @@
-﻿using bytePassion.Lib.Communication.MessageBus;
+﻿using System;
+using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.Communication.ViewModel.Messages;
 
 
 namespace bytePassion.Lib.Communication.ViewModel
 {
 
-	public class ViewModelCommunication<TMessageBase>
+	public class ViewModelCommunication : IViewModelCommunication
 	{
-		private readonly IMessageBus<TMessageBase> viewModelMessageBus;
+		private readonly IMessageBus<ViewModelMessage> viewModelMessageBus;
 		private readonly IViewModelCollections     viewModelCollections;
 		private readonly IStateEngine              viewModelVariableEngine;
 		
 
-		public ViewModelCommunication(IMessageBus<TMessageBase> viewModelMessageBus, 
+		public ViewModelCommunication(IMessageBus<ViewModelMessage> viewModelMessageBus, 
 									  IStateEngine viewModelVariableEngine, 
 									  IViewModelCollections viewModelCollections)
 		{
@@ -73,7 +75,8 @@ namespace bytePassion.Lib.Communication.ViewModel
 
 		public void SendTo<TIdent, TMessage>(string viewModelCollectionIdentifier, 
 											 TIdent viewModelIdentifier, 
-											 TMessage message)			
+											 TMessage message)
+			where TMessage : ViewModelMessage
 		{
 			var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(viewModelCollectionIdentifier);
 
@@ -83,6 +86,22 @@ namespace bytePassion.Lib.Communication.ViewModel
 			viewModelAsMessageHandler?.Process(message);
 		}
 
+		public TResult SynchronRequest<TResult, TIdent, TMessage>(string viewModelCollectionIdentifier, 
+																  TIdent viewModelIdentifier, 
+																  TMessage requestMessage)
+			where TMessage : ViewModelRequest
+		{
+			var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(viewModelCollectionIdentifier);
+
+			var viewModel = viewModelCollection.GetViewModel(viewModelIdentifier);
+
+			var viewModelAsRequestHandler = viewModel as IViewModelRequestHandler<TMessage, TResult>;
+
+			if (viewModelAsRequestHandler == null)
+				throw new InvalidOperationException("there is no handler for this request");
+
+			return viewModelAsRequestHandler.Process(requestMessage);
+		}
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////                                                                                   ///////////
@@ -91,19 +110,19 @@ namespace bytePassion.Lib.Communication.ViewModel
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		public void RegisterViewModelMessageHandler<TMessage>(IViewModelMessageHandler<TMessage> viewModelMessageHandler)
-			where TMessage: TMessageBase
+			where TMessage: ViewModelMessage
 		{
 			viewModelMessageBus.RegisterMessageHandler(viewModelMessageHandler);
 		}
 
 		public void DeregisterViewModelMessageHandler<TMessage>(IViewModelMessageHandler<TMessage> viewModelMessageHandler)
-			where TMessage : TMessageBase
+			where TMessage : ViewModelMessage
 		{
 			viewModelMessageBus.DeregisterMessageHander(viewModelMessageHandler);
 		}
 
 		public void Send<TMessage>(TMessage message) 
-			where TMessage : TMessageBase
+			where TMessage : ViewModelMessage
 		{
 			viewModelMessageBus.Send(message);
 		}

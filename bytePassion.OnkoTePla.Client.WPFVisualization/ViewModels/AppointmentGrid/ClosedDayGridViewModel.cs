@@ -6,7 +6,6 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 
@@ -19,7 +18,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 	{
 		private bool viewModelIsActive;
 		
-		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
+		private readonly IViewModelCommunication viewModelCommunication;
 		
 
 		private readonly IGlobalState<Size> globalGridSizeVariable;
@@ -27,7 +26,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		public ClosedDayGridViewModel (AggregateIdentifier identifier,
 									   IDataCenter dataCenter,										
-									   ViewModelCommunication<ViewModelMessage> viewModelCommunication)
+									   IViewModelCommunication viewModelCommunication)
 		{			
 			this.viewModelCommunication = viewModelCommunication;
 			

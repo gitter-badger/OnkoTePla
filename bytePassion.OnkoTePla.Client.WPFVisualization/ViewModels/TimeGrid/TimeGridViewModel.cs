@@ -8,7 +8,6 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using Duration = bytePassion.Lib.TimeLib.Duration;
@@ -34,10 +33,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 		private readonly Time timeSlotStart;
 		private readonly Time timeSlotEnd;
 
-		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
+		private readonly IViewModelCommunication viewModelCommunication;
 
 		public TimeGridViewModel(AggregateIdentifier identifierWithCorrectMedPracVersion,
-								 ViewModelCommunication<ViewModelMessage> viewModelCommunication,
+								 IViewModelCommunication viewModelCommunication,
                                  IDataCenter dataCenter,
 								 Size initalSize)
 		{

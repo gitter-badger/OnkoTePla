@@ -101,6 +101,7 @@
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModel.cs" />
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModelSampleData.cs" />
     <Compile Include="ViewModels\DateDisplay\IDateDisplayViewModel.cs" />
+    <Compile Include="ViewModels\TherapyPlaceRowView\Requests\GetMaxLeftRequest.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />
     <Compile Include="ViewModelMessages\Deactivate.cs" />
     <Compile Include="ViewModelMessages\Activate.cs" />
@@ -138,7 +139,7 @@
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModel.cs" />
     <Compile Include="TestAndOldStuff\AppointmentOverView\AppointmentOverViewModel.cs" />
     <Compile Include="ViewModels\AppointmentView\AppointmentViewModel.cs" />
-    <Compile Include="ViewModels\Base\IViewModel.cs" />
+    <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\Helper\OperatingMode.cs" />
     <Compile Include="ViewModels\PatientSelector\Helper\PatientListItem.cs" />
     <Compile Include="TestAndOldStuff\AddAppointmentTestView\IAddAppointmentTestViewModel.cs" />
@@ -155,7 +156,6 @@
     <Compile Include="ViewModels\RoomSelector\Helper\RoomSelectorData.cs" />
     <Compile Include="TestAndOldStuff\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MedicalPracticeSelector\MedicalPracticeSelectorViewModel.cs" />
-    <Compile Include="ViewModels\Base\ViewModelMessage.cs" />
     <Compile Include="ViewModels\PatientSelector\PatientSelectorViewModel.cs" />
     <Compile Include="ViewModels\TimeGrid\Helper\TimeSlotLine.cs" />
     <Compile Include="ViewModels\RoomSelector\RoomFilterViewModel.cs" />

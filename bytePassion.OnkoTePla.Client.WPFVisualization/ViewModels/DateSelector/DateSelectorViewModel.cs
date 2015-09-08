@@ -5,7 +5,6 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfUtils.Commands;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
@@ -17,7 +16,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 
 		private Date selectedDate;
 
-		public DateSelectorViewModel(ViewModelCommunication<ViewModelMessage> viewModelCommunication)
+		public DateSelectorViewModel(IViewModelCommunication viewModelCommunication)
 		{
 			selectedDateState = viewModelCommunication.GetGlobalViewModelVariable<Date>(
 				AppointmentGridSelectedDateVariable

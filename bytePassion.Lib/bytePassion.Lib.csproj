@@ -53,8 +53,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communication\MessageBus\IRequestHandler.cs" />
     <Compile Include="Communication\State\IGlobalState.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCollectionItem.cs" />
+    <Compile Include="Communication\ViewModel\IViewModelCommunication.cs" />
+    <Compile Include="Communication\ViewModel\Messages\IViewModelRequestHandler.cs" />
+    <Compile Include="Communication\ViewModel\Messages\ViewModelMessage.cs" />
+    <Compile Include="Communication\ViewModel\Messages\ViewModelRequest.cs" />
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="WpfUtils\Adorner\AdornedControl.cs" />
@@ -74,7 +79,7 @@
     <Compile Include="Communication\State\IStateEngine.cs" />
     <Compile Include="Communication\State\StateEngine.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCollections.cs" />
-    <Compile Include="Communication\ViewModel\IViewModelMessageHandler.cs" />
+    <Compile Include="Communication\ViewModel\Messages\IViewModelMessageHandler.cs" />
     <Compile Include="Communication\ViewModel\ViewModelCollection.cs" />
     <Compile Include="Communication\ViewModel\ViewModelCollections.cs" />
     <Compile Include="Communication\ViewModel\ViewModelCommunication.cs" />

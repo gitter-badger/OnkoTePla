@@ -2,13 +2,12 @@
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfUtils.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView
 {
 	public class ChangeConfirmationViewModel : IChangeConfirmationViewModel
 	{
-		public ChangeConfirmationViewModel(ViewModelCommunication<ViewModelMessage> viewModelCommunication)
+		public ChangeConfirmationViewModel(IViewModelCommunication viewModelCommunication)
 		{
 			ConfirmChanges = new Command(() => viewModelCommunication.Send(new ConfirmChanges()));
 			RejectChanges  = new Command(() => viewModelCommunication.Send(new RejectChanges ()));

@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
@@ -24,7 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 									 IDateSelectorViewModel dateSelectorViewModel, 
 									 IGridContainerViewModel gridContainerViewModel, 
 									 IChangeConfirmationViewModel changeConfirmationViewModel,
-									 ViewModelCommunication<ViewModelMessage> viewModelCommunication)
+									 IViewModelCommunication viewModelCommunication)
 		{
 			DateDisplayViewModel = dateDisplayViewModel;
 			MedicalPracticeSelectorViewModel = medicalPracticeSelectorViewModel;

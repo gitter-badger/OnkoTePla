@@ -5,8 +5,8 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Requests;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
@@ -15,9 +15,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 	public class TherapyPlaceRowViewModel : DisposingObject,
 											ITherapyPlaceRowViewModel											
 	{
-		private readonly ViewModelCommunication<ViewModelMessage> viewModelCommunication;
+		private readonly IViewModelCommunication viewModelCommunication;
 
-		public TherapyPlaceRowViewModel(ViewModelCommunication<ViewModelMessage> viewModelCommunication,
+		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication,
 										TherapyPlace therapyPlace, Color roomDisplayColor,										
 										TherapyPlaceRowIdentifier identifier)
 		{
@@ -53,6 +53,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			AppointmentViewModels.Remove(message.AppointmentViewModelToRemove);
 		}
 
+		public double Process (GetMaxLeftRequest message)
+		{
+			return -15;
+		}
+
 		public override void CleanUp()
 		{
 			viewModelCommunication.DeregisterViewModelAtCollection<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
@@ -60,5 +65,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 				this
 			);
 		}
+
+		
 	}
 }

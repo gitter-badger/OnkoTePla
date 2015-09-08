@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;

@@ -9,7 +9,6 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
@@ -33,8 +32,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 		private ObservableCollection<RoomSelectorData> availableRoomFilters;
 
 
-		public RoomFilterViewModel(IDataCenter dataCenter, 
-								   ViewModelCommunication<ViewModelMessage> viewModelCommunication)
+		public RoomFilterViewModel(IDataCenter dataCenter,
+								   IViewModelCommunication viewModelCommunication)
 		{
 			this.dataCenter = dataCenter;
 

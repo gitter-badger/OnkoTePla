@@ -1,7 +1,7 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
@@ -12,7 +12,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 	{
 		private readonly IGlobalState<Appointment> selectedAppointmentVariable;
 
-		public RejectChangesMessageHandler (ViewModelCommunication<ViewModelMessage> viewModelCommunication)
+		public RejectChangesMessageHandler (IViewModelCommunication viewModelCommunication)
 		{			
 			selectedAppointmentVariable = viewModelCommunication.GetGlobalViewModelVariable<Appointment>(
 				SelectedAppointmentVariable

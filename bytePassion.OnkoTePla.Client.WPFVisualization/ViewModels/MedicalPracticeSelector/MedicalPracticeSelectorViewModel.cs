@@ -6,7 +6,6 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
@@ -21,8 +20,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 
 		private MedicalPractice selectedPractice;
 
-		public MedicalPracticeSelectorViewModel (IDataCenter dataCenter, 
-												 ViewModelCommunication<ViewModelMessage> viewModelCommunication)
+		public MedicalPracticeSelectorViewModel (IDataCenter dataCenter,
+												 IViewModelCommunication viewModelCommunication)
 		{
 			configuration = dataCenter.Configuration;			 
 
