@@ -145,10 +145,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		
 		private void RemoveAppointment(Appointment appointmentToRemove)
 		{
-			viewModelCommunication.SendTo<IAppointmentViewModel, Guid, Dispose>(
-				AppointmentViewModelCollection,
-				appointmentToRemove.Id,
-				new Dispose()	
+			viewModelCommunication.SendTo( 
+				AppointmentViewModelCollection, 
+				appointmentToRemove.Id, 
+				new Dispose()
 			);
 		}
 
@@ -156,7 +156,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		{
 			if (viewModelIsActive)
 			{
-				viewModelCommunication.SendTo<ITimeGridViewModel, AggregateIdentifier, NewSizeAvailable>(
+				viewModelCommunication.SendTo(
 					TimeGridViewModelCollection,
 					Identifier,
 					new NewSizeAvailable(newGridSize)	
@@ -164,7 +164,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 				foreach (var appointment in readModel.Appointments)
 				{
-					viewModelCommunication.SendTo<IAppointmentViewModel, Guid, NewSizeAvailable>(
+					viewModelCommunication.SendTo(
 						AppointmentViewModelCollection,
 						appointment.Id,
 						new NewSizeAvailable(newGridSize)
@@ -204,7 +204,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				this					
 			);
 
-			viewModelCommunication.SendTo<ITimeGridViewModel, AggregateIdentifier, Dispose>(
+			viewModelCommunication.SendTo(
 				TimeGridViewModelCollection,
 				Identifier,
 				new Dispose()	

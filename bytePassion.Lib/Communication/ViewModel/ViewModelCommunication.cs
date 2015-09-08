@@ -60,28 +60,27 @@ namespace bytePassion.Lib.Communication.ViewModel
 																	  TViewModel viewModel)
 			where TViewModel : IViewModelCollectionItem<TIdent>
 		{
-			var viewModelCollection = viewModelCollections.GetViewModelCollection<TViewModel, TIdent>(collectionIdentifier);
+			var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(collectionIdentifier);
 			viewModelCollection.AddViewModel(viewModel);
 		}
 
 		public void DeregisterViewModelAtCollection<TViewModel, TIdent>(string collectionIdentifier, TViewModel viewModel)
 			where TViewModel : IViewModelCollectionItem<TIdent>
 		{
-			var viewModelCollection = viewModelCollections.GetViewModelCollection<TViewModel, TIdent>(collectionIdentifier);
+			var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(collectionIdentifier);
 			viewModelCollection.RemoveViewModel(viewModel);
 		}
 
-		public void SendTo<TViewModel, TIdent, TMessage>(string viewModelCollectionIdentifier, 
-													     TIdent viewModelIdentifier, 
-													     TMessage message)
-			where TViewModel : IViewModelMessageHandler<TMessage>, IViewModelCollectionItem<TIdent>
+		public void SendTo<TIdent, TMessage>(string viewModelCollectionIdentifier, 
+											 TIdent viewModelIdentifier, 
+											 TMessage message)			
 		{
-			var viewModelCollection = viewModelCollections.GetViewModelCollection<TViewModel, TIdent>(viewModelCollectionIdentifier);
+			var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(viewModelCollectionIdentifier);
 
 			var viewModel = viewModelCollection.GetViewModel(viewModelIdentifier);
 
-			if (viewModel != null)			
-				viewModel.Process(message);			
+			var viewModelAsMessageHandler = viewModel as IViewModelMessageHandler<TMessage>;
+			viewModelAsMessageHandler?.Process(message);
 		}
 
 

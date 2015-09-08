@@ -7,14 +7,11 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfUtils.Commands;
-using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using MahApps.Metro.Controls.Dialogs;
@@ -86,7 +83,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				    {
 						selectedAppointment.Value = null;
 
-						viewModelCommunication.SendTo<IAppointmentGridViewModel, AggregateIdentifier, DeleteAppointment>(
+						viewModelCommunication.SendTo(
 							AppointmentGridViewModelCollection,
 							initialLocalisation.PlaceAndDate,
 							new DeleteAppointment(appointment.Id, appointment.Patient.Id)
@@ -122,7 +119,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{
 			if (!isInitialLocation)
 			{
-				viewModelCommunication.SendTo<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier, RemoveAppointmentFromTherapyPlaceRow>(
+				viewModelCommunication.SendTo(
 					TherapyPlaceRowViewModelCollection,
 					currentLocation,
 					new RemoveAppointmentFromTherapyPlaceRow(this)
@@ -138,7 +135,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			timeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(therapyPlaceRowIdentifier.PlaceAndDate.Date);
 
 
-			viewModelCommunication.SendTo<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier, AddAppointmentToTherapyPlaceRow>(
+			viewModelCommunication.SendTo(
 				TherapyPlaceRowViewModelCollection,
 				therapyPlaceRowIdentifier,
 				new AddAppointmentToTherapyPlaceRow(this)	
@@ -231,7 +228,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				this
 			);
 
-			viewModelCommunication.SendTo<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier, RemoveAppointmentFromTherapyPlaceRow>(
+			viewModelCommunication.SendTo(
 				TherapyPlaceRowViewModelCollection,
 				currentLocation,
 				new RemoveAppointmentFromTherapyPlaceRow(this)

@@ -9,8 +9,7 @@ namespace bytePassion.Lib.Communication.ViewModel
 
 		void RemoveViewModelCollection(string identifier);
 
-		ViewModelCollection<TViewModel, TIdent> GetViewModelCollection<TViewModel, TIdent>(string identifier) 
-			where TViewModel : IViewModelCollectionItem<TIdent>;
+		ViewModelCollection<TIdent> GetViewModelCollection<TIdent>(string identifier);
 	}
 
 }

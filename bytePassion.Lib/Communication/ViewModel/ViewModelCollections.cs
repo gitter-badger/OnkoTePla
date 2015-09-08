@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace bytePassion.Lib.Communication.ViewModel
 {
 
@@ -19,7 +18,7 @@ namespace bytePassion.Lib.Communication.ViewModel
 			where TViewModel : IViewModelCollectionItem<TIdent>
 		{
 			if (!viewModelCollections.ContainsKey(identifier))
-				viewModelCollections.Add(identifier, new ViewModelCollection<TViewModel, TIdent>());
+				viewModelCollections.Add(identifier, new ViewModelCollection<TIdent>());
 			else
 				throw new ArgumentException($"collection with name {identifier} is already registered");
 		}
@@ -32,11 +31,10 @@ namespace bytePassion.Lib.Communication.ViewModel
 		}
 
 
-		public ViewModelCollection<TViewModel, TIdent> GetViewModelCollection<TViewModel, TIdent>(string identifier)
-			where TViewModel : IViewModelCollectionItem<TIdent>
+		public ViewModelCollection<TIdent> GetViewModelCollection<TIdent>(string identifier)			
 		{
 			if (viewModelCollections.ContainsKey(identifier))
-				return (ViewModelCollection<TViewModel, TIdent>)viewModelCollections[identifier];
+				return (ViewModelCollection<TIdent>)viewModelCollections[identifier];
 
 			throw new ArgumentException($"collection with name {identifier} is not available");
 		}

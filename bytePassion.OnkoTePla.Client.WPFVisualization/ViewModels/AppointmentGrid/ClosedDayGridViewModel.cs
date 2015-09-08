@@ -62,7 +62,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		{
 			if (viewModelIsActive)
 			{
-				viewModelCommunication.SendTo<ITimeGridViewModel, AggregateIdentifier, NewSizeAvailable>(
+				viewModelCommunication.SendTo(
 					TimeGridViewModelCollection,
 					Identifier,
 					new NewSizeAvailable(newGridSize)
@@ -100,7 +100,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				this
 			);
 
-			viewModelCommunication.SendTo<ITimeGridViewModel, AggregateIdentifier, Dispose>(
+			viewModelCommunication.SendTo(
 				TimeGridViewModelCollection,
 				Identifier,
 				new Dispose()
