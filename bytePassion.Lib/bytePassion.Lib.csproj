@@ -72,7 +72,7 @@
     <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
     <Compile Include="WpfUtils\Behaviors\GridViewSplitColumnsEqualyBehavior.cs" />
     <Compile Include="WpfUtils\Commands\UpdateCommandInformation.cs" />
-    <Compile Include="Clonable\ClonableList.cs" />
+    <Compile Include="FrameworkExtensions\Clonable\ClonableList.cs" />
     <Compile Include="WpfUtils\Commands\Command.cs" />
     <Compile Include="WpfUtils\Commands\ParameterrizedCommand.cs" />
     <Compile Include="Communication\State\GlobalState.cs" />
@@ -102,8 +102,8 @@
     <Compile Include="TimeLib\Date.cs" />
     <Compile Include="TimeLib\Time.cs" />
     <Compile Include="TimeLib\Duration.cs" />
-    <Compile Include="Clonable\IGenericClonable.cs" />
-    <Compile Include="Clonable\IClonableList.cs" />
+    <Compile Include="FrameworkExtensions\Clonable\IGenericClonable.cs" />
+    <Compile Include="FrameworkExtensions\Clonable\IClonableList.cs" />
     <Compile Include="FrameworkExtensions\PropertyChangedNotifierExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeLib\TimeTools.cs" />
