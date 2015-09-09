@@ -10,7 +10,8 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
 {
-	public interface IAppointmentGridViewModel : IDisposable,
+	public interface IAppointmentGridViewModel : IViewModel,
+												 IDisposable,
 												 IViewModelCollectionItem<AggregateIdentifier>,
 												 IViewModelMessageHandler<Activate>,
 												 IViewModelMessageHandler<Deactivate>,
@@ -21,5 +22,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		ITimeGridViewModel 	TimeGridViewModel { get; }
 
 		bool PracticeIsClosedAtThisDay { get; }
+		bool IsActive { get; }
 	}
 }

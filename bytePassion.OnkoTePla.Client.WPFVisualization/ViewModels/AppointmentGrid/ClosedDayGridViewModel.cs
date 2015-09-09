@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
@@ -16,7 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 	public class ClosedDayGridViewModel : DisposingObject, 
 										  IAppointmentGridViewModel
 	{
-		private bool viewModelIsActive;
+		private bool isActive;
 		
 		private readonly IViewModelCommunication viewModelCommunication;
 		
@@ -30,7 +31,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		{			
 			this.viewModelCommunication = viewModelCommunication;
 			
-			viewModelIsActive = false;
+			IsActive = false;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,
@@ -59,7 +60,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		
 		private void OnGridSizeChanged (Size newGridSize)
 		{
-			if (viewModelIsActive)
+			if (IsActive)
 			{
 				viewModelCommunication.SendTo(
 					TimeGridViewModelCollection,
@@ -77,16 +78,22 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		public bool PracticeIsClosedAtThisDay { get; }
 
+		public bool IsActive
+		{
+			get { return isActive; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref isActive, value); }
+		}
+
 
 		public void Process (Activate message)
 		{
-			viewModelIsActive = true;
+			IsActive = true;
 			OnGridSizeChanged(globalGridSizeVariable.Value);
 		}
 
 		public void Process (Deactivate message)
 		{
-			viewModelIsActive = false;
+			IsActive = false;
 		}
 
 		public override void CleanUp ()
@@ -107,5 +114,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		}
 
 		public void Process (DeleteAppointment message) {}
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

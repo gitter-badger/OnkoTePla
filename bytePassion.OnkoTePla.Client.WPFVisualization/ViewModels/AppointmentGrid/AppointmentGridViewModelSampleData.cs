@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
 {
@@ -23,6 +25,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			TimeGridViewModel = new TimeGridViewModelSampleData();	
 			Identifier = new AggregateIdentifier(Date.Dummy, new Guid());
 			PracticeIsClosedAtThisDay = true;
+			IsActive = true;
 		}
 		
 		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; }
@@ -30,6 +33,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public ITimeGridViewModel TimeGridViewModel { get; }
 
 		public bool PracticeIsClosedAtThisDay { get; }
+		public bool IsActive { get; }
 
 		public AggregateIdentifier Identifier { get; }
 
@@ -38,5 +42,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public void Process(Activate message) {}
 		public void Process(Deactivate message) {}
 		public void Process(DeleteAppointment message) {}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

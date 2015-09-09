@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using bytePassion.Lib.Communication.State;
@@ -26,7 +27,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 	public class AppointmentGridViewModel : DisposingObject,
 											IAppointmentGridViewModel											
 	{
-		private bool viewModelIsActive;
+		private bool isActive;
 
 		private readonly IDataCenter dataCenter;
 		private readonly ICommandBus commandBus;
@@ -36,8 +37,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		private readonly AppointmentsOfADayReadModel readModel;
 		private readonly IGlobalState<Size> globalGridSizeVariable;
-		private readonly IGlobalState<Guid?> globalRoomFilterVariable; 
-
+		private readonly IGlobalState<Guid?> globalRoomFilterVariable;
+		
 		public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
 										ICommandBus commandBus,
@@ -47,7 +48,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			this.commandBus = commandBus;
 			this.viewModelCommunication = viewModelCommunication;
 
-			viewModelIsActive = false;
+			IsActive = false;
 			
 			globalGridSizeVariable = viewModelCommunication.GetGlobalViewModelVariable<Size>(
 				AppointmentGridSizeVariable
@@ -153,7 +154,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		private void OnGridSizeChanged(Size newGridSize)
 		{
-			if (viewModelIsActive)
+			if (IsActive)
 			{
 				viewModelCommunication.SendTo(
 					TimeGridViewModelCollection,
@@ -180,16 +181,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		public bool PracticeIsClosedAtThisDay { get; }
 
+		public bool IsActive
+		{
+			get { return isActive; }
+			private set
+			{
+				PropertyChanged.ChangeAndNotify(this, ref isActive, value);
+			}
+		}
+
 
 		public void Process(Activate message)
 		{
-			viewModelIsActive = true;
+			IsActive = true;
 			OnGridSizeChanged(globalGridSizeVariable.Value);
 		}
 
 		public void Process(Deactivate message)
 		{
-			viewModelIsActive = false;
+			IsActive = false;
 		}		
 
 		public override void CleanUp()
@@ -226,5 +236,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 																message.AppointmentId, 
 																message.PatientId));
 		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

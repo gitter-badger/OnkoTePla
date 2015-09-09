@@ -9,12 +9,17 @@
              xmlns:panels="clr-namespace:bytePassion.Lib.WpfUtils.Panels;assembly=bytePassion.Lib"
              xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"             
              xmlns:behaviors="clr-namespace:bytePassion.Lib.WpfUtils.Behaviors;assembly=bytePassion.Lib"
+             xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900">
 	
 	<d:DesignData.DataContext>
         <gridContainer:GridContainerViewModelSampleData/>
 	</d:DesignData.DataContext>
+	
+	<UserControl.Resources>
+		<converter:BoolToHiddenVisibilityConverter x:Key="BoolToHiddenVisibilityConverter"/>
+	</UserControl.Resources>
 
     <Grid Background="White">
         
@@ -42,6 +47,17 @@
                     <panels:DeckPanel SelectedLayer="{Binding CurrentDisplayedAppointmentGridIndex}"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+
+            <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
+			
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Visibility" Value="{Binding IsActive, 
+																  Converter={StaticResource BoolToHiddenVisibilityConverter}}"/>					
+				</Style>
+            </ItemsControl.ItemContainerStyle> 
+			
+            <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="gridContainer:IGridContainerViewModel">

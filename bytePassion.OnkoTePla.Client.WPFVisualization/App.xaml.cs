@@ -119,10 +119,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 													sessionInformation);
 
 
-			// initiate ViewModelCommunication
-
-			var initialMedicalPractice = configReadRepository.GetAllMedicalPractices().First();  // TODO set last usage
-
+			// initiate ViewModelCommunication			
 
 			IHandlerCollection<ViewModelMessage> handlerCollection = new MultiHandlerCollection<ViewModelMessage>();
 			IMessageBus<ViewModelMessage> viewModelMessageBus = new LocalMessageBus<ViewModelMessage>(handlerCollection);
@@ -135,6 +132,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 
 			// Register Global ViewModelVariables
+
+			var initialMedicalPractice = configReadRepository.GetAllMedicalPractices().First();  // TODO set last usage
 
 			var gridSizeInitialValue          = new Size(400,400);
 			var selectedDateInitialValue      = initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday();

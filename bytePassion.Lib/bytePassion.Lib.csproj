@@ -93,6 +93,7 @@
     <Compile Include="TimeLib\TimeExtensions.cs" />
     <Compile Include="Utils\Converter.cs" />
     <Compile Include="FrameworkExtensions\EqualsExtension.cs" />
+    <Compile Include="WpfUtils\Converter\BoolToHiddenVisibilityConverter.cs" />
     <Compile Include="WpfUtils\GridViewColumns.cs" />
     <Compile Include="Math\Angle.cs" />
     <Compile Include="Math\AngleInterval.cs" />
