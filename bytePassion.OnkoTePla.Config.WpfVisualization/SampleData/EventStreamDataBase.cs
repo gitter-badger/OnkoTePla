@@ -100,7 +100,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
 			patientRepository.LoadRepository();
 
-			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
+			IPersistenceService<Configuration> configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
 			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
@@ -129,8 +129,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			var medicalPratice = configReadRepository.GetMedicalPracticeByName("examplePractice1");				
 			var user = configReadRepository.GetUserByName("exampleUser1");
 
-			var startCreation = new Date(1,  7, 2015);
-			var endCreation   = new Date(1, 10, 2015);
+			var startCreation = new Date(8,  9, 2015);
+			var endCreation   = new Date(9, 9, 2015);
 
 			for (var date = startCreation; date < endCreation; date = date.DayAfter())
 			{

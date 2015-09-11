@@ -1,0 +1,1076 @@
+{
+  "ConfiguredTherapyPlaceTypes": [
+    {
+      "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+      "Name": "therapieStuhl",
+      "IconType": 0
+    },
+    {
+      "Id": "8e67b02a-eb5e-4b89-b281-7fb48d7e7876",
+      "Name": "therapieBett",
+      "IconType": 5
+    }
+  ],
+  "ConfiguredMedicalPractices": [
+    {
+      "Id": "9263f54e-ec29-4f2a-a5d8-cb76db5dcc99",
+      "Name": "examplePractice1",
+      "Version": 1,
+      "Rooms": [
+        {
+          "Id": "fc1aa93b-0c9c-4b9d-b3bd-4b06c33d57ef",
+          "Name": "A12",
+          "DisplayedColor": "#FF90EE90",
+          "TherapyPlaces": [
+            {
+              "Id": "c4fb2014-e830-461f-916f-30feaf591d14",
+              "Name": "1",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "ce531fea-7708-4009-9fc4-baf656975330",
+              "Name": "2",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "fcb3426f-cd24-4e78-aa31-3b10623b351e",
+              "Name": "3",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "bfc62b0e-106d-42fc-aa95-a1321c565ce6",
+              "Name": "4",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "5767bf30-0325-498d-bc5d-3918916cdefa",
+              "Name": "5",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "86a1b261-abc3-491e-ab20-a42c9f471a01",
+              "Name": "6",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "6282981f-c657-49f5-8833-56aa8cb0509a",
+              "Name": "7",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "e208e0c4-8c85-4957-9c5a-ec7dbaaef613",
+              "Name": "8",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "dd306285-0d0a-4a98-8a67-e1c6dae3d73b",
+              "Name": "9",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "a922e2e2-0f4e-4b5f-b8c1-e63ebe3a3711",
+              "Name": "10",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "545108e8-5668-4f56-b221-ea36a70fcc5a",
+              "Name": "11",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "6153fc90-c6c3-4136-9002-4681bc3dcfd6",
+              "Name": "12",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "1b6664a8-e9f2-42a0-a328-7b98f66307df",
+              "Name": "13",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "357eb1e3-2c2c-4cf3-97f0-fd0493646fdc",
+              "Name": "14",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "0f9da692-bb92-40aa-9ab5-2b3b99159c47",
+              "Name": "15",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "aa52e485-fa4e-4b51-af64-d1fa3d7d8a81",
+              "Name": "16",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "efcc11e1-a12e-454a-b42d-a986d6be1859",
+              "Name": "17",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "6cb64588-8977-4737-8955-472867eb11ad",
+              "Name": "18",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "02ed926d-562a-453c-b5fd-12e11461415d",
+              "Name": "19",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "4468c6e2-88de-4f3d-8373-fc6bd3c9de52",
+              "Name": "20",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            }
+          ]
+        },
+        {
+          "Id": "01cb16d0-81e5-4844-a8c5-3564505d54c4",
+          "Name": "A13",
+          "DisplayedColor": "#FFFFB6C1",
+          "TherapyPlaces": [
+            {
+              "Id": "433ff91a-024b-4434-94a8-164e87d68ab0",
+              "Name": "21",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "b599d2ab-739c-4d79-a653-f9d301b5d53b",
+              "Name": "22",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "0b74c1cf-9512-4758-b52a-fa5f15ffa9ca",
+              "Name": "23",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "467d8a99-362f-4ccb-bfdb-758a14f150b3",
+              "Name": "24",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "d1a3d18b-d0cd-467f-90a4-f4f608a73978",
+              "Name": "25",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "70c7e94e-07a3-470e-82de-2c23201b6cdf",
+              "Name": "26",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            }
+          ]
+        },
+        {
+          "Id": "7c64ee36-1fa5-4ea0-a7ed-6a9b9f6f302c",
+          "Name": "A14",
+          "DisplayedColor": "#FFADD8E6",
+          "TherapyPlaces": [
+            {
+              "Id": "cca3d8cb-ed02-4bcb-9f0d-35d956b67cfa",
+              "Name": "27",
+              "Type": {
+                "Id": "8e67b02a-eb5e-4b89-b281-7fb48d7e7876",
+                "Name": "therapieBett",
+                "IconType": 5
+              }
+            },
+            {
+              "Id": "be9deb62-10ae-4c94-b3c5-327868bab017",
+              "Name": "28",
+              "Type": {
+                "Id": "8e67b02a-eb5e-4b89-b281-7fb48d7e7876",
+                "Name": "therapieBett",
+                "IconType": 5
+              }
+            },
+            {
+              "Id": "51564d77-de53-48bc-850d-9cb5feefcd24",
+              "Name": "29",
+              "Type": {
+                "Id": "8e67b02a-eb5e-4b89-b281-7fb48d7e7876",
+                "Name": "therapieBett",
+                "IconType": 5
+              }
+            }
+          ]
+        }
+      ],
+      "HoursOfOpening": {
+        "OpeningTimeMonday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeTuesday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeWednesday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeThursday": {
+          "Hour": 9,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeFriday": {
+          "Hour": 10,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeSaturday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeSunday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeMonday": {
+          "Hour": 15,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeTuesday": {
+          "Hour": 16,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeWednesday": {
+          "Hour": 17,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeThursday": {
+          "Hour": 18,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeFriday": {
+          "Hour": 20,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeSaturday": {
+          "Hour": 17,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeSunday": {
+          "Hour": 17,
+          "Minute": 0,
+          "Second": 0
+        },
+        "IsOpenOnMonday": true,
+        "IsOpenOnTuesday": true,
+        "IsOpenOnWednesday": true,
+        "IsOpenOnThursday": true,
+        "IsOpenOnFriday": true,
+        "IsOpenOnSaturday": false,
+        "IsOpenOnSunday": false,
+        "AdditionalClosedDays": [
+          {
+            "Day": 7,
+            "Month": 7,
+            "Year": 2015
+          },
+          {
+            "Day": 8,
+            "Month": 7,
+            "Year": 2015
+          }
+        ],
+        "AdditionalOpenedDays": [
+          {
+            "Day": 18,
+            "Month": 7,
+            "Year": 2015
+          }
+        ]
+      },
+      "PreviousVersion": {
+        "Id": "9263f54e-ec29-4f2a-a5d8-cb76db5dcc99",
+        "Name": "examplePractice1",
+        "Version": 0,
+        "Rooms": [
+          {
+            "Id": "fc1aa93b-0c9c-4b9d-b3bd-4b06c33d57ef",
+            "Name": "A12",
+            "DisplayedColor": "#FF90EE90",
+            "TherapyPlaces": [
+              {
+                "Id": "c4fb2014-e830-461f-916f-30feaf591d14",
+                "Name": "1",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "ce531fea-7708-4009-9fc4-baf656975330",
+                "Name": "2",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "fcb3426f-cd24-4e78-aa31-3b10623b351e",
+                "Name": "3",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "bfc62b0e-106d-42fc-aa95-a1321c565ce6",
+                "Name": "4",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "5767bf30-0325-498d-bc5d-3918916cdefa",
+                "Name": "5",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "86a1b261-abc3-491e-ab20-a42c9f471a01",
+                "Name": "6",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "6282981f-c657-49f5-8833-56aa8cb0509a",
+                "Name": "7",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "e208e0c4-8c85-4957-9c5a-ec7dbaaef613",
+                "Name": "8",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "dd306285-0d0a-4a98-8a67-e1c6dae3d73b",
+                "Name": "9",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "a922e2e2-0f4e-4b5f-b8c1-e63ebe3a3711",
+                "Name": "10",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "545108e8-5668-4f56-b221-ea36a70fcc5a",
+                "Name": "11",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "6153fc90-c6c3-4136-9002-4681bc3dcfd6",
+                "Name": "12",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "1b6664a8-e9f2-42a0-a328-7b98f66307df",
+                "Name": "13",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "357eb1e3-2c2c-4cf3-97f0-fd0493646fdc",
+                "Name": "14",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "0f9da692-bb92-40aa-9ab5-2b3b99159c47",
+                "Name": "15",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "aa52e485-fa4e-4b51-af64-d1fa3d7d8a81",
+                "Name": "16",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "efcc11e1-a12e-454a-b42d-a986d6be1859",
+                "Name": "17",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "6cb64588-8977-4737-8955-472867eb11ad",
+                "Name": "18",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "02ed926d-562a-453c-b5fd-12e11461415d",
+                "Name": "19",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "4468c6e2-88de-4f3d-8373-fc6bd3c9de52",
+                "Name": "20",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              }
+            ]
+          },
+          {
+            "Id": "01cb16d0-81e5-4844-a8c5-3564505d54c4",
+            "Name": "A13",
+            "DisplayedColor": "#FFFFB6C1",
+            "TherapyPlaces": [
+              {
+                "Id": "433ff91a-024b-4434-94a8-164e87d68ab0",
+                "Name": "21",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "b599d2ab-739c-4d79-a653-f9d301b5d53b",
+                "Name": "22",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "0b74c1cf-9512-4758-b52a-fa5f15ffa9ca",
+                "Name": "23",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "467d8a99-362f-4ccb-bfdb-758a14f150b3",
+                "Name": "24",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "d1a3d18b-d0cd-467f-90a4-f4f608a73978",
+                "Name": "25",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              },
+              {
+                "Id": "70c7e94e-07a3-470e-82de-2c23201b6cdf",
+                "Name": "26",
+                "Type": {
+                  "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                  "Name": "therapieStuhl",
+                  "IconType": 0
+                }
+              }
+            ]
+          }
+        ],
+        "HoursOfOpening": {
+          "OpeningTimeMonday": {
+            "Hour": 8,
+            "Minute": 0,
+            "Second": 0
+          },
+          "OpeningTimeTuesday": {
+            "Hour": 8,
+            "Minute": 0,
+            "Second": 0
+          },
+          "OpeningTimeWednesday": {
+            "Hour": 8,
+            "Minute": 0,
+            "Second": 0
+          },
+          "OpeningTimeThursday": {
+            "Hour": 9,
+            "Minute": 0,
+            "Second": 0
+          },
+          "OpeningTimeFriday": {
+            "Hour": 10,
+            "Minute": 0,
+            "Second": 0
+          },
+          "OpeningTimeSaturday": {
+            "Hour": 8,
+            "Minute": 0,
+            "Second": 0
+          },
+          "OpeningTimeSunday": {
+            "Hour": 8,
+            "Minute": 0,
+            "Second": 0
+          },
+          "ClosingTimeMonday": {
+            "Hour": 15,
+            "Minute": 0,
+            "Second": 0
+          },
+          "ClosingTimeTuesday": {
+            "Hour": 16,
+            "Minute": 0,
+            "Second": 0
+          },
+          "ClosingTimeWednesday": {
+            "Hour": 17,
+            "Minute": 0,
+            "Second": 0
+          },
+          "ClosingTimeThursday": {
+            "Hour": 18,
+            "Minute": 0,
+            "Second": 0
+          },
+          "ClosingTimeFriday": {
+            "Hour": 20,
+            "Minute": 0,
+            "Second": 0
+          },
+          "ClosingTimeSaturday": {
+            "Hour": 17,
+            "Minute": 0,
+            "Second": 0
+          },
+          "ClosingTimeSunday": {
+            "Hour": 17,
+            "Minute": 0,
+            "Second": 0
+          },
+          "IsOpenOnMonday": true,
+          "IsOpenOnTuesday": true,
+          "IsOpenOnWednesday": true,
+          "IsOpenOnThursday": true,
+          "IsOpenOnFriday": true,
+          "IsOpenOnSaturday": false,
+          "IsOpenOnSunday": false,
+          "AdditionalClosedDays": [
+            {
+              "Day": 7,
+              "Month": 7,
+              "Year": 2015
+            },
+            {
+              "Day": 8,
+              "Month": 7,
+              "Year": 2015
+            }
+          ],
+          "AdditionalOpenedDays": [
+            {
+              "Day": 18,
+              "Month": 7,
+              "Year": 2015
+            }
+          ]
+        },
+        "PreviousVersion": null
+      }
+    },
+    {
+      "Id": "c072da00-5f48-46ef-a91a-fc6b0bc94f36",
+      "Name": "examplePractice2",
+      "Version": 0,
+      "Rooms": [
+        {
+          "Id": "2f80d843-3c53-4228-b497-e8868ecf4119",
+          "Name": "B2",
+          "DisplayedColor": "#FF90EE90",
+          "TherapyPlaces": [
+            {
+              "Id": "35572c61-c3e4-406d-8584-a081816a2b38",
+              "Name": "1",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "a2a2d2f8-0bf6-416c-a2bc-d060f6955522",
+              "Name": "2",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "4c4c5bbc-c4a5-49f6-9d58-a686f2534419",
+              "Name": "3",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "92053cf9-687e-4037-96e6-2c6e644841f5",
+              "Name": "4",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "4f9851db-feb1-4352-aa2b-3a31dc007d4e",
+              "Name": "5",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "cbf12dfd-3bdd-46ec-9565-ea5209b6107d",
+              "Name": "6",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "0efc725a-d21f-41be-bb7e-c59cf45694e5",
+              "Name": "7",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "22048360-9c47-4c1f-b719-77b44377210f",
+              "Name": "8",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "8b899029-74de-4ff7-8375-4c8ff20fd8f6",
+              "Name": "9",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "a8b156c0-b367-4748-9cad-7305da3b770e",
+              "Name": "10",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            }
+          ]
+        },
+        {
+          "Id": "176d0eeb-7cd4-4e80-9789-5b5d7c8d1ff8",
+          "Name": "B3",
+          "DisplayedColor": "#FF87CEFA",
+          "TherapyPlaces": [
+            {
+              "Id": "6c6111d5-a9ee-4ed6-b5fd-ff56ed492276",
+              "Name": "11",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "73ce3bbd-0d28-4a17-9f1c-0e5487cb6717",
+              "Name": "12",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "5b7c2c15-845a-4ae1-9cea-9f167b9a3fa9",
+              "Name": "13",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "0737e747-8b11-4e65-a469-4ebee5e8f3a1",
+              "Name": "14",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "9703cdb1-f5e3-4333-bbf2-065ae8250c28",
+              "Name": "15",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "a94659f9-eac2-4aef-b06e-f0a96f16b411",
+              "Name": "16",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "20a87247-3928-45fd-9ef0-dfa62720bcc9",
+              "Name": "17",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "9794c946-1395-48d3-893e-3c63a29fe662",
+              "Name": "18",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "a107e88f-a033-4ad5-882a-e6d40da4fb7b",
+              "Name": "19",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            },
+            {
+              "Id": "846a424c-7711-4527-b09c-7e29aac7d6e2",
+              "Name": "20",
+              "Type": {
+                "Id": "3a16b99e-ed7d-4d03-8dda-13b302efddbc",
+                "Name": "therapieStuhl",
+                "IconType": 0
+              }
+            }
+          ]
+        }
+      ],
+      "HoursOfOpening": {
+        "OpeningTimeMonday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeTuesday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeWednesday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeThursday": {
+          "Hour": 9,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeFriday": {
+          "Hour": 10,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeSaturday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "OpeningTimeSunday": {
+          "Hour": 8,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeMonday": {
+          "Hour": 15,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeTuesday": {
+          "Hour": 16,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeWednesday": {
+          "Hour": 17,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeThursday": {
+          "Hour": 18,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeFriday": {
+          "Hour": 20,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeSaturday": {
+          "Hour": 17,
+          "Minute": 0,
+          "Second": 0
+        },
+        "ClosingTimeSunday": {
+          "Hour": 17,
+          "Minute": 0,
+          "Second": 0
+        },
+        "IsOpenOnMonday": true,
+        "IsOpenOnTuesday": true,
+        "IsOpenOnWednesday": true,
+        "IsOpenOnThursday": true,
+        "IsOpenOnFriday": true,
+        "IsOpenOnSaturday": false,
+        "IsOpenOnSunday": false,
+        "AdditionalClosedDays": [
+          {
+            "Day": 7,
+            "Month": 7,
+            "Year": 2015
+          },
+          {
+            "Day": 8,
+            "Month": 7,
+            "Year": 2015
+          }
+        ],
+        "AdditionalOpenedDays": [
+          {
+            "Day": 18,
+            "Month": 7,
+            "Year": 2015
+          }
+        ]
+      },
+      "PreviousVersion": null
+    }
+  ],
+  "ConfiguredUsers": [
+    {
+      "Id": "aaec2351-5af6-42e2-84e9-d2eceb73f03c",
+      "Name": "exampleUser1",
+      "ListOfAccessableMedicalPractices": [
+        "9263f54e-ec29-4f2a-a5d8-cb76db5dcc99"
+      ],
+      "Password": "1234"
+    },
+    {
+      "Id": "ab385d52-cc77-4a5e-ab6c-f96a9b773911",
+      "Name": "exampleUser2",
+      "ListOfAccessableMedicalPractices": [
+        "9263f54e-ec29-4f2a-a5d8-cb76db5dcc99",
+        "c072da00-5f48-46ef-a91a-fc6b0bc94f36"
+      ],
+      "Password": "2345"
+    }
+  ]
+}

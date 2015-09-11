@@ -2,59 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
+using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using Newtonsoft.Json;
 
 
 namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 {
-	public class Patient2
-	{				
-		public Patient2 (string name, Date birthday, bool alive,
-					   Guid id, string externalId)
-		{
-			Name     = name;
-			Alive    = alive;
-			Birthday = birthday;
-			Id       = id;
-			ExternalId = externalId;
-		}
-		
-		public string Name       { get; }
-		public bool   Alive      { get; }
-		public Date   Birthday   { get; }
-		public Guid   Id         { get; }
-		public string ExternalId { get; }
-
-
-		#region ToString / HashCode / Equals
-
-		public override string ToString ()         => $"{Name} + (* {Birthday})";		
-		public override bool   Equals (object obj) => this.Equals(obj, (patient1, patient2) => patient1.Id == patient2.Id);		  
-		public override int    GetHashCode ()      => Id.GetHashCode();
-	
-		#endregion
-
-		public static IComparer<Patient2> GetNameComparer ()
-		{
-			return new PatientNameSorter();
-		}
-
-		private class PatientNameSorter : IComparer<Patient2>
-		{
-			public int Compare (Patient2 x, Patient2 y)
-			{
-				return String.Compare(x.Name, y.Name, StringComparison.Ordinal);
-			}
-		}
-	}
-
-	public class JSonPatientDataStoreTest : IPersistenceService<IEnumerable<Patient2>>
+	public class JSonPatientDataStoreTest : IPersistenceService<IEnumerable<Patient>>
 	{
 		private readonly string filename;
 
@@ -63,7 +20,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			this.filename = filename;
 		}
 
-		public void Persist (IEnumerable<Patient2> data)
+		public void Persist (IEnumerable<Patient> data)
 		{
 
 			var serializer = new JsonSerializer
@@ -78,14 +35,14 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			}
 		}
 
-		public IEnumerable<Patient2> Load ()
+		public IEnumerable<Patient> Load ()
 		{
-			List<Patient2> patients;
+			List<Patient> patients;
             var serializer = new JsonSerializer();
 
             using (StreamReader file = File.OpenText(filename))
 			{
-				patients = (List<Patient2>)serializer.Deserialize(file,typeof(List<Patient2>));
+				patients = (List<Patient>)serializer.Deserialize(file,typeof(List<Patient>));
 			}
 			return patients;
 		}
@@ -94,20 +51,20 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 	public class PatientRepositoryTest
 	{
 		
-		private IDictionary<Guid, Patient2> patients;
-		private readonly IPersistenceService<IEnumerable<Patient2>> persistenceService;
+		private IDictionary<Guid, Patient> patients;
+		private readonly IPersistenceService<IEnumerable<Patient>> persistenceService;
 
-		public PatientRepositoryTest (IPersistenceService<IEnumerable<Patient2>> persistenceService)
+		public PatientRepositoryTest (IPersistenceService<IEnumerable<Patient>> persistenceService)
 		{
 			this.persistenceService = persistenceService;
-			patients = new Dictionary<Guid, Patient2>();
+			patients = new Dictionary<Guid, Patient>();
 		}
 		
 
 		public void AddPatient (string name, Date birthday, bool alive, string externalId)
 		{
 			var newPatientId = Guid.NewGuid();
-			var newPatient = new Patient2(name, birthday, alive, newPatientId, externalId);
+			var newPatient = new Patient(name, birthday, alive, newPatientId, externalId);
 			patients.Add(newPatientId, newPatient);			
 		}
 		
@@ -128,7 +85,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void TestLoad()
 		{
-			IPersistenceService<IEnumerable<Patient2>> persistenceService = new JSonPatientDataStoreTest("patientTest.json");
+			IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStoreTest(GlobalConstants.PatientJsonPersistenceFile);
 			PatientRepositoryTest repo = new PatientRepositoryTest(persistenceService);			
 			repo.LoadRepository();
 		}
@@ -136,7 +93,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		
         public static void GenerateJSONPatientsFile()
         {
-            IPersistenceService<IEnumerable<Patient2>> persistenceService = new JSonPatientDataStoreTest("patientTest.json");
+            IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStoreTest(GlobalConstants.PatientJsonPersistenceFile);
 			PatientRepositoryTest repo = new PatientRepositoryTest(persistenceService);
 
             var patients = GeneratePatients(10);

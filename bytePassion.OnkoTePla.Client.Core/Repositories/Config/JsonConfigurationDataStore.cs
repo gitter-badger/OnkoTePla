@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using bytePassion.OnkoTePla.Contracts.Config;
-using Jil;
+using Newtonsoft.Json;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 {
@@ -15,16 +15,30 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 
         public void Persist(Configuration data)
         {
+
+
+            var serializer = new JsonSerializer
+            {
+                Formatting = Formatting.Indented
+            };
+
             using (var output = new StringWriter())
             {
-                JSON.Serialize(data, output, Options.PrettyPrint);
+                serializer.Serialize(output, data);
                 File.WriteAllText(fileName, output.ToString());
             }
         }
 
         public Configuration Load()
         {
-            throw new System.NotImplementedException();
+            Configuration config;
+            var serializer = new JsonSerializer();
+
+            using (StreamReader file = File.OpenText(fileName))
+            {
+                config = (Configuration)serializer.Deserialize(file, typeof(Configuration));
+            }
+            return config;
         }
     }
 }

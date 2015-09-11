@@ -77,6 +77,7 @@
     <Compile Include="Repositories\Config\XmlConfigurationDataStore.cs" />
     <Compile Include="Repositories\EventStore\EventStream.cs" />
     <Compile Include="Domain\AggregateIdentifier.cs" />
+    <Compile Include="Repositories\EventStore\JsonEventStreamDataStore.cs" />
     <Compile Include="Repositories\Patients\IPatientReadRepository.cs" />
     <Compile Include="Repositories\Patients\IPatientWriteRepository.cs" />
     <Compile Include="Repositories\IPersistable.cs" />

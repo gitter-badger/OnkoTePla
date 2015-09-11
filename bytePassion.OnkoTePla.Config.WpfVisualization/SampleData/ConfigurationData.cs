@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void TestLoad()
 		{
-			IPersistenceService<Configuration> persistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
+			IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
 			ConfigurationRepository repo = new ConfigurationRepository(persistenceService);
 
 			repo.LoadRepository();

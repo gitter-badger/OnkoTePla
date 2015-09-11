@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Config.WpfClient
 
 		private void ButtonBase_OnClick1(object sender, RoutedEventArgs e)
 		{
-			ConfigurationData.ConfigToXml();
+			ConfigurationData.ConfigToJson();
 		}
 
 		private void ButtonBase_OnClick2(object sender, RoutedEventArgs e)
@@ -36,7 +36,7 @@ namespace bytePassion.OnkoTePla.Config.WpfClient
 			PatientDataBase.GenerateJSONPatientsFile(20000);
 		}
 
-		private void ButtonBase_OnClick5 (object sender, RoutedEventArgs e)
+		private void OnCreatePatients_Test_Click (object sender, RoutedEventArgs e)
 		{			
 			PatientDataBaseTest.GenerateJSONPatientsFile();
 		}
