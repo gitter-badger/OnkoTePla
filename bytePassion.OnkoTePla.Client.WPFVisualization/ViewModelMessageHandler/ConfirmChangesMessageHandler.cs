@@ -2,7 +2,7 @@
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
@@ -10,19 +10,19 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 {
 	public class ConfirmChangesMessageHandler : IViewModelMessageHandler<ConfirmChanges>
 	{		
-		private readonly IGlobalState<Appointment> selectedAppointmentVariable; 
+		private readonly IGlobalState<AppointmentModifications> currentModifiedAppointmentVariable; 
 
 		public ConfirmChangesMessageHandler (IViewModelCommunication viewModelCommunication)
 		{			
-			selectedAppointmentVariable = viewModelCommunication.GetGlobalViewModelVariable<Appointment>(
-				SelectedAppointmentVariable
+			currentModifiedAppointmentVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
+				CurrentModifiedAppointmentVariable
 			);
 		}
 		
 		public void Process(ConfirmChanges message)
 		{
 			// TODO: proper implementation
-			selectedAppointmentVariable.Value = null;
+			currentModifiedAppointmentVariable.Value = null;
 		}
 	}
 }

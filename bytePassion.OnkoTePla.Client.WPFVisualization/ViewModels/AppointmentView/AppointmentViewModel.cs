@@ -11,6 +11,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using MahApps.Metro.Controls.Dialogs;
@@ -27,7 +28,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private readonly Appointment appointment;		
 		private readonly IDataCenter dataCenter;		
 
-		private readonly IGlobalState<Appointment> selectedAppointment;
+		private readonly IGlobalState<AppointmentModifications> currentModifiedAppointment;
 
 		private TherapyPlaceRowIdentifier currentLocation;
 		private OperatingMode operatingMode;
@@ -38,6 +39,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private Time   beginTime;
 		private Time   endTime;
 
+		private AppointmentModifications currentAppointmentModification;
+
 		public AppointmentViewModel(Appointment appointment,
 									IViewModelCommunication viewModelCommunication,
 									IDataCenter dataCenter,									
@@ -47,10 +50,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			this.dataCenter = dataCenter;
 			ViewModelCommunication = viewModelCommunication;		
 
-			selectedAppointment = viewModelCommunication.GetGlobalViewModelVariable<Appointment>(
-				SelectedAppointmentVariable
+			currentModifiedAppointment = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
+				CurrentModifiedAppointmentVariable
 			);
-
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentViewModel, Guid>(
 				AppointmentViewModelCollection,
@@ -59,11 +61,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			SwitchToEditMode = new Command(() =>
 				{
-					if (selectedAppointment.Value == null)
+					if (currentModifiedAppointment.Value == null)
 					{
-						selectedAppointment.Value = appointment;
+						currentAppointmentModification = new AppointmentModifications(appointment,
+																					initialLocalisation.PlaceAndDate.MedicalPracticeId, 
+																					dataCenter, 
+																					viewModelCommunication);
+
+
+						currentAppointmentModification.PropertyChanged += OnAppointmentModificationsPropertyChanged;
+						currentModifiedAppointment.Value = currentAppointmentModification;
 						OperatingMode = OperatingMode.Edit;
-						selectedAppointment.StateChanged += OnSelectedAppointmentChanged;
+						currentModifiedAppointment.StateChanged += OnCurrentModifiedAppointmentChanged;
 					}
 				}
 			);
@@ -76,7 +85,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 				    if (result == MessageDialogResult.Affirmative)
 				    {
-						selectedAppointment.Value = null;
+						currentModifiedAppointment.Value = null;
 
 						viewModelCommunication.SendTo(
 							AppointmentGridViewModelCollection,
@@ -85,15 +94,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 						);
 					}					
 				}
-			);
-
-//			SaveCanvasLeftPosition = new Command(() =>
-//			{
-//				CanvasLeftPosition = CanvasLeftPosition;
-//				ViewElementLength = ViewElementLength;
-//				CanvasLeftPositionDelta = 0;
-//			}
-//			);			
+			);	
 
 			BeginTime = appointment.StartTime;
 			EndTime = appointment.EndTime;
@@ -101,12 +102,26 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			SetNewLocation(initialLocalisation, true);		
 		}
 
-		private void OnSelectedAppointmentChanged(Appointment newSelectedAppointment)
+		private void OnAppointmentModificationsPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
-			if (appointment != newSelectedAppointment || newSelectedAppointment == null)
+			var appointmentModifications = (AppointmentModifications)sender;
+			switch (propertyChangedEventArgs.PropertyName)
+			{
+				case nameof(AppointmentModifications.BeginTime):
+				{
+					BeginTime = appointmentModifications.BeginTime;
+					break;
+				}
+			}
+		}
+
+		private void OnCurrentModifiedAppointmentChanged(AppointmentModifications newModifiedAppointment)
+		{
+			if (newModifiedAppointment == null || appointment != newModifiedAppointment.Appointment)
 			{
 				OperatingMode = OperatingMode.View;
-				selectedAppointment.StateChanged -= OnSelectedAppointmentChanged;
+				currentAppointmentModification.PropertyChanged -= OnAppointmentModificationsPropertyChanged;
+				currentModifiedAppointment.StateChanged -= OnCurrentModifiedAppointmentChanged;
 			}
 		}
 
@@ -182,20 +197,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			private set { PropertyChanged.ChangeAndNotify(this, ref timeSlotEnd, value); }
 		}
 
-
-//		public ICommand SaveCanvasLeftPosition { get; }
-//
-//		public double CanvasLeftPositionDelta
-//		{
-//			get { return canvasLeftPositionDelta; }
-//			set
-//			{
-//				canvasLeftPositionDelta = value;
-//
-//				PropertyChanged.Notify(this, nameof(CanvasLeftPosition));
-//				PropertyChanged.Notify(this, nameof(ViewElementLength));
-//			}
-//		}
 
 		public string PatientDisplayName => appointment.Patient.Name;
 		public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";

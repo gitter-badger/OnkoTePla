@@ -7,7 +7,8 @@
 			 xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              xmlns:appointmentView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"
              xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper"
-             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"             
+             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
              d:DesignHeight="30"
              d:DesignWidth="200"
              mc:Ignorable="d">
@@ -113,12 +114,9 @@
                 <StackPanel Orientation="Horizontal" 
 							Background="Transparent">
 					
-<!--					<i:Interaction.Behaviors>-->
-<!--						<libBehaviors:MoveHorizontalBehavior HorizontalMovementDelta="{Binding CanvasLeftPositionDelta, -->
-<!--																							   Mode=OneWayToSource, -->
-<!--																							   UpdateSourceTrigger=PropertyChanged}"-->
-<!--															 ExecuteOnMovementEnd="{Binding SaveCanvasLeftPosition}"/>-->
-<!--					</i:Interaction.Behaviors>-->
+					<i:Interaction.Behaviors>
+                        <behaviors:MoveBeginTimeBehavior ViewModelCommunication="{Binding ViewModelCommunication}"/>
+					</i:Interaction.Behaviors>
 					
                     <Border Width="1"
                             Height="20"
