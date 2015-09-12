@@ -10,7 +10,5 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 		ObservableCollection<IAppointmentGridViewModel> LoadedAppointmentGrids { get; }
 		
 		int CurrentDisplayedAppointmentGridIndex { get; }
-
-		//Size ReportedGridSize { set; get; }
 	}
 }

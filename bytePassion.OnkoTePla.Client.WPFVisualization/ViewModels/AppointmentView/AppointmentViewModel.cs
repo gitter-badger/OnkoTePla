@@ -26,21 +26,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 	{		
 		private readonly Appointment appointment;		
 		private readonly IDataCenter dataCenter;		
-		private readonly IViewModelCommunication viewModelCommunication;
 
 		private readonly IGlobalState<Appointment> selectedAppointment;
 
-		private double canvasLeftPosition;
-		private double viewElementLength;
-
+		private TherapyPlaceRowIdentifier currentLocation;
 		private OperatingMode operatingMode;
 
-		private Time timeSlotStart;
-		private Time timeSlotEnd;
-
-		private TherapyPlaceRowIdentifier currentLocation;
-		
-		private double canvasLeftPositionDelta;
+		private Time   timeSlotStart;
+		private Time   timeSlotEnd;		
+		private double gridWidth;
+		private Time   beginTime;
+		private Time   endTime;
 
 		public AppointmentViewModel(Appointment appointment,
 									IViewModelCommunication viewModelCommunication,
@@ -48,8 +44,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 									TherapyPlaceRowIdentifier initialLocalisation)
 		{ 						
 			this.appointment = appointment;
-			this.viewModelCommunication = viewModelCommunication;
-			this.dataCenter = dataCenter;			
+			this.dataCenter = dataCenter;
+			ViewModelCommunication = viewModelCommunication;		
 
 			selectedAppointment = viewModelCommunication.GetGlobalViewModelVariable<Appointment>(
 				SelectedAppointmentVariable
@@ -91,16 +87,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				}
 			);
 
-			SaveCanvasLeftPosition = new Command(() =>
-			{
-				CanvasLeftPosition = CanvasLeftPosition;
-				ViewElementLength = ViewElementLength;
-				CanvasLeftPositionDelta = 0;
-			}
-			);
+//			SaveCanvasLeftPosition = new Command(() =>
+//			{
+//				CanvasLeftPosition = CanvasLeftPosition;
+//				ViewElementLength = ViewElementLength;
+//				CanvasLeftPositionDelta = 0;
+//			}
+//			);			
 
-			canvasLeftPositionDelta = 0;
-
+			BeginTime = appointment.StartTime;
+			EndTime = appointment.EndTime;
+			
 			SetNewLocation(initialLocalisation, true);		
 		}
 
@@ -118,7 +115,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{
 			if (!isInitialLocation)
 			{
-				viewModelCommunication.SendTo(
+				ViewModelCommunication.SendTo(
 					TherapyPlaceRowViewModelCollection,
 					currentLocation,
 					new RemoveAppointmentFromTherapyPlaceRow(this)
@@ -130,78 +127,81 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var medicalPractice = dataCenter.GetMedicalPracticeByDateAndId(therapyPlaceRowIdentifier.PlaceAndDate.Date,
 																		   therapyPlaceRowIdentifier.PlaceAndDate.MedicalPracticeId);
 
-			timeSlotStart = medicalPractice.HoursOfOpening.GetOpeningTime(therapyPlaceRowIdentifier.PlaceAndDate.Date);
-			timeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(therapyPlaceRowIdentifier.PlaceAndDate.Date);
+			TimeSlotBegin = medicalPractice.HoursOfOpening.GetOpeningTime(therapyPlaceRowIdentifier.PlaceAndDate.Date);
+			TimeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(therapyPlaceRowIdentifier.PlaceAndDate.Date);
 
 
-			viewModelCommunication.SendTo(
+			ViewModelCommunication.SendTo(
 				TherapyPlaceRowViewModelCollection,
 				therapyPlaceRowIdentifier,
 				new AddAppointmentToTherapyPlaceRow(this)	
 			);
 
-			var globalGridSizeVariable  = viewModelCommunication.GetGlobalViewModelVariable<Size>(
+			var globalGridSizeVariable  = ViewModelCommunication.GetGlobalViewModelVariable<Size>(
 				AppointmentGridSizeVariable
 			);
 
-			SetNewGridSize(globalGridSizeVariable.Value);
+			GridWidth = globalGridSizeVariable.Value.Width;
 		}
 
-		private void SetNewGridSize(Size newGridSize)
-		{
-			var lengthOfOneHour = newGridSize.Width / (Time.GetDurationBetween(timeSlotEnd, timeSlotStart).Seconds / 3600.0);
-			
-			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointment.StartTime, timeSlotStart);
-			CanvasLeftPosition =  lengthOfOneHour * (durationFromDayBeginToAppointmentStart.Seconds / 3600.0);
-
-			var durationOfAppointment = Time.GetDurationBetween(appointment.StartTime, appointment.EndTime);
-			ViewElementLength = lengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
-		}
 
 		public Guid Identifier => appointment.Id;
 		
 		public ICommand DeleteAppointment      { get; }
 		public ICommand SwitchToEditMode       { get; }
-		public ICommand SaveCanvasLeftPosition { get; }
 
-		public double CanvasLeftPositionDelta
+
+		public Time BeginTime
 		{
-			get { return canvasLeftPositionDelta; }
-			set
-			{
-				canvasLeftPositionDelta = value;
-
-				PropertyChanged.Notify(this, nameof(CanvasLeftPosition));
-				PropertyChanged.Notify(this, nameof(ViewElementLength));
-			}
+			get { return beginTime; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref beginTime, value); }
 		}
+
+		public Time EndTime
+		{
+			get { return endTime; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref endTime, value); }
+		}
+
+		public double GridWidth
+		{
+			get { return gridWidth; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref gridWidth, value); }
+		}
+
+		public Time TimeSlotBegin
+		{
+			get { return timeSlotStart;}
+			private set { PropertyChanged.ChangeAndNotify(this, ref timeSlotStart, value); }
+			
+		}
+
+		public Time TimeSlotEnd
+		{
+			get { return timeSlotEnd; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref timeSlotEnd, value); }
+		}
+
+
+//		public ICommand SaveCanvasLeftPosition { get; }
+//
+//		public double CanvasLeftPositionDelta
+//		{
+//			get { return canvasLeftPositionDelta; }
+//			set
+//			{
+//				canvasLeftPositionDelta = value;
+//
+//				PropertyChanged.Notify(this, nameof(CanvasLeftPosition));
+//				PropertyChanged.Notify(this, nameof(ViewElementLength));
+//			}
+//		}
 
 		public string PatientDisplayName => appointment.Patient.Name;
 		public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
 		public string AppointmentDate    => appointment.Day.ToString();
 		public string Description        => appointment.Description;
 		public string Room               => appointment.TherapyPlace.Name;		
-
-		public double CanvasLeftPosition
-		{
-			get { return CheckCanvasLeftPosition(canvasLeftPosition + CanvasLeftPositionDelta); }
-			set { PropertyChanged.ChangeAndNotify(this, ref canvasLeftPosition, value); }
-		}
-
-		private double CheckCanvasLeftPosition(double newCanvasLeftPosition)
-		{
-			if (newCanvasLeftPosition < 0)
-				return 0;
-			else
-				return newCanvasLeftPosition;
-
-		}
-
-		public double ViewElementLength
-		{
-			get { return viewElementLength - CanvasLeftPositionDelta; }
-			set { PropertyChanged.ChangeAndNotify(this, ref viewElementLength, value); }
-		}
 	
 
 		public OperatingMode OperatingMode
@@ -217,23 +217,26 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public void Process (NewSizeAvailable message)
 		{
-			SetNewGridSize(message.NewSize);
+			GridWidth = message.NewSize.Width;
 		}
 
 		public override void CleanUp()
 		{
-			viewModelCommunication.DeregisterViewModelAtCollection<AppointmentViewModel, Guid>(
+			ViewModelCommunication.DeregisterViewModelAtCollection<AppointmentViewModel, Guid>(
 				AppointmentViewModelCollection,
 				this
 			);
 
-			viewModelCommunication.SendTo(
+			ViewModelCommunication.SendTo(
 				TherapyPlaceRowViewModelCollection,
 				currentLocation,
 				new RemoveAppointmentFromTherapyPlaceRow(this)
 			);
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;		
+		public IViewModelCommunication ViewModelCommunication { get; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		
 	}	
 }

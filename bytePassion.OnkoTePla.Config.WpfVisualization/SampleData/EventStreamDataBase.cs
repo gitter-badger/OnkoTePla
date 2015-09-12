@@ -39,20 +39,20 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		private static Duration GetAppointmentDuration(Time startTime, Time closingTime)
 		{
 			int tryCount = 0;
-			Duration currentTry = RandomTimeInterval(4);
+			var currentIntervalTry = RandomTimeInterval(4);
 
-			while (startTime + currentTry > closingTime)
+			while (startTime + currentIntervalTry > closingTime)
 			{
 				if (tryCount++ > 100)
 				{
-					currentTry = new Duration(60 * 30);
+					currentIntervalTry = new Duration(60 * 30);
 					break;
 				}
 
-				currentTry = RandomTimeInterval(4);
+				currentIntervalTry = RandomTimeInterval(4);
 			}
 
-			return currentTry;
+			return currentIntervalTry;
 		}
 
 		private static AddAppointment CreateAppointmentData (AppointmentsOfADayReadModel readModel, IReadOnlyList<Patient> patients, 
@@ -104,6 +104,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
+			//IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
 			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 
@@ -129,13 +130,13 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			var medicalPratice = configReadRepository.GetMedicalPracticeByName("examplePractice1");				
 			var user = configReadRepository.GetUserByName("exampleUser1");
 
-			var startCreation = new Date(8,  9, 2015);
-			var endCreation   = new Date(9, 9, 2015);
+			var startCreation = new Date(1,  9, 2015);
+			var endCreation   = new Date(1, 10, 2016);
 
 			for (var date = startCreation; date < endCreation; date = date.DayAfter())
 			{
-				var aggregateID = new AggregateIdentifier(date, medicalPratice.Id);
-				var readmodel = readModelRepository.GetAppointmentsOfADayReadModel(aggregateID);
+				var aggregateId = new AggregateIdentifier(date, medicalPratice.Id);
+				var readmodel = readModelRepository.GetAppointmentsOfADayReadModel(aggregateId);
 				GenerateAppointments(commandBus, readmodel, 
 									 medicalPratice, user, 
 									 patientRepository.GetAllPatients().ToList(),

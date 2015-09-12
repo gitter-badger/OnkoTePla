@@ -2,14 +2,15 @@
 using System.Windows.Input;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
 {
 	public interface IAppointmentViewModel : IViewModel,
+											 IViewModelCommunicationDeliverer,
 											 IViewModelCollectionItem<Guid>,
 											 IDisposable,
                                              IViewModelMessageHandler<Dispose>,
@@ -18,20 +19,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }		
 		
-		double CanvasLeftPosition { get; set; }
-		double ViewElementLength  { get; set; }
+		Time BeginTime { get; }					//
+		Time EndTime   { get; }					//	All this Data is necessary
+												//  to position the Appointment
+		double GridWidth     { get; }			//  correct
+		Time   TimeSlotBegin { get; }			//
+		Time   TimeSlotEnd   { get; }			//		
 
 		string PatientDisplayName { get; }
-		string TimeSpan           { get; }
-		string AppointmentDate    { get; }
-		string Description        { get; }
-		string Room               { get; }
+
+		string TimeSpan           { get; }		//
+		string AppointmentDate    { get; }		//	Information for
+		string Description        { get; }		//  the Tool-Tip
+		string Room               { get; }		//
 
 		OperatingMode OperatingMode { get; }
 
-
-
-		ICommand SaveCanvasLeftPosition  { get; }
-		double   CanvasLeftPositionDelta { set; }
+		//ICommand SaveCanvasLeftPosition  { get; }
+		//double   CanvasLeftPositionDelta { set; }
 	}
 }

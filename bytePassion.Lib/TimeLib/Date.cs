@@ -203,7 +203,7 @@ namespace bytePassion.Lib.TimeLib
 			return Year.GetHashCode() ^ Month.GetHashCode() ^ Day.GetHashCode();
 		}
 
-		public static bool operator ==(NewDate d1, NewDate d2) => d1.Equals(d2);
+		public static bool operator ==(NewDate d1, NewDate d2) => EqualsExtension.EqualsForEqualityOperator(d1, d2);
 		public static bool operator !=(NewDate d1, NewDate d2) => !(d1 == d2);
 		public static bool operator <=(NewDate d1, NewDate d2) => d1 < d2 || d1 == d2;
 		public static bool operator >=(NewDate d1, NewDate d2) => d1 > d2 || d1 == d2;

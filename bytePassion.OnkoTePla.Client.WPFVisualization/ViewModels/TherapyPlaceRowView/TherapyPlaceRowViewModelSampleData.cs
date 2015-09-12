@@ -20,8 +20,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 
 			AppointmentViewModels = new ObservableCollection<IAppointmentViewModel>
 			{
-				new AppointmentViewModelSampleData( 10, 150),
-				new AppointmentViewModelSampleData(200, 150)
+				new AppointmentViewModelSampleData( new Time(9,0), new Time(10,30)),
+				new AppointmentViewModelSampleData( new Time(10,45), new Time(12,0))
 			};	
 			
 			Identifier = new TherapyPlaceRowIdentifier(new AggregateIdentifier(Date.Dummy, new Guid()), new Guid());		

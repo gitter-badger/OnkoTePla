@@ -1,21 +1,18 @@
 ﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.AppointmentView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
-             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                          
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              xmlns:appointmentView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"
-             xmlns:enu="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper"
-             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"
-             xmlns:libBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.Behaviors;assembly=bytePassion.Lib"
+             xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper"
+             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"             
              d:DesignHeight="30"
              d:DesignWidth="200"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <converter:OperatingModeToBackgroundBrush x:Key="OperatingModeToBackgroundBrush" />
         <converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter" />
     </UserControl.Resources>
 
@@ -107,7 +104,7 @@
                             <Setter Property="Background" Value="#FF119EDA" />
                         </Style.Setters>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                            <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
                                 <Setter Property="Background" Value="#CC119EDA" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -116,12 +113,12 @@
                 <StackPanel Orientation="Horizontal" 
 							Background="Transparent">
 					
-					<i:Interaction.Behaviors>
-						<libBehaviors:MoveHorizontalBehavior HorizontalMovementDelta="{Binding CanvasLeftPositionDelta, 
-																							   Mode=OneWayToSource, 
-																							   UpdateSourceTrigger=PropertyChanged}"
-															 ExecuteOnMovementEnd="{Binding SaveCanvasLeftPosition}"/>
-					</i:Interaction.Behaviors>
+<!--					<i:Interaction.Behaviors>-->
+<!--						<libBehaviors:MoveHorizontalBehavior HorizontalMovementDelta="{Binding CanvasLeftPositionDelta, -->
+<!--																							   Mode=OneWayToSource, -->
+<!--																							   UpdateSourceTrigger=PropertyChanged}"-->
+<!--															 ExecuteOnMovementEnd="{Binding SaveCanvasLeftPosition}"/>-->
+<!--					</i:Interaction.Behaviors>-->
 					
                     <Border Width="1"
                             Height="20"
@@ -133,7 +130,7 @@
                                     <Setter Property="Background" Value="#FF119EDA" />
                                 </Style.Setters>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
                                         <Setter Property="Background" Value="#ffffff" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -150,7 +147,7 @@
                                     <Setter Property="Background" Value="#FF119EDA" />
                                 </Style.Setters>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
                                         <Setter Property="Background" Value="#ffffff" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -169,7 +166,7 @@
                             <Setter Property="BorderThickness" Value="0,1" />
                         </Style.Setters>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                            <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
                                 <Setter Property="Opacity" Value="0.6" />
                                 <Setter Property="BorderThickness" Value="0,1" />
                             </DataTrigger>
@@ -193,7 +190,7 @@
                             <Setter Property="Background" Value="#FF119EDA" />
                         </Style.Setters>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                            <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
                                 <Setter Property="Background" Value="#CC119EDA" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -210,7 +207,7 @@
                                     <Setter Property="Background" Value="#FF119EDA" />
                                 </Style.Setters>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
                                         <Setter Property="Background" Value="#ffffff" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -228,7 +225,7 @@
                                     <Setter Property="Background" Value="#FF119EDA" />
                                 </Style.Setters>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enu:OperatingMode.Edit}">
+                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
                                         <Setter Property="Background" Value="#ffffff" />
                                     </DataTrigger>
                                 </Style.Triggers>
