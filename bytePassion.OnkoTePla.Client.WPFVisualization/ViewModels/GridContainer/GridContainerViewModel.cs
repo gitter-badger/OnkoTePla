@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
@@ -24,8 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 		private readonly ICommandBus  commandBus;		
 
 		private readonly IGlobalState<Date> selectedDateState;
-		private readonly IGlobalState<Guid> displayedPracticeState;
-		private readonly IGlobalState<Size> gridSize; 
+		private readonly IGlobalState<Guid> displayedPracticeState;		
 
 		private readonly IDictionary<AggregateIdentifier, IAppointmentGridViewModel> cachedAppointmentGridViewModels; 
 
@@ -56,11 +54,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 			displayedPracticeState = viewModelCommunication.GetGlobalViewModelVariable<Guid>(
 				AppointmentGridDisplayedPracticeVariable
 			);
-
-			gridSize = viewModelCommunication.GetGlobalViewModelVariable<Size>(
-				AppointmentGridSizeVariable	
-			);
-
+			
 			foreach (var identifier in initialGridViewModelsToCache)
 			{
 				AddGridViewModel(identifier);
