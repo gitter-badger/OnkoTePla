@@ -8,7 +8,7 @@
 			 xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Global"
              xmlns:panels="clr-namespace:bytePassion.Lib.WpfUtils.Panels;assembly=bytePassion.Lib"
              xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"             
-             xmlns:behaviors="clr-namespace:bytePassion.Lib.WpfUtils.Behaviors;assembly=bytePassion.Lib"
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
              xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900">
@@ -31,9 +31,7 @@
         <Border Grid.Row="0" 
 				Grid.Column="1">
             <i:Interaction.Behaviors>
-                <behaviors:SizeReportingBehavior ReportedSize="{Binding ReportedGridSize, 
-																		Mode=OneWayToSource, 
-																		UpdateSourceTrigger=PropertyChanged}"/>
+                <behaviors:SizeReportingToGlobalVariebleBehavior ViewModelCommunication="{Binding ViewModelCommunication}"/>
             </i:Interaction.Behaviors>
         </Border>
 

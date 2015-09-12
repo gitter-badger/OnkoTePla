@@ -21,9 +21,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 	public class GridContainerViewModel : IGridContainerViewModel										  
 	{
 		private readonly IDataCenter dataCenter;
-		private readonly ICommandBus  commandBus;
-
-		private readonly IViewModelCommunication viewModelCommunication;
+		private readonly ICommandBus  commandBus;		
 
 		private readonly IGlobalState<Date> selectedDateState;
 		private readonly IGlobalState<Guid> displayedPracticeState;
@@ -44,7 +42,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 
 			this.dataCenter = dataCenter;
 			this.commandBus = commandBus;
-			this.viewModelCommunication = viewModelCommunication;
+			ViewModelCommunication = viewModelCommunication;
 
 			LoadedAppointmentGrids          = new ObservableCollection<IAppointmentGridViewModel>();
 			cachedAppointmentGridViewModels = new Dictionary<AggregateIdentifier, IAppointmentGridViewModel>();
@@ -82,12 +80,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 			private set { PropertyChanged.ChangeAndNotify(this, ref currentDisplayedAppointmentGridIndex, value); }
 		}
 
-		public Size ReportedGridSize
-		{
-			set { gridSize.Value = value; }
-			get { return gridSize.Value; }
-		}
-
 		private void AddGridViewModel(AggregateIdentifier identifier)
 		{
 			if (!cachedAppointmentGridViewModels.ContainsKey(identifier))
@@ -97,9 +89,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 				IAppointmentGridViewModel gridViewModel;
 
 				if (medicalPractice.HoursOfOpening.IsOpen(identifier.Date))
-					gridViewModel = new AppointmentGridViewModel(identifier, dataCenter, commandBus,viewModelCommunication);
+					gridViewModel = new AppointmentGridViewModel(identifier, dataCenter, commandBus,ViewModelCommunication);
 				else
-					gridViewModel = new ClosedDayGridViewModel(identifier, dataCenter, viewModelCommunication);
+					gridViewModel = new ClosedDayGridViewModel(identifier, dataCenter, ViewModelCommunication);
 
 				cachedAppointmentGridViewModels.Add(identifier, gridViewModel);
 				LoadedAppointmentGrids.Add(gridViewModel);
@@ -148,7 +140,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 
 		private void ActivateGridViewModel(AggregateIdentifier identifier)
 		{
-			viewModelCommunication.SendTo(
+			ViewModelCommunication.SendTo(
 				AppointmentGridViewModelCollection,
 				identifier,
 				new Activate()
@@ -157,7 +149,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 
 		private void DeactivateGridViewModel (AggregateIdentifier identifier)
 		{
-			viewModelCommunication.SendTo(
+			ViewModelCommunication.SendTo(
 				AppointmentGridViewModelCollection,
 				identifier,
 				new Deactivate()
@@ -178,6 +170,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 			ActivateGridViewModel(identifier);
 		}
 		
-		public event PropertyChangedEventHandler PropertyChanged;		
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public IViewModelCommunication ViewModelCommunication { get; }
 	}
 }
