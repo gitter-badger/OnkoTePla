@@ -70,6 +70,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
+    <Compile Include="Behaviors\SizeReportingToGlobalVariebleBehavior.cs" />
     <Compile Include="Behaviors\ToggleButtonAsRadioButtonBehavior.cs" />
     <Compile Include="Converter\DateToDateTimeConverter.cs" />
     <Compile Include="Converter\OperatingModeToBackgroundBrush.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModelMessages\Dispose.cs" />
     <Compile Include="ViewModels\AppointmentGrid\ClosedDayGridViewModel.cs" />
+    <Compile Include="ViewModels\IViewModelCommunicationDeliverer.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModelSampleData.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\IChangeConfirmationViewModel.cs" />
