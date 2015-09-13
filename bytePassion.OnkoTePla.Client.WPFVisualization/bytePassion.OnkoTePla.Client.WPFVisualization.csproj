@@ -71,6 +71,7 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\MoveEndTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveBeginTimeBehavior.cs" />
+    <Compile Include="Behaviors\MoveWholeAppointmentBehavior.cs" />
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
     <Compile Include="Behaviors\SizeReportingToGlobalVariebleBehavior.cs" />
     <Compile Include="Behaviors\ToggleButtonAsRadioButtonBehavior.cs" />

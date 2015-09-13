@@ -157,6 +157,7 @@
             <Border Grid.Column="1"
                     Background="#FF119EDA"
                     BorderBrush="DarkSlateGray">
+
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Setters>
@@ -179,7 +180,18 @@
                            Text="{Binding PatientDisplayName}"
                            TextTrimming="CharacterEllipsis" />
             </Border>
-            <Border Grid.Column="2"
+
+            <Border Grid.Column="1"
+                    Background="Transparent"
+					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}">
+
+                <i:Interaction.Behaviors>
+                    <behaviors:MoveWholeAppointmentBehavior ViewModelCommunication="{Binding ViewModelCommunication}"/>
+                </i:Interaction.Behaviors>
+			</Border>
+
+
+                <Border Grid.Column="2"
                     BorderBrush="DarkSlateGray"
                     BorderThickness="0,1,1,1">
                 <Border.Style>

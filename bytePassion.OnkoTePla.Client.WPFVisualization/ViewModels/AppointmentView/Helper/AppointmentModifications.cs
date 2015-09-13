@@ -81,6 +81,42 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			private set { PropertyChanged.ChangeAndNotify(this, ref endTime, value); }
 		}
 
+		public void SetNewTimeShiftDelta(double deltaInPixel)
+		{
+			if (Time.IsDummy(currentDayOpeningTime))
+			{
+				ComputeSlotInformations();
+			}
+
+			var lengthOfOneHour = currentGridWidth / (Time.GetDurationBetween(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
+			var secondsDelta = (uint)Math.Floor(Math.Abs(deltaInPixel) / (lengthOfOneHour / 3600));
+			var durationDelta = new Duration(secondsDelta);
+
+
+			if (deltaInPixel > 0)
+			{
+				var tempEndTime = CheckEndTime(deltaInPixel > 0 ? lastSetEndTime + durationDelta : lastSetEndTime - durationDelta);
+				var actualTimeDelta = Time.GetDurationBetween(lastSetEndTime, tempEndTime);
+				
+				BeginTime = lastSetBeginTime + actualTimeDelta;
+				EndTime   = lastSetEndTime + actualTimeDelta;
+			}
+			else
+			{
+				var tmpBeginTime = CheckBeginTime(deltaInPixel > 0 ? lastSetBeginTime + durationDelta : lastSetBeginTime - durationDelta);
+				var actualTimeDelta = Time.GetDurationBetween(lastSetBeginTime, tmpBeginTime);
+				
+				BeginTime = lastSetBeginTime - actualTimeDelta;
+				EndTime   = lastSetEndTime - actualTimeDelta;
+			}						
+		}
+
+		public void FixTimeShiftDelta()
+		{
+			lastSetBeginTime = BeginTime;
+			lastSetEndTime = EndTime;
+		}
+
 		public void SetNewEndTimeDelta(double deltaInPixel)
 		{
 			if (Time.IsDummy(currentDayOpeningTime))
