@@ -29,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel
 
 		public AppointmentsOfADayReadModel GetAppointmentsOfADayReadModel(AggregateIdentifier id)
 		{
-			var eventStream = eventStore.GetEventStream(id);
+			var eventStream = eventStore.GetEventStreamForADay(id);
 			var readmodel = new AppointmentsOfADayReadModel(eventBus, config, patientsRepository, eventStream.Id);
 			readmodel.LoadFromEventStream(eventStream);
 

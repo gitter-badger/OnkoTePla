@@ -23,7 +23,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			this.config = config;
 		}
 
-		public EventStream<AggregateIdentifier> GetEventStream (AggregateIdentifier id)
+		public EventStream<AggregateIdentifier> GetEventStreamForADay (AggregateIdentifier id)
 		{
 			var eventStream = eventStreams.FirstOrDefault(evenstream => evenstream.Id == id);
 
@@ -40,7 +40,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 		public void AddEventsToEventStream(AggregateIdentifier id, IEnumerable<DomainEvent> eventStream)
 		{						
-			GetEventStream(id).AddEvents(eventStream);
+			GetEventStreamForADay(id).AddEvents(eventStream);
 		}
 
 		public EventStream<Guid> GetEventStreamForAPatient(Guid patientId)
