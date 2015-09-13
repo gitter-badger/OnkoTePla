@@ -112,6 +112,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 					BeginTime = appointmentModifications.BeginTime;
 					break;
 				}
+				case nameof(AppointmentModifications.EndTime):
+				{
+					EndTime = appointmentModifications.EndTime;
+					break;
+				}
 			}
 		}
 

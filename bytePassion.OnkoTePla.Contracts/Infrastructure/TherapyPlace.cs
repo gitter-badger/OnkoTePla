@@ -1,6 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.FrameworkExtensions;
 
+using static bytePassion.Lib.FrameworkExtensions.EqualsExtension;
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
@@ -24,6 +25,9 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		public override bool Equals (object obj)
 		{
 			return this.Equals(obj, (therapyPlace1, therapyPlace2) => therapyPlace1.Id == therapyPlace2.Id);
-		}			
+		}
+
+		public static bool operator ==(TherapyPlace t1, TherapyPlace t2) => EqualsForEqualityOperator(t1, t2);
+		public static bool operator !=(TherapyPlace t1, TherapyPlace t2) => !(t1 == t2);
 	}
 }

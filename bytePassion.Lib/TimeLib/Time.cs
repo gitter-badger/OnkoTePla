@@ -7,8 +7,8 @@ using bytePassion.Lib.FrameworkExtensions;
 namespace bytePassion.Lib.TimeLib
 {
     [DataContract]
-	public struct Time
-	{
+	public struct Time : IComparable<Time>
+    {
 		public static readonly Time Dummy = new Time(0,0);
 
         [DataMember(Name = "Hour")]
@@ -96,9 +96,16 @@ namespace bytePassion.Lib.TimeLib
 			return GetTimeFromSecondsSinceBeginOfTheDay(t.SecondsFromDayBegin - d.Seconds);
 		}
 
-		#endregion			
+		#endregion
 
 		#region ToString / Equals / GetHashCOde
+
+		public int CompareTo (Time other)
+		{
+			if (this > other) return 1;
+			if (this == other) return 0;
+			return -1;
+		}
 
 		public override bool Equals (object obj)
 		{
@@ -109,9 +116,9 @@ namespace bytePassion.Lib.TimeLib
 		public override int GetHashCode ()
 		{
 			return hour.GetHashCode() ^ minute.GetHashCode();
-		}
+		}	    
 
-		public override string ToString ()
+	    public override string ToString ()
 		{
 			var builder = new StringBuilder();
 
