@@ -8,6 +8,7 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
@@ -38,7 +39,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		private Date currentDate;
 		private double currentGridWidth;
-		private MedicalPractice currentMedicalPracticeVersion;		
+		private MedicalPractice currentMedicalPracticeVersion;
+		private bool hideAppointment;
+		private TherapyPlaceRowIdentifier currentLocation;
 
 		public AppointmentModifications(Appointment appointment,
 										Guid medicalPracticeId, 
@@ -58,13 +61,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			currentSlotBegin = Time.Dummy;
 			currentSlotEnd = Time.Dummy;
 
-			currentReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(new AggregateIdentifier(appointment.Day,
-																													 medicalPracticeId));
+			var aggregateIdentifier = new AggregateIdentifier(appointment.Day, medicalPracticeId);
 
+			currentReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(aggregateIdentifier);
 			beginTime = appointment.StartTime;
 			lastSetBeginTime = beginTime;
 			endTime = appointment.EndTime;
 			lastSetEndTime = endTime;
+
+			CurrentLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, appointment.TherapyPlace.Id);
 		}
 
 		public Appointment Appointment { get; }
@@ -72,15 +77,27 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public Time BeginTime
 		{
 			get { return beginTime; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref beginTime, value); }
+			set { PropertyChanged.ChangeAndNotify(this, ref beginTime, value); }
 		}
 
 		public Time EndTime
 		{
 			get { return endTime; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref endTime, value); }
+			set { PropertyChanged.ChangeAndNotify(this, ref endTime, value); }
 		}
 
+		public bool ShowDisabledOverlay
+		{
+			get { return hideAppointment; }
+			set { PropertyChanged.ChangeAndNotify(this, ref hideAppointment, value); }
+		}
+
+		public TherapyPlaceRowIdentifier CurrentLocation
+		{
+			get { return currentLocation; }
+			set { PropertyChanged.ChangeAndNotify(this, ref currentLocation, value); }
+		}		
+		
 		public void SetNewTimeShiftDelta(double deltaInPixel)
 		{
 			if (Time.IsDummy(currentDayOpeningTime))

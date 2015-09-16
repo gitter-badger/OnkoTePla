@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.State;
@@ -30,10 +31,52 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			AssociatedObject.PreviewMouseLeftButtonDown += OnAssociatedObjectMouseLeftButtonDown;
 			AssociatedObject.MouseLeftButtonUp          += OnAssociatedObjectMouseLeftButtonUp;
 			AssociatedObject.MouseMove                  += OnAssociatedObjectMouseMove;
+			AssociatedObject.MouseLeave                 += AssociatedObjectOnMouseLeave;
+			AssociatedObject.PreviewQueryContinueDrag   += OnQueryContinueDrag;
+
+			AssociatedObject.DragLeave += AssociatedObjectOnDragLeave;			
+
+			
 
 			container = Application.Current.MainWindow;
 			mouseIsDown = false;
-		}		
+		}
+
+		private void AssociatedObjectOnDragLeave(object sender, DragEventArgs dragEventArgs)
+		{
+			Console.WriteLine("blubb");
+		}
+
+		private void AssociatedObjectOnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
+		{
+			if (mouseIsDown)
+			{
+				EndDrag();
+
+				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = true;				
+
+				DragDrop.DoDragDrop((DependencyObject)sender,
+									currentModifiedAppointmentVariable.Value.Appointment,
+				                    DragDropEffects.Link);
+			}
+		}
+
+		private void OnQueryContinueDrag (object sender, QueryContinueDragEventArgs e)
+		{
+			if (e.EscapePressed)
+			{
+				e.Action = DragAction.Cancel;
+				e.Handled = true;
+
+				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = false;
+			}
+
+			if (e.Action != DragAction.Continue)
+			{			
+				Console.WriteLine("blubb");
+			}
+		
+		}
 
 		protected override void OnDetaching ()
 		{
@@ -41,6 +84,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			AssociatedObject.PreviewMouseLeftButtonDown -= OnAssociatedObjectMouseLeftButtonDown;
 			AssociatedObject.MouseLeftButtonUp          -= OnAssociatedObjectMouseLeftButtonUp;
 			AssociatedObject.MouseMove                  -= OnAssociatedObjectMouseMove;
+			AssociatedObject.MouseLeave                 -= AssociatedObjectOnMouseLeave;
+			AssociatedObject.PreviewQueryContinueDrag   -= OnQueryContinueDrag;
 		}
 
 		private FrameworkElement container;
@@ -87,7 +132,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 				mouseIsDown = true;
 				referencePoint = startinPoint;
 
-				AssociatedObject.CaptureMouse();
+				//AssociatedObject.CaptureMouse();
 			}
 		}
 
@@ -95,7 +140,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 		{
 			currentModifiedAppointmentVariable.Value.FixTimeShiftDelta();
 			mouseIsDown = false;
-			Mouse.Capture(null);
+			//Mouse.Capture(null);
 		}
 	}
 }

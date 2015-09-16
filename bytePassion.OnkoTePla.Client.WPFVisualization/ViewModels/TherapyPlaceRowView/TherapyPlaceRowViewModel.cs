@@ -3,6 +3,7 @@ using System.Windows.Media;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
@@ -14,14 +15,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 {
 	public class TherapyPlaceRowViewModel : DisposingObject,
 											ITherapyPlaceRowViewModel											
-	{
-		private readonly IViewModelCommunication viewModelCommunication;
-
-		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication,
-										TherapyPlace therapyPlace, Color roomDisplayColor,										
+	{		
+		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication, 
+									    IDataCenter dataCenter,
+										TherapyPlace therapyPlace, 
+										Color roomDisplayColor,										
 										TherapyPlaceRowIdentifier identifier)
 		{
-			this.viewModelCommunication = viewModelCommunication;
+			ViewModelCommunication = viewModelCommunication;
+			DataCenter = dataCenter;
 
 			RoomColor        = roomDisplayColor;		
 			Identifier       = identifier;			
@@ -60,12 +62,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 
 		public override void CleanUp()
 		{
-			viewModelCommunication.DeregisterViewModelAtCollection<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
+			ViewModelCommunication.DeregisterViewModelAtCollection<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
 				Constants.TherapyPlaceRowViewModelCollection,
 				this
 			);
 		}
 
-		
+		public IViewModelCommunication ViewModelCommunication { get; }
+		public IDataCenter DataCenter { get; }
 	}
 }

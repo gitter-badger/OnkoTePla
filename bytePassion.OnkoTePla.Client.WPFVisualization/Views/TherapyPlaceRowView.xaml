@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              xmlns:therapyPlaceRowView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView"
-			 xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"
-             d:DesignHeight="30"
+			 xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"			 
+			 xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
+			 d:DesignHeight="30"
              d:DesignWidth="600"
              mc:Ignorable="d">
 
@@ -21,7 +23,6 @@
 
     <Grid Height="30">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5" />
             <ColumnDefinition Width="140" />
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />
@@ -30,13 +31,13 @@
         <Border Grid.Column="0"
                 BorderBrush="#99A9A9A9"
                 BorderThickness="1,1,0,1">
+
             <Border.Background>
                 <SolidColorBrush Color="{Binding RoomColor}" />
             </Border.Background>
         </Border>
 
-        <Border Grid.Column="1"
-                Background="White"
+        <Border Grid.Column="0"               
                 BorderBrush="DarkGray"
                 BorderThickness="0,1,1,1">
 
@@ -47,12 +48,21 @@
                        Text="{Binding TherapyPlaceName}" />
         </Border>
 
-        <Border Grid.Column="3"
+        <Border Grid.Column="2"
                 BorderBrush="#99A9A9A9"
-                BorderThickness="1">
-            
-            <ItemsControl ItemsSource="{Binding AppointmentViewModels}">
+                BorderThickness="1"
+				Background="Transparent"
+				AllowDrop="True">
 
+            <i:Interaction.Behaviors>
+                <behaviors:AcceptAppointmentDropBehavior ViewModelCommunication="{Binding ViewModelCommunication}"
+														 Appointments="{Binding AppointmentViewModels}"
+														 DataCenter="{Binding DataCenter}"
+														 TherapyPlaceRowIdentifier="{Binding Identifier}"/>
+            </i:Interaction.Behaviors>
+
+            <ItemsControl ItemsSource="{Binding AppointmentViewModels}">
+				
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas />

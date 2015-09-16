@@ -12,6 +12,8 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowVi
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
 {
 	public interface ITherapyPlaceRowViewModel : IViewModelCollectionItem<TherapyPlaceRowIdentifier>,
+												 IViewModelCommunicationDeliverer,
+												 IDataCenterDeliverer,
 												 IDisposable,
 												 IViewModelMessageHandler<AddAppointmentToTherapyPlaceRow>,
 												 IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>,

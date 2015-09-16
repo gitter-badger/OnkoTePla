@@ -40,6 +40,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private Time   endTime;
 
 		private AppointmentModifications currentAppointmentModification;
+		private bool showDisabledOverlay;
 
 		public AppointmentViewModel(Appointment appointment,
 									IViewModelCommunication viewModelCommunication,
@@ -64,9 +65,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 					if (currentModifiedAppointment.Value == null)
 					{
 						currentAppointmentModification = new AppointmentModifications(appointment,
-																					initialLocalisation.PlaceAndDate.MedicalPracticeId, 
-																					dataCenter, 
-																					viewModelCommunication);
+																					  initialLocalisation.PlaceAndDate.MedicalPracticeId, 
+																					  dataCenter, 
+																					  viewModelCommunication);
 
 
 						currentAppointmentModification.PropertyChanged += OnAppointmentModificationsPropertyChanged;
@@ -98,6 +99,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			BeginTime = appointment.StartTime;
 			EndTime = appointment.EndTime;
+
+			ShowDisabledOverlay = false;
 			
 			SetNewLocation(initialLocalisation, true);		
 		}
@@ -115,6 +118,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				case nameof(AppointmentModifications.EndTime):
 				{
 					EndTime = appointmentModifications.EndTime;
+					break;
+				}
+				case nameof(AppointmentModifications.ShowDisabledOverlay):
+				{
+					ShowDisabledOverlay = appointmentModifications.ShowDisabledOverlay;
+					break;
+				}
+				case nameof(AppointmentModifications.CurrentLocation):
+				{
+					SetNewLocation(appointmentModifications.CurrentLocation, false);
 					break;
 				}
 			}
@@ -214,7 +227,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{
 			get { return operatingMode; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref operatingMode, value); }
-		}		
+		}
+
+		public bool ShowDisabledOverlay
+		{
+			get { return showDisabledOverlay; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref showDisabledOverlay, value); }
+		}
 
 		public void Process (Dispose message)
 		{

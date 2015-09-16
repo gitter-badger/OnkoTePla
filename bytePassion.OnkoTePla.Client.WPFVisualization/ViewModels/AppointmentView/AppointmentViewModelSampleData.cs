@@ -33,6 +33,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			TimeSlotEnd = new Time(16,0);
 
 			OperatingMode = OperatingMode.Edit;
+			ShowDisabledOverlay = false;
 			Identifier = new Guid();
 		}
 
@@ -53,6 +54,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public string Room               { get; }				
 
 		public OperatingMode OperatingMode  { get; set; }
+		public bool ShowDisabledOverlay { get; }
 
 //		public ICommand SaveCanvasLeftPosition => null;
 //		public double   CanvasLeftPositionDelta { set {} }

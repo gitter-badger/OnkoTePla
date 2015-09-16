@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
@@ -38,6 +40,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public void   Process(RemoveAppointmentFromTherapyPlaceRow message) {}
 		public double Process(GetMaxLeftRequest message) => -1;
 
-		public void Dispose () {}		
+		public IViewModelCommunication ViewModelCommunication { get; } = null;
+		public IDataCenter DataCenter { get; } = null;
+
+		public void Dispose () { }
 	}
 }

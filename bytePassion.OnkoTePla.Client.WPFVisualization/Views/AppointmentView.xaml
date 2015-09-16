@@ -9,12 +9,14 @@
              xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper"
              xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"
              xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
+             xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
              d:DesignHeight="30"
              d:DesignWidth="200"
              mc:Ignorable="d">
 
     <UserControl.Resources>
         <converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter" />
+		<converterLib:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
     </UserControl.Resources>
 
     <d:UserControl.DataContext>
@@ -180,7 +182,6 @@
                            Text="{Binding PatientDisplayName}"
                            TextTrimming="CharacterEllipsis" />
             </Border>
-
             <Border Grid.Column="1"
                     Background="Transparent"
 					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}">
@@ -188,10 +189,8 @@
                 <i:Interaction.Behaviors>
                     <behaviors:MoveWholeAppointmentBehavior ViewModelCommunication="{Binding ViewModelCommunication}"/>
                 </i:Interaction.Behaviors>
-			</Border>
-
-
-                <Border Grid.Column="2"
+            </Border>
+            <Border Grid.Column="2"
                     BorderBrush="DarkSlateGray"
                     BorderThickness="0,1,1,1">
                 <Border.Style>
@@ -278,6 +277,13 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+			
+			<Rectangle Grid.Column="0"
+					   Grid.ColumnSpan="3"
+					   Fill="DarkGray"
+					   Opacity="0.6"
+					   Visibility="{Binding ShowDisabledOverlay, 
+											Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
         </Grid>
 
     </Border>

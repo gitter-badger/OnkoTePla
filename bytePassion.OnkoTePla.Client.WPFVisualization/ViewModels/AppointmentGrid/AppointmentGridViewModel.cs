@@ -86,7 +86,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				foreach (var therapyPlace in room.TherapyPlaces)
 				{
 					var location = new TherapyPlaceRowIdentifier(Identifier, therapyPlace.Id);
-					availableTherapyPlaceRowViewModels.Add(therapyPlace.Id, new TherapyPlaceRowViewModel(viewModelCommunication, therapyPlace, 
+					availableTherapyPlaceRowViewModels.Add(therapyPlace.Id, new TherapyPlaceRowViewModel(viewModelCommunication,dataCenter, therapyPlace, 
 																										 room.DisplayedColor, location));
 				}
 			}

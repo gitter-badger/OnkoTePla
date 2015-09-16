@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\AcceptAppointmentDropBehavior.cs" />
     <Compile Include="Behaviors\MoveEndTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveBeginTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveWholeAppointmentBehavior.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="ViewModelMessages\Dispose.cs" />
     <Compile Include="ViewModels\AppointmentGrid\ClosedDayGridViewModel.cs" />
     <Compile Include="ViewModels\AppointmentView\Helper\AppointmentModifications.cs" />
+    <Compile Include="ViewModels\IDataCenterDeliverer.cs" />
     <Compile Include="ViewModels\IViewModelCommunicationDeliverer.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModelSampleData.cs" />
