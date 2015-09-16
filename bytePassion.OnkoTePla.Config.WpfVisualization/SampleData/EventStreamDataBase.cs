@@ -100,7 +100,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
 			patientRepository.LoadRepository();
 
-			IPersistenceService<Configuration> configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
+			//IPersistenceService<Configuration> configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
+			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
 			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
