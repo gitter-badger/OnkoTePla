@@ -233,7 +233,7 @@ namespace bytePassion.Lib.TimeLib
 
 		#region operators: == , != , < , > . <= , >= , + , -
 
-		public static bool operator ==(NewTime t1, NewTime t2) => t1.Equals(t2);
+		public static bool operator ==(NewTime t1, NewTime t2) => EqualsExtension.EqualsForEqualityOperator(t1,t2);
 		public static bool operator !=(NewTime t1, NewTime t2) => !(t1 == t2);
 		public static bool operator < (NewTime t1, NewTime t2) => t1.SecondsFromDayBegin < t2.SecondsFromDayBegin;
 		public static bool operator > (NewTime t1, NewTime t2) => t1.SecondsFromDayBegin > t2.SecondsFromDayBegin;
