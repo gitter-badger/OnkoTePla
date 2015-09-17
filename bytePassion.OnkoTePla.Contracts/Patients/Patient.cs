@@ -33,7 +33,7 @@ namespace bytePassion.OnkoTePla.Contracts.Patients
 	    public string ExternalId => externalId;
 
 
-		public override string ToString    ()           => Name + " (* " + Birthday + ")";
+		public override string ToString    ()           => $"{Name}(*{Birthday})";
 	    public override bool   Equals      (object obj) => this.Equals(obj, (patient1, patient2) => patient1.Id == patient2.Id);
 	    public override int    GetHashCode ()           => id.GetHashCode();
 

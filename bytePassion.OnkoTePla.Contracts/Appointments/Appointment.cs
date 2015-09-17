@@ -42,11 +42,7 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 
 		public override string ToString()
 		{
-			return "[" + Patient + 
-						" am " + Day +
-						" von " + StartTime +
-						" bis " + EndTime +						
-						" an platz " + TherapyPlace + "]";
+			return $"[{Patient} am {Day} von {StartTime} bis {EndTime} an platz {TherapyPlace}]";
 		}
 
 		public override bool Equals(object obj)

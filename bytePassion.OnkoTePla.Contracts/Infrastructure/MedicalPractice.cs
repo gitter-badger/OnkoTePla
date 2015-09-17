@@ -132,7 +132,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 
 		#region ToString / HashCode / Equals
 
-		public override string ToString    () => Name + " (v:" + Version + ")";
+		public override string ToString    () => $"{Name} (v: {Version})";
 		public override int    GetHashCode () => id.GetHashCode() ^ version.GetHashCode();
 
 		public override bool Equals (object obj)
