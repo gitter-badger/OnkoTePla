@@ -8,6 +8,7 @@
              xmlns:therapyPlaceRowView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView"
 			 xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"			 
 			 xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
+			 xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Global"
 			 d:DesignHeight="30"
              d:DesignWidth="600"
              mc:Ignorable="d">
@@ -23,14 +24,14 @@
 
     <Grid Height="30">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="140" />
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="{x:Static global:Constants.AppointmentGridLeftColumsSize}"/>           
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0"
                 BorderBrush="#99A9A9A9"
-                BorderThickness="1,1,0,1">
+                BorderThickness="1,1,0,1"
+				Margin="0,0,5,0">
 
             <Border.Background>
                 <SolidColorBrush Color="{Binding RoomColor}" />
@@ -39,7 +40,8 @@
 
         <Border Grid.Column="0"               
                 BorderBrush="DarkGray"
-                BorderThickness="0,1,1,1">
+                BorderThickness="0,1,1,1"
+				Margin="0,0,5,0">
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
@@ -48,7 +50,7 @@
                        Text="{Binding TherapyPlaceName}" />
         </Border>
 
-        <Border Grid.Column="2"
+        <Border Grid.Column="1"
                 BorderBrush="#99A9A9A9"
                 BorderThickness="1"
 				Background="Transparent"
