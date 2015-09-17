@@ -109,31 +109,34 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 		private void OnDrop(object sender, DragEventArgs dragEventArgs)
 		{		
 			if (dropIsPossible)
-			{
-				appointmentModification.CurrentLocation = TherapyPlaceRowIdentifier;
-
+			{				
 				var timeAtDropPosition = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
 				var appointmentDuration = Time.GetDurationBetween(appointmentModification.BeginTime,
 																	  appointmentModification.EndTime);
 				var halfappointmentDuration = appointmentDuration / 2u;
 
-				var slotAtDropPosition = GetSlot(timeAtDropPosition);			
+				var slotAtDropPosition = GetSlot(timeAtDropPosition);
+
+				Time newBeginTime;
+				Time newEndTime;
 
 				if (timeAtDropPosition + halfappointmentDuration > slotAtDropPosition.End)
 				{
-					appointmentModification.EndTime   = slotAtDropPosition.End;
-					appointmentModification.BeginTime = slotAtDropPosition.End - appointmentDuration;					
+					newEndTime   = slotAtDropPosition.End;
+					newBeginTime = slotAtDropPosition.End - appointmentDuration;					
 				}
 				else if (timeAtDropPosition - halfappointmentDuration < slotAtDropPosition.Begin)
 				{
-					appointmentModification.BeginTime = slotAtDropPosition.Begin;
-					appointmentModification.EndTime = slotAtDropPosition.Begin + appointmentDuration;
+					newBeginTime = slotAtDropPosition.Begin;
+					newEndTime   = slotAtDropPosition.Begin + appointmentDuration;
 				}
 				else
 				{
-					appointmentModification.BeginTime = timeAtDropPosition - halfappointmentDuration;
-					appointmentModification.EndTime   = timeAtDropPosition + halfappointmentDuration;
-				}								
+					newBeginTime = timeAtDropPosition - halfappointmentDuration;
+					newEndTime   = timeAtDropPosition + halfappointmentDuration;
+				}
+
+				appointmentModification.SetNewLocation(TherapyPlaceRowIdentifier, newBeginTime, newEndTime);
 			}
 
 			appointmentModification.ShowDisabledOverlay = false;

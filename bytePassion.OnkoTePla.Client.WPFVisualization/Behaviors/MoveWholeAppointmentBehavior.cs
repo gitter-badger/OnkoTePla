@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.State;
@@ -33,19 +32,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			AssociatedObject.MouseMove                  += OnAssociatedObjectMouseMove;
 			AssociatedObject.MouseLeave                 += AssociatedObjectOnMouseLeave;
 			AssociatedObject.PreviewQueryContinueDrag   += OnQueryContinueDrag;
-
-			AssociatedObject.DragLeave += AssociatedObjectOnDragLeave;			
-
-			
-
+						
 			container = Application.Current.MainWindow;
 			mouseIsDown = false;
-		}
-
-		private void AssociatedObjectOnDragLeave(object sender, DragEventArgs dragEventArgs)
-		{
-			Console.WriteLine("blubb");
-		}
+		}		
 
 		private void AssociatedObjectOnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
 		{
@@ -69,13 +59,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 				e.Handled = true;
 
 				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = false;
-			}
-
-			if (e.Action != DragAction.Continue)
-			{			
-				Console.WriteLine("blubb");
-			}
-		
+			}			
 		}
 
 		protected override void OnDetaching ()

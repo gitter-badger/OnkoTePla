@@ -6,7 +6,6 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -17,13 +16,11 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper
 {
 	public class AppointmentModifications : INotifyPropertyChanged
-	{
-		private readonly Guid medicalPracticeId;
+	{		
 		private readonly IDataCenter dataCenter;
 		private readonly IViewModelCommunication viewModelCommunication;
 
 		
-
 		private Time beginTime;
 		private Time endTime;
 		private Time lastSetBeginTime;
@@ -35,11 +32,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private Time currentSlotBegin;
 		private Time currentSlotEnd;
 
-		private AppointmentsOfADayReadModel currentReadModel;
-
-		private Date currentDate;
-		private double currentGridWidth;
 		private MedicalPractice currentMedicalPracticeVersion;
+		private double currentGridWidth;		
 		private bool hideAppointment;
 		private TherapyPlaceRowIdentifier currentLocation;
 
@@ -48,28 +42,26 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 										IDataCenter dataCenter, 
 										IViewModelCommunication viewModelCommunication)
 		{
-			Appointment = appointment;
-			this.medicalPracticeId = medicalPracticeId;
+			Appointment = appointment;			
 			this.dataCenter = dataCenter;
-			this.viewModelCommunication = viewModelCommunication;
-
-			currentDate = Appointment.Day;
-			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(currentDate, medicalPracticeId);
-
-			currentDayOpeningTime = Time.Dummy;
-			currentDayClosingTime = Time.Dummy;
-			currentSlotBegin = Time.Dummy;
-			currentSlotEnd = Time.Dummy;
-
+			this.viewModelCommunication = viewModelCommunication;								
+						
 			var aggregateIdentifier = new AggregateIdentifier(appointment.Day, medicalPracticeId);
+			var initalLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, appointment.TherapyPlace.Id);
+			
+			
+			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(initalLocation.PlaceAndDate.Date,
+																					 initalLocation.PlaceAndDate.MedicalPracticeId);
+			
+			currentLocation = initalLocation;
 
-			currentReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(aggregateIdentifier);
 			beginTime = appointment.StartTime;
-			lastSetBeginTime = beginTime;
-			endTime = appointment.EndTime;
-			lastSetEndTime = endTime;
+			endTime   = appointment.EndTime;
 
-			CurrentLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, appointment.TherapyPlace.Id);
+			lastSetBeginTime = BeginTime;
+			lastSetEndTime   = EndTime;
+
+			ComputeSlotInformations();
 		}
 
 		public Appointment Appointment { get; }
@@ -77,13 +69,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public Time BeginTime
 		{
 			get { return beginTime; }
-			set { PropertyChanged.ChangeAndNotify(this, ref beginTime, value); }
+			private set { PropertyChanged.ChangeAndNotify(this, ref beginTime, value); }
 		}
 
 		public Time EndTime
 		{
 			get { return endTime; }
-			set { PropertyChanged.ChangeAndNotify(this, ref endTime, value); }
+			private set { PropertyChanged.ChangeAndNotify(this, ref endTime, value); }
 		}
 
 		public bool ShowDisabledOverlay
@@ -95,16 +87,31 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public TherapyPlaceRowIdentifier CurrentLocation
 		{
 			get { return currentLocation; }
-			set { PropertyChanged.ChangeAndNotify(this, ref currentLocation, value); }
-		}		
-		
-		public void SetNewTimeShiftDelta(double deltaInPixel)
+			private set { PropertyChanged.ChangeAndNotify(this, ref currentLocation, value); }
+		}
+
+		public void SetNewLocation(TherapyPlaceRowIdentifier newLocation, Time newBeginTime, Time newEndTime)
 		{
-			if (Time.IsDummy(currentDayOpeningTime))
+			if (CurrentLocation == null ||
+			   (CurrentLocation != null && CurrentLocation.PlaceAndDate != newLocation.PlaceAndDate))
 			{
-				ComputeSlotInformations();
+				currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(newLocation.PlaceAndDate.Date,
+				                                                                         newLocation.PlaceAndDate.MedicalPracticeId);
 			}
 
+			CurrentLocation = newLocation;
+
+			BeginTime = newBeginTime;
+			EndTime   = newEndTime;
+
+			lastSetBeginTime = BeginTime;
+			lastSetEndTime   = EndTime;
+
+			ComputeSlotInformations();
+		}	
+		
+		public void SetNewTimeShiftDelta(double deltaInPixel)
+		{			
 			var lengthOfOneHour = currentGridWidth / (Time.GetDurationBetween(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
 			var secondsDelta = (uint)Math.Floor(Math.Abs(deltaInPixel) / (lengthOfOneHour / 3600));
 			var durationDelta = new Duration(secondsDelta);
@@ -135,12 +142,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		}
 
 		public void SetNewEndTimeDelta(double deltaInPixel)
-		{
-			if (Time.IsDummy(currentDayOpeningTime))
-			{
-				ComputeSlotInformations();
-			}
-
+		{			
 			var lengthOfOneHour = currentGridWidth / (Time.GetDurationBetween(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
 			var secondsDelta = (uint)Math.Floor(Math.Abs(deltaInPixel) / (lengthOfOneHour / 3600));
 			var durationDelta = new Duration(secondsDelta);
@@ -167,12 +169,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		}
 
 		public void SetNewBeginTimeDelta(double deltaInPixel)
-		{
-			if (Time.IsDummy(currentDayOpeningTime))
-			{
-				ComputeSlotInformations();
-			}
-
+		{			
 			var lengthOfOneHour = currentGridWidth / (Time.GetDurationBetween(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);						
 			var secondsDelta = (uint)Math.Floor(Math.Abs(deltaInPixel) / (lengthOfOneHour / 3600));
 			var durationDelta = new Duration(secondsDelta);
@@ -200,17 +197,30 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		private void ComputeSlotInformations()
 		{
-			currentDayOpeningTime = currentMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(currentDate);
-			currentDayClosingTime = currentMedicalPracticeVersion.HoursOfOpening.GetClosingTime(currentDate);
+			currentDayOpeningTime = currentMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(CurrentLocation.PlaceAndDate.Date);
+			currentDayClosingTime = currentMedicalPracticeVersion.HoursOfOpening.GetClosingTime(CurrentLocation.PlaceAndDate.Date);
 			currentGridWidth = viewModelCommunication.GetGlobalViewModelVariable<Size>(AppointmentGridSizeVariable)
 													 .Value
 													 .Width;
 
+			var currentReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(CurrentLocation.PlaceAndDate);
+
+			var appointmentWithCorrectStartAndEnd = new Appointment(Appointment.Patient, 
+																	Appointment.Description,
+																	Appointment.TherapyPlace,
+																	Appointment.Day, 
+																	BeginTime, 
+																	EndTime, 
+																	Appointment.Id);
+
 			var appointmentsWithinTheSameRow = currentReadModel.Appointments
-																   .Where(appointment => appointment.TherapyPlace == Appointment.TherapyPlace)
-																   .ToList();
+															   .Where(appointment => appointment.TherapyPlace.Id == CurrentLocation.TherapyPlaceId)
+															   .Where(appointment => appointment.Id != Appointment.Id)
+															   .Append(appointmentWithCorrectStartAndEnd)
+															   .ToList();
+
 			appointmentsWithinTheSameRow.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));
-			var indexOfThisAppointment = appointmentsWithinTheSameRow.IndexOf(Appointment);
+			var indexOfThisAppointment = appointmentsWithinTheSameRow.IndexOf(appointmentWithCorrectStartAndEnd);
 
 			if (appointmentsWithinTheSameRow.Count == 1)
 			{
