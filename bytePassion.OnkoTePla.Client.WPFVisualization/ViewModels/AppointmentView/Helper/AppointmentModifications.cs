@@ -137,8 +137,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public void FixTimeShiftDelta()
 		{
-			lastSetBeginTime = BeginTime;
-			lastSetEndTime = EndTime;
+			var duration = Time.GetDurationBetween(BeginTime, EndTime);
+			var beginTimeToSnap = GetTimeToSnap(BeginTime);
+			lastSetBeginTime = beginTimeToSnap;
+			BeginTime = beginTimeToSnap;
+
+
+			var endTimeToSnap = GetTimeToSnap(beginTimeToSnap + duration);
+			lastSetEndTime = endTimeToSnap;
+			EndTime = endTimeToSnap;
 		}
 
 		public void SetNewEndTimeDelta(double deltaInPixel)
@@ -165,7 +172,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public void FixEndTimeDelta()
 		{
-			lastSetEndTime = EndTime;
+			var timeToSnap = GetTimeToSnap(EndTime);
+			lastSetEndTime = timeToSnap;
+			EndTime = timeToSnap;
 		}
 
 		public void SetNewBeginTimeDelta(double deltaInPixel)
@@ -192,7 +201,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public void FixBeginTimeDelta()
 		{
-			lastSetBeginTime = BeginTime;
+			var timeToSnap = GetTimeToSnap(BeginTime);
+			lastSetBeginTime = timeToSnap;
+			BeginTime = timeToSnap;			
+		}
+
+		private static Time GetTimeToSnap(Time time)
+		{
+			var m = time.Minute;
+
+			if (m == 0 || m == 15 || m == 30 || m == 45)
+				return new Time(time.Hour, m, 0);
+
+			if (m >  0 && m <=  7) return new Time(time.Hour,  0, 0);
+			if (m >  7 && m <= 22) return new Time(time.Hour, 15, 0);
+			if (m > 22 && m <= 37) return new Time(time.Hour, 30, 0);
+			if (m > 37 && m <= 52) return new Time(time.Hour, 45, 0);
+			if (m > 52 && m <= 59) return new Time((byte)(time.Hour+1),  0, 0);
+
+			throw new Exception("internal Error");
 		}
 
 		private void ComputeSlotInformations()
