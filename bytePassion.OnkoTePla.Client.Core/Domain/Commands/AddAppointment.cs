@@ -8,22 +8,17 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands
 {
 	public class AddAppointment : DomainCommand
 	{
-		private readonly CreateAppointmentData createAppointmentData;		
-
 		public AddAppointment(AggregateIdentifier aggregateId, uint aggregateVersion, Guid userId, 
 							  Guid patientId, string description, 
 							  Time startTime, Time endTime, 
 							  Guid therapyPlaceId)
 			: base(aggregateId, aggregateVersion, userId)
 		{
-			createAppointmentData = new CreateAppointmentData(patientId, description, 
+			CreateAppointmentData = new CreateAppointmentData(patientId, description, 
 															  startTime, endTime, AggregateId.Date, 
 															  therapyPlaceId, Guid.NewGuid());
 		}
 
-		public CreateAppointmentData CreateAppointmentData
-		{
-			get { return createAppointmentData; }
-		}	
+		public CreateAppointmentData CreateAppointmentData { get; }
 	}
 }

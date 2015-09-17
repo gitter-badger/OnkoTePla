@@ -1,4 +1,5 @@
 ﻿using System;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
@@ -6,10 +7,10 @@ using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 
 namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 {
-	public abstract class ReadModelBase : IDisposable, INotifyAppointmentChanged,
-													   IDomainEventHandler<AppointmentAdded>,
-													   IDomainEventHandler<AppointmentReplaced>,
-													   IDomainEventHandler<AppointmentDeleted>
+	public abstract class ReadModelBase : DisposingObject, INotifyAppointmentChanged,
+														   IDomainEventHandler<AppointmentAdded>,
+													       IDomainEventHandler<AppointmentReplaced>,
+													       IDomainEventHandler<AppointmentDeleted>
 	{
 
 		public abstract event EventHandler<AppointmentChangedEventArgs> AppointmentChanged;
@@ -41,27 +42,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			eventBus.DeregisterEventHander<AppointmentDeleted>(this);
 		}
 
-		private bool disposed = false;
-		public void Dispose ()
+		public override void CleanUp()
 		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		~ReadModelBase ()
-		{
-			Dispose(false);
-		}
-
-		private void Dispose (bool disposing)
-		{
-			if (!disposed)
-			{
-				if (disposing)
-					DeregisterAtEventBus();
-
-			}
-			disposed = true;
+			DeregisterAtEventBus();
 		}
 	}
 }

@@ -24,14 +24,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 		public void AddAppointment(Appointment newAppointment)
 		{
 			appointments.Add(newAppointment);
-
-			var appointmentHandler = AppointmentChanged;
-			if (appointmentHandler != null)
-				appointmentHandler(this, new AppointmentChangedEventArgs(newAppointment, ChangeAction.Added));
-
-			var collectionHandler = CollectionChanged;
-			if (collectionHandler != null)
-				collectionHandler(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
+			
+			AppointmentChanged?.Invoke(this, new AppointmentChangedEventArgs(newAppointment, ChangeAction.Added));			
+			CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add));
 		}
 
 		public void DeleteAppointment (Guid removedAppointmentId)
@@ -39,13 +34,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 			var appointmentToRemove = GetAppointmentById(removedAppointmentId);
 			appointments.Remove(appointmentToRemove);
 
-			var appointmentHandler = AppointmentChanged;
-			if (appointmentHandler != null)
-				appointmentHandler(this, new AppointmentChangedEventArgs(appointmentToRemove, ChangeAction.Deleted));
-
-			var collectionHandler = CollectionChanged;
-			if (collectionHandler != null)
-				collectionHandler(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
+			AppointmentChanged?.Invoke(this, new AppointmentChangedEventArgs(appointmentToRemove, ChangeAction.Deleted));
+			CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
 		}
 
 		public IEnumerable<Appointment> Appointments

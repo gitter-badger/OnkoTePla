@@ -10,21 +10,17 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 {
 	public abstract class AggregateRootBase<TIdentifier>
 	{
-		private readonly TIdentifier id;
 		private readonly IList<DomainEvent> uncommitedChanges;
 
 		protected AggregateRootBase(TIdentifier id, uint version)
 		{
-			this.id = id;
+			Id = id;
 			Version = version;
 
 			uncommitedChanges = new List<DomainEvent>();
 		}
 
-		public TIdentifier Id
-		{
-			get { return id; }
-		}
+		public TIdentifier Id { get; }
 
 		public uint Version
 		{

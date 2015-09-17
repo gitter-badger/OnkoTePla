@@ -22,8 +22,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			add    { appointmentSet.ObservableAppointments.AppointmentChanged += value; }
 			remove { appointmentSet.ObservableAppointments.AppointmentChanged -= value; }
 		}
-		
-		private readonly AggregateIdentifier identifier;
+
 		private readonly AppointmentSet      appointmentSet;
 
 		public AppointmentsOfADayReadModel (IEventBus eventBus, 
@@ -32,13 +31,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 										   AggregateIdentifier identifier)
 			: base(eventBus)
 		{			
-			this.identifier = identifier;
+			Identifier = identifier;
 
 			appointmentSet = new AppointmentSet(patientsRepository, config);			
 		}
 
 		public uint AggregateVersion { private set; get; }
-		public AggregateIdentifier Identifier { get { return identifier; }}
+		public AggregateIdentifier Identifier { get; }
 
 		public void LoadFromEventStream (EventStream<AggregateIdentifier> eventStream)
 		{			
@@ -53,7 +52,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		public override void Process(AppointmentAdded domainEvent)
 		{
-			if (domainEvent.AggregateId != identifier) return;
+			if (domainEvent.AggregateId != Identifier) return;
 
 			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
 				throw new VersionNotApplicapleException("@handle appointmentAdded @readmodel");
@@ -67,14 +66,14 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		public override void Process (AppointmentReplaced domainEvent)
 		{
-			if (domainEvent.AggregateId != identifier) return;
+			if (domainEvent.AggregateId != Identifier) return;
 
 			throw new NotImplementedException();
 		}
 		 
 		public override void Process (AppointmentDeleted domainEvent)
 		{
-			if (domainEvent.AggregateId != identifier) return;
+			if (domainEvent.AggregateId != Identifier) return;
 
 			appointmentSet.DeleteAppointment(domainEvent.RemovedAppointmentId);
 

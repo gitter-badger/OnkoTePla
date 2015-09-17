@@ -32,7 +32,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private const string EventStream  		          = "eventStream";
 		private const string ConfigVersionAttribute       = "configVersion";
 		private const string Event       			      = "event";
-		private const string AggregateIdAttribute	      = "aggregateId";
 		private const string DateAttribute				  = "date";
 		private const string MedicalPracticeAttribute     = "medicalPracticeId";
 		private const string AggregateVersionAttribute    = "aggregateVersion";		
@@ -159,7 +158,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 					var eventCount = 0;
 					var date = Date.Dummy;
 					var configVersion = 0u;
-					var medicalPractiveId = new Guid();
+					var medicalPracticeId = new Guid();
 
 					while (reader.MoveToNextAttribute())
 					{
@@ -168,11 +167,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 							case ConfigVersionAttribute:   configVersion     = UInt32.Parse(reader.Value); break;
 							case CountAttribute:           eventCount        = Int32.Parse(reader.Value);  break;
 							case DateAttribute:            date              = Date.Parse(reader.Value);   break;
-							case MedicalPracticeAttribute: medicalPractiveId = Guid.Parse(reader.Value);   break;
+							case MedicalPracticeAttribute: medicalPracticeId = Guid.Parse(reader.Value);   break;
 						}
 					}
 
-					var id = new AggregateIdentifier(date, medicalPractiveId, configVersion);
+					var id = new AggregateIdentifier(date, medicalPracticeId, configVersion);
 					var events = AcceptEventStream(reader,eventCount, id);
 					eventStreams.Add(new EventStream<AggregateIdentifier>(id, events)); 
 				}

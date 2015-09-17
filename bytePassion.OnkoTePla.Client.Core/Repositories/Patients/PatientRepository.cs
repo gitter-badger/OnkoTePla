@@ -37,14 +37,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 			var newPatient = new Patient(name, birthday, alive, newPatientId, externalId);
 			patients.Add(newPatientId, newPatient);
 
-			RaisePatientAdded(newPatient);
-		}
-
-		private void RaisePatientAdded(Patient p)
-		{
-			var handler = PatientAdded;
-			if (handler != null)
-				handler(p);
+			PatientAdded?.Invoke(newPatient);
 		}
 
 		private void ModifyPatientAndRaiseEvent(Guid patientId, Func<Patient, Patient> modification)
@@ -57,9 +50,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 
 			patients[patientId] = newPatientData;
 
-			var handler = PatientModified;
-			if (handler != null)
-				handler(newPatientData);
+			PatientModified?.Invoke(newPatientData);
 		}
 
 		public void SetNewName(Guid patientId, string newName)

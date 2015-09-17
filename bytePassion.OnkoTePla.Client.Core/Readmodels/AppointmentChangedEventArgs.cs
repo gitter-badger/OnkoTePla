@@ -6,16 +6,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 {
 	public class AppointmentChangedEventArgs : EventArgs
 	{
-		private readonly Appointment appointment;
-		private readonly ChangeAction changeAction;
-
 		public AppointmentChangedEventArgs(Appointment appointment, ChangeAction changeAction)
 		{
-			this.appointment = appointment;
-			this.changeAction = changeAction;
+			Appointment = appointment;
+			ChangeAction = changeAction;
 		}
 
-		public Appointment  Appointment  { get { return appointment;  }}
-		public ChangeAction ChangeAction { get { return changeAction; }}
+		public Appointment  Appointment  { get; }
+		public ChangeAction ChangeAction { get; }
 	}
 }

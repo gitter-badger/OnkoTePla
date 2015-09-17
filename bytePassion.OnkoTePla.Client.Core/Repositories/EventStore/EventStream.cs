@@ -7,17 +7,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 {
 	public class EventStream<TIdentifier>
 	{
-		private readonly TIdentifier id;
 		private readonly List<DomainEvent> events; 
 
 		public EventStream(TIdentifier id, IEnumerable<DomainEvent> initialEventStream = null)
 		{
-			this.id = id;
-			events = initialEventStream == null ? new List<DomainEvent>() : initialEventStream.ToList();
+			Id = id;
+			events = initialEventStream?.ToList() ?? new List<DomainEvent>();
 		}
 
 
-		public TIdentifier              Id     { get { return id;              }}
+		public TIdentifier              Id     { get; }
 		public IEnumerable<DomainEvent> Events { get { return events.ToList(); }}
 
 		public void AddEvents(IEnumerable<DomainEvent> newEvents)

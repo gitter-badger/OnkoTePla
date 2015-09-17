@@ -11,7 +11,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 	public class AppointmentSet
 	{
 		//private readonly IDictionary<Guid, Appointment>  appointmentLookUp;
-		private readonly ObservableAppointmentCollection appointmentCollection;
 
 		private readonly IPatientReadRepository patientRepository;
 		private readonly IConfigurationReadRepository configurationRepository;
@@ -23,17 +22,14 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 			this.configurationRepository = configurationRepository;
 
 			//appointmentLookUp = new Dictionary<Guid, Appointment>();
-			appointmentCollection = new ObservableAppointmentCollection();
+			ObservableAppointments = new ObservableAppointmentCollection();
 		}
 
-		public ObservableAppointmentCollection ObservableAppointments
-		{
-			get { return appointmentCollection; }
-		}
+		public ObservableAppointmentCollection ObservableAppointments { get; }
 
 		public IEnumerable<Appointment> AppointmentList
 		{
-			get { return appointmentCollection.Appointments.ToList(); }
+			get { return ObservableAppointments.Appointments.ToList(); }
 		} 
 
 		public void AddAppointment(Guid medicalPracticeId, uint medicalPracticeVersion, CreateAppointmentData appointmentData)
@@ -46,13 +42,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 												 appointmentData.Day, appointmentData.StartTime, appointmentData.EndTime, 
 												 appointmentData.AppointmentId);
 
-			appointmentCollection.AddAppointment(newAppointment);
+			ObservableAppointments.AddAppointment(newAppointment);
 			//appointmentLookUp.Add(appointmentId, newAppointment);
 		}
 
 		public void DeleteAppointment(Guid removedAppointmentId)
 		{
-			appointmentCollection.DeleteAppointment(removedAppointmentId);
+			ObservableAppointments.DeleteAppointment(removedAppointmentId);
 		}
 	}	
 }
