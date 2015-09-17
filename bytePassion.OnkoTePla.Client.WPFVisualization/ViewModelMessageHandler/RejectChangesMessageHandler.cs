@@ -16,6 +16,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 		public RejectChangesMessageHandler (IViewModelCommunication viewModelCommunication)
 		{
 			this.viewModelCommunication = viewModelCommunication;
+
 			currentModifiedAppointmentVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
 				CurrentModifiedAppointmentVariable
 			);
