@@ -98,7 +98,9 @@
     <Compile Include="ViewModelMessageHandler\RejectChangesMessageHandler.cs" />
     <Compile Include="ViewModelMessages\ConfirmChanges.cs" />
     <Compile Include="ViewModelMessages\DeleteAppointment.cs" />
+    <Compile Include="ViewModelMessages\HideNotification.cs" />
     <Compile Include="ViewModelMessages\RejectChanges.cs" />
+    <Compile Include="ViewModelMessages\ShowNotification.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModelMessages\Dispose.cs" />
     <Compile Include="ViewModels\AppointmentGrid\ClosedDayGridViewModel.cs" />
@@ -112,6 +114,9 @@
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModel.cs" />
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModelSampleData.cs" />
     <Compile Include="ViewModels\DateDisplay\IDateDisplayViewModel.cs" />
+    <Compile Include="ViewModels\NotificationView\INotificationViewModel.cs" />
+    <Compile Include="ViewModels\NotificationView\NotificationViewModel.cs" />
+    <Compile Include="ViewModels\NotificationView\NotificationViewModelSampleData.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\Requests\GetMaxLeftRequest.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />
     <Compile Include="ViewModelMessages\Deactivate.cs" />
@@ -207,6 +212,9 @@
     <Compile Include="Views\MedicalPracticeSelector.xaml.cs">
       <DependentUpon>MedicalPracticeSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NotificationView.xaml.cs">
+      <DependentUpon>NotificationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OptionsPage.xaml.cs">
       <DependentUpon>OptionsPage.xaml</DependentUpon>
     </Compile>
@@ -288,6 +296,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MedicalPracticeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotificationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

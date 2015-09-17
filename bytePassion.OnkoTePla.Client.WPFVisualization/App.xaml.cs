@@ -166,7 +166,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			);
 
 
-			// register viewModelMessageHandler
+			// register stand-alone viewModelMessageHandler
 
 			viewModelCommunication.RegisterViewModelMessageHandler(new ConfirmChangesMessageHandler(viewModelCommunication));
 			viewModelCommunication.RegisterViewModelMessageHandler(new RejectChangesMessageHandler(viewModelCommunication));
@@ -198,7 +198,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			var optionsPageViewModel  = new OptionsPageViewModel();
 
 
-			var newMainWindowViewModel = new NewMainWindowViewModel(overviewPageViewModel, searchPageViewModel, optionsPageViewModel);
+			var newMainWindowViewModel = new NewMainWindowViewModel(overviewPageViewModel, 
+																	searchPageViewModel, 
+																	optionsPageViewModel,
+																	viewModelCommunication);
 
 			var mainWindow = new NewMainWindow
 			{

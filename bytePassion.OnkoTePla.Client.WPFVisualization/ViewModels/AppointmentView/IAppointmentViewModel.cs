@@ -34,11 +34,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		string Description        { get; }		//  the Tool-Tip
 		string Room               { get; }		//
 
-		OperatingMode OperatingMode { get; }
-		bool ShowDisabledOverlay { get; }
-
-		//ICommand SaveCanvasLeftPosition  { get; }
-		//double   CanvasLeftPositionDelta { set; }
+		OperatingMode OperatingMode       { get; }
+		bool          ShowDisabledOverlay { get; }	
 	}
-
 }

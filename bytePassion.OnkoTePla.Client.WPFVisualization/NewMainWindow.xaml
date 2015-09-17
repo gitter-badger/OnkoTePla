@@ -7,6 +7,7 @@
 					  xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
 					  xmlns:newMainWindow="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow"
 					  xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+					  xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
 
 					  mc:Ignorable="d"
 					  
@@ -17,6 +18,10 @@
 					  MinHeight="300" 
 					  MinWidth="300">
 
+	<Window.Resources>
+		<converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+	</Window.Resources>
+	
     <d:UserControl.DataContext>
         <newMainWindow:NewMainWindowViewModelSampleData/>
     </d:UserControl.DataContext>
@@ -28,12 +33,12 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-		<Grid Grid.Row="0"
+        <Grid Grid.Row="0"
 			  Height="25"
 			  Margin="120,-32,0,0">
-			
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="130"/>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"/>
                 <ColumnDefinition Width="130"/>
                 <ColumnDefinition Width="130"/>
                 <ColumnDefinition/>
@@ -43,12 +48,12 @@
 					Margin="5,0"
 					Content="Übersicht"					
 					Command="{Binding ShowOverviewPage}"/>
-			
+
             <Button Grid.Column="1" 
 					Margin="5,0"
 					Content="Suchen"
 					Command="{Binding ShowSearchPage}"/>
-			
+
             <Button Grid.Column="2" 
 					Margin="5,0"
 					Content="Einstellungen"
@@ -65,6 +70,17 @@
             <views:OptionsPage  DataContext="{Binding OptionsPageViewModel}"/>
            
         </panels:DeckPanel>
-		
+
+        <Grid Grid.Row="1"
+			  HorizontalAlignment="Center"
+			  VerticalAlignment="Top"
+			  Width="600"
+			  Height="50"
+			  Visibility="{Binding NotificationVisible, 
+								   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+			
+			<views:NotificationView DataContext="{Binding NotificationViewModel}"/>
+        </Grid>
+
     </Grid>
 </controls:MetroWindow>
