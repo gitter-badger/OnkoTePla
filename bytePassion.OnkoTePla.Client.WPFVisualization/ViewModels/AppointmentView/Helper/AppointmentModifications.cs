@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
@@ -16,10 +19,11 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper
 {
-	public class AppointmentModifications : INotifyPropertyChanged
+	public class AppointmentModifications : DisposingObject, INotifyPropertyChanged
 	{		
 		private readonly IDataCenter dataCenter;
 		private readonly IViewModelCommunication viewModelCommunication;
+		private readonly IGlobalState<Date> selectedDateVariable; 
 
 		
 		private Time beginTime;
@@ -62,7 +66,107 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			lastSetBeginTime = BeginTime;
 			lastSetEndTime   = EndTime;
 
+			selectedDateVariable = viewModelCommunication.GetGlobalViewModelVariable<Date>(
+				AppointmentGridSelectedDateVariable
+			);
+
+			selectedDateVariable.StateChanged += OnSelectedDateVariableChanged;
+
 			ComputeSlotInformations();
+		}
+
+		private void OnSelectedDateVariableChanged(Date date)
+		{
+			if (date != CurrentLocation.PlaceAndDate.Date)
+			{
+
+				var newMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(date, currentMedicalPracticeVersion.Id);
+
+				if (newMedicalPracticeVersion.HoursOfOpening.IsOpen(date))
+				{
+					var readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(
+						new AggregateIdentifier(date, CurrentLocation.PlaceAndDate.MedicalPracticeId)
+						);
+
+					IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments =
+						new Dictionary<TherapyPlace, IList<Appointment>>();
+
+					foreach (var therapyPlace in newMedicalPracticeVersion.GetAllTherapyPlaces())
+						sortedAppointments.Add(therapyPlace, new List<Appointment>());
+
+					foreach (var appointment in readModel.Appointments)
+						if (appointment != Appointment)
+							sortedAppointments[appointment.TherapyPlace].Add(appointment);
+
+					var openingTime = newMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(date);
+					var closingTime = newMedicalPracticeVersion.HoursOfOpening.GetClosingTime(date);
+
+					var appointmentDuration = Time.GetDurationBetween(BeginTime, EndTime);
+
+					foreach (var therapyRowData in sortedAppointments)
+					{
+						var slots = ComputeSlots(openingTime, closingTime, therapyRowData.Value);
+						var suitableSlot = GetSlotForAppointment(slots, appointmentDuration);
+
+						if (suitableSlot != null)
+						{
+							SetNewLocation(
+								new TherapyPlaceRowIdentifier(new AggregateIdentifier(date, 
+																					  CurrentLocation.PlaceAndDate.MedicalPracticeId),
+								                              therapyRowData.Key.Id), 
+								suitableSlot.Begin,
+								suitableSlot.Begin + appointmentDuration
+							);
+							return;
+						}
+					}
+
+					viewModelCommunication.Send(
+						new ShowNotification("cannot move the appointment to that day. To timeslot is big enough!")
+					);
+				}
+				else
+				{
+					viewModelCommunication.Send(
+						new ShowNotification("cannot move an appointment to a day where the practice is closed!")
+					);					
+				}
+
+				selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
+			}
+		}
+
+		private static TimeSlot GetSlotForAppointment(IEnumerable<TimeSlot> timeSlots, Duration appointmentDuration)
+		{
+			return timeSlots.FirstOrDefault(slot => Time.GetDurationBetween(slot.Begin, slot.End) >= appointmentDuration);
+		}
+
+		private IEnumerable<TimeSlot> ComputeSlots (Time openingTime, Time closingTime, IEnumerable<Appointment> appointments)
+		{			
+			var sortedAppointments = appointments.ToList();
+			sortedAppointments.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));			
+									
+			var startOfSlots = new List<Time>();
+			var endOfSlots = new List<Time>();
+
+			startOfSlots.Add(openingTime);
+
+			foreach (var appointment in sortedAppointments)
+			{
+				endOfSlots.Add(appointment.StartTime);
+				startOfSlots.Add(appointment.EndTime);
+			}
+
+			endOfSlots.Add(closingTime);
+
+			var slots = new List<TimeSlot>();
+
+			for (int i = 0; i < startOfSlots.Count; i++)
+			{
+				slots.Add(new TimeSlot(startOfSlots[i], endOfSlots[i]));
+			}
+
+			return slots;
 		}
 
 		public Appointment Appointment { get; }
@@ -271,6 +375,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				currentSlotBegin = appointmentsWithinTheSameRow[indexOfThisAppointment - 1].EndTime;
 				currentSlotEnd   = appointmentsWithinTheSameRow[indexOfThisAppointment + 1].StartTime;
 			}
+		}
+		
+		public override void CleanUp()
+		{
+			selectedDateVariable.StateChanged -= OnSelectedDateVariableChanged;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

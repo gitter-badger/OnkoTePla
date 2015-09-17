@@ -18,20 +18,7 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 {
 	public class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
-	{
-		private class TimeSlot
-		{
-			public TimeSlot (Time begin, Time end)
-			{
-				Begin = begin;
-				End = end;
-			}
-
-			public Time Begin { get; }
-			public Time End   { get; }
-		}
-
-
+	{		
 		public static readonly DependencyProperty ViewModelCommunicationProperty =
 			DependencyProperty.Register(nameof(ViewModelCommunication),
 										typeof (IViewModelCommunication),

@@ -30,6 +30,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 				new RestoreOriginalValues()	
 			);
 
+			currentModifiedAppointmentVariable.Value.Dispose();
 			currentModifiedAppointmentVariable.Value = null;
 		}
 	}
