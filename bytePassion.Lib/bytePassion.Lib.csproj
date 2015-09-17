@@ -62,6 +62,7 @@
     <Compile Include="Communication\ViewModel\Messages\ViewModelRequest.cs" />
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="Math\Vec2.cs" />
+    <Compile Include="TimeLib\TimeSlot.cs" />
     <Compile Include="WpfUtils\Adorner\AdornedControl.cs" />
     <Compile Include="WpfUtils\Adorner\AdornerPlacement.cs" />
     <Compile Include="WpfUtils\Adorner\FrameworkElementAdorner.cs" />
