@@ -14,7 +14,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 											 IViewModelCollectionItem<Guid>,
 											 IDisposable,
                                              IViewModelMessageHandler<Dispose>,
-											 IViewModelMessageHandler<NewSizeAvailable>                                             
+											 IViewModelMessageHandler<NewSizeAvailable>,
+											 IViewModelMessageHandler<RestoreOriginalValues>
 	{
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }		
@@ -39,4 +40,5 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		//ICommand SaveCanvasLeftPosition  { get; }
 		//double   CanvasLeftPositionDelta { set; }
 	}
+
 }

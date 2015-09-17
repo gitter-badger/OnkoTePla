@@ -10,10 +10,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 {
 	public class RejectChangesMessageHandler : IViewModelMessageHandler<RejectChanges>
 	{
+		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IGlobalState<AppointmentModifications> currentModifiedAppointmentVariable;
 
 		public RejectChangesMessageHandler (IViewModelCommunication viewModelCommunication)
-		{			
+		{
+			this.viewModelCommunication = viewModelCommunication;
 			currentModifiedAppointmentVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
 				CurrentModifiedAppointmentVariable
 			);
@@ -21,7 +23,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 
 		public void Process(RejectChanges message)
 		{
-			// TODO: proper implementation
+			viewModelCommunication.SendTo(
+				AppointmentViewModelCollection,
+				currentModifiedAppointmentVariable.Value.Appointment.Id,
+				new RestoreOriginalValues()	
+			);
+
 			currentModifiedAppointmentVariable.Value = null;
 		}
 	}

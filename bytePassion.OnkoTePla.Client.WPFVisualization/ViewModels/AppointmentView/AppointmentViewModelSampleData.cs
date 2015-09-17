@@ -63,12 +63,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public void Process (Dispose message) { }
 		public void Process (NewSizeAvailable message) { }
+		public void Process (RestoreOriginalValues message) { }
 
 		public void Dispose() {}
 
 		public IViewModelCommunication ViewModelCommunication { get; } = null;
 
-		public event PropertyChangedEventHandler PropertyChanged;
-		
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

@@ -26,7 +26,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 										IAppointmentViewModel										
 	{		
 		private readonly Appointment appointment;		
-		private readonly IDataCenter dataCenter;		
+		private readonly IDataCenter dataCenter;
+		private readonly TherapyPlaceRowIdentifier initialLocalisation;
 
 		private readonly IGlobalState<AppointmentModifications> currentModifiedAppointment;
 
@@ -49,6 +50,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{ 						
 			this.appointment = appointment;
 			this.dataCenter = dataCenter;
+			this.initialLocalisation = initialLocalisation;
 			ViewModelCommunication = viewModelCommunication;		
 
 			currentModifiedAppointment = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
@@ -170,7 +172,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				new AddAppointmentToTherapyPlaceRow(this)	
 			);
 
-			var globalGridSizeVariable  = ViewModelCommunication.GetGlobalViewModelVariable<Size>(
+			var globalGridSizeVariable = ViewModelCommunication.GetGlobalViewModelVariable<Size>(
 				AppointmentGridSizeVariable
 			);
 
@@ -245,6 +247,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			GridWidth = message.NewSize.Width;
 		}
 
+		public void Process (RestoreOriginalValues message)
+		{
+			BeginTime = appointment.StartTime;
+			EndTime   = appointment.EndTime;
+
+			if (initialLocalisation != currentLocation)			
+				SetNewLocation(initialLocalisation, false);			
+		}
+
 		public override void CleanUp()
 		{
 			ViewModelCommunication.DeregisterViewModelAtCollection<AppointmentViewModel, Guid>(
@@ -261,7 +272,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public IViewModelCommunication ViewModelCommunication { get; }
 
-		public event PropertyChangedEventHandler PropertyChanged;
-		
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}	
 }

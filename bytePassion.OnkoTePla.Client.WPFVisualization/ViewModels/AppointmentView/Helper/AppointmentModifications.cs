@@ -100,12 +100,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			}
 
 			CurrentLocation = newLocation;
+			
+			var duration = Time.GetDurationBetween(newBeginTime, newEndTime);
+			var beginTimeToSnap = GetTimeToSnap(newBeginTime);
+			lastSetBeginTime = beginTimeToSnap;
+			BeginTime = beginTimeToSnap;
 
-			BeginTime = newBeginTime;
-			EndTime   = newEndTime;
 
-			lastSetBeginTime = BeginTime;
-			lastSetEndTime   = EndTime;
+			var endTimeToSnap = GetTimeToSnap(beginTimeToSnap + duration);
+			lastSetEndTime = endTimeToSnap;
+			EndTime = endTimeToSnap;
 
 			ComputeSlotInformations();
 		}	
