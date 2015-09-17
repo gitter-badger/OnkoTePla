@@ -253,7 +253,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			EndTime   = appointment.EndTime;
 
 			if (initialLocalisation != currentLocation)			
-				SetNewLocation(initialLocalisation, false);			
+				SetNewLocation(initialLocalisation, false);
+
+			ViewModelCommunication.GetGlobalViewModelVariable<Date>(
+				AppointmentGridSelectedDateVariable
+			).Value = appointment.Day;
 		}
 
 		public override void CleanUp()

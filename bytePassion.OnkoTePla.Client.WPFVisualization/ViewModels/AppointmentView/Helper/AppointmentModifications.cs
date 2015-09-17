@@ -19,7 +19,8 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper
 {
-	public class AppointmentModifications : DisposingObject, INotifyPropertyChanged
+	public class AppointmentModifications : DisposingObject, 
+											INotifyPropertyChanged
 	{		
 		private readonly IDataCenter dataCenter;
 		private readonly IViewModelCommunication viewModelCommunication;
