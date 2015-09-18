@@ -18,7 +18,12 @@ namespace bytePassion.Lib.TimeLib
 		{
 			Seconds = seconds;
 		}
-	
+
+		public Duration (Time t1, Time t2)
+		{
+			Seconds = ((uint)(System.Math.Abs((int)t1.SecondsFromDayBegin-(int)t2.SecondsFromDayBegin)));
+		}
+
 		public uint Seconds { get; }
 
 		public override bool   Equals (object obj) => this.Equals(obj, (duration1, duration2) => duration1.Seconds == duration2.Seconds);

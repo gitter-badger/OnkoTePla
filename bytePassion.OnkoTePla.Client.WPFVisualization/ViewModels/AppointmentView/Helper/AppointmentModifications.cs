@@ -102,7 +102,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 					var openingTime = newMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(date);
 					var closingTime = newMedicalPracticeVersion.HoursOfOpening.GetClosingTime(date);
 
-					var appointmentDuration = Time.GetDurationBetween(BeginTime, EndTime);
+					var appointmentDuration = new Duration(BeginTime, EndTime);
 
 					foreach (var therapyRowData in sortedAppointments)
 					{
@@ -139,7 +139,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		private static TimeSlot GetSlotForAppointment(IEnumerable<TimeSlot> timeSlots, Duration appointmentDuration)
 		{
-			return timeSlots.FirstOrDefault(slot => Time.GetDurationBetween(slot.Begin, slot.End) >= appointmentDuration);
+			return timeSlots.FirstOrDefault(slot => new Duration(slot.Begin, slot.End) >= appointmentDuration);
 		}
 
 		private IEnumerable<TimeSlot> ComputeSlots (Time openingTime, Time closingTime, IEnumerable<Appointment> appointments)
@@ -207,7 +207,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			CurrentLocation = newLocation;
 			
-			var duration = Time.GetDurationBetween(newBeginTime, newEndTime);
+			var duration = new Duration(newBeginTime, newEndTime);
 			var beginTimeToSnap = GetTimeToSnap(newBeginTime);
 			lastSetBeginTime = beginTimeToSnap;
 			BeginTime = beginTimeToSnap;
@@ -222,7 +222,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		
 		public void SetNewTimeShiftDelta(double deltaInPixel)
 		{			
-			var lengthOfOneHour = currentGridWidth / (Time.GetDurationBetween(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
+			var lengthOfOneHour = currentGridWidth / (new Duration(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
 			var secondsDelta = (uint)Math.Floor(Math.Abs(deltaInPixel) / (lengthOfOneHour / 3600));
 			var durationDelta = new Duration(secondsDelta);
 
@@ -230,7 +230,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			if (deltaInPixel > 0)
 			{
 				var tempEndTime = CheckEndTime(deltaInPixel > 0 ? lastSetEndTime + durationDelta : lastSetEndTime - durationDelta);
-				var actualTimeDelta = Time.GetDurationBetween(lastSetEndTime, tempEndTime);
+				var actualTimeDelta = new Duration(lastSetEndTime, tempEndTime);
 				
 				BeginTime = lastSetBeginTime + actualTimeDelta;
 				EndTime   = lastSetEndTime + actualTimeDelta;
@@ -238,7 +238,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			else
 			{
 				var tmpBeginTime = CheckBeginTime(deltaInPixel > 0 ? lastSetBeginTime + durationDelta : lastSetBeginTime - durationDelta);
-				var actualTimeDelta = Time.GetDurationBetween(lastSetBeginTime, tmpBeginTime);
+				var actualTimeDelta = new Duration(lastSetBeginTime, tmpBeginTime);
 				
 				BeginTime = lastSetBeginTime - actualTimeDelta;
 				EndTime   = lastSetEndTime - actualTimeDelta;
@@ -247,7 +247,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public void FixTimeShiftDelta()
 		{
-			var duration = Time.GetDurationBetween(BeginTime, EndTime);
+			var duration = new Duration(BeginTime, EndTime);
 			var beginTimeToSnap = GetTimeToSnap(BeginTime);
 			lastSetBeginTime = beginTimeToSnap;
 			BeginTime = beginTimeToSnap;
@@ -260,7 +260,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public void SetNewEndTimeDelta(double deltaInPixel)
 		{			
-			var lengthOfOneHour = currentGridWidth / (Time.GetDurationBetween(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
+			var lengthOfOneHour = currentGridWidth / (new Duration(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
 			var secondsDelta = (uint)Math.Floor(Math.Abs(deltaInPixel) / (lengthOfOneHour / 3600));
 			var durationDelta = new Duration(secondsDelta);
 
@@ -289,7 +289,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public void SetNewBeginTimeDelta(double deltaInPixel)
 		{			
-			var lengthOfOneHour = currentGridWidth / (Time.GetDurationBetween(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);						
+			var lengthOfOneHour = currentGridWidth / (new Duration(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);						
 			var secondsDelta = (uint)Math.Floor(Math.Abs(deltaInPixel) / (lengthOfOneHour / 3600));
 			var durationDelta = new Duration(secondsDelta);
 

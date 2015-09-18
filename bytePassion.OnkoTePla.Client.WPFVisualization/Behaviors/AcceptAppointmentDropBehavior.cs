@@ -98,8 +98,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			if (dropIsPossible)
 			{				
 				var timeAtDropPosition = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
-				var appointmentDuration = Time.GetDurationBetween(appointmentModification.BeginTime,
-																	  appointmentModification.EndTime);
+				var appointmentDuration = new Duration(appointmentModification.BeginTime,
+													   appointmentModification.EndTime);
 				var halfappointmentDuration = appointmentDuration / 2u;
 
 				var slotAtDropPosition = GetSlot(timeAtDropPosition);
@@ -151,9 +151,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 					if (currentPointedSlot != null)
 					{
-						var slotLength = Time.GetDurationBetween(currentPointedSlot.Begin, currentPointedSlot.End);
-						var appointmentLength = Time.GetDurationBetween(appointmentModification.BeginTime, 
-																		appointmentModification.EndTime);
+						var slotLength = new Duration(currentPointedSlot.Begin, currentPointedSlot.End);
+						var appointmentLength = new Duration(appointmentModification.BeginTime, 
+															 appointmentModification.EndTime);
 
 						if (slotLength >= appointmentLength)
 						{
@@ -191,7 +191,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 		private Time GetTimeForPosition (double xPosition)
 		{			
-			var durationOfWholeDay = Time.GetDurationBetween(closingTime, openingTime);			
+			var durationOfWholeDay = new Duration(closingTime, openingTime);			
 
 			double relativePosition = xPosition / gridWidth;
 

@@ -87,7 +87,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 					var nextCommand = CreateAppointmentData(readModel, patients, currrentTime, closingTime, therapyPlace.Id, user.Id);
 					commandBus.SendCommand(nextCommand);
 
-					currrentTime += Time.GetDurationBetween(nextCommand.CreateAppointmentData.StartTime,nextCommand.CreateAppointmentData.EndTime);
+					currrentTime += new Duration(nextCommand.CreateAppointmentData.StartTime,nextCommand.CreateAppointmentData.EndTime);
 					currrentTime += RandomTimeInterval(0);
 				}
 			}

@@ -9,7 +9,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 	{
 		protected override double Convert(Time appointmentStartTime, Time slotStartTime, double lengthOfOneHour, CultureInfo culture)
 		{
-			var durationFromDayBeginToAppointmentStart = Time.GetDurationBetween(appointmentStartTime, slotStartTime);
+			var durationFromDayBeginToAppointmentStart = new Duration(appointmentStartTime, slotStartTime);
 			return lengthOfOneHour * durationFromDayBeginToAppointmentStart.Seconds * 3600;
 		}		
 	}

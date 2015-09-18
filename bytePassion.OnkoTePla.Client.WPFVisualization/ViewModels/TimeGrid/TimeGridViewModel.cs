@@ -96,7 +96,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 
 			var newGridViewDivision  = GetDevisionForWidth(gridSize.Width);
 			var slotLengthInSeconds  = GetSlotLengthInSeconds(newGridViewDivision);
-			var timeSlotDuration     = Time.GetDurationBetween(timeSlotEnd, timeSlotStart);
+			var timeSlotDuration     = new Duration(timeSlotEnd, timeSlotStart);
 			var excactTimeSlotCount  = (double)timeSlotDuration.Seconds / slotLengthInSeconds;
 			int roundedTimeSlotCount = (int)Math.Floor(excactTimeSlotCount);
 			var timeSlotWidth        = gridSize.Width / excactTimeSlotCount;

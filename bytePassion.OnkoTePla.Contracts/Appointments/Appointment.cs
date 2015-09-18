@@ -31,7 +31,7 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 		public TherapyPlace TherapyPlace { get; }
 		public Guid         Id           { get; }				
 
-		public Duration Duration => Time.GetDurationBetween(StartTime, EndTime);
+		public Duration Duration => new Duration(StartTime, EndTime);
 		
 		
 		public static bool operator ==(Appointment a1, Appointment a2) => EqualsForEqualityOperator(a1,a2);
