@@ -30,15 +30,11 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 		public Time         EndTime      { get; }
 		public TherapyPlace TherapyPlace { get; }
 		public Guid         Id           { get; }				
-
-		public Duration Duration => new Duration(StartTime, EndTime);
-		
+				
 		
 		public static bool operator ==(Appointment a1, Appointment a2) => EqualsForEqualityOperator(a1,a2);
 		public static bool operator !=(Appointment a1, Appointment a2) => !(a1 == a2);
-
-		
-		#region ToString / HashCode / Equals
+	
 
 		public override string ToString()
 		{
@@ -64,7 +60,5 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 			       EndTime.GetHashCode() ^
 			       TherapyPlace.GetHashCode();
 		}
-
-		#endregion
 	}
 }
