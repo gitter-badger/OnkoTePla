@@ -32,7 +32,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			AssociatedObject.MouseMove                  += OnAssociatedObjectMouseMove;
 			AssociatedObject.MouseLeave                 += AssociatedObjectOnMouseLeave;
 			AssociatedObject.PreviewQueryContinueDrag   += OnQueryContinueDrag;
-						
+			
+
 			container = Application.Current.MainWindow;
 			mouseIsDown = false;
 		}		
@@ -47,7 +48,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 				DragDrop.DoDragDrop((DependencyObject)sender,
 									currentModifiedAppointmentVariable.Value.Appointment,
-				                    DragDropEffects.Link);
+				                    DragDropEffects.Link);				
 			}
 		}
 

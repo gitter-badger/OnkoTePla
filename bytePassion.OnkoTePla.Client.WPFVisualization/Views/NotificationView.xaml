@@ -15,7 +15,7 @@
     <Border CornerRadius="5"
 			BorderThickness="2"
 			BorderBrush="Black"
-			Background="Aquamarine">
+			Background="Azure">
 
         <Grid>
 
@@ -25,11 +25,12 @@
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
-			<Border Grid.Column="0"
-					Background="Red"
-					CornerRadius="5"
-					Margin="5"/>
-			
+            <Viewbox Width="48" Height="48">
+                <Canvas Width="24" Height="24">
+                    <Path Data="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" Fill="Red" />
+                </Canvas>
+            </Viewbox>
+
             <TextBlock Grid.Column="1"
 					   HorizontalAlignment="Center"
 					   VerticalAlignment="Center"
