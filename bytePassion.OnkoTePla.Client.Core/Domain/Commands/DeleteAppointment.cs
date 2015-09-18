@@ -8,13 +8,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands
 	{
 		public DeleteAppointment(AggregateIdentifier aggregateId, uint aggregateVersion, 
 								 Guid userId, Guid appointmentId, Guid patientId)
-			: base(aggregateId, aggregateVersion, userId)
+			: base(aggregateId, aggregateVersion, userId, patientId)
 		{
 			AppointmentId = appointmentId;
-			PatientId = patientId;
 		}
 
 		public Guid AppointmentId { get; }
-		public Guid PatientId     { get; }
 	}
 }
