@@ -15,14 +15,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 											 IDisposable,
                                              IViewModelMessageHandler<Dispose>,
 											 IViewModelMessageHandler<NewSizeAvailable>,
-											 IViewModelMessageHandler<RestoreOriginalValues>
+											 IViewModelMessageHandler<RestoreOriginalValues>											
 	{
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }		
 		
 		Time BeginTime { get; }					//
 		Time EndTime   { get; }					//	All this Data is necessary
-												//  to position the Appointment
+												//  to position the OriginalAppointment
 		double GridWidth     { get; }			//  correct
 		Time   TimeSlotBegin { get; }			//
 		Time   TimeSlotEnd   { get; }			//		

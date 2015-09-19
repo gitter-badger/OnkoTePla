@@ -47,7 +47,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = true;				
 
 				DragDrop.DoDragDrop((DependencyObject)sender,
-									currentModifiedAppointmentVariable.Value.Appointment,
+									currentModifiedAppointmentVariable.Value.OriginalAppointment,
 				                    DragDropEffects.Link);				
 			}
 		}

@@ -56,14 +56,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public OperatingMode OperatingMode  { get; set; }
 		public bool ShowDisabledOverlay { get; }
 
-//		public ICommand SaveCanvasLeftPosition => null;
-//		public double   CanvasLeftPositionDelta { set {} }
-
 		public Guid Identifier { get; }
 
 		public void Process (Dispose message) { }
 		public void Process (NewSizeAvailable message) { }
-		public void Process (RestoreOriginalValues message) { }
+		public void Process (RestoreOriginalValues message) { }		
 
 		public void Dispose() {}
 

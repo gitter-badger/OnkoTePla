@@ -68,12 +68,27 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		{
 			if (domainEvent.AggregateId != Identifier) return;
 
-			throw new NotImplementedException();
+			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
+				throw new VersionNotApplicapleException("@handle appointmentReplaced @readmodel");
+
+			appointmentSet.ReplaceAppointment(domainEvent.AggregateId.MedicalPracticeId,
+											  domainEvent.AggregateId.PracticeVersion,
+											  domainEvent.NewDescription,
+											  domainEvent.NewDate,
+											  domainEvent.NewStartTime,
+											  domainEvent.NewEndTime,
+											  domainEvent.NewTherapyPlaceId,
+											  domainEvent.OriginalAppointmendId);
+
+			AggregateVersion = domainEvent.AggregateVersion;
 		}
 		 
 		public override void Process (AppointmentDeleted domainEvent)
 		{
 			if (domainEvent.AggregateId != Identifier) return;
+
+			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
+				throw new VersionNotApplicapleException("@handle appointmentDeleted @readmodel");
 
 			appointmentSet.DeleteAppointment(domainEvent.RemovedAppointmentId);
 

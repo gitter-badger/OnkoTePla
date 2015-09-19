@@ -21,7 +21,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 		public void DeregisterEventHander<TDomainEvent>(IMessageHandler<TDomainEvent> eventHandler) 
 			where TDomainEvent : DomainEvent
 		{
-			eventMessageBus.RegisterMessageHandler(eventHandler);
+			eventMessageBus.DeregisterMessageHander(eventHandler);
 		}
 
 		public void PublishEvent<TDomainEvent>(TDomainEvent @event) 

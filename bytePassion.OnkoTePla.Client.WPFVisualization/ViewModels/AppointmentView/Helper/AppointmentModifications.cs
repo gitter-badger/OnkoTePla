@@ -42,18 +42,19 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private double currentGridWidth;		
 		private bool hideAppointment;
 		private TherapyPlaceRowIdentifier currentLocation;
+		private string description;
 
-		public AppointmentModifications(Appointment appointment,
+		public AppointmentModifications(Appointment originalAppointment,										
 										Guid medicalPracticeId, 
 										IDataCenter dataCenter, 
 										IViewModelCommunication viewModelCommunication)
 		{
-			Appointment = appointment;			
+			OriginalAppointment = originalAppointment;			
 			this.dataCenter = dataCenter;
 			this.viewModelCommunication = viewModelCommunication;								
 						
-			var aggregateIdentifier = new AggregateIdentifier(appointment.Day, medicalPracticeId);
-			var initalLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, appointment.TherapyPlace.Id);
+			var aggregateIdentifier = new AggregateIdentifier(originalAppointment.Day, medicalPracticeId);
+			var initalLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, originalAppointment.TherapyPlace.Id);
 			
 			
 			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(initalLocation.PlaceAndDate.Date,
@@ -61,11 +62,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			
 			currentLocation = initalLocation;
 
-			beginTime = appointment.StartTime;
-			endTime   = appointment.EndTime;
+			beginTime = originalAppointment.StartTime;
+			endTime   = originalAppointment.EndTime;
 
 			lastSetBeginTime = BeginTime;
 			lastSetEndTime   = EndTime;
+
+			description = originalAppointment.Description;
 
 			selectedDateVariable = viewModelCommunication.GetGlobalViewModelVariable<Date>(
 				AppointmentGridSelectedDateVariable
@@ -96,7 +99,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 						sortedAppointments.Add(therapyPlace, new List<Appointment>());
 
 					foreach (var appointment in readModel.Appointments)
-						if (appointment != Appointment)
+						if (appointment != OriginalAppointment)
 							sortedAppointments[appointment.TherapyPlace].Add(appointment);
 
 					var openingTime = newMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(date);
@@ -123,13 +126,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 					}
 
 					viewModelCommunication.Send(
-						new ShowNotification("cannot move the appointment to that day. To timeslot is big enough!")
+						new ShowNotification("cannot move the OriginalAppointment to that day. To timeslot is big enough!")
 					);
 				}
 				else
 				{
 					viewModelCommunication.Send(
-						new ShowNotification("cannot move an appointment to a day where the practice is closed!")
+						new ShowNotification("cannot move an OriginalAppointment to a day where the practice is closed!")
 					);					
 				}
 
@@ -170,7 +173,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			return slots;
 		}
 
-		public Appointment Appointment { get; }
+		public Appointment OriginalAppointment { get; }
 
 		public Time BeginTime
 		{
@@ -194,6 +197,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{
 			get { return currentLocation; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref currentLocation, value); }
+		}
+
+		public string Description
+		{
+			get { return description; }
+			set { PropertyChanged.ChangeAndNotify(this, ref description, value); }
 		}
 
 		public void SetNewLocation(TherapyPlaceRowIdentifier newLocation, Time newBeginTime, Time newEndTime)
@@ -339,17 +348,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			var currentReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(CurrentLocation.PlaceAndDate);
 
-			var appointmentWithCorrectStartAndEnd = new Appointment(Appointment.Patient, 
-																	Appointment.Description,
-																	Appointment.TherapyPlace,
-																	Appointment.Day, 
+			var appointmentWithCorrectStartAndEnd = new Appointment(OriginalAppointment.Patient, 
+																	OriginalAppointment.Description,
+																	OriginalAppointment.TherapyPlace,
+																	OriginalAppointment.Day, 
 																	BeginTime, 
 																	EndTime, 
-																	Appointment.Id);
+																	OriginalAppointment.Id);
 
 			var appointmentsWithinTheSameRow = currentReadModel.Appointments
 															   .Where(appointment => appointment.TherapyPlace.Id == CurrentLocation.TherapyPlaceId)
-															   .Where(appointment => appointment.Id != Appointment.Id)
+															   .Where(appointment => appointment.Id != OriginalAppointment.Id)
 															   .Append(appointmentWithCorrectStartAndEnd)
 															   .ToList();
 

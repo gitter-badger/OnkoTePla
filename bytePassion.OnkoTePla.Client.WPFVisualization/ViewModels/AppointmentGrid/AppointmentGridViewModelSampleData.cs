@@ -42,7 +42,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public void Process(Activate message) {}
 		public void Process(Deactivate message) {}
 		public void Process(DeleteAppointment message) {}
+		public void Process(SendCurrentChangesToCommandBus message) { }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

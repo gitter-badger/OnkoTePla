@@ -100,6 +100,7 @@
     <Compile Include="ViewModelMessages\DeleteAppointment.cs" />
     <Compile Include="ViewModelMessages\HideNotification.cs" />
     <Compile Include="ViewModelMessages\RejectChanges.cs" />
+    <Compile Include="ViewModelMessages\SendCurrentChangesToCommandBus.cs" />
     <Compile Include="ViewModelMessages\ShowNotification.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModelMessages\Dispose.cs" />

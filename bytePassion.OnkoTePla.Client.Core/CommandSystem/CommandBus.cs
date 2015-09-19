@@ -20,7 +20,7 @@ namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
 		public void DeregisterCommandHander<TDomainCommand>(IMessageHandler<TDomainCommand> commandHandler) 
 			where TDomainCommand : DomainCommand
 		{
-			commandMessageBus.RegisterMessageHandler(commandHandler);
+			commandMessageBus.DeregisterMessageHander(commandHandler);
 		}
 
 		public void SendCommand<TDomainCommand>(TDomainCommand command) 

@@ -40,9 +40,11 @@ namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 			if (!eventHandlerLists.ContainsKey(typeof(TMessage)))
 				return null;
 
-			return eventHandlerLists[typeof(TMessage)]
+			var result = eventHandlerLists[typeof(TMessage)]
 					.Cast<IMessageHandler<TMessage>>()
 					.ToList();
+
+			return result;
 		}
 	}
 

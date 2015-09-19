@@ -13,6 +13,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 													       IDomainEventHandler<AppointmentDeleted>
 	{
 
+		private static int identityCounter = 0;
+
+		private readonly int identity;
+
 		public abstract event EventHandler<AppointmentChangedEventArgs> AppointmentChanged;
 
 		private readonly IEventBus eventBus;
@@ -20,6 +24,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		protected ReadModelBase (IEventBus eventBus)
 		{
 			this.eventBus = eventBus;
+
+			identity = identityCounter++;
 
 			RegisterAtEventBus();
 		}

@@ -9,17 +9,19 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
-
+using DeleteAppointment = bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages.DeleteAppointment;
 using DeleteAppointmentCommand = bytePassion.OnkoTePla.Client.Core.Domain.Commands.DeleteAppointment;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
@@ -235,6 +237,61 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 																dataCenter.SessionInfo.LoggedInUser.Id, 
 																message.AppointmentId, 
 																message.PatientId));
+		}
+		
+		public void Process(SendCurrentChangesToCommandBus message)
+		{
+			var appointmentModificationVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
+				CurrentModifiedAppointmentVariable	
+			);
+
+			if (appointmentModificationVariable.Value == null)
+				return;
+
+			var originalAppointment = appointmentModificationVariable.Value.OriginalAppointment;
+
+			if (originalAppointment.Description     == appointmentModificationVariable.Value.Description &&
+				originalAppointment.StartTime       == appointmentModificationVariable.Value.BeginTime &&
+				originalAppointment.EndTime         == appointmentModificationVariable.Value.EndTime &&
+				originalAppointment.Day             == appointmentModificationVariable.Value.CurrentLocation.PlaceAndDate.Date &&
+				originalAppointment.TherapyPlace.Id == appointmentModificationVariable.Value.CurrentLocation.TherapyPlaceId)
+			{
+				return; // no changes to report
+			}
+
+			AggregateIdentifier sourceAggregateId;
+			AggregateIdentifier destinationAggregateId = Identifier;
+
+			uint sourceAggregateVersion;
+			uint destinationAggregateVersion = readModel.AggregateVersion;
+
+
+			if (appointmentModificationVariable.Value.OriginalAppointment.Day != Identifier.Date)
+			{
+				sourceAggregateId = new AggregateIdentifier(appointmentModificationVariable.Value.OriginalAppointment.Day, 
+															Identifier.MedicalPracticeId);
+
+				var tmpReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(sourceAggregateId);
+
+				sourceAggregateVersion = tmpReadModel.AggregateVersion;
+			}
+			else
+			{
+				sourceAggregateId = destinationAggregateId;
+				sourceAggregateVersion = destinationAggregateVersion;
+			}
+
+			commandBus.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
+														  sourceAggregateVersion, destinationAggregateVersion,
+														  dataCenter.SessionInfo.LoggedInUser.Id, 
+														  originalAppointment.Patient.Id, 
+														  appointmentModificationVariable.Value.Description,
+														  appointmentModificationVariable.Value.CurrentLocation.PlaceAndDate.Date,
+														  appointmentModificationVariable.Value.BeginTime,
+														  appointmentModificationVariable.Value.EndTime,															 
+														  appointmentModificationVariable.Value.CurrentLocation.TherapyPlaceId,
+														  originalAppointment.Id,
+														  originalAppointment.Day));
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
