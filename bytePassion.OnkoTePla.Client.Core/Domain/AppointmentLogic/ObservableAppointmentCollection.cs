@@ -38,6 +38,19 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 			CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove));
 		}
 
+		public void ReplaceAppointment(Appointment updatedAppointment)
+		{
+			var appointmentToRemove = GetAppointmentById(updatedAppointment.Id);
+			appointments.Remove(appointmentToRemove);
+
+			appointments.Add(updatedAppointment);
+
+			AppointmentChanged?.Invoke(this, new AppointmentChangedEventArgs(updatedAppointment, ChangeAction.Modified));
+			CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, 
+																				 new List<Appointment> {appointmentToRemove}, 
+																				 new List<Appointment> {updatedAppointment}));
+		}
+
 		public IEnumerable<Appointment> Appointments
 		{
 			get { return appointments.ToList(); }

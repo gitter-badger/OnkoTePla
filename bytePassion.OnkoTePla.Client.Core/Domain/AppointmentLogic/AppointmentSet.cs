@@ -9,9 +9,7 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 {
 	public class AppointmentSet
-	{
-		//private readonly IDictionary<Guid, Appointment>  appointmentLookUp;
-
+	{		
 		private readonly IPatientReadRepository patientRepository;
 		private readonly IConfigurationReadRepository configurationRepository;
 
@@ -20,8 +18,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 		{
 			this.patientRepository = patientRepository;
 			this.configurationRepository = configurationRepository;
-
-			//appointmentLookUp = new Dictionary<Guid, Appointment>();
+			
 			ObservableAppointments = new ObservableAppointmentCollection();
 		}
 
@@ -42,13 +39,30 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 												 appointmentData.Day, appointmentData.StartTime, appointmentData.EndTime, 
 												 appointmentData.AppointmentId);
 
-			ObservableAppointments.AddAppointment(newAppointment);
-			//appointmentLookUp.Add(appointmentId, newAppointment);
+			ObservableAppointments.AddAppointment(newAppointment);			
 		}
 
 		public void DeleteAppointment(Guid removedAppointmentId)
 		{
 			ObservableAppointments.DeleteAppointment(removedAppointmentId);
+		}
+
+		public void ReplaceAppointment(Guid medicalPracticeId, uint medicalPracticeVersion, ReplaceAppointmentData replaceAppointmentData)
+		{
+			var appointmentToBeUpdated = ObservableAppointments.GetAppointmentById(replaceAppointmentData.OriginalAppointmendId);
+
+			var newTherapyPlace = configurationRepository.GetMedicalPracticeByIdAndVersion(medicalPracticeId, medicalPracticeVersion)
+													     .GetTherapyPlaceById(replaceAppointmentData.NewTherapyPlaceId);
+
+			var updatedAppointment = new Appointment(appointmentToBeUpdated.Patient,
+													 replaceAppointmentData.NewDescription,
+													 newTherapyPlace,
+													 replaceAppointmentData.NewDate,
+													 replaceAppointmentData.NewStartTime,
+													 replaceAppointmentData.NewEndTime,
+													 replaceAppointmentData.OriginalAppointmendId);
+
+			ObservableAppointments.ReplaceAppointment(updatedAppointment);
 		}
 	}	
 }
