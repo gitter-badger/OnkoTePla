@@ -27,28 +27,29 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			}
 		}
 
-		private const string XmlRoot				      = "eventStreams";
-		private const string CountAttribute			      = "count";
-		private const string EventStream  		          = "eventStream";
-		private const string ConfigVersionAttribute       = "configVersion";
-		private const string Event       			      = "event";
-		private const string DateAttribute				  = "date";
-		private const string MedicalPracticeAttribute     = "medicalPracticeId";
-		private const string AggregateVersionAttribute    = "aggregateVersion";		
-
-		private const string AppointmentAddedEvent        = "appointmentAddedEvent";
-		private const string AppointmentReplacedEvent     = "appointmentReplacedEvent";
-		private const string AppointmentDeletedEvent      = "appointmentDeletedEvent";
-
-		private const string PatientIdAttribute		      = "patientId";
-		private const string AppointmentIdAttribute       = "appointmentId";
-		private const string DescriptionAttribute	      = "description";
-		private const string StartTimeAttribute		      = "startTime";
-		private const string EndTimeAttribute		      = "endTime";
-		private const string TherapyPlaceIdAttribute      = "therapyPlaceId";		
-		private const string UserIdAttribute              = "userId";
-		private const string TimeStampTimeAttribute       = "timeStampTime";
-		private const string TimeStampDateAttribute       = "timeStampDate";
+		private const string XmlRoot				        = "eventStreams";
+		private const string CountAttribute			        = "count";
+		private const string EventStream  		            = "eventStream";
+		private const string ConfigVersionAttribute         = "configVersion";
+		private const string Event       			        = "event";
+		private const string DateAttribute				    = "date";
+		private const string MedicalPracticeAttribute       = "medicalPracticeId";
+		private const string AggregateVersionAttribute      = "aggregateVersion";		
+														    
+		private const string AppointmentAddedEvent          = "appointmentAddedEvent";
+		private const string AppointmentReplacedEvent       = "appointmentReplacedEvent";
+		private const string AppointmentDeletedEvent        = "appointmentDeletedEvent";
+														    
+		private const string PatientIdAttribute		        = "patientId";
+		private const string AppointmentIdAttribute         = "appointmentId";
+		private const string DescriptionAttribute	        = "description";
+		private const string StartTimeAttribute		        = "startTime";
+		private const string EndTimeAttribute		        = "endTime";
+		private const string TherapyPlaceIdAttribute        = "therapyPlaceId";
+		private const string OriginalAppointmentIdAttribute = "originalAppointemtnId";	
+		private const string UserIdAttribute                = "userId";
+		private const string TimeStampTimeAttribute         = "timeStampTime";
+		private const string TimeStampDateAttribute         = "timeStampDate";
 
 		private readonly string filename;
 
@@ -99,8 +100,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.WriteAttributeString(UserIdAttribute,           @event.UserId.ToString());
 			writer.WriteAttributeString(PatientIdAttribute,        @event.PatientId.ToString());
 			writer.WriteAttributeString(TimeStampDateAttribute,    @event.TimeStamp.Item1.ToString());
-			writer.WriteAttributeString(TimeStampTimeAttribute,    @event.TimeStamp.Item2.ToString());			
-
+			writer.WriteAttributeString(TimeStampTimeAttribute,    @event.TimeStamp.Item2.ToString());
+			
 			if (@event is AppointmentAdded)    WriteEvent(writer, (AppointmentAdded)   @event);
 			if (@event is AppointmentReplaced) WriteEvent(writer, (AppointmentReplaced)@event);
 			if (@event is AppointmentDeleted)  WriteEvent(writer, (AppointmentDeleted) @event);
@@ -119,7 +120,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 		private static void WriteEvent(XmlWriter writer, AppointmentReplaced @event)
 		{
-			throw new NotImplementedException();
+			writer.WriteStartElement(AppointmentReplacedEvent);
+
+			writer.WriteAttributeString(DescriptionAttribute,           @event.ReplaceAppointmentData.NewDescription);
+			writer.WriteAttributeString(DateAttribute,                  @event.ReplaceAppointmentData.NewDate.ToString());
+			writer.WriteAttributeString(StartTimeAttribute,             @event.ReplaceAppointmentData.NewStartTime.ToString());
+			writer.WriteAttributeString(EndTimeAttribute,               @event.ReplaceAppointmentData.NewEndTime.ToString());
+			writer.WriteAttributeString(TherapyPlaceIdAttribute,        @event.ReplaceAppointmentData.NewTherapyPlaceId.ToString());
+			writer.WriteAttributeString(OriginalAppointmentIdAttribute, @event.ReplaceAppointmentData.OriginalAppointmendId.ToString());
+
+			writer.WriteEndElement();
 		}
 
 		private static void WriteEvent(XmlWriter writer, AppointmentAdded @event)
@@ -264,7 +274,33 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 																		  uint aggregateVersion, Guid userId, Guid patientId,
 																		  Tuple<Date, Time> timeStamp)
 		{
-			throw new NotImplementedException();
+			var newDiscription = String.Empty;
+			var newDate = Date.Dummy;
+			var newStartTime = Time.Dummy;
+			var newEndTime = Time.Dummy;
+			var newTherapyPlaceId = Guid.Empty;
+			var originalAppointmentId = Guid.Empty;
+
+			if (reader.HasAttributes)
+			{
+				while (reader.MoveToNextAttribute())
+				{
+					switch (reader.Name)
+					{
+						case DescriptionAttribute:           newDiscription        = reader.Value;             break;
+						case DateAttribute:                  newDate               = Date.Parse(reader.Value); break;
+						case StartTimeAttribute:             newStartTime          = Time.Parse(reader.Value); break;
+						case EndTimeAttribute:               newEndTime            = Time.Parse(reader.Value); break;
+						case TherapyPlaceIdAttribute:        newTherapyPlaceId     = Guid.Parse(reader.Value); break;
+						case OriginalAppointmentIdAttribute: originalAppointmentId = Guid.Parse(reader.Value); break;
+					}
+				}
+			}
+
+			return new AppointmentReplaced(identifier, aggregateVersion, userId, 
+										   patientId, timeStamp, 
+										   new ReplaceAppointmentData(newDiscription, newStartTime, newEndTime, 
+																	  newDate, newTherapyPlaceId, originalAppointmentId));
 		}
 
 		private static AppointmentAdded AcceptAppointmentAddedEvent(XmlReader reader, AggregateIdentifier identifier,

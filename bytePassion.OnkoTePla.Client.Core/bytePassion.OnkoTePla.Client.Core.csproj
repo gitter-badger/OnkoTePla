@@ -57,6 +57,7 @@
     <Compile Include="CommandSystem\DomainCommand.cs" />
     <Compile Include="CommandSystem\ICommandBus.cs" />
     <Compile Include="Domain\AppointmentLogic\ReplaceAppointmentData.cs" />
+    <Compile Include="Domain\CommandHandler\ReplaceAppointmentCommandHandler.cs" />
     <Compile Include="Domain\CommandHandler\DeleteAppointmentCommandHandler.cs" />
     <Compile Include="Domain\Commands\ReplaceAppointment.cs" />
     <Compile Include="Domain\Commands\DeleteAppointment.cs" />
