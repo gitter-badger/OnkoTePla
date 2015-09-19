@@ -89,10 +89,10 @@
 						<ColumnDefinition Width="250" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<views:PatientSelector Grid.Column="0" DataContext="{Binding PatientSelectorViewModel}" />
+                    <views:PatientSelector Grid.Column="0" DataContext="{Binding SearchPageViewModel}" />
 					<views:PatientDetailView Grid.Column="1"
 					                         Margin="20"
-					                         DataContext="{Binding PatientSelectorViewModel}" />
+					                         DataContext="{Binding SearchPageViewModel}" />
 				</Grid>
 			</TabItem>
 

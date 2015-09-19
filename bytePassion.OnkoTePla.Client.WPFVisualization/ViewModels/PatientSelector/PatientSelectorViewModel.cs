@@ -4,24 +4,26 @@ using System.Linq;
 using System.Windows.Data;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector
 {
-    internal class PatientSelectorViewModel : IPatientSelectorViewModel
+    internal class PatientSelectorViewModel :ISearchPageViewModel
     {
         //private readonly IReadOnlyList<Appointment> appointments;
-        //private readonly IPatientReadRepository patients;
+        //private readonly IPatientReadRepository dataCenter;
         private PatientListItem selectedPatient;
         private string searchFilter;
 
-        public PatientSelectorViewModel(IPatientReadRepository patients)
+        public PatientSelectorViewModel(IDataCenter dataCenter)
         {
             Patients = new CollectionViewSource();
             Patients.Filter += Filter;
-            Patients.Source = PatientListItem.ConvertPatientList(patients.GetAllPatients().ToList());
+            Patients.Source = PatientListItem.ConvertPatientList(dataCenter.Patients.GetAllPatients().ToList());
         }
 
         public CollectionViewSource Patients { get; set; }

@@ -194,7 +194,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 																  changeConfirmationViewModel,
 																  viewModelCommunication);
 
-			var searchPageViewModel   = new SearchPageViewModel();
+			var searchPageViewModel   = new SearchPageViewModel(dataCenter);
 			var optionsPageViewModel  = new OptionsPageViewModel();
 
 

@@ -13,38 +13,33 @@
     </d:UserControl.DataContext>
 
     <UserControl.Resources>
-        <DataTemplate x:Key="AppointmenTemplate">
-                <DockPanel Margin="3">
-                    <StackPanel DockPanel.Dock="Left">
-                        <TextBlock>
-                            <Run Text="Uhrzeit: " />
-                            <Run Text="{Binding StartTime, Converter={StaticResource TimeFromDateConverter}, Mode=OneWay}" />
-                            <Run Text=" - " />
-                            <Run Text="{Binding EndTime, Converter={StaticResource TimeFromDateConverter}, Mode=OneWay}" />
-                            <Run Text="Uhr" />
-                        </TextBlock>
-                        <TextBlock>
-                            <Run Text="Datum: " />
-                            <Run Text="{Binding StartTime, Converter={StaticResource BirthdayToStringConverter}, Mode=OneWay}" />
-                        </TextBlock>
-                        <TextBlock Margin="0,10,0,0" Text="{Binding Description, Mode=OneWay}" />
+        <DataTemplate x:Key="AppointmentTemplate">
+            <DockPanel Margin="3">
+                <StackPanel DockPanel.Dock="Left">
+                    <TextBlock>
+                        <Run Text="Uhrzeit: " />
+                        <Run Text="{Binding StartTime, Mode=OneWay}" />
+                        <Run Text=" - " />
+                        <Run Text="{Binding EndTime, Mode=OneWay}" />
+                        <Run Text="Uhr" />
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="Datum: " />
+                        <Run Text="{Binding Day, Converter={StaticResource BirthdayToStringConverter}, Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock Margin="0,10,0,0" Text="{Binding Description, Mode=OneWay}" />
 
-                    </StackPanel>
-                    <StackPanel Margin="50,0" DockPanel.Dock="Left">
-                        <TextBlock>
-                            <Run Text="Raum: Raum" />
-                            <Run Text="{Binding Room.RoomID, Mode=OneWay}" />
-                            <Run Text="" />
-                        </TextBlock>
-                        <TextBlock>
-                            <Run Text="Platz: " />
-                            <Run Text="{Binding TherapyPlace.TherapyPlaceType.TypeName, Mode=OneWay}" />
-                        </TextBlock>
-                        <TextBlock Margin="0,10,0,0" Text="{Binding Description, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="50,0" DockPanel.Dock="Left">
+                    <TextBlock>
+                        <Run Text="Platz: " />
+                        <Run Text="{Binding TherapyPlace.Type, Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock Margin="0,10,0,0" Text="{Binding Description, Mode=OneWay}" />
 
-                    </StackPanel>
-                    <StackPanel DockPanel.Dock="Left" />
-                </DockPanel>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Left" />
+            </DockPanel>
         </DataTemplate>
     </UserControl.Resources>
 
@@ -80,7 +75,7 @@
                       Foreground="DarkSlateGray" />
         </DockPanel>
         <ListView Grid.Row="2"
-                  ItemTemplate="{StaticResource AppointmenTemplate}"
+                  ItemTemplate="{StaticResource AppointmentTemplate}"
                   ItemsSource="{Binding Appointments}" />
     </Grid>
 </UserControl>

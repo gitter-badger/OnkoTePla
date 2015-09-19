@@ -7,7 +7,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector.Helper
 {
-	internal class PatientListItem : INotifyPropertyChanged
+	public class PatientListItem : INotifyPropertyChanged
 	{
 		private readonly Patient patient;
 		private bool isCurrentVisibleInList;

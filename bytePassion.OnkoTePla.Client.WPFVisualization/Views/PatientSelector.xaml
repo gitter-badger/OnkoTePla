@@ -22,7 +22,7 @@
 		<ListBox DockPanel.Dock="Top"
 				 HorizontalContentAlignment="Stretch"
                  ItemTemplate="{StaticResource PatientDataTemplate}"
-                 SelectedValue="{Binding SelectedPatient}"
+                 SelectedValue="{Binding SelectedPatient, Mode=OneWayToSource}"
                  ItemsSource="{Binding Patients.View}" />
 	</DockPanel>
 </UserControl>

@@ -57,8 +57,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		{
 			if (domainEvent.CreateAppointmentData.PatientId != patient.Id) return;
 
-			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
-				throw new VersionNotApplicapleException("@handle appointmentAdded @readmodel");		
+			//if (AggregateVersion + 1 != domainEvent.AggregateVersion)
+			//	throw new VersionNotApplicapleException("@handle appointmentAdded @readmodel");		
 
 			appointmentSet.AddAppointment(domainEvent.AggregateId.MedicalPracticeId,
 										  domainEvent.AggregateId.PracticeVersion,
