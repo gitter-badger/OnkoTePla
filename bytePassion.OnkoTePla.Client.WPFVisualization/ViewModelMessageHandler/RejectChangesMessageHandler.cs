@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 			{
 				viewModelCommunication.SendTo(
 					AppointmentViewModelCollection,
-					currentModifiedAppointmentVariable.Value.Appointment.Id,
+					currentModifiedAppointmentVariable.Value.OriginalAppointment.Id,
 					new RestoreOriginalValues()
 				);
 

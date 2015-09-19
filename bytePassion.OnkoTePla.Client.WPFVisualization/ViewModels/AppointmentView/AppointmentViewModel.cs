@@ -25,7 +25,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 	public class AppointmentViewModel : DisposingObject, 
 										IAppointmentViewModel										
 	{		
-		private readonly Appointment appointment;		
+		private readonly Appointment appointment;
 		private readonly IDataCenter dataCenter;
 		private readonly TherapyPlaceRowIdentifier initialLocalisation;
 
@@ -137,7 +137,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		private void OnCurrentModifiedAppointmentChanged(AppointmentModifications newModifiedAppointment)
 		{
-			if (newModifiedAppointment == null || appointment != newModifiedAppointment.Appointment)
+			if (newModifiedAppointment == null || appointment != newModifiedAppointment.OriginalAppointment)
 			{
 				OperatingMode = OperatingMode.View;
 				currentAppointmentModification.PropertyChanged -= OnAppointmentModificationsPropertyChanged;

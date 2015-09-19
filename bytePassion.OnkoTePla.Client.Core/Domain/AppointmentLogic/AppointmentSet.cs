@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -47,20 +48,24 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
 			ObservableAppointments.DeleteAppointment(removedAppointmentId);
 		}
 
-		public void ReplaceAppointment(Guid medicalPracticeId, uint medicalPracticeVersion, ReplaceAppointmentData replaceAppointmentData)
+		public void ReplaceAppointment(Guid medicalPracticeId, uint medicalPracticeVersion, 
+									   string newDescription, Date newDate,
+								       Time newStartTime, Time newEndTime,
+								       Guid newTherapyPlaceId,
+								       Guid originalAppointmendId)
 		{
-			var appointmentToBeUpdated = ObservableAppointments.GetAppointmentById(replaceAppointmentData.OriginalAppointmendId);
+			var appointmentToBeUpdated = ObservableAppointments.GetAppointmentById(originalAppointmendId);
 
 			var newTherapyPlace = configurationRepository.GetMedicalPracticeByIdAndVersion(medicalPracticeId, medicalPracticeVersion)
-													     .GetTherapyPlaceById(replaceAppointmentData.NewTherapyPlaceId);
+													     .GetTherapyPlaceById(newTherapyPlaceId);
 
 			var updatedAppointment = new Appointment(appointmentToBeUpdated.Patient,
-													 replaceAppointmentData.NewDescription,
+													 newDescription,
 													 newTherapyPlace,
-													 replaceAppointmentData.NewDate,
-													 replaceAppointmentData.NewStartTime,
-													 replaceAppointmentData.NewEndTime,
-													 replaceAppointmentData.OriginalAppointmendId);
+													 newDate,
+													 newStartTime,
+													 newEndTime,
+													 originalAppointmendId);
 
 			ObservableAppointments.ReplaceAppointment(updatedAppointment);
 		}

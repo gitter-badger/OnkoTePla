@@ -101,6 +101,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
 			commandBus.RegisterCommandHandler(new DeleteAppointmentCommandHandler(aggregateRepository));
+			commandBus.RegisterCommandHandler(new ReplaceAppointmentCommandHandler(aggregateRepository));
 
 
 			// SessionInformation

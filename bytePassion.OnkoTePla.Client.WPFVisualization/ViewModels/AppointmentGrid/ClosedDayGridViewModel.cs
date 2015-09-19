@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using bytePassion.Lib.Communication.State;
@@ -113,7 +114,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			);						
 		}
 
-		public void Process (DeleteAppointment message) {}
+		public void Process(DeleteAppointment message)
+		{
+			throw new Exception("internal error");
+		}
+		
+		public void Process(SendCurrentChangesToCommandBus message)
+		{
+			throw new Exception("internal error");
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }
