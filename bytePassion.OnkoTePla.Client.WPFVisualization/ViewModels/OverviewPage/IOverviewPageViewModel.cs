@@ -1,4 +1,4 @@
-﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
+﻿using System.Windows.Input;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
@@ -17,6 +17,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 		IGridContainerViewModel           GridContainerViewModel           { get; }	
 		IChangeConfirmationViewModel      ChangeConfirmationViewModel      { get; }
 
+		ICommand ShowAddAppointmentDialog { get; }
+
 		bool ChangeConfirmationVisible { get; }
+		bool AddAppointmentPossible { get; }
 	}
 }

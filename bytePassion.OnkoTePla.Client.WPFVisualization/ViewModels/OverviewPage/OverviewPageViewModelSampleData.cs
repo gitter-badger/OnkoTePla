@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
@@ -22,6 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 			ChangeConfirmationViewModel      = new ChangeConfirmationViewModelSampleData();
 
 			ChangeConfirmationVisible = true;
+			AddAppointmentPossible = true;
 		}
 
 		public IDateDisplayViewModel             DateDisplayViewModel             { get; }
@@ -31,7 +33,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 		public IGridContainerViewModel           GridContainerViewModel           { get; }
 		public IChangeConfirmationViewModel      ChangeConfirmationViewModel      { get; }
 
+		public ICommand ShowAddAppointmentDialog { get; } = null;
+
 		public bool ChangeConfirmationVisible { get; }
+		public bool AddAppointmentPossible { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
