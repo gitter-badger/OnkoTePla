@@ -25,7 +25,8 @@
 		
 		<Calendar Grid.Row="0"
 				  VerticalAlignment="Top"
-				  SelectionMode="SingleDate"					 
+				  SelectionMode="SingleDate"		
+                  Style="{StaticResource CalendarStyle}"
 				  SelectedDate="{Binding SelectedDate, 
 										 Converter={StaticResource DateToDateTimeConverter}, 
 										 Mode=TwoWay}"/>
