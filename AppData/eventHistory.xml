@@ -14,9 +14,20 @@
       <appointmentDeletedEvent appointmentId="5c64d90b-5b0a-41ce-9ba9-89470396c86b" />
     </event>
   </eventStream>
-  <eventStream count="1" date="17.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604">
+  <eventStream count="2" date="17.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604">
     <event aggregateVersion="1" userId="af95def9-375c-4c21-9d46-6b30952ac490" patientId="fe29f26b-97d1-44ed-818e-42767a93bce6" timeStampDate="19.09.2015" timeStampTime="17:16:10">
       <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="01cb2dda-7dd1-4e77-baa3-3270c4e8058b" startTime="09:00:00" endTime="11:15:00" appointmentId="5c64d90b-5b0a-41ce-9ba9-89470396c86b" />
     </event>
+    <event aggregateVersion="2" userId="af95def9-375c-4c21-9d46-6b30952ac490" patientId="fe29f26b-97d1-44ed-818e-42767a93bce6" timeStampDate="19.09.2015" timeStampTime="18:32:38">
+      <appointmentReplacedEvent description="automated generated appointment" date="17.09.2015" startTime="09:00:00" endTime="11:15:00" therapyPlaceId="7d4d207c-9e23-49b5-9c10-26827b165c0d" originalAppointemtnId="5c64d90b-5b0a-41ce-9ba9-89470396c86b" />
+    </event>
   </eventStream>
+  <eventStream count="0" date="16.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604" />
+  <eventStream count="0" date="20.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604" />
+  <eventStream count="0" date="21.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604" />
+  <eventStream count="0" date="22.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604" />
+  <eventStream count="0" date="23.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604" />
+  <eventStream count="0" date="15.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604" />
+  <eventStream count="0" date="14.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604" />
+  <eventStream count="0" date="19.09.2015" configVersion="1" medicalPracticeId="66380951-9850-4b79-8eea-4b78d489a604" />
 </eventStreams>

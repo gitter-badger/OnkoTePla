@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
@@ -28,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
 			Date = newDate.GetDisplayString(new CultureInfo("de-DE"));
 		}
 
-		public string Date
+        public string Date
 		{
 			get { return date; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref date, value); }

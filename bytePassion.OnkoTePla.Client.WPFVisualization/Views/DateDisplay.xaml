@@ -10,16 +10,14 @@
 	<d:DesignData.DataContext>
 		<dateDisplay:DateDisplayViewModelSampleData/>
 	</d:DesignData.DataContext>
-	
-	<Border BorderThickness="1"
-			BorderBrush="Black"
-			Background="White">
-        <Grid>
-            <TextBlock Text="{Binding Date}"
+
+    <StackPanel Orientation="Horizontal">
+        <TextBlock Text="{Binding Date}"
+                       Margin="5"
 					   FontFamily="{StaticResource StandardFontFamily}"
+                       Foreground="{StaticResource SemiTransparentWhiteBrush}"
 					   HorizontalAlignment="Center"
 					   VerticalAlignment="Center"
-					   FontSize="30"/>
-        </Grid>
-    </Border>
+					   FontSize="20"/>
+    </StackPanel>
 </UserControl>
