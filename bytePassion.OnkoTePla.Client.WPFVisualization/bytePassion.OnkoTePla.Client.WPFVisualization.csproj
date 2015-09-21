@@ -200,6 +200,9 @@
     <Compile Include="Views\AppointmentView.xaml.cs">
       <DependentUpon>AppointmentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AppointmentViewToolTip.xaml.cs">
+      <DependentUpon>AppointmentViewToolTip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ChangeConfirmationView.xaml.cs">
       <DependentUpon>ChangeConfirmationView.xaml</DependentUpon>
     </Compile>
@@ -282,6 +285,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AppointmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppointmentViewToolTip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

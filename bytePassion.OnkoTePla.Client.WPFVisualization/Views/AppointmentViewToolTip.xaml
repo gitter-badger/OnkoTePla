@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.AppointmentViewToolTip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
+             xmlns:appointmentView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300">
+	
+	<d:DesignData.DataContext>
+			<appointmentView:AppointmentViewModelSampleData/>
+     </d:DesignData.DataContext>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="1"
+                   Grid.Column="3"
+                   FontFamily="Segoe UI Semibold"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Foreground="#404148"
+                   Text="{Binding PatientDisplayName}"/>
+		
+        <Rectangle Grid.Row="3"
+                   Grid.Column="1"
+                   Fill="#CC119EDA" />
+
+        <StackPanel Grid.Row="3" 
+					Grid.Column="3">
+            <TextBlock FontFamily="Segoe UI Semibold"
+                       Foreground="#404148"
+                       Text="{Binding AppointmentDate}" />
+			
+            <TextBlock FontFamily="Segoe UI Semibold"
+                       Foreground="#404148"
+                       Text="{Binding TimeSpan}" />
+        </StackPanel>
+
+        <Rectangle Grid.Row="5"
+                   Grid.Column="1"
+                   Fill="#CC3FDA11" />
+
+        <StackPanel Grid.Row="5" 
+					Grid.Column="3">
+            <TextBlock FontFamily="Segoe UI Semibold"
+                       Foreground="#404148"
+                       Text="{Binding Room}" />
+        </StackPanel>
+
+        <Rectangle Grid.Row="7"
+                   Grid.Column="1"
+                   Fill="#CCDA6C11" />
+
+        <TextBlock Grid.Row="7"
+                   Grid.Column="3"
+                   FontFamily="Segoe UI Semibold"
+                   Foreground="#404148"
+                   Text="{Binding Description}"
+                   TextWrapping="Wrap" />
+    </Grid>
+</UserControl>

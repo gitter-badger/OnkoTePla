@@ -20,10 +20,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public AppointmentViewModelSampleData(Time beginTime, Time endTime)
 		{
 			PatientDisplayName = "Jerry Black";
-			TimeSpan = "";
-			AppointmentDate = "";
-			Description = "";
-			Room = "";
+			TimeSpan = "10.00-13.00";
+			AppointmentDate = "2.November 2015";
+			Description = "test";
+			Room = "A12";
 
 			BeginTime = beginTime;
 			EndTime = endTime;
