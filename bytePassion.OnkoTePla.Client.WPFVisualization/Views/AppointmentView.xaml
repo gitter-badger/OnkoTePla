@@ -159,8 +159,9 @@
                 </StackPanel>
             </Border>
             <Border Grid.Column="1"
+					BorderThickness="1"					
                     Background="{StaticResource AccentColorBrush}"
-                    BorderBrush="{StaticResource AccentColorBrush}">
+                    BorderBrush="Black">
 
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
