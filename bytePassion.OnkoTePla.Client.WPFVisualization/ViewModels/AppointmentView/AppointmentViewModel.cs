@@ -217,8 +217,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		}
 
 
-		public string PatientDisplayName => appointment.Patient.Name;
-		public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
+		public string PatientDisplayName => $"{appointment.Patient.Name} (*{appointment.Patient.Birthday.Year})";
+        public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
 		public string AppointmentDate    => appointment.Day.ToString();
 		public string Description        => appointment.Description;
 		public string Room               => appointment.TherapyPlace.Name;		
