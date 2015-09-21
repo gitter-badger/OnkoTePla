@@ -23,7 +23,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			remove { appointmentSet.ObservableAppointments.AppointmentChanged -= value; }
 		}
 
-		private readonly AppointmentSet      appointmentSet;
+		private readonly AppointmentSet appointmentSet;
 
 		public AppointmentsOfADayReadModel (IEventBus eventBus, 
 								           IConfigurationReadRepository config, 
