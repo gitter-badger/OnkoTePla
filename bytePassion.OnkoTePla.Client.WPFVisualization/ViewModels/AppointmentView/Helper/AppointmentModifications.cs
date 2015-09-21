@@ -24,7 +24,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 	{		
 		private readonly IDataCenter dataCenter;
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IGlobalState<Date> selectedDateVariable; 
+		private readonly IGlobalState<Date> selectedDateVariable;
+		private readonly IGlobalState<Size> gridSizeVariable; 
 
 		
 		private Time beginTime;
@@ -73,10 +74,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			selectedDateVariable = viewModelCommunication.GetGlobalViewModelVariable<Date>(
 				AppointmentGridSelectedDateVariable
 			);
-
 			selectedDateVariable.StateChanged += OnSelectedDateVariableChanged;
 
+			gridSizeVariable = viewModelCommunication.GetGlobalViewModelVariable<Size>(
+				AppointmentGridSizeVariable	
+			);
+			gridSizeVariable.StateChanged += OnGridSizeVariableChanged;
+			OnGridSizeVariableChanged(gridSizeVariable.Value);
+
 			ComputeSlotInformations();
+		}
+
+		private void OnGridSizeVariableChanged(Size size)
+		{
+			currentGridWidth = size.Width;
 		}
 
 		private void OnSelectedDateVariableChanged(Date date)
@@ -341,10 +352,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private void ComputeSlotInformations()
 		{
 			currentDayOpeningTime = currentMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(CurrentLocation.PlaceAndDate.Date);
-			currentDayClosingTime = currentMedicalPracticeVersion.HoursOfOpening.GetClosingTime(CurrentLocation.PlaceAndDate.Date);
-			currentGridWidth = viewModelCommunication.GetGlobalViewModelVariable<Size>(AppointmentGridSizeVariable)
-													 .Value
-													 .Width;
+			currentDayClosingTime = currentMedicalPracticeVersion.HoursOfOpening.GetClosingTime(CurrentLocation.PlaceAndDate.Date);			
 
 			var currentReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(CurrentLocation.PlaceAndDate);
 
@@ -392,6 +400,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public override void CleanUp()
 		{
 			selectedDateVariable.StateChanged -= OnSelectedDateVariableChanged;
+			gridSizeVariable.StateChanged -= OnGridSizeVariableChanged;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
