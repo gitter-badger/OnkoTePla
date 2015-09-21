@@ -4,7 +4,7 @@ using System.Windows.Input;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 
 #pragma warning disable 0067
 

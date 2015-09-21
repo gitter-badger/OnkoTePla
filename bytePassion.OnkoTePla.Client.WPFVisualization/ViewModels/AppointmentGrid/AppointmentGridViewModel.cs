@@ -54,7 +54,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			
 			globalGridSizeVariable = viewModelCommunication.GetGlobalViewModelVariable<Size>(
 				AppointmentGridSizeVariable
-				);
+			);
 			globalGridSizeVariable.StateChanged += OnGridSizeChanged;
 
 			globalRoomFilterVariable = viewModelCommunication.GetGlobalViewModelVariable<Guid?>(
@@ -130,8 +130,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				case ChangeAction.Added:   { AddAppointment(appointmentChangedEventArgs.Appointment);    break; }
 				case ChangeAction.Deleted: { RemoveAppointment(appointmentChangedEventArgs.Appointment); break; }				
 				case ChangeAction.Modified:
-				{
-					// TODO: das geht bestimmt besser!!
+				{					
 					RemoveAppointment(appointmentChangedEventArgs.Appointment);
 					AddAppointment(appointmentChangedEventArgs.Appointment);
 					break;

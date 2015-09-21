@@ -159,7 +159,7 @@
     <Compile Include="TestAndOldStuff\AppointmentOverView\AppointmentOverViewModel.cs" />
     <Compile Include="ViewModels\AppointmentView\AppointmentViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
-    <Compile Include="ViewModels\AppointmentGrid\Helper\OperatingMode.cs" />
+    <Compile Include="ViewModels\AppointmentView\Helper\OperatingMode.cs" />
     <Compile Include="ViewModels\PatientSelector\Helper\PatientListItem.cs" />
     <Compile Include="TestAndOldStuff\AddAppointmentTestView\IAddAppointmentTestViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\IAppointmentGridViewModel.cs" />

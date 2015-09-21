@@ -99,9 +99,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		public override void CleanUp ()
 		{
-			globalGridSizeVariable.StateChanged   -= OnGridSizeChanged;
+			globalGridSizeVariable.StateChanged -= OnGridSizeChanged;
 			
-
 			viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,
 				this

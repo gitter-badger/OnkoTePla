@@ -145,7 +145,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			return timeSlots.FirstOrDefault(slot => new Duration(slot.Begin, slot.End) >= appointmentDuration);
 		}
 
-		private IEnumerable<TimeSlot> ComputeSlots (Time openingTime, Time closingTime, IEnumerable<Appointment> appointments)
+		private static IEnumerable<TimeSlot> ComputeSlots (Time openingTime, Time closingTime, IEnumerable<Appointment> appointments)
 		{			
 			var sortedAppointments = appointments.ToList();
 			sortedAppointments.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));			
@@ -216,13 +216,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			CurrentLocation = newLocation;
 			
-			var duration = new Duration(newBeginTime, newEndTime);
+			var appointmentDuration = new Duration(newBeginTime, newEndTime);
 			var beginTimeToSnap = GetTimeToSnap(newBeginTime);
 			lastSetBeginTime = beginTimeToSnap;
 			BeginTime = beginTimeToSnap;
 
 
-			var endTimeToSnap = GetTimeToSnap(beginTimeToSnap + duration);
+			var endTimeToSnap = GetTimeToSnap(beginTimeToSnap + appointmentDuration);
 			lastSetEndTime = endTimeToSnap;
 			EndTime = endTimeToSnap;
 
@@ -361,6 +361,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 															   .Where(appointment => appointment.Id != OriginalAppointment.Id)
 															   .Append(appointmentWithCorrectStartAndEnd)
 															   .ToList();
+
+			currentReadModel.Dispose();
 
 			appointmentsWithinTheSameRow.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));
 			var indexOfThisAppointment = appointmentsWithinTheSameRow.IndexOf(appointmentWithCorrectStartAndEnd);

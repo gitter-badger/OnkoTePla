@@ -4,7 +4,7 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView

@@ -6,10 +6,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
              xmlns:appointmentView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"
-             xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper"
              xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"
              xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
              xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
+             xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper"
              d:DesignHeight="30"
              d:DesignWidth="200"
              mc:Ignorable="d">

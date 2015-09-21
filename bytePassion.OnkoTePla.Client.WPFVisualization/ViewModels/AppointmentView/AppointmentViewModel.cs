@@ -10,7 +10,6 @@ using bytePassion.Lib.WpfUtils.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -182,8 +181,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public Guid Identifier => appointment.Id;
 		
-		public ICommand DeleteAppointment      { get; }
-		public ICommand SwitchToEditMode       { get; }
+		public ICommand DeleteAppointment { get; }
+		public ICommand SwitchToEditMode  { get; }
 
 
 		public Time BeginTime
