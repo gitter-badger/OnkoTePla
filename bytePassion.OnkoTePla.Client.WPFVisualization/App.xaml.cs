@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
-using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
@@ -20,27 +17,9 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Patients;
-
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization
 {
@@ -120,95 +99,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 													sessionInformation);
 
 
-			// initiate ViewModelCommunication			
+			// Create MainWindow
 
-			IHandlerCollection<ViewModelMessage> handlerCollection = new MultiHandlerCollection<ViewModelMessage>();
-			IMessageBus<ViewModelMessage> viewModelMessageBus = new LocalMessageBus<ViewModelMessage>(handlerCollection);
-			IStateEngine viewModelStateEngine = new StateEngine();
-			IViewModelCollections viewModelCollections = new ViewModelCollections();
+			IWindowBuilder<NewMainWindow> mainWindowBuilder = new MainWindowBuilder(configReadRepository, dataCenter, commandBus);
 
-			IViewModelCommunication viewModelCommunication = new ViewModelCommunication(viewModelMessageBus,
-																	                    viewModelStateEngine,
-																	                    viewModelCollections);
-
-
-			// Register Global ViewModelVariables
-
-			var initialMedicalPractice = configReadRepository.GetAllMedicalPractices().First();  // TODO set last usage
-
-			var gridSizeInitialValue          = new Size(400,400);
-			var selectedDateInitialValue      = initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday();
-			var displayedPracticeInitialValue = initialMedicalPractice.Id; // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört	
-
-			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSizeVariable,              gridSizeInitialValue);
-			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedDateVariable,      selectedDateInitialValue);
-			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridDisplayedPracticeVariable, displayedPracticeInitialValue);		// TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
-			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridRoomFilterVariable,        (Guid?) null);							// when selectedRoomID == null --> all rooms are selected
-			viewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable,                     true);									// true --> full width; false --> minimized
-			viewModelCommunication.RegisterGlobalViewModelVariable(CurrentModifiedAppointmentVariable,       (AppointmentModifications)null);		// null -> no appointment selected
-
-
-			// Create ViewModelCollection
-
-			viewModelCommunication.CreateViewModelCollection<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
-				TherapyPlaceRowViewModelCollection				
-			);
-
-			viewModelCommunication.CreateViewModelCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-				AppointmentGridViewModelCollection				
-			);
-
-			viewModelCommunication.CreateViewModelCollection<ITimeGridViewModel, AggregateIdentifier>(
-				TimeGridViewModelCollection				
-			);
-
-			viewModelCommunication.CreateViewModelCollection<IAppointmentViewModel, Guid>(
-				AppointmentViewModelCollection				
-			);
-
-
-			// register stand-alone viewModelMessageHandler
-
-			viewModelCommunication.RegisterViewModelMessageHandler(new ConfirmChangesMessageHandler(viewModelCommunication));
-			viewModelCommunication.RegisterViewModelMessageHandler(new RejectChangesMessageHandler(viewModelCommunication));
-
-
-			// create permanent ViewModels
-
-			var dateDisplayViewModel = new DateDisplayViewModel(viewModelCommunication);
-			var medicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModel(dataCenter, viewModelCommunication);
-			var roomSelectorViewModel = new RoomFilterViewModel(dataCenter, viewModelCommunication);
-			var dateSelectorViewModel = new DateSelectorViewModel(viewModelCommunication);
-			var gridContainerViewModel = new GridContainerViewModel(dataCenter,
-																	commandBus,
-																	viewModelCommunication,                                                                    
-																	new List<AggregateIdentifier>(), 
-																	50);
-
-			var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);
-			
-			var overviewPageViewModel = new OverviewPageViewModel(dateDisplayViewModel,
-																  medicalPracticeSelectorViewModel, 
-																  roomSelectorViewModel, 
-																  dateSelectorViewModel, 
-																  gridContainerViewModel,
-																  changeConfirmationViewModel,
-																  viewModelCommunication);
-
-			var searchPageViewModel   = new SearchPageViewModel(dataCenter);
-			var optionsPageViewModel  = new OptionsPageViewModel();
-
-
-			var newMainWindowViewModel = new NewMainWindowViewModel(overviewPageViewModel, 
-																	searchPageViewModel, 
-																	optionsPageViewModel,
-																	viewModelCommunication);
-
-			var mainWindow = new NewMainWindow
-			{
-				DataContext = newMainWindowViewModel
-			};
-
+			var mainWindow = mainWindowBuilder.BuildWindow();
 			mainWindow.ShowDialog();
 
 

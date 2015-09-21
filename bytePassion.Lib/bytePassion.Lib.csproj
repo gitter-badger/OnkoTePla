@@ -63,6 +63,7 @@
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="TimeLib\TimeSlot.cs" />
+    <Compile Include="Utils\IWindowBuilder.cs" />
     <Compile Include="WpfUtils\Adorner\AdornedControl.cs" />
     <Compile Include="WpfUtils\Adorner\AdornerPlacement.cs" />
     <Compile Include="WpfUtils\Adorner\FrameworkElementAdorner.cs" />

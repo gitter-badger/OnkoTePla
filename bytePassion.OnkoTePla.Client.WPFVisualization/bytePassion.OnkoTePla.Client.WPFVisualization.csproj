@@ -248,6 +248,8 @@
     <Compile Include="Views\TimeGrid.xaml.cs">
       <DependentUpon>TimeGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowBuilder\AddAppointmentDialogWindowBuilder.cs" />
+    <Compile Include="WindowBuilder\MainWindowBuilder.cs" />
     <Page Include="TestAndOldStuff\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
