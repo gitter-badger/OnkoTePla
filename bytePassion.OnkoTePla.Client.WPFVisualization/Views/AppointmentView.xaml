@@ -32,9 +32,9 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid.ToolTip>
                 <Grid>
@@ -99,7 +99,9 @@
                 </Grid>
             </Grid.ToolTip>
             <Border Grid.Column="0"
+					Width="20"
                     BorderBrush="{StaticResource AccentColorBrush}"
+					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}"
                     BorderThickness="1,1,0,1">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
@@ -192,6 +194,8 @@
             </Border>
             <Border Grid.Column="2"
                     BorderBrush="{StaticResource AccentColorBrush}"
+					Width="20"
+					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}"
                     BorderThickness="0,1,1,1">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
