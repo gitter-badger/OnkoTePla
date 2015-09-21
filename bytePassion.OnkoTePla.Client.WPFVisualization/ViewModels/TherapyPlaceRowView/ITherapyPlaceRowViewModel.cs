@@ -6,7 +6,6 @@ using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Requests;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
@@ -16,8 +15,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 												 IDataCenterDeliverer,
 												 IDisposable,
 												 IViewModelMessageHandler<AddAppointmentToTherapyPlaceRow>,
-												 IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>,
-												 IViewModelRequestHandler<GetMaxLeftRequest, double>
+												 IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>
 	{		
 		ObservableCollection<IAppointmentViewModel> AppointmentViewModels { get; }				
 		

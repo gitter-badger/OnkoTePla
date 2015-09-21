@@ -121,7 +121,6 @@
     <Compile Include="ViewModels\NotificationView\INotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModelSampleData.cs" />
-    <Compile Include="ViewModels\TherapyPlaceRowView\Requests\GetMaxLeftRequest.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />
     <Compile Include="ViewModelMessages\Deactivate.cs" />
     <Compile Include="ViewModelMessages\Activate.cs" />

@@ -7,7 +7,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Requests;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
@@ -53,12 +52,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public void Process(RemoveAppointmentFromTherapyPlaceRow message)
 		{
 			AppointmentViewModels.Remove(message.AppointmentViewModelToRemove);
-		}
-
-		public double Process (GetMaxLeftRequest message)
-		{
-			return -15;
-		}
+		}	
 
 		public override void CleanUp()
 		{

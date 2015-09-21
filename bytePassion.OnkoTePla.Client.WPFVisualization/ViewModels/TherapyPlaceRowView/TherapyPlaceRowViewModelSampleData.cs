@@ -8,7 +8,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Requests;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
@@ -37,8 +36,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public TherapyPlaceRowIdentifier Identifier { get; }		
 
 		public void   Process(AddAppointmentToTherapyPlaceRow message) {}
-		public void   Process(RemoveAppointmentFromTherapyPlaceRow message) {}
-		public double Process(GetMaxLeftRequest message) => -1;
+		public void   Process(RemoveAppointmentFromTherapyPlaceRow message) {}		
 
 		public IViewModelCommunication ViewModelCommunication { get; } = null;
 		public IDataCenter DataCenter { get; } = null;
