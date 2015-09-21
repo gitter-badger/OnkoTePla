@@ -4,6 +4,7 @@ using System.Windows.Input;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfUtils.Commands;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
@@ -49,7 +50,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 			{
 				var dialogWindow = new Views.AddAppointmentDialog
 				{
-					Owner = Application.Current.MainWindow
+					Owner = Application.Current.MainWindow,
+					DataContext = new AddAppointmentDialogViewModel()
 				};
 
 				dialogWindow.ShowDialog();

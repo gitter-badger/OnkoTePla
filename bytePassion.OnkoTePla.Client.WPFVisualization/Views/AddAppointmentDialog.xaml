@@ -4,10 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:addAppointmentDialog="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog"
         mc:Ignorable="d"
 		WindowStyle="ToolWindow"		
 		WindowStartupLocation="CenterOwner"
         Title="AddAppointmentDialog" Height="600" Width="800">
+	
+	<d:DesignData.DataContext>
+        <addAppointmentDialog:AddAppointmentDialogViewModelSampleData/>
+	</d:DesignData.DataContext>
+	
     <Grid Background="Bisque">
 
         <Grid.ColumnDefinitions>
@@ -16,6 +22,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -41,6 +48,12 @@
                 Grid.Row="2"
                 Margin="5"
                 Background="Cyan"/>
+		
+		<Button Grid.Row="3"
+				Grid.Column="1"
+				Margin="20"
+				Content="Close"
+				Command="{Binding CloseDialog}"></Button>
 
     </Grid>
 </controls:MetroWindow>

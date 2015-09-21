@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using bytePassion.Lib.WpfUtils.Commands;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog
@@ -10,7 +12,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 		{
 			CloseDialog = new Command(() =>
 			{
-				
+				var windows = Application.Current.Windows
+												 .OfType<Views.AddAppointmentDialog>()
+												 .ToList();
+
+				if (windows.Count() == 1)
+					windows[0].Close();
+					
 			});
 		}
 
