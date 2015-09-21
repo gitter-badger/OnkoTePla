@@ -11,68 +11,73 @@
 			<appointmentView:AppointmentViewModelSampleData/>
      </d:DesignData.DataContext>
 
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="15" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="15" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="15" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="10" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="3" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="250" />
-            <ColumnDefinition Width="10" />
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="1"
-                   Grid.Column="3"
-                   FontFamily="Segoe UI Semibold"
-                   FontSize="18"
-                   FontWeight="Bold"
-                   Foreground="#404148"
-                   Text="{Binding PatientDisplayName}"/>
+    <Border BorderThickness="1"
+			BorderBrush="DarkGray"
+			Background="White">
+
+        <Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="10" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="15" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="15" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="15" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="10" />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="10" />
+				<ColumnDefinition Width="3" />
+				<ColumnDefinition Width="5" />
+				<ColumnDefinition Width="250" />
+				<ColumnDefinition Width="10" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Row="1"
+					   Grid.Column="3"
+					   FontFamily="Segoe UI Semibold"
+					   FontSize="18"
+					   FontWeight="Bold"
+					   Foreground="#404148"
+					   Text="{Binding PatientDisplayName}"/>
 		
-        <Rectangle Grid.Row="3"
-                   Grid.Column="1"
-                   Fill="#CC119EDA" />
+			<Rectangle Grid.Row="3"
+					   Grid.Column="1"
+					   Fill="#CC119EDA" />
 
-        <StackPanel Grid.Row="3" 
-					Grid.Column="3">
-            <TextBlock FontFamily="Segoe UI Semibold"
-                       Foreground="#404148"
-                       Text="{Binding AppointmentDate}" />
+			<StackPanel Grid.Row="3" 
+						Grid.Column="3">
+				<TextBlock FontFamily="Segoe UI Semibold"
+						   Foreground="#404148"
+						   Text="{Binding AppointmentDate}" />
 			
-            <TextBlock FontFamily="Segoe UI Semibold"
-                       Foreground="#404148"
-                       Text="{Binding TimeSpan}" />
-        </StackPanel>
+				<TextBlock FontFamily="Segoe UI Semibold"
+						   Foreground="#404148"
+						   Text="{Binding TimeSpan}" />
+			</StackPanel>
 
-        <Rectangle Grid.Row="5"
-                   Grid.Column="1"
-                   Fill="#CC3FDA11" />
+			<Rectangle Grid.Row="5"
+					   Grid.Column="1"
+					   Fill="#CC3FDA11" />
 
-        <StackPanel Grid.Row="5" 
-					Grid.Column="3">
-            <TextBlock FontFamily="Segoe UI Semibold"
-                       Foreground="#404148"
-                       Text="{Binding Room}" />
-        </StackPanel>
+			<StackPanel Grid.Row="5" 
+						Grid.Column="3">
+				<TextBlock FontFamily="Segoe UI Semibold"
+						   Foreground="#404148"
+						   Text="{Binding Room}" />
+			</StackPanel>
 
-        <Rectangle Grid.Row="7"
-                   Grid.Column="1"
-                   Fill="#CCDA6C11" />
+			<Rectangle Grid.Row="7"
+					   Grid.Column="1"
+					   Fill="#CCDA6C11" />
 
-        <TextBlock Grid.Row="7"
-                   Grid.Column="3"
-                   FontFamily="Segoe UI Semibold"
-                   Foreground="#404148"
-                   Text="{Binding Description}"
-                   TextWrapping="Wrap" />
-    </Grid>
+			<TextBlock Grid.Row="7"
+					   Grid.Column="3"
+					   FontFamily="Segoe UI Semibold"
+					   Foreground="#404148"
+					   Text="{Binding Description}"
+					   TextWrapping="Wrap" />
+		</Grid>
+    </Border>
 </UserControl>
