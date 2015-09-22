@@ -17,6 +17,22 @@
 
     <Window.Resources>
         <converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
+        <Ellipse x:Key="AccentMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     Fill="{Binding ColorBrush, Mode=OneWay}" />
+        
+        <Style x:Key="AccentColorMenuItemStyle"
+                   TargetType="{x:Type MenuItem}"
+                   BasedOn="{StaticResource MetroMenuItem}">
+            <Setter Property="Command"
+                        Value="{Binding ChangeAccentCommand}" />
+            <Setter Property="Icon"
+                        Value="{StaticResource AccentMenuIcon}" />
+            <Setter Property="Header"
+                        Value="{Binding Name, Mode=OneWay}" />
+        </Style>
     </Window.Resources>
 
     <d:UserControl.DataContext>
@@ -35,6 +51,7 @@
               Margin="120,-32,0,0">
 
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130" />
                 <ColumnDefinition Width="130" />
                 <ColumnDefinition Width="130" />
                 <ColumnDefinition Width="130" />
@@ -58,6 +75,11 @@
                     Command="{Binding ShowOptionsPage}"
                     Content="Einstellungen"
                     Style="{StaticResource TitleBarButton}" />
+            <Menu Grid.Column="3" Height="25">
+                <MenuItem Header="Accent"
+                          ItemsSource="{Binding AccentColors, Mode=OneWay}"
+                          ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" />
+            </Menu>
 
         </Grid>
 

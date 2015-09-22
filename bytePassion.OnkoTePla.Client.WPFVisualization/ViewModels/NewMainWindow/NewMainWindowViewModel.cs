@@ -1,5 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfUtils.Commands;
@@ -8,75 +12,105 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
+using MahApps.Metro;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 {
-	public class NewMainWindowViewModel : INewMainWindowViewModel
-	{
-		private readonly IViewModelCommunication viewModelCommunication;
+    public class AccentColorMenuData
+    {
+        public string Name { get; set; }
+        public Brush BorderColorBrush { get; set; }
+        public Brush ColorBrush { get; set; }
 
-		private int selectedPage;
-		private bool notificationVisible;
-		private INotificationViewModel notificationViewModel;
 
-		public NewMainWindowViewModel(IOverviewPageViewModel overviewPageViewModel, 
-									  ISearchPageViewModel searchPageViewModel, 
-									  IOptionsPageViewModel optionsPageViewModel,
-									  IViewModelCommunication viewModelCommunication)
-		{
-			this.viewModelCommunication = viewModelCommunication;
+        public ICommand ChangeAccentCommand { get; }
 
-			OverviewPageViewModel = overviewPageViewModel;
-			SearchPageViewModel   = searchPageViewModel;
-			OptionsPageViewModel  = optionsPageViewModel;
+        public AccentColorMenuData()
+        {
+            ChangeAccentCommand = new Command(() =>
+            {
+                var theme = ThemeManager.DetectAppStyle(Application.Current);
+                var accent = ThemeManager.GetAccent(Name);
+                ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+            },() => true);
+        }
+    }
 
-			ShowOverviewPage = new Command(() => SelectedPage = 0);
-			ShowSearchPage   = new Command(() => SelectedPage = 1);
-			ShowOptionsPage  = new Command(() => SelectedPage = 2);
+    public class NewMainWindowViewModel : INewMainWindowViewModel
+    {
+        private readonly IViewModelCommunication viewModelCommunication;
 
-			NotificationVisible = false;
+        private int selectedPage;
+        private bool notificationVisible;
+        private INotificationViewModel notificationViewModel;
 
-			viewModelCommunication.RegisterViewModelMessageHandler<ShowNotification>(this);
-			viewModelCommunication.RegisterViewModelMessageHandler<HideNotification>(this);
-		}
+        public NewMainWindowViewModel(IOverviewPageViewModel overviewPageViewModel,
+            ISearchPageViewModel searchPageViewModel,
+            IOptionsPageViewModel optionsPageViewModel,
+            IViewModelCommunication viewModelCommunication)
+        {
+            this.viewModelCommunication = viewModelCommunication;
 
-		public int SelectedPage
-		{
-			get { return selectedPage; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref selectedPage, value); }
-		}
+            OverviewPageViewModel = overviewPageViewModel;
+            SearchPageViewModel = searchPageViewModel;
+            OptionsPageViewModel = optionsPageViewModel;
 
-		public ICommand ShowOverviewPage { get; }
-		public ICommand ShowSearchPage   { get; }
-		public ICommand ShowOptionsPage  { get; }
+            ShowOverviewPage = new Command(() => SelectedPage = 0);
+            ShowSearchPage = new Command(() => SelectedPage = 1);
+            ShowOptionsPage = new Command(() => SelectedPage = 2);
 
-		public IOverviewPageViewModel OverviewPageViewModel { get; }
-		public ISearchPageViewModel   SearchPageViewModel   { get; }
-		public IOptionsPageViewModel  OptionsPageViewModel  { get; }
+            NotificationVisible = false;
 
-		public bool NotificationVisible
-		{
-			get { return notificationVisible; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref notificationVisible, value); }
-		}
+            AccentColors = ThemeManager.Accents
+                .Select(
+                    a =>
+                        new AccentColorMenuData() {Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush})
+                .ToList();
 
-		public INotificationViewModel NotificationViewModel
-		{
-			get { return notificationViewModel; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref notificationViewModel, value); }
-		}
+            viewModelCommunication.RegisterViewModelMessageHandler<ShowNotification>(this);
+            viewModelCommunication.RegisterViewModelMessageHandler<HideNotification>(this);
+        }
 
-		public void Process(ShowNotification message)
-		{
-			NotificationViewModel = new NotificationViewModel(message.NotificationMessage, viewModelCommunication);
-			NotificationVisible = true;
-		}
+        public List<AccentColorMenuData> AccentColors { get; set; }
 
-		public void Process(HideNotification message)
-		{
-			NotificationVisible = false;
-		}
+        public int SelectedPage
+        {
+            get { return selectedPage; }
+            private set { PropertyChanged.ChangeAndNotify(this, ref selectedPage, value); }
+        }
 
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+        public ICommand ShowOverviewPage { get; }
+        public ICommand ShowSearchPage { get; }
+        public ICommand ShowOptionsPage { get; }
+        public ICommand ChangeAccent { get; }
+
+        public IOverviewPageViewModel OverviewPageViewModel { get; }
+        public ISearchPageViewModel SearchPageViewModel { get; }
+        public IOptionsPageViewModel OptionsPageViewModel { get; }
+
+        public bool NotificationVisible
+        {
+            get { return notificationVisible; }
+            private set { PropertyChanged.ChangeAndNotify(this, ref notificationVisible, value); }
+        }
+
+        public INotificationViewModel NotificationViewModel
+        {
+            get { return notificationViewModel; }
+            private set { PropertyChanged.ChangeAndNotify(this, ref notificationViewModel, value); }
+        }
+
+        public void Process(ShowNotification message)
+        {
+            NotificationViewModel = new NotificationViewModel(message.NotificationMessage, viewModelCommunication);
+            NotificationVisible = true;
+        }
+
+        public void Process(HideNotification message)
+        {
+            NotificationVisible = false;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }
