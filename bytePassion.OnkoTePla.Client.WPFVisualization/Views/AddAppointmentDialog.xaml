@@ -90,7 +90,7 @@
                     <controls:NumericUpDown Maximum="23"
                                             Minimum="0"
                                             Value="0" />
-                    <TextBlock Margin="5,0,20,0"
+                    <TextBlock Margin="5,0,32,0"
                                VerticalAlignment="Center"
                                Text="h" />
                     <controls:NumericUpDown Interval="15"
@@ -117,12 +117,12 @@
                 <StackPanel Grid.Row="4"
                             Grid.Column="2"
                             Orientation="Horizontal">
-                    <TextBox Width="50" />
-                    <TextBlock Width="50"
+                    <TextBox Width="66" />
+                    <TextBlock Margin="5,0,20,0"
                                VerticalAlignment="Center"
                                Text="Uhr" />
-                    <TextBox Width="50" />
-                    <TextBlock Width="50"
+                    <TextBox Width="66" />
+                    <TextBlock Margin="5,0,0,0"
                                VerticalAlignment="Center"
                                Text="min" />
                 </StackPanel>
