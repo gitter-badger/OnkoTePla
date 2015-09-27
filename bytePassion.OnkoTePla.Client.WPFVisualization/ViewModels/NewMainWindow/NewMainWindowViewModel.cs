@@ -16,26 +16,6 @@ using MahApps.Metro;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 {
-    public class AccentColorMenuData
-    {
-        public string Name { get; set; }
-        public Brush BorderColorBrush { get; set; }
-        public Brush ColorBrush { get; set; }
-
-
-        public ICommand ChangeAccentCommand { get; }
-
-        public AccentColorMenuData()
-        {
-            ChangeAccentCommand = new Command(() =>
-            {
-                var theme = ThemeManager.DetectAppStyle(Application.Current);
-                var accent = ThemeManager.GetAccent(Name);
-                ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
-            },() => true);
-        }
-    }
-
     public class NewMainWindowViewModel : INewMainWindowViewModel
     {
         private readonly IViewModelCommunication viewModelCommunication;
@@ -61,17 +41,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 
             NotificationVisible = false;
 
-            AccentColors = ThemeManager.Accents
-                .Select(
-                    a =>
-                        new AccentColorMenuData() {Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush})
-                .ToList();
-
-            viewModelCommunication.RegisterViewModelMessageHandler<ShowNotification>(this);
+           viewModelCommunication.RegisterViewModelMessageHandler<ShowNotification>(this);
             viewModelCommunication.RegisterViewModelMessageHandler<HideNotification>(this);
         }
-
-        public List<AccentColorMenuData> AccentColors { get; set; }
 
         public int SelectedPage
         {
@@ -82,7 +54,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
         public ICommand ShowOverviewPage { get; }
         public ICommand ShowSearchPage { get; }
         public ICommand ShowOptionsPage { get; }
-        public ICommand ChangeAccent { get; }
 
         public IOverviewPageViewModel OverviewPageViewModel { get; }
         public ISearchPageViewModel SearchPageViewModel { get; }
