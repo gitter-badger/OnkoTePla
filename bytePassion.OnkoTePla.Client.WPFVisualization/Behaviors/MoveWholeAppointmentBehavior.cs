@@ -18,6 +18,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 										typeof (MoveWholeAppointmentBehavior),
 										new PropertyMetadata(default(IViewModelCommunication)));
 
+	    public static readonly DependencyProperty DragAdornerTemplateProperty = DependencyProperty.Register(
+	        "DragAdornerTemplate", typeof (DataTemplate), typeof (MoveWholeAppointmentBehavior), new PropertyMetadata(default(DataTemplate)));
+
+	    public DataTemplate DragAdornerTemplate
+	    {
+	        get { return (DataTemplate) GetValue(DragAdornerTemplateProperty); }
+	        set { SetValue(DragAdornerTemplateProperty, value); }
+	    }
+
 		public IViewModelCommunication ViewModelCommunication
 		{
 			get { return (IViewModelCommunication)GetValue(ViewModelCommunicationProperty); }

@@ -66,6 +66,7 @@
     <Compile Include="Utils\IWindowBuilder.cs" />
     <Compile Include="WpfUtils\Adorner\AdornedControl.cs" />
     <Compile Include="WpfUtils\Adorner\AdornerPlacement.cs" />
+    <Compile Include="WpfUtils\Adorner\DragAdorner.cs" />
     <Compile Include="WpfUtils\Adorner\FrameworkElementAdorner.cs" />
     <Compile Include="WpfUtils\Behaviors\AutoScrollDownBehavior.cs" />
     <Compile Include="WpfUtils\Behaviors\HeightWidthReportingBehavior.cs" />
