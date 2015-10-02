@@ -37,6 +37,10 @@ namespace bytePassion.Lib.WpfUtils.Commands
 			if (canExecute == null)
 				return true;
 
+			if (parameter != null)
+				if (!(parameter is T))
+					return false;
+
 			return canExecute((parameter == null) ? default(T) : (T)parameter);
 		}
 
