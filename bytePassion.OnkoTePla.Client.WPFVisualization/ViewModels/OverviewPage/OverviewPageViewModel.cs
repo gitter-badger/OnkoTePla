@@ -4,6 +4,7 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfUtils.Commands;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
@@ -22,12 +23,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 		private bool addAppointmentPossible;
 
 		public OverviewPageViewModel(IDateDisplayViewModel dateDisplayViewModel,
-                                     IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel, 
+									 IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel, 
 									 IRoomFilterViewModel roomFilterViewModel, 
 									 IDateSelectorViewModel dateSelectorViewModel, 
 									 IGridContainerViewModel gridContainerViewModel, 
-									 IChangeConfirmationViewModel changeConfirmationViewModel,
-									 IViewModelCommunication viewModelCommunication)
+									 IChangeConfirmationViewModel changeConfirmationViewModel, 
+									 IViewModelCommunication viewModelCommunication, 
+									 IDataCenter dataCenter)
 		{
 			DateDisplayViewModel = dateDisplayViewModel;
 			MedicalPracticeSelectorViewModel = medicalPracticeSelectorViewModel;
@@ -47,7 +49,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 
 			ShowAddAppointmentDialog = new Command(() =>
 			{
-				IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder = new AddAppointmentDialogWindowBuilder();
+				IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder = new AddAppointmentDialogWindowBuilder(dataCenter);
 
 				var dialogWindow = dialogBuilder.BuildWindow();
 				dialogWindow.ShowDialog();

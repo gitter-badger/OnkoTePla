@@ -125,9 +125,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 																  dateSelectorViewModel,
 																  gridContainerViewModel,
 																  changeConfirmationViewModel,
-																  viewModelCommunication);
+																  viewModelCommunication, 
+																  dataCenter);
 
-			var searchPageViewModel   = new SearchPageViewModel(dataCenter);
+			var searchPageViewModel   = new SearchPageViewModel();
 			var optionsPageViewModel  = new OptionsPageViewModel();
 
 

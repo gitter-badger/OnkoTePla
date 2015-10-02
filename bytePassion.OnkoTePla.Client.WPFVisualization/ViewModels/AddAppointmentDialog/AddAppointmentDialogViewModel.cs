@@ -2,14 +2,18 @@
 using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.WpfUtils.Commands;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
+
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog
 {
 	public class AddAppointmentDialogViewModel : IAddAppointmentDialogViewModel
 	{
 
-		public AddAppointmentDialogViewModel()
+		public AddAppointmentDialogViewModel(IPatientSelectorViewModel patientSelectorViewModel)
 		{
+			PatientSelectorViewModel = patientSelectorViewModel;
+
 			CloseDialog = new Command(() =>
 			{
 				var windows = Application.Current.Windows
@@ -22,6 +26,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 			});
 		}
 
+		public IPatientSelectorViewModel PatientSelectorViewModel { get; }
 		public ICommand CloseDialog { get; }
 	}
 }

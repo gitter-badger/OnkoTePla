@@ -1,150 +1,173 @@
 ﻿<controls:MetroWindow x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.AddAppointmentDialog"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:addAppointmentDialog="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                      
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      Title="AddAppointmentDialog"
+					  xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog"
+					  xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
+					  Title="AddAppointmentDialog"
                       Width="1000"
+					  Height="620"
                       SizeToContent="Height"
                       WindowStartupLocation="CenterOwner"
                       WindowStyle="ToolWindow"
+					  ResizeMode="NoResize"
                       mc:Ignorable="d">
 
     <d:DesignData.DataContext>
-        <addAppointmentDialog:AddAppointmentDialogViewModelSampleData />
+        <sampleData:AddAppointmentDialogViewModelSampleData />
     </d:DesignData.DataContext>
+	
+	<Window.Resources>
+		
+		<Style TargetType="Border"
+			   x:Key="OpticalDivisionBorder">
+			<Setter Property="Height" Value="1"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="Black"/>
+			<Setter Property="Margin" Value="0,2,40,15"></Setter>
+		</Style>
+		
+		<Style TargetType="TextBlock"
+			   x:Key="HeadingTextBlock">
+			
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="FontFamily" Value="Segoe UI Light"/>
+			<Setter Property="Margin" Value="0,20,0,0"></Setter>
+			
+		</Style>
+		
+	</Window.Resources>
 
-    <Grid Background="{StaticResource WhiteColorBrush}">
+	<Border Background="{StaticResource WhiteColorBrush}"
+			BorderThickness="1"
+			BorderBrush="DarkGray">
+        <Grid >
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="25" />
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="25" />
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1"
-                    Grid.Column="1"
-                    Margin="0,0,0,50">
-            <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-                <TextBlock FontSize="24" Text="Patient" />
+            <views:PatientSelector Grid.Column="0"
+								   Grid.Row="0"
+								   Grid.RowSpan="2"
+								   Margin="20"
+								   Height="550"
+								   DataContext="{Binding PatientSelectorViewModel}"/>
+
+            <StackPanel Grid.Row="0"
+						Grid.Column="1"
+						Margin="0,0,0,50">
+
+                <TextBlock Style="{StaticResource HeadingTextBlock}"
+						   Text="Patient" />
+                <Border Style="{StaticResource OpticalDivisionBorder}"/>
+                <TextBlock FontSize="24" 
+						   Margin="30,0"
+						   Text="-noch kein Patient ausgewählt-" />
+
+
+                <TextBlock Style="{StaticResource HeadingTextBlock}" 
+						   Text="Beschreibung" />
+                <Border Style="{StaticResource OpticalDivisionBorder}"/>
+
+                <TextBox Height="40"
+						 Margin="30,0,50,0"/>
+
+                <TextBlock Style="{StaticResource HeadingTextBlock}" 
+						   Text="Uhrzeit" />
+                <Border Style="{StaticResource OpticalDivisionBorder}"/>
+
+                <Grid Margin="30,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="20" />
+                        <RowDefinition />
+                        <RowDefinition Height="20" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0"
+								Grid.Column="0"
+								Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="Dauer:" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="0"
+								Grid.Column="2"
+								Orientation="Horizontal">
+                        <controls:NumericUpDown Maximum="23"
+												Minimum="0"
+												Value="0" />
+                        <TextBlock Margin="5,0,32,0"
+								   VerticalAlignment="Center"
+								   Text="h" />
+                        <controls:NumericUpDown Interval="15"
+												Maximum="45"
+												Minimum="0"
+												Value="15" />
+                        <TextBlock Margin="5,0,0,0"
+								   VerticalAlignment="Center"
+								   Text="min" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2"
+								Grid.Column="0"
+								Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="freie Zeiten:" />
+                    </StackPanel>
+                    <Button Grid.Row="2"
+							Grid.Column="2"
+							Content="zeigen" />
+                    <StackPanel Grid.Row="4"
+								Grid.Column="0"
+								Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="Uhrzeit:" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="4"
+								Grid.Column="2"
+								Orientation="Horizontal">
+                        <TextBox Width="66" />
+                        <TextBlock Margin="5,0,20,0"
+								   VerticalAlignment="Center"
+								   Text="Uhr" />
+                        <TextBox Width="66" />
+                        <TextBlock Margin="5,0,0,0"
+								   VerticalAlignment="Center"
+								   Text="min" />
+                    </StackPanel>
+                </Grid>
             </StackPanel>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBox Width="400" HorizontalAlignment="Left" />
-                <TextBlock Grid.Column="1"
-                           HorizontalAlignment="Right"
-                           Text="Ich bin ein Platzhalter" />
-            </Grid>
-        </StackPanel>
 
-        <StackPanel Grid.Row="2"
-                    Grid.Column="1"
-                    Margin="0,0,0,50">
-            <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-                <TextBlock FontSize="24" Text="Beschreibung" />
+            <StackPanel Grid.Row="1"
+						Grid.Column="1"
+						Margin="10,0"
+						HorizontalAlignment="Right"
+						Orientation="Horizontal">
+
+                <Button Width="120"
+						Height="40"
+						Margin="10,10,5,10"
+						VerticalAlignment="Center"
+						Command="{Binding CloseDialog}"
+						Content="anlegen" />
+                <Button Width="120"
+						Height="40"
+						Margin="5,10,0,10"
+						VerticalAlignment="Center"
+						Command="{Binding CloseDialog}"
+						Content="abbrechen" />
+
             </StackPanel>
-            <Grid>
-                <TextBox Height="120" />
-            </Grid>
-        </StackPanel>
-
-        <StackPanel Grid.Row="3" Grid.Column="1">
-            <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-                <TextBlock FontSize="24" Text="Uhrzeit" />
-            </StackPanel>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="20" />
-                    <RowDefinition />
-                    <RowDefinition Height="20" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0"
-                            Grid.Column="0"
-                            Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Dauer:" />
-                </StackPanel>
-                <StackPanel Grid.Row="0"
-                            Grid.Column="2"
-                            Orientation="Horizontal">
-                    <controls:NumericUpDown Maximum="23"
-                                            Minimum="0"
-                                            Value="0" />
-                    <TextBlock Margin="5,0,32,0"
-                               VerticalAlignment="Center"
-                               Text="h" />
-                    <controls:NumericUpDown Interval="15"
-                                            Maximum="45"
-                                            Minimum="0"
-                                            Value="15" />
-                    <TextBlock Margin="5,0,0,0"
-                               VerticalAlignment="Center"
-                               Text="min" />
-                </StackPanel>
-                <StackPanel Grid.Row="2"
-                            Grid.Column="0"
-                            Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="freie Zeiten:" />
-                </StackPanel>
-                <Button Grid.Row="2"
-                        Grid.Column="2"
-                        Content="zeigen" />
-                <StackPanel Grid.Row="4"
-                            Grid.Column="0"
-                            Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Uhrzeit:" />
-                </StackPanel>
-                <StackPanel Grid.Row="4"
-                            Grid.Column="2"
-                            Orientation="Horizontal">
-                    <TextBox Width="66" />
-                    <TextBlock Margin="5,0,20,0"
-                               VerticalAlignment="Center"
-                               Text="Uhr" />
-                    <TextBox Width="66" />
-                    <TextBlock Margin="5,0,0,0"
-                               VerticalAlignment="Center"
-                               Text="min" />
-                </StackPanel>
-            </Grid>
-        </StackPanel>
-
-        <StackPanel Grid.Row="4"
-                    Grid.Column="1"
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal">
-            <Button Width="120"
-                    Height="40"
-                    Margin="10,10,5,10"
-                    VerticalAlignment="Center"
-                    Command="{Binding CloseDialog}"
-                    Content="anlegen" />
-            <Button Width="120"
-                    Height="40"
-                    Margin="5,10,0,10"
-                    VerticalAlignment="Center"
-                    Command="{Binding CloseDialog}"
-                    Content="abbrechen" />
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </Border>
 </controls:MetroWindow>
