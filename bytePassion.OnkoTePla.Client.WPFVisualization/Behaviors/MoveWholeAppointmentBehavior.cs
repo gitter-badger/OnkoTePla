@@ -1,8 +1,10 @@
 ﻿using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.WpfUtils.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
@@ -17,15 +19,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 										typeof (IViewModelCommunication),
 										typeof (MoveWholeAppointmentBehavior),
 										new PropertyMetadata(default(IViewModelCommunication)));
-
-	    public static readonly DependencyProperty DragAdornerTemplateProperty = DependencyProperty.Register(
-	        "DragAdornerTemplate", typeof (DataTemplate), typeof (MoveWholeAppointmentBehavior), new PropertyMetadata(default(DataTemplate)));
-
-	    public DataTemplate DragAdornerTemplate
-	    {
-	        get { return (DataTemplate) GetValue(DragAdornerTemplateProperty); }
-	        set { SetValue(DragAdornerTemplateProperty, value); }
-	    }
 
 		public IViewModelCommunication ViewModelCommunication
 		{
@@ -89,12 +82,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 		private IGlobalState<AppointmentModifications> currentModifiedAppointmentVariable;
 
-		private void OnAssociatedObjectMouseMove (object sender, MouseEventArgs mouseEventArgs)
+	    private void OnAssociatedObjectMouseMove (object sender, MouseEventArgs mouseEventArgs)
 		{
 			if (mouseIsDown)
 			{
-				var displacement = mouseEventArgs.GetPosition(container) - referencePoint;
-
+			    var mousePos = mouseEventArgs.GetPosition(container);
+                var displacement =  mousePos- referencePoint;
 				currentModifiedAppointmentVariable.Value.SetNewTimeShiftDelta(displacement.X);
 			}
 		}
@@ -134,7 +127,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 		{
 			currentModifiedAppointmentVariable.Value.FixTimeShiftDelta();
 			mouseIsDown = false;
-			//Mouse.Capture(null);
+		    //Mouse.Capture(null);
 		}
 	}
 }

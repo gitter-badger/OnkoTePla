@@ -20,7 +20,10 @@
 	<UserControl.Resources>
         <computations:ComputeAppointmentPixelLeft  x:Key="ComputeAppointmentPixelLeft"/>
 		<computations:ComputeAppointmentPixelWidth x:Key="ComputeAppointmentPixelWidth"/>
-	</UserControl.Resources>
+        <DataTemplate x:Key="DragTemplate">
+            <TextBlock Text="Bla"></TextBlock>
+        </DataTemplate>
+    </UserControl.Resources>
 
     <Grid Height="30">
         <Grid.ColumnDefinitions>
@@ -60,7 +63,14 @@
                 <behaviors:AcceptAppointmentDropBehavior ViewModelCommunication="{Binding ViewModelCommunication}"
 														 Appointments="{Binding AppointmentViewModels}"
 														 DataCenter="{Binding DataCenter}"
-														 TherapyPlaceRowIdentifier="{Binding Identifier}"/>
+														 TherapyPlaceRowIdentifier="{Binding Identifier}"
+                                                         >
+                    <behaviors:AcceptAppointmentDropBehavior.DragAdornerTemplate>
+                        <DataTemplate>
+                                <Rectangle Fill="Green" Width="30" Height="30"></Rectangle>
+                        </DataTemplate>
+                    </behaviors:AcceptAppointmentDropBehavior.DragAdornerTemplate>
+                </behaviors:AcceptAppointmentDropBehavior>
             </i:Interaction.Behaviors>
 
             <ItemsControl ItemsSource="{Binding AppointmentViewModels}">
