@@ -213,6 +213,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                         ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
                             Constants.CurrentModifiedAppointmentVariable
                             ).Value;
+
+
                     if (adorner == null)
                     {
                         adorner = new UIElementAdorner(AssociatedObject, DragAdornerTemplate,
@@ -221,6 +223,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
                     }
                     adorner.Visibility = Visibility.Visible;
+                    adorner.Width = ComputeAppointmentWidth(currentDraggedAppointment);
                 }
             }
             dragEventArgs.Handled = true;
@@ -240,6 +243,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
         private TimeSlot GetSlot(Time time)
         {
             return slots.FirstOrDefault(slot => time > slot.Begin && time < slot.End);
+        }
+
+        private double ComputeAppointmentWidth(Appointment currentDraggedAppointment)
+        {
+            var lengthOfOneHour = gridWidth / (new Duration(closingTime, openingTime).Seconds / 3600.0);
+            var durationOfAppointment = new Duration(currentDraggedAppointment.StartTime, currentDraggedAppointment.EndTime);
+
+            return lengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
         }
 
         private void ComputeSlots(Guid currentDraggedAppointmentId)
