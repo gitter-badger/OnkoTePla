@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
+using System.Windows.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -15,14 +17,29 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
         private string searchFilter;
 		private bool listIsEmpty;
 
+		private readonly DispatcherTimer uglyHackTimer;
+	
+
 		public PatientSelectorViewModel(IDataCenter dataCenter)
         {	        
+			uglyHackTimer = new DispatcherTimer				//
+			{												//
+				IsEnabled = true,
+				Interval = new TimeSpan(0,0,0,0,5)			
+			};
+
+			uglyHackTimer.Tick += (sender, args) =>
+			{
+				SearchFilter = "";
+				uglyHackTimer.IsEnabled = false;
+			};
+
             Patients = new CollectionViewSource();
             Patients.Filter += Filter;
             Patients.Source = dataCenter.Patients.GetAllPatients().ToList();
 
-			SearchFilter = "";
-		}
+			SearchFilter = "";			
+        }
 
         public CollectionViewSource Patients { get; }
 
@@ -42,10 +59,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
         public Patient SelectedPatient
         {
             get { return selectedPatient; }
-	        set
-	        {
-		        PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value);
-	        }
+	        set { PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value); }
         }
 
 		public bool ListIsEmpty
