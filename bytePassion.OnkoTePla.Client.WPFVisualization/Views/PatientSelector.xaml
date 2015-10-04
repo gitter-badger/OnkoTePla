@@ -58,7 +58,8 @@
 		
 		<ListBox Grid.Row="1"
 				 Margin="0,10,0,0"
-				 SelectionMode="Single"					 
+				 SelectionMode="Single"		
+                 IsSynchronizedWithCurrentItem="False"
 				 HorizontalContentAlignment="Stretch"
                  ItemTemplate="{StaticResource PatientDataTemplate}"
                  SelectedItem="{Binding SelectedPatient, 
@@ -66,9 +67,9 @@
 										 UpdateSourceTrigger=PropertyChanged}"
                  ItemsSource="{Binding Patients.View}"> 						
 			
-			<i:Interaction.Behaviors>
+			<!--<i:Interaction.Behaviors>
                 <libBehaviors:ClearInitialListBoxSelectionBehavior/>
-            </i:Interaction.Behaviors>
+            </i:Interaction.Behaviors>-->
 			
 		</ListBox>
 		
