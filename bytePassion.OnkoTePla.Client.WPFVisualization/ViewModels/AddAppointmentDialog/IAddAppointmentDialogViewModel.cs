@@ -12,7 +12,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 		IPatientSelectorViewModel PatientSelectorViewModel { get; }
 
 		ICommand CloseDialog { get; }
+		ICommand CreateAppointment { get; }
+
+		ICommand HourPlusOne        { get; }
+		ICommand HourMinusOne       { get; }
+		ICommand MinutePlusFifteen  { get; }
+		ICommand MinuteMinusFifteen { get; }
+
+		byte DurationHours   { get; }
+		byte DurationMinutes { get; }
 
 		Patient SelectedPatient { get; }
+		string Description { set; }
 	}
 }

@@ -16,14 +16,28 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 			PatientSelectorViewModel = new PatientSelectorViewModelSampleData();
 
 			SelectedPatient = new Patient("John Doh", new Date(12,4,1978), true, new Guid(), "externalID");
+
+			DurationHours = 2;
+			DurationMinutes = 15;
 		}
 
 		public IPatientSelectorViewModel PatientSelectorViewModel { get; }
-		public ICommand CloseDialog { get; } = null;
+
+		public ICommand CloseDialog        { get; } = null;
+		public ICommand CreateAppointment  { get; } = null;
+		
+		public ICommand HourPlusOne        { get; } = null;
+		public ICommand HourMinusOne       { get; } = null;
+		public ICommand MinutePlusFifteen  { get; } = null;
+		public ICommand MinuteMinusFifteen { get; } = null;
+
+		public byte DurationHours   { get; }
+		public byte DurationMinutes { get; }
+
 		public Patient SelectedPatient { get; }
+		public string  Description     { set {} }
 
 		public void Dispose() { }
-
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

@@ -9,6 +9,7 @@
 					  xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"
 					  xmlns:system="clr-namespace:System;assembly=mscorlib"
 					  xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts"
+					  xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
 					  Title="AddAppointmentDialog"
                       Width="1000"
 					  Height="620"
@@ -23,9 +24,9 @@
     </d:DesignData.DataContext>
 	
 	<Window.Resources>
+				
+		<converter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter"/> 
 		
-		<computations:PatientToCollapedVisibilityConverter x:Key="PatientToCollapedVisibilityConverter"/>
-
         <system:Boolean x:Key="True">  True  </system:Boolean>
         <system:Boolean x:Key="False"> False </system:Boolean>
 
@@ -38,13 +39,20 @@
 		</Style>
 		
 		<Style TargetType="TextBlock"
-			   x:Key="HeadingTextBlock">
+			   x:Key="HeaderTextBlock">
 			
 			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="FontFamily" Value="Segoe UI Light"/>
 			<Setter Property="Margin" Value="0,20,0,0"></Setter>
 			
 		</Style>
+		
+		<Style TargetType="TextBlock"
+			   x:Key="StandardTextBlock">
+
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>            
+        </Style>
 
         <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
         <ControlTemplate x:Key="PatientControlTemplate">
@@ -52,6 +60,52 @@
 					   FontSize="24"/>	        
 		</ControlTemplate>
         <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
+
+        <ControlTemplate TargetType="Button"
+						 x:Key="PlusButtonControlTemplate">
+			
+            <Grid Width="{TemplateBinding Width}" 
+				  Height="{TemplateBinding Height}">
+                <Border Background="Transparent">
+                    <Viewbox >
+                        <Path Data="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 
+									0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" 
+							  Fill="Blue" />
+                    </Viewbox>
+                </Border>
+				
+				<Ellipse Margin="3,3,1,0"
+						 Fill="Gray" 
+						 Opacity="0.9"
+						 Visibility="{TemplateBinding IsEnabled, 
+													  Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}">
+										
+				</Ellipse>
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate TargetType="Button"
+						 x:Key="MinusButtonControlTemplate">
+           
+            <Grid Width="{TemplateBinding Width}" 
+				  Height="{TemplateBinding Height}">
+                <Border Background="Transparent">
+                    <Viewbox >
+                        <Path Data="M17,13H7V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 
+								    0 0,0 12,2Z"
+							  Fill="Red" />
+                    </Viewbox>
+                </Border>
+
+                <Ellipse Margin="3,3,1,0"
+						 Fill="Gray" 
+						 Opacity="0.9"
+						 Visibility="{TemplateBinding IsEnabled, 
+													  Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}">
+
+                </Ellipse>
+            </Grid>
+        </ControlTemplate>
 
     </Window.Resources>
 
@@ -81,7 +135,7 @@
 						Grid.Column="1"
 						Margin="0,0,0,50">
 
-                <TextBlock Style="{StaticResource HeadingTextBlock}"
+                <TextBlock Style="{StaticResource HeaderTextBlock}"
 						   Text="Patient" />
                 <Border Style="{StaticResource OpticalDivisionBorder}"/>
 				
@@ -99,8 +153,7 @@
 									<Setter Property="Template">
 										<Setter.Value>
                                             <ControlTemplate>
-                                                <TextBlock FontSize="24"
-														   Margin="30,0"
+                                                <TextBlock Style="{StaticResource StandardTextBlock}"														  														   
 														   Text="-noch kein Patient ausgewählt-" />
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -113,77 +166,83 @@
 				</ContentControl>
 
 
-                <TextBlock Style="{StaticResource HeadingTextBlock}" 
+                <TextBlock Style="{StaticResource HeaderTextBlock}" 
 						   Text="Beschreibung" />
                 <Border Style="{StaticResource OpticalDivisionBorder}"/>
 
-                <TextBox Height="40"
-						 Margin="30,0,50,0"/>
+                <TextBox Height="80"
+						 FontSize="24"
+						 VerticalScrollBarVisibility="Auto"
+						 AcceptsReturn="True"
+						 TextWrapping="Wrap"
+						 Margin="30,0,50,0"
+						 Text="{Binding Description, 
+										Mode=OneWayToSource, 
+										UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Style="{StaticResource HeadingTextBlock}" 
-						   Text="Uhrzeit" />
+                <TextBlock Style="{StaticResource HeaderTextBlock}" 
+						   Text="Dauer" />
                 <Border Style="{StaticResource OpticalDivisionBorder}"/>
 
-                <Grid Margin="30,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="Auto" />
+
+                <Grid Margin="30,0,0,0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="20" />
-                        <RowDefinition />
-                        <RowDefinition Height="20" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0"
-								Grid.Column="0"
-								Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Text="Dauer:" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="0"
-								Grid.Column="2"
-								Orientation="Horizontal">
-                        <controls:NumericUpDown Maximum="23"
-												Minimum="0"
-												Value="0" />
-                        <TextBlock Margin="5,0,32,0"
-								   VerticalAlignment="Center"
-								   Text="h" />
-                        <controls:NumericUpDown Interval="15"
-												Maximum="45"
-												Minimum="0"
-												Value="15" />
-                        <TextBlock Margin="5,0,0,0"
-								   VerticalAlignment="Center"
-								   Text="min" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="2"
-								Grid.Column="0"
-								Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Text="freie Zeiten:" />
-                    </StackPanel>
-                    <Button Grid.Row="2"
-							Grid.Column="2"
-							Content="zeigen" />
-                    <StackPanel Grid.Row="4"
-								Grid.Column="0"
-								Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Text="Uhrzeit:" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="4"
-								Grid.Column="2"
-								Orientation="Horizontal">
-                        <TextBox Width="66" />
-                        <TextBlock Margin="5,0,20,0"
-								   VerticalAlignment="Center"
-								   Text="Uhr" />
-                        <TextBox Width="66" />
-                        <TextBlock Margin="5,0,0,0"
-								   VerticalAlignment="Center"
-								   Text="min" />
-                    </StackPanel>
+					
+					<TextBlock Grid.Column="0"
+							   Text="Stunden" 
+							   Style="{StaticResource StandardTextBlock}"/>
+					
+					<Button Grid.Column="1"
+							Margin="4"
+							Template="{StaticResource PlusButtonControlTemplate}"
+							Command="{Binding HourPlusOne}"/>
+					
+					<TextBlock Grid.Column="2"
+							   Style="{StaticResource StandardTextBlock}"
+							   Text="{Binding DurationHours}"
+							   HorizontalAlignment="Center"
+							   VerticalAlignment="Center"/>
+
+                    <Button Grid.Column="3"
+							Margin="4"
+							Template="{StaticResource MinusButtonControlTemplate}"
+							Command="{Binding HourMinusOne}"/>
+                </Grid>
+
+                <Grid Margin="30,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0"
+							   Text="Minuten" 
+							   Style="{StaticResource StandardTextBlock}"/>
+
+                    <Button Grid.Column="1"
+							Margin="4"
+							Template="{StaticResource PlusButtonControlTemplate}"
+							Command="{Binding MinutePlusFifteen}"/>
+
+                    <TextBlock Grid.Column="2"
+							   Style="{StaticResource StandardTextBlock}"
+							   Text="{Binding DurationMinutes}"
+							   HorizontalAlignment="Center"
+							   VerticalAlignment="Center"/>
+
+                    <Button Grid.Column="3"
+							Margin="4"
+							Template="{StaticResource MinusButtonControlTemplate}"
+							Command="{Binding MinuteMinusFifteen}"/>
                 </Grid>
             </StackPanel>
 
@@ -197,7 +256,7 @@
 						Height="40"
 						Margin="10,10,5,10"
 						VerticalAlignment="Center"
-						Command="{Binding CloseDialog}"
+						Command="{Binding CreateAppointment}"
 						Content="anlegen" />
                 <Button Width="120"
 						Height="40"
