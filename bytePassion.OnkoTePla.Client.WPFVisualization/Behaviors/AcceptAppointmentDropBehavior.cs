@@ -89,6 +89,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
         private bool dropIsPossible;
         private UIElementAdorner adorner;
         private AdornerLayer layer;
+        private Appointment currentDraggedAppointment;
 
         protected override void OnAttached()
         {
@@ -112,41 +113,50 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
         {
             if (dropIsPossible)
             {
-                var timeAtDropPosition = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
-                var appointmentDuration = new Duration(appointmentModification.BeginTime,
-                    appointmentModification.EndTime);
-                var halfappointmentDuration = appointmentDuration/2u;
-
-                var slotAtDropPosition = GetSlot(timeAtDropPosition);
-
                 Time newBeginTime;
                 Time newEndTime;
 
-                if (timeAtDropPosition + halfappointmentDuration > slotAtDropPosition.End)
-                {
-                    newEndTime = slotAtDropPosition.End;
-                    newBeginTime = slotAtDropPosition.End - appointmentDuration;
-                }
-                else if (timeAtDropPosition - halfappointmentDuration < slotAtDropPosition.Begin)
-                {
-                    newBeginTime = slotAtDropPosition.Begin;
-                    newEndTime = slotAtDropPosition.Begin + appointmentDuration;
-                }
-                else
-                {
-                    newBeginTime = timeAtDropPosition - halfappointmentDuration;
-                    newEndTime = timeAtDropPosition + halfappointmentDuration;
-                }
+                CalculateCorrectAppointmentPosition(dragEventArgs, out newBeginTime, out newEndTime);
 
                 appointmentModification.SetNewLocation(TherapyPlaceRowIdentifier, newBeginTime, newEndTime);
-    
+
             }
             if (adorner != null)
             {
                 adorner.Destroy();
                 adorner.Visibility = Visibility.Collapsed;
+                adorner = null;
             }
             appointmentModification.ShowDisabledOverlay = false;
+            dragEventArgs.Handled = true;
+        }
+
+        private void CalculateCorrectAppointmentPosition(DragEventArgs dragEventArgs, out Time newBeginTime, out Time newEndTime)
+        {
+            var timeAtDropPosition = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
+            var appointmentDuration = new Duration(appointmentModification.BeginTime,
+                appointmentModification.EndTime);
+            var halfappointmentDuration = appointmentDuration / 2u;
+
+            var slotAtDropPosition = GetSlot(timeAtDropPosition);
+
+
+
+            if (timeAtDropPosition + halfappointmentDuration > slotAtDropPosition.End)
+            {
+                newEndTime = slotAtDropPosition.End;
+                newBeginTime = slotAtDropPosition.End - appointmentDuration;
+            }
+            else if (timeAtDropPosition - halfappointmentDuration < slotAtDropPosition.Begin)
+            {
+                newBeginTime = slotAtDropPosition.Begin;
+                newEndTime = slotAtDropPosition.Begin + appointmentDuration;
+            }
+            else
+            {
+                newBeginTime = timeAtDropPosition - halfappointmentDuration;
+                newEndTime = timeAtDropPosition + halfappointmentDuration;
+            }
         }
 
         private void OnDragOver(object sender, DragEventArgs dragEventArgs)
@@ -157,7 +167,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                 {
                     if (slots == null)
                     {
-                        var currentDraggedAppointment = (Appointment) dragEventArgs.Data.GetData(typeof (Appointment));
                         ComputeSlots(currentDraggedAppointment.Id);
 
                         appointmentModification =
@@ -178,10 +187,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                        
 
                         if (slotLength >= appointmentLength)
-                        {
-                            adorner.UpdatePosition(dragEventArgs.GetPosition(AssociatedObject).X, dragEventArgs.GetPosition(AssociatedObject).Y);
+                        {            
+                            adorner.UpdatePosition(dragEventArgs.GetPosition(AssociatedObject).X - ComputeAppointmentWidth(currentDraggedAppointment)/2.0, dragEventArgs.GetPosition(AssociatedObject).Y);
                             dropIsPossible = true;
                             dragEventArgs.Handled = true;
+                            return;
                         }
                     }
 
@@ -206,7 +216,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
             {
                 if (Appointments != null)
                 {
-                    var currentDraggedAppointment = (Appointment) dragEventArgs.Data.GetData(typeof (Appointment));
+                    currentDraggedAppointment = (Appointment) dragEventArgs.Data.GetData(typeof (Appointment));
                     ComputeSlots(currentDraggedAppointment.Id);
 
                     appointmentModification =
