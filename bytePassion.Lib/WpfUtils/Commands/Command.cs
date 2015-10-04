@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.WpfUtils.Commands
 {
-	public class Command : ICommand, IDisposable
+	public class Command : DisposingObject, ICommand
 	{
 		private readonly Func<bool> canExecute;
 		private readonly Action execute;
@@ -42,30 +43,14 @@ namespace bytePassion.Lib.WpfUtils.Commands
 		}
 		
 		public event EventHandler CanExecuteChanged;		
-
-		private bool disposed = false;
-		public void Dispose ()
+		
+		public override void CleanUp()
 		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		~Command ()
-		{
-			Dispose(false);
-		}
-
-		private void Dispose (bool disposing)
-		{
-			if (!disposed)
-				if (disposing)
-					if (updateCommandInformation != null)
-					{
-						updateCommandInformation.UpdateOfCanExecuteChangedRequired -= CanExecuteChangedRequired;
-						updateCommandInformation.Dispose();
-					}
-
-			disposed = true;
-		}
+			if (updateCommandInformation != null)
+			{
+				updateCommandInformation.UpdateOfCanExecuteChangedRequired -= CanExecuteChangedRequired;
+				updateCommandInformation.Dispose();
+			}
+		}		
 	}
 }
