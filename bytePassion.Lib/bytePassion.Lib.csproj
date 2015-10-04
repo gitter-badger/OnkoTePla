@@ -68,6 +68,7 @@
     <Compile Include="WpfUtils\Adorner\AdornerPlacement.cs" />
     <Compile Include="WpfUtils\Adorner\FrameworkElementAdorner.cs" />
     <Compile Include="WpfUtils\Behaviors\AutoScrollDownBehavior.cs" />
+    <Compile Include="WpfUtils\Behaviors\ClearInitialListBoxSelectionBehavior.cs" />
     <Compile Include="WpfUtils\Behaviors\HeightWidthReportingBehavior.cs" />
     <Compile Include="WpfUtils\Behaviors\MoveHorizontalBehavior.cs" />
     <Compile Include="WpfUtils\CommandExecutingBehaviors\ExecuteCommandOnClickBehavior.cs" />

@@ -7,7 +7,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 	public interface IPatientSelectorViewModel : IViewModel
 	{
 		CollectionViewSource Patients { get; }
+
 		string SearchFilter { set; }
         Patient SelectedPatient { set; }
+
+		bool ListIsEmpty { get; }
 	}
 }

@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 		             
              xmlns:patientSelector="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector"
              xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:libBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.Behaviors;assembly=bytePassion.Lib"
+             xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignWidth="300"
 			 d:DesignHeight="500">
@@ -14,6 +17,9 @@
 	</d:UserControl.DataContext>
 	
 	<UserControl.Resources>
+		
+		<converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+		
         <DataTemplate x:Key="PatientDataTemplate" 
 					  DataType="{x:Type contracts:Patient}">
             <Border BorderThickness="1"
@@ -52,11 +58,25 @@
 		
 		<ListBox Grid.Row="1"
 				 Margin="0,10,0,0"
+				 SelectionMode="Single"					 
 				 HorizontalContentAlignment="Stretch"
                  ItemTemplate="{StaticResource PatientDataTemplate}"
-                 SelectedValue="{Binding SelectedPatient, 
+                 SelectedItem="{Binding SelectedPatient, 
 										 Mode=TwoWay,
 										 UpdateSourceTrigger=PropertyChanged}"
-                 ItemsSource="{Binding Patients.View}" />
-	</Grid>
+                 ItemsSource="{Binding Patients.View}"> 						
+			
+		</ListBox>
+		
+		<Border Grid.Row="1"
+				Background="LightGreen"
+				Visibility="{Binding ListIsEmpty, 
+									 Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+			
+			<TextBlock HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Text="Kein Patient mit diesem Namen Vorhanden"/>
+
+        </Border>
+    </Grid>
 </UserControl>

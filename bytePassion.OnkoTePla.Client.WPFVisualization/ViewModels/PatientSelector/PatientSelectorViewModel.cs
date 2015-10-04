@@ -13,8 +13,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
         
         private Patient selectedPatient;
         private string searchFilter;
+		private bool listIsEmpty;
 
-        public PatientSelectorViewModel(IDataCenter dataCenter)
+		public PatientSelectorViewModel(IDataCenter dataCenter)
         {	        
             Patients = new CollectionViewSource();
             Patients.Filter += Filter;
@@ -33,16 +34,37 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
                 searchFilter = value;
 	            SelectedPatient = null;
                 Patients.View.Refresh();
+
+				CheckList();
             }
         }
 		       
         public Patient SelectedPatient
         {
             get { return selectedPatient; }
-	        set { PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value); }
-        }        
+	        set
+	        {
+		        PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value);
+	        }
+        }
 
-        private void Filter(object sender, FilterEventArgs e)
+		public bool ListIsEmpty
+		{
+			get { return listIsEmpty; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref listIsEmpty, value); }
+		}
+
+		private void CheckList()
+		{
+			ListIsEmpty = Patients.View.IsEmpty;
+
+			foreach (var VARIABLE in Patients.View.)
+			{
+				
+			}
+		}
+
+		private void Filter(object sender, FilterEventArgs e)
         {
 			var patientToCheck = e.Item as Patient;
 
