@@ -10,7 +10,9 @@ namespace bytePassion.OnkoTePla.Contracts.Patients
     [DataContract]
 	public class Patient
 	{
-        [DataMember (Name = "Name")]      private readonly string name;
+		public static readonly Patient Dummy = new Patient("", Date.Dummy, false, new Guid(), "");
+
+        [DataMember(Name = "Name")]       private readonly string name;
         [DataMember(Name = "Alive")]      private readonly bool   alive;
         [DataMember(Name = "Birthday")]   private readonly Date   birthday;
         [DataMember(Name = "Id")]         private readonly Guid   id;
@@ -38,7 +40,10 @@ namespace bytePassion.OnkoTePla.Contracts.Patients
 	    public override int    GetHashCode ()           => id.GetHashCode();
 
 
-		public static IComparer<Patient> GetNameComparer() => new PatientNameSorter();
+	    public static bool operator ==(Patient p1, Patient p2) => EqualsExtension.EqualsForEqualityOperator(p1, p2);
+	    public static bool operator !=(Patient p1, Patient p2) => !(p1 == p2);
+
+	    public static IComparer<Patient> GetNameComparer() => new PatientNameSorter();
 
 	    private class PatientNameSorter : IComparer<Patient>
 		{
