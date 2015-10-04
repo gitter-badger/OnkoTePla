@@ -5,6 +5,7 @@ using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog;
@@ -18,14 +19,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 	public class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
 	{
 		private readonly IDataCenter dataCenter;
-			
-		public AddAppointmentDialogWindowBuilder(IDataCenter dataCenter)
+		private readonly IViewModelCommunication superViewModelCommunication;		
+
+		public AddAppointmentDialogWindowBuilder(IDataCenter dataCenter,
+												 IViewModelCommunication superViewModelCommunication)
 		{
 			this.dataCenter = dataCenter;
+			this.superViewModelCommunication = superViewModelCommunication;			
 		}
 
 		public AddAppointmentDialog BuildWindow()
 		{
+			var creationDate      = superViewModelCommunication.GetGlobalViewModelVariable<Date>(AppointmentGridSelectedDateVariable).Value;
+			var medicalPracticeId = superViewModelCommunication.GetGlobalViewModelVariable<Guid>(AppointmentGridDisplayedPracticeVariable).Value;
+
 			IHandlerCollection<ViewModelMessage> handlerCollection = new MultiHandlerCollection<ViewModelMessage>();
 			IMessageBus<ViewModelMessage> viewModelMessageBus = new LocalMessageBus<ViewModelMessage>(handlerCollection);
 			IStateEngine viewModelStateEngine = new StateEngine();
@@ -44,7 +51,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 			return new AddAppointmentDialog
 			       {
 						Owner = Application.Current.MainWindow,
-						DataContext = new AddAppointmentDialogViewModel(patientSelectorViewModel, viewModelCommunication)
+						DataContext = new AddAppointmentDialogViewModel(patientSelectorViewModel, 
+																		viewModelCommunication, 
+																		dataCenter, 
+																		creationDate, 
+																		medicalPracticeId)
 			       };
 		}
 

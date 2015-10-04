@@ -61,7 +61,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				this	
 			);
 
-			SwitchToEditMode = new Command(() =>
+			SwitchToEditMode = new ParameterrizedCommand<bool>(isInitalAdjusting =>
 				{
 					if (currentModifiedAppointment.Value == null)
 					{

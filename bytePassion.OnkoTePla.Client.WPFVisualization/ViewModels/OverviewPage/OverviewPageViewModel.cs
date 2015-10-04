@@ -47,10 +47,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 			
 			currentModifiedAppointmentVariable.StateChanged += OnCurrentModifiedAppointmentVariableChanged;
 
-			ShowAddAppointmentDialog = new Command(() =>
-			{
-				IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder = new AddAppointmentDialogWindowBuilder(dataCenter);
+			IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder = new AddAppointmentDialogWindowBuilder(dataCenter, viewModelCommunication);
 
+			ShowAddAppointmentDialog = new Command(() =>
+			{				
 				var dialogWindow = dialogBuilder.BuildWindow();
 				dialogWindow.ShowDialog();
 			});

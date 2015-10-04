@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
@@ -19,6 +20,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 
 			DurationHours = 2;
 			DurationMinutes = 15;
+
+			CreationState = AppointmentCreationState.NoPatientSelected;
 		}
 
 		public IPatientSelectorViewModel PatientSelectorViewModel { get; }
@@ -33,6 +36,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 
 		public byte DurationHours   { get; }
 		public byte DurationMinutes { get; }
+
+		public AppointmentCreationState CreationState { get; }
 
 		public Patient SelectedPatient { get; }
 		public string  Description     { set {} }

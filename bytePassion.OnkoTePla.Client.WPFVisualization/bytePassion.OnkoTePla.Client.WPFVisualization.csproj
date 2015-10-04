@@ -78,6 +78,7 @@
     <Compile Include="Behaviors\ToggleButtonAsRadioButtonBehavior.cs" />
     <Compile Include="Computations\ComputeAppointmentLeft.cs" />
     <Compile Include="Computations\ComputeAppointmentPixelWidth.cs" />
+    <Compile Include="Converter\CreationStateToSolidColorBrushConverter.cs" />
     <Compile Include="Converter\DateToDateTimeConverter.cs" />
     <Compile Include="Computations\PatientToCollapedVisibilityConverter.cs" />
     <Compile Include="Converter\OperatingModeToBackgroundBrush.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="ViewModelMessages\ShowNotification.cs" />
     <Compile Include="ViewModels\AddAppointmentDialog\AddAppointmentDialogViewModel.cs" />
     <Compile Include="ViewModels\AddAppointmentDialog\AddAppointmentDialogViewModelSampleData.cs" />
+    <Compile Include="ViewModels\AddAppointmentDialog\Helper\AppointmentCreationState.cs" />
     <Compile Include="ViewModels\AddAppointmentDialog\IAddAppointmentDialogViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModelMessages\Dispose.cs" />

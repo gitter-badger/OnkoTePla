@@ -9,10 +9,11 @@
 					  xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"
 					  xmlns:system="clr-namespace:System;assembly=mscorlib"
 					  xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts"
-					  xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
+					  xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
+					  xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
 					  Title="AddAppointmentDialog"
                       Width="1000"
-					  Height="620"
+					  Height="620" 
                       SizeToContent="Height"
                       WindowStartupLocation="CenterOwner"
                       WindowStyle="ToolWindow"
@@ -24,8 +25,9 @@
     </d:DesignData.DataContext>
 	
 	<Window.Resources>
-				
-		<converter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter"/> 
+
+        <libConverter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter"/>
+        <converter:CreationStateToSolidColorBrushConverter x:Key="CreationStateToSolidColorBrushConverter"/>
 		
         <system:Boolean x:Key="True">  True  </system:Boolean>
         <system:Boolean x:Key="False"> False </system:Boolean>
@@ -256,14 +258,20 @@
 						Height="40"
 						Margin="10,10,5,10"
 						VerticalAlignment="Center"
+						Background="{Binding CreationState, 
+											 Converter={StaticResource CreationStateToSolidColorBrushConverter}}"
 						Command="{Binding CreateAppointment}"
-						Content="anlegen" />
+						Content="anlegen" >
+
+                </Button>
+
                 <Button Width="120"
 						Height="40"
 						Margin="5,10,0,10"
 						VerticalAlignment="Center"
 						Command="{Binding CloseDialog}"
-						Content="abbrechen" />
+						Content="abbrechen">
+                </Button>
 
             </StackPanel>
         </Grid>
