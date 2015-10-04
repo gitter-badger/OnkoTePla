@@ -37,14 +37,27 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 
 			if (result == MessageDialogResult.Affirmative)
 			{
-				viewModelCommunication.SendTo(
-					AppointmentViewModelCollection,
-					currentModifiedAppointmentVariable.Value.OriginalAppointment.Id,
-					new RestoreOriginalValues()
-				);
+				var currentAppointmentModification = currentModifiedAppointmentVariable.Value;
 
-				currentModifiedAppointmentVariable.Value.Dispose();
-				currentModifiedAppointmentVariable.Value = null;
+				if (currentAppointmentModification.IsInitialAdjustment)
+				{
+					viewModelCommunication.SendTo(
+						AppointmentViewModelCollection,
+						currentAppointmentModification.OriginalAppointment.Id,
+						new Dispose()
+					);					
+				}
+				else
+				{
+					viewModelCommunication.SendTo(
+						AppointmentViewModelCollection,
+						currentModifiedAppointmentVariable.Value.OriginalAppointment.Id,
+						new RestoreOriginalValues()
+					);
+				}
+
+				currentAppointmentModification.Dispose();
+				currentModifiedAppointmentVariable.Value = null;								
 			}
 		}
 	}

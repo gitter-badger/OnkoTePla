@@ -186,7 +186,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 								    	                           new TherapyPlaceRowIdentifier(new AggregateIdentifier(creationDate, medicalPracticeId),
 								    	                           							     firstFittingTimeSlot.Item1.TherapyPlaceId));
 
-			newAppointmentViewModel.SwitchToEditMode.Execute(null);
+			newAppointmentViewModel.SwitchToEditMode.Execute(true);
+			CloseWindow();
 		}
 
 		private void DoHourPlusOne()

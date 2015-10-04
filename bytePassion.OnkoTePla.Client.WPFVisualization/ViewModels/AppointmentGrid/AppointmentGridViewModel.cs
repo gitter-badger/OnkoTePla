@@ -293,6 +293,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 														  originalAppointment.Day));
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public void Process (CreateNewAppointmentAndSendToCommandBus message)
+		{
+			var appointmentModificationVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
+				CurrentModifiedAppointmentVariable
+			);
+
+			if (appointmentModificationVariable.Value == null)
+				throw new Exception("internal error");
+			
+			commandBus.SendCommand(new AddAppointment(appointmentModificationVariable.Value.CurrentLocation.PlaceAndDate, 
+													  readModel.AggregateVersion, 
+													  dataCenter.SessionInfo.LoggedInUser.Id, 
+													  appointmentModificationVariable.Value.OriginalAppointment.Patient.Id, 
+													  appointmentModificationVariable.Value.Description, 
+													  appointmentModificationVariable.Value.BeginTime, 
+													  appointmentModificationVariable.Value.EndTime, 
+													  appointmentModificationVariable.Value.CurrentLocation.TherapyPlaceId));			
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

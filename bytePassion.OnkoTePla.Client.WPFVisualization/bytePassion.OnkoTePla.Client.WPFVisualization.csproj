@@ -99,6 +99,7 @@
     <Compile Include="ViewModelMessageHandler\ConfirmChangesMessageHandler.cs" />
     <Compile Include="ViewModelMessageHandler\RejectChangesMessageHandler.cs" />
     <Compile Include="ViewModelMessages\ConfirmChanges.cs" />
+    <Compile Include="ViewModelMessages\CreateNewAppointmentAndSendToCommandBus.cs" />
     <Compile Include="ViewModelMessages\DeleteAppointment.cs" />
     <Compile Include="ViewModelMessages\HideNotification.cs" />
     <Compile Include="ViewModelMessages\RejectChanges.cs" />

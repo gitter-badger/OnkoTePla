@@ -53,6 +53,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 						Owner = Application.Current.MainWindow,
 						DataContext = new AddAppointmentDialogViewModel(patientSelectorViewModel, 
 																		viewModelCommunication, 
+																		superViewModelCommunication,
 																		dataCenter, 
 																		creationDate, 
 																		medicalPracticeId)

@@ -29,14 +29,34 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 				AppointmentGridDisplayedPracticeVariable
 			).Value;
 
-			viewModelCommunication.SendTo(
-				AppointmentGridViewModelCollection,
-				new AggregateIdentifier(currentModifiedAppointmentVariable.Value.CurrentLocation.PlaceAndDate.Date, 
-										currentMedicalPracticeId),
-				new SendCurrentChangesToCommandBus()
-			);
+			var currentAppointmentModification = currentModifiedAppointmentVariable.Value;
 
-			currentModifiedAppointmentVariable.Value.Dispose();
+			if (currentAppointmentModification.IsInitialAdjustment)
+			{
+				viewModelCommunication.SendTo(
+					AppointmentViewModelCollection,
+					currentAppointmentModification.OriginalAppointment.Id,
+					new Dispose()						
+				);
+
+				viewModelCommunication.SendTo(
+					AppointmentGridViewModelCollection,
+					new AggregateIdentifier(currentModifiedAppointmentVariable.Value.CurrentLocation.PlaceAndDate.Date,
+						currentMedicalPracticeId),
+					new CreateNewAppointmentAndSendToCommandBus()
+				);
+			}
+			else
+			{
+				viewModelCommunication.SendTo(
+					AppointmentGridViewModelCollection,
+					new AggregateIdentifier(currentModifiedAppointmentVariable.Value.CurrentLocation.PlaceAndDate.Date,
+						currentMedicalPracticeId),
+					new SendCurrentChangesToCommandBus()
+				);
+			}
+
+			currentAppointmentModification.Dispose();
 			currentModifiedAppointmentVariable.Value = null;
 		}
 	}

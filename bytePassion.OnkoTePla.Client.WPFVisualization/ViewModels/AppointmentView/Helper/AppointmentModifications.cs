@@ -24,10 +24,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 	{		
 		private readonly IDataCenter dataCenter;
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalState<Size> gridSizeVariable; 
-
 		
+		private readonly IGlobalState<Date> selectedDateVariable;
+		private readonly IGlobalState<Size> gridSizeVariable;		
+
 		private Time beginTime;
 		private Time endTime;
 		private Time lastSetBeginTime;
@@ -48,12 +48,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public AppointmentModifications(Appointment originalAppointment,										
 										Guid medicalPracticeId, 
 										IDataCenter dataCenter, 
-										IViewModelCommunication viewModelCommunication)
+										IViewModelCommunication viewModelCommunication,
+										bool isInitialAdjustment)
 		{
 			OriginalAppointment = originalAppointment;			
 			this.dataCenter = dataCenter;
-			this.viewModelCommunication = viewModelCommunication;								
-						
+			this.viewModelCommunication = viewModelCommunication;
+			IsInitialAdjustment = isInitialAdjustment;
+
 			var aggregateIdentifier = new AggregateIdentifier(originalAppointment.Day, medicalPracticeId);
 			var initalLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, originalAppointment.TherapyPlace.Id);
 			
@@ -185,6 +187,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		}
 
 		public Appointment OriginalAppointment { get; }
+		public bool IsInitialAdjustment { get; }
 
 		public Time BeginTime
 		{
@@ -400,7 +403,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public override void CleanUp()
 		{
 			selectedDateVariable.StateChanged -= OnSelectedDateVariableChanged;
-			gridSizeVariable.StateChanged -= OnGridSizeVariableChanged;
+			gridSizeVariable.StateChanged     -= OnGridSizeVariableChanged;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

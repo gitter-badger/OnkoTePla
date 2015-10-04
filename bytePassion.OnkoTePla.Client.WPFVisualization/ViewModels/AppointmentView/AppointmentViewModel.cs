@@ -68,7 +68,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 						currentAppointmentModification = new AppointmentModifications(appointment,
 																					  initialLocalisation.PlaceAndDate.MedicalPracticeId, 
 																					  dataCenter, 
-																					  viewModelCommunication);
+																					  viewModelCommunication,
+																					  isInitalAdjusting);
 
 
 						currentAppointmentModification.PropertyChanged += OnAppointmentModificationsPropertyChanged;

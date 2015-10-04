@@ -121,6 +121,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public void Process(SendCurrentChangesToCommandBus message)
 		{
 			throw new Exception("internal error");
+		}		
+
+		public void Process(CreateNewAppointmentAndSendToCommandBus message)
+		{
+			throw new Exception("internal error");
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
