@@ -65,11 +65,7 @@
                  SelectedItem="{Binding SelectedPatient, 
 										 Mode=TwoWay,
 										 UpdateSourceTrigger=PropertyChanged}"
-                 ItemsSource="{Binding Patients.View}"> 						
-			
-			<!--<i:Interaction.Behaviors>
-                <libBehaviors:ClearInitialListBoxSelectionBehavior/>
-            </i:Interaction.Behaviors>-->
+                 ItemsSource="{Binding Patients.View}"> 									
 			
 		</ListBox>
 		

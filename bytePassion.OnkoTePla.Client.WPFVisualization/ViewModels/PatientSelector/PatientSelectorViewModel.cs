@@ -1,8 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
-using System.Windows.Threading;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -12,31 +12,24 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 {
 	internal class PatientSelectorViewModel : IPatientSelectorViewModel
     {
-        
-        private Patient selectedPatient;
+		private readonly IGlobalState<Patient> selectedPatientGlobalVariable;
+
+		private Patient selectedPatient;
         private string searchFilter;
 		private bool listIsEmpty;
 
-		private readonly DispatcherTimer uglyHackTimer;
-	
+		private IReadOnlyList<Patient> allPatients;
 
-		public PatientSelectorViewModel(IDataCenter dataCenter)
-        {	        
-			uglyHackTimer = new DispatcherTimer				//
-			{												//
-				IsEnabled = true,
-				Interval = new TimeSpan(0,0,0,0,5)			
-			};
 
-			uglyHackTimer.Tick += (sender, args) =>
-			{
-				SearchFilter = "";
-				uglyHackTimer.IsEnabled = false;
-			};
+		public PatientSelectorViewModel(IDataCenter dataCenter, IGlobalState<Patient> selectedPatientGlobalVariable)
+        {
+			this.selectedPatientGlobalVariable = selectedPatientGlobalVariable;
+			
+			allPatients = dataCenter.Patients.GetAllPatients().ToList();
 
-            Patients = new CollectionViewSource();
+			Patients = new CollectionViewSource();
             Patients.Filter += Filter;
-            Patients.Source = dataCenter.Patients.GetAllPatients().ToList();
+			Patients.Source = allPatients;
 
 			SearchFilter = "";			
         }
@@ -59,7 +52,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
         public Patient SelectedPatient
         {
             get { return selectedPatient; }
-	        set { PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value); }
+	        set
+	        {
+		        selectedPatientGlobalVariable.Value = value;
+		        PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value);
+	        }
         }
 
 		public bool ListIsEmpty
@@ -69,13 +66,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 		}
 
 		private void CheckList()
-		{
-			ListIsEmpty = Patients.View.IsEmpty;
+		{			
+			var filteredPatients = allPatients.Where(patient => patient.Name.ToLower().Contains(SearchFilter.ToLower())).ToList();
 
-//			foreach (var VARIABLE in Patients.View.)
-//			{
-//				
-//			}
+			if (filteredPatients.Count == 1)
+				SelectedPatient = filteredPatients[0];
+
+			ListIsEmpty = filteredPatients.Count == 0;
 		}
 
 		private void Filter(object sender, FilterEventArgs e)
