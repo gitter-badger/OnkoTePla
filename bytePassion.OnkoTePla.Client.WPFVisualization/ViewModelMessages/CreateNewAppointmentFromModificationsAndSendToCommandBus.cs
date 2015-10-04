@@ -2,7 +2,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
 {
-	public class CreateNewAppointmentAndSendToCommandBus : ViewModelMessage
+	public class CreateNewAppointmentFromModificationsAndSendToCommandBus : ViewModelMessage
 	{
 	}
 }

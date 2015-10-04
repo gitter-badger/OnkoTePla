@@ -293,7 +293,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 														  originalAppointment.Day));
 		}
 
-		public void Process (CreateNewAppointmentAndSendToCommandBus message)
+		public void Process (CreateNewAppointmentFromModificationsAndSendToCommandBus message)
 		{
 			var appointmentModificationVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
 				CurrentModifiedAppointmentVariable

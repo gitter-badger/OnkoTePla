@@ -38,13 +38,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 			IStateEngine viewModelStateEngine = new StateEngine();
 			IViewModelCollections viewModelCollections = new ViewModelCollections();
 
-			IViewModelCommunication viewModelCommunication = new ViewModelCommunication(viewModelMessageBus,
-																						viewModelStateEngine,
-																						viewModelCollections);
+			IViewModelCommunication subViewModelCommunication = new ViewModelCommunication(viewModelMessageBus,
+																						   viewModelStateEngine,
+																						   viewModelCollections);
 
-			viewModelCommunication.RegisterGlobalViewModelVariable(SelectedPatientVariable, (Patient)null);
+			subViewModelCommunication.RegisterGlobalViewModelVariable(SelectedPatientVariable, (Patient)null);
 
-			var selectedPatientVariable = viewModelCommunication.GetGlobalViewModelVariable<Patient>(SelectedPatientVariable);
+			var selectedPatientVariable = subViewModelCommunication.GetGlobalViewModelVariable<Patient>(SelectedPatientVariable);
 
 			IPatientSelectorViewModel patientSelectorViewModel = new PatientSelectorViewModel(dataCenter, selectedPatientVariable);
 
@@ -52,7 +52,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 			       {
 						Owner = Application.Current.MainWindow,
 						DataContext = new AddAppointmentDialogViewModel(patientSelectorViewModel, 
-																		viewModelCommunication, 
+																		subViewModelCommunication, 
 																		superViewModelCommunication,
 																		dataCenter, 
 																		creationDate, 

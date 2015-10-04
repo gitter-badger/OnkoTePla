@@ -41,11 +41,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 
 				if (currentAppointmentModification.IsInitialAdjustment)
 				{
-					viewModelCommunication.SendTo(
-						AppointmentViewModelCollection,
-						currentAppointmentModification.OriginalAppointment.Id,
-						new Dispose()
-					);					
+					viewModelCommunication.SendTo(									//
+						AppointmentViewModelCollection,								// do nothing but
+						currentAppointmentModification.OriginalAppointment.Id,		// deleting the temporarly
+						new Dispose()												// created Appointment
+					);																//
 				}
 				else
 				{

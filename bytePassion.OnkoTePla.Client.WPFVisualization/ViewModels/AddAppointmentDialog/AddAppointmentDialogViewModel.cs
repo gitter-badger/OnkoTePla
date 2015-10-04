@@ -44,7 +44,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 		private Tuple<TherapyPlaceRowIdentifier, TimeSlot> firstFittingTimeSlot; 
 
 		public AddAppointmentDialogViewModel(IPatientSelectorViewModel patientSelectorViewModel,
-											 IViewModelCommunication viewModelCommunication,
+											 IViewModelCommunication subViewModelCommunication,
 											 IViewModelCommunication superViewModelCommunication,
 											 IDataCenter dataCenter,
 											 Date creationDate,
@@ -57,7 +57,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 
 			allAvailableTimeSlots = GetFreeTimeSlotsForADay(creationDate, medicalPracticeId);		
 
-			selectedPatientVariable = viewModelCommunication.GetGlobalViewModelVariable<Patient>(
+			selectedPatientVariable = subViewModelCommunication.GetGlobalViewModelVariable<Patient>(
 				Constants.SelectedPatientVariable
 			);
 

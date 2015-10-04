@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 												 IViewModelMessageHandler<Deactivate>,
 												 IViewModelMessageHandler<DeleteAppointment>, 
 												 IViewModelMessageHandler<SendCurrentChangesToCommandBus>,
-												 IViewModelMessageHandler<CreateNewAppointmentAndSendToCommandBus>
+												 IViewModelMessageHandler<CreateNewAppointmentFromModificationsAndSendToCommandBus>
 	{						
 		ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; } 	
 		
