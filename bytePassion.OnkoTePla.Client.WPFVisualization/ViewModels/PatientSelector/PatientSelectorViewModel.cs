@@ -64,13 +64,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 		}
 
 		private void CheckList()
-		{			
-			var filteredPatients = allPatients.Where(patient => patient.Name.ToLower().Contains(SearchFilter.ToLower())).ToList();
+		{
+			var count = ((ListCollectionView) Patients.View).Count;
 
-			if (filteredPatients.Count == 1)
-				SelectedPatient = filteredPatients[0];
+			if (count == 1)
+				SelectedPatient = (Patient) ((ListCollectionView)Patients.View).GetItemAt(0);
 
-			ListIsEmpty = filteredPatients.Count == 0;
+			ListIsEmpty = count == 0;
 		}
 
 		private void Filter(object sender, FilterEventArgs e)
