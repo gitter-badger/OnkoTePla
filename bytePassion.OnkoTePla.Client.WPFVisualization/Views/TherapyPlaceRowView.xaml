@@ -1,47 +1,50 @@
 ﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.TherapyPlaceRowView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
+             xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Global"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              xmlns:therapyPlaceRowView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView"
-			 xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"			 
-			 xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
-			 xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Global"
-			 d:DesignHeight="30"
+             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
+             d:DesignHeight="30"
              d:DesignWidth="600"
              mc:Ignorable="d">
 
     <d:UserControl.DataContext>
         <therapyPlaceRowView:TherapyPlaceRowViewModelSampleData />
     </d:UserControl.DataContext>
-	
-	<UserControl.Resources>
-        <computations:ComputeAppointmentPixelLeft  x:Key="ComputeAppointmentPixelLeft"/>
-		<computations:ComputeAppointmentPixelWidth x:Key="ComputeAppointmentPixelWidth"/>
-	</UserControl.Resources>
+
+    <UserControl.Resources>
+        <computations:ComputeAppointmentPixelLeft x:Key="ComputeAppointmentPixelLeft" />
+        <computations:ComputeAppointmentPixelWidth x:Key="ComputeAppointmentPixelWidth" />
+        <DataTemplate x:Key="DragTemplate">
+            <TextBlock Text="Bla" />
+        </DataTemplate>
+    </UserControl.Resources>
 
     <Grid Height="30">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{x:Static global:Constants.AppointmentGridLeftColumsSize}"/>           
+            <ColumnDefinition Width="{x:Static global:Constants.AppointmentGridLeftColumsSize}" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0"
+                Margin="0,0,5,0"
                 BorderBrush="#99A9A9A9"
-                BorderThickness="1,1,0,1"
-				Margin="0,0,5,0">
+                BorderThickness="1,1,0,1">
 
             <Border.Background>
                 <SolidColorBrush Color="{Binding RoomColor}" />
             </Border.Background>
         </Border>
 
-        <Border Grid.Column="0"               
+        <Border Grid.Column="0"
+                Margin="0,0,5,0"
                 BorderBrush="DarkGray"
-                BorderThickness="0,1,1,1"
-				Margin="0,0,5,0">
+                BorderThickness="0,1,1,1">
 
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
@@ -51,20 +54,26 @@
         </Border>
 
         <Border Grid.Column="1"
+                AllowDrop="True"
+                Background="Transparent"
                 BorderBrush="#99A9A9A9"
-                BorderThickness="1"
-				Background="Transparent"
-				AllowDrop="True">
+                BorderThickness="1">
 
             <i:Interaction.Behaviors>
-                <behaviors:AcceptAppointmentDropBehavior ViewModelCommunication="{Binding ViewModelCommunication}"
-														 Appointments="{Binding AppointmentViewModels}"
-														 DataCenter="{Binding DataCenter}"
-														 TherapyPlaceRowIdentifier="{Binding Identifier}"/>
+                <behaviors:AcceptAppointmentDropBehavior Appointments="{Binding AppointmentViewModels}"
+                                                         DataCenter="{Binding DataCenter}"
+                                                         TherapyPlaceRowIdentifier="{Binding Identifier}"
+                                                         ViewModelCommunication="{Binding ViewModelCommunication}">
+                    <behaviors:AcceptAppointmentDropBehavior.DragAdornerTemplate>
+                        <DataTemplate>
+                            <Rectangle Height="30" Fill="Green" />
+                        </DataTemplate>
+                    </behaviors:AcceptAppointmentDropBehavior.DragAdornerTemplate>
+                </behaviors:AcceptAppointmentDropBehavior>
             </i:Interaction.Behaviors>
 
             <ItemsControl ItemsSource="{Binding AppointmentViewModels}">
-				
+
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas />
@@ -73,19 +82,19 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <views:AppointmentView Height="30" >
-							
-							<views:AppointmentView.Width>
+                        <views:AppointmentView Height="30">
+
+                            <views:AppointmentView.Width>
                                 <MultiBinding Converter="{StaticResource ComputeAppointmentPixelWidth}">
-                                    <Binding Path="BeginTime"/>
-                                    <Binding Path="EndTime"/>
-                                    <Binding Path="GridWidth"/>
-                                    <Binding Path="TimeSlotBegin"/>
-                                    <Binding Path="TimeSlotEnd"/>
-                                </MultiBinding>                               
+                                    <Binding Path="BeginTime" />
+                                    <Binding Path="EndTime" />
+                                    <Binding Path="GridWidth" />
+                                    <Binding Path="TimeSlotBegin" />
+                                    <Binding Path="TimeSlotEnd" />
+                                </MultiBinding>
                             </views:AppointmentView.Width>
-							
-						</views:AppointmentView>
+
+                        </views:AppointmentView>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
@@ -94,15 +103,15 @@
                     <Style>
                         <Setter Property="Canvas.Top" Value="-1" />
                         <Setter Property="Canvas.Left">
-							<Setter.Value>
+                            <Setter.Value>
                                 <MultiBinding Converter="{StaticResource ComputeAppointmentPixelLeft}">
-                                    <Binding Path="BeginTime"/>
-                                    <Binding Path="GridWidth"/>
-                                    <Binding Path="TimeSlotBegin"/>
-                                    <Binding Path="TimeSlotEnd"/>
+                                    <Binding Path="BeginTime" />
+                                    <Binding Path="GridWidth" />
+                                    <Binding Path="TimeSlotBegin" />
+                                    <Binding Path="TimeSlotEnd" />
                                 </MultiBinding>
                             </Setter.Value>
-						</Setter>
+                        </Setter>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <!--  ReSharper restore Xaml.BindingWithContextNotResolved  -->

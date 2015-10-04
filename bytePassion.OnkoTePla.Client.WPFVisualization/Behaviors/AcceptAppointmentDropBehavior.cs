@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.WpfUtils.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
@@ -17,235 +20,282 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 {
-	public class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
-	{		
-		public static readonly DependencyProperty ViewModelCommunicationProperty =
-			DependencyProperty.Register(nameof(ViewModelCommunication),
-										typeof (IViewModelCommunication),
-										typeof (AcceptAppointmentDropBehavior),
-										new PropertyMetadata(default(IViewModelCommunication)));
+    public class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
+    {
+        public static readonly DependencyProperty ViewModelCommunicationProperty =
+            DependencyProperty.Register(nameof(ViewModelCommunication),
+                typeof (IViewModelCommunication),
+                typeof (AcceptAppointmentDropBehavior),
+                new PropertyMetadata(default(IViewModelCommunication)));
 
-		public static readonly DependencyProperty AppointmentsProperty = 
-			DependencyProperty.Register(nameof(Appointments), 
-										typeof (ObservableCollection<IAppointmentViewModel>), 
-										typeof (AcceptAppointmentDropBehavior), 
-										new PropertyMetadata(default(ObservableCollection<IAppointmentViewModel>)));
+        public static readonly DependencyProperty AppointmentsProperty =
+            DependencyProperty.Register(nameof(Appointments),
+                typeof (ObservableCollection<IAppointmentViewModel>),
+                typeof (AcceptAppointmentDropBehavior),
+                new PropertyMetadata(default(ObservableCollection<IAppointmentViewModel>)));
 
-		public static readonly DependencyProperty DataCenterProperty = 
-			DependencyProperty.Register(nameof(DataCenter), 
-										typeof (IDataCenter), 
-										typeof (AcceptAppointmentDropBehavior), 
-										new PropertyMetadata(default(IDataCenter)));
+        public static readonly DependencyProperty DataCenterProperty =
+            DependencyProperty.Register(nameof(DataCenter),
+                typeof (IDataCenter),
+                typeof (AcceptAppointmentDropBehavior),
+                new PropertyMetadata(default(IDataCenter)));
 
-		public static readonly DependencyProperty TherapyPlaceRowIdentifierProperty = 
-			DependencyProperty.Register(nameof(TherapyPlaceRowIdentifier), 
-										typeof (TherapyPlaceRowIdentifier), 
-										typeof (AcceptAppointmentDropBehavior), 
-										new PropertyMetadata(default(TherapyPlaceRowIdentifier)));
+        public static readonly DependencyProperty TherapyPlaceRowIdentifierProperty =
+            DependencyProperty.Register(nameof(TherapyPlaceRowIdentifier),
+                typeof (TherapyPlaceRowIdentifier),
+                typeof (AcceptAppointmentDropBehavior),
+                new PropertyMetadata(default(TherapyPlaceRowIdentifier)));
 
-		public TherapyPlaceRowIdentifier TherapyPlaceRowIdentifier
-		{
-			get { return (TherapyPlaceRowIdentifier) GetValue(TherapyPlaceRowIdentifierProperty); }
-			set { SetValue(TherapyPlaceRowIdentifierProperty, value); }
-		}
+        public static readonly DependencyProperty DragAdornerTemplateProperty = DependencyProperty.Register(
+            "DragAdornerTemplate", typeof (DataTemplate), typeof (MoveWholeAppointmentBehavior),
+            new PropertyMetadata(default(DataTemplate)));
 
-		public IDataCenter DataCenter
-		{
-			get { return (IDataCenter) GetValue(DataCenterProperty); }
-			set { SetValue(DataCenterProperty, value); }
-		}
+        public DataTemplate DragAdornerTemplate
+        {
+            get { return (DataTemplate) GetValue(DragAdornerTemplateProperty); }
+            set { SetValue(DragAdornerTemplateProperty, value); }
+        }
 
-		public ObservableCollection<IAppointmentViewModel> Appointments
-		{
-			get { return (ObservableCollection<IAppointmentViewModel>) GetValue(AppointmentsProperty); }
-			set { SetValue(AppointmentsProperty, value); }
-		}
+        public TherapyPlaceRowIdentifier TherapyPlaceRowIdentifier
+        {
+            get { return (TherapyPlaceRowIdentifier) GetValue(TherapyPlaceRowIdentifierProperty); }
+            set { SetValue(TherapyPlaceRowIdentifierProperty, value); }
+        }
 
-		public IViewModelCommunication ViewModelCommunication
-		{
-			get { return (IViewModelCommunication)GetValue(ViewModelCommunicationProperty); }
-			set { SetValue(ViewModelCommunicationProperty, value); }
-		}
+        public IDataCenter DataCenter
+        {
+            get { return (IDataCenter) GetValue(DataCenterProperty); }
+            set { SetValue(DataCenterProperty, value); }
+        }
 
-		private AppointmentModifications appointmentModification;
-		private IList<TimeSlot> slots = null;
-		private Time openingTime;
-		private Time closingTime;
-		private double gridWidth;
+        public ObservableCollection<IAppointmentViewModel> Appointments
+        {
+            get { return (ObservableCollection<IAppointmentViewModel>) GetValue(AppointmentsProperty); }
+            set { SetValue(AppointmentsProperty, value); }
+        }
 
-		private bool dropIsPossible;
-		
-		protected override void OnAttached()
-		{
-			base.OnAttached();
-			AssociatedObject.DragEnter += OnDragEnter;
-			AssociatedObject.DragLeave += OnDragLeave;
-			AssociatedObject.DragOver  += OnDragOver;
-			AssociatedObject.Drop      += OnDrop;			
-		}
+        public IViewModelCommunication ViewModelCommunication
+        {
+            get { return (IViewModelCommunication) GetValue(ViewModelCommunicationProperty); }
+            set { SetValue(ViewModelCommunicationProperty, value); }
+        }
 
-		protected override void OnDetaching ()
-		{
-			base.OnDetaching();
-			AssociatedObject.DragEnter -= OnDragEnter;
-			AssociatedObject.DragLeave -= OnDragLeave;
-			AssociatedObject.DragOver  -= OnDragOver;
-			AssociatedObject.Drop      -= OnDrop;
-		}
+        private AppointmentModifications appointmentModification;
+        private IList<TimeSlot> slots = null;
+        private Time openingTime;
+        private Time closingTime;
+        private double gridWidth;
 
-		private void OnDrop(object sender, DragEventArgs dragEventArgs)
-		{		
-			if (dropIsPossible)
-			{				
-				var timeAtDropPosition = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
-				var appointmentDuration = new Duration(appointmentModification.BeginTime,
-													   appointmentModification.EndTime);
-				var halfappointmentDuration = appointmentDuration / 2u;
+        private bool dropIsPossible;
+        private UIElementAdorner adorner;
+        private AdornerLayer layer;
 
-				var slotAtDropPosition = GetSlot(timeAtDropPosition);
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+            AssociatedObject.DragEnter += OnDragEnter;
+            AssociatedObject.DragLeave += OnDragLeave;
+            AssociatedObject.DragOver += OnDragOver;
+            AssociatedObject.Drop += OnDrop;
+        }
 
-				Time newBeginTime;
-				Time newEndTime;
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+            AssociatedObject.DragEnter -= OnDragEnter;
+            AssociatedObject.DragLeave -= OnDragLeave;
+            AssociatedObject.DragOver -= OnDragOver;
+            AssociatedObject.Drop -= OnDrop;
+        }
 
-				if (timeAtDropPosition + halfappointmentDuration > slotAtDropPosition.End)
-				{
-					newEndTime   = slotAtDropPosition.End;
-					newBeginTime = slotAtDropPosition.End - appointmentDuration;					
-				}
-				else if (timeAtDropPosition - halfappointmentDuration < slotAtDropPosition.Begin)
-				{
-					newBeginTime = slotAtDropPosition.Begin;
-					newEndTime   = slotAtDropPosition.Begin + appointmentDuration;
-				}
-				else
-				{
-					newBeginTime = timeAtDropPosition - halfappointmentDuration;
-					newEndTime   = timeAtDropPosition + halfappointmentDuration;
-				}
+        private void OnDrop(object sender, DragEventArgs dragEventArgs)
+        {
+            if (dropIsPossible)
+            {
+                var timeAtDropPosition = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
+                var appointmentDuration = new Duration(appointmentModification.BeginTime,
+                    appointmentModification.EndTime);
+                var halfappointmentDuration = appointmentDuration/2u;
 
-				appointmentModification.SetNewLocation(TherapyPlaceRowIdentifier, newBeginTime, newEndTime);
-			}
+                var slotAtDropPosition = GetSlot(timeAtDropPosition);
 
-			appointmentModification.ShowDisabledOverlay = false;
-		}
+                Time newBeginTime;
+                Time newEndTime;
 
-		private void OnDragOver(object sender, DragEventArgs dragEventArgs)
-		{
-			if (dragEventArgs.Data.GetDataPresent(typeof(Appointment)))
-			{
+                if (timeAtDropPosition + halfappointmentDuration > slotAtDropPosition.End)
+                {
+                    newEndTime = slotAtDropPosition.End;
+                    newBeginTime = slotAtDropPosition.End - appointmentDuration;
+                }
+                else if (timeAtDropPosition - halfappointmentDuration < slotAtDropPosition.Begin)
+                {
+                    newBeginTime = slotAtDropPosition.Begin;
+                    newEndTime = slotAtDropPosition.Begin + appointmentDuration;
+                }
+                else
+                {
+                    newBeginTime = timeAtDropPosition - halfappointmentDuration;
+                    newEndTime = timeAtDropPosition + halfappointmentDuration;
+                }
 
-				if (Appointments != null)
-				{
-					if (slots == null)
-					{
-						var currentDraggedAppointment = (Appointment)dragEventArgs.Data.GetData(typeof (Appointment));
-						ComputeSlots(currentDraggedAppointment.Id);
+                appointmentModification.SetNewLocation(TherapyPlaceRowIdentifier, newBeginTime, newEndTime);
+    
+            }
+            if (adorner != null)
+            {
+                adorner.Destroy();
+                adorner.Visibility = Visibility.Collapsed;
+            }
+            appointmentModification.ShowDisabledOverlay = false;
+        }
 
-						appointmentModification = ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-							Constants.CurrentModifiedAppointmentVariable
-						).Value;
-					}
+        private void OnDragOver(object sender, DragEventArgs dragEventArgs)
+        {
+            if (dragEventArgs.Data.GetDataPresent(typeof (Appointment)))
+            {
+                if (Appointments != null)
+                {
+                    if (slots == null)
+                    {
+                        var currentDraggedAppointment = (Appointment) dragEventArgs.Data.GetData(typeof (Appointment));
+                        ComputeSlots(currentDraggedAppointment.Id);
 
-					var mousePositionTime = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
-					var currentPointedSlot = GetSlot(mousePositionTime);
+                        appointmentModification =
+                            ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
+                                Constants.CurrentModifiedAppointmentVariable
+                                ).Value;
+                    }
 
-					if (currentPointedSlot != null)
-					{
-						var slotLength = new Duration(currentPointedSlot.Begin, currentPointedSlot.End);
-						var appointmentLength = new Duration(appointmentModification.BeginTime, 
-															 appointmentModification.EndTime);
+                    var mousePositionTime = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
+                    var currentPointedSlot = GetSlot(mousePositionTime);
 
-						if (slotLength >= appointmentLength)
-						{
-							// TODO DropPossible
-							dropIsPossible = true;														
-							return;
-						}
-					}
 
-					// TODO DropImpossible
-					dropIsPossible = false;									
-				}
-			}
-		}
+                    if (currentPointedSlot != null)
+                    {
+                        var slotLength = new Duration(currentPointedSlot.Begin, currentPointedSlot.End);
+                        var appointmentLength = new Duration(appointmentModification.BeginTime,
+                            appointmentModification.EndTime);
+                       
 
-		private void OnDragLeave(object sender, DragEventArgs dragEventArgs)
-		{
-			// TODO
-		}		
+                        if (slotLength >= appointmentLength)
+                        {
+                            adorner.UpdatePosition(dragEventArgs.GetPosition(AssociatedObject).X, dragEventArgs.GetPosition(AssociatedObject).Y);
+                            dropIsPossible = true;
+                            dragEventArgs.Handled = true;
+                        }
+                    }
 
-		private void OnDragEnter (object sender, DragEventArgs dragEventArgs)
-		{
-			if (dragEventArgs.Data.GetDataPresent(typeof(Appointment)))
-				if (Appointments != null)
-				{
-					var currentDraggedAppointment = (Appointment)dragEventArgs.Data.GetData(typeof (Appointment));
-					ComputeSlots(currentDraggedAppointment.Id);
+                    // TODO DropImpossible
+                    dropIsPossible = false;
+                    dragEventArgs.Handled = true;
 
-					appointmentModification = ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-						Constants.CurrentModifiedAppointmentVariable
-					).Value;
-				}
+                }
+            }
+        }
 
-		}
+        private void OnDragLeave(object sender, DragEventArgs dragEventArgs)
+        {
+            
+            adorner.Visibility = Visibility.Collapsed;
+            dragEventArgs.Handled = true;
+        }
 
-		private Time GetTimeForPosition (double xPosition)
-		{			
-			var durationOfWholeDay = new Duration(closingTime, openingTime);			
+        private void OnDragEnter(object sender, DragEventArgs dragEventArgs)
+        {
+            if (dragEventArgs.Data.GetDataPresent(typeof (Appointment)))
+            {
+                if (Appointments != null)
+                {
+                    var currentDraggedAppointment = (Appointment) dragEventArgs.Data.GetData(typeof (Appointment));
+                    ComputeSlots(currentDraggedAppointment.Id);
 
-			double relativePosition = xPosition / gridWidth;
+                    appointmentModification =
+                        ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
+                            Constants.CurrentModifiedAppointmentVariable
+                            ).Value;
 
-			var resultTime = openingTime + new Duration((uint)Math.Floor((durationOfWholeDay.Seconds * relativePosition)));
-			return resultTime;
-		}
 
-		private TimeSlot GetSlot(Time time)
-		{
-			return slots.FirstOrDefault(slot => time > slot.Begin && time < slot.End);
-		}
+                    if (adorner == null)
+                    {
+                        adorner = new UIElementAdorner(AssociatedObject, DragAdornerTemplate,
+                            appointmentModification.OriginalAppointment,
+                            AdornerLayer.GetAdornerLayer(AssociatedObject));
 
-		private void ComputeSlots(Guid currentDraggedAppointmentId)
-		{
-			var startOfSlots = new List<Time>();
-			var endOfSlots = new List<Time>();
+                    }
+                    adorner.Visibility = Visibility.Visible;
+                    adorner.Width = ComputeAppointmentWidth(currentDraggedAppointment);
+                }
+            }
+            dragEventArgs.Handled = true;
+        }
 
-			var sortedAppointments = Appointments.Where(appointment => appointment.Identifier != currentDraggedAppointmentId)
-												 .ToList();
-			sortedAppointments.Sort((appointment, appointment1) => appointment.BeginTime.CompareTo(appointment1.BeginTime));
+        private Time GetTimeForPosition(double xPosition)
+        {
+            var durationOfWholeDay = new Duration(closingTime, openingTime);
 
-			gridWidth = ViewModelCommunication.GetGlobalViewModelVariable<Size>(
-				Constants.AppointmentGridSizeVariable
-			).Value.Width;
+            double relativePosition = xPosition/gridWidth;
 
-			var currentDate = ViewModelCommunication.GetGlobalViewModelVariable<Date>(
-				Constants.AppointmentGridSelectedDateVariable
-			).Value;
+            var resultTime = openingTime +
+                             new Duration((uint) Math.Floor((durationOfWholeDay.Seconds*relativePosition)));
+            return resultTime;
+        }
 
-			var currentMedicalPracticeId = ViewModelCommunication.GetGlobalViewModelVariable<Guid>(
-				Constants.AppointmentGridDisplayedPracticeVariable
-			).Value;
+        private TimeSlot GetSlot(Time time)
+        {
+            return slots.FirstOrDefault(slot => time > slot.Begin && time < slot.End);
+        }
 
-			var medicalPractice = DataCenter.GetMedicalPracticeByDateAndId(currentDate, currentMedicalPracticeId);
-			openingTime = medicalPractice.HoursOfOpening.GetOpeningTime(currentDate);
-			closingTime = medicalPractice.HoursOfOpening.GetClosingTime(currentDate);
+        private double ComputeAppointmentWidth(Appointment currentDraggedAppointment)
+        {
+            var lengthOfOneHour = gridWidth / (new Duration(closingTime, openingTime).Seconds / 3600.0);
+            var durationOfAppointment = new Duration(currentDraggedAppointment.StartTime, currentDraggedAppointment.EndTime);
 
-			startOfSlots.Add(openingTime);
+            return lengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
+        }
 
-			foreach (var appointmentViewModel in sortedAppointments)
-			{
-				endOfSlots.Add(appointmentViewModel.BeginTime);
-				startOfSlots.Add(appointmentViewModel.EndTime);
-			}
+        private void ComputeSlots(Guid currentDraggedAppointmentId)
+        {
+            var startOfSlots = new List<Time>();
+            var endOfSlots = new List<Time>();
 
-			endOfSlots.Add(closingTime);
+            var sortedAppointments =
+                Appointments.Where(appointment => appointment.Identifier != currentDraggedAppointmentId)
+                    .ToList();
+            sortedAppointments.Sort(
+                (appointment, appointment1) => appointment.BeginTime.CompareTo(appointment1.BeginTime));
 
-			slots = new List<TimeSlot>();
+            gridWidth = ViewModelCommunication.GetGlobalViewModelVariable<Size>(
+                Constants.AppointmentGridSizeVariable
+                ).Value.Width;
 
-			for (int i = 0; i < startOfSlots.Count; i++)
-			{
-				slots.Add(new TimeSlot(startOfSlots[i], endOfSlots[i]));
-			}
-		}		
-	}
-	
+            var currentDate = ViewModelCommunication.GetGlobalViewModelVariable<Date>(
+                Constants.AppointmentGridSelectedDateVariable
+                ).Value;
+
+            var currentMedicalPracticeId = ViewModelCommunication.GetGlobalViewModelVariable<Guid>(
+                Constants.AppointmentGridDisplayedPracticeVariable
+                ).Value;
+
+            var medicalPractice = DataCenter.GetMedicalPracticeByDateAndId(currentDate, currentMedicalPracticeId);
+            openingTime = medicalPractice.HoursOfOpening.GetOpeningTime(currentDate);
+            closingTime = medicalPractice.HoursOfOpening.GetClosingTime(currentDate);
+
+            startOfSlots.Add(openingTime);
+
+            foreach (var appointmentViewModel in sortedAppointments)
+            {
+                endOfSlots.Add(appointmentViewModel.BeginTime);
+                startOfSlots.Add(appointmentViewModel.EndTime);
+            }
+
+            endOfSlots.Add(closingTime);
+
+            slots = new List<TimeSlot>();
+
+            for (int i = 0; i < startOfSlots.Count; i++)
+            {
+                slots.Add(new TimeSlot(startOfSlots[i], endOfSlots[i]));
+            }
+        }
+    }
 }
