@@ -79,6 +79,7 @@
     <Compile Include="Computations\ComputeAppointmentLeft.cs" />
     <Compile Include="Computations\ComputeAppointmentPixelWidth.cs" />
     <Compile Include="Converter\DateToDateTimeConverter.cs" />
+    <Compile Include="Computations\PatientToCollapedVisibilityConverter.cs" />
     <Compile Include="Converter\OperatingModeToBackgroundBrush.cs" />
     <Compile Include="Converter\OperatingModeToVisibilityConverter.cs" />
     <Compile Include="Converter\ComputeAppointmentPosition.cs" />

@@ -6,6 +6,9 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 					  xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog"
 					  xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
+					  xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"
+					  xmlns:system="clr-namespace:System;assembly=mscorlib"
+					  xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts"
 					  Title="AddAppointmentDialog"
                       Width="1000"
 					  Height="620"
@@ -21,7 +24,12 @@
 	
 	<Window.Resources>
 		
-		<Style TargetType="Border"
+		<computations:PatientToCollapedVisibilityConverter x:Key="PatientToCollapedVisibilityConverter"/>
+
+        <system:Boolean x:Key="True">  True  </system:Boolean>
+        <system:Boolean x:Key="False"> False </system:Boolean>
+
+        <Style TargetType="Border"
 			   x:Key="OpticalDivisionBorder">
 			<Setter Property="Height" Value="1"/>
 			<Setter Property="BorderThickness" Value="1"/>
@@ -37,8 +45,15 @@
 			<Setter Property="Margin" Value="0,20,0,0"></Setter>
 			
 		</Style>
-		
-	</Window.Resources>
+
+        <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
+        <ControlTemplate x:Key="PatientControlTemplate">
+            <TextBlock Text="{Binding SelectedPatient.Name}"
+					   FontSize="24"/>	        
+		</ControlTemplate>
+        <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
+
+    </Window.Resources>
 
 	<Border Background="{StaticResource WhiteColorBrush}"
 			BorderThickness="1"
@@ -69,9 +84,33 @@
                 <TextBlock Style="{StaticResource HeadingTextBlock}"
 						   Text="Patient" />
                 <Border Style="{StaticResource OpticalDivisionBorder}"/>
-                <TextBlock FontSize="24" 
-						   Margin="30,0"
-						   Text="-noch kein Patient ausgewählt-" />
+				
+				<ContentControl Content="{Binding SelectedPatient}"
+								Margin="30,0">
+					
+					<ContentControl.Style>
+                        <Style TargetType="ContentControl">
+
+							<Setter Property="Template" Value="{StaticResource PatientControlTemplate}"/>
+							
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding SelectedPatient}" 
+											 Value="{x:Static contracts:Patient.Dummy}">
+									<Setter Property="Template">
+										<Setter.Value>
+                                            <ControlTemplate>
+                                                <TextBlock FontSize="24"
+														   Margin="30,0"
+														   Text="-noch kein Patient ausgewählt-" />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+								</DataTrigger>
+							</Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+					
+				</ContentControl>
 
 
                 <TextBlock Style="{StaticResource HeadingTextBlock}" 
