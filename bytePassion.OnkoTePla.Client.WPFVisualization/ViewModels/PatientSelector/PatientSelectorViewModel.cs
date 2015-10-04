@@ -58,10 +58,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 		{
 			ListIsEmpty = Patients.View.IsEmpty;
 
-			foreach (var VARIABLE in Patients.View.)
-			{
-				
-			}
+//			foreach (var VARIABLE in Patients.View.)
+//			{
+//				
+//			}
 		}
 
 		private void Filter(object sender, FilterEventArgs e)
