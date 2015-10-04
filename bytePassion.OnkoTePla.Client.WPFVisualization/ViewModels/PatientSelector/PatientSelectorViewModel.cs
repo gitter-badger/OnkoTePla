@@ -13,13 +13,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 	internal class PatientSelectorViewModel : IPatientSelectorViewModel
     {
 		private readonly IGlobalState<Patient> selectedPatientGlobalVariable;
+		private readonly IReadOnlyList<Patient> allPatients;
 
 		private Patient selectedPatient;
         private string searchFilter;
-		private bool listIsEmpty;
-
-		private IReadOnlyList<Patient> allPatients;
-
+		private bool listIsEmpty;		
 
 		public PatientSelectorViewModel(IDataCenter dataCenter, IGlobalState<Patient> selectedPatientGlobalVariable)
         {
