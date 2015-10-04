@@ -66,6 +66,10 @@
 										 UpdateSourceTrigger=PropertyChanged}"
                  ItemsSource="{Binding Patients.View}"> 						
 			
+			<i:Interaction.Behaviors>
+                <libBehaviors:ClearInitialListBoxSelectionBehavior/>
+            </i:Interaction.Behaviors>
+			
 		</ListBox>
 		
 		<Border Grid.Row="1"
