@@ -6,7 +6,8 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace bytePassion.Lib.Adorner
+
+namespace bytePassion.Lib.WpfUtils.Adorner
 {
    
     public class AdornedControl : ContentControl

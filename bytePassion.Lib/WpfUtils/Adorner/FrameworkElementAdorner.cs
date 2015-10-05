@@ -3,7 +3,8 @@ using System.Collections;
 using System.Windows;
 using System.Windows.Media;
 
-namespace bytePassion.Lib.Adorner
+
+namespace bytePassion.Lib.WpfUtils.Adorner
 {
     
     public class FrameworkElementAdorner : System.Windows.Documents.Adorner
