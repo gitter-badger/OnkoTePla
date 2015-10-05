@@ -17,6 +17,9 @@ namespace bytePassion.Lib.Communication.ViewModel
 		void RegisterGlobalViewModelVariable<TVariableType>(string identifier, 
 		                                                    TVariableType initialValue = default(TVariableType));
 
+		void RegisterGlobalReadOnlyViewModelVariable<TVariableType>(string identifier,
+		                                                            TVariableType value);
+
 		IGlobalState<TVariableType> GetGlobalViewModelVariable<TVariableType>(string identifier);
 
 

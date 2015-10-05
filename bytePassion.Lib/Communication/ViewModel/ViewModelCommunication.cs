@@ -35,6 +35,11 @@ namespace bytePassion.Lib.Communication.ViewModel
 			viewModelVariableEngine.RegisterState(identifier, initialValue);
 		}
 
+		public void RegisterGlobalReadOnlyViewModelVariable<TVariableType>(string identifier, TVariableType value)
+		{
+			viewModelVariableEngine.RegisterStateReadOnly(identifier, value);
+		}
+
 		public IGlobalState<TVariableType> GetGlobalViewModelVariable<TVariableType>(string identifier)
 		{
 			return viewModelVariableEngine.GetState<TVariableType>(identifier);

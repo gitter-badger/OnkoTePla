@@ -26,6 +26,11 @@ namespace bytePassion.Lib.Communication.State
 			states.Add(stateIdentifier, newGlobalState);
 		}
 
+		public void RegisterStateReadOnly<T>(string stateIdentifier, T value)
+		{
+			states.Add(stateIdentifier, new GlobalReadOnlyState<T>(value));
+		}
+
 		public IGlobalState<T> GetState<T> (string stateIdentifier)
 		{
 			return (IGlobalState<T>)states[stateIdentifier];
