@@ -63,13 +63,7 @@
                 <behaviors:AcceptAppointmentDropBehavior Appointments="{Binding AppointmentViewModels}"
                                                          DataCenter="{Binding DataCenter}"
                                                          TherapyPlaceRowIdentifier="{Binding Identifier}"
-                                                         ViewModelCommunication="{Binding ViewModelCommunication}">
-                    <behaviors:AcceptAppointmentDropBehavior.DragAdornerTemplate>
-                        <DataTemplate>
-                            <Rectangle Height="30" Fill="Green" />
-                        </DataTemplate>
-                    </behaviors:AcceptAppointmentDropBehavior.DragAdornerTemplate>
-                </behaviors:AcceptAppointmentDropBehavior>
+                                                         ViewModelCommunication="{Binding ViewModelCommunication}"/>
             </i:Interaction.Behaviors>
 			
 			<Border Margin="0,3"

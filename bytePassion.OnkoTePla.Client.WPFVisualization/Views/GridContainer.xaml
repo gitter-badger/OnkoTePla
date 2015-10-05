@@ -32,6 +32,7 @@
 				Grid.Column="1">
             <i:Interaction.Behaviors>
                 <behaviors:SizeReportingToGlobalVariebleBehavior ViewModelCommunication="{Binding ViewModelCommunication}"/>
+				<behaviors:ReportSelfBehavior                    ViewModelCommunication="{Binding ViewModelCommunication}"/>				
             </i:Interaction.Behaviors>
         </Border>
 

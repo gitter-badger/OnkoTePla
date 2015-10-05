@@ -1,10 +1,9 @@
 ﻿using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.WpfUtils.Adorner;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
@@ -33,8 +32,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			AssociatedObject.MouseLeftButtonUp          += OnAssociatedObjectMouseLeftButtonUp;
 			AssociatedObject.MouseMove                  += OnAssociatedObjectMouseMove;
 			AssociatedObject.MouseLeave                 += AssociatedObjectOnMouseLeave;
-			AssociatedObject.PreviewQueryContinueDrag   += OnQueryContinueDrag;
-			
+			AssociatedObject.PreviewQueryContinueDrag   += OnQueryContinueDrag;			
 
 			container = Application.Current.MainWindow;
 			mouseIsDown = false;
@@ -46,11 +44,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			{
 				EndDrag();
 
-				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = true;				
+				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = true;
+
+				var adornerControl = ViewModelCommunication.GetGlobalViewModelVariable<AdornerControl>(
+					AdornerControlVariable
+				).Value;
+
+				adornerControl.CreateAdorner(currentModifiedAppointmentVariable.Value.OriginalAppointment.Patient.Name,
+											 currentModifiedAppointmentVariable.Value.CurrentAppointmentPixelWidth);
+				
 
 				DragDrop.DoDragDrop((DependencyObject)sender,
 									currentModifiedAppointmentVariable.Value.OriginalAppointment,
-				                    DragDropEffects.Link);				
+				                    DragDropEffects.Link);
+
+				adornerControl.DisposeAdorner();
+
+				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = false;				
 			}
 		}
 
@@ -60,6 +70,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			{
 				e.Action = DragAction.Cancel;
 				e.Handled = true;
+
+				var adornerControl = ViewModelCommunication.GetGlobalViewModelVariable<AdornerControl>(
+					AdornerControlVariable
+				).Value;
+
+				adornerControl.DisposeAdorner();
 
 				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = false;
 			}			

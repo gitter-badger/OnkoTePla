@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.Lib.WpfUtils.Adorner;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
@@ -20,41 +18,31 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 {
-    public class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
+	public class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
     {
         public static readonly DependencyProperty ViewModelCommunicationProperty =
             DependencyProperty.Register(nameof(ViewModelCommunication),
-                typeof (IViewModelCommunication),
-                typeof (AcceptAppointmentDropBehavior),
-                new PropertyMetadata(default(IViewModelCommunication)));
+										typeof (IViewModelCommunication),
+										typeof (AcceptAppointmentDropBehavior),
+										new PropertyMetadata(default(IViewModelCommunication)));
 
         public static readonly DependencyProperty AppointmentsProperty =
             DependencyProperty.Register(nameof(Appointments),
-                typeof (ObservableCollection<IAppointmentViewModel>),
-                typeof (AcceptAppointmentDropBehavior),
-                new PropertyMetadata(default(ObservableCollection<IAppointmentViewModel>)));
+										typeof (ObservableCollection<IAppointmentViewModel>),
+										typeof (AcceptAppointmentDropBehavior),
+										new PropertyMetadata(default(ObservableCollection<IAppointmentViewModel>)));
 
         public static readonly DependencyProperty DataCenterProperty =
             DependencyProperty.Register(nameof(DataCenter),
-                typeof (IDataCenter),
-                typeof (AcceptAppointmentDropBehavior),
-                new PropertyMetadata(default(IDataCenter)));
+										typeof (IDataCenter),
+										typeof (AcceptAppointmentDropBehavior),
+										new PropertyMetadata(default(IDataCenter)));
 
         public static readonly DependencyProperty TherapyPlaceRowIdentifierProperty =
             DependencyProperty.Register(nameof(TherapyPlaceRowIdentifier),
-                typeof (TherapyPlaceRowIdentifier),
-                typeof (AcceptAppointmentDropBehavior),
-                new PropertyMetadata(default(TherapyPlaceRowIdentifier)));
-
-        public static readonly DependencyProperty DragAdornerTemplateProperty = DependencyProperty.Register(
-            "DragAdornerTemplate", typeof (DataTemplate), typeof (MoveWholeAppointmentBehavior),
-            new PropertyMetadata(default(DataTemplate)));
-
-        public DataTemplate DragAdornerTemplate
-        {
-            get { return (DataTemplate) GetValue(DragAdornerTemplateProperty); }
-            set { SetValue(DragAdornerTemplateProperty, value); }
-        }
+										typeof (TherapyPlaceRowIdentifier),
+										typeof (AcceptAppointmentDropBehavior),
+										new PropertyMetadata(default(TherapyPlaceRowIdentifier)));       
 
         public TherapyPlaceRowIdentifier TherapyPlaceRowIdentifier
         {
@@ -81,14 +69,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
         }
 
         private AppointmentModifications appointmentModification;
+		private AdornerControl adornerControl;
         private IList<TimeSlot> slots = null;
         private Time openingTime;
         private Time closingTime;
         private double gridWidth;
 
-        private bool dropIsPossible;
-        private UIElementAdorner adorner;
-        private AdornerLayer layer;
+        private bool dropIsPossible;              
         private Appointment currentDraggedAppointment;
 
         protected override void OnAttached()
@@ -96,8 +83,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
             base.OnAttached();
             AssociatedObject.DragEnter += OnDragEnter;
             AssociatedObject.DragLeave += OnDragLeave;
-            AssociatedObject.DragOver += OnDragOver;
-            AssociatedObject.Drop += OnDrop;
+            AssociatedObject.DragOver  += OnDragOver;
+            AssociatedObject.Drop      += OnDrop;
         }
 
         protected override void OnDetaching()
@@ -105,8 +92,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
             base.OnDetaching();
             AssociatedObject.DragEnter -= OnDragEnter;
             AssociatedObject.DragLeave -= OnDragLeave;
-            AssociatedObject.DragOver -= OnDragOver;
-            AssociatedObject.Drop -= OnDrop;
+            AssociatedObject.DragOver  -= OnDragOver;
+            AssociatedObject.Drop      -= OnDrop;
         }
 
         private void OnDrop(object sender, DragEventArgs dragEventArgs)
@@ -119,16 +106,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                 CalculateCorrectAppointmentPosition(dragEventArgs, out newBeginTime, out newEndTime);
 
                 appointmentModification.SetNewLocation(TherapyPlaceRowIdentifier, newBeginTime, newEndTime);
-
-            }
-            if (adorner != null)
-            {
-                adorner.Destroy();
-                adorner.Visibility = Visibility.Collapsed;
-                adorner = null;
-            }
-            appointmentModification.ShowDisabledOverlay = false;
-            dragEventArgs.Handled = true;
+            }            			                      
         }
 
         private void CalculateCorrectAppointmentPosition(DragEventArgs dragEventArgs, out Time newBeginTime, out Time newEndTime)
@@ -163,7 +141,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
         {
             if (dragEventArgs.Data.GetDataPresent(typeof (Appointment)))
             {
-                if (Appointments != null)
+                if (Appointments != null && adornerControl != null)
                 {
                     if (slots == null)
                     {
@@ -175,6 +153,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                                 ).Value;
                     }
 
+					adornerControl.NewMousePositionForAdorner(dragEventArgs.GetPosition(adornerControl.ReferenceElement));
+
                     var mousePositionTime = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
                     var currentPointedSlot = GetSlot(mousePositionTime);
 
@@ -183,31 +163,26 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                     {
                         var slotLength = new Duration(currentPointedSlot.Begin, currentPointedSlot.End);
                         var appointmentLength = new Duration(appointmentModification.BeginTime,
-                            appointmentModification.EndTime);
+															 appointmentModification.EndTime);
                        
 
                         if (slotLength >= appointmentLength)
-                        {            
-                            adorner.UpdatePosition(dragEventArgs.GetPosition(AssociatedObject).X - ComputeAppointmentWidth(currentDraggedAppointment)/2.0, dragEventArgs.GetPosition(AssociatedObject).Y);
-                            dropIsPossible = true;
-                            dragEventArgs.Handled = true;
+                        {
+							adornerControl.ShowAdornerLikeDropIsPossible();
+							dropIsPossible = true;
                             return;
                         }
                     }
 
-                    // TODO DropImpossible
-                    dropIsPossible = false;
-                    dragEventArgs.Handled = true;
-
+					adornerControl.ShowAdornerLikeDropIsNotPossible();
+					dropIsPossible = false;
                 }
             }
         }
 
         private void OnDragLeave(object sender, DragEventArgs dragEventArgs)
         {
-            
-            adorner.Visibility = Visibility.Collapsed;
-            dragEventArgs.Handled = true;
+            adornerControl.ShowAdornerLikeDropIsNotPossible();           
         }
 
         private void OnDragEnter(object sender, DragEventArgs dragEventArgs)
@@ -219,24 +194,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                     currentDraggedAppointment = (Appointment) dragEventArgs.Data.GetData(typeof (Appointment));
                     ComputeSlots(currentDraggedAppointment.Id);
 
-                    appointmentModification =
-                        ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-                            Constants.CurrentModifiedAppointmentVariable
-                            ).Value;
+                    appointmentModification = ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
+						Constants.CurrentModifiedAppointmentVariable
+                    ).Value;
 
-
-                    if (adorner == null)
-                    {
-                        adorner = new UIElementAdorner(AssociatedObject, DragAdornerTemplate,
-                            appointmentModification.OriginalAppointment,
-                            AdornerLayer.GetAdornerLayer(AssociatedObject));
-
-                    }
-                    adorner.Visibility = Visibility.Visible;
-                    adorner.Width = ComputeAppointmentWidth(currentDraggedAppointment);
+	                adornerControl = ViewModelCommunication.GetGlobalViewModelVariable<AdornerControl>(
+		                Constants.AdornerControlVariable
+					).Value;
                 }
             }
-            dragEventArgs.Handled = true;
         }
 
         private Time GetTimeForPosition(double xPosition)
@@ -255,36 +221,28 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
             return slots.FirstOrDefault(slot => time > slot.Begin && time < slot.End);
         }
 
-        private double ComputeAppointmentWidth(Appointment currentDraggedAppointment)
-        {
-            var lengthOfOneHour = gridWidth / (new Duration(closingTime, openingTime).Seconds / 3600.0);
-            var durationOfAppointment = new Duration(currentDraggedAppointment.StartTime, currentDraggedAppointment.EndTime);
-
-            return lengthOfOneHour * (durationOfAppointment.Seconds / 3600.0);
-        }
-
         private void ComputeSlots(Guid currentDraggedAppointmentId)
         {
             var startOfSlots = new List<Time>();
-            var endOfSlots = new List<Time>();
+            var endOfSlots   = new List<Time>();
 
-            var sortedAppointments =
-                Appointments.Where(appointment => appointment.Identifier != currentDraggedAppointmentId)
-                    .ToList();
+            var sortedAppointments = Appointments.Where(appointment => appointment.Identifier != currentDraggedAppointmentId)
+												 .ToList();
             sortedAppointments.Sort(
-                (appointment, appointment1) => appointment.BeginTime.CompareTo(appointment1.BeginTime));
+                (appointment, appointment1) => appointment.BeginTime.CompareTo(appointment1.BeginTime)
+			);
 
             gridWidth = ViewModelCommunication.GetGlobalViewModelVariable<Size>(
                 Constants.AppointmentGridSizeVariable
-                ).Value.Width;
+            ).Value.Width;
 
             var currentDate = ViewModelCommunication.GetGlobalViewModelVariable<Date>(
                 Constants.AppointmentGridSelectedDateVariable
-                ).Value;
+            ).Value;
 
             var currentMedicalPracticeId = ViewModelCommunication.GetGlobalViewModelVariable<Guid>(
                 Constants.AppointmentGridDisplayedPracticeVariable
-                ).Value;
+            ).Value;
 
             var medicalPractice = DataCenter.GetMedicalPracticeByDateAndId(currentDate, currentMedicalPracticeId);
             openingTime = medicalPractice.HoursOfOpening.GetOpeningTime(currentDate);

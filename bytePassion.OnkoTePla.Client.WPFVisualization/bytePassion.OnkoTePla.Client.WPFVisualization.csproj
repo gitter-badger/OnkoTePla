@@ -69,11 +69,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Adorner\AdornerControl.cs" />
     <Compile Include="Behaviors\AcceptAppointmentDropBehavior.cs" />
     <Compile Include="Behaviors\MoveEndTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveBeginTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveWholeAppointmentBehavior.cs" />
     <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
+    <Compile Include="Behaviors\ReportSelfBehavior.cs" />
     <Compile Include="Behaviors\SizeReportingToGlobalVariebleBehavior.cs" />
     <Compile Include="Behaviors\ToggleButtonAsRadioButtonBehavior.cs" />
     <Compile Include="Computations\ComputeAppointmentLeft.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="ViewModelMessages\DeleteAppointment.cs" />
     <Compile Include="ViewModelMessages\HideNotification.cs" />
     <Compile Include="ViewModelMessages\RejectChanges.cs" />
+    <Compile Include="ViewModelMessages\UIInstance.cs" />
     <Compile Include="ViewModelMessages\SendCurrentChangesToCommandBus.cs" />
     <Compile Include="ViewModelMessages\ShowNotification.cs" />
     <Compile Include="ViewModels\AddAppointmentDialog\AddAppointmentDialogViewModel.cs" />
@@ -112,6 +115,9 @@
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModelSampleData.cs" />
     <Compile Include="ViewModelMessages\Dispose.cs" />
     <Compile Include="ViewModels\AppointmentGrid\ClosedDayGridViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentViewDragAdorner\AppointmentViewDragAdornerViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentViewDragAdorner\AppointmentViewDragAdornerViewModelSampleData.cs" />
+    <Compile Include="ViewModels\AppointmentViewDragAdorner\IAppointmentViewDragAdornerViewModel.cs" />
     <Compile Include="ViewModels\AppointmentView\Helper\AppointmentModifications.cs" />
     <Compile Include="ViewModelMessages\RestoreOriginalValues.cs" />
     <Compile Include="ViewModels\IDataCenterDeliverer.cs" />
@@ -203,6 +209,9 @@
     <Compile Include="Views\AppointmentView.xaml.cs">
       <DependentUpon>AppointmentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AppointmentViewDragAdorner.xaml.cs">
+      <DependentUpon>AppointmentViewDragAdorner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AppointmentViewToolTip.xaml.cs">
       <DependentUpon>AppointmentViewToolTip.xaml</DependentUpon>
     </Compile>
@@ -290,6 +299,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AppointmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppointmentViewDragAdorner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

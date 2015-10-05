@@ -11,6 +11,7 @@ using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
@@ -70,15 +71,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 
 			var gridSizeInitialValue          = new Size(400,400);
 			var selectedDateInitialValue      = initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday();
-			var displayedPracticeInitialValue = initialMedicalPractice.Id; 
+			var displayedPracticeInitialValue = initialMedicalPractice.Id;
 
-			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSizeVariable, gridSizeInitialValue);
-			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedDateVariable, selectedDateInitialValue);
+			var adornerControl = new AdornerControl();
+
+			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSizeVariable,              gridSizeInitialValue);
+			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridSelectedDateVariable,      selectedDateInitialValue);
 			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridDisplayedPracticeVariable, displayedPracticeInitialValue);        // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
-			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridRoomFilterVariable, (Guid?)null);									// when selectedRoomID == null --> all rooms are selected
-			viewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable, true);														// true --> full width; false --> minimized
-			viewModelCommunication.RegisterGlobalViewModelVariable(CurrentModifiedAppointmentVariable, (AppointmentModifications)null);				// null -> no appointment selected
+			viewModelCommunication.RegisterGlobalViewModelVariable(AppointmentGridRoomFilterVariable,        (Guid?)null);							// when selectedRoomID == null --> all rooms are selected
+			viewModelCommunication.RegisterGlobalViewModelVariable(SideBarStateVariable,                     true);									// true --> full width; false --> minimized
+			viewModelCommunication.RegisterGlobalViewModelVariable(CurrentModifiedAppointmentVariable,       (AppointmentModifications)null);		// null -> no appointment selected
 
+			viewModelCommunication.RegisterGlobalReadOnlyViewModelVariable(AdornerControlVariable, adornerControl);
 
 			// Create ViewModelCollection
 
@@ -104,6 +108,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 			viewModelCommunication.RegisterViewModelMessageHandler(new ConfirmChangesMessageHandler(viewModelCommunication));
 			viewModelCommunication.RegisterViewModelMessageHandler(new RejectChangesMessageHandler(viewModelCommunication));
 
+			viewModelCommunication.RegisterViewModelMessageHandler(adornerControl);
 
 			// create permanent ViewModels
 

@@ -1,42 +1,42 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace bytePassion.Lib.WpfUtils.Adorner
 {
-    public class UIElementAdorner : System.Windows.Documents.Adorner
+	public class UIElementAdorner : System.Windows.Documents.Adorner
     {
         private readonly AdornerLayer layer;
 
-        private ContentPresenter presenter;
-        private double _leftOffset;
-        private double _topOffset;
+        private readonly UIElement adornerView;
+        private double leftOffset;
+        private double topOffset;
 
-        public UIElementAdorner(UIElement adornedElement, DataTemplate adornderContent, object data, AdornerLayer layer) : base(adornedElement)
+        public UIElementAdorner(UIElement adornedElement, UIElement adornerView, AdornerLayer layer) : base(adornedElement)
         {
             this.layer = layer;
-            Focusable = false;
-            IsHitTestVisible = false;
-            presenter = new ContentPresenter() { Content = data, ContentTemplate = adornderContent, Opacity = 0.7};
+			this.adornerView = adornerView;
+
+			Focusable = false;
+            IsHitTestVisible = false;	        
             layer.Add(this);
         }
 
         protected override Size MeasureOverride(Size constraint)
         {
-            presenter.Measure(constraint);
-            return presenter.DesiredSize;
+            adornerView.Measure(constraint);
+            return adornerView.DesiredSize;
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            presenter.Arrange(new Rect(finalSize));
+            adornerView.Arrange(new Rect(finalSize));
             return finalSize;
         }
 
         protected override Visual GetVisualChild(int index)
         {
-            return presenter;
+            return adornerView;
         }
 
         protected override int VisualChildrenCount
@@ -46,19 +46,17 @@ namespace bytePassion.Lib.WpfUtils.Adorner
 
         public void UpdatePosition(double left, double top)
         {
-            _leftOffset = left;
-            _topOffset = top;
-            if (layer!= null)
-            {
-                layer.Update(this.AdornedElement);
-            }
+            leftOffset = left;
+            topOffset = top;
+	        layer?.Update(AdornedElement);
         }
 
         public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
         {
-            GeneralTransformGroup result = new GeneralTransformGroup();
+            var result = new GeneralTransformGroup();
+	        // ReSharper disable once AssignNullToNotNullAttribute
             result.Children.Add(base.GetDesiredTransform(transform));
-            result.Children.Add(new TranslateTransform(_leftOffset, 0));
+            result.Children.Add(new TranslateTransform(leftOffset, topOffset));
             return result;
         }
 

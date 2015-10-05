@@ -189,6 +189,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public Appointment OriginalAppointment { get; }
 		public bool IsInitialAdjustment { get; }
 
+		public double CurrentAppointmentPixelWidth
+		{
+			get
+			{
+				var lengthOfOneHour = currentGridWidth / (new Duration(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
+				var duration = new Duration(BeginTime, EndTime);
+
+				return ((double)duration.Seconds / 3600) * lengthOfOneHour;
+			}
+		}
+
 		public Time BeginTime
 		{
 			get { return beginTime; }
@@ -218,6 +229,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			get { return description; }
 			set { PropertyChanged.ChangeAndNotify(this, ref description, value); }
 		}
+
+		
 
 		public void SetNewLocation(TherapyPlaceRowIdentifier newLocation, Time newBeginTime, Time newEndTime)
 		{

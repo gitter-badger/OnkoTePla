@@ -14,6 +14,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Global
 		public const string SideBarStateVariable                     = "SideBarState";
 		public const string CurrentModifiedAppointmentVariable	     = "CurrentModifiedAppointment";
 		public const string SelectedPatientVariable                  = "SelectedPatient";
+		public const string AdornerControlVariable                   = "AdornerControl";
 
 		// ViewModel-Collections
 
