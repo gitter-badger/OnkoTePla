@@ -18,6 +18,7 @@
                       WindowStartupLocation="CenterOwner"
                       WindowStyle="ToolWindow"
 					  ResizeMode="NoResize"
+					  ShowTitleBar="False"
                       mc:Ignorable="d">
 
     <d:DesignData.DataContext>
