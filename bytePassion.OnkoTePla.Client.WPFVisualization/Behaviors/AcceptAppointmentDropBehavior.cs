@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
@@ -77,8 +78,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
         private bool dropIsPossible;              
         private Appointment currentDraggedAppointment;
+	    private GiveFeedbackEventHandler handler;
 
-        protected override void OnAttached()
+	    protected override void OnAttached()
         {
             base.OnAttached();
             AssociatedObject.DragEnter += OnDragEnter;
@@ -103,10 +105,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                 Time newBeginTime;
                 Time newEndTime;
 
+                ((UIElement) sender).GiveFeedback -= handler;
                 CalculateCorrectAppointmentPosition(dragEventArgs, out newBeginTime, out newEndTime);
 
                 appointmentModification.SetNewLocation(TherapyPlaceRowIdentifier, newBeginTime, newEndTime);
-            }            			                      
+             }            			                      
         }
 
         private void CalculateCorrectAppointmentPosition(DragEventArgs dragEventArgs, out Time newBeginTime, out Time newEndTime)
@@ -164,8 +167,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                         var slotLength = new Duration(currentPointedSlot.Begin, currentPointedSlot.End);
                         var appointmentLength = new Duration(appointmentModification.BeginTime,
 															 appointmentModification.EndTime);
-                       
 
+                        handler = new GiveFeedbackEventHandler(GiveFeedback);
+                        ((UIElement) sender).GiveFeedback += handler;
                         if (slotLength >= appointmentLength)
                         {
 							adornerControl.ShowAdornerLikeDropIsPossible();
@@ -180,7 +184,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
             }
         }
 
-        private void OnDragLeave(object sender, DragEventArgs dragEventArgs)
+	    private void GiveFeedback(object sender, GiveFeedbackEventArgs e)
+	    {
+	        Mouse.SetCursor( Cursors.None);
+	        e.UseDefaultCursors = false;
+            e.Handled = true;
+        }
+
+	    private void OnDragLeave(object sender, DragEventArgs dragEventArgs)
         {
             adornerControl.ShowAdornerLikeDropIsNotPossible();           
         }
@@ -201,7 +212,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 	                adornerControl = ViewModelCommunication.GetGlobalViewModelVariable<AdornerControl>(
 		                Constants.AdornerControlVariable
 					).Value;
-                }
+                 }
             }
         }
 
