@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"			 
-             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
-             xmlns:appointmentGrid="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid"             
-             xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Global"
-             xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
+			 xmlns:appointmentGrid="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid"
+			 xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
+			 xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Global"
+             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"                                       
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="900">
+             d:DesignHeight="700" 
+			 d:DesignWidth="900">
 	
 	<d:UserControl.DataContext>
 		<appointmentGrid:AppointmentGridViewModelSampleData/>
@@ -51,7 +52,7 @@
 			
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<views:TherapyPlaceRowView Margin="0,3"/>
+						<views:TherapyPlaceRowView/>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			
