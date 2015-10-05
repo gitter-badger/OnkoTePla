@@ -19,10 +19,7 @@
 
     <UserControl.Resources>
         <computations:ComputeAppointmentPixelLeft x:Key="ComputeAppointmentPixelLeft" />
-        <computations:ComputeAppointmentPixelWidth x:Key="ComputeAppointmentPixelWidth" />
-        <DataTemplate x:Key="DragTemplate">
-            <TextBlock Text="Bla" />
-        </DataTemplate>
+        <computations:ComputeAppointmentPixelWidth x:Key="ComputeAppointmentPixelWidth" />      
     </UserControl.Resources>
 
     <Grid Height="36"
