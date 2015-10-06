@@ -80,6 +80,7 @@
     <Compile Include="Behaviors\ToggleButtonAsRadioButtonBehavior.cs" />
     <Compile Include="Computations\ComputeAppointmentLeft.cs" />
     <Compile Include="Computations\ComputeAppointmentPixelWidth.cs" />
+    <Compile Include="Computations\DeleteButtonVisibility.cs" />
     <Compile Include="Converter\CreationStateToSolidColorBrushConverter.cs" />
     <Compile Include="Converter\DateToDateTimeConverter.cs" />
     <Compile Include="Computations\PatientToCollapedVisibilityConverter.cs" />

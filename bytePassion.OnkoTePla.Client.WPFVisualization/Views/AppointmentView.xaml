@@ -4,21 +4,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
-             xmlns:appointmentView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"
-             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"
-             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
-             xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
+			 xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"			 
+			 xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
+			 xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"
+			 xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"    
+			 xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"     			 
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"             
+			 xmlns:system="clr-namespace:System;assembly=mscorlib"             
+			 xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper"
-             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
+			 
              d:DesignHeight="30"
              d:DesignWidth="200"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter" />
-		<converterLib:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+		
+        <converter:OperatingModeToVisibilityConverter    x:Key="OperatingModeToVisibilityConverter" />
+		<computations:DeleteButtonVisibility             x:Key="DeleteButtonVisibility"/>
+		<converterLib:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>		
 		
 		<Style TargetType="Border" 
 			   x:Key="WhiteLineBorderStyle">
@@ -47,7 +51,7 @@
     </UserControl.Resources>
 
     <d:UserControl.DataContext>
-        <appointmentView:AppointmentViewModelSampleData />
+        <sampleData:AppointmentViewModelSampleData />
     </d:UserControl.DataContext>
 
     <UserControl.ToolTip>
@@ -153,11 +157,17 @@
 				
             </Border>
             <Button Grid.Column="1"
-					Command="{Binding DeleteAppointment}"
-					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}"
+					Command="{Binding DeleteAppointment}"					
 					Margin="0,-55,0,0"
 					Width="24"
 					Height="24">
+				
+				<Button.Visibility>
+                    <MultiBinding Converter="{StaticResource DeleteButtonVisibility}">
+						<Binding Path="OperatingMode"/>
+						<Binding Path="ShowDisabledOverlay"/>
+					</MultiBinding>
+				</Button.Visibility>
 				
                 <Button.Template>
                     <ControlTemplate>
