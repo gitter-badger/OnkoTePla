@@ -12,7 +12,9 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder;
+
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
@@ -29,6 +31,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 									 IGridContainerViewModel gridContainerViewModel, 
 									 IChangeConfirmationViewModel changeConfirmationViewModel, 
 									 IViewModelCommunication viewModelCommunication, 
+									 IUndoRedoViewModel undoRedoViewModel,
 									 IDataCenter dataCenter)
 		{
 			DateDisplayViewModel = dateDisplayViewModel;
@@ -36,7 +39,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 			RoomFilterViewModel = roomFilterViewModel;
 			DateSelectorViewModel = dateSelectorViewModel;
 			GridContainerViewModel = gridContainerViewModel;
-			ChangeConfirmationViewModel = changeConfirmationViewModel;			
+			ChangeConfirmationViewModel = changeConfirmationViewModel;
+			UndoRedoViewModel = undoRedoViewModel;
 
 			ChangeConfirmationVisible = false;
 			AddAppointmentPossible = true;
@@ -68,6 +72,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 		public IDateSelectorViewModel            DateSelectorViewModel            { get; }
 		public IGridContainerViewModel           GridContainerViewModel           { get; }
 		public IChangeConfirmationViewModel      ChangeConfirmationViewModel      { get; }
+		public IUndoRedoViewModel                UndoRedoViewModel                { get; }
 
 		public ICommand ShowAddAppointmentDialog { get; }
 

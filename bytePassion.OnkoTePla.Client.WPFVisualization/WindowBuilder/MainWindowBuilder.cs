@@ -30,7 +30,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
-
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 
@@ -121,8 +121,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 																	viewModelCommunication,
 																	new List<AggregateIdentifier>(),
 																	50);
-
 			var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);
+			var undoRedoViewModel = new UndoRedoViewModel(viewModelCommunication);
 
 			var overviewPageViewModel = new OverviewPageViewModel(dateDisplayViewModel,
 																  medicalPracticeSelectorViewModel,
@@ -130,7 +130,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 																  dateSelectorViewModel,
 																  gridContainerViewModel,
 																  changeConfirmationViewModel,
-																  viewModelCommunication, 
+																  viewModelCommunication,
+																  undoRedoViewModel, 
 																  dataCenter);
 
 			var searchPageViewModel   = new SearchPageViewModel();

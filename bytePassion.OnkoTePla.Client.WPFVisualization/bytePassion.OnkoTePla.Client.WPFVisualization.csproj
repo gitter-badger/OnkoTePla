@@ -192,6 +192,9 @@
     <Compile Include="ViewModelMessages\NewSizeAvailable.cs" />
     <Compile Include="ViewModels\TimeGrid\TimeGridViewModel.cs" />
     <Compile Include="ViewModels\TimeGrid\TimeGridViewModelSampleData.cs" />
+    <Compile Include="ViewModels\UndoRedoView\IUndoRedoViewModel.cs" />
+    <Compile Include="ViewModels\UndoRedoView\UndoRedoViewModel.cs" />
+    <Compile Include="ViewModels\UndoRedoView\UndoRedoViewModelSampleData.cs" />
     <Compile Include="Views\ActionBar.xaml.cs">
       <DependentUpon>ActionBar.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,9 @@
     </Compile>
     <Compile Include="Views\TimeGrid.xaml.cs">
       <DependentUpon>TimeGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UndoRedoView.xaml.cs">
+      <DependentUpon>UndoRedoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowBuilder\AddAppointmentDialogWindowBuilder.cs" />
     <Compile Include="WindowBuilder\MainWindowBuilder.cs" />
@@ -380,6 +386,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TimeGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UndoRedoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

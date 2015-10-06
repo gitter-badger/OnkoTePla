@@ -5,6 +5,8 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView;
+
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 {
@@ -16,6 +18,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 		IDateSelectorViewModel            DateSelectorViewModel            { get; }
 		IGridContainerViewModel           GridContainerViewModel           { get; }	
 		IChangeConfirmationViewModel      ChangeConfirmationViewModel      { get; }
+		IUndoRedoViewModel                UndoRedoViewModel                { get; }
 
 		ICommand ShowAddAppointmentDialog { get; }
 

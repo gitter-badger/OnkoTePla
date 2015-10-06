@@ -39,6 +39,8 @@
 			<StackPanel Grid.Row="0"
 						Margin="5">
 
+				<local:UndoRedoView Height="30"
+									DataContext="{Binding UndoRedoViewModel}"/>
                 <local:DateDisplay  DataContext="{Binding DateDisplayViewModel}"  />
                 <local:DateSelector DataContext="{Binding DateSelectorViewModel}" />
 
