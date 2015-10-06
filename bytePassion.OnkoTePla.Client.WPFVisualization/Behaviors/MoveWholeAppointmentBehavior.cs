@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.State;
@@ -32,11 +33,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			AssociatedObject.MouseLeftButtonUp          += OnAssociatedObjectMouseLeftButtonUp;
 			AssociatedObject.MouseMove                  += OnAssociatedObjectMouseMove;
 			AssociatedObject.MouseLeave                 += AssociatedObjectOnMouseLeave;
-			AssociatedObject.PreviewQueryContinueDrag   += OnQueryContinueDrag;			
+			AssociatedObject.PreviewQueryContinueDrag   += OnQueryContinueDrag;
+			AssociatedObject.GiveFeedback               += OnGiveFeedback;
 
 			container = Application.Current.MainWindow;
 			mouseIsDown = false;
-		}		
+		}
+
+		protected override void OnDetaching ()
+		{
+			base.OnDetaching();
+			AssociatedObject.PreviewMouseLeftButtonDown -= OnAssociatedObjectMouseLeftButtonDown;
+			AssociatedObject.MouseLeftButtonUp          -= OnAssociatedObjectMouseLeftButtonUp;
+			AssociatedObject.MouseMove                  -= OnAssociatedObjectMouseMove;
+			AssociatedObject.MouseLeave                 -= AssociatedObjectOnMouseLeave;
+			AssociatedObject.PreviewQueryContinueDrag   -= OnQueryContinueDrag;
+			AssociatedObject.GiveFeedback               -= OnGiveFeedback;
+		}
 
 		private void AssociatedObjectOnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
 		{
@@ -79,16 +92,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = false;
 			}			
-		}
+		}		
 
-		protected override void OnDetaching ()
+		private void OnGiveFeedback(object sender, GiveFeedbackEventArgs giveFeedbackEventArgs)
 		{
-			base.OnDetaching();
-			AssociatedObject.PreviewMouseLeftButtonDown -= OnAssociatedObjectMouseLeftButtonDown;
-			AssociatedObject.MouseLeftButtonUp          -= OnAssociatedObjectMouseLeftButtonUp;
-			AssociatedObject.MouseMove                  -= OnAssociatedObjectMouseMove;
-			AssociatedObject.MouseLeave                 -= AssociatedObjectOnMouseLeave;
-			AssociatedObject.PreviewQueryContinueDrag   -= OnQueryContinueDrag;
+			Mouse.SetCursor(Cursors.None);
+			giveFeedbackEventArgs.UseDefaultCursors = false;
+			giveFeedbackEventArgs.Handled = true;
 		}
 
 		private FrameworkElement container;
