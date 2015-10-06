@@ -64,7 +64,7 @@
     <Grid>
         <StackPanel>
             <Border BorderThickness="0,0,0,1" Margin="0,5" BorderBrush="{StaticResource SemiTransparentWhiteBrush}">
-                <TextBlock Text="RÄUME" Foreground="{StaticResource SemiTransparentWhiteBrush}" ></TextBlock>
+                <TextBlock Text="Raum" Foreground="{StaticResource SemiTransparentWhiteBrush}"/>
             </Border>
             <ListBox ItemsSource="{Binding AvailableRoomFilters}"
 				 SelectionMode="Single"

@@ -15,7 +15,7 @@
     </d:UserControl.DataContext>
 
     <UserControl.Resources>
-        <converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
+        <converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />			
     </UserControl.Resources>
 
     <Grid Background="White">
@@ -28,37 +28,39 @@
         <Grid Grid.Column="0" Background="{DynamicResource AccentColorBrush}">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />                
+                <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+			
+			<StackPanel Grid.Row="0"
+						Margin="5">
 
-            <local:DateDisplay Grid.Row="0"
-                               Margin="5"
-                               DataContext="{Binding DateDisplayViewModel}" />
+                <local:DateDisplay  DataContext="{Binding DateDisplayViewModel}"  />
+                <local:DateSelector DataContext="{Binding DateSelectorViewModel}" />
 
-            <local:DateSelector Grid.Row="1" DataContext="{Binding DateSelectorViewModel}" />
+            </StackPanel>
 
-            <TextBlock Grid.Row="3"
-                       Margin="5"
-                       FontSize="20"
+            <StackPanel Grid.Row="2"
+						Margin="5">
+
+                <TextBlock FontSize="20"
                        Foreground="{DynamicResource SemiTransparentWhiteBrush}"
-                       Text="Raumwahl" />
+                       Text="Ortsnavigation" />
 
-            <local:MedicalPracticeSelector Grid.Row="4"
-                                           Margin="5"
-                                           DataContext="{Binding MedicalPracticeSelectorViewModel}" />
+                <Border BorderThickness="0,0,0,1" Margin="0,5" BorderBrush="{StaticResource SemiTransparentWhiteBrush}">
+                    <TextBlock Text="Praxis" Foreground="{StaticResource SemiTransparentWhiteBrush}" ></TextBlock>
+                </Border>
 
-            <local:RoomSelector Grid.Row="5"
-                                Margin="5"
-                                DataContext="{Binding RoomFilterViewModel}" />
+                <local:MedicalPracticeSelector DataContext="{Binding MedicalPracticeSelectorViewModel}" />
+                <local:RoomSelector DataContext="{Binding RoomFilterViewModel}" />
 
-            <Grid Grid.Row="7" Visibility="{Binding ChangeConfirmationVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+            </StackPanel>
+
+            <Grid Grid.Row="4" Visibility="{Binding ChangeConfirmationVisible, 
+													Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
 
                 <local:ChangeConfirmationView Margin="5" DataContext="{Binding ChangeConfirmationViewModel}" />
             </Grid>
