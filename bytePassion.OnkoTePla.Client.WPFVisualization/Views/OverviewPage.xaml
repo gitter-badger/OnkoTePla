@@ -3,15 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage"
+			 xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"             
 			 xmlns:local="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
-			 xmlns:converter="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
-             xmlns:overviewPage="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage"
+			 
              d:DesignHeight="600"
              d:DesignWidth="900"
              mc:Ignorable="d">
 
     <d:UserControl.DataContext>
-        <overviewPage:OverviewPageViewModelSampleData />
+        <sampleData:OverviewPageViewModelSampleData />
     </d:UserControl.DataContext>
 
     <UserControl.Resources>
