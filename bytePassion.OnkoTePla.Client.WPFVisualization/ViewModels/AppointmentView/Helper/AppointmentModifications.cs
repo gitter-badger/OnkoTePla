@@ -237,12 +237,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public string Description
 		{
 			get { return description; }
-			set { PropertyChanged.ChangeAndNotify(this, ref description, value); }
+			private set { PropertyChanged.ChangeAndNotify(this, ref description, value); }
 		}
 
 		#endregion
 
-		#region set and fix new values of location / time shift / begin / end
+		#region set and fix new values of location / time shift / begin / end / description
 
 		public void SetNewLocation(TherapyPlaceRowIdentifier newLocation, Time newBeginTime, Time newEndTime)
 		{			
@@ -347,6 +347,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				                                               versions.CurrentVersion.EndTime,
 				                                               versions.CurrentVersion.Description,
 				                                               versions.CurrentVersion.Location));
+			}
+		}
+
+		public void SetNewDescription(string newDescription)
+		{
+			if (newDescription != Description)
+			{
+				versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
+															   versions.CurrentVersion.EndTime,
+															   newDescription,
+															   versions.CurrentVersion.Location));
 			}
 		}
 
