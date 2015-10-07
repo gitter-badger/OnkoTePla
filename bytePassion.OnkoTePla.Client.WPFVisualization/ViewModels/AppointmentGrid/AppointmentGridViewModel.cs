@@ -100,8 +100,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				AddAppointment(appointment);
 			}
 
-			therapyPlaceRowIdentifiers = medicalPractice.Rooms
-			                                            .SelectMany(room => room.TherapyPlaces)
+			therapyPlaceRowIdentifiers = medicalPractice.GetAllTherapyPlaces()
 			                                            .Select(therapyPlaceRow => new TherapyPlaceRowIdentifier(Identifier, therapyPlaceRow.Id))
 			                                            .ToList();
 
