@@ -19,7 +19,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowVi
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages.DeleteAppointment;
 using DeleteAppointmentCommand = bytePassion.OnkoTePla.Client.Core.Domain.Commands.DeleteAppointment;
@@ -38,9 +37,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		private readonly IDictionary<Guid, TherapyPlaceRowViewModel> availableTherapyPlaceRowViewModels; 
 
 		private readonly AppointmentsOfADayReadModel readModel;
+
 		private readonly IGlobalState<Size> globalGridSizeVariable;
 		private readonly IGlobalState<Guid?> globalRoomFilterVariable;
-		
+
+		private readonly IReadOnlyList<TherapyPlaceRowIdentifier> therapyPlaceRowIdentifiers;
+
 		public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
 										ICommandBus commandBus,
@@ -97,6 +99,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			{
 				AddAppointment(appointment);
 			}
+
+			therapyPlaceRowIdentifiers = medicalPractice.Rooms
+			                                            .SelectMany(room => room.TherapyPlaces)
+			                                            .Select(therapyPlaceRow => new TherapyPlaceRowIdentifier(Identifier, therapyPlaceRow.Id))
+			                                            .ToList();
 
 			OnGlobalRoomFilterVariableChanged(globalRoomFilterVariable.Value);
 
@@ -163,11 +170,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 					new NewSizeAvailable(newGridSize)	
 				);
 
-				foreach (var appointment in readModel.Appointments)
-				{
+				foreach (var therapyPlaceRowIdentifier in therapyPlaceRowIdentifiers)
+				{ 
 					viewModelCommunication.SendTo(
-						AppointmentViewModelCollection,
-						appointment.Id,
+						TherapyPlaceRowViewModelCollection,
+						therapyPlaceRowIdentifier,
 						new NewSizeAvailable(newGridSize)
 					);
 				}							

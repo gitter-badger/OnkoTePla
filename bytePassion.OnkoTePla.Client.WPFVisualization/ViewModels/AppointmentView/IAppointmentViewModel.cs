@@ -13,8 +13,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 											 IViewModelCommunicationDeliverer,
 											 IViewModelCollectionItem<Guid>,
 											 IDisposable,
-                                             IViewModelMessageHandler<Dispose>,
-											 IViewModelMessageHandler<NewSizeAvailable>,
+                                             IViewModelMessageHandler<Dispose>,											 
 											 IViewModelMessageHandler<RestoreOriginalValues>,
 											 IViewModelMessageHandler<ShowDisabledOverlay>,
 											 IViewModelMessageHandler<HideDisabledOverlay>
@@ -22,13 +21,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }		
 		
-		Time BeginTime { get; }					//
-		Time EndTime   { get; }					//	All this Data is necessary
-												//  to position the OriginalAppointment
-		double GridWidth     { get; }			//  correct
-		Time   TimeSlotBegin { get; }			//
-		Time   TimeSlotEnd   { get; }			//		
-
+		Time BeginTime { get; }
+		Time EndTime   { get; }
+	
 		string PatientDisplayName { get; }
 
 		string TimeSpan           { get; }		//

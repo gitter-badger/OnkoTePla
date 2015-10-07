@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Media;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
@@ -14,7 +16,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 {
 	public class TherapyPlaceRowViewModel : DisposingObject,
 											ITherapyPlaceRowViewModel											
-	{		
+	{
+		private double gridWidth;
+
 		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication, 
 									    IDataCenter dataCenter,
 										TherapyPlace therapyPlace, 
@@ -34,6 +38,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 				Constants.TherapyPlaceRowViewModelCollection,
 				this	
 			);
+
+			var medicalPractice = dataCenter.GetMedicalPracticeByDateAndId(identifier.PlaceAndDate.Date,
+																		   identifier.PlaceAndDate.MedicalPracticeId);
+
+			TimeSlotBegin = medicalPractice.HoursOfOpening.GetOpeningTime(identifier.PlaceAndDate.Date);
+			TimeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(identifier.PlaceAndDate.Date);
 		}
 
 		public TherapyPlaceRowIdentifier Identifier { get; }
@@ -42,7 +52,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		
 		public Color  RoomColor        { get; }		
 		public string TherapyPlaceName { get; }
-	
+
+		public Time TimeSlotBegin { get; }
+		public Time TimeSlotEnd   { get; }
+
+		public double GridWidth
+		{
+			get { return gridWidth; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref gridWidth, value); }
+		}
+
+		public void Process (NewSizeAvailable message)
+		{
+			GridWidth = message.NewSize.Width;
+		}
 
 		public void Process(AddAppointmentToTherapyPlaceRow message)
 		{
@@ -64,5 +87,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 
 		public IViewModelCommunication ViewModelCommunication { get; }
 		public IDataCenter DataCenter { get; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

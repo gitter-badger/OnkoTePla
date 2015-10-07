@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Media;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
@@ -9,6 +10,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
 {
@@ -25,6 +27,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 				new AppointmentViewModelSampleData( new Time(10,45), new Time(12,0))
 			};	
 			
+			TimeSlotBegin = new Time( 8,0);
+			TimeSlotEnd   = new Time(16,0);
+			GridWidth = 600;
+
 			Identifier = new TherapyPlaceRowIdentifier(new AggregateIdentifier(Date.Dummy, new Guid()), new Guid());		
 		}
 		
@@ -33,14 +39,21 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public string TherapyPlaceName { get; }
 		public Color  RoomColor        { get; }
 
-		public TherapyPlaceRowIdentifier Identifier { get; }		
+		public Time TimeSlotBegin { get; }
+		public Time TimeSlotEnd   { get; }
+		public double GridWidth { get; }
 
-		public void   Process(AddAppointmentToTherapyPlaceRow message) {}
-		public void   Process(RemoveAppointmentFromTherapyPlaceRow message) {}		
+		public TherapyPlaceRowIdentifier Identifier { get; }
+
+		public void Process (NewSizeAvailable message) {}
+		public void Process (AddAppointmentToTherapyPlaceRow message) {}
+		public void Process (RemoveAppointmentFromTherapyPlaceRow message) {}		
 
 		public IViewModelCommunication ViewModelCommunication { get; } = null;
 		public IDataCenter DataCenter { get; } = null;
 
 		public void Dispose () { }
+
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

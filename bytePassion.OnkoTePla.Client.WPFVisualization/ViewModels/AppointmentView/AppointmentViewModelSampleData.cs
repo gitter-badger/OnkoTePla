@@ -26,26 +26,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			Room = "A12";
 
 			BeginTime = beginTime;
-			EndTime = endTime;
-
-			GridWidth = 400;
-			TimeSlotBegin = new Time(8, 0);
-			TimeSlotEnd = new Time(16,0);
+			EndTime = endTime;			
 
 			OperatingMode = OperatingMode.Edit;
 			ShowDisabledOverlay = false;
 			Identifier = new Guid();
 		}
 
-		public ICommand DeleteAppointment      => null;
-		public ICommand SwitchToEditMode       => null;
+		public ICommand DeleteAppointment => null;
+		public ICommand SwitchToEditMode  => null;
 
 		public Time   BeginTime     { get; }
-		public Time   EndTime       { get; }
-		public double GridWidth     { get; }
-		public Time   TimeSlotBegin { get; }
-		public Time   TimeSlotEnd   { get; }
-
+		public Time   EndTime       { get; }		
 
 		public string PatientDisplayName { get; }
 		public string TimeSpan           { get; }
@@ -58,8 +50,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public Guid Identifier { get; }
 
-		public void Process (Dispose message) { }
-		public void Process (NewSizeAvailable message) { }
+		public void Process (Dispose message) { }		
 		public void Process (RestoreOriginalValues message) { }
 		public void Process (ShowDisabledOverlay message) { }
 		public void Process (HideDisabledOverlay message) { }

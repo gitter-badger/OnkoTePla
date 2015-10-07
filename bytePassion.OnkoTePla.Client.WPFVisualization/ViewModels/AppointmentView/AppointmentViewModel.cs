@@ -25,17 +25,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 										IAppointmentViewModel										
 	{		
 		private readonly Appointment appointment;
-		private readonly IDataCenter dataCenter;
 		private readonly TherapyPlaceRowIdentifier initialLocalisation;
 
 		private readonly IGlobalState<AppointmentModifications> currentModifiedAppointment;
 
 		private TherapyPlaceRowIdentifier currentLocation;
 		private OperatingMode operatingMode;
-
-		private Time   timeSlotStart;
-		private Time   timeSlotEnd;		
-		private double gridWidth;
+		
 		private Time   beginTime;
 		private Time   endTime;
 
@@ -48,7 +44,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 									TherapyPlaceRowIdentifier initialLocalisation)
 		{ 						
 			this.appointment = appointment;
-			this.dataCenter = dataCenter;
 			this.initialLocalisation = initialLocalisation;
 			ViewModelCommunication = viewModelCommunication;		
 
@@ -154,24 +149,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			currentLocation = therapyPlaceRowIdentifier;
 
-			var medicalPractice = dataCenter.GetMedicalPracticeByDateAndId(therapyPlaceRowIdentifier.PlaceAndDate.Date,
-																		   therapyPlaceRowIdentifier.PlaceAndDate.MedicalPracticeId);
-
-			TimeSlotBegin = medicalPractice.HoursOfOpening.GetOpeningTime(therapyPlaceRowIdentifier.PlaceAndDate.Date);
-			TimeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(therapyPlaceRowIdentifier.PlaceAndDate.Date);
-
-
 			ViewModelCommunication.SendTo(
 				TherapyPlaceRowViewModelCollection,
 				therapyPlaceRowIdentifier,
 				new AddAppointmentToTherapyPlaceRow(this)	
-			);
-
-			var globalGridSizeVariable = ViewModelCommunication.GetGlobalViewModelVariable<Size>(
-				AppointmentGridSizeVariable
-			);
-
-			GridWidth = globalGridSizeVariable.Value.Width;
+			);				
 		}
 
 
@@ -193,25 +175,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			private set { PropertyChanged.ChangeAndNotify(this, ref endTime, value); }
 		}
 
-		public double GridWidth
-		{
-			get { return gridWidth; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref gridWidth, value); }
-		}
-
-		public Time TimeSlotBegin
-		{
-			get { return timeSlotStart;}
-			private set { PropertyChanged.ChangeAndNotify(this, ref timeSlotStart, value); }
-			
-		}
-
-		public Time TimeSlotEnd
-		{
-			get { return timeSlotEnd; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref timeSlotEnd, value); }
-		}
-
+		
 
 		public string PatientDisplayName => $"{appointment.Patient.Name} (*{appointment.Patient.Birthday.Year})";
         public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
@@ -238,12 +202,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{
 			Dispose();
 		}
-
-		public void Process (NewSizeAvailable message)
-		{
-			GridWidth = message.NewSize.Width;
-		}
-
+		
 		public void Process (RestoreOriginalValues message)
 		{
 			BeginTime = appointment.StartTime;
