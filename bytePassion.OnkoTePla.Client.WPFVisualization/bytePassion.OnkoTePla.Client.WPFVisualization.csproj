@@ -104,8 +104,10 @@
     <Compile Include="ViewModelMessages\ConfirmChanges.cs" />
     <Compile Include="ViewModelMessages\CreateNewAppointmentFromModificationsAndSendToCommandBus.cs" />
     <Compile Include="ViewModelMessages\DeleteAppointment.cs" />
+    <Compile Include="ViewModelMessages\HideDisabledOverlay.cs" />
     <Compile Include="ViewModelMessages\HideNotification.cs" />
     <Compile Include="ViewModelMessages\RejectChanges.cs" />
+    <Compile Include="ViewModelMessages\ShowDisabledOverlay.cs" />
     <Compile Include="ViewModelMessages\UIInstance.cs" />
     <Compile Include="ViewModelMessages\SendCurrentChangesToCommandBus.cs" />
     <Compile Include="ViewModelMessages\ShowNotification.cs" />

@@ -5,6 +5,7 @@ using System.Windows.Interactivity;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
@@ -55,9 +56,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 		{
 			if (mouseIsDown)
 			{
-				EndDrag();
+				EndDrag();				
 
-				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = true;
+				ViewModelCommunication.SendTo(
+					AppointmentViewModelCollection,
+					currentModifiedAppointmentVariable.Value.OriginalAppointment.Id, 
+					new ShowDisabledOverlay()
+				);
 
 				var adornerControl = ViewModelCommunication.GetGlobalViewModelVariable<AdornerControl>(
 					AdornerControlVariable
@@ -73,7 +78,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 				adornerControl.DisposeAdorner();
 
-				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = false;				
+				ViewModelCommunication.SendTo(
+					AppointmentViewModelCollection,
+					currentModifiedAppointmentVariable.Value.OriginalAppointment.Id,
+					new HideDisabledOverlay()
+				);
 			}
 		}
 
@@ -83,14 +92,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			{
 				e.Action = DragAction.Cancel;
 				e.Handled = true;
-
-				var adornerControl = ViewModelCommunication.GetGlobalViewModelVariable<AdornerControl>(
-					AdornerControlVariable
-				).Value;
-
-				adornerControl.DisposeAdorner();
-
-				currentModifiedAppointmentVariable.Value.ShowDisabledOverlay = false;
 			}			
 		}		
 

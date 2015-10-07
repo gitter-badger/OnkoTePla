@@ -7,6 +7,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
@@ -21,12 +22,33 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 {
 	public class AppointmentModifications : DisposingObject, 
 											INotifyPropertyChanged
-	{		
+	{
+
+		private class ModificationDataSet
+		{
+			public ModificationDataSet(Time beginTime, Time endTime, 
+									   string description, TherapyPlaceRowIdentifier location)
+			{
+				BeginTime = beginTime;
+				EndTime = endTime;
+				Description = description;
+				Location = location;
+			}
+
+			public Time BeginTime { get; }
+			public Time EndTime { get; }
+
+			public string Description { get; }
+			public TherapyPlaceRowIdentifier Location { get; }
+		}
+
 		private readonly IDataCenter dataCenter;
 		private readonly IViewModelCommunication viewModelCommunication;
 		
 		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalState<Size> gridSizeVariable;		
+		private readonly IGlobalState<Size> gridSizeVariable;
+
+		private readonly VersionManager<ModificationDataSet> versions; 
 
 		private Time beginTime;
 		private Time endTime;
@@ -40,8 +62,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private Time currentSlotEnd;
 
 		private MedicalPractice currentMedicalPracticeVersion;
-		private double currentGridWidth;		
-		private bool hideAppointment;
+		private double currentGridWidth;				
 		private TherapyPlaceRowIdentifier currentLocation;
 		private string description;
 
@@ -51,10 +72,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 										IViewModelCommunication viewModelCommunication,
 										bool isInitialAdjustment)
 		{
-			OriginalAppointment = originalAppointment;			
+			OriginalAppointment = originalAppointment;						
+			IsInitialAdjustment = isInitialAdjustment;
+
 			this.dataCenter = dataCenter;
 			this.viewModelCommunication = viewModelCommunication;
-			IsInitialAdjustment = isInitialAdjustment;
+
+			versions = new VersionManager<ModificationDataSet>(100);
+			versions.CurrentVersionChanged += OnCurrentVersionChanged;
 
 			var aggregateIdentifier = new AggregateIdentifier(originalAppointment.Day, medicalPracticeId);
 			var initalLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, originalAppointment.TherapyPlace.Id);
@@ -62,16 +87,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			
 			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(initalLocation.PlaceAndDate.Date,
 																					 initalLocation.PlaceAndDate.MedicalPracticeId);
-			
-			currentLocation = initalLocation;
 
-			beginTime = originalAppointment.StartTime;
-			endTime   = originalAppointment.EndTime;
+			var initialDataSet = new ModificationDataSet(originalAppointment.StartTime,
+													     originalAppointment.EndTime,
+														 originalAppointment.Description,
+														 initalLocation);
 
-			lastSetBeginTime = BeginTime;
-			lastSetEndTime   = EndTime;
-
-			description = originalAppointment.Description;
+			versions.AddnewVersion(initialDataSet);
 
 			selectedDateVariable = viewModelCommunication.GetGlobalViewModelVariable<Date>(
 				AppointmentGridSelectedDateVariable
@@ -82,21 +104,58 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				AppointmentGridSizeVariable	
 			);
 			gridSizeVariable.StateChanged += OnGridSizeVariableChanged;
-			OnGridSizeVariableChanged(gridSizeVariable.Value);
 
-			ComputeSlotInformations();
+			OnGridSizeVariableChanged(gridSizeVariable.Value);
 		}
 
-		private void OnGridSizeVariableChanged(Size size)
+		private void OnCurrentVersionChanged(object sender, ModificationDataSet modificationDataSet)
+		{
+			ApplyModificationDataset(modificationDataSet);
+		}
+
+		public Appointment OriginalAppointment { get; }
+		public bool IsInitialAdjustment { get; }
+
+		public double CurrentAppointmentPixelWidth
+		{
+			get
+			{
+				var lengthOfOneHour = currentGridWidth / (new Duration(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
+				var duration = new Duration(BeginTime, EndTime);
+
+				return ((double)duration.Seconds / 3600) * lengthOfOneHour;
+			}
+		}
+
+		private void ApplyModificationDataset(ModificationDataSet dataSet)
+		{
+			Description = dataSet.Description;
+
+			BeginTime = dataSet.BeginTime;
+			EndTime = dataSet.EndTime;
+
+			lastSetBeginTime = BeginTime;
+			lastSetEndTime   = EndTime;
+
+			bool recomputationOfSlotsNecessary = CurrentLocation != dataSet.Location;
+
+			CurrentLocation = dataSet.Location;
+
+			if (recomputationOfSlotsNecessary)
+				ComputeBoundariesOfCurrentTimeSlot();
+		}
+
+		#region OnGridSizeVariableChanged, OnSelectedDateVariableChanged
+
+		private void OnGridSizeVariableChanged (Size size)
 		{
 			currentGridWidth = size.Width;
 		}
 
-		private void OnSelectedDateVariableChanged(Date date)
+		private void OnSelectedDateVariableChanged (Date date)
 		{
 			if (date != CurrentLocation.PlaceAndDate.Date)
 			{
-
 				var newMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(date, currentMedicalPracticeVersion.Id);
 
 				if (newMedicalPracticeVersion.HoursOfOpening.IsOpen(date))
@@ -122,15 +181,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 					foreach (var therapyRowData in sortedAppointments)
 					{
-						var slots = ComputeSlots(openingTime, closingTime, therapyRowData.Value);
+						var slots = ComputeAllSlotsWithinARow(openingTime, closingTime, therapyRowData.Value);
 						var suitableSlot = GetSlotForAppointment(slots, appointmentDuration);
 
 						if (suitableSlot != null)
 						{
 							SetNewLocation(
-								new TherapyPlaceRowIdentifier(new AggregateIdentifier(date, 
+								new TherapyPlaceRowIdentifier(new AggregateIdentifier(date,
 																					  CurrentLocation.PlaceAndDate.MedicalPracticeId),
-								                              therapyRowData.Key.Id), 
+															  therapyRowData.Key.Id),
 								suitableSlot.Begin,
 								suitableSlot.Begin + appointmentDuration
 							);
@@ -139,66 +198,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 					}
 
 					viewModelCommunication.Send(
-						new ShowNotification("cannot move the OriginalAppointment to that day. To timeslot is big enough!")
+						new ShowNotification("cannot move the OriginalAppointment to that day. No timeslot is big enough!")
 					);
 				}
 				else
 				{
 					viewModelCommunication.Send(
 						new ShowNotification("cannot move an OriginalAppointment to a day where the practice is closed!")
-					);					
+					);
 				}
 
 				selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
 			}
 		}
 
-		private static TimeSlot GetSlotForAppointment(IEnumerable<TimeSlot> timeSlots, Duration appointmentDuration)
-		{
-			return timeSlots.FirstOrDefault(slot => new Duration(slot.Begin, slot.End) >= appointmentDuration);
-		}
+		#endregion
 
-		private static IEnumerable<TimeSlot> ComputeSlots (Time openingTime, Time closingTime, IEnumerable<Appointment> appointments)
-		{			
-			var sortedAppointments = appointments.ToList();
-			sortedAppointments.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));			
-									
-			var startOfSlots = new List<Time>();
-			var endOfSlots = new List<Time>();
-
-			startOfSlots.Add(openingTime);
-
-			foreach (var appointment in sortedAppointments)
-			{
-				endOfSlots.Add(appointment.StartTime);
-				startOfSlots.Add(appointment.EndTime);
-			}
-
-			endOfSlots.Add(closingTime);
-
-			var slots = new List<TimeSlot>();
-
-			for (int i = 0; i < startOfSlots.Count; i++)
-			{
-				slots.Add(new TimeSlot(startOfSlots[i], endOfSlots[i]));
-			}
-
-			return slots;
-		}
-
-		public Appointment OriginalAppointment { get; }
-		public bool IsInitialAdjustment { get; }
-
-		public double CurrentAppointmentPixelWidth
-		{
-			get
-			{
-				var lengthOfOneHour = currentGridWidth / (new Duration(currentDayClosingTime, currentDayOpeningTime).Seconds / 3600.0);
-				var duration = new Duration(BeginTime, EndTime);
-
-				return ((double)duration.Seconds / 3600) * lengthOfOneHour;
-			}
-		}
+		#region public properties for appointment-changes
 
 		public Time BeginTime
 		{
@@ -210,13 +226,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{
 			get { return endTime; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref endTime, value); }
-		}
-
-		public bool ShowDisabledOverlay
-		{
-			get { return hideAppointment; }
-			set { PropertyChanged.ChangeAndNotify(this, ref hideAppointment, value); }
-		}
+		}		
 
 		public TherapyPlaceRowIdentifier CurrentLocation
 		{
@@ -230,30 +240,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			set { PropertyChanged.ChangeAndNotify(this, ref description, value); }
 		}
 
-		
+		#endregion
+
+		#region set and fix new values of location / time shift / begin / end
 
 		public void SetNewLocation(TherapyPlaceRowIdentifier newLocation, Time newBeginTime, Time newEndTime)
-		{
-			if (CurrentLocation == null ||
-			   (CurrentLocation != null && CurrentLocation.PlaceAndDate != newLocation.PlaceAndDate))
-			{
-				currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(newLocation.PlaceAndDate.Date,
-				                                                                         newLocation.PlaceAndDate.MedicalPracticeId);
-			}
-
-			CurrentLocation = newLocation;
-			
+		{			
+			var finalBeginTime = GetTimeToSnap(newBeginTime);
 			var appointmentDuration = new Duration(newBeginTime, newEndTime);
-			var beginTimeToSnap = GetTimeToSnap(newBeginTime);
-			lastSetBeginTime = beginTimeToSnap;
-			BeginTime = beginTimeToSnap;
+			var finalEndTime = GetTimeToSnap(finalBeginTime + appointmentDuration);
 
-
-			var endTimeToSnap = GetTimeToSnap(beginTimeToSnap + appointmentDuration);
-			lastSetEndTime = endTimeToSnap;
-			EndTime = endTimeToSnap;
-
-			ComputeSlotInformations();
+			versions.AddnewVersion(new ModificationDataSet(finalBeginTime, 
+														   finalEndTime, 
+														   versions.CurrentVersion.Description, 
+														   newLocation));
 		}	
 		
 		public void SetNewTimeShiftDelta(double deltaInPixel)
@@ -284,14 +284,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public void FixTimeShiftDelta()
 		{
 			var duration = new Duration(BeginTime, EndTime);
-			var beginTimeToSnap = GetTimeToSnap(BeginTime);
-			lastSetBeginTime = beginTimeToSnap;
-			BeginTime = beginTimeToSnap;
-
-
-			var endTimeToSnap = GetTimeToSnap(beginTimeToSnap + duration);
-			lastSetEndTime = endTimeToSnap;
-			EndTime = endTimeToSnap;
+			var finalBeginTime = GetTimeToSnap(BeginTime);			
+			var finalEndTime = GetTimeToSnap(finalBeginTime + duration);
+			
+			versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
+														   finalEndTime,
+														   versions.CurrentVersion.Description,
+														   versions.CurrentVersion.Location));
 		}
 
 		public void SetNewEndTimeDelta(double deltaInPixel)
@@ -301,26 +300,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var durationDelta = new Duration(secondsDelta);
 
 			EndTime = CheckEndTime(deltaInPixel > 0 ? lastSetEndTime + durationDelta : lastSetEndTime - durationDelta);
-		}
-
-		private Time CheckEndTime(Time endTimeToCheck)
-		{
-			if (endTimeToCheck > currentSlotEnd)
-				return currentSlotEnd;
-
-			var minimalTimeEnd = BeginTime + new Duration(60*15);
-
-			if (endTimeToCheck < minimalTimeEnd)
-				return minimalTimeEnd;
-						
-			return endTimeToCheck;
-		}
+		}		
 
 		public void FixEndTimeDelta()
 		{
-			var timeToSnap = GetTimeToSnap(EndTime);
-			lastSetEndTime = timeToSnap;
-			EndTime = timeToSnap;
+			var finalEndTime = GetTimeToSnap(EndTime);
+
+			versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
+														   finalEndTime,
+														   versions.CurrentVersion.Description,
+														   versions.CurrentVersion.Location));
 		}
 
 		public void SetNewBeginTimeDelta(double deltaInPixel)
@@ -330,9 +319,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var durationDelta = new Duration(secondsDelta);
 
 			BeginTime = CheckBeginTime(deltaInPixel > 0 ? lastSetBeginTime + durationDelta : lastSetBeginTime - durationDelta);			
+		}		
+
+		public void FixBeginTimeDelta()
+		{
+			var finalBeginTime = GetTimeToSnap(BeginTime);
+
+			versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
+														   versions.CurrentVersion.EndTime,
+														   versions.CurrentVersion.Description,
+														   versions.CurrentVersion.Location));
 		}
 
-		private Time CheckBeginTime(Time beginTimeToCheck)
+		#endregion
+
+		#region validate funktions: CheckBeginTime, CheckEndTime
+
+		private Time CheckBeginTime (Time beginTimeToCheck)
 		{
 			if (beginTimeToCheck < currentSlotBegin)
 				return currentSlotBegin;
@@ -345,12 +348,22 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			return beginTimeToCheck;
 		}
 
-		public void FixBeginTimeDelta()
+		private Time CheckEndTime (Time endTimeToCheck)
 		{
-			var timeToSnap = GetTimeToSnap(BeginTime);
-			lastSetBeginTime = timeToSnap;
-			BeginTime = timeToSnap;			
+			if (endTimeToCheck > currentSlotEnd)
+				return currentSlotEnd;
+
+			var minimalTimeEnd = BeginTime + new Duration(60*15);
+
+			if (endTimeToCheck < minimalTimeEnd)
+				return minimalTimeEnd;
+
+			return endTimeToCheck;
 		}
+
+		#endregion
+
+		#region help functions: GetTimeToSnap, GetSlotForAppointment, ComputeAllSlotsWithinARow, ComputeBoundariesOfCurrentTimeSlot
 
 		private static Time GetTimeToSnap(Time time)
 		{
@@ -363,10 +376,47 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			if (m > 52 && m <= 59) return new Time((byte)(time.Hour+1), 0);
 
 			throw new Exception("internal Error");
+		}		
+
+		private static TimeSlot GetSlotForAppointment (IEnumerable<TimeSlot> timeSlots, Duration appointmentDuration)
+		{
+			return timeSlots.FirstOrDefault(slot => new Duration(slot.Begin, slot.End) >= appointmentDuration);
 		}
 
-		private void ComputeSlotInformations()
+		private static IEnumerable<TimeSlot> ComputeAllSlotsWithinARow (Time openingTime, Time closingTime, 
+																		IEnumerable<Appointment> appointments)
 		{
+			var sortedAppointments = appointments.ToList();
+			sortedAppointments.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));
+
+			var startOfSlots = new List<Time>();
+			var endOfSlots = new List<Time>();
+
+			startOfSlots.Add(openingTime);
+
+			foreach (var appointment in sortedAppointments)
+			{
+				endOfSlots.Add(appointment.StartTime);
+				startOfSlots.Add(appointment.EndTime);
+			}
+
+			endOfSlots.Add(closingTime);
+
+			var slots = new List<TimeSlot>();
+
+			for (int i = 0; i < startOfSlots.Count; i++)
+			{
+				slots.Add(new TimeSlot(startOfSlots[i], endOfSlots[i]));
+			}
+
+			return slots;
+		}
+
+		private void ComputeBoundariesOfCurrentTimeSlot()
+		{
+			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(CurrentLocation.PlaceAndDate.Date,
+																					 CurrentLocation.PlaceAndDate.MedicalPracticeId);
+
 			currentDayOpeningTime = currentMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(CurrentLocation.PlaceAndDate.Date);
 			currentDayClosingTime = currentMedicalPracticeVersion.HoursOfOpening.GetClosingTime(CurrentLocation.PlaceAndDate.Date);			
 
@@ -412,11 +462,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				currentSlotEnd   = appointmentsWithinTheSameRow[indexOfThisAppointment + 1].StartTime;
 			}
 		}
-		
+
+		#endregion
+
 		public override void CleanUp()
 		{
 			selectedDateVariable.StateChanged -= OnSelectedDateVariableChanged;
 			gridSizeVariable.StateChanged     -= OnGridSizeVariableChanged;
+			versions.CurrentVersionChanged    -= OnCurrentVersionChanged;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

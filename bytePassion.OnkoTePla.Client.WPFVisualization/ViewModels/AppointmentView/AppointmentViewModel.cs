@@ -121,12 +121,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				{
 					EndTime = appointmentModifications.EndTime;
 					break;
-				}
-				case nameof(AppointmentModifications.ShowDisabledOverlay):
-				{
-					ShowDisabledOverlay = appointmentModifications.ShowDisabledOverlay;
-					break;
-				}
+				}				
 				case nameof(AppointmentModifications.CurrentLocation):
 				{
 					SetNewLocation(appointmentModifications.CurrentLocation, false);
@@ -237,6 +232,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			private set { PropertyChanged.ChangeAndNotify(this, ref showDisabledOverlay, value); }
 		}
 
+		#region process messages
+
 		public void Process (Dispose message)
 		{
 			Dispose();
@@ -259,6 +256,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				AppointmentGridSelectedDateVariable
 			).Value = appointment.Day;
 		}
+
+		public void Process (ShowDisabledOverlay message)
+		{
+			ShowDisabledOverlay = true;
+		}
+
+		public void Process (HideDisabledOverlay message)
+		{
+			ShowDisabledOverlay = false;
+		}
+
+		#endregion
 
 		public override void CleanUp()
 		{
