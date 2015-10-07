@@ -67,7 +67,7 @@
     <Border>
 		
         <i:Interaction.Behaviors>
-            <commandExecutingBehaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode}"
+            <commandExecutingBehaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode, Mode=OneTime}"
 																	 CommandParameter="{StaticResource False}"/>
         </i:Interaction.Behaviors>
 
@@ -90,7 +90,7 @@
 							Margin="5,0">
 					
 					<i:Interaction.Behaviors>
-                        <behaviors:MoveBeginTimeBehavior ViewModelCommunication="{Binding ViewModelCommunication}"/>
+                        <behaviors:MoveBeginTimeBehavior ViewModelCommunication="{Binding ViewModelCommunication, Mode=OneTime}"/>
 					</i:Interaction.Behaviors>
 
                     <Border Style="{StaticResource WhiteLineBorderStyle}"/>
@@ -122,7 +122,7 @@
                            FontFamily="Segoe UI Semibold"
                            FontSize="18"
                            Foreground="#FFE4EBEC"
-                           Text="{Binding PatientDisplayName}"
+                           Text="{Binding PatientDisplayName, Mode=OneTime}"
                            TextTrimming="CharacterEllipsis"/>
             </Border>
 			
@@ -157,7 +157,7 @@
 				
             </Border>
             <Button Grid.Column="1"
-					Command="{Binding DeleteAppointment}"					
+					Command="{Binding DeleteAppointment, Mode=OneTime}"					
 					Margin="0,-55,0,0"
 					Width="24"
 					Height="24">
