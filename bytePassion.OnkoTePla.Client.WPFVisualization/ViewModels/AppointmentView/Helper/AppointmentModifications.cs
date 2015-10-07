@@ -250,10 +250,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var appointmentDuration = new Duration(newBeginTime, newEndTime);
 			var finalEndTime = GetTimeToSnap(finalBeginTime + appointmentDuration);
 
-			versions.AddnewVersion(new ModificationDataSet(finalBeginTime, 
-														   finalEndTime, 
-														   versions.CurrentVersion.Description, 
-														   newLocation));
+			if (newLocation != CurrentLocation ||
+			    finalBeginTime != BeginTime ||
+			    finalEndTime != EndTime)
+			{
+				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
+				                                               finalEndTime,
+				                                               versions.CurrentVersion.Description,
+				                                               newLocation));
+			}
 		}	
 		
 		public void SetNewTimeShiftDelta(double deltaInPixel)
@@ -286,11 +291,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var duration = new Duration(BeginTime, EndTime);
 			var finalBeginTime = GetTimeToSnap(BeginTime);			
 			var finalEndTime = GetTimeToSnap(finalBeginTime + duration);
-			
-			versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
-														   finalEndTime,
-														   versions.CurrentVersion.Description,
-														   versions.CurrentVersion.Location));
+
+			if (finalBeginTime != BeginTime ||
+			    finalEndTime != EndTime)
+			{
+				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
+				                                               finalEndTime,
+				                                               versions.CurrentVersion.Description,
+				                                               versions.CurrentVersion.Location));
+			}
 		}
 
 		public void SetNewEndTimeDelta(double deltaInPixel)
@@ -299,17 +308,22 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var secondsDelta = (uint)Math.Floor(Math.Abs(deltaInPixel) / (lengthOfOneHour / 3600));
 			var durationDelta = new Duration(secondsDelta);
 
-			EndTime = CheckEndTime(deltaInPixel > 0 ? lastSetEndTime + durationDelta : lastSetEndTime - durationDelta);
+			EndTime = CheckEndTime(deltaInPixel > 0 
+										? lastSetEndTime + durationDelta 
+										: lastSetEndTime - durationDelta);
 		}		
 
 		public void FixEndTimeDelta()
 		{
 			var finalEndTime = GetTimeToSnap(EndTime);
 
-			versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
-														   finalEndTime,
-														   versions.CurrentVersion.Description,
-														   versions.CurrentVersion.Location));
+			if (finalEndTime != EndTime)
+			{
+				versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
+				                                               finalEndTime,
+				                                               versions.CurrentVersion.Description,
+				                                               versions.CurrentVersion.Location));
+			}
 		}
 
 		public void SetNewBeginTimeDelta(double deltaInPixel)
@@ -318,17 +332,22 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var secondsDelta = (uint)Math.Floor(Math.Abs(deltaInPixel) / (lengthOfOneHour / 3600));
 			var durationDelta = new Duration(secondsDelta);
 
-			BeginTime = CheckBeginTime(deltaInPixel > 0 ? lastSetBeginTime + durationDelta : lastSetBeginTime - durationDelta);			
+			BeginTime = CheckBeginTime(deltaInPixel > 0 
+											? lastSetBeginTime + durationDelta 
+											: lastSetBeginTime - durationDelta);			
 		}		
 
 		public void FixBeginTimeDelta()
 		{
 			var finalBeginTime = GetTimeToSnap(BeginTime);
 
-			versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
-														   versions.CurrentVersion.EndTime,
-														   versions.CurrentVersion.Description,
-														   versions.CurrentVersion.Location));
+			if (finalBeginTime != BeginTime)
+			{
+				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
+				                                               versions.CurrentVersion.EndTime,
+				                                               versions.CurrentVersion.Description,
+				                                               versions.CurrentVersion.Location));
+			}
 		}
 
 		#endregion
