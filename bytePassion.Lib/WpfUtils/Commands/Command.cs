@@ -41,6 +41,11 @@ namespace bytePassion.Lib.WpfUtils.Commands
 		{
 			execute();
 		}
+
+		public void RaiseCanExecuteChanged()
+		{
+			CanExecuteChangedRequired(this, null);
+		}
 		
 		public event EventHandler CanExecuteChanged;		
 		
