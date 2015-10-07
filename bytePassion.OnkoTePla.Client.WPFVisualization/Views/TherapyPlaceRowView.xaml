@@ -35,7 +35,8 @@
                 BorderThickness="1,1,0,1">
 
             <Border.Background>
-                <SolidColorBrush Color="{Binding RoomColor}" />
+                <SolidColorBrush Color="{Binding RoomColor, 
+												 Mode=OneTime}" />
             </Border.Background>
         </Border>
 
@@ -48,7 +49,8 @@
                        VerticalAlignment="Center"
                        FontFamily="Segoe UI Semibold"
                        FontSize="18"
-                       Text="{Binding TherapyPlaceName}" />
+                       Text="{Binding TherapyPlaceName,
+									  Mode=OneTime}" />
         </Border>
 
         <Border Grid.Column="1"
@@ -57,17 +59,17 @@
 				Margin="0,0">
 
             <i:Interaction.Behaviors>
-                <behaviors:AcceptAppointmentDropBehavior Appointments="{Binding AppointmentViewModels}"
-                                                         DataCenter="{Binding DataCenter}"
-                                                         TherapyPlaceRowIdentifier="{Binding Identifier}"
-                                                         ViewModelCommunication="{Binding ViewModelCommunication}"/>
+                <behaviors:AcceptAppointmentDropBehavior Appointments="{Binding AppointmentViewModels, Mode=OneTime}"
+                                                         DataCenter="{Binding DataCenter, Mode=OneTime}"
+                                                         TherapyPlaceRowIdentifier="{Binding Identifier, Mode=OneTime}"
+                                                         ViewModelCommunication="{Binding ViewModelCommunication, Mode=OneTime}"/>
             </i:Interaction.Behaviors>
 			
 			<Border Margin="0,3"
 					BorderBrush="#99A9A9A9"
 					BorderThickness="1">
 
-				<ItemsControl ItemsSource="{Binding AppointmentViewModels}">
+                <ItemsControl ItemsSource="{Binding AppointmentViewModels, Mode=OneTime}">
 
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>
@@ -84,8 +86,8 @@
 										<Binding Path="BeginTime" />
 										<Binding Path="EndTime" />
                                         <Binding Path="DataContext.GridWidth"     RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}"/>
-                                        <Binding Path="DataContext.TimeSlotBegin" RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}"/>
-                                        <Binding Path="DataContext.TimeSlotEnd"   RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}"/>
+                                        <Binding Path="DataContext.TimeSlotBegin" RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}" Mode="OneTime"/>
+                                        <Binding Path="DataContext.TimeSlotEnd"   RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}" Mode="OneTime"/>
 									</MultiBinding>
 								</views:AppointmentView.Width>
 
@@ -102,8 +104,8 @@
 									<MultiBinding Converter="{StaticResource ComputeAppointmentPixelLeft}">
 										<Binding Path="BeginTime" />
                                         <Binding Path="DataContext.GridWidth"     RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}"/>
-                                        <Binding Path="DataContext.TimeSlotBegin" RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}"/>
-                                        <Binding Path="DataContext.TimeSlotEnd"   RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}"/>
+                                        <Binding Path="DataContext.TimeSlotBegin" RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}" Mode="OneTime"/>
+                                        <Binding Path="DataContext.TimeSlotEnd"   RelativeSource="{RelativeSource AncestorType={x:Type views:TherapyPlaceRowView}}" Mode="OneTime"/>
                                     </MultiBinding>
 								</Setter.Value>
 							</Setter>
