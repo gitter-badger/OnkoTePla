@@ -80,6 +80,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			versions = new VersionManager<ModificationDataSet>(100);
 			versions.CurrentVersionChanged += OnCurrentVersionChanged;
+			versions.PropertyChanged += OnVersionsManagerPropertyChanged;
 
 			var aggregateIdentifier = new AggregateIdentifier(originalAppointment.Day, medicalPracticeId);
 			var initalLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, originalAppointment.TherapyPlace.Id);
@@ -106,6 +107,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			gridSizeVariable.StateChanged += OnGridSizeVariableChanged;
 
 			OnGridSizeVariableChanged(gridSizeVariable.Value);
+		}
+
+		private void OnVersionsManagerPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+		{
+			switch (propertyChangedEventArgs.PropertyName)							//
+			{																		//
+				case nameof(VersionManager<ModificationDataSet>.RedoPossible):		//
+				{																	//
+					PropertyChanged.Notify(this, nameof(RedoPossible));				//	forwarding event
+					break;															//	that notifies
+				}																	//	UndoPossible or
+				case nameof(VersionManager<ModificationDataSet>.UndoPossible):		//  RedoPossible
+				{																	//	has changed
+					PropertyChanged.Notify(this, nameof(UndoPossible));				//
+					break;															//
+				}																	//
+			}																		//			
 		}
 
 		private void OnCurrentVersionChanged(object sender, ModificationDataSet modificationDataSet)
@@ -145,6 +163,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				ComputeBoundariesOfCurrentTimeSlot();
 		}
 
+		#region Undo/Redo
+
+		public bool UndoPossible { get { return versions.UndoPossible; }}
+		public bool RedoPossible { get { return versions.RedoPossible; }}
+
+		public void Undo()
+		{
+			if (versions.UndoPossible)
+				versions.Undo();
+		}
+
+		public void Redo()
+		{
+			if (versions.RedoPossible)
+				versions.Redo();
+		}
+
+		#endregion
+
 		#region OnGridSizeVariableChanged, OnSelectedDateVariableChanged
 
 		private void OnGridSizeVariableChanged (Size size)
@@ -156,9 +193,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{
 			if (date != CurrentLocation.PlaceAndDate.Date)
 			{
-				var newMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(date, currentMedicalPracticeVersion.Id);
+				var newMedicalPractice = dataCenter.GetMedicalPracticeByDateAndId(date, currentMedicalPracticeVersion.Id);
 
-				if (newMedicalPracticeVersion.HoursOfOpening.IsOpen(date))
+				if (newMedicalPractice.HoursOfOpening.IsOpen(date))
 				{
 					var readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(
 						new AggregateIdentifier(date, CurrentLocation.PlaceAndDate.MedicalPracticeId)
@@ -167,15 +204,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 					IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments =
 						new Dictionary<TherapyPlace, IList<Appointment>>();
 
-					foreach (var therapyPlace in newMedicalPracticeVersion.GetAllTherapyPlaces())
+					foreach (var therapyPlace in newMedicalPractice.GetAllTherapyPlaces())
 						sortedAppointments.Add(therapyPlace, new List<Appointment>());
 
 					foreach (var appointment in readModel.Appointments)
 						if (appointment != OriginalAppointment)
 							sortedAppointments[appointment.TherapyPlace].Add(appointment);
 
-					var openingTime = newMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(date);
-					var closingTime = newMedicalPracticeVersion.HoursOfOpening.GetClosingTime(date);
+					var openingTime = newMedicalPractice.HoursOfOpening.GetOpeningTime(date);
+					var closingTime = newMedicalPractice.HoursOfOpening.GetClosingTime(date);
 
 					var appointmentDuration = new Duration(BeginTime, EndTime);
 
@@ -500,6 +537,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			selectedDateVariable.StateChanged -= OnSelectedDateVariableChanged;
 			gridSizeVariable.StateChanged     -= OnGridSizeVariableChanged;
 			versions.CurrentVersionChanged    -= OnCurrentVersionChanged;
+			versions.PropertyChanged          -= OnVersionsManagerPropertyChanged;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
