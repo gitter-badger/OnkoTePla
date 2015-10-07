@@ -27,6 +27,10 @@ namespace bytePassion.Lib.TimeLib
 
 		public Time (uint secondsFromDayBegin)
 		{
+
+			if (secondsFromDayBegin > 86399)
+				throw new ArgumentException("parameter secondsFromDayBegin has to be in range from 0 to 86399");
+
 			var timeSeconds = secondsFromDayBegin % 60;
 			var restTime    = (secondsFromDayBegin - timeSeconds) / 60;
 			var timeMinutes = restTime % 60;
@@ -41,6 +45,10 @@ namespace bytePassion.Lib.TimeLib
 
 		public Time(byte hour, byte minute, byte second=0)
 		{
+			if (hour   > 23) throw new ArgumentException("parameter hour has to be in the range from 0 to 23");
+			if (minute > 59) throw new ArgumentException("parameter minute has to be in the range from 0 to 59");
+			if (second > 59) throw new ArgumentException("parameter second has to be in the range from 0 to 59");
+
 			this.hour = hour;
 			this.minute = minute;
 			this.second = second;
