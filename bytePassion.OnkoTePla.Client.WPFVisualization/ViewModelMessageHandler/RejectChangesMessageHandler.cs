@@ -31,34 +31,52 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 
 		private async void ProcessMesageAsync()
 		{
-			var dialog = new UserDialogBox("", "Wollen Sie alle Änderungen verwerfen?",
-										   MessageBoxButton.OKCancel, MessageBoxImage.Question);
-			var result = await dialog.ShowMahAppsDialog();
+			var currentMods = currentModifiedAppointmentVariable.Value;
+			var original = currentModifiedAppointmentVariable.Value.OriginalAppointment;
 
-			if (result == MessageDialogResult.Affirmative)
+			if (currentMods.BeginTime == original.StartTime &&
+			    currentMods.EndTime == original.EndTime &&
+			    currentMods.Description == original.Description &&
+			    currentMods.CurrentLocation == currentMods.InitialLocation)
 			{
-				var currentAppointmentModification = currentModifiedAppointmentVariable.Value;
-
-				if (currentAppointmentModification.IsInitialAdjustment)
-				{
-					viewModelCommunication.SendTo(									//
-						AppointmentViewModelCollection,								// do nothing but
-						currentAppointmentModification.OriginalAppointment.Id,		// deleting the temporarly
-						new Dispose()												// created Appointment
-					);																//
-				}
-				else
-				{
-					viewModelCommunication.SendTo(
-						AppointmentViewModelCollection,
-						currentModifiedAppointmentVariable.Value.OriginalAppointment.Id,
-						new RestoreOriginalValues()
-					);
-				}
-
-				currentAppointmentModification.Dispose();
-				currentModifiedAppointmentVariable.Value = null;								
+				RejectChanges();
 			}
+			else
+			{
+				var dialog = new UserDialogBox("", "Wollen Sie alle Änderungen verwerfen?",
+				                               MessageBoxButton.OKCancel, MessageBoxImage.Question);
+				var result = await dialog.ShowMahAppsDialog();
+
+				if (result == MessageDialogResult.Affirmative)
+				{
+					RejectChanges();
+				}
+			}
+		}
+
+		private void RejectChanges()
+		{
+			var currentAppointmentModification = currentModifiedAppointmentVariable.Value;
+
+			if (currentAppointmentModification.IsInitialAdjustment)
+			{
+				viewModelCommunication.SendTo(                                  //
+					AppointmentViewModelCollection,                             // do nothing but
+					currentAppointmentModification.OriginalAppointment.Id,      // deleting the temporarly
+					new Dispose()                                               // created Appointment
+				);                                                              //
+			}
+			else
+			{
+				viewModelCommunication.SendTo(
+					AppointmentViewModelCollection,
+					currentModifiedAppointmentVariable.Value.OriginalAppointment.Id,
+					new RestoreOriginalValues()
+				);
+			}
+
+			currentAppointmentModification.Dispose();
+			currentModifiedAppointmentVariable.Value = null;
 		}
 	}
 }

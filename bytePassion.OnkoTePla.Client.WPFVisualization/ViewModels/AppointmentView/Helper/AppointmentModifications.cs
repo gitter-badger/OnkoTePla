@@ -83,16 +83,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			versions.PropertyChanged += OnVersionsManagerPropertyChanged;
 
 			var aggregateIdentifier = new AggregateIdentifier(originalAppointment.Day, medicalPracticeId);
-			var initalLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, originalAppointment.TherapyPlace.Id);
+			InitialLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, originalAppointment.TherapyPlace.Id);
 			
 			
-			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(initalLocation.PlaceAndDate.Date,
-																					 initalLocation.PlaceAndDate.MedicalPracticeId);
+			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(InitialLocation.PlaceAndDate.Date,
+																					 InitialLocation.PlaceAndDate.MedicalPracticeId);
 
 			var initialDataSet = new ModificationDataSet(originalAppointment.StartTime,
 													     originalAppointment.EndTime,
 														 originalAppointment.Description,
-														 initalLocation);
+														 InitialLocation);
 
 			versions.AddnewVersion(initialDataSet);
 
@@ -132,6 +132,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		}
 
 		public Appointment OriginalAppointment { get; }
+		public TherapyPlaceRowIdentifier InitialLocation { get; }
 		public bool IsInitialAdjustment { get; }
 
 		public double CurrentAppointmentPixelWidth
