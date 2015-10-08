@@ -1,6 +1,8 @@
-﻿using bytePassion.OnkoTePla.Client.Core.CommandSystem;
+﻿using System;
+using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate;
 
 
@@ -14,7 +16,19 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 		{
 			this.repository = repository;
 		}
-		
+
+		private static ActionTag GetDividedActionTag(ActionTag actionTag)
+		{
+			switch (actionTag)
+			{
+				case ActionTag.NormalAction: { return ActionTag.NormalDividedReplaceAction; }
+				case ActionTag.RedoAction:   { return ActionTag.RedoDividedReplaceAction;   }
+				case ActionTag.UndoAction:   { return ActionTag.UndoDividedReplaceAction;   }
+			}
+
+			throw new ArgumentException("internal parameter error");
+		}
+
 		public void Process(ReplaceAppointment command)
 		{
 			if (command.NewDate == command.OriginalDate)
@@ -42,12 +56,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 				sourceAggregate.DeleteAppointment(command.UserId, 
 												  command.SourceAggregateVersion, 
 												  command.UserId, 
-												  command.ActionTag,
+												  GetDividedActionTag(command.ActionTag),
 												  command.OriginalAppointmendId);
 
 				destinationAggregate.AddAppointment(command.UserId, 
 												    command.DestinationAggregateVersion,
-													command.ActionTag,
+													GetDividedActionTag(command.ActionTag),
 													new CreateAppointmentData(command.PatientId, 
 																			  command.NewDescription, 
 																			  command.NewStartTime, 
