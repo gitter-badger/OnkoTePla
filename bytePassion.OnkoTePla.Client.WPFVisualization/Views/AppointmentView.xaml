@@ -1,52 +1,60 @@
 ﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.AppointmentView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                          
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
+             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"
+             xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"
+             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
+             xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"			 
-			 xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
-			 xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"
-			 xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"    
-			 xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"     			 
-             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"             
-			 xmlns:system="clr-namespace:System;assembly=mscorlib"             
-			 xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
-             xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper"
-			 
+             xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              d:DesignHeight="30"
              d:DesignWidth="200"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-		
-        <converter:OperatingModeToVisibilityConverter    x:Key="OperatingModeToVisibilityConverter" />
-		<computations:DeleteButtonVisibility             x:Key="DeleteButtonVisibility"/>
-		<converterLib:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>		
-		
-		<Style TargetType="Border" 
-			   x:Key="WhiteLineBorderStyle">
 
-            <Setter Property="Background" Value="White"/>
-			<Setter Property="Height" Value="20"/>
-			<Setter Property="Width" Value="1"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-			<Setter Property="Margin" Value="1,0,0,0"/>
-		</Style>
+        <converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter" />
+        <computations:DeleteButtonVisibility x:Key="DeleteButtonVisibility" />
+        <converterLib:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
+
+        <Style x:Key="WhiteLineBorderStyle" TargetType="Border">
+
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Width" Value="1" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="1,0,0,0" />
+        </Style>
 
         <Style TargetType="{x:Type ToolTip}">
+            <Setter Property="HasDropShadow" Value="True" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToolTip}">
-                        <ContentPresenter/>
+                    <ControlTemplate xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" TargetType="{x:Type ToolTip}">
+                        <themes:SystemDropShadowChrome Name="Shdw"
+                                                       CornerRadius="0"
+                                                       SnapsToDevicePixels="True"
+                                                       Color="Transparent">
+                            <ContentPresenter />
+                        </themes:SystemDropShadowChrome>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasDropShadow" Value="True">
+                                <Setter TargetName="Shdw" Property="Margin" Value="0,0,5,5" />
+                                <Setter TargetName="Shdw" Property="themes:SystemDropShadowChrome.Color" Value="#71000000" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <system:Boolean x:Key="False">
-			False
-		</system:Boolean>
+        <system:Boolean x:Key="False">False</system:Boolean>
 
     </UserControl.Resources>
 
@@ -56,19 +64,18 @@
 
     <UserControl.ToolTip>
         <ContentControl Content="{Binding}">
-			<ContentControl.Template>
-				<ControlTemplate>
-                    <views:AppointmentViewToolTip/>
+            <ContentControl.Template>
+                <ControlTemplate>
+                    <views:AppointmentViewToolTip />
                 </ControlTemplate>
-			</ContentControl.Template>
-		</ContentControl>
+            </ContentControl.Template>
+        </ContentControl>
     </UserControl.ToolTip>
 
     <Border>
-		
+
         <i:Interaction.Behaviors>
-            <commandExecutingBehaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode, Mode=OneTime}"
-																	 CommandParameter="{StaticResource False}"/>
+            <commandExecutingBehaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode, Mode=OneTime}" CommandParameter="{StaticResource False}" />
         </i:Interaction.Behaviors>
 
         <Grid>
@@ -77,124 +84,126 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-           
-            <Border Grid.Column="0"
-					Width="20"
-					Background="#CC119EDA"
-                    BorderBrush="{StaticResource AccentColorBrush}"
-					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}"
-                    BorderThickness="1,1,0,1">
-                
-                <StackPanel Orientation="Horizontal" 
-							Background="Transparent"
-							Margin="5,0">
-					
-					<i:Interaction.Behaviors>
-                        <behaviors:MoveBeginTimeBehavior ViewModelCommunication="{Binding ViewModelCommunication, Mode=OneTime}"/>
-					</i:Interaction.Behaviors>
 
-                    <Border Style="{StaticResource WhiteLineBorderStyle}"/>
-                    <Border Style="{StaticResource WhiteLineBorderStyle}"/>
-					
+            <Border Grid.Column="0"
+                    Width="20"
+                    Background="#CC119EDA"
+                    BorderBrush="{StaticResource AccentColorBrush}"
+                    BorderThickness="1,1,0,1"
+                    Visibility="{Binding OperatingMode,
+                                         Converter={StaticResource OperatingModeToVisibilityConverter}}">
+
+                <StackPanel Margin="5,0"
+                            Background="Transparent"
+                            Orientation="Horizontal">
+
+                    <i:Interaction.Behaviors>
+                        <behaviors:MoveBeginTimeBehavior ViewModelCommunication="{Binding ViewModelCommunication, Mode=OneTime}" />
+                    </i:Interaction.Behaviors>
+
+                    <Border Style="{StaticResource WhiteLineBorderStyle}" />
+                    <Border Style="{StaticResource WhiteLineBorderStyle}" />
+
                 </StackPanel>
             </Border>
-			
+
+            <Rectangle Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       Fill="DarkGray"
+                       Opacity="0.6"
+                       Visibility="{Binding ShowDisabledOverlay,
+                                            Converter={StaticResource BoolToCollapsedVisibilityConverter}}" />
+
             <Border Grid.Column="1"
-					BorderThickness="1"					
                     Background="{StaticResource AccentColorBrush}"
-                    BorderBrush="Black">
+                    BorderBrush="Black"
+                    BorderThickness="1">
 
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Setters>
-                            <Setter Property="Opacity" Value="1.0" />                            
+                            <Setter Property="Opacity" Value="1.0" />
                         </Style.Setters>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
-                                <Setter Property="Opacity" Value="0.6" />                                
+                                <Setter Property="Opacity" Value="0.6" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
-				
+
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontFamily="Segoe UI Semibold"
                            FontSize="18"
                            Foreground="#FFE4EBEC"
-                           Text="{Binding PatientDisplayName, Mode=OneTime}"
-                           TextTrimming="CharacterEllipsis"/>
+                           Text="{Binding PatientDisplayName,
+                                          Mode=OneTime}"
+                           TextTrimming="CharacterEllipsis" />
             </Border>
-			
+
             <Border Grid.Column="1"
                     Background="Transparent"
-					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}">
+                    Visibility="{Binding OperatingMode,
+                                         Converter={StaticResource OperatingModeToVisibilityConverter}}">
 
                 <i:Interaction.Behaviors>
-                    <behaviors:MoveWholeAppointmentBehavior ViewModelCommunication="{Binding ViewModelCommunication}"/>
+                    <behaviors:MoveWholeAppointmentBehavior ViewModelCommunication="{Binding ViewModelCommunication}" />
                 </i:Interaction.Behaviors>
-            </Border>
-			
-            <Border Grid.Column="2"
-                    BorderBrush="{StaticResource AccentColorBrush}"
-					Background="#CC119EDA"
-					Width="20"
-					Visibility="{Binding OperatingMode, Converter={StaticResource OperatingModeToVisibilityConverter}}"
-                    BorderThickness="0,1,1,1">
-
-                <i:Interaction.Behaviors>
-                    <behaviors:MoveEndTimeBehavior ViewModelCommunication="{Binding ViewModelCommunication}"/>
-                </i:Interaction.Behaviors>
-
-                <StackPanel Orientation="Horizontal"
-							FlowDirection="RightToLeft"
-							Background="Transparent"
-							Margin="5,0">
-
-                    <Border Style="{StaticResource WhiteLineBorderStyle}"/>
-                    <Border Style="{StaticResource WhiteLineBorderStyle}"/>
-                </StackPanel>
-				
             </Border>
             <Button Grid.Column="1"
-					Command="{Binding DeleteAppointment, Mode=OneTime}"					
-					Margin="0,-55,0,0"
-					Width="24"
-					Height="24">
-				
-				<Button.Visibility>
+                    Width="24"
+                    Height="24"
+                    Margin="0,-55,0,0"
+                    Command="{Binding DeleteAppointment,
+                                      Mode=OneTime}">
+
+                <Button.Visibility>
                     <MultiBinding Converter="{StaticResource DeleteButtonVisibility}">
-						<Binding Path="OperatingMode"/>
-						<Binding Path="ShowDisabledOverlay"/>
-					</MultiBinding>
-				</Button.Visibility>
-				
+                        <Binding Path="OperatingMode" />
+                        <Binding Path="ShowDisabledOverlay" />
+                    </MultiBinding>
+                </Button.Visibility>
+
                 <Button.Template>
                     <ControlTemplate>
                         <Canvas>
                             <Ellipse Width="24"
-									 Height="24"
-									 Fill="White"></Ellipse>
-                            <Viewbox Width="24"
-									 Height="24"
-									 Canvas.Left="-1"
-									 Canvas.Top="-1">
-                                <Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,
-											2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,
-											15.59L13.41,12L17,8.41L15.59,7Z"
-									  Fill="Red" />
+                                     Height="24"
+                                     Fill="White" />
+                            <Viewbox Canvas.Left="-1"
+                                     Canvas.Top="-1"
+                                     Width="24"
+                                     Height="24">
+                                <Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,            2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,            15.59L13.41,12L17,8.41L15.59,7Z" Fill="Red" />
                             </Viewbox>
                         </Canvas>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-			
-			<Rectangle Grid.Column="0"
-					   Grid.ColumnSpan="3"
-					   Fill="DarkGray"
-					   Opacity="0.6"
-					   Visibility="{Binding ShowDisabledOverlay, 
-											Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
+
+            <Border Grid.Column="2"
+                    Width="20"
+                    Background="#CC119EDA"
+                    BorderBrush="{StaticResource AccentColorBrush}"
+                    BorderThickness="0,1,1,1"
+                    Visibility="{Binding OperatingMode,
+                                         Converter={StaticResource OperatingModeToVisibilityConverter}}">
+
+                <i:Interaction.Behaviors>
+                    <behaviors:MoveEndTimeBehavior ViewModelCommunication="{Binding ViewModelCommunication}" />
+                </i:Interaction.Behaviors>
+
+                <StackPanel Margin="5,0"
+                            Background="Transparent"
+                            FlowDirection="RightToLeft"
+                            Orientation="Horizontal">
+
+                    <Border Style="{StaticResource WhiteLineBorderStyle}" />
+                    <Border Style="{StaticResource WhiteLineBorderStyle}" />
+                </StackPanel>
+
+            </Border>
         </Grid>
 
     </Border>

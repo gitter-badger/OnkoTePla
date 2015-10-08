@@ -14,7 +14,6 @@
     <Border BorderThickness="1"
 			BorderBrush="DarkGray"
 			Background="White">
-
         <Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="10" />
