@@ -24,5 +24,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 
 		bool ChangeConfirmationVisible { get; }
 		bool AddAppointmentPossible { get; }
+
+		bool DisabledOverlayVisible { get; }
 	}
 }

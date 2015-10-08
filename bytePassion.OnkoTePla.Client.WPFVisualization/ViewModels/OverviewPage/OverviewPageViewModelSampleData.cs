@@ -26,6 +26,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 
 			ChangeConfirmationVisible = true;
 			AddAppointmentPossible = true;
+			DisabledOverlayVisible = false;
 		}
 
 		public IDateDisplayViewModel             DateDisplayViewModel             { get; }
@@ -40,6 +41,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 
 		public bool ChangeConfirmationVisible { get; }
 		public bool AddAppointmentPossible { get; }
+		public bool DisabledOverlayVisible { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}

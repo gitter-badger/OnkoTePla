@@ -130,6 +130,13 @@
             </Button.Template>
 
         </Button>
+		
+		<Rectangle Grid.Column="0"
+				   Grid.ColumnSpan="3"
+				   Fill="Gray"
+				   Opacity="0.6"
+				   Visibility="{Binding DisabledOverlayVisible, 
+										Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
 
     </Grid>
 </UserControl>

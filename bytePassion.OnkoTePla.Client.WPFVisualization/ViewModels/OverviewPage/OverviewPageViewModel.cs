@@ -23,6 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 	{
 		private bool changeConfirmationVisible;
 		private bool addAppointmentPossible;
+		private bool disabledOverlayVisible;
 
 		public OverviewPageViewModel(IDateDisplayViewModel dateDisplayViewModel,
 									 IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel, 
@@ -44,6 +45,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 
 			ChangeConfirmationVisible = false;
 			AddAppointmentPossible = true;
+			DisabledOverlayVisible = false;
 
 			var currentModifiedAppointmentVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
 				CurrentModifiedAppointmentVariable	
@@ -54,9 +56,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 			IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder = new AddAppointmentDialogWindowBuilder(dataCenter, viewModelCommunication);
 
 			ShowAddAppointmentDialog = new Command(() =>
-			{				
+			{
+				DisabledOverlayVisible = true;
+
 				var dialogWindow = dialogBuilder.BuildWindow();
 				dialogWindow.ShowDialog();
+
+				DisabledOverlayVisible = false;
 			});
 		}
 
@@ -86,6 +92,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 		{
 			get { return addAppointmentPossible; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref addAppointmentPossible, value); }
+		}
+
+		public bool DisabledOverlayVisible
+		{
+			get { return disabledOverlayVisible; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref disabledOverlayVisible, value); }
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
