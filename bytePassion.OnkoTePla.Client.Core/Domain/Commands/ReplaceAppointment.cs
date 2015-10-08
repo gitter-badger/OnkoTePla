@@ -1,6 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands
@@ -11,12 +12,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands
 								   AggregateIdentifier destinationAggregateId,
 								   uint sourceAggregateVersion, 
 								   uint destinationAggregateVersion,
-								   Guid userId, Guid patientId, 
+								   Guid userId, Guid patientId, ActionTag actionTag,
 								   string newDescription, Date newDate, 
 								   Time newStartTime, Time newEndTime, 
 								   Guid newTherapyPlaceId, 
 								   Guid originalAppointmendId, Date originalDate)
-			: base(userId, patientId)
+			: base(userId, patientId, actionTag)
 		{
 			SourceAggregateId = sourceAggregateId;
 			DestinationAggregateId = destinationAggregateId;

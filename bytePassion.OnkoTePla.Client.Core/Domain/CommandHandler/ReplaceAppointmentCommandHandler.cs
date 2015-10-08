@@ -24,6 +24,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 				aggregate.ReplaceAppointemnt(command.UserId,
 											 command.SourceAggregateVersion,
 											 command.PatientId,
+											 command.ActionTag,
 											 command.NewDescription,
 											 command.NewDate,
 											 command.NewStartTime,
@@ -41,10 +42,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 				sourceAggregate.DeleteAppointment(command.UserId, 
 												  command.SourceAggregateVersion, 
 												  command.UserId, 
+												  command.ActionTag,
 												  command.OriginalAppointmendId);
 
 				destinationAggregate.AddAppointment(command.UserId, 
 												    command.DestinationAggregateVersion,
+													command.ActionTag,
 													new CreateAppointmentData(command.PatientId, 
 																			  command.NewDescription, 
 																			  command.NewStartTime, 

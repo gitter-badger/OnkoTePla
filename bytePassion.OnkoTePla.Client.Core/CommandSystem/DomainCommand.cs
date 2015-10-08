@@ -1,16 +1,20 @@
 ﻿using System;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+
 
 namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
 {
 	public class DomainCommand
 	{
-		public DomainCommand(Guid userId, Guid patientId)
+		public DomainCommand(Guid userId, Guid patientId, ActionTag actionTag)
 		{			
 			UserId = userId;
 			PatientId = patientId;
+			ActionTag = actionTag;
 		}
 		
-		public Guid UserId    { get; }
-		public Guid PatientId { get; }		
+		public Guid      UserId    { get; }
+		public Guid      PatientId { get; }	
+		public ActionTag ActionTag { get; }	
 	}
 }

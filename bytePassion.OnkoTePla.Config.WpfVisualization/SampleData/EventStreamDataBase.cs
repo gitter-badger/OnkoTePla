@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.TimeLib;
@@ -21,6 +22,7 @@ using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
 namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
@@ -61,6 +63,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			return new AddAppointment(readModel.Identifier, 
 									  readModel.AggregateVersion,
 									  userId,
+									  ActionTag.NormalAction,
 									  patients[Rand.Next(0, patients.Count-1)].Id,
 									  "automated generated appointment",
 									  startTime,
@@ -131,7 +134,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			var medicalPratice = configReadRepository.GetMedicalPracticeByName("examplePractice1");				
 			var user = configReadRepository.GetUserByName("exampleUser1");
 
-			var startCreation = new Date(1,  9, 2015);
+			var startCreation = new Date(1, 10, 2015);
 			var endCreation   = new Date(1, 10, 2016);
 
 			for (var date = startCreation; date < endCreation; date = date.DayAfter())
@@ -145,7 +148,9 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 				readmodel.Dispose();
 			}			
 
-			eventStore.PersistRepository();			
+			eventStore.PersistRepository();
+
+			MessageBox.Show("fertig");
 		} 
 	}
 }

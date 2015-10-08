@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfUtils.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
@@ -20,7 +19,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 		}
 
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
 
 		private AppointmentModifications currentAppointmentModifications;
 		private ButtonMode currentButtonMode;
@@ -36,9 +34,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 			Undo = new Command(UndoAction, UndoPossible);
 			Redo = new Command(RedoAction, RedoPossible);
 
-			appointmentModificationsVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
+			var appointmentModificationsVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
 				Constants.CurrentModifiedAppointmentVariable
-			);
+				);
 			appointmentModificationsVariable.StateChanged += OnAppointmentModificationsVariableChanged;
 		}
 
@@ -141,5 +139,4 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 		public ICommand Undo { get; }
 		public ICommand Redo { get; }
 	}
-
 }

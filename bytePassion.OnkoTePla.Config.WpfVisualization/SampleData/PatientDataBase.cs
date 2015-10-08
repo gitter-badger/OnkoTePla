@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
@@ -35,6 +36,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			}			
 
 			repo.PersistRepository();
+			MessageBox.Show("fertig");
 		}
 
         public static void GenerateJSONPatientsFile(int patientCount)
@@ -50,7 +52,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
             }
 
             repo.PersistRepository();
-        }
+			MessageBox.Show("fertig");
+		}
 
         private static readonly Random Rand = new Random();
 

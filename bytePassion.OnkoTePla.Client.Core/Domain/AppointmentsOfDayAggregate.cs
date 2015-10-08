@@ -2,6 +2,7 @@
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Exceptions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
@@ -61,7 +62,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			Version = @event.AggregateVersion;
 		}
 		
-		public void AddAppointment(Guid userId, uint forAggregateVersion, CreateAppointmentData createAppointmentData)
+		public void AddAppointment(Guid userId, uint forAggregateVersion, ActionTag actionTag, 
+								   CreateAppointmentData createAppointmentData)
 		{
 
 			if (forAggregateVersion != Version)
@@ -71,10 +73,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
  			ApplyChange(new AppointmentAdded(Id, newAggregateVersion, 
 											 userId,TimeTools.GetCurrentTimeStamp(), 
-											 createAppointmentData));
+											 actionTag,
+											 createAppointmentData)); 
 		}
 
-		public void ReplaceAppointemnt(Guid userId, uint forAggregateVersion, Guid patientId, 
+		public void ReplaceAppointemnt(Guid userId, uint forAggregateVersion, 
+									   Guid patientId, ActionTag actionTag,
 									   string newDescription, Date newDate,
 								       Time newStartTime, Time newEndTime,
 								       Guid newTherapyPlaceId,
@@ -88,13 +92,15 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 			ApplyChange(new AppointmentReplaced(Id, newAggregateVersion, 
 												userId, patientId, 
 												TimeTools.GetCurrentTimeStamp(),
+												actionTag,
 												newDescription, newDate,
 												newStartTime, newEndTime,
 												newTherapyPlaceId,
 												originalAppointmendId));
 		}
 
-		public void DeleteAppointment(Guid userId, uint forAggregateVersion, Guid patientId, Guid appointmentToRemoveId)
+		public void DeleteAppointment(Guid userId, uint forAggregateVersion, Guid patientId, 
+									  ActionTag actionTag, Guid appointmentToRemoveId)
 		{
 			if (forAggregateVersion != Version)
 				throw new VersionNotApplicapleException("@deleteAppointmen");
@@ -103,7 +109,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain
 
 			ApplyChange(new AppointmentDeleted(Id, newAggregateVersion, 
 											   userId, patientId, 
-											   TimeTools.GetCurrentTimeStamp(), 
+											   TimeTools.GetCurrentTimeStamp(),
+											   actionTag,
 											   appointmentToRemoveId));
 		}
 	}

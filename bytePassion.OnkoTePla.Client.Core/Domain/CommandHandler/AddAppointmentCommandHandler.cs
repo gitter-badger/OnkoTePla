@@ -19,7 +19,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 		{
 			var aggregate = repository.GetById(command.AggregateId);
 
-			aggregate.AddAppointment(command.UserId, command.AggregateVersion,
+			aggregate.AddAppointment(command.UserId, 
+									 command.AggregateVersion, 
+									 command.ActionTag,
 									 command.CreateAppointmentData);
 
 			repository.Save(aggregate);

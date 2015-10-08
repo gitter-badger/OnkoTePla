@@ -67,11 +67,13 @@
     <Compile Include="Domain\AppointmentLogic\ObservableAppointmentCollection.cs" />
     <Compile Include="Domain\CommandHandler\AddAppointmentCommandHandler.cs" />
     <Compile Include="Eventsystem\EventBus.cs" />
+    <Compile Include="Eventsystem\ActionTag.cs" />
     <Compile Include="Eventsystem\IEventBus.cs" />
     <Compile Include="Exceptions\AppointmentRuleIsNotApplicableException.cs" />
     <Compile Include="Exceptions\VersionNotApplicapleException.cs" />
     <Compile Include="Domain\AppointmentLogic\INotifyAppointmentChanged.cs" />
     <Compile Include="Readmodels\ReadModelBase.cs" />
+    <Compile Include="Readmodels\SessionAndUserSpecificEventHistory.cs" />
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationWriteRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationReadRepository.cs" />

@@ -9,11 +9,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.Events
 	{
 		public AppointmentReplaced (AggregateIdentifier aggregateId, uint aggregateVersion,
 								    Guid userId, Guid patientId, Tuple<Date, Time> timeStamp,
+									ActionTag actionTag,
 									string newDescription, Date newDate,
 								    Time newStartTime, Time newEndTime,
 								    Guid newTherapyPlaceId,
 								    Guid originalAppointmendId)
-			: base(aggregateId, aggregateVersion, userId, patientId, timeStamp)
+			: base(aggregateId, aggregateVersion, userId, patientId, timeStamp, actionTag)
 		{
 			NewDescription = newDescription;
 			NewDate = newDate;

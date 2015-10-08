@@ -8,6 +8,7 @@ using bytePassion.Lib.WpfUtils.Commands;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
@@ -64,8 +65,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.TestAndOldStuff.AddAppoi
 				() =>
 				{
 					commandBus.SendCommand(new AddAppointment(readModel.Identifier, readModel.AggregateVersion, 
-															  SelectedUser.Id, 
-															  SelectedPatient.Id, 
+															  SelectedUser.Id,
+															  ActionTag.NormalAction,
+															  SelectedPatient.Id, 															  
 															  Description, 
 															  Time.Parse(StartTimeAsString), Time.Parse(EndTimeAsString), 
 															  SelectedTherapyPlace.Id));

@@ -19,7 +19,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 		{
 			var aggregate = repository.GetById(command.AggregateId);
 
-			aggregate.DeleteAppointment(command.UserId, command.AggregateVersion, command.PatientId, command.AppointmentId);
+			aggregate.DeleteAppointment(command.UserId, 
+										command.AggregateVersion, 
+										command.PatientId, 
+										command.ActionTag, 
+										command.AppointmentToRemoveId);
 
 			repository.Save(aggregate);
 		}		

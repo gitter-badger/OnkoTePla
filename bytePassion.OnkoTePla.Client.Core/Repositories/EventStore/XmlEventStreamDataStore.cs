@@ -46,10 +46,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 		private const string StartTimeAttribute		        = "startTime";
 		private const string EndTimeAttribute		        = "endTime";
 		private const string TherapyPlaceIdAttribute        = "therapyPlaceId";
-		private const string OriginalAppointmentIdAttribute = "originalAppointemtnId";
+		private const string OriginalAppointmentIdAttribute = "originalAppointmentId";
 		private const string UserIdAttribute                = "userId";
 		private const string TimeStampTimeAttribute         = "timeStampTime";
 		private const string TimeStampDateAttribute         = "timeStampDate";
+		private const string ActionTagAttribute             = "actionTag";
 
 		private readonly string filename;
 
@@ -101,6 +102,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			writer.WriteAttributeString(PatientIdAttribute,        @event.PatientId.ToString());
 			writer.WriteAttributeString(TimeStampDateAttribute,    @event.TimeStamp.Item1.ToString());
 			writer.WriteAttributeString(TimeStampTimeAttribute,    @event.TimeStamp.Item2.ToString());
+			writer.WriteAttributeString(ActionTagAttribute,        @event.ActionTag.ToString());
 			
 			if (@event is AppointmentAdded)    WriteEvent(writer, (AppointmentAdded)   @event);
 			if (@event is AppointmentReplaced) WriteEvent(writer, (AppointmentReplaced)@event);
@@ -207,7 +209,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 				var userId = new Guid();
 				var patientId = new Guid();
 				var timeStampDate = String.Empty;
-				var timeStampTime = String.Empty;				
+				var timeStampTime = String.Empty;
+				var actionTag = ActionTag.NormalAction;
 
 				if (reader.HasAttributes)
 				{
@@ -218,7 +221,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 						if (reader.Name == PatientIdAttribute) patientId = Guid.Parse(reader.Value);
 						if (reader.Name == TimeStampDateAttribute) timeStampDate = reader.Value;
 						if (reader.Name == TimeStampTimeAttribute) timeStampTime = reader.Value;
-					
+						if (reader.Name == ActionTagAttribute) actionTag = (ActionTag) Enum.Parse(typeof (ActionTag), reader.Value);
 					}
 				}
 
@@ -230,18 +233,30 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 					{
 						switch (reader.Name)
 						{
-							case AppointmentAddedEvent:	domainEvent = AcceptAppointmentAddedEvent(reader, id, aggrevateVersion, userId, patientId,
-																								  new Tuple<Date, Time>(Date.Parse(timeStampDate), 
-																							 							Time.Parse(timeStampTime)));
-														break;
-							case AppointmentReplacedEvent: domainEvent = AcceptAppointmentModifiedEvent(reader, id, aggrevateVersion, userId, patientId, 
-																										new Tuple<Date, Time>(Date.Parse(timeStampDate),
-																															  Time.Parse(timeStampTime)));
-														break;
-							case AppointmentDeletedEvent: domainEvent = AcceptAppointmentDeletedEvent(reader, id, aggrevateVersion, userId, patientId,
-																										new Tuple<Date, Time>(Date.Parse(timeStampDate),
-																															  Time.Parse(timeStampTime)));
-														break;
+							case AppointmentAddedEvent:
+							{
+								domainEvent = AcceptAppointmentAddedEvent(reader, id, aggrevateVersion, userId, patientId,
+								                                          new Tuple<Date, Time>(Date.Parse(timeStampDate),
+																								Time.Parse(timeStampTime)),
+								                                          actionTag);
+								break;
+							}
+							case AppointmentReplacedEvent:
+							{
+								domainEvent = AcceptAppointmentModifiedEvent(reader, id, aggrevateVersion, userId, patientId,
+								                                             new Tuple<Date, Time>(Date.Parse(timeStampDate),
+								                                                                   Time.Parse(timeStampTime)),
+								                                             actionTag);
+								break;
+							}
+							case AppointmentDeletedEvent:
+							{
+								domainEvent = AcceptAppointmentDeletedEvent(reader, id, aggrevateVersion, userId, patientId,
+								                                            new Tuple<Date, Time>(Date.Parse(timeStampDate),
+								                                                                  Time.Parse(timeStampTime)),
+								                                            actionTag);
+								break;
+							}
 						}
 
 						events.Add(domainEvent);
@@ -255,7 +270,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 		private static DomainEvent AcceptAppointmentDeletedEvent(XmlReader reader, AggregateIdentifier identifier, 
 																 uint aggrevateVersion, Guid userId, Guid patientId, 
-																 Tuple<Date, Time> timeStamp)
+																 Tuple<Date, Time> timeStamp, ActionTag actionTag)
 		{
 			var removedAppointmentId = new Guid();
 
@@ -267,12 +282,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 				}
 			}
 
-			return new AppointmentDeleted(identifier, aggrevateVersion, userId, patientId, timeStamp, removedAppointmentId);
+			return new AppointmentDeleted(identifier, aggrevateVersion, userId, patientId, timeStamp, actionTag, removedAppointmentId);
 		}
 
 		private static AppointmentReplaced AcceptAppointmentModifiedEvent(XmlReader reader, AggregateIdentifier identifier,
 																		  uint aggregateVersion, Guid userId, Guid patientId,
-																		  Tuple<Date, Time> timeStamp)
+																		  Tuple<Date, Time> timeStamp, ActionTag actionTag)
 		{
 			var newDiscription = String.Empty;
 			var newDate = Date.Dummy;
@@ -298,16 +313,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			}
 
 			return new AppointmentReplaced(identifier, aggregateVersion, userId, 
-										   patientId, timeStamp, 
+										   patientId, timeStamp, actionTag,
 										   newDiscription, newDate,
 										   newStartTime, newEndTime, 
-										   newTherapyPlaceId, 
+										   newTherapyPlaceId,
 										   originalAppointmentId);
 		}
 
 		private static AppointmentAdded AcceptAppointmentAddedEvent(XmlReader reader, AggregateIdentifier identifier,
 																	uint aggregateVersion, Guid userId, Guid patientId,
-																	Tuple<Date, Time> timeStamp)
+																	Tuple<Date, Time> timeStamp, ActionTag actionTag)
 		{			
 			var description   = String.Empty;
 			var startTime     = new Time();
@@ -333,7 +348,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 			var createAppointmentData = new CreateAppointmentData(patientId, description, startTime, endTime, identifier.Date,
 																  therpyPlaceId, appointmentId);
 
-			return new AppointmentAdded(identifier, aggregateVersion, userId, timeStamp, createAppointmentData);
+			return new AppointmentAdded(identifier, aggregateVersion, userId, timeStamp, actionTag, createAppointmentData);
 		}
 	}
 }

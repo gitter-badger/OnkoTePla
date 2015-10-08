@@ -7,6 +7,7 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfUtils.Commands;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
@@ -88,7 +89,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 						viewModelCommunication.SendTo(
 							AppointmentGridViewModelCollection,
 							initialLocalisation.PlaceAndDate,
-							new DeleteAppointment(appointment.Id, appointment.Patient.Id)
+							new DeleteAppointment(appointment.Id, appointment.Patient.Id, ActionTag.NormalAction)
 						);
 					}					
 				}

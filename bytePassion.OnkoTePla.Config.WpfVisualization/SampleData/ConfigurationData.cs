@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
@@ -29,6 +30,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			ConfigurationRepository repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());			
 
 			repo.PersistRepository();
+			MessageBox.Show("fertig");
 		}
 
 
@@ -38,7 +40,8 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
             ConfigurationRepository repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());
 
             repo.PersistRepository();
-        }
+			MessageBox.Show("fertig");
+		}
 
 		private static Configuration GetMedicalPracticeSample()
 		{

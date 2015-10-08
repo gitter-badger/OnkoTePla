@@ -10,6 +10,7 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
+using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
@@ -240,8 +241,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			commandBus.SendCommand(new DeleteAppointmentCommand(Identifier, 
 																readModel.AggregateVersion, 
 																dataCenter.SessionInfo.LoggedInUser.Id, 
-																message.AppointmentId, 
-																message.PatientId));
+																message.PatientId,
+																message.ActionTag,
+                                                                message.AppointmentId));
 		}
 		
 		public void Process(SendCurrentChangesToCommandBus message)
@@ -288,8 +290,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 			commandBus.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
 														  sourceAggregateVersion, destinationAggregateVersion,
-														  dataCenter.SessionInfo.LoggedInUser.Id, 
+														  dataCenter.SessionInfo.LoggedInUser.Id,
 														  originalAppointment.Patient.Id, 
+														  ActionTag.NormalAction, 
 														  appointmentModificationVariable.Value.Description,
 														  appointmentModificationVariable.Value.CurrentLocation.PlaceAndDate.Date,
 														  appointmentModificationVariable.Value.BeginTime,
@@ -311,6 +314,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			commandBus.SendCommand(new AddAppointment(appointmentModificationVariable.Value.CurrentLocation.PlaceAndDate, 
 													  readModel.AggregateVersion, 
 													  dataCenter.SessionInfo.LoggedInUser.Id, 
+													  ActionTag.NormalAction, 
 													  appointmentModificationVariable.Value.OriginalAppointment.Patient.Id, 
 													  appointmentModificationVariable.Value.Description, 
 													  appointmentModificationVariable.Value.BeginTime, 
