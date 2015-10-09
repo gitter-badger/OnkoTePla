@@ -7,29 +7,39 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
-
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector
 {
-	internal class PatientSelectorViewModel : IPatientSelectorViewModel
+    internal class PatientSelectorViewModel : IPatientSelectorViewModel
     {
-		private readonly IGlobalState<Patient> selectedPatientGlobalVariable;
-		private readonly IReadOnlyList<Patient> allPatients;
-
-		private Patient selectedPatient;
+        private readonly IReadOnlyList<Patient> allPatients;
+        private readonly IGlobalState<Patient> selectedPatientGlobalVariable;
+        private bool listIsEmpty;
         private string searchFilter;
-		private bool listIsEmpty;		
 
-		public PatientSelectorViewModel(IDataCenter dataCenter, IGlobalState<Patient> selectedPatientGlobalVariable)
+        private Patient selectedPatient;
+        private bool showDeceasedPatients;
+
+        public PatientSelectorViewModel(IDataCenter dataCenter, IGlobalState<Patient> selectedPatientGlobalVariable)
         {
-			this.selectedPatientGlobalVariable = selectedPatientGlobalVariable;
-			
-			allPatients = dataCenter.Patients.GetAllPatients().ToList();
+            this.selectedPatientGlobalVariable = selectedPatientGlobalVariable;
 
-			Patients = new CollectionViewSource();
+            allPatients = dataCenter.Patients.GetAllPatients().ToList();
+
+            Patients = new CollectionViewSource();
             Patients.Filter += Filter;
-			Patients.Source = allPatients;
+            Patients.Source = allPatients;
 
-			SearchFilter = "";			
+            SearchFilter = "";
+        }
+
+        public bool ShowDeceasedPatients
+        {
+            get { return showDeceasedPatients; }
+            set
+            {
+                PropertyChanged.ChangeAndNotify(this, ref showDeceasedPatients, value);
+                Patients.View.Refresh();
+            }
         }
 
         public CollectionViewSource Patients { get; }
@@ -40,57 +50,65 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
             set
             {
                 searchFilter = value;
-	            SelectedPatient = null;
+                SelectedPatient = null;
                 Patients.View.Refresh();
 
-				CheckList();
+                CheckList();
             }
         }
-		       
+
         public Patient SelectedPatient
         {
             get { return selectedPatient; }
-	        set
-	        {
-		        selectedPatientGlobalVariable.Value = value;
-		        PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value);
-	        }
+            set
+            {
+                selectedPatientGlobalVariable.Value = value;
+                PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value);
+            }
         }
 
-		public bool ListIsEmpty
-		{
-			get { return listIsEmpty; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref listIsEmpty, value); }
-		}
-
-		private void CheckList()
-		{
-			var count = ((ListCollectionView) Patients.View).Count;
-
-			if (count == 1)
-				SelectedPatient = (Patient) ((ListCollectionView)Patients.View).GetItemAt(0);
-
-			ListIsEmpty = count == 0;
-		}
-
-		private void Filter(object sender, FilterEventArgs e)
+        public bool ListIsEmpty
         {
-			var patientToCheck = e.Item as Patient;
-
-	        e.Accepted = IsPatientNameWithinFilter(patientToCheck, SearchFilter);			                               
+            get { return listIsEmpty; }
+            private set { PropertyChanged.ChangeAndNotify(this, ref listIsEmpty, value);  }
         }
 
-		private static bool IsPatientNameWithinFilter(Patient p, string filter)
-		{
-			if (string.IsNullOrWhiteSpace(filter))
-				return true;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-			if (p.Name.ToLower().Contains(filter.ToLower()))
-				return true;
+        private void CheckList()
+        {
+            var count = ((ListCollectionView) Patients.View).Count;
 
-			return false;
-		}
+            if (count == 1)
+                SelectedPatient = (Patient) ((ListCollectionView) Patients.View).GetItemAt(0);
 
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+            ListIsEmpty = count == 0;
+        }
+
+        private void Filter(object sender, FilterEventArgs e)
+        {
+            var patientToCheck = e.Item as Patient;
+
+            var nameCheck = IsPatientNameWithinFilter(patientToCheck, SearchFilter);
+
+            if (nameCheck)
+            {
+                if (!ShowDeceasedPatients)
+                {
+                    e.Accepted = patientToCheck.Alive;
+                }
+            }
+        }
+
+        private static bool IsPatientNameWithinFilter(Patient p, string filter)
+        {
+            if (string.IsNullOrWhiteSpace(filter))
+                return true;
+
+            if (p.Name.ToLower().Contains(filter.ToLower())) { }
+                return true;
+
+            return false;
+        }
+    }
 }

@@ -18,7 +18,7 @@
 
         <converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
 
-        <DataTemplate x:Key="PatientDataTemplate" DataType="{x:Type contracts:Patient}" >
+        <DataTemplate x:Key="PatientDataTemplate" DataType="{x:Type contracts:Patient}">
             <Border x:Name="BgBorder"
                     Margin="4,4"
                     BorderBrush="#FFE6E6E6"
@@ -91,17 +91,34 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0"
+                 Margin="5,0,0,0"
                  FontFamily="{StaticResource StandardFontFamily}"
-                 FontSize="17"
+                 FontSize="12pt"
                  Text="{Binding SearchFilter,
                                 UpdateSourceTrigger=PropertyChanged,
                                 Mode=OneWayToSource}" />
+        <CheckBox Grid.Row="1"
+                  Margin="5"
+                  Content="Verstorbene Patienten einblenden"
+                  IsChecked="{Binding ShowDeceasedPatients}" />
 
-        <ListView Grid.Row="1"
+        <Border Grid.Row="2"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                Visibility="{Binding ListIsEmpty,
+                                     Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="Kein Patient mit diesem Namen Vorhanden" />
+
+        </Border>
+        <ListView Grid.Row="2"
                   Margin="0,0"
                   BorderThickness="0"
                   IsSynchronizedWithCurrentItem="False"
@@ -112,16 +129,5 @@
                                          UpdateSourceTrigger=PropertyChanged}"
                   SelectionMode="Single"
                   Style="{StaticResource VirtualisedMetroListView}" />
-
-        <Border Grid.Row="1"
-                Background="LightGreen"
-                Visibility="{Binding ListIsEmpty,
-                                     Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
-
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Text="Kein Patient mit diesem Namen Vorhanden" />
-
-        </Border>
     </Grid>
 </UserControl>
