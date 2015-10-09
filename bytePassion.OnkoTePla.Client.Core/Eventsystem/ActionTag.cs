@@ -2,11 +2,11 @@
 {
 	public enum ActionTag
     {
-		NormalAction,		
+		RegularAction,		
 		UndoAction,
 		RedoAction,
 		
-		NormalDividedReplaceAction,
+		RegularDividedReplaceAction,
 		UndoDividedReplaceAction,
 		RedoDividedReplaceAction
 	}
