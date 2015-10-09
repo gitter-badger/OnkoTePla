@@ -108,6 +108,7 @@
     <Compile Include="ViewModelMessages\HideDisabledOverlay.cs" />
     <Compile Include="ViewModelMessages\HideNotification.cs" />
     <Compile Include="ViewModelMessages\RejectChanges.cs" />
+    <Compile Include="ViewModelMessages\SetVisibility.cs" />
     <Compile Include="ViewModelMessages\ShowDisabledOverlay.cs" />
     <Compile Include="ViewModelMessages\UIInstance.cs" />
     <Compile Include="ViewModelMessages\SendCurrentChangesToCommandBus.cs" />

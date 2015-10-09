@@ -18,6 +18,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 											ITherapyPlaceRowViewModel											
 	{
 		private double gridWidth;
+		private bool isVisible;
 
 		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication, 
 									    IDataCenter dataCenter,
@@ -28,6 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			ViewModelCommunication = viewModelCommunication;
 			DataCenter = dataCenter;
 
+			IsVisible		 = true;
 			RoomColor        = roomDisplayColor;		
 			Identifier       = identifier;			
 			TherapyPlaceName = therapyPlace.Name;
@@ -62,6 +64,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			private set { PropertyChanged.ChangeAndNotify(this, ref gridWidth, value); }
 		}
 
+		public bool IsVisible
+		{
+			get { return isVisible; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref isVisible, value); }
+		}
+
 		public void Process (NewSizeAvailable message)
 		{
 			GridWidth = message.NewSize.Width;
@@ -75,7 +83,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public void Process(RemoveAppointmentFromTherapyPlaceRow message)
 		{
 			AppointmentViewModels.Remove(message.AppointmentViewModelToRemove);
-		}	
+		}
+
+		public void Process (SetVisibility message)
+		{
+			IsVisible = message.Visible;
+		}
 
 		public override void CleanUp()
 		{
@@ -88,6 +101,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public IViewModelCommunication ViewModelCommunication { get; }
 		public IDataCenter DataCenter { get; }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

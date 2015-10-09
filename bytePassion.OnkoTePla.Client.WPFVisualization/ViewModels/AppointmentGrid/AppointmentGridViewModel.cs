@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -35,14 +34,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		private readonly ICommandBus commandBus;
 		private readonly IViewModelCommunication viewModelCommunication;
 
-		private readonly IDictionary<Guid, TherapyPlaceRowViewModel> availableTherapyPlaceRowViewModels; 
-
 		private readonly AppointmentsOfADayReadModel readModel;
 
 		private readonly IGlobalState<Size> globalGridSizeVariable;
-		private readonly IGlobalState<Guid?> globalRoomFilterVariable;
-
-		private readonly IReadOnlyList<TherapyPlaceRowIdentifier> therapyPlaceRowIdentifiers;
+		private readonly IGlobalState<Guid?> globalRoomFilterVariable;		
 
 		public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
@@ -76,34 +71,31 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 			readModel.AppointmentChanged += OnReadModelAppointmentChanged;
 
-
 			TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication, 
 													  dataCenter, globalGridSizeVariable.Value);
 
 			var medicalPractice = dataCenter.Configuration.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
 			                                                                                Identifier.PracticeVersion);
 
-			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();
-			availableTherapyPlaceRowViewModels = new Dictionary<Guid, TherapyPlaceRowViewModel>();
+			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();			
 
 			foreach (var room in medicalPractice.Rooms)
 			{
 				foreach (var therapyPlace in room.TherapyPlaces)
 				{
 					var location = new TherapyPlaceRowIdentifier(Identifier, therapyPlace.Id);
-					availableTherapyPlaceRowViewModels.Add(therapyPlace.Id, new TherapyPlaceRowViewModel(viewModelCommunication,dataCenter, therapyPlace, 
-																										 room.DisplayedColor, location));
+					TherapyPlaceRowViewModels.Add(new TherapyPlaceRowViewModel(viewModelCommunication,
+																			   dataCenter, 
+																			   therapyPlace, 																										 
+																			   room.DisplayedColor, 
+																			   location));
 				}
 			}
 
 			foreach (var appointment in readModel.Appointments)
 			{
 				AddAppointment(appointment);
-			}
-
-			therapyPlaceRowIdentifiers = medicalPractice.GetAllTherapyPlaces()
-			                                            .Select(therapyPlaceRow => new TherapyPlaceRowIdentifier(Identifier, therapyPlaceRow.Id))
-			                                            .ToList();
+			}			
 
 			OnGlobalRoomFilterVariableChanged(globalRoomFilterVariable.Value);
 
@@ -111,22 +103,42 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		}
 
 		private void OnGlobalRoomFilterVariableChanged(Guid? newRoomFilter)
-		{
-			TherapyPlaceRowViewModels.Clear();
-
+		{			
 			if (newRoomFilter == null)
 			{
-				availableTherapyPlaceRowViewModels.Values
-												  .Do(viewModel => TherapyPlaceRowViewModels.Add(viewModel));
+				TherapyPlaceRowViewModels.Do(viewModel =>
+				{
+					viewModelCommunication.SendTo(
+						TherapyPlaceRowViewModelCollection,
+						viewModel.Identifier,
+						new SetVisibility(true) 	
+					);                             
+				});
 			}
 			else
 			{
+				TherapyPlaceRowViewModels.Do(viewModel =>
+				{
+					viewModelCommunication.SendTo(
+						TherapyPlaceRowViewModelCollection,
+						viewModel.Identifier,
+						new SetVisibility(false)
+					);
+				});
+
 				var medicalPractice = dataCenter.GetMedicalPracticeByDateAndId(Identifier.Date, Identifier.MedicalPracticeId);
 
 				medicalPractice.GetRoomById(newRoomFilter.Value)
 							   .TherapyPlaces
 							   .Select(therapyPlace => therapyPlace.Id)
-							   .Do(id => TherapyPlaceRowViewModels.Add(availableTherapyPlaceRowViewModels[id]));								
+							   .Do(id =>
+							       {
+									   viewModelCommunication.SendTo(
+											TherapyPlaceRowViewModelCollection,
+											new TherapyPlaceRowIdentifier(Identifier, id), 
+											new SetVisibility(true)
+									   );
+								   });								
 			}
 		}
 
@@ -170,7 +182,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 					new NewSizeAvailable(newGridSize)	
 				);
 
-				foreach (var therapyPlaceRowIdentifier in therapyPlaceRowIdentifiers)
+				foreach (var therapyPlaceRowIdentifier in TherapyPlaceRowViewModels.Select(viewModel => viewModel.Identifier))
 				{ 
 					viewModelCommunication.SendTo(
 						TherapyPlaceRowViewModelCollection,
@@ -232,8 +244,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 			readModel.Dispose();
 
-			availableTherapyPlaceRowViewModels.Values
-											  .Do(viewModel => viewModel.Dispose());			
+			TherapyPlaceRowViewModels.Do(viewModel => viewModel.Dispose());			
 		}
 
 		public void Process(DeleteAppointment message)

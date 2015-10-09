@@ -18,7 +18,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 												 IDisposable,
 												 IViewModelMessageHandler<NewSizeAvailable>,
 												 IViewModelMessageHandler<AddAppointmentToTherapyPlaceRow>,
-												 IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>
+												 IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>,
+												 IViewModelMessageHandler<SetVisibility>
 	{		
 		ObservableCollection<IAppointmentViewModel> AppointmentViewModels { get; }				
 		
@@ -28,6 +29,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		Time TimeSlotBegin { get; }		
 		Time TimeSlotEnd   { get; }	
 
-		double GridWidth { get; }	
+		double GridWidth { get; }
+		
+		bool IsVisible { get; }	
 	}
 }

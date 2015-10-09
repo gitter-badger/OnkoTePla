@@ -52,7 +52,8 @@
 			
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<views:TherapyPlaceRowView/>
+						<views:TherapyPlaceRowView Visibility="{Binding IsVisible, 
+																		Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			

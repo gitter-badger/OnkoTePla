@@ -30,6 +30,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 			TimeSlotBegin = new Time( 8,0);
 			TimeSlotEnd   = new Time(16,0);
 			GridWidth = 600;
+			IsVisible = true;
 
 			Identifier = new TherapyPlaceRowIdentifier(new AggregateIdentifier(Date.Dummy, new Guid()), new Guid());		
 		}
@@ -42,18 +43,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public Time TimeSlotBegin { get; }
 		public Time TimeSlotEnd   { get; }
 		public double GridWidth { get; }
+		public bool IsVisible { get; }
 
 		public TherapyPlaceRowIdentifier Identifier { get; }
 
 		public void Process (NewSizeAvailable message) {}
 		public void Process (AddAppointmentToTherapyPlaceRow message) {}
-		public void Process (RemoveAppointmentFromTherapyPlaceRow message) {}		
+		public void Process (RemoveAppointmentFromTherapyPlaceRow message) {}
+		public void Process (SetVisibility message) { }
 
 		public IViewModelCommunication ViewModelCommunication { get; } = null;
 		public IDataCenter DataCenter { get; } = null;
 
 		public void Dispose () { }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }
