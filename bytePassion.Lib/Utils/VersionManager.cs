@@ -7,7 +7,7 @@ using bytePassion.Lib.FrameworkExtensions;
 namespace bytePassion.Lib.Utils
 {
 
-	public class VersionManager<T> : INotifyPropertyChanged where T : class
+	public class VersionManager<T> : IUndoRedo where T : class
 	{
 		public event EventHandler<T> CurrentVersionChanged;
 
@@ -94,11 +94,8 @@ namespace bytePassion.Lib.Utils
 
 					CheckIfUndoAndRedoIsPossible();
 
-					if (CurrentVersionPointer != null)
-					{
-						var handler = CurrentVersionChanged;
-						handler?.Invoke(this, CurrentVersion);
-					}
+					if (CurrentVersionPointer != null)											
+						CurrentVersionChanged?.Invoke(this, CurrentVersion);					
 				}
 			}
 		}
