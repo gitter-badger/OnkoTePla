@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands
 			: base(userId, patientId, actionTag)
 		{
 			CreateAppointmentData = new CreateAppointmentData(patientId, description, 
-															  startTime, endTime, AggregateId.Date, 
+															  startTime, endTime, aggregateId.Date, 
 															  therapyPlaceId, Guid.NewGuid());
 			AggregateId = aggregateId;
 			AggregateVersion = aggregateVersion;
