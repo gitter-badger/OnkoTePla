@@ -21,9 +21,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 		{
 			switch (actionTag)
 			{
-				case ActionTag.NormalAction: { return ActionTag.NormalDividedReplaceAction; }
-				case ActionTag.RedoAction:   { return ActionTag.RedoDividedReplaceAction;   }
-				case ActionTag.UndoAction:   { return ActionTag.UndoDividedReplaceAction;   }
+				case ActionTag.RegularAction: { return ActionTag.RegularDividedReplaceAction; }
+				case ActionTag.RedoAction:    { return ActionTag.RedoDividedReplaceAction;   }
+				case ActionTag.UndoAction:    { return ActionTag.UndoDividedReplaceAction;   }
 			}
 
 			throw new ArgumentException("internal parameter error");

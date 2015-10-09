@@ -15,12 +15,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
 
 		private static AppointmentAdded GetAppointmentAddedDummy()
 		{
-			return new AppointmentAdded(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), null,ActionTag.NormalAction, new CreateAppointmentData(new Guid(),null, new Time(),new Time(),new Date(), new Guid(),new Guid()));
+			return new AppointmentAdded(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), null,ActionTag.RegularAction, new CreateAppointmentData(new Guid(),null, new Time(),new Time(),new Date(), new Guid(),new Guid()));
 		}
 
 		private static AppointmentDeleted GetAppointmentRemovedDummy()
 		{
-			return new AppointmentDeleted(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), new Guid(), new Tuple<Date, Time>(Date.Dummy, Time.Dummy),ActionTag.NormalAction, new Guid());
+			return new AppointmentDeleted(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), new Guid(), new Tuple<Date, Time>(Date.Dummy, Time.Dummy),ActionTag.RegularAction, new Guid());
 		}
 
 		private class TestSingleEventHandler : IDomainEventHandler<AppointmentAdded>

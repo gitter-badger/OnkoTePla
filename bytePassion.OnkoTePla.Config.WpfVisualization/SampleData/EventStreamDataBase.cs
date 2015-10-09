@@ -63,7 +63,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			return new AddAppointment(readModel.Identifier, 
 									  readModel.AggregateVersion,
 									  userId,
-									  ActionTag.NormalAction,
+									  ActionTag.RegularAction,
 									  patients[Rand.Next(0, patients.Count-1)].Id,
 									  "automated generated appointment",
 									  startTime,

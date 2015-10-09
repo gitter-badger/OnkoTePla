@@ -210,7 +210,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 				var patientId = new Guid();
 				var timeStampDate = String.Empty;
 				var timeStampTime = String.Empty;
-				var actionTag = ActionTag.NormalAction;
+				var actionTag = ActionTag.RegularAction;
 
 				if (reader.HasAttributes)
 				{

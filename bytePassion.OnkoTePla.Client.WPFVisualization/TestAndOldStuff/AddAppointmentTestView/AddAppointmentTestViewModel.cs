@@ -66,7 +66,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.TestAndOldStuff.AddAppoi
 				{
 					commandBus.SendCommand(new AddAppointment(readModel.Identifier, readModel.AggregateVersion, 
 															  SelectedUser.Id,
-															  ActionTag.NormalAction,
+															  ActionTag.RegularAction,
 															  SelectedPatient.Id, 															  
 															  Description, 
 															  Time.Parse(StartTimeAsString), Time.Parse(EndTimeAsString), 

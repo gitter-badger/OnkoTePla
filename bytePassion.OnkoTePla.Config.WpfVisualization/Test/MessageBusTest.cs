@@ -14,7 +14,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.Test
 	{
 		private static AppointmentAdded GetAppointmentAddedDummy ()
 		{
-			return new AppointmentAdded(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), null, ActionTag.NormalAction, new CreateAppointmentData(new Guid(), null, new Time(), new Time(), new Date(), new Guid(), new Guid()));
+			return new AppointmentAdded(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), null, ActionTag.RegularAction, new CreateAppointmentData(new Guid(), null, new Time(), new Time(), new Date(), new Guid(), new Guid()));
 		}		
 
 		private class TestSingleEventHandler : IDomainEventHandler<AppointmentAdded>

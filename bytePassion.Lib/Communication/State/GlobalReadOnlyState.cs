@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable 0067
+
 namespace bytePassion.Lib.Communication.State
 {
 	public class GlobalReadOnlyState<T> : IGlobalState<T>

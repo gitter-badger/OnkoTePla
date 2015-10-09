@@ -38,7 +38,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Test.CommandSystem
 			Assert.False(testCommandHandler.CommandExecuted);
 
 			commandBus.RegisterMessageHandler(testCommandHandler);
-			commandBus.Send(new AddAppointment(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), ActionTag.NormalAction, new Guid(), null, Time.Dummy, Time.Dummy, new Guid()));
+			commandBus.Send(new AddAppointment(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), ActionTag.RegularAction, new Guid(), null, Time.Dummy, Time.Dummy, new Guid()));
 
 			Assert.True(testCommandHandler.CommandExecuted);
 		}
