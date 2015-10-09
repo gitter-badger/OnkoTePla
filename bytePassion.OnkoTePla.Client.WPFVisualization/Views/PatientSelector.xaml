@@ -18,16 +18,17 @@
 
         <converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
 
-        <DataTemplate x:Key="PatientDataTemplate" DataType="{x:Type contracts:Patient}">
-            <Border Margin="4,4                 "
-                    Background="White"
-                    BorderBrush="#FFE6E6E6">
+        <DataTemplate x:Key="PatientDataTemplate" DataType="{x:Type contracts:Patient}" >
+            <Border x:Name="BgBorder"
+                    Margin="4,4"
+                    BorderBrush="#FFE6E6E6"
+                    FocusVisualStyle="{x:Null}">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="4"
                                       Direction="-45"
                                       ShadowDepth="1" />
                 </Border.Effect>
-                <Grid>
+                <Grid FocusVisualStyle="{x:Null}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50" />
                         <ColumnDefinition />
@@ -39,17 +40,49 @@
                     <StackPanel Grid.Column="1">
                         <TextBlock FontFamily="{StaticResource StandardFontFamily}"
                                    FontSize="15pt"
-                                   Foreground="DimGray"
-                                   Text="{Binding Name}" />
+                                   Text="{Binding Name}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="DimGray" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="true">
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                         <TextBlock Margin="0,0,0,5"
                                    FontSize="10pt"
-                                   Foreground="DarkGray"
                                    Text="{Binding Birthday,
-                                                  Converter={StaticResource BirthdayToStringConverter}}" />
+                                                  Converter={StaticResource BirthdayToStringConverter}}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="DarkGray" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="true">
+                                            <Setter Property="Foreground" Value="WhiteSmoke" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </StackPanel>
                 </Grid>
-
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="White" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="true">
+                                <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
             </Border>
+
         </DataTemplate>
 
     </UserControl.Resources>
