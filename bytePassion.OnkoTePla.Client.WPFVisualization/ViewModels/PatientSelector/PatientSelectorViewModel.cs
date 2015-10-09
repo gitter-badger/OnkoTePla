@@ -70,7 +70,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
         public bool ListIsEmpty
         {
             get { return listIsEmpty; }
-            private set { PropertyChanged.ChangeAndNotify(this, ref listIsEmpty, value);  }
+            private set { PropertyChanged.ChangeAndNotify(this, ref listIsEmpty, value); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -91,12 +91,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 
             var nameCheck = IsPatientNameWithinFilter(patientToCheck, SearchFilter);
 
-            if (nameCheck)
+            if (nameCheck && !ShowDeceasedPatients)
             {
-                if (!ShowDeceasedPatients)
-                {
-                    e.Accepted = patientToCheck.Alive;
-                }
+                e.Accepted = patientToCheck.Alive;
             }
         }
 
@@ -105,8 +102,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
             if (string.IsNullOrWhiteSpace(filter))
                 return true;
 
-            if (p.Name.ToLower().Contains(filter.ToLower())) { }
-                return true;
+            if (p.Name.ToLower().Contains(filter.ToLower()))
+            {
+            }
+            return true;
 
             return false;
         }
