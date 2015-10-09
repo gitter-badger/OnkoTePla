@@ -27,6 +27,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel
 			this.eventBus = eventBus;
 		}
 
+		public FixedAppointmentSet GetAppointmentSetOfADay (AggregateIdentifier id, uint eventStreamVersionLimit)
+		{
+			var eventStream = eventStore.GetEventStreamForADay(id);
+			return new FixedAppointmentSet(config, patientsRepository, eventStream, eventStreamVersionLimit);
+		}
+
 		public AppointmentsOfADayReadModel GetAppointmentsOfADayReadModel(AggregateIdentifier id)
 		{
 			var eventStream = eventStore.GetEventStreamForADay(id);

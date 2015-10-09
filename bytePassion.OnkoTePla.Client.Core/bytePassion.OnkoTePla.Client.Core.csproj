@@ -72,6 +72,7 @@
     <Compile Include="Exceptions\AppointmentRuleIsNotApplicableException.cs" />
     <Compile Include="Exceptions\VersionNotApplicapleException.cs" />
     <Compile Include="Domain\AppointmentLogic\INotifyAppointmentChanged.cs" />
+    <Compile Include="Readmodels\FixedAppointmentSet.cs" />
     <Compile Include="Readmodels\ReadModelBase.cs" />
     <Compile Include="Readmodels\SessionAndUserSpecificEventHistory.cs" />
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
