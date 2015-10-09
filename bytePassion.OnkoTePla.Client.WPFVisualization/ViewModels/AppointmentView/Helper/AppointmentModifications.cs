@@ -289,13 +289,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var finalEndTime = GetTimeToSnap(finalBeginTime + appointmentDuration);
 
 			if (newLocation != CurrentLocation ||
-			    finalBeginTime != BeginTime ||
-			    finalEndTime != EndTime)
+			    finalBeginTime != lastSetBeginTime ||
+			    finalEndTime != lastSetEndTime)
 			{
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               finalEndTime,
 				                                               versions.CurrentVersion.Description,
 				                                               newLocation));
+			}
+			else
+			{
+				BeginTime = finalBeginTime;
+				EndTime = finalEndTime;
 			}
 		}	
 		
@@ -330,13 +335,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var finalBeginTime = GetTimeToSnap(BeginTime);			
 			var finalEndTime = GetTimeToSnap(finalBeginTime + duration);
 
-			if (finalBeginTime != BeginTime ||
-			    finalEndTime != EndTime)
+			if (finalBeginTime != lastSetBeginTime ||
+			    finalEndTime != lastSetEndTime)
 			{
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               finalEndTime,
 				                                               versions.CurrentVersion.Description,
 				                                               versions.CurrentVersion.Location));
+			}
+			else
+			{
+				BeginTime = finalBeginTime;
+				EndTime = finalEndTime;
 			}
 		}
 
@@ -355,12 +365,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{
 			var finalEndTime = GetTimeToSnap(EndTime);
 
-			if (finalEndTime != EndTime)
+			if (finalEndTime != lastSetEndTime)
 			{
 				versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
 				                                               finalEndTime,
 				                                               versions.CurrentVersion.Description,
 				                                               versions.CurrentVersion.Location));
+			}
+			else
+			{
+				EndTime = finalEndTime;
 			}
 		}
 
@@ -379,12 +393,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		{
 			var finalBeginTime = GetTimeToSnap(BeginTime);
 
-			if (finalBeginTime != BeginTime)
+			if (finalBeginTime != lastSetBeginTime)
 			{
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               versions.CurrentVersion.EndTime,
 				                                               versions.CurrentVersion.Description,
 				                                               versions.CurrentVersion.Location));
+			}
+			else
+			{
+				BeginTime = finalBeginTime;
 			}
 		}
 
