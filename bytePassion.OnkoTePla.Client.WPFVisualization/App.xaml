@@ -27,7 +27,6 @@
 			
             <converter:AliveDeadToImageConverter x:Key="AliveDeadToImageConverter" />
             <converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter" />
-            <converter:TherapyPlaceToStringConverter x:Key="TherapyPlaceToStringConverter" />
             <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <converter:TimeFromDateConverter x:Key="TimeFromDateConverter" />
 

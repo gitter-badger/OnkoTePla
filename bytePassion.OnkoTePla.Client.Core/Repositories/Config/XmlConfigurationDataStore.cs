@@ -259,7 +259,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 
 			writer.WriteAttributeString(IdAttribute, therapyPlace.Id.ToString());
 			writer.WriteAttributeString(NameAttribute, therapyPlace.Name);
-			writer.WriteAttributeString(TherapyPlaceTypeAttribute, therapyPlace.Type.Id.ToString());
+			writer.WriteAttributeString(TherapyPlaceTypeAttribute, therapyPlace.TypeId.ToString());
 			
 			writer.WriteEndElement();
 		}
@@ -278,7 +278,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 
 		Configuration IPersistenceService<Configuration>.Load()
 		{
-			IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes = new Dictionary<Guid, TherapyPlaceType>();
+			IEnumerable<TherapyPlaceType> therapyPlaceTypes = null;
 			IList<MedicalPractice> practices = new List<MedicalPractice>();
 			IList<User> users = new List<User>();
 
@@ -303,8 +303,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 								therapyPlaceTypesCount = Int32.Parse(reader.Value);
 						}
 
-						var types = AcceptTherapyPlaceTypes(reader, therapyPlaceTypesCount);
-						therapyPlaceTypes = types.ToDictionary(type => type.Id, type => type);
+						therapyPlaceTypes = AcceptTherapyPlaceTypes(reader, therapyPlaceTypesCount);						
 					}
 
 					if (reader.NodeType == XmlNodeType.Element && reader.Name == MedicalPractices)
@@ -320,7 +319,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 								medicalPracticesCount = Int32.Parse(reader.Value);
 						}
 
-						practices = AcceptMedicalPractices(reader, therapyPlaceTypes, medicalPracticesCount);
+						practices = AcceptMedicalPractices(reader, medicalPracticesCount);
 					}
 
 					if (reader.NodeType == XmlNodeType.Element && reader.Name == Users)
@@ -342,7 +341,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			}
 			reader.Close();
 
-			return new Configuration(therapyPlaceTypes.Values.ToList(), practices, users);
+			return new Configuration(therapyPlaceTypes, practices, users);
 		}
 		
 		#region readerMethods
@@ -387,9 +386,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		}
 
 		
-		private static IList<MedicalPractice> AcceptMedicalPractices(XmlReader reader, 
-																	 IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes, 
-																	 int medicalPracticesCount)
+		private static IList<MedicalPractice> AcceptMedicalPractices(XmlReader reader, int medicalPracticesCount)
 		{
 			IList<MedicalPractice> medicalPractices = new List<MedicalPractice>();
 
@@ -401,14 +398,13 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				if (reader.NodeType != XmlNodeType.Element || reader.Name != MedicalPractice) continue;
 				i++;
 
-				var medicalPractice = AcceptMedicalPractice(reader, therapyPlaceTypes);				
+				var medicalPractice = AcceptMedicalPractice(reader);				
 				medicalPractices.Add(medicalPractice);
 			}
 			return medicalPractices;			
 		}
 
-		private static MedicalPractice AcceptMedicalPractice (XmlReader reader,
-															 IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes)
+		private static MedicalPractice AcceptMedicalPractice (XmlReader reader)
 		{
 			var name = String.Empty;
 			var version = 0u;
@@ -428,7 +424,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				}
 			}
 
-			var rooms = AcceptRooms(reader, therapyPlaceTypes, roomCount);
+			var rooms = AcceptRooms(reader, roomCount);
 
 			var hoursOfOpening = AcceptHoursOfOpening(reader);
 
@@ -438,7 +434,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 				while (reader.Read())
 				{
 					if (reader.NodeType != XmlNodeType.Element || reader.Name != MedicalPractice) continue;
-					previousVersion = AcceptMedicalPractice(reader, therapyPlaceTypes);
+					previousVersion = AcceptMedicalPractice(reader);
 					break;
 				}
 			}
@@ -582,9 +578,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 			return days;			
 		}
 
-		private static IReadOnlyList<Room> AcceptRooms (XmlReader reader, 
-														IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes, 
-														int roomCount)
+		private static IReadOnlyList<Room> AcceptRooms (XmlReader reader, int roomCount)
 		{
 			IList<Room> rooms = new List<Room>();
 
@@ -612,16 +606,14 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 					}
 				}
 
-				var therapyPlaces = AcceptTherapyPlace(reader, therapyPlaceTypes, placeCount);
+				var therapyPlaces = AcceptTherapyPlace(reader, placeCount);
 				rooms.Add(new Room(id, name, therapyPlaces, color));
 			}
 
 			return rooms.ToList();
 		}
 
-		private static IReadOnlyList<TherapyPlace> AcceptTherapyPlace(XmlReader reader, 
-																	  IDictionary<Guid, TherapyPlaceType> therapyPlaceTypes, 
-																	  int placeCount)
+		private static IReadOnlyList<TherapyPlace> AcceptTherapyPlace(XmlReader reader, int placeCount)
 		{
 			IList<TherapyPlace> therapyPlaces  = new List<TherapyPlace>();
 
@@ -647,7 +639,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 					}
 				}
 
-				var therapyPlace = new TherapyPlace(id, therapyPlaceTypes[typeId], name);
+				var therapyPlace = new TherapyPlace(id, typeId, name);
 				therapyPlaces.Add(therapyPlace);
 			}
 

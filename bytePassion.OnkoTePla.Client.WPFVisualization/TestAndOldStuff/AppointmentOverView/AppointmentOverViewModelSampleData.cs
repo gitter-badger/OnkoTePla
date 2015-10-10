@@ -15,7 +15,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.TestAndOldStuff.Appointm
 		{
 			var patient = new Patient("karl heinz", new Date(2, 6, 1965), true, Guid.NewGuid(), "1");
 			var therapyPlaceType = new TherapyPlaceType("stuhl", TherapyPlaceIconType.ChairType1, Guid.NewGuid());
-			var therapyPlace = new TherapyPlace(Guid.NewGuid(), therapyPlaceType, "BehandlungsPlatz1");
+			var therapyPlace = new TherapyPlace(Guid.NewGuid(), therapyPlaceType.Id, "BehandlungsPlatz1");
 
 
 			Appointments = new ObservableCollection<Appointment>()

@@ -104,8 +104,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 
             if (p.Name.ToLower().Contains(filter.ToLower()))
             {
-            }
-            return true;
+				return true;
+			}            
 
             return false;
         }
