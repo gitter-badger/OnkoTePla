@@ -21,5 +21,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
 		[DataMember(Name = "Day")]   public byte   Day   { get; set; }
 		[DataMember(Name = "Month")] public byte   Month { get; set; }
 		[DataMember(Name = "Year")]  public ushort Year  { get; set; }
+
+		public Date GetDate()
+		{
+			return new Date(Day, Month, Year);
+		}
 	}
 }
