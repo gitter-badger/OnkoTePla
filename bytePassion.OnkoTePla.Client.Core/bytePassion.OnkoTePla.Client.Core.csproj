@@ -78,6 +78,7 @@
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationWriteRepository.cs" />
     <Compile Include="Repositories\Config\IConfigurationReadRepository.cs" />
+    <Compile Include="Repositories\Config\JsonConfigurationDataStoreTest.cs" />
     <Compile Include="Repositories\Config\JsonConfigurationDataStore.cs" />
     <Compile Include="Repositories\Config\XmlConfigurationDataStore.cs" />
     <Compile Include="Repositories\EventStore\EventStream.cs" />

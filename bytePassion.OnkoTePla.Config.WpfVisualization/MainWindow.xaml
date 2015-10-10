@@ -5,8 +5,8 @@
 
     <Grid>
 		<UniformGrid Rows="3">
-			<Button Content="create Config testData and save to XML"       Height="50" Width="300" Click="ButtonClickCreateConfigTestData"/>
-			<Button Content="load config from XML"                         Height="50" Width="300" Click="ButtonClickLoadConfig"/>		
+			<Button Content="create Config testData and save to JSon"      Height="50" Width="300" Click="ButtonClickCreateConfigTestData"/>
+			<Button Content="load config from JSon"                        Height="50" Width="300" Click="ButtonClickLoadConfig"/>		
 			<Button Content="Create Patients-testData and save to JSon"    Height="50" Width="300" Click="ButtonClickCreatePatientTestData"/>			
             <Button Content="LoadPatients from JSon"                       Height="50" Width="300" Click="ButtonClickLoadPatients"/>
             <Button Content="Create Appointment-testData and save to JSon" Height="50" Width="300" Click="ButtonClickCreateAppointmentTestData"/>

@@ -18,26 +18,17 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void TestLoad()
 		{
-			IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
-			ConfigurationRepository repo = new ConfigurationRepository(persistenceService);
+			IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStoreTest(GlobalConstants.ConfigJsonPersistenceFile);
+			var repo = new ConfigurationRepository(persistenceService);
 
 			repo.LoadRepository();
 		}
+		
 
-		public static void ConfigToXml()
-		{
-			IPersistenceService<Configuration> persistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
-			var repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());			
-
-			repo.PersistRepository();
-			MessageBox.Show("fertig");
-		}
-
-
-        public static void CreateConfigTestDataAndSaveToXML()
+        public static void CreateConfigTestDataAndSaveToJson()
         {
-            IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
-            ConfigurationRepository repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());
+            IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStoreTest(GlobalConstants.ConfigJsonPersistenceFile);
+            var repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());
 
             repo.PersistRepository();
 			MessageBox.Show("fertig");
@@ -52,15 +43,15 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			var therapyPlacesRoom2 = new List<TherapyPlace>();
 			var therapyPlacesRoom3 = new List<TherapyPlace>();
 
-			int therapyPlaceIndex = 1;
+			var therapyPlaceIndex = 1;
 
-			for (int i = 0; i < 20; i++)			
+			for (var i = 0; i < 20; i++)			
 				therapyPlacesRoom1.Add(new TherapyPlace(Guid.NewGuid(), type1.Id, (therapyPlaceIndex++).ToString()));
 
-			for (int i = 0; i < 6; i++)			
+			for (var i = 0; i < 6; i++)			
 				therapyPlacesRoom2.Add(new TherapyPlace(Guid.NewGuid(), type1.Id, (therapyPlaceIndex++).ToString()));
 
-			for (int i = 0; i < 3; i++)			
+			for (var i = 0; i < 3; i++)			
 				therapyPlacesRoom3.Add(new TherapyPlace(Guid.NewGuid(), type2.Id, (therapyPlaceIndex++).ToString()));										
 
 			var rooms = new List<Room>
@@ -83,10 +74,10 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 			therapyPlaceIndex = 1;
 
-			for (int i = 0; i < 10; i++)
+			for (var i = 0; i < 10; i++)
 				therapyPlacesRoom4.Add(new TherapyPlace(Guid.NewGuid(), type1.Id, (therapyPlaceIndex++).ToString()));
 
-			for (int i = 0; i < 10; i++)
+			for (var i = 0; i < 10; i++)
 				therapyPlacesRoom5.Add(new TherapyPlace(Guid.NewGuid(), type1.Id, (therapyPlaceIndex++).ToString()));
 					
 			var rooms2 = new List<Room>
