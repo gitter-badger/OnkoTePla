@@ -17,32 +17,17 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void TestLoad()
 		{
-			IPersistenceService<IEnumerable<Patient>> persistenceService = new XmlPatientDataStore(GlobalConstants.PatientPersistenceFile);
-			PatientRepository repo = new PatientRepository(persistenceService);
+			IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStoreTest(GlobalConstants.PatientJsonPersistenceFile);
+			var repo = new PatientRepository(persistenceService);
 
 			repo.LoadRepository();
 		}
 
-		public static void GenerateXmlPatientsFile(int patientCount)
-		{
-			IPersistenceService<IEnumerable<Patient>> persistenceService = new XmlPatientDataStore(GlobalConstants.PatientPersistenceFile);
-			PatientRepository repo = new PatientRepository(persistenceService);
-
-			var patients = GeneratePatients(patientCount);
-
-			foreach (var patient in patients)
-			{
-				repo.AddPatient(patient.Name, patient.Birthday, patient.Alive, patient.ExternalId);
-			}			
-
-			repo.PersistRepository();
-			MessageBox.Show("fertig");
-		}
 
         public static void GenerateJSONPatientsFile(int patientCount)
         {
-            IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
-            PatientRepository repo = new PatientRepository(persistenceService);
+            IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStoreTest(GlobalConstants.PatientJsonPersistenceFile);
+            var repo = new PatientRepository(persistenceService);
 
             var patients = GeneratePatients(patientCount);
 
@@ -60,16 +45,16 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		private static IEnumerable<Patient> GeneratePatients (int count)
 		{
-			IReadOnlyList<string> firstNames = FirstNames();
-			IReadOnlyList<string> surNames   = SurNames();
+			var firstNames = FirstNames();
+			var surNames   = SurNames();
 
-			int firstNamesCount = firstNames.Count;
-			int surNamesCount = surNames.Count;
+			var firstNamesCount = firstNames.Count;
+			var surNamesCount = surNames.Count;
 
 
 			var patients = new List<Patient>(count);			
 
-			for (int i = 0; i < count; i++)
+			for (var i = 0; i < count; i++)
 			{
 				patients.Add(new Patient(firstNames[Rand.Next(firstNamesCount-1)] + " " + surNames[Rand.Next(surNamesCount-1)],
 										 new Date((byte)Rand.Next(1, 28), 
@@ -86,19 +71,19 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		private static void GenerateNamesList()
 		{
-			IReadOnlyList<string> firstNames = FirstNames();
-			IReadOnlyList<string> surNames   = SurNames();			
+			var firstNames = FirstNames();
+			var surNames   = SurNames();			
 
-			int firstNamesCount = firstNames.Count;
-			int surNamesCount = surNames.Count;
+			var firstNamesCount = firstNames.Count;
+			var surNamesCount = surNames.Count;
 
 
-			StreamWriter nameFile = new StreamWriter("names.txt");
+			var nameFile = new StreamWriter("names.txt");
 
 			nameFile.WriteLine("return new List<Patient>()");
 			nameFile.WriteLine("{");
 
-			for (int i = 0; i < 5000; i++)
+			for (var i = 0; i < 5000; i++)
 			{
 				nameFile.Write("\tnew Patient(\"" + 
 							   firstNames[Rand.Next(firstNamesCount-1)] + " " + 
@@ -118,7 +103,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		private static string GetRandomBoolValueAsString()
 		{
-			double d = Rand.NextDouble();
+			var d = Rand.NextDouble();
 
 			return d < 0.2 ? "false" : "true";
 		}
@@ -153,12 +138,12 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			IList<string> vornameList = vornamen.ToList();
 			IList<string> nachnameList = nachnamen.ToList();
 
-			StreamWriter nameFile = new StreamWriter("names.txt");
+			var nameFile = new StreamWriter("names.txt");
 
 			nameFile.WriteLine("return new List<string>()");
 			nameFile.WriteLine("{");
 
-			for (int i = 0; i < vornameList.Count; i += 10)
+			for (var i = 0; i < vornameList.Count; i += 10)
 			{
 				nameFile.Write("\t\"" + vornameList[i+0] + "\",");
 
@@ -184,7 +169,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			nameFile.WriteLine("return new List<string>()");
 			nameFile.WriteLine("{");
 
-			for (int i = 0; i < nachnameList.Count; i += 10)
+			for (var i = 0; i < nachnameList.Count; i += 10)
 			{
 				nameFile.Write("\t\"" + nachnameList[i+0] + "\",");
 

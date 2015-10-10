@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
 {
-	[DataContract]
+
 	public class PatientSerializationDouble
 	{									
 		public PatientSerializationDouble()
@@ -21,11 +20,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
 			ExternalId = p.ExternalId;				
 		}
 
-		[DataMember(Name = "Name")]       public string                  Name       { get; set; }
-		[DataMember(Name = "Alive")]      public bool                    Alive      { get; set; }
-		[DataMember(Name = "Birthday")]   public DateSerializationDouble Birthday   { get; set; }
-		[DataMember(Name = "Id")]         public Guid                    Id         { get; set; }
-		[DataMember(Name = "ExternalId")] public string                  ExternalId { get; set; }
+		public string                  Name       { get; set; }
+		public bool                    Alive      { get; set; }
+		public DateSerializationDouble Birthday   { get; set; }
+		public Guid                    Id         { get; set; }
+		public string                  ExternalId { get; set; }
 
 		public Patient GetPatient()
 		{

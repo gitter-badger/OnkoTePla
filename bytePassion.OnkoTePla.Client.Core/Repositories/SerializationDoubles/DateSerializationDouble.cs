@@ -1,5 +1,4 @@
-﻿using System.Runtime.Serialization;
-using bytePassion.Lib.TimeLib;
+﻿using bytePassion.Lib.TimeLib;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
@@ -18,9 +17,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
 			Year  = date.Year;
 		}
 
-		[DataMember(Name = "Day")]   public byte   Day   { get; set; }
-		[DataMember(Name = "Month")] public byte   Month { get; set; }
-		[DataMember(Name = "Year")]  public ushort Year  { get; set; }
+		public byte   Day   { get; set; }
+		public byte   Month { get; set; }
+		public ushort Year  { get; set; }
 
 		public Date GetDate()
 		{
