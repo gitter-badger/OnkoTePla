@@ -10,6 +10,7 @@ using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
@@ -41,14 +42,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 		private readonly IConfigurationReadRepository configReadRepository;
 		private readonly IDataCenter dataCenter;
 		private readonly ICommandBus commandBus;
-
+		private readonly SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory;
+		
 		public MainWindowBuilder(IConfigurationReadRepository configReadRepository, 
 								 IDataCenter dataCenter, 
-								 ICommandBus commandBus)
+								 ICommandBus commandBus,
+								 SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory)
 		{
 			this.configReadRepository = configReadRepository;
 			this.dataCenter = dataCenter;
 			this.commandBus = commandBus;
+			this.sessionAndUserSpecificEventHistory = sessionAndUserSpecificEventHistory;
 		}
 
 		public NewMainWindow BuildWindow()
@@ -121,9 +125,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 																	viewModelCommunication,
 																	new List<AggregateIdentifier>(),
 																	50);
-			var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);
-			var undoRedoViewModel = new UndoRedoViewModel(viewModelCommunication);
-
+			var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);			
+			var undoRedoViewModel = new UndoRedoViewModel(viewModelCommunication, 
+														  sessionAndUserSpecificEventHistory);
 			var overviewPageViewModel = new OverviewPageViewModel(dateDisplayViewModel,
 																  medicalPracticeSelectorViewModel,
 																  roomSelectorViewModel,

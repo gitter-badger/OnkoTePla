@@ -1,6 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
@@ -14,6 +15,11 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 		public Appointment (Patient patient, string description, TherapyPlace therapyPlace, 
 						    Date day, Time startTime, Time endTime, Guid id)
 		{
+			Guard.ArgumentNotNull(patient);
+			Guard.ArgumentNotNull(description);
+			Guard.ArgumentNotNull(therapyPlace);
+			Guard.ArgumentNotNull(patient);
+
 			Patient      = patient;
 			TherapyPlace = therapyPlace;			
 		    Day          = day;

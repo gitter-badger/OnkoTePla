@@ -89,7 +89,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 						viewModelCommunication.SendTo(
 							AppointmentGridViewModelCollection,
 							initialLocalisation.PlaceAndDate,
-							new DeleteAppointment(appointment.Id, appointment.Patient.Id, ActionTag.NormalAction)
+							new DeleteAppointment(appointment.Id, appointment.Patient.Id, ActionTag.RegularAction)
 						);
 					}					
 				}
@@ -177,7 +177,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		}
 
 		
-
 		public string PatientDisplayName => $"{appointment.Patient.Name} (*{appointment.Patient.Birthday.Year})";
         public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
 		public string AppointmentDate    => appointment.Day.ToString();

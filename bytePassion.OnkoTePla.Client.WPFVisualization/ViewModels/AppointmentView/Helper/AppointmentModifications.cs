@@ -48,7 +48,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private readonly IGlobalState<Date> selectedDateVariable;
 		private readonly IGlobalState<Size> gridSizeVariable;
 
-		private readonly VersionManager<ModificationDataSet> versions; 
+		private readonly VersionManager<ModificationDataSet> versions;		
 
 		private Time beginTime;
 		private Time endTime;
@@ -172,13 +172,19 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public void Undo()
 		{
 			if (versions.UndoPossible)
+			{
 				versions.Undo();
+				selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
+			}
 		}
 
 		public void Redo()
 		{
 			if (versions.RedoPossible)
+			{
 				versions.Redo();
+				selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
+			}
 		}
 
 		#endregion

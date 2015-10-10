@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfUtils.Commands;
+using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
@@ -21,31 +20,31 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 		}
 
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IGlobalState<Date> selectedDateVariable;
+		private readonly SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory;		
 
 		private AppointmentModifications currentAppointmentModifications;
 		private ButtonMode currentButtonMode;
 				
 
-		public UndoRedoViewModel(IViewModelCommunication viewModelCommunication)
+		public UndoRedoViewModel(IViewModelCommunication viewModelCommunication,
+								 SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory)
 		{
 			this.viewModelCommunication = viewModelCommunication;
-
+			this.sessionAndUserSpecificEventHistory = sessionAndUserSpecificEventHistory;
+			
 			currentButtonMode = ButtonMode.ViewMode;
 			currentAppointmentModifications = null;
 
 			Undo = new Command(UndoAction, UndoPossible);
-			Redo = new Command(RedoAction, RedoPossible);
-
-			selectedDateVariable = viewModelCommunication.GetGlobalViewModelVariable<Date>(
-				Constants.AppointmentGridSelectedDateVariable
-			);
+			Redo = new Command(RedoAction, RedoPossible);			
 
 			var appointmentModificationsVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
 				Constants.CurrentModifiedAppointmentVariable
 			);
 			appointmentModificationsVariable.StateChanged += OnAppointmentModificationsVariableChanged;
-		}
+
+			sessionAndUserSpecificEventHistory.PropertyChanged += OnSessionAndUserSpecificEventHistoryChanged;
+		}		
 
 		private bool RedoPossible()
 		{
@@ -53,7 +52,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 			{
 				case ButtonMode.EditsAvailable:  
 				case ButtonMode.StartOfEditMode: return currentAppointmentModifications.RedoPossible;
-				case ButtonMode.ViewMode:		 return false; // TODO !!
+				case ButtonMode.ViewMode:		 return sessionAndUserSpecificEventHistory.RedoPossible;
 			}
 
 			return false;
@@ -65,7 +64,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 			{
 				case ButtonMode.EditsAvailable:  
 				case ButtonMode.StartOfEditMode: return true;
-				case ButtonMode.ViewMode:		 return false; // TODO !!
+				case ButtonMode.ViewMode:		 return sessionAndUserSpecificEventHistory.UndoPossible;
 			}
 
 			return false;
@@ -84,6 +83,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 
 			((Command)Undo).RaiseCanExecuteChanged();
 			((Command)Redo).RaiseCanExecuteChanged();
+		}
+
+		private void OnSessionAndUserSpecificEventHistoryChanged (object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+		{
+			switch (propertyChangedEventArgs.PropertyName)
+			{			
+				case nameof(SessionAndUserSpecificEventHistory.UndoPossible):
+				{
+					((Command)Undo).RaiseCanExecuteChanged();
+					break;
+				}
+				case nameof(SessionAndUserSpecificEventHistory.RedoPossible):
+				{
+					((Command)Redo).RaiseCanExecuteChanged();
+					break;
+				}
+			}
 		}
 
 		private void OnCurrentAppointmentModificationsChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -118,12 +134,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 			switch (currentButtonMode)
 			{
 				case ButtonMode.StartOfEditMode:
-				case ButtonMode.EditsAvailable:
-				{
-					currentAppointmentModifications.Redo();
-					selectedDateVariable.Value = currentAppointmentModifications.CurrentLocation.PlaceAndDate.Date;
-					break;
-				}
+				case ButtonMode.EditsAvailable: { currentAppointmentModifications.Redo();    break; }
+				case ButtonMode.ViewMode:       { sessionAndUserSpecificEventHistory.Redo(); break; }
 			}
 		}
 
@@ -131,17 +143,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 		{
 			switch (currentButtonMode)
 			{
-				case ButtonMode.EditsAvailable:
-				{
-					currentAppointmentModifications.Undo();
-					selectedDateVariable.Value = currentAppointmentModifications.CurrentLocation.PlaceAndDate.Date;
-					break;
-				}
-				case ButtonMode.StartOfEditMode:
-				{
-					viewModelCommunication.Send(new RejectChanges());
-                    break;
-				}
+				case ButtonMode.EditsAvailable:  { currentAppointmentModifications.Undo();           break; }
+				case ButtonMode.StartOfEditMode: { viewModelCommunication.Send(new RejectChanges()); break; }
+				case ButtonMode.ViewMode:        { sessionAndUserSpecificEventHistory.Undo();        break; }
 			}
 		}
 

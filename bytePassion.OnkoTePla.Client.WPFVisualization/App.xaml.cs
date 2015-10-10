@@ -8,6 +8,7 @@ using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.Core.Repositories;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
@@ -90,6 +91,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 				LoggedInUser = configReadRepository.GetAllUsers().First()
 			};
 
+			// SessionAndUserSpecificEventHistory
+
+			var sessionAndUserSpecificEventHistory = new SessionAndUserSpecificEventHistory(eventBus,
+																							commandBus,
+																							readModelRepository,
+																							sessionInformation.LoggedInUser,
+																							50);
 
 			// Data-Model
 
@@ -100,8 +108,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 
 			// Create MainWindow
-
-			IWindowBuilder<NewMainWindow> mainWindowBuilder = new MainWindowBuilder(configReadRepository, dataCenter, commandBus);
+			
+			IWindowBuilder<NewMainWindow> mainWindowBuilder = new MainWindowBuilder(configReadRepository, 
+																					dataCenter, 
+																					commandBus, 
+																					sessionAndUserSpecificEventHistory);
 
 			var mainWindow = mainWindowBuilder.BuildWindow();
 			mainWindow.ShowDialog();
