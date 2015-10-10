@@ -16,9 +16,9 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization
 		private void ButtonClickLoadConfig               (object sender, RoutedEventArgs e) { ConfigurationData.TestLoad();	                        }
 
 		private void ButtonClickCreateAppointmentTestData(object sender, RoutedEventArgs e) { EventStreamDataBase.GenerateExampleEventStream();     }
+		private void ButtonLickLoadAppointments          (object sender, RoutedEventArgs e) { EventStreamDataBase.TestLoad();                       }
 
 		private void ButtonClickCreatePatientTestData    (object sender, RoutedEventArgs e) { PatientDataBase.GenerateJSONPatientsFile(20000);      }	
-		private void ButtonClickLoadPatients             (object sender, RoutedEventArgs e) { PatientDataBase.TestLoad();                           }
-		
+		private void ButtonClickLoadPatients             (object sender, RoutedEventArgs e) { PatientDataBase.TestLoad();                           }		
 	}
 }

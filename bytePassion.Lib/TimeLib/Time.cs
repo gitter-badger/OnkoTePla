@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Text;
 using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
 {
-    [DataContract]
 	public struct Time : IComparable<Time>
     {
 		public static readonly Time Dummy = new Time(0,0);
 
-        [DataMember(Name = "Hour")]   private readonly byte hour;
-        [DataMember(Name = "Minute")] private readonly byte minute;
-        [DataMember(Name = "Second")] private readonly byte second;
-
+       
 		public Time(Time time) 
 			: this(time.Hour, time.Minute, time.Second)
 		{						
@@ -36,9 +31,9 @@ namespace bytePassion.Lib.TimeLib
 			var timeMinutes = restTime % 60;
 			var timeHour    = (restTime - timeMinutes) / 60;
 
-			hour   = (byte) timeHour;
-			minute = (byte) timeMinutes;
-			second = (byte) timeSeconds;
+			Hour   = (byte) timeHour;
+			Minute = (byte) timeMinutes;
+			Second = (byte) timeSeconds;
 
 			SecondsFromDayBegin = secondsFromDayBegin;
 		}
@@ -49,20 +44,20 @@ namespace bytePassion.Lib.TimeLib
 			if (minute > 59) throw new ArgumentException("parameter minute has to be in the range from 0 to 59");
 			if (second > 59) throw new ArgumentException("parameter second has to be in the range from 0 to 59");
 
-			this.hour = hour;
-			this.minute = minute;
-			this.second = second;
+			Hour   = hour;
+			Minute = minute;
+			Second = second;
 
 			SecondsFromDayBegin = (uint)(hour * 3600 + minute * 60 + second);
 		}
 
 		#region Properties: Hour / Minute / Second / SecondsFromDayBegin
 
-		public byte Hour   { get { return hour;   }}
-		public byte Minute { get { return minute; }}
-		public byte Second { get { return second; }}
+	    public byte Hour   { get; }
+	    public byte Minute { get; }
+		public byte Second { get; }
 
-	    public uint SecondsFromDayBegin { get; }
+		public uint SecondsFromDayBegin { get; }
 
 		#endregion
 
@@ -98,29 +93,29 @@ namespace bytePassion.Lib.TimeLib
 
 		public override int GetHashCode ()
 		{
-			return hour.GetHashCode() ^ minute.GetHashCode();
+			return Hour.GetHashCode() ^ Minute.GetHashCode() ^ Second.GetHashCode();
 		}	    
 
 	    public override string ToString ()
 		{
 			var builder = new StringBuilder();
 
-			if (hour < 10)
+			if (Hour < 10)
 				builder.Append('0');
 
-			builder.Append(hour);
+			builder.Append(Hour);
 			builder.Append(':');
 
-			if (minute < 10)
+			if (Minute < 10)
 				builder.Append('0');
 
-			builder.Append(minute);
+			builder.Append(Minute);
 			builder.Append(':');
 
-			if (second < 10)
+			if (Second < 10)
 				builder.Append('0');
 
-			builder.Append(second);
+			builder.Append(Second);
 
 			return builder.ToString();
 		}
@@ -136,17 +131,17 @@ namespace bytePassion.Lib.TimeLib
 
 			if (elements.Length == 2)
 			{
-				var hour   = Byte.Parse(elements[0]);
-				var minute = Byte.Parse(elements[1]);
+				var hour   = byte.Parse(elements[0]);
+				var minute = byte.Parse(elements[1]);
 
 				return new Time(hour, minute);
 			}
 
 			if (elements.Length == 3)
 			{
-				var hour    = Byte.Parse(elements[0]);
-				var minute  = Byte.Parse(elements[1]);
-				var seconds = Byte.Parse(elements[2]);
+				var hour    = byte.Parse(elements[0]);
+				var minute  = byte.Parse(elements[1]);
+				var seconds = byte.Parse(elements[2]);
 
 				return new Time(hour, minute, seconds);
 			}

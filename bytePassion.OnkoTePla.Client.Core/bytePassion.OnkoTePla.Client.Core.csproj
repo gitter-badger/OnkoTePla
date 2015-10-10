@@ -82,6 +82,7 @@
     <Compile Include="Repositories\Config\XmlConfigurationDataStore.cs" />
     <Compile Include="Repositories\EventStore\EventStream.cs" />
     <Compile Include="Domain\AggregateIdentifier.cs" />
+    <Compile Include="Repositories\EventStore\JsonEventStreamDataStoreTest.cs" />
     <Compile Include="Repositories\EventStore\JsonEventStreamDataStore.cs" />
     <Compile Include="Repositories\Patients\IPatientReadRepository.cs" />
     <Compile Include="Repositories\Patients\IPatientWriteRepository.cs" />
@@ -110,8 +111,12 @@
     <Compile Include="Repositories\Patients\XmlPatientDataStore.cs" />
     <Compile Include="Repositories\Readmodel\IReadModelRepository.cs" />
     <Compile Include="Repositories\Readmodel\ReadModelRepository.cs" />
+    <Compile Include="Repositories\SerializationDoubles\AggregateIdentifierSerializationDouble.cs" />
     <Compile Include="Repositories\SerializationDoubles\DateSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\DomainEventSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\EventStreamSerializationDouble.cs" />
     <Compile Include="Repositories\SerializationDoubles\PatientSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\TimeSerializationDouble.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">

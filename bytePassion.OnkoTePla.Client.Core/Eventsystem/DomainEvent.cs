@@ -27,6 +27,6 @@ namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
 		public Guid                  UserId           { get; }
 		public Guid                  PatientId        { get; }
 		public Tuple<Date, Time>     TimeStamp        { get; }
-		public ActionTag              ActionTag         { get; }
+		public ActionTag             ActionTag        { get; }
 	}
 }
