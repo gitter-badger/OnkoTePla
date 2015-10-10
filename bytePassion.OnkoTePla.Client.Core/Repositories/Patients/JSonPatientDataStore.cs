@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using Newtonsoft.Json;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 {
     public class JSonPatientDataStore : IPersistenceService<IEnumerable<Patient>>
-    {
+    {		
 		private readonly string filename;
 
         public JSonPatientDataStore(string filename)

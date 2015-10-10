@@ -109,6 +109,8 @@
     <Compile Include="Repositories\Patients\XmlPatientDataStore.cs" />
     <Compile Include="Repositories\Readmodel\IReadModelRepository.cs" />
     <Compile Include="Repositories\Readmodel\ReadModelRepository.cs" />
+    <Compile Include="Repositories\SerializationDoubles\DateSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\PatientSerializationDouble.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
@@ -127,6 +129,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
