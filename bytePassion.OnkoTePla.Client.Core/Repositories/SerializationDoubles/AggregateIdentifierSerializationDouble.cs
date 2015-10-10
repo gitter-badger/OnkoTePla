@@ -6,8 +6,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
 	public class AggregateIdentifierSerializationDouble
 	{
 		public AggregateIdentifierSerializationDouble()
-		{
-			
+		{			
 		}
 
 		public AggregateIdentifierSerializationDouble (AggregateIdentifier aggregateIdentifier)
