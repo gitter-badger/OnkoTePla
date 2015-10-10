@@ -25,6 +25,11 @@ namespace bytePassion.Lib.FrameworkExtensions
 	    public static IEnumerable<TSource> Append<TSource>(this IEnumerable<TSource> items, TSource itemToAppend)
 	    {
 		    return items.Concat(new List<TSource> { itemToAppend });
+	    }
+
+	    public static IEnumerable<TSource> Without<TSource>(this IEnumerable<TSource> items, TSource itemToLeafOut)
+	    {
+		    return items.Where(item => !item.Equals(itemToLeafOut));
 	    } 
     }
 }
