@@ -6,7 +6,7 @@ using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
-	public sealed class Room
+	public class Room
 	{
 		public Room (Guid id, string name, IReadOnlyList<TherapyPlace> therapyPlaces, Color displayColor)
 		{
@@ -25,6 +25,9 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		public override string ToString    ()           => Name;
 		public override bool   Equals      (object obj) => this.Equals(obj, (room1, room2) => room1.Id == room2.Id);
 		public override int    GetHashCode ()           => Id.GetHashCode();
-		
+
+
+		public static bool operator ==(Room r1, Room r2) => EqualsExtension.EqualsForEqualityOperator(r1, r2);
+		public static bool operator !=(Room r1, Room r2) => !(r1 == r2);
 	}
 }

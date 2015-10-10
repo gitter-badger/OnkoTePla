@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
-    [DataContract]
-	public sealed class MedicalPractice
+	public class MedicalPractice
 	{
-        [DataMember(Name = "Id")]              private readonly Guid id;
-        [DataMember(Name = "Name")]            private readonly string name;
-        [DataMember(Name = "Version")]         private readonly uint version;
-        [DataMember(Name = "Rooms")]           private readonly IReadOnlyList<Room> rooms;
-        [DataMember(Name = "HoursOfOpening")]  private readonly HoursOfOpening hoursOfOpening;
-        [DataMember(Name = "PreviousVersion")] private readonly MedicalPractice previousVersion;
-
-
+       
 		public static MedicalPractice CreateNewMedicalPractice(IReadOnlyList<Room> rooms, string name, HoursOfOpening hoursOfOpening)
 		{
 			return new MedicalPractice(rooms, name, 0, Guid.NewGuid(), null, hoursOfOpening);
@@ -26,21 +17,20 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		public MedicalPractice(IEnumerable<Room> rooms, string name, uint version, Guid id, 
 							   MedicalPractice previousVersion, HoursOfOpening hoursOfOpening)
 		{
-			this.rooms = rooms.ToList();
-			this.name = name;
-			this.version = version;
-			this.id = id;
-			this.previousVersion = previousVersion;
-			this.hoursOfOpening = hoursOfOpening;
+			Rooms = rooms.ToList();
+			Name = name;
+			Version = version;
+			Id = id;
+			PreviousVersion = previousVersion;
+			HoursOfOpening = hoursOfOpening;
 		}
 
-		public Guid              Id              => id;
-	    public string            Name            => name;
-	    public uint              Version         => version;
-	    public IEnumerable<Room> Rooms           => rooms.ToList();
-	    public HoursOfOpening    HoursOfOpening  => hoursOfOpening;
-	    public MedicalPractice   PreviousVersion => previousVersion;
-
+		public Guid              Id              { get; }
+	    public string            Name            { get; }
+	    public uint              Version         { get; }
+	    public IEnumerable<Room> Rooms           { get; }
+	    public HoursOfOpening    HoursOfOpening  { get; }
+	    public MedicalPractice   PreviousVersion { get; }
 
 	    public bool HasPreviousVersion => PreviousVersion != null;
 
@@ -65,7 +55,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		public MedicalPractice UpdateRoom(Guid roomToUpdate, Room newRoomVariant)
 		{
 			var updatedRoomList = Rooms.Where(room => room.Id != roomToUpdate)
-									   .Concat(new List<Room> {newRoomVariant})
+									   .Append(newRoomVariant)
 									   .ToList();
 			var updatedVersion = Version + 1;
 
@@ -104,28 +94,28 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 			if (Version < requestedVersion)
 				throw new ArgumentException("the requested version does not exist");
 
-			return previousVersion.GetVersion(requestedVersion);
+			return PreviousVersion.GetVersion(requestedVersion);
 		}
 
 		public TherapyPlace GetTherapyPlaceById(Guid therapyPlaceId)
 		{
-			return rooms.SelectMany(room => room.TherapyPlaces)
+			return Rooms.SelectMany(room => room.TherapyPlaces)
 				        .FirstOrDefault(therapyPlace => therapyPlace.Id == therapyPlaceId);
 		}
 
 		public IEnumerable<TherapyPlace> GetAllTherapyPlaces()
 		{
-			return rooms.SelectMany(room => room.TherapyPlaces);
+			return Rooms.SelectMany(room => room.TherapyPlaces);
 		}
 
 		public Room GetRoomForTherapyPlace(Guid therapyPlaceId)
 		{
-			return rooms.FirstOrDefault(room => room.TherapyPlaces.Contains(GetTherapyPlaceById(therapyPlaceId)));
+			return Rooms.FirstOrDefault(room => room.TherapyPlaces.Contains(GetTherapyPlaceById(therapyPlaceId)));
 		}
 
 		public Room GetRoomById(Guid roomId)
 		{
-			return rooms.FirstOrDefault(room => room.Id == roomId);
+			return Rooms.FirstOrDefault(room => room.Id == roomId);
 		}
 
 		#endregion
@@ -133,7 +123,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		#region ToString / HashCode / Equals
 
 		public override string ToString    () => $"{Name} (v: {Version})";
-		public override int    GetHashCode () => id.GetHashCode() ^ version.GetHashCode();
+		public override int    GetHashCode () => Id.GetHashCode() ^ Version.GetHashCode();
 
 		public override bool Equals (object obj)
 		{

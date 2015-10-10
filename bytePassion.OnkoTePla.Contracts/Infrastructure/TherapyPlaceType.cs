@@ -1,33 +1,31 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Contracts.Enums;
 
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
-    [DataContract]
 	public class TherapyPlaceType
 	{
-
-        [DataMember(Name = "Id")]       private readonly Guid id;
-        [DataMember(Name = "Name")]     private readonly string name;
-        [DataMember(Name = "IconType")] private readonly TherapyPlaceIconType iconType;
-
+        
 		public TherapyPlaceType(string name, TherapyPlaceIconType iconType, Guid id)
 		{
-			this.name = name;
-			this.iconType = iconType;
-			this.id = id;
+			Name = name;
+			IconType = iconType;
+			Id = id;
 		}
 
-		public string               Name     => name;
-	    public TherapyPlaceIconType IconType => iconType;
-	    public Guid                 Id       => id;
+		public string               Name     { get; }
+	    public TherapyPlaceIconType IconType { get; }
+	    public Guid                 Id       { get; }
 	    
 
 		public override string ToString    ()           => Name;
 	    public override bool   Equals      (object obj) => this.Equals(obj, (tpt1, tpt2) => tpt1.Id == tpt2.Id);
-	    public override int    GetHashCode ()           => id.GetHashCode();
+	    public override int    GetHashCode ()           => Id.GetHashCode();
+
+
+		public static bool operator ==(TherapyPlaceType tpt1, TherapyPlaceType tpt2) => EqualsExtension.EqualsForEqualityOperator(tpt1, tpt2);
+		public static bool operator !=(TherapyPlaceType tpt1, TherapyPlaceType tpt2) => !(tpt1 == tpt2);
 	}
 }

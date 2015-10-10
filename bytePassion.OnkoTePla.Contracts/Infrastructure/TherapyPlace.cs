@@ -5,7 +5,7 @@ using static bytePassion.Lib.FrameworkExtensions.EqualsExtension;
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
-	public sealed class TherapyPlace
+	public class TherapyPlace
 	{
 		public TherapyPlace(Guid id, Guid typeId, string name)
 		{
@@ -19,7 +19,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		public Guid   TypeId { get; }
 
 
-		public override string ToString ()      => Name;
+		public override string ToString ()         => Name;
 		public override int    GetHashCode ()      => Id.GetHashCode();
 		public override bool   Equals (object obj) => this.Equals(obj, (therapyPlace1, therapyPlace2) => therapyPlace1.Id == therapyPlace2.Id);
 
