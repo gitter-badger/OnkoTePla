@@ -80,7 +80,6 @@
   <ItemGroup>
     <Compile Include="SampleData\EventStreamDataBase.cs" />
     <Compile Include="SampleData\ConfigurationData.cs" />
-    <Compile Include="SampleData\PatientDataBaseTest.cs" />
     <Compile Include="SampleData\PatientDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

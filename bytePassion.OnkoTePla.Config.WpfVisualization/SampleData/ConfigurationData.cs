@@ -27,14 +27,14 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 		public static void ConfigToXml()
 		{
 			IPersistenceService<Configuration> persistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
-			ConfigurationRepository repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());			
+			var repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());			
 
 			repo.PersistRepository();
 			MessageBox.Show("fertig");
 		}
 
 
-        public static void ConfigToJson()
+        public static void CreateConfigTestDataAndSaveToXML()
         {
             IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
             ConfigurationRepository repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());
