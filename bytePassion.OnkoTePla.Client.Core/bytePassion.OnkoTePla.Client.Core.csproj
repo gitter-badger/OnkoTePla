@@ -112,11 +112,18 @@
     <Compile Include="Repositories\Readmodel\IReadModelRepository.cs" />
     <Compile Include="Repositories\Readmodel\ReadModelRepository.cs" />
     <Compile Include="Repositories\SerializationDoubles\AggregateIdentifierSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\ConfigurationSerializationDouble.cs" />
     <Compile Include="Repositories\SerializationDoubles\DateSerializationDouble.cs" />
     <Compile Include="Repositories\SerializationDoubles\DomainEventSerializationDouble.cs" />
     <Compile Include="Repositories\SerializationDoubles\EventStreamSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\HoursOfOpeningSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\MedicalPracticeSerializationDouble.cs" />
     <Compile Include="Repositories\SerializationDoubles\PatientSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\RoomSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\TherapyPlaceSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\TherapyPlaceTypeSerializationDouble.cs" />
     <Compile Include="Repositories\SerializationDoubles\TimeSerializationDouble.cs" />
+    <Compile Include="Repositories\SerializationDoubles\UserSerializationDouble.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
