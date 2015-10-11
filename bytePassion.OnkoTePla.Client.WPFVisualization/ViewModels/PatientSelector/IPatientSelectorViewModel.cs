@@ -12,5 +12,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
         Patient SelectedPatient { set; }
 
 		bool ListIsEmpty { get; }
-	}
+		bool ShowDeceasedPatients { get; set; }
+    }
 }

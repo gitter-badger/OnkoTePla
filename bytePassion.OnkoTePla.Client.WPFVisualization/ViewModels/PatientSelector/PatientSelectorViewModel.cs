@@ -11,8 +11,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 {
     internal class PatientSelectorViewModel : IPatientSelectorViewModel
     {
-        private readonly IReadOnlyList<Patient> allPatients;
-        private readonly IGlobalState<Patient> selectedPatientGlobalVariable;
+	    private readonly IGlobalState<Patient> selectedPatientGlobalVariable;
         private bool listIsEmpty;
         private string searchFilter;
 
@@ -21,9 +20,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 
         public PatientSelectorViewModel(IDataCenter dataCenter, IGlobalState<Patient> selectedPatientGlobalVariable)
         {
-            this.selectedPatientGlobalVariable = selectedPatientGlobalVariable;
+	        this.selectedPatientGlobalVariable = selectedPatientGlobalVariable;
 
-            allPatients = dataCenter.Patients.GetAllPatients().ToList();
+            IReadOnlyList<Patient> allPatients = dataCenter.Patients.GetAllPatients().ToList();
 
             Patients = new CollectionViewSource();
             Patients.Filter += Filter;
@@ -38,8 +37,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
             set
             {
                 PropertyChanged.ChangeAndNotify(this, ref showDeceasedPatients, value);
-                Patients.View.Refresh();
-            }
+				UpdateForNewInput();
+			}
         }
 
         public CollectionViewSource Patients { get; }
@@ -49,13 +48,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
             get { return searchFilter; }
             set
             {
-                searchFilter = value;
-                SelectedPatient = null;
-                Patients.View.Refresh();
-
-                CheckList();
+                searchFilter = value;                
+                UpdateForNewInput();
             }
         }
+
+	    private void UpdateForNewInput()
+	    {
+			SelectedPatient = null;
+			Patients.View.Refresh();
+			CheckList();
+		}
+
 
         public Patient SelectedPatient
         {

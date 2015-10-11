@@ -105,7 +105,9 @@
         <CheckBox Grid.Row="1"
                   Margin="5"
                   Content="Verstorbene Patienten einblenden"
-                  IsChecked="{Binding ShowDeceasedPatients}" />
+                  IsChecked="{Binding ShowDeceasedPatients, 
+									  Mode=TwoWay, 
+									  UpdateSourceTrigger=PropertyChanged}" />
 
         <Border Grid.Row="2"
                 VerticalAlignment="Center"
