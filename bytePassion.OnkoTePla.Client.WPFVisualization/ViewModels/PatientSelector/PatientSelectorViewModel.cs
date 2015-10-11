@@ -91,10 +91,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 
             var nameCheck = IsPatientNameWithinFilter(patientToCheck, SearchFilter);
 
-            if (nameCheck && !ShowDeceasedPatients)
-            {
-                e.Accepted = patientToCheck.Alive;
-            }
+	        e.Accepted = nameCheck && (ShowDeceasedPatients || patientToCheck.Alive);
         }
 
         private static bool IsPatientNameWithinFilter(Patient p, string filter)
@@ -105,9 +102,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
             if (p.Name.ToLower().Contains(filter.ToLower()))
             {
 				return true;
-			}            
+			}
 
-            return false;
+	        return false;
         }
     }
 }
