@@ -20,16 +20,11 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 		public void Persist (IEnumerable<EventStream<AggregateIdentifier>> data)
 		{
-			var serializationData = data.Select(eventStream => new EventStreamSerializationDouble(eventStream));
-
-			var serializer = new JsonSerializer
-			{
-				Formatting = Formatting.Indented
-			};
+			var serializationData = data.Select(eventStream => new EventStreamSerializationDouble(eventStream));		
 
 			using (var output = new StringWriter())
 			{
-				serializer.Serialize(output, serializationData);
+				new JsonSerializer().Serialize(output, serializationData);
 				File.WriteAllText(filename, output.ToString());
 			}
 		}

@@ -17,15 +17,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
 		public void Persist (Configuration data)
 		{
 			var serializationData = new ConfigurationSerializationDouble(data);
-
-			var serializer = new JsonSerializer
-			{
-				Formatting = Formatting.Indented
-			};
-
+			
 			using (var output = new StringWriter())
 			{
-				serializer.Serialize(output, serializationData);
+				new JsonSerializer().Serialize(output, serializationData);
 				File.WriteAllText(fileName, output.ToString());
 			}
 		}

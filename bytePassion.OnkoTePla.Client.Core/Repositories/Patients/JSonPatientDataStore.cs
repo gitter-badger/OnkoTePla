@@ -19,15 +19,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 		public void Persist (IEnumerable<Patient> data)
 		{
 			var serializationData = data.Select(patient => new PatientSerializationDouble(patient));
-
-			var serializer = new JsonSerializer
-			{
-				Formatting = Formatting.Indented
-			};
-
+						
 			using (var output = new StringWriter())
-			{
-				serializer.Serialize(output, serializationData);
+			{				
+				new JsonSerializer().Serialize(output, serializationData);
 				File.WriteAllText(filename, output.ToString());
 			}
 		}
