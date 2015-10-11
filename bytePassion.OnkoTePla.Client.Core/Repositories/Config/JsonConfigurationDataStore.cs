@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles;
 using bytePassion.OnkoTePla.Contracts.Config;
 using Newtonsoft.Json;
 
@@ -13,32 +14,32 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
             this.fileName = fileName;
         }
 
-        public void Persist(Configuration data)
-        {
+		public void Persist (Configuration data)
+		{
+			var serializationData = new ConfigurationSerializationDouble(data);
 
+			var serializer = new JsonSerializer
+			{
+				Formatting = Formatting.Indented
+			};
 
-            var serializer = new JsonSerializer
-            {
-                Formatting = Formatting.Indented
-            };
+			using (var output = new StringWriter())
+			{
+				serializer.Serialize(output, serializationData);
+				File.WriteAllText(fileName, output.ToString());
+			}
+		}
 
-            using (var output = new StringWriter())
-            {
-                serializer.Serialize(output, data);
-                File.WriteAllText(fileName, output.ToString());
-            }
-        }
+		public Configuration Load ()
+		{
+			ConfigurationSerializationDouble config;
+			var serializer = new JsonSerializer();
 
-        public Configuration Load()
-        {
-            Configuration config;
-            var serializer = new JsonSerializer();
-
-            using (StreamReader file = File.OpenText(fileName))
-            {
-                config = (Configuration)serializer.Deserialize(file, typeof(Configuration));
-            }
-            return config;
-        }
-    }
+			using (StreamReader file = File.OpenText(fileName))
+			{
+				config = (ConfigurationSerializationDouble)serializer.Deserialize(file, typeof(ConfigurationSerializationDouble));
+			}
+			return config.GetConfiguration();
+		}
+	}
 }

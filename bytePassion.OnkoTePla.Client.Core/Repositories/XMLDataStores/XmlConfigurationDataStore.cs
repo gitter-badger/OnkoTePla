@@ -8,8 +8,7 @@ using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
-
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
+namespace bytePassion.OnkoTePla.Client.Core.Repositories.XMLDataStores
 {
 	public class XmlConfigurationDataStore : IPersistenceService<Configuration>
 	{

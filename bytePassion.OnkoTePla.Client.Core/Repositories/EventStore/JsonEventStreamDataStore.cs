@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -16,35 +18,37 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
             this.filename = filename;
         }
 
-        public void Persist(IEnumerable<EventStream<AggregateIdentifier>> data)
-        {
-            var serializer = new JsonSerializer
-            {
-                Formatting = Formatting.Indented
-            };
+		public void Persist (IEnumerable<EventStream<AggregateIdentifier>> data)
+		{
+			var serializationData = data.Select(eventStream => new EventStreamSerializationDouble(eventStream));
 
-            using (var output = new StringWriter())
-            {
-                serializer.Serialize(output, data);
-                File.WriteAllText(filename, output.ToString());
-            }
-        }
+			var serializer = new JsonSerializer
+			{
+				Formatting = Formatting.Indented
+			};
 
-        public IEnumerable<EventStream<AggregateIdentifier>> Load()
-        {
-            List<EventStream<AggregateIdentifier>> eventStreams;
-            ITraceWriter traceWriter = new MemoryTraceWriter();
+			using (var output = new StringWriter())
+			{
+				serializer.Serialize(output, serializationData);
+				File.WriteAllText(filename, output.ToString());
+			}
+		}
 
-            var serializer = new JsonSerializer() {TraceWriter = traceWriter};
-     
+		public IEnumerable<EventStream<AggregateIdentifier>> Load ()
+		{
+			List<EventStreamSerializationDouble> eventStreams;
+			ITraceWriter traceWriter = new MemoryTraceWriter();
 
-            using (StreamReader file = File.OpenText(filename))
-            {
-                eventStreams = (List<EventStream<AggregateIdentifier>>)serializer.Deserialize(file, typeof(List<EventStream<AggregateIdentifier>>));
-            }
+			var serializer = new JsonSerializer() {TraceWriter = traceWriter};
 
-            Debug.WriteLine(traceWriter);
-            return eventStreams;
-        }
-    }
+
+			using (StreamReader file = File.OpenText(filename))
+			{
+				eventStreams = (List<EventStreamSerializationDouble>)serializer.Deserialize(file, typeof(List<EventStreamSerializationDouble>));
+			}
+
+			Debug.WriteLine(traceWriter);
+			return eventStreams.Select(eventStreamDouble => eventStreamDouble.GetEventStream());
+		}
+	}
 }

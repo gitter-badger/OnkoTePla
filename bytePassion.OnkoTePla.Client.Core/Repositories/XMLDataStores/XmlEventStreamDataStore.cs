@@ -6,9 +6,9 @@ using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 
-
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
+namespace bytePassion.OnkoTePla.Client.Core.Repositories.XMLDataStores
 {
 	public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
 	{

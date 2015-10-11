@@ -99,11 +99,11 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void TestLoad()
 		{
-			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
+			IPersistenceService<Configuration> configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
 			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
-			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new JsonEventStreamDataStoreTest(GlobalConstants.EventHistoryJsonPersistenceFile);
+			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 
 			eventStore.LoadRepository();
@@ -112,16 +112,16 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void GenerateExampleEventStream()
 		{			
-			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new JSonPatientDataStoreTest(GlobalConstants.PatientJsonPersistenceFile);
+			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
 			IPatientReadRepository patientRepository = new PatientRepository(patientPersistenceService);
 			patientRepository.LoadRepository();
 
 			
-			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
+			IPersistenceService<Configuration> configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
 			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
-			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new JsonEventStreamDataStoreTest(GlobalConstants.EventHistoryJsonPersistenceFile);			
+			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);			
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 
 			IHandlerCollection<DomainEvent> eventHandlerCollection = new MultiHandlerCollection<DomainEvent>();
@@ -147,7 +147,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 			var user = configReadRepository.GetUserByName("exampleUser1");
 
 			var startCreation = new Date(1, 10, 2015);
-			var endCreation   = new Date(3, 10, 2015);
+			var endCreation   = new Date(3, 10, 2016);
 
 			for (var date = startCreation; date < endCreation; date = date.DayAfter())
 			{

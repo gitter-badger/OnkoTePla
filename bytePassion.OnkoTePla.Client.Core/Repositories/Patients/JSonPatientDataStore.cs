@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
-using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.TimeLib;
+using System.Linq;
+using bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using Newtonsoft.Json;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 {
-    public class JSonPatientDataStore : IPersistenceService<IEnumerable<Patient>>
+	public class JSonPatientDataStore : IPersistenceService<IEnumerable<Patient>>
     {		
 		private readonly string filename;
 
@@ -18,31 +16,32 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
             this.filename = filename;
         }
 
-        public void Persist(IEnumerable<Patient> data)
-        {
+		public void Persist (IEnumerable<Patient> data)
+		{
+			var serializationData = data.Select(patient => new PatientSerializationDouble(patient));
 
-            var serializer = new JsonSerializer
-            {
-                Formatting = Formatting.Indented
-            };
+			var serializer = new JsonSerializer
+			{
+				Formatting = Formatting.Indented
+			};
 
-            using (var output = new StringWriter())
-            {
-                serializer.Serialize(output, data);
-                File.WriteAllText(filename, output.ToString());
-            }
-        }
+			using (var output = new StringWriter())
+			{
+				serializer.Serialize(output, serializationData);
+				File.WriteAllText(filename, output.ToString());
+			}
+		}
 
-        public IEnumerable<Patient> Load()
-        {
-            List<Patient> patients;
-            var serializer = new JsonSerializer();
+		public IEnumerable<Patient> Load ()
+		{
+			List<PatientSerializationDouble> patients;
+			var serializer = new JsonSerializer();
 
-            using (StreamReader file = File.OpenText(filename))
-            {
-                patients = (List<Patient>)serializer.Deserialize(file, typeof(List<Patient>));
-            }
-            return patients;
-        }
-    }
+			using (StreamReader file = File.OpenText(filename))
+			{
+				patients = (List<PatientSerializationDouble>)serializer.Deserialize(file, typeof(List<PatientSerializationDouble>));
+			}
+			return patients.Select(patientDouble => patientDouble.GetPatient());
+		}
+	}
 }

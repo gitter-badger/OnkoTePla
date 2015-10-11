@@ -4,8 +4,7 @@ using System.Xml;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
-
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
+namespace bytePassion.OnkoTePla.Client.Core.Repositories.XMLDataStores
 {
 
 	public class XmlPatientDataStore : IPersistenceService<IEnumerable<Patient>>

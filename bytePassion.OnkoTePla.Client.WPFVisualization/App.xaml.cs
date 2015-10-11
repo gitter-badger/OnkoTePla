@@ -47,14 +47,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Config-Repository
 
-			IPersistenceService<Configuration> configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
+			IPersistenceService<Configuration> configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
 			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
 
 			// EventStore
 
-			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
+			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
 			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 			eventStore.LoadRepository(); 
 

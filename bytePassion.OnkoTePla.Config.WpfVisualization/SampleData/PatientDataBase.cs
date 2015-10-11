@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void TestLoad()
 		{
-			IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStoreTest(GlobalConstants.PatientJsonPersistenceFile);
+			IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
 			var repo = new PatientRepository(persistenceService);
 
 			repo.LoadRepository();
@@ -26,7 +26,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
         public static void GenerateJSONPatientsFile(int patientCount)
         {
-            IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStoreTest(GlobalConstants.PatientJsonPersistenceFile);
+            IPersistenceService<IEnumerable<Patient>> persistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
             var repo = new PatientRepository(persistenceService);
 
             var patients = GeneratePatients(patientCount);

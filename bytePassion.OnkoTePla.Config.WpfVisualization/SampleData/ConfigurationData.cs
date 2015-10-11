@@ -18,7 +18,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
 		public static void TestLoad()
 		{
-			IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStoreTest(GlobalConstants.ConfigJsonPersistenceFile);
+			IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
 			var repo = new ConfigurationRepository(persistenceService);
 
 			repo.LoadRepository();
@@ -27,7 +27,7 @@ namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 
         public static void CreateConfigTestDataAndSaveToJson()
         {
-            IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStoreTest(GlobalConstants.ConfigJsonPersistenceFile);
+            IPersistenceService<Configuration> persistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
             var repo = new ConfigurationRepository(persistenceService, GetMedicalPracticeSample());
 
             repo.PersistRepository();
