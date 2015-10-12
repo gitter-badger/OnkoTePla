@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using bytePassion.OnkoTePla.Client.Core.Domain;
@@ -9,7 +8,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 {
-    public class JsonEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
+	public class JsonEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
     {
         private readonly string filename;
 
@@ -36,13 +35,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
 
 			var serializer = new JsonSerializer() {TraceWriter = traceWriter};
 
-
 			using (StreamReader file = File.OpenText(filename))
 			{
 				eventStreams = (List<EventStreamSerializationDouble>)serializer.Deserialize(file, typeof(List<EventStreamSerializationDouble>));
-			}
-
-			Debug.WriteLine(traceWriter);
+			}			
 			return eventStreams.Select(eventStreamDouble => eventStreamDouble.GetEventStream());
 		}
 	}
