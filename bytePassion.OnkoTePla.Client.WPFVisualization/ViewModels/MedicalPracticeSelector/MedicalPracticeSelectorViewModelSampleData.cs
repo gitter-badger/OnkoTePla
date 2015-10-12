@@ -22,17 +22,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 				med1,
 				med2
 			};
+
+			PracticeIsSelectable = true;
 		}
 
-		public MedicalPractice SelectedMedicalPractice
-		{
-			get; set;
-		}
-
-		public ObservableCollection<MedicalPractice> AvailableMedicalPractices
-		{
-			get; private set;
-		}
+		public MedicalPractice SelectedMedicalPractice { get; set; }
+		public ObservableCollection<MedicalPractice> AvailableMedicalPractices { get; }
+		public bool PracticeIsSelectable { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}

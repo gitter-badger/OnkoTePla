@@ -13,6 +13,7 @@
 	</d:UserControl.DataContext>
 	
     <ComboBox ItemsSource="{Binding AvailableMedicalPractices}"
+			  IsEnabled="{Binding PracticeIsSelectable}"
 			  SelectedItem="{Binding SelectedMedicalPractice, 
 									 Mode=TwoWay, 
 									 UpdateSourceTrigger=PropertyChanged}">

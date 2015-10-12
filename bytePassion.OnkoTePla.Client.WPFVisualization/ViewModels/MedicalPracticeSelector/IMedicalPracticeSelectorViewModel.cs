@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
@@ -10,5 +9,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 		MedicalPractice SelectedMedicalPractice { get; set; }
 
 		ObservableCollection<MedicalPractice> AvailableMedicalPractices { get; } 
+
+		bool PracticeIsSelectable { get; }
 	}
 }
