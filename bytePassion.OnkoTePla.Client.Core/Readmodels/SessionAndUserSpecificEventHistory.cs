@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
+using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
@@ -17,6 +19,15 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 	public class SessionAndUserSpecificEventHistory : ReadModelBase,
 													  IUndoRedo													  
 	{
+		private class InitialDummyEvent : DomainEvent
+		{
+			public InitialDummyEvent()
+				: base(new AggregateIdentifier(Date.Dummy, new Guid()), 0, new Guid(), new Guid(), null, ActionTag.RegularAction)
+			{				
+			}
+		}
+
+
 		private readonly ICommandBus commandBus;
 		private readonly IReadModelRepository readModelRepository;
 		private readonly User currentUser;		
@@ -37,12 +48,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		{
 			this.commandBus = commandBus;
 			this.readModelRepository = readModelRepository;
-			this.currentUser = currentUser;
-			
-
+			this.currentUser = currentUser;			
 			this.maximalSavedVersions = maximalSavedVersions;
+
 			userTriggeredEvents = new LinkedList<DomainEvent>();
-			lastTriggeredEventPointer = null;
+
+			var initialNode = new LinkedListNode<DomainEvent>(new InitialDummyEvent());
+
+			userTriggeredEvents.AddLast(initialNode);
+			lastTriggeredEventPointer = initialNode;
+			
 
 			CheckIfUndoAndRedoIsPossible();
 		}
@@ -74,10 +89,12 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 				if (userTriggeredEvents.Count == maximalSavedVersions + 1)
 					userTriggeredEvents.RemoveFirst();
 			}
+
+			CheckIfUndoAndRedoIsPossible();
 		}
 
 
-		public void Undo ()
+	public void Undo ()
 		{			
 			if (UndoPossible)
 			{
