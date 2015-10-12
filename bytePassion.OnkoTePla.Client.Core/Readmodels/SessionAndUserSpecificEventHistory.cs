@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
@@ -94,62 +95,84 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		}
 
 
-	public void Undo ()
+		public void Undo ()
 		{			
-			if (UndoPossible)
-			{
-				var domainEvent = lastTriggeredEventPointer.Value;
-                switch (domainEvent.ActionTag)
-				{
-					case ActionTag.RegularAction:
-					{
-						
-						if (domainEvent.GetType() == typeof(AppointmentAdded))
-						{
-							var addedEvent = (AppointmentAdded) domainEvent;
-
-							var readModel = readModelRepository.GetAppointmentsOfADayReadModel(addedEvent.AggregateId);
-							commandBus.SendCommand(new DeleteAppointment(readModel.Identifier, 
-																		 readModel.AggregateVersion,
-																		 currentUser.Id,
-																		 addedEvent.PatientId,
-																		 ActionTag.UndoAction, 
-																		 addedEvent.CreateAppointmentData.AppointmentId));
-						}
-						else if (domainEvent.GetType() == typeof(AppointmentReplaced))
-						{
-							var replacedEvent = (AppointmentReplaced) domainEvent;
-
-							
-						}
-						else if (domainEvent.GetType() == typeof(AppointmentDeleted))
-						{
-							var deletedEvent = (AppointmentDeleted) domainEvent;
-							
-
-						}
-						else
-						{
-							throw new Exception("internal error");
-						}
-
-						break;
-					}
-					case ActionTag.RegularDividedReplaceAction:
-					{
-						break;
-					}
-				}
-
-				lastTriggeredEventPointer = lastTriggeredEventPointer.Previous;
-
-				// TODO !!!!
-
-				CheckIfUndoAndRedoIsPossible();
-			}
-			else
+			if (!UndoPossible)
 				throw new InvalidOperationException("undo not possible");
 			
+
+			var domainEvent = lastTriggeredEventPointer.Value;
+			var readModel = readModelRepository.GetAppointmentsOfADayReadModel(domainEvent.AggregateId);
+
+			switch (domainEvent.ActionTag)
+			{
+				case ActionTag.RegularAction:
+				{
+						
+					if (domainEvent.GetType() == typeof(AppointmentAdded))
+					{
+						var addedEvent = (AppointmentAdded) domainEvent;
+						
+						commandBus.SendCommand(new DeleteAppointment(readModel.Identifier, 
+																	 readModel.AggregateVersion,
+																	 currentUser.Id,
+																	 addedEvent.PatientId,
+																	 ActionTag.UndoAction, 
+																	 addedEvent.CreateAppointmentData.AppointmentId));
+					}
+					else if (domainEvent.GetType() == typeof(AppointmentReplaced))
+					{
+						var replacedEvent = (AppointmentReplaced) domainEvent;
+
+						var fixedAppointmentSet = readModelRepository.GetAppointmentSetOfADay(replacedEvent.AggregateId, 
+																							  replacedEvent.AggregateVersion-1);
+
+						var lastVersionOfTheAppointment = fixedAppointmentSet.Appointments.First(
+							appointment => appointment.Id == replacedEvent.OriginalAppointmendId
+						);
+
+						commandBus.SendCommand(new ReplaceAppointment(readModel.Identifier,
+																	  readModel.Identifier,
+																	  readModel.AggregateVersion,
+																	  readModel.AggregateVersion,
+																	  currentUser.Id,
+																	  replacedEvent.PatientId,
+																	  ActionTag.UndoAction, 
+																	  lastVersionOfTheAppointment.Description,
+																	  lastVersionOfTheAppointment.Day,
+																	  lastVersionOfTheAppointment.StartTime,
+																	  lastVersionOfTheAppointment.EndTime,
+																	  lastVersionOfTheAppointment.TherapyPlace.Id,
+																	  lastVersionOfTheAppointment.Id,
+																	  lastVersionOfTheAppointment.Day));
+					}
+					else if (domainEvent.GetType() == typeof(AppointmentDeleted))
+					{
+						var deletedEvent = (AppointmentDeleted) domainEvent;
+							
+
+					}
+					else
+					{
+						throw new Exception("internal error");
+					}
+
+					break;
+				}
+				case ActionTag.RegularDividedReplaceAction:
+				{
+					break;
+				}
+			}
+
+			readModel.Dispose();
+			lastTriggeredEventPointer = lastTriggeredEventPointer.Previous;
+
+			// TODO !!!!
+
+			CheckIfUndoAndRedoIsPossible();
+					
+							
 		}
 
 		public void Redo ()
