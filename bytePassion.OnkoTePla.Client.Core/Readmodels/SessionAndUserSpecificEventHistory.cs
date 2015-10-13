@@ -206,7 +206,19 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 					if (domainEventToBeRestored.GetType() == typeof (AppointmentAdded))
 					{
-						
+						var addAppointmentEventToBeRestored = (AppointmentAdded) domainEventToBeRestored;
+
+						commandBus.SendCommand(new AddAppointment(readModel.Identifier,
+																  readModel.AggregateVersion,
+																  currentUser.Id,
+																  ActionTag.RedoAction,
+																  addAppointmentEventToBeRestored.PatientId,
+																  addAppointmentEventToBeRestored.CreateAppointmentData.Description,
+																  addAppointmentEventToBeRestored.CreateAppointmentData.StartTime,
+																  addAppointmentEventToBeRestored.CreateAppointmentData.EndTime,
+																  addAppointmentEventToBeRestored.CreateAppointmentData.TherapyPlaceId,
+																  addAppointmentEventToBeRestored.CreateAppointmentData.AppointmentId));
+
 					}
 					else if (domainEventToBeRestored.GetType() == typeof (AppointmentReplaced))
 					{
@@ -218,7 +230,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 																	  readModel.AggregateVersion,
 																	  currentUser.Id,
 																	  replacedEventToBeRestored.PatientId,
-																	  ActionTag.UndoAction,
+																	  ActionTag.RedoAction,
 																	  replacedEventToBeRestored.NewDescription,
 																	  replacedEventToBeRestored.NewDate,
 																	  replacedEventToBeRestored.NewStartTime,
@@ -229,7 +241,14 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 					}
 					else if (domainEventToBeRestored.GetType() == typeof (AppointmentDeleted))
 					{
-						
+						var deletedEventToBeRestored = (AppointmentDeleted) domainEventToBeRestored;
+
+						commandBus.SendCommand(new DeleteAppointment(readModel.Identifier,
+																	 readModel.AggregateVersion,
+																	 currentUser.Id,
+																	 deletedEventToBeRestored.PatientId,
+																	 ActionTag.RedoAction,
+																	 deletedEventToBeRestored.RemovedAppointmentId));
 					}
 					else
 					{
