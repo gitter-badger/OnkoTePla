@@ -99,16 +99,17 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		{			
 			if (!UndoPossible)
 				throw new InvalidOperationException("undo not possible");
-			
+
 
 			var domainEvent = eventPointer.Value;
-			var readModel = readModelRepository.GetAppointmentsOfADayReadModel(domainEvent.AggregateId);
+			
 
 			switch (domainEvent.ActionTag)
 			{
 				case ActionTag.RegularAction:
 				{
-						
+					var readModel = readModelRepository.GetAppointmentsOfADayReadModel(domainEvent.AggregateId);
+
 					if (domainEvent.GetType() == typeof(AppointmentAdded))
 					{
 						var addedEvent = (AppointmentAdded) domainEvent;
@@ -173,20 +174,58 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 						throw new Exception("internal error");
 					}
 
+					readModel.Dispose();
 					eventPointer = eventPointer.Previous;
 					break;
 				}
 				case ActionTag.RegularDividedReplaceAction:
-				{
+				{					
+					var currentEvent = eventPointer.Value;
+					var lastEvent = eventPointer.Previous.Value;
+
+					if (currentEvent.GetType() != typeof (AppointmentAdded) || lastEvent.GetType() != typeof (AppointmentDeleted))					
+						throw new Exception("internal error");
+
+					var addedEvent   = (AppointmentAdded) currentEvent;
+					var deletedEvent = (AppointmentDeleted) lastEvent;
+
+					var readModelWhereTheAppointmentWasAdded   = readModelRepository.GetAppointmentsOfADayReadModel(addedEvent.AggregateId);
+					var readModelWhereTheAppointmentWasDeleted = readModelRepository.GetAppointmentsOfADayReadModel(deletedEvent.AggregateId);
+
+					var fixedAppointmentSet = readModelRepository.GetAppointmentSetOfADay(readModelWhereTheAppointmentWasDeleted.Identifier,
+																						  eventPointer.Previous.Value.AggregateVersion-1);
+
+					var lastVersionOfTheAppointment = fixedAppointmentSet.Appointments.First(
+							appointment => appointment.Id == deletedEvent.RemovedAppointmentId
+					);
+
+					commandBus.SendCommand(new DeleteAppointment(readModelWhereTheAppointmentWasAdded.Identifier,
+																 readModelWhereTheAppointmentWasAdded.AggregateVersion,
+																 currentUser.Id,
+																 addedEvent.PatientId,
+																 ActionTag.UndoDividedReplaceAction, 
+																 addedEvent.CreateAppointmentData.AppointmentId));
+
+					commandBus.SendCommand(new AddAppointment(readModelWhereTheAppointmentWasDeleted.Identifier,
+															  readModelWhereTheAppointmentWasDeleted.AggregateVersion,
+															  currentUser.Id,
+															  ActionTag.UndoDividedReplaceAction, 
+															  deletedEvent.PatientId,
+															  lastVersionOfTheAppointment.Description,
+															  lastVersionOfTheAppointment.StartTime,
+															  lastVersionOfTheAppointment.EndTime,
+															  lastVersionOfTheAppointment.TherapyPlace.Id,
+															  lastVersionOfTheAppointment.Id));
 
 
-
+					readModelWhereTheAppointmentWasAdded.Dispose();
+					readModelWhereTheAppointmentWasDeleted.Dispose();
 					eventPointer = eventPointer.Previous.Previous;
 					break;
 				}
 			}
 
-			readModel.Dispose();						
+								
 			CheckIfUndoAndRedoIsPossible();												
 		}
 

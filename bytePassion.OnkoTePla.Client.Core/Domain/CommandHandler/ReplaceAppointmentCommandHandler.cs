@@ -55,7 +55,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
 
 				sourceAggregate.DeleteAppointment(command.UserId, 
 												  command.SourceAggregateVersion, 
-												  command.UserId, 
+												  command.PatientId, 
 												  GetDividedActionTag(command.ActionTag),
 												  command.OriginalAppointmendId);
 
