@@ -35,7 +35,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		private readonly uint maximalSavedVersions;
 		private readonly LinkedList<DomainEvent> userTriggeredEvents;
 
-		private LinkedListNode<DomainEvent> lastTriggeredEventPointer;
+		private LinkedListNode<DomainEvent> eventPointer;
 
 		private bool undoPossible;
 		private bool redoPossible;
@@ -57,7 +57,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			var initialNode = new LinkedListNode<DomainEvent>(new InitialDummyEvent());
 
 			userTriggeredEvents.AddLast(initialNode);
-			lastTriggeredEventPointer = initialNode;
+			eventPointer = initialNode;
 			
 
 			CheckIfUndoAndRedoIsPossible();
@@ -83,9 +83,9 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			{
 				var newVersionNode = new LinkedListNode<DomainEvent>(domainEvent);
 
-				RemoveAllFromEndTo(lastTriggeredEventPointer);
+				RemoveAllFromEndTo(eventPointer);
 				userTriggeredEvents.AddLast(newVersionNode);
-				lastTriggeredEventPointer = newVersionNode;
+				eventPointer = newVersionNode;
 
 				if (userTriggeredEvents.Count == maximalSavedVersions + 1)
 					userTriggeredEvents.RemoveFirst();
@@ -101,7 +101,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 				throw new InvalidOperationException("undo not possible");
 			
 
-			var domainEvent = lastTriggeredEventPointer.Value;
+			var domainEvent = eventPointer.Value;
 			var readModel = readModelRepository.GetAppointmentsOfADayReadModel(domainEvent.AggregateId);
 
 			switch (domainEvent.ActionTag)
@@ -124,8 +124,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 					{
 						var replacedEvent = (AppointmentReplaced) domainEvent;
 
-						var fixedAppointmentSet = readModelRepository.GetAppointmentSetOfADay(replacedEvent.AggregateId, 
-																							  replacedEvent.AggregateVersion-1);
+						var fixedAppointmentSet = readModelRepository.GetAppointmentSetOfADay(readModel.Identifier, 
+																							  eventPointer.Value.AggregateVersion-1);
 
 						var lastVersionOfTheAppointment = fixedAppointmentSet.Appointments.First(
 							appointment => appointment.Id == replacedEvent.OriginalAppointmendId
@@ -149,24 +149,45 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 					else if (domainEvent.GetType() == typeof(AppointmentDeleted))
 					{
 						var deletedEvent = (AppointmentDeleted) domainEvent;
-							
 
+						var fixedAppointmentSet = readModelRepository.GetAppointmentSetOfADay(readModel.Identifier,
+																							  eventPointer.Value.AggregateVersion-1);
+
+						var lastVersionOfTheAppointment = fixedAppointmentSet.Appointments.First(
+							appointment => appointment.Id == deletedEvent.RemovedAppointmentId
+						);
+
+						commandBus.SendCommand(new AddAppointment(readModel.Identifier,
+																  readModel.AggregateVersion,
+																  currentUser.Id,
+																  ActionTag.UndoAction, 
+																  deletedEvent.PatientId,
+																  lastVersionOfTheAppointment.Description,
+																  lastVersionOfTheAppointment.StartTime,
+																  lastVersionOfTheAppointment.EndTime,
+																  lastVersionOfTheAppointment.TherapyPlace.Id,
+																  lastVersionOfTheAppointment.Id));
 					}
 					else
 					{
 						throw new Exception("internal error");
 					}
 
+					eventPointer = eventPointer.Previous;
 					break;
 				}
 				case ActionTag.RegularDividedReplaceAction:
 				{
+
+
+
+					eventPointer = eventPointer.Previous.Previous;
 					break;
 				}
 			}
 
 			readModel.Dispose();
-			lastTriggeredEventPointer = lastTriggeredEventPointer.Previous;
+			
 
 			// TODO !!!!
 
@@ -179,7 +200,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 		{			
 			if (RedoPossible)
 			{
-				lastTriggeredEventPointer = lastTriggeredEventPointer.Next;
+				eventPointer = eventPointer.Next;
 
 				// TODO !!!!
 
@@ -191,10 +212,10 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		private void CheckIfUndoAndRedoIsPossible ()
 		{
-			if (lastTriggeredEventPointer != null)
+			if (eventPointer != null)
 			{
-				UndoPossible = lastTriggeredEventPointer.Previous != null;
-				RedoPossible = lastTriggeredEventPointer.Next != null;
+				UndoPossible = eventPointer.Previous != null;
+				RedoPossible = eventPointer.Next != null;
 			}
 			else
 			{
