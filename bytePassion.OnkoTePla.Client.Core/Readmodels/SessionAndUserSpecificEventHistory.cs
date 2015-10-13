@@ -186,28 +186,69 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 				}
 			}
 
-			readModel.Dispose();
-			
-
-			// TODO !!!!
-
-			CheckIfUndoAndRedoIsPossible();
-					
-							
+			readModel.Dispose();						
+			CheckIfUndoAndRedoIsPossible();												
 		}
 
 		public void Redo ()
 		{			
-			if (RedoPossible)
+			if (!RedoPossible)
+				throw new InvalidOperationException("redo not possible");
+
+
+			var domainEventToBeRestored = eventPointer.Next.Value;
+			var readModel = readModelRepository.GetAppointmentsOfADayReadModel(domainEventToBeRestored.AggregateId);
+
+			switch (domainEventToBeRestored.ActionTag)
 			{
-				eventPointer = eventPointer.Next;
+				case ActionTag.RegularAction:
+				{
 
-				// TODO !!!!
+					if (domainEventToBeRestored.GetType() == typeof (AppointmentAdded))
+					{
+						
+					}
+					else if (domainEventToBeRestored.GetType() == typeof (AppointmentReplaced))
+					{
+						var replacedEventToBeRestored = (AppointmentReplaced) domainEventToBeRestored;
 
-				CheckIfUndoAndRedoIsPossible();
+						commandBus.SendCommand(new ReplaceAppointment(readModel.Identifier,
+																	  readModel.Identifier,
+																	  readModel.AggregateVersion,
+																	  readModel.AggregateVersion,
+																	  currentUser.Id,
+																	  replacedEventToBeRestored.PatientId,
+																	  ActionTag.UndoAction,
+																	  replacedEventToBeRestored.NewDescription,
+																	  replacedEventToBeRestored.NewDate,
+																	  replacedEventToBeRestored.NewStartTime,
+																	  replacedEventToBeRestored.NewEndTime,
+																	  replacedEventToBeRestored.NewTherapyPlaceId,
+																	  replacedEventToBeRestored.OriginalAppointmendId,
+																	  replacedEventToBeRestored.NewDate));
+					}
+					else if (domainEventToBeRestored.GetType() == typeof (AppointmentDeleted))
+					{
+						
+					}
+					else
+					{
+						throw new Exception("internal error");
+					}
+					eventPointer = eventPointer.Next;
+					break;
+				}
+
+				case ActionTag.RegularDividedReplaceAction:
+				{
+
+					eventPointer = eventPointer.Next.Next;
+					break;
+				}
 			}
-			else
-				throw new InvalidOperationException("redo not possible");			
+						
+			readModel.Dispose();	
+			CheckIfUndoAndRedoIsPossible();										
 		}
 
 		private void CheckIfUndoAndRedoIsPossible ()
