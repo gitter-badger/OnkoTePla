@@ -72,7 +72,7 @@
         </ContentControl>
     </UserControl.ToolTip>
 
-    <Border>
+    <Border x:Name="ParentBorder">
 
         <i:Interaction.Behaviors>
             <commandExecutingBehaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode, Mode=OneTime}" CommandParameter="{StaticResource False}" />
@@ -154,7 +154,8 @@
             <Button Grid.Column="1"
                     Width="24"
                     Height="24"
-                    Margin="0,-55,0,0"
+                    Margin="66,-25,70,30"
+                    x:Name="DeleteButton"
                     Command="{Binding DeleteAppointment,
                                       Mode=OneTime}">
 
@@ -180,6 +181,9 @@
                         </Canvas>
                     </ControlTemplate>
                 </Button.Template>
+                <i:Interaction.Behaviors>
+                    <behaviors:DeleteButtonPlacementBehavior ReferenceElement="{Binding ElementName=ParentBorder}"></behaviors:DeleteButtonPlacementBehavior>
+                </i:Interaction.Behaviors>
             </Button>
 
             <Border Grid.Column="2"

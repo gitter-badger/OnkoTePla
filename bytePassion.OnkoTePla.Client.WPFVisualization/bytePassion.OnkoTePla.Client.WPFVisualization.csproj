@@ -72,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="Adorner\AdornerControl.cs" />
     <Compile Include="Behaviors\AcceptAppointmentDropBehavior.cs" />
+    <Compile Include="Behaviors\DeleteButtonPlacementBehavior.cs" />
     <Compile Include="Behaviors\MoveEndTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveBeginTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveWholeAppointmentBehavior.cs" />
