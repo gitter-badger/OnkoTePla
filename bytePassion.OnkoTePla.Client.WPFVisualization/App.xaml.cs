@@ -109,10 +109,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Create MainWindow
 			
-			IWindowBuilder<NewMainWindow> mainWindowBuilder = new MainWindowBuilder(configReadRepository, 
-																					dataCenter, 
-																					commandBus, 
-																					sessionAndUserSpecificEventHistory);
+			IWindowBuilder<MainWindow> mainWindowBuilder = new MainWindowBuilder(dataCenter, 
+																				 commandBus, 
+																				 sessionAndUserSpecificEventHistory);
 
 			var mainWindow = mainWindowBuilder.BuildWindow();
 			mainWindow.ShowDialog();

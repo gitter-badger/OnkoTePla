@@ -3,9 +3,9 @@
 	/// <summary>
 	/// Interaction logic for NewMainWindow.xaml
 	/// </summary>
-	public partial class NewMainWindow
+	public partial class MainWindow
 	{
-		public NewMainWindow ()
+		public MainWindow ()
 		{
 			InitializeComponent();
 		}		

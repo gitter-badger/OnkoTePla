@@ -11,7 +11,6 @@ using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler;
@@ -38,25 +37,22 @@ using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 {
-	public class MainWindowBuilder : IWindowBuilder<NewMainWindow>
-	{
-		private readonly IConfigurationReadRepository configReadRepository;
+	public class MainWindowBuilder : IWindowBuilder<MainWindow>
+	{		
 		private readonly IDataCenter dataCenter;
 		private readonly ICommandBus commandBus;
 		private readonly SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory;
 		
-		public MainWindowBuilder(IConfigurationReadRepository configReadRepository, 
-								 IDataCenter dataCenter, 
+		public MainWindowBuilder(IDataCenter dataCenter, 
 								 ICommandBus commandBus,
 								 SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory)
-		{
-			this.configReadRepository = configReadRepository;
+		{			
 			this.dataCenter = dataCenter;
 			this.commandBus = commandBus;
 			this.sessionAndUserSpecificEventHistory = sessionAndUserSpecificEventHistory;
 		}
 
-		public NewMainWindow BuildWindow()
+		public MainWindow BuildWindow()
 		{
 			// initiate ViewModelCommunication			
 
@@ -69,10 +65,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 																						viewModelStateEngine,
 																						viewModelCollections);
 
-
 			// Register Global ViewModelVariables
 
-			var initialMedicalPractice = configReadRepository.GetAllMedicalPractices().First();  // TODO set last usage
+			var initialMedicalPractice = dataCenter.Configuration.GetAllMedicalPractices().First();  // TODO set last usage
 
 			var gridSizeInitialValue          = new Size(400,400);
 			var selectedDateInitialValue      = initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday();
@@ -144,18 +139,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 
 			var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel();
 
-			var newMainWindowViewModel = new NewMainWindowViewModel(overviewPageViewModel,
-																	searchPageViewModel,
-																	optionsPageViewModel,
-																	notificationServiceContainerViewModel);
+			var mainWindowViewModel = new NewMainWindowViewModel(overviewPageViewModel,
+																 searchPageViewModel,
+																 optionsPageViewModel,
+																 notificationServiceContainerViewModel);
 
-			return new NewMainWindow
+			return new MainWindow
 			{
-				DataContext = newMainWindowViewModel
+				DataContext = mainWindowViewModel
 			};
 		}
 
-		public void DisposeWindow(NewMainWindow buildedWindow)
+		public void DisposeWindow(MainWindow buildedWindow)
 		{
 			throw new NotImplementedException();
 		}

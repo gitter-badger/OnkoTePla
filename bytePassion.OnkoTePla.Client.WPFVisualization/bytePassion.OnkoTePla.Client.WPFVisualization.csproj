@@ -96,8 +96,8 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Model\DataCenter.cs" />
     <Compile Include="Model\IDataCenter.cs" />
-    <Compile Include="NewMainWindow.xaml.cs">
-      <DependentUpon>NewMainWindow.xaml</DependentUpon>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModelMessageHandler\ConfirmChangesMessageHandler.cs" />
     <Compile Include="ViewModelMessageHandler\RejectChangesMessageHandler.cs" />
@@ -267,7 +267,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NewMainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
