@@ -146,6 +146,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 																	  lastVersionOfTheAppointment.TherapyPlace.Id,
 																	  lastVersionOfTheAppointment.Id,
 																	  lastVersionOfTheAppointment.Day));
+
 					}
 					else if (domainEvent.GetType() == typeof(AppointmentDeleted))
 					{
@@ -300,6 +301,38 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 				case ActionTag.RegularDividedReplaceAction:
 				{
 
+					var currentEvent = eventPointer.Next.Value;
+					var nextEvent    = eventPointer.Next.Next.Value;
+
+					if (currentEvent.GetType() != typeof(AppointmentDeleted) || nextEvent.GetType() != typeof(AppointmentAdded))
+						throw new Exception("internal error");
+
+					var addedEvent = (AppointmentAdded) nextEvent;
+					var deletedEvent = (AppointmentDeleted) currentEvent;
+
+					var readModelWhereTheAppointmentIsToBeAdded   = readModelRepository.GetAppointmentsOfADayReadModel(addedEvent.AggregateId);
+					var readModelWhereTheAppointmentIsToBeDeleted = readModelRepository.GetAppointmentsOfADayReadModel(deletedEvent.AggregateId);					
+
+					commandBus.SendCommand(new DeleteAppointment(readModelWhereTheAppointmentIsToBeDeleted.Identifier,
+																 readModelWhereTheAppointmentIsToBeDeleted.AggregateVersion,
+																 currentUser.Id,
+																 deletedEvent.PatientId,
+																 ActionTag.RedoDividedReplaceAction, 
+																 deletedEvent.RemovedAppointmentId));
+
+					commandBus.SendCommand(new AddAppointment(readModelWhereTheAppointmentIsToBeAdded.Identifier,
+															  readModelWhereTheAppointmentIsToBeAdded.AggregateVersion,
+															  currentUser.Id,
+															  ActionTag.RedoDividedReplaceAction, 
+															  addedEvent.PatientId,
+															  addedEvent.CreateAppointmentData.Description,
+															  addedEvent.CreateAppointmentData.StartTime,
+															  addedEvent.CreateAppointmentData.EndTime,
+															  addedEvent.CreateAppointmentData.TherapyPlaceId,
+															  addedEvent.CreateAppointmentData.AppointmentId));
+
+					readModelWhereTheAppointmentIsToBeAdded.Dispose();
+					readModelWhereTheAppointmentIsToBeDeleted.Dispose();
 					eventPointer = eventPointer.Next.Next;
 					break;
 				}
