@@ -133,6 +133,9 @@
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModel.cs" />
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModelSampleData.cs" />
     <Compile Include="ViewModels\DateDisplay\IDateDisplayViewModel.cs" />
+    <Compile Include="ViewModels\NotificationServiceContainer\INotificationServiceContainerViewModel.cs" />
+    <Compile Include="ViewModels\NotificationServiceContainer\NotificationServiceContainerViewModel.cs" />
+    <Compile Include="ViewModels\NotificationServiceContainer\NotificationServiceContainerViewModelSampleData.cs" />
     <Compile Include="ViewModels\NotificationView\INotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModelSampleData.cs" />
@@ -241,6 +244,9 @@
     <Compile Include="Views\MedicalPracticeSelector.xaml.cs">
       <DependentUpon>MedicalPracticeSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NotificationServiceContainer.xaml.cs">
+      <DependentUpon>NotificationServiceContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NotificationView.xaml.cs">
       <DependentUpon>NotificationView.xaml</DependentUpon>
     </Compile>
@@ -342,6 +348,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MedicalPracticeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotificationServiceContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
