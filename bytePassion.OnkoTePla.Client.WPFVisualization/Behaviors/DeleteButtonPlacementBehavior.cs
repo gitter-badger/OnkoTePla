@@ -1,13 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
-using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 {
-    public class DeleteButtonPlacementBehavior : Behavior<Button>
+	public class DeleteButtonPlacementBehavior : Behavior<Button>
     {
         public static readonly DependencyProperty ReferenceElementProperty = DependencyProperty.Register(
             "ReferenceElement", typeof (UIElement), typeof (DeleteButtonPlacementBehavior), new PropertyMetadata(default(UIElement)));
@@ -33,14 +30,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
         private void OnLayoutUpdate(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            if(!ReferenceElement.IsUserVisible())
-            {
-                AssociatedObject.Margin = new Thickness(0, 30, 0, -25);
-            }
-            else
-            {
+//            if(!ReferenceElement.IsUserVisible())
+//            {
+//                AssociatedObject.Margin = new Thickness(0, 30, 0, -25);
+//            }
+//            else
+//            {
                 AssociatedObject.Margin = new Thickness(0, -25,0, 30); 
-            }
+//            }
         }
     }
 }
