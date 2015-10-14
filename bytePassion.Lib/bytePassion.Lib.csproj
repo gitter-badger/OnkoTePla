@@ -62,6 +62,7 @@
     <Compile Include="Communication\ViewModel\Messages\ViewModelMessage.cs" />
     <Compile Include="Communication\ViewModel\Messages\ViewModelRequest.cs" />
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
+    <Compile Include="FrameworkExtensions\FrameworkElementExtensions.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="TimeLib\TimeSlot.cs" />
     <Compile Include="Utils\Guard.cs" />

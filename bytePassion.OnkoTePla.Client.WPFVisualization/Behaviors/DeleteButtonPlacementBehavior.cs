@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
+using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 {
@@ -30,14 +31,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
         private void OnLayoutUpdate(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-//            if(!ReferenceElement.IsUserVisible())
-//            {
-//                AssociatedObject.Margin = new Thickness(0, 30, 0, -25);
-//            }
-//            else
-//            {
+            if (!ReferenceElement.IsUserVisible())
+            {
+                AssociatedObject.Margin = new Thickness(0, 30, 0, -25);
+            }
+            else
+            {
                 AssociatedObject.Margin = new Thickness(0, -25,0, 30); 
-//            }
+            }
         }
     }
 }
