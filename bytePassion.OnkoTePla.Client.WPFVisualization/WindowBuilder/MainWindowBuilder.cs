@@ -137,7 +137,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 			var searchPageViewModel   = new SearchPageViewModel();
 			var optionsPageViewModel  = new OptionsPageViewModel();
 
-			var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel();
+			var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
 
 			var mainWindowViewModel = new NewMainWindowViewModel(overviewPageViewModel,
 																 searchPageViewModel,

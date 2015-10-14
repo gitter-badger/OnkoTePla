@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
 
 

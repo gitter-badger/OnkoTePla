@@ -242,13 +242,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 					}
 
 					viewModelCommunication.Send(
-						new ShowNotification("cannot move the OriginalAppointment to that day. No timeslot is big enough!")
+						new ShowNotification("cannot move the OriginalAppointment to that day. No timeslot is big enough!", 5)
 					);
 				}
 				else
 				{
 					viewModelCommunication.Send(
-						new ShowNotification("cannot move an OriginalAppointment to a day where the practice is closed!")
+						new ShowNotification("cannot move an OriginalAppointment to a day where the practice is closed!", 5)
 					);
 				}
 

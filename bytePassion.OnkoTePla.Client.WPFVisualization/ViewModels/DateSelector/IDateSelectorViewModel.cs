@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.Base;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
@@ -10,7 +9,5 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 		Date SelectedDate { get; set; }
 
 		ICommand SelectToday { get; }
-
-		// bool IsMinimized { get; }
 	}
 }
