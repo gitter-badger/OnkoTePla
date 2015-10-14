@@ -24,6 +24,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
@@ -141,11 +142,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 			var searchPageViewModel   = new SearchPageViewModel();
 			var optionsPageViewModel  = new OptionsPageViewModel();
 
+			var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel();
 
 			var newMainWindowViewModel = new NewMainWindowViewModel(overviewPageViewModel,
 																	searchPageViewModel,
 																	optionsPageViewModel,
-																	viewModelCommunication);
+																	notificationServiceContainerViewModel);
 
 			return new NewMainWindow
 			{

@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
@@ -19,9 +18,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 			OverviewPageViewModel = new OverviewPageViewModelSampleData();
 			SearchPageViewModel   = new SearchPageViewModelSampleData();
 			OptionsPageViewModel  = new OptionsPageViewModelSampleData();
-
-			NotificationVisible = true;
-			NotificationViewModel = new NotificationViewModelSampleData();			
+			
+			NotificationServiceContainerViewModel = new NotificationServiceContainerViewModelSampleData();		
 		}
 
 		public int SelectedPage { get; }
@@ -34,12 +32,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 		public ISearchPageViewModel   SearchPageViewModel   { get; }
 		public IOptionsPageViewModel  OptionsPageViewModel  { get; }
 
-		public bool NotificationVisible { get; }
-
-		public INotificationViewModel NotificationViewModel { get; }		
-
-		public void Process(ShowNotification message) {}
-		public void Process(HideNotification message) {}
+		public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
