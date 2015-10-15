@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.FrameworkExtensions.Clonable;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView;
 
@@ -14,8 +17,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationS
 	{
 
 		private readonly IViewModelCommunication viewModelCommunication;
-
-		private readonly IDictionary<Guid, INotificationViewModel> notifications; 
+		private readonly IDictionary<Guid, INotificationViewModel> notifications;
+				
 
 		public NotificationServiceContainerViewModel(IViewModelCommunication viewModelCommunication)
 		{
@@ -34,15 +37,27 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationS
 			var notificationViewModel = new NotificationViewModel(message.NotificationMessage, 
 																  notificationId, 
 																  viewModelCommunication);
+
+			if (message.SecondsToShow > 0)
+			{		
+				Application.Current.Dispatcher.DelayInvoke(
+					() => viewModelCommunication.Send(new HideNotification(notificationId)), 
+					TimeSpan.FromSeconds(message.SecondsToShow)
+				);		
+			}
 			
 			notifications.Add(notificationId, notificationViewModel);
 			CurrentVisibleNotifications.Add(notificationViewModel);
 		}
 
+
 		public void Process(HideNotification message)
 		{
-			var notificationViewModelToHide = notifications[message.NotificationId];
-			CurrentVisibleNotifications.Remove(notificationViewModelToHide);
+			if (notifications.ContainsKey(message.NotificationId))
+			{
+				var notificationViewModelToHide = notifications[message.NotificationId];
+				CurrentVisibleNotifications.Remove(notificationViewModelToHide);
+			}
 		}
 
 		public ObservableCollection<INotificationViewModel> CurrentVisibleNotifications { get; }
