@@ -79,7 +79,47 @@
             <commandExecutingBehaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode, Mode=OneTime}" CommandParameter="{StaticResource False}" />
         </i:Interaction.Behaviors>
 
-        <adorner:AdornedControl>
+        <adorner:AdornedControl IsMouseOverShowEnabled="False"
+								IsAdornerVisible="True">
+
+            <adorner:AdornedControl.AdornerContent>
+                <Button Grid.Column="1"
+                    Width="24"
+                    Height="24"
+                    Margin="66,-25,70,30"
+                    x:Name="DeleteButton"
+                    Command="{Binding DeleteAppointment,
+                                      Mode=OneTime}">
+
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource DeleteButtonVisibility}">
+                            <Binding Path="OperatingMode" />
+                            <Binding Path="ShowDisabledOverlay" />
+                        </MultiBinding>
+                    </Button.Visibility>
+
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Canvas>
+                                <Ellipse Width="24"
+                                     Height="24"
+                                     Fill="White" />
+                                <Viewbox Canvas.Left="-1"
+                                     Canvas.Top="-1"
+                                     Width="24"
+                                     Height="24">
+                                    <Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,            2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,            15.59L13.41,12L17,8.41L15.59,7Z" Fill="Red" />
+                                </Viewbox>
+                            </Canvas>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                    <i:Interaction.Behaviors>
+                        <behaviors:DeleteButtonPlacementBehavior ReferenceElement="{x:Reference ParentBorder}"/>
+                    </i:Interaction.Behaviors>
+                </Button>
+            </adorner:AdornedControl.AdornerContent>
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -108,13 +148,6 @@
 
                     </StackPanel>
                 </Border>
-
-                <Rectangle Grid.Column="0"
-                       Grid.ColumnSpan="3"
-                       Fill="DarkGray"
-                       Opacity="0.6"
-                       Visibility="{Binding ShowDisabledOverlay,
-                                            Converter={StaticResource BoolToCollapsedVisibilityConverter}}" />
 
                 <Border Grid.Column="1"
                     Background="{StaticResource AccentColorBrush}"
@@ -177,44 +210,14 @@
                     </StackPanel>
 
                 </Border>
+
+                <Rectangle Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       Fill="DarkGray"
+                       Opacity="0.6"
+                       Visibility="{Binding ShowDisabledOverlay,
+                                            Converter={StaticResource BoolToCollapsedVisibilityConverter}}" />
             </Grid>
-            <adorner:AdornedControl.AdornerContent>
-                <Button Grid.Column="1"
-                    Width="24"
-                    Height="24"
-                    Margin="66,-25,70,30"
-                    x:Name="DeleteButton"
-                    Command="{Binding DeleteAppointment,
-                                      Mode=OneTime}">
-
-                    <Button.Visibility>
-                        <MultiBinding Converter="{StaticResource DeleteButtonVisibility}">
-                            <Binding Path="OperatingMode" />
-                            <Binding Path="ShowDisabledOverlay" />
-                        </MultiBinding>
-                    </Button.Visibility>
-
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Canvas>
-                                <Ellipse Width="24"
-                                     Height="24"
-                                     Fill="White" />
-                                <Viewbox Canvas.Left="-1"
-                                     Canvas.Top="-1"
-                                     Width="24"
-                                     Height="24">
-                                    <Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,            2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,            15.59L13.41,12L17,8.41L15.59,7Z" Fill="Red" />
-                                </Viewbox>
-                            </Canvas>
-                        </ControlTemplate>
-                    </Button.Template>
-					
-                    <i:Interaction.Behaviors>
-						<behaviors:DeleteButtonPlacementBehavior ReferenceElement="{x:Reference ParentBorder}"/>
-					</i:Interaction.Behaviors>
-                </Button>
-            </adorner:AdornedControl.AdornerContent>
         </adorner:AdornedControl>
 
 
