@@ -17,7 +17,7 @@ namespace bytePassion.Lib.Utils
 		}
 			
 							
-		public static void KeyNotFoundInDictionary (IDictionary dictionary, object key)
+		public static void KeyInDictionary (IDictionary dictionary, object key)
 		{
 			ArgumentNotNull(key);
 			ArgumentNotNull(dictionary);
@@ -30,7 +30,7 @@ namespace bytePassion.Lib.Utils
 		}
 		
 
-		public static void KeyAlreadyExistsInDictionary (IDictionary dictionary, object key)
+		public static void KeyNotInDictionary (IDictionary dictionary, object key)
 		{
 			ArgumentNotNull(key);
 			ArgumentNotNull(dictionary);
@@ -42,8 +42,19 @@ namespace bytePassion.Lib.Utils
 			}
 		}
 
-		
-		public static void KeyAlreadyExistsInDictionary<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key)
+		public static void KeyInDictionary<TKey, TValue> (IDictionary<TKey, TValue> dictionary, TKey key)
+		{
+			ArgumentNotNull(key);
+			ArgumentNotNull(dictionary);
+
+			if (!dictionary.ContainsKey(key))
+			{
+				Type valueType = dictionary.GetType();
+				throw new KeyNotFoundException($"{key} is not found in {valueType.Name}");
+			}
+		}
+
+		public static void KeyNotInDictionary<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key)
 		{
 			ArgumentNotNull(key);
 			ArgumentNotNull(dictionary);
