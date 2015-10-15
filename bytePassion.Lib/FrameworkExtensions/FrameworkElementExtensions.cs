@@ -1,18 +1,19 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using bytePassion.Lib.Utils;
+
 
 namespace bytePassion.Lib.FrameworkExtensions
 {
-    public static class FrameworkElementExtensions
+	public static class FrameworkElementExtensions
     {
         public static bool IsUserVisible(this UIElement element)
         {
             if (!element.IsVisible)
                 return false;
-            var container = FindVisualParent<ScrollViewer>(element);
-            if (container == null) throw new ArgumentNullException("container");
+            var container = FindVisualParent<ScrollViewer>(element);            
+			Guard.ArgumentNotNull(container);
 
             var relativePoint = element.TranslatePoint(new Point(0.0, 0.0), container);
 

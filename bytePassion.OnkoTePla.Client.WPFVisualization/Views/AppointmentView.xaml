@@ -209,9 +209,10 @@
                             </Canvas>
                         </ControlTemplate>
                     </Button.Template>
+					
                     <i:Interaction.Behaviors>
-                    <behaviors:DeleteButtonPlacementBehavior ReferenceElement="{x:Reference ParentBorder}"></behaviors:DeleteButtonPlacementBehavior>
-                </i:Interaction.Behaviors>
+						<behaviors:DeleteButtonPlacementBehavior ReferenceElement="{x:Reference ParentBorder}"/>
+					</i:Interaction.Behaviors>
                 </Button>
             </adorner:AdornedControl.AdornerContent>
         </adorner:AdornedControl>
