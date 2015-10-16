@@ -42,6 +42,7 @@ namespace bytePassion.Lib.Utils
 			}
 		}
 
+
 		public static void KeyInDictionary<TKey, TValue> (IDictionary<TKey, TValue> dictionary, TKey key)
 		{
 			ArgumentNotNull(key);
@@ -54,12 +55,13 @@ namespace bytePassion.Lib.Utils
 			}
 		}
 
+
 		public static void KeyNotInDictionary<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key)
 		{
 			ArgumentNotNull(key);
 			ArgumentNotNull(dictionary);
 
-			if (dictionary.ContainsKey(key) == true)
+			if (dictionary.ContainsKey(key))
 			{
 				Type valueType = dictionary.GetType();
 				throw new ArgumentException($"{key} is already defined in {valueType.Name}");

@@ -21,7 +21,7 @@
     <UserControl.Resources>
 
         <converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter" />
-        <computations:DeleteButtonVisibility x:Key="DeleteButtonVisibility" />
+        <computations:ControlAdornerVisibility x:Key="ControlAdornerVisibility" />
         <converterLib:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
 
         <Style x:Key="WhiteLineBorderStyle" TargetType="Border">
@@ -79,9 +79,15 @@
             <commandExecutingBehaviors:ExecuteCommandOnClickBehavior Command="{Binding SwitchToEditMode, Mode=OneTime}" CommandParameter="{StaticResource False}" />
         </i:Interaction.Behaviors>
 
-        <adorner:AdornedControl IsMouseOverShowEnabled="False"
-								IsAdornerVisible="True">
+        <adorner:AdornedControl IsMouseOverShowEnabled="False">
 
+			<adorner:AdornedControl.IsAdornerVisible>
+                <MultiBinding Converter="{StaticResource ControlAdornerVisibility}">
+                    <Binding Path="OperatingMode" />
+                    <Binding Path="ShowDisabledOverlay" />
+                </MultiBinding>
+            </adorner:AdornedControl.IsAdornerVisible>
+			
             <adorner:AdornedControl.AdornerContent>
                 <Button Grid.Column="1"
                     Width="24"
@@ -90,13 +96,6 @@
                     x:Name="DeleteButton"
                     Command="{Binding DeleteAppointment,
                                       Mode=OneTime}">
-
-                    <Button.Visibility>
-                        <MultiBinding Converter="{StaticResource DeleteButtonVisibility}">
-                            <Binding Path="OperatingMode" />
-                            <Binding Path="ShowDisabledOverlay" />
-                        </MultiBinding>
-                    </Button.Visibility>
 
                     <Button.Template>
                         <ControlTemplate>
