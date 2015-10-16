@@ -26,17 +26,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		private class ModificationDataSet
 		{
-			public ModificationDataSet(Time beginTime, Time endTime, 
-									   string description, TherapyPlaceRowIdentifier location)
+			public ModificationDataSet(Time beginTime, 
+									   Time endTime, 
+									   string description, 
+									   TherapyPlaceRowIdentifier location, 
+									   bool slotRecomputationRequired)
 			{
 				BeginTime = beginTime;
 				EndTime = endTime;
 				Description = description;
 				Location = location;
+				SlotRecomputationRequired = slotRecomputationRequired;
 			}
 
 			public Time BeginTime { get; }
 			public Time EndTime { get; }
+
+			public bool SlotRecomputationRequired { get; }
 
 			public string Description { get; }
 			public TherapyPlaceRowIdentifier Location { get; }
@@ -92,7 +98,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			var initialDataSet = new ModificationDataSet(originalAppointment.StartTime,
 													     originalAppointment.EndTime,
 														 originalAppointment.Description,
-														 InitialLocation);
+														 InitialLocation,
+														 true);
 
 			versions.AddnewVersion(initialDataSet);
 
@@ -160,7 +167,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			CurrentLocation = dataSet.Location;
 
-			if (recomputationOfSlotsNecessary)
+			if (recomputationOfSlotsNecessary || dataSet.SlotRecomputationRequired)
 				ComputeBoundariesOfCurrentTimeSlot();
 		}
 
@@ -301,7 +308,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               finalEndTime,
 				                                               versions.CurrentVersion.Description,
-				                                               newLocation));
+				                                               newLocation,
+															   true));
 			}
 			else
 			{
@@ -347,7 +355,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               finalEndTime,
 				                                               versions.CurrentVersion.Description,
-				                                               versions.CurrentVersion.Location));
+				                                               versions.CurrentVersion.Location,
+															   false));
 			}
 			else
 			{
@@ -376,7 +385,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
 				                                               finalEndTime,
 				                                               versions.CurrentVersion.Description,
-				                                               versions.CurrentVersion.Location));
+				                                               versions.CurrentVersion.Location,
+															   false));
 			}
 			else
 			{
@@ -404,7 +414,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               versions.CurrentVersion.EndTime,
 				                                               versions.CurrentVersion.Description,
-				                                               versions.CurrentVersion.Location));
+				                                               versions.CurrentVersion.Location,
+															   false));
 			}
 			else
 			{
@@ -419,7 +430,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
 															   versions.CurrentVersion.EndTime,
 															   newDescription,
-															   versions.CurrentVersion.Location));
+															   versions.CurrentVersion.Location,
+															   false));
 			}
 		}
 
