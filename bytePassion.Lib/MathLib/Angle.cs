@@ -1,15 +1,11 @@
-﻿using System;
+﻿using bytePassion.Lib.FrameworkExtensions;
+using System;
 using System.Globalization;
-using bytePassion.Lib.FrameworkExtensions;
 
-using SysMath = System.Math;
 
-using static System.Double;
-using static System.String;
-
-namespace bytePassion.Lib.Math
+namespace bytePassion.Lib.MathLib
 {
-	public struct Angle
+    public struct Angle
 	{
 		// TODO get culture from framework
 		private static readonly IFormatProvider Numberformat = CultureInfo.CreateSpecificCulture("en-US");
@@ -24,42 +20,32 @@ namespace bytePassion.Lib.Math
 		public Angle (double angle, AngleUnit representation = AngleUnit.Degree)
 		{
 			if (representation == AngleUnit.Radians)
-				angle = (180.0/SysMath.PI)*angle;
+				angle = (180.0/Math.PI)*angle;
 
 			Value = angle%360.0;
 
-			valueAsRad = NaN;
-			sin = NaN;
-			cos = NaN;
-			tan = NaN;
+			valueAsRad = Double.NaN;
+			sin = Double.NaN;
+			cos = Double.NaN;
+			tan = Double.NaN;
 		}
 
-		#region properties (Value/ValueAsRad/PosValue/Sin/Cos)
+        public double Value { get; }
 
-		public double Value { get; }
-
-		public double ValueAsRad => valueAsRad = IsNaN(valueAsRad) ? (SysMath.PI/180.0)*Value : valueAsRad;
+		public double ValueAsRad => valueAsRad = Double.IsNaN(valueAsRad) ? (Math.PI/180.0)*Value : valueAsRad;
 
 		public Angle PosValue => Value >= 0 ? this : new Angle(360 + Value);
 		public Angle Inverted => new Angle(-Value);
 
-		public double Sin => sin = IsNaN(sin) ? SysMath.Sin(ValueAsRad) : sin;
-		public double Cos => cos = IsNaN(cos) ? SysMath.Cos(ValueAsRad) : cos;
-		public double Tan => tan = IsNaN(cos) ? SysMath.Tan(ValueAsRad) : tan;
+		public double Sin => sin = Double.IsNaN(sin) ? Math.Sin(ValueAsRad) : sin;
+		public double Cos => cos = Double.IsNaN(cos) ? Math.Cos(ValueAsRad) : cos;
+		public double Tan => tan = Double.IsNaN(cos) ? Math.Tan(ValueAsRad) : tan;
 
-		#endregion
-
-		#region Equals,ToString,HashCode
-
-		public override bool   Equals (object obj) => this.Equals(obj, (angle1, angle2) => MathLibUtils.DoubleEquals(angle1.PosValue.Value, angle2.PosValue.Value));
+        public override bool   Equals (object obj) => this.Equals(obj, (a1, a2) => MathLibUtils.DoubleEquals(a1.PosValue.Value, a2.PosValue.Value));
 		public override int    GetHashCode ()      => Value.GetHashCode();
-		public override string ToString ()         => Format(Numberformat, "{0:0.000000} deg", Value);
+	    public override string ToString()          => MathLibUtils.DoubleFormat(Value);
 
-		#endregion
-
-		#region operators ( > >= < <= == != + - * / )
-
-		public static bool operator >  (Angle a1, Angle a2) => a1.Value > a2.Value;
+        public static bool operator >  (Angle a1, Angle a2) => a1.Value > a2.Value;
 		public static bool operator >= (Angle a1, Angle a2) => a1 > a2 || a1 == a2;
 		public static bool operator <  (Angle a1, Angle a2) => !(a1 >= a2);
 		public static bool operator <= (Angle a1, Angle a2) => !(a1 > a2);
@@ -74,11 +60,7 @@ namespace bytePassion.Lib.Math
 		public static Angle  operator / (Angle a, double d)  => a*(1.0/d);
 		public static double operator / (Angle a1, Angle a2) => a1.Value/a2.Value;
 
-		#endregion
-
-		#region operations (MinimalAngleBetween)
-
-		public static Angle MinimalAngleBetween (Angle a1, Angle a2)
+        public static Angle MinimalAngleBetween (Angle a1, Angle a2)
 		{
 			var interval = new AngleInterval(a1, a2);
 
@@ -87,11 +69,7 @@ namespace bytePassion.Lib.Math
 				: interval.AbsolutAngleValue;
 		}
 
-		#endregion
-
-		#region static: Parse
-
-		public static Angle Parse (string s)
+        public static Angle Parse (string s)
 		{
 			var parts = s.Split(' ');
 
@@ -103,7 +81,5 @@ namespace bytePassion.Lib.Math
 
 			return new Angle(number, unit);
 		}
-
-		#endregion
 	}
 }

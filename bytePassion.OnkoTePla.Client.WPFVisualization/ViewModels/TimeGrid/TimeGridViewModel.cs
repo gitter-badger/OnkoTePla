@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Windows;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.Math;
+using bytePassion.Lib.MathLib;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper;
+using System;
+using System.Collections.ObjectModel;
+using System.Windows;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 

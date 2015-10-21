@@ -1,7 +1,7 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
-using static bytePassion.Lib.FrameworkExtensions.EqualsExtension;
 
-namespace bytePassion.Lib.Math
+
+namespace bytePassion.Lib.MathLib
 {
     public class AngleInterval
     {
@@ -12,7 +12,7 @@ namespace bytePassion.Lib.Math
 	    }
 
 		public Angle From { get; }
-	    public Angle To { get; }
+	    public Angle To   { get; }
 
 	    public Angle AbsolutAngleValue => (From < To) ? To - From : new Angle(360 - From.Value + To.Value);
 
@@ -43,7 +43,6 @@ namespace bytePassion.Lib.Math
 		/// <returns></returns>
 	    public double GetPercentageOverlappingTo(AngleInterval referenceInterval)
 	    {
-
 			if (referenceInterval.IsAngleWithin(From) && referenceInterval.IsAngleWithin(To))
 				return 1.0;
 
@@ -64,12 +63,11 @@ namespace bytePassion.Lib.Math
 			return overlapping / AbsolutAngleValue;
 	    }
 
-
 	    public override bool   Equals(object obj) => this.Equals(obj, (ai1, ai2) => true); // TODO !!!!!!!!!!!
 	    public override int    GetHashCode()      => From.GetHashCode() ^ To.GetHashCode();
 	    public override string ToString()         => $"[{From};{To}]";
 
-	    public static bool operator == (AngleInterval a1, AngleInterval a2) => EqualsForEqualityOperator(a1,a2);
+	    public static bool operator == (AngleInterval a1, AngleInterval a2) => EqualsExtension.EqualsForEqualityOperator(a1,a2);
 	    public static bool operator != (AngleInterval a1, AngleInterval a2) => !(a1 == a2);
     }
 }

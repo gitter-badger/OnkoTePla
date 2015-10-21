@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using bytePassion.Lib.Math;
+﻿using bytePassion.Lib.MathLib;
 using bytePassion.Lib.WpfUtils.ConverterBase;
+using System.Globalization;
 
 
 namespace bytePassion.Lib.WpfUtils.Converter
