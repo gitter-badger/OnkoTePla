@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using bytePassion.Lib.TimeLib;
-using bytePassion.Lib.WpfUtils.ConverterBase;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.WpfLib.ConverterBase;
+using System.Globalization;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter

@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:timeGrid="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid"             
-             xmlns:computations="clr-namespace:bytePassion.Lib.WpfUtils.Computations;assembly=bytePassion.Lib"
+             xmlns:timeGrid="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid"
+             xmlns:computations="clr-namespace:bytePassion.Lib.WpfLib.Computations;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 	

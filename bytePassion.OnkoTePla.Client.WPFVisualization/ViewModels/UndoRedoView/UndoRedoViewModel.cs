@@ -1,11 +1,11 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
-using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.WpfUtils.Commands;
+﻿using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using System.ComponentModel;
+using System.Windows.Input;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView

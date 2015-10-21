@@ -1,7 +1,7 @@
-﻿using System.Windows.Input;
-using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.WpfUtils.Commands;
+﻿using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
+using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView
 {

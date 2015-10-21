@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Documents;
-using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.Lib.WpfUtils.Adorner;
+﻿using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.Lib.WpfLib.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewDragAdorner;
+using System.Windows;
+using System.Windows.Documents;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Adorner

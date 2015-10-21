@@ -1,9 +1,7 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
-using bytePassion.Lib.WpfUtils.Commands;
+using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
@@ -14,7 +12,8 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSe
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder;
-
+using System.ComponentModel;
+using System.Windows.Input;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage

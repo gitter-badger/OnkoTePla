@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using bytePassion.Lib.WpfLib.Commands;
+using MahApps.Metro;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using bytePassion.Lib.WpfUtils.Commands;
-using MahApps.Metro;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage
 {

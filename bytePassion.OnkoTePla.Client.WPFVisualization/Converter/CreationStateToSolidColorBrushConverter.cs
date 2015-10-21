@@ -1,8 +1,8 @@
-﻿using System;
+﻿using bytePassion.Lib.WpfLib.ConverterBase;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog.Helper;
+using System;
 using System.Globalization;
 using System.Windows.Media;
-using bytePassion.Lib.WpfUtils.ConverterBase;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog.Helper;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 {

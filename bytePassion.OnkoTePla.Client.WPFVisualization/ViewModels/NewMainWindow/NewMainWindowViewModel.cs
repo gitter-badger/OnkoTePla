@@ -1,11 +1,11 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
-using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.WpfUtils.Commands;
+﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 {

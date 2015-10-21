@@ -5,16 +5,16 @@
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors"
-             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfUtils.CommandExecutingBehaviors;assembly=bytePassion.Lib"
              xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Computations"
              xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
-             xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"             
              xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper"             
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
-             xmlns:adorner="clr-namespace:bytePassion.Lib.WpfUtils.Adorner;assembly=bytePassion.Lib"
-			 
+             xmlns:converter1="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+             xmlns:commandExecutingBehaviors="clr-namespace:bytePassion.Lib.WpfLib.CommandExecutingBehaviors;assembly=bytePassion.Lib"
+             xmlns:adorner="clr-namespace:bytePassion.Lib.WpfLib.Adorner;assembly=bytePassion.Lib"
+
              d:DesignHeight="30"
              d:DesignWidth="200"
              mc:Ignorable="d">
@@ -23,7 +23,7 @@
 
         <converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter" />
         <computations:ControlAdornerVisibility x:Key="ControlAdornerVisibility" />
-        <converterLib:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
+        <converter1:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
 
         <Style x:Key="WhiteLineBorderStyle" TargetType="Border">
 
