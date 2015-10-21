@@ -61,6 +61,11 @@
     <Compile Include="Communication\ViewModel\Messages\IViewModelRequestHandler.cs" />
     <Compile Include="Communication\ViewModel\Messages\ViewModelMessage.cs" />
     <Compile Include="Communication\ViewModel\Messages\ViewModelRequest.cs" />
+    <Compile Include="ConcurrencyLib\BlockingExchanger.cs" />
+    <Compile Include="ConcurrencyLib\BlockingQueue.cs" />
+    <Compile Include="ConcurrencyLib\FixedThreadExecutor.cs" />
+    <Compile Include="ConcurrencyLib\IThreadTask.cs" />
+    <Compile Include="ConcurrencyLib\WorkPackage.cs" />
     <Compile Include="FrameworkExtensions\DispatcherExtension.cs" />
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="FrameworkExtensions\FrameworkElementExtensions.cs" />
