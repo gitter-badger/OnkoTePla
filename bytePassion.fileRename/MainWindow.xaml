@@ -6,12 +6,11 @@
 		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 		xmlns:sampleData="clr-namespace:bytePassion.FileRename.ViewModel.SampleData"
 		xmlns:converter="clr-namespace:bytePassion.FileRename.Converter"
-        xmlns:enum="clr-namespace:bytePassion.FileRename.RenameLogic.Enums"
-        xmlns:utils="clr-namespace:bytePassion.Lib.Utils;assembly=bytePassion.Lib"
-        xmlns:computations="clr-namespace:bytePassion.Lib.WpfUtils.Computations;assembly=bytePassion.Lib"
-        xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfUtils.Converter;assembly=bytePassion.Lib"
-        xmlns:behaviors="clr-namespace:bytePassion.Lib.WpfUtils.Behaviors;assembly=bytePassion.Lib"
-        xmlns:wpfUtils="clr-namespace:bytePassion.Lib.WpfUtils;assembly=bytePassion.Lib"
+        xmlns:enum="clr-namespace:bytePassion.FileRename.RenameLogic.Enums"        
+        xmlns:computations="clr-namespace:bytePassion.Lib.WpfLib.Computations;assembly=bytePassion.Lib"
+        xmlns:converterLib="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+        xmlns:behaviors="clr-namespace:bytePassion.Lib.WpfLib.Behaviors;assembly=bytePassion.Lib"
+        xmlns:wpfUtils="clr-namespace:bytePassion.Lib.WpfLib;assembly=bytePassion.Lib"
 
         mc:Ignorable="d"
         Title="bytePassion - FileRenameTool" Height="699.8" Width="885" MinHeight="440" MinWidth="820">

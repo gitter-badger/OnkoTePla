@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using bytePassion.FileRename.RenameLogic;
+using bytePassion.FileRename.RenameLogic.Enums;
+using bytePassion.FileRename.ViewModel.Helper;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.WpfLib;
+using bytePassion.Lib.WpfLib.Commands;
+using Ookii.Dialogs.Wpf;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using bytePassion.FileRename.RenameLogic;
-using bytePassion.FileRename.RenameLogic.Enums;
-using bytePassion.FileRename.ViewModel.Helper;
-using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.WpfUtils;
-using bytePassion.Lib.WpfUtils.Commands;
-using Ookii.Dialogs.Wpf;
-
 using static System.String;
 
 
@@ -111,7 +110,7 @@ namespace bytePassion.FileRename.ViewModel
 			};
 
 			ListItems = new ObservableCollection<FileListItem>();
-			this.LastExecutedStartFolders = new ObservableCollection<string>(lastExecutedStartFolders);
+			LastExecutedStartFolders = new ObservableCollection<string>(lastExecutedStartFolders);
 
 			IsProcessAbortable = false;
 			IsProcessStartable = true;
