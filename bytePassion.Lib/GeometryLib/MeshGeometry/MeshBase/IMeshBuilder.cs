@@ -1,4 +1,4 @@
-﻿using bytePassion.Lib.MathLib;
+﻿using bytePassion.Lib.GeometryLib.Base;
 
 
 namespace bytePassion.Lib.GeometryLib.MeshGeometry.MeshBase

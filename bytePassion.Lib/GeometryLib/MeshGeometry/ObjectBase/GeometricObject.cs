@@ -1,7 +1,7 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.FrameworkExtensions.Clonable;
+using bytePassion.Lib.GeometryLib.Base;
 using bytePassion.Lib.GeometryLib.MeshGeometry.MeshBase;
-using bytePassion.Lib.MathLib;
 using System;
 
 

@@ -1,8 +1,9 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.MathLib;
 using System;
 
 
-namespace bytePassion.Lib.MathLib
+namespace bytePassion.Lib.GeometryLib.Base
 {
     public class CartesianCoordinate
     {
@@ -21,14 +22,14 @@ namespace bytePassion.Lib.MathLib
 
         public override bool Equals(object obj)
         {           
-            return this.Equals(obj, (c1, c2) =>  MathLibUtils.DoubleEquals(c1.X, c2.X) &&
-                                                 MathLibUtils.DoubleEquals(c1.Y, c2.Y) &&
-                                                 MathLibUtils.DoubleEquals(c1.Z, c2.Z));
+            return this.Equals(obj, (c1, c2) =>  GeometryLibUtils.DoubleEquals(c1.X, c2.X) &&
+                                                 GeometryLibUtils.DoubleEquals(c1.Y, c2.Y) &&
+                                                 GeometryLibUtils.DoubleEquals(c1.Z, c2.Z));
         }
 
         public override string ToString()
         {
-            return $"CC({MathLibUtils.DoubleFormat(X)}, {MathLibUtils.DoubleFormat(Y)}, {MathLibUtils.DoubleFormat(Z)})";
+            return $"CC({GeometryLibUtils.DoubleFormat(X)}, {GeometryLibUtils.DoubleFormat(Y)}, {GeometryLibUtils.DoubleFormat(Z)})";
         }
 
         public override int GetHashCode()

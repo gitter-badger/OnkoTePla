@@ -1,7 +1,7 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
 
 
-namespace bytePassion.Lib.MathLib
+namespace bytePassion.Lib.GeometryLib.Base
 {
     public class AngleInterval
     {

@@ -1,5 +1,5 @@
-﻿using bytePassion.Lib.GeometryLib.MeshGeometry.MeshBase;
-using bytePassion.Lib.MathLib;
+﻿using bytePassion.Lib.GeometryLib.Base;
+using bytePassion.Lib.GeometryLib.MeshGeometry.MeshBase;
 using System;
 
 

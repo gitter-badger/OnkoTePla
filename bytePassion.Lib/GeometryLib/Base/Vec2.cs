@@ -1,9 +1,10 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.MathLib;
 using System;
 using System.Windows;
 
 
-namespace bytePassion.Lib.MathLib
+namespace bytePassion.Lib.GeometryLib.Base
 {
     public struct Vec2
 	{
@@ -32,8 +33,8 @@ namespace bytePassion.Lib.MathLib
 		public double Length        => Math.Sqrt(X*X + Y*Y);
 		public double SquaredLength =>      X*X + Y*Y;
 
-	    public override bool   Equals(object obj) => this.Equals(obj, (v1, v2) => MathLibUtils.DoubleEquals(v1.X, v2.X) && MathLibUtils.DoubleEquals(v1.Y, v2.Y));
-	    public override string ToString()         => "Vec2(" + MathLibUtils.DoubleFormat(X) +"|" + MathLibUtils.DoubleFormat(Y) + ")";
+	    public override bool   Equals(object obj) => this.Equals(obj, (v1, v2) => GeometryLibUtils.DoubleEquals(v1.X, v2.X) && GeometryLibUtils.DoubleEquals(v1.Y, v2.Y));
+	    public override string ToString()         => "Vec2(" + GeometryLibUtils.DoubleFormat(X) +"|" + GeometryLibUtils.DoubleFormat(Y) + ")";
 	    public override int    GetHashCode()      => X.GetHashCode() ^ Y.GetHashCode();
 
 	    public static bool operator > (Vec2 v1, Vec2 v2) => v1.Length > v2.Length;

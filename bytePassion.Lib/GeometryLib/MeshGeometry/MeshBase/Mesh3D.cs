@@ -1,6 +1,6 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.GeometryLib.Base;
 using bytePassion.Lib.GeometryLib.MeshGeometry.ObjectBase;
-using bytePassion.Lib.MathLib;
 using System;
 using System.Collections.Generic;
 

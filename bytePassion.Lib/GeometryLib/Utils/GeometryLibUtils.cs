@@ -4,8 +4,8 @@ using System.Windows;
 
 
 namespace bytePassion.Lib.MathLib
-{
-    public static class MathLibUtils
+{ 
+    public static class GeometryLibUtils
     {
         private static readonly IFormatProvider Numberformat = CultureInfo.CreateSpecificCulture("en-US");
 

@@ -1,6 +1,6 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.MathLib;
-using static bytePassion.Lib.MathLib.MathLibUtils;
+using bytePassion.Lib.GeometryLib.Base;
+using static bytePassion.Lib.MathLib.GeometryLibUtils;
 
 
 namespace bytePassion.Lib.GeometryLib

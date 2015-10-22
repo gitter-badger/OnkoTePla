@@ -1,9 +1,10 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.MathLib;
 using System;
 using System.Globalization;
 
 
-namespace bytePassion.Lib.MathLib
+namespace bytePassion.Lib.GeometryLib.Base
 {
     public struct Angle
 	{
@@ -41,9 +42,9 @@ namespace bytePassion.Lib.MathLib
 		public double Cos => cos = Double.IsNaN(cos) ? Math.Cos(ValueAsRad) : cos;
 		public double Tan => tan = Double.IsNaN(cos) ? Math.Tan(ValueAsRad) : tan;
 
-        public override bool   Equals (object obj) => this.Equals(obj, (a1, a2) => MathLibUtils.DoubleEquals(a1.PosValue.Value, a2.PosValue.Value));
+        public override bool   Equals (object obj) => this.Equals(obj, (a1, a2) => GeometryLibUtils.DoubleEquals(a1.PosValue.Value, a2.PosValue.Value));
 		public override int    GetHashCode ()      => Value.GetHashCode();
-	    public override string ToString()          => MathLibUtils.DoubleFormat(Value);
+	    public override string ToString()          => GeometryLibUtils.DoubleFormat(Value);
 
         public static bool operator >  (Angle a1, Angle a2) => a1.Value > a2.Value;
 		public static bool operator >= (Angle a1, Angle a2) => a1 > a2 || a1 == a2;

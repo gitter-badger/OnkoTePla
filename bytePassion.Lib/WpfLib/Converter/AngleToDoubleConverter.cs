@@ -1,4 +1,4 @@
-﻿using bytePassion.Lib.MathLib;
+﻿using bytePassion.Lib.GeometryLib.Base;
 using bytePassion.Lib.WpfLib.ConverterBase;
 using System.Globalization;
 

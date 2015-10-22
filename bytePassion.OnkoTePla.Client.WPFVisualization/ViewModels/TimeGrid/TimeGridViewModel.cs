@@ -139,7 +139,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 				});
 			}
 
-			if (!MathLibUtils.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
+			if (!GeometryLibUtils.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
 			{
 				var timeCaption = timeSlotEnd.ToString()
 											 .Substring(0, 5);
@@ -170,7 +170,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 				TimeSlotLines [slot].YCoordBottom = gridSize.Height;
 			}
 
-			if (!MathLibUtils.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
+			if (!GeometryLibUtils.DoubleEquals(excactTimeSlotCount, roundedTimeSlotCount))
 			{
 				TimeSlotLabels[roundedTimeSlotCount + 1].XCoord       = gridSize.Width;
 				TimeSlotLines [roundedTimeSlotCount + 1].XCoord       = gridSize.Width;

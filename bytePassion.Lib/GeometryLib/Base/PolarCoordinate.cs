@@ -1,7 +1,8 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.MathLib;
 
 
-namespace bytePassion.Lib.MathLib
+namespace bytePassion.Lib.GeometryLib.Base
 {
 
     public sealed class PolarCoordinate
@@ -21,11 +22,11 @@ namespace bytePassion.Lib.MathLib
         public Angle Theta   { get; }
         public Angle Phi     { get; }
 
-        public override bool Equals(object obj) => this.Equals(obj, (p1, p2) => MathLibUtils.DoubleEquals(p1.Radius, p2.Radius) &&
+        public override bool Equals(object obj) => this.Equals(obj, (p1, p2) => GeometryLibUtils.DoubleEquals(p1.Radius, p2.Radius) &&
                                                                                 p1.Theta == p2.Theta &&
                                                                                 p1.Phi == p2.Phi);
 
-        public override string ToString() => $"PC({MathLibUtils.DoubleFormat(Radius)}, {Theta}, {Phi})";
+        public override string ToString() => $"PC({GeometryLibUtils.DoubleFormat(Radius)}, {Theta}, {Phi})";
 
         public override int GetHashCode() => Radius.GetHashCode() ^ Phi.GetHashCode() ^ Theta.GetHashCode();
 

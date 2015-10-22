@@ -1,5 +1,5 @@
 ﻿
-namespace bytePassion.Lib.MathLib
+namespace bytePassion.Lib.GeometryLib.Base
 {
 	public enum AngleUnit
 	{

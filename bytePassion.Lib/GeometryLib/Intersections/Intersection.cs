@@ -1,4 +1,5 @@
-﻿using bytePassion.Lib.GeometryLib.MeshGeometry;
+﻿using bytePassion.Lib.GeometryLib.Base;
+using bytePassion.Lib.GeometryLib.MeshGeometry;
 using bytePassion.Lib.GeometryLib.MeshGeometry.ObjectBase;
 using bytePassion.Lib.MathLib;
 using System;
@@ -60,7 +61,7 @@ namespace bytePassion.Lib.GeometryLib.Intersections
 			// Compute denominator, check for invalid
 			var denom = v1 * u2 - v2 * u1;
 			
-			if (MathLibUtils.DoubleEquals(denom, 0.0)) {
+			if (GeometryLibUtils.DoubleEquals(denom, 0.0)) {
 				// Bogus triangle - probably triangle has zero area
 				return null;
 			}
@@ -233,7 +234,7 @@ namespace bytePassion.Lib.GeometryLib.Intersections
 		private static IntersectionResult<double> RayPlaneIntersection (Ray r, Plane p) {
 
 			var quotient = r.Direction * p.Normal;
-			if (MathLibUtils.DoubleEquals(quotient, 0)) return new IntersectionResult<double>(IntersectionResultType.NoIntersection);
+			if (GeometryLibUtils.DoubleEquals(quotient, 0)) return new IntersectionResult<double>(IntersectionResultType.NoIntersection);
 
 			var t = (p.Distance-((Vec3)r.Origin*p.Normal))/quotient;
 

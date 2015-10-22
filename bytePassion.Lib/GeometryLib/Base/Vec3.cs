@@ -1,8 +1,9 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.MathLib;
 using System;
 
 
-namespace bytePassion.Lib.MathLib
+namespace bytePassion.Lib.GeometryLib.Base
 {
 
     public class Vec3
@@ -28,11 +29,11 @@ namespace bytePassion.Lib.MathLib
         public double Length        => Math.Sqrt(X*X + Y*Y + Z*Z);
         public double SquaredLength =>      X*X + Y*Y + Z*Z;
 
-        public override bool Equals(Object obj) => this.Equals(obj, (v1, v2) => MathLibUtils.DoubleEquals(v1.X, v2.X) &&
-                                                                                MathLibUtils.DoubleEquals(v1.Y, v2.Y) &&
-                                                                                MathLibUtils.DoubleEquals(v1.Z, v2.Z));
+        public override bool Equals(Object obj) => this.Equals(obj, (v1, v2) => GeometryLibUtils.DoubleEquals(v1.X, v2.X) &&
+                                                                                GeometryLibUtils.DoubleEquals(v1.Y, v2.Y) &&
+                                                                                GeometryLibUtils.DoubleEquals(v1.Z, v2.Z));
 
-        public override string ToString() => "Vec3(" + MathLibUtils.DoubleFormat(X) + "|" + MathLibUtils.DoubleFormat(Y) + "|" + MathLibUtils.DoubleFormat(Z) + ")";
+        public override string ToString() => "Vec3(" + GeometryLibUtils.DoubleFormat(X) + "|" + GeometryLibUtils.DoubleFormat(Y) + "|" + GeometryLibUtils.DoubleFormat(Z) + ")";
 
         public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
 
@@ -52,7 +53,7 @@ namespace bytePassion.Lib.MathLib
         public static Vec3   operator *(Vec3 v, double d)  => new Vec3(v.X * d, v.Y * d, v.Z * d);
         public static Vec3   operator *(double d, Vec3 v)  => v * d;
         public static Vec3   operator /(Vec3 v,  double d) => v * (1 / d);
-        public static bool   operator |(Vec3 v1, Vec3 v2)  => MathLibUtils.DoubleEquals(v1 * v2, 0.0, Constants.VectorPerpendicularPrecision);
+        public static bool   operator |(Vec3 v1, Vec3 v2)  => GeometryLibUtils.DoubleEquals(v1 * v2, 0.0, Constants.VectorPerpendicularPrecision);
 
 
         /// <summary>
