@@ -113,9 +113,11 @@
     <Compile Include="WpfLib\Adorner\FrameworkElementAdorner.cs" />
     <Compile Include="WpfLib\Adorner\UIElementAdorner.cs" />
     <Compile Include="WpfLib\Behaviors\AutoScrollDownBehavior.cs" />
+    <Compile Include="WpfLib\Behaviors\GetFocusOnLoadedBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\HeightWidthReportingBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\MoveHorizontalBehavior.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnClickBehavior.cs" />
+    <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnEscape.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\GridViewSplitColumnsEqualyBehavior.cs" />
     <Compile Include="WpfLib\Commands\UpdateCommandInformation.cs" />
@@ -143,6 +145,14 @@
     <Compile Include="WpfLib\ConverterBase\GenericFiveToOneValueConverter.cs" />
     <Compile Include="WpfLib\ConverterBase\GenericFourToOneValueConverter.cs" />
     <Compile Include="WpfLib\Converter\BoolToHiddenVisibilityConverter.cs" />
+    <Compile Include="WpfLib\Dialogs\Input\InputBox.cs" />
+    <Compile Include="WpfLib\Dialogs\Input\InputBoxWindow\Helper\InputBoxResult.cs" />
+    <Compile Include="WpfLib\Dialogs\Input\InputBoxWindow\InputBoxWindow.xaml.cs">
+      <DependentUpon>InputBoxWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WpfLib\Dialogs\Input\InputBoxWindow\IInputBoxViewModel.cs" />
+    <Compile Include="WpfLib\Dialogs\Input\InputBoxWindow\InputBoxViewModel.cs" />
+    <Compile Include="WpfLib\Dialogs\Input\InputBoxWindow\InputBoxViewModelSampleData.cs" />
     <Compile Include="WpfLib\GridViewColumns.cs" />
     <Compile Include="GeometryLib\Base\Angle.cs" />
     <Compile Include="GeometryLib\Base\AngleInterval.cs" />
@@ -183,7 +193,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="WpfLib\Dialogs\Input\InputBoxWindow\InputBoxWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
