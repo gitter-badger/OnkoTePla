@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using bytePassion.Lib.FrameworkExtensions;
+﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
@@ -12,6 +8,10 @@ using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Contracts.Config;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 #pragma warning disable 0067
 
@@ -94,6 +94,16 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			CheckIfUndoAndRedoIsPossible();
 		}
 
+
+		public string GetUndoActionMessage()
+		{
+			if (!UndoPossible)
+				return "";
+
+
+
+			return "";
+		}
 
 		public void Undo ()
 		{			
