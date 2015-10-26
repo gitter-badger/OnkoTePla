@@ -1,4 +1,7 @@
-﻿namespace bytePassion.OnkoTePla.Client.WPFVisualization.Views
+﻿using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.Views
 {
     public partial class DateSelector
 	{
@@ -6,5 +9,13 @@
 		{
 			InitializeComponent();
 		}
+
+        private void UIElement_OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if(Mouse.Captured is CalendarItem)
+            {
+                Mouse.Capture(null);
+            }
+        }
 	}
 }
