@@ -1,14 +1,14 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.MathLib;
 using System;
 using System.Windows;
+
+using static bytePassion.Lib.MathLib.GeometryLibUtils;
 
 
 namespace bytePassion.Lib.GeometryLib.Base
 {
     public struct Vec2
-	{
-		
+	{        
 		public static readonly Vec2 Zero = new Vec2(0.0, 0.0);
 
 		public Vec2(Point from, Point to) 
@@ -31,10 +31,10 @@ namespace bytePassion.Lib.GeometryLib.Base
 		public double Y { get; }
 
 		public double Length        => Math.Sqrt(X*X + Y*Y);
-		public double SquaredLength =>      X*X + Y*Y;
+		public double SquaredLength =>           X*X + Y*Y;
 
-	    public override bool   Equals(object obj) => this.Equals(obj, (v1, v2) => GeometryLibUtils.DoubleEquals(v1.X, v2.X) && GeometryLibUtils.DoubleEquals(v1.Y, v2.Y));
-	    public override string ToString()         => "Vec2(" + GeometryLibUtils.DoubleFormat(X) +"|" + GeometryLibUtils.DoubleFormat(Y) + ")";
+	    public override bool   Equals(object obj) => this.Equals(obj, (v1, v2) => DoubleEquals(v1.X, v2.X) && DoubleEquals(v1.Y, v2.Y));
+	    public override string ToString()         => $"Vec2({DoubleFormat(X)}|{DoubleFormat(Y)})";
 	    public override int    GetHashCode()      => X.GetHashCode() ^ Y.GetHashCode();
 
 	    public static bool operator > (Vec2 v1, Vec2 v2) => v1.Length > v2.Length;
@@ -56,7 +56,7 @@ namespace bytePassion.Lib.GeometryLib.Base
 
 		public Vec2 ProjectTo(Vec2 v)
 		{
-			return (new Vec2(v)) * ((this * v) / (v.Length * v.Length));
+            return (new Vec2(v)) * ((this * v) / (v.Length * v.Length));
 		}
 
 		public Angle GetAngleTo(Vec2 v)
