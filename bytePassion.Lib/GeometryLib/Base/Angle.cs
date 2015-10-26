@@ -18,11 +18,18 @@ namespace bytePassion.Lib.GeometryLib.Base
 		private double cos;				//  redundant computation
 		private double tan;				//
 
-		public Angle (double angle, AngleUnit representation = AngleUnit.Degree)
-		{
-			if (representation == AngleUnit.Radians)
-				angle = (180.0/Math.PI)*angle;
+        public Angle(Degree degValue) 
+            : this(degValue.Value)
+        {            
+        }
 
+        public Angle(Radians radValue) 
+            : this((180.0 / Math.PI) * radValue.Value)
+        {            
+        }
+
+		private Angle (double angle)
+		{			
 			Value = angle%360.0;
 
 			valueAsRad = Double.NaN;
@@ -78,9 +85,11 @@ namespace bytePassion.Lib.GeometryLib.Base
 				throw new ArgumentException(s + " cannot be converted to an Angle");
 
 			var number = Double.Parse(parts[0].Trim(), Numberformat);
-			var unit = parts[1].Trim() == "deg" ? AngleUnit.Degree : AngleUnit.Radians;
 
-			return new Angle(number, unit);
-		}
+            if (parts[1].Trim() == "deg") return new Angle(new Degree(number));
+            if (parts[1].Trim() == "rad") return new Angle(new Radians(number));
+
+            throw new ArgumentException(s + " cannot be converted to an Angle");
+        }
 	}
 }

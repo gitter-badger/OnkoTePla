@@ -1,5 +1,5 @@
 ﻿
-namespace bytePassion.Lib.FrameworkExtensions.Clonable {
+namespace bytePassion.Lib.Types.Clonable {
 
 	public interface IGenericClonable<out T> 
 	{

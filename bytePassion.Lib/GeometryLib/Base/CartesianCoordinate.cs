@@ -57,8 +57,8 @@ namespace bytePassion.Lib.GeometryLib.Base
         {
             var radius = Math.Sqrt(c.X * c.X + c.Y * c.Y + c.Z * c.Z);
 
-            var theta = new Angle( (2 * Math.PI) - ((Math.Atan2(c.Z, c.X) + 2 * Math.PI) % (2 * Math.PI)), AngleUnit.Radians);
-            var phi = new Angle(Math.Asin(c.Y / radius), AngleUnit.Radians);
+            var theta = new Angle(new Radians((2 * Math.PI) - ((Math.Atan2(c.Z, c.X) + 2 * Math.PI) % (2 * Math.PI))));
+            var phi = new Angle(new Radians(Math.Asin(c.Y / radius)));
 
             return new PolarCoordinate(radius, theta, phi);
         }        

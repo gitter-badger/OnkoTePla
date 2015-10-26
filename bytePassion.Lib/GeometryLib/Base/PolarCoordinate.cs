@@ -37,11 +37,11 @@ namespace bytePassion.Lib.GeometryLib.Base
 
         public PolarCoordinate AddPhi(Angle deltaPhi)
         {
-            if (Phi + deltaPhi > new Angle(90))
-                return new PolarCoordinate(Radius, Theta + new Angle(180), new Angle(180) - (Phi + deltaPhi));
+            if (Phi + deltaPhi > new Angle(new Degree(90)))
+                return new PolarCoordinate(Radius, Theta + new Angle(new Degree(180)), new Angle(new Degree(180)) - (Phi + deltaPhi));
 
-            if (Phi + deltaPhi < new Angle(-90))
-                return new PolarCoordinate(Radius, Theta + new Angle(180), new Angle(-180) - (Phi + deltaPhi));
+            if (Phi + deltaPhi < new Angle(new Degree(-90)))
+                return new PolarCoordinate(Radius, Theta + new Angle(new Degree(180)), new Angle(new Degree(-180)) - (Phi + deltaPhi));
 
             return new PolarCoordinate(Radius, Theta, Phi + deltaPhi);
         }

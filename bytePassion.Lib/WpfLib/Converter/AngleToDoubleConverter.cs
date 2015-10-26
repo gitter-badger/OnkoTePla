@@ -14,7 +14,7 @@ namespace bytePassion.Lib.WpfLib.Converter
 
 	    protected override Angle ConvertBack(double value, CultureInfo culture)
 	    {
-		    return new Angle(value);
+		    return new Angle(new Degree(value));
 	    }
     }
 }

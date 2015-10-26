@@ -8,8 +8,8 @@ namespace bytePassion.Lib.GeometryLib.Utils
     {
         public static void GetCirclePointsOnXZPlane(Vec3 height, double radius, int pointCount, ref Vec3[] positions, int writeBegin)
         {
-            var stepAround = new Angle(180.0) / (pointCount / 2.0);
-            var step = new PolarCoordinate(radius, new Angle(-90), Angle.Zero);
+            var stepAround = new Angle(new Degree(180)) / (pointCount / 2.0);
+            var step = new PolarCoordinate(radius, new Angle(new Degree(-90)), Angle.Zero);
 
             for (var i = 0; i < pointCount; i++)
             {

@@ -1,13 +1,12 @@
-﻿using System;
+﻿using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.FrameworkExtensions.Clonable;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView;
 
 #pragma warning disable 0067
 

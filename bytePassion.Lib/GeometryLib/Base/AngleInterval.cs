@@ -14,7 +14,7 @@ namespace bytePassion.Lib.GeometryLib.Base
 		public Angle From { get; }
 	    public Angle To   { get; }
 
-	    public Angle AbsolutAngleValue => (From < To) ? To - From : new Angle(360 - From.Value + To.Value);
+	    public Angle AbsolutAngleValue => (From < To) ? To - From : new Angle(new Degree(360 - From.Value + To.Value));
 
 	    public bool IsAngleWithin(Angle a)
 	    {

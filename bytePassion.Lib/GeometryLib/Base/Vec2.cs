@@ -66,8 +66,8 @@ namespace bytePassion.Lib.GeometryLib.Base
 			var v1 = this;
 			var v2 = v;
 
-			var a1 = new Angle(Math.Atan2(v1.Y, v1.X), AngleUnit.Radians);
-			var a2 = new Angle(Math.Atan2(v2.Y, v2.X), AngleUnit.Radians);
+			var a1 = new Angle(new Radians(Math.Atan2(v1.Y, v1.X)));
+			var a2 = new Angle(new Radians(Math.Atan2(v2.Y, v2.X)));
 
 			var res = a2 - a1;
 

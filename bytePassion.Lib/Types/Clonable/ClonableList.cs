@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace bytePassion.Lib.FrameworkExtensions.Clonable
+
+namespace bytePassion.Lib.Types.Clonable
 {
 	/// <summary>
 	/// A <c>ClonableList</c> is a partial wrapped <c>System.Collections.Generic.List</c>, extended by a deep- and shallow-copy function.	

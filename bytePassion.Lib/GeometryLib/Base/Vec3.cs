@@ -88,8 +88,7 @@ namespace bytePassion.Lib.GeometryLib.Base
 
         public Angle GetAngleTo(Vec3 v)
         {
-
-            return new Angle(Math.Acos((this * v) / (Length * v.Length)), AngleUnit.Radians);
+            return new Angle(new Radians(Math.Acos((this * v) / (Length * v.Length))));
         }
 
         public static Angle GetAngleBetween(Vec3 v1, Vec3 v2)

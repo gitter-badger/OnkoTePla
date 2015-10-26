@@ -1,5 +1,5 @@
-﻿using System;
-using bytePassion.Lib.FrameworkExtensions.Clonable;
+﻿using bytePassion.Lib.Types.Clonable;
+using System;
 using Xunit;
 
 

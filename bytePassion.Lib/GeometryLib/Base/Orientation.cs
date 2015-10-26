@@ -145,9 +145,9 @@ namespace bytePassion.Lib.GeometryLib.Base
 
             return new[]
                    {
-                       new Angle(h, AngleUnit.Radians),
-                       new Angle(p, AngleUnit.Radians),
-                       new Angle(b, AngleUnit.Radians)
+                       new Angle(new Radians(h)),
+                       new Angle(new Radians(p)),
+                       new Angle(new Radians(b)),
                    };
         }
     }
