@@ -8,7 +8,7 @@
 					  xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"					  					  
 					  xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts"
                       xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"
-                      xmlns:converter1="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+                      xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
                       Title="AddAppointmentDialog"
                       Width="1000"
 					  Height="620" 
@@ -25,7 +25,7 @@
 	
 	<Window.Resources>
 
-        <converter1:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter"/>
+        <libConverter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter"/>
         <converter:CreationStateToSolidColorBrushConverter x:Key="CreationStateToSolidColorBrushConverter"/>		      
 
         <Style TargetType="Border"
@@ -121,11 +121,11 @@
         </Grid.RowDefinitions>
 
         <views:PatientSelector Grid.Column="0"
-								Grid.Row="0"
-								Grid.RowSpan="2"
-								Margin="20"
-								Height="550"
-								DataContext="{Binding PatientSelectorViewModel}"/>
+							   Grid.Row="0"
+							   Grid.RowSpan="2"
+							   Margin="20"
+							   Height="550"
+							   DataContext="{Binding PatientSelectorViewModel}"/>
 
         <StackPanel Grid.Row="0"
 					Grid.Column="1"

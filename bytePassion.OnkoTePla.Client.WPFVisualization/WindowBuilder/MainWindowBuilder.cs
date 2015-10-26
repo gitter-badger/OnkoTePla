@@ -26,12 +26,14 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView;
+using bytePassion.OnkoTePla.Contracts.Patients;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 
@@ -134,7 +136,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 																  undoRedoViewModel, 
 																  dataCenter);
 
-			var searchPageViewModel   = new SearchPageViewModel();
+			viewModelCommunication.RegisterGlobalViewModelVariable(SelectedPatientVariable, (Patient)null);
+			var selectedPatientVariable = viewModelCommunication.GetGlobalViewModelVariable<Patient>(SelectedPatientVariable);
+
+			IPatientSelectorViewModel patientSelectorViewModel = new PatientSelectorViewModel(dataCenter, selectedPatientVariable);
+
+			var searchPageViewModel   = new SearchPageViewModel(patientSelectorViewModel, selectedPatientVariable);
 			var optionsPageViewModel  = new OptionsPageViewModel();
 
 			var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
