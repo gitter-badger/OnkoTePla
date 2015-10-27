@@ -1,5 +1,6 @@
-﻿using System;
-using bytePassion.Lib.TimeLib;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Repository;
+using System;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients

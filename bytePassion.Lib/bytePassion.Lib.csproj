@@ -63,6 +63,8 @@
     <Compile Include="FrameworkExtensions\FrameworkElementExtensions.cs" />
     <Compile Include="GeometryLib\Base\Degree.cs" />
     <Compile Include="GeometryLib\Base\Radians.cs" />
+    <Compile Include="Types\Repository\IPersistable.cs" />
+    <Compile Include="Types\Repository\IPersistenceService.cs" />
     <Compile Include="Types\ValueType.cs" />
     <Compile Include="GeometryLib\Intersections\Intersection.cs" />
     <Compile Include="GeometryLib\Intersections\IntersectionResult.cs" />

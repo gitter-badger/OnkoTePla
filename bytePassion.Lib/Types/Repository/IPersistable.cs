@@ -1,4 +1,4 @@
-﻿namespace bytePassion.OnkoTePla.Client.Core.Repositories
+﻿namespace bytePassion.Lib.Types.Repository
 {
 	public interface IPersistable
 	{

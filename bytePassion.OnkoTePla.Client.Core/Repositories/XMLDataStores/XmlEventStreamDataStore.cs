@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml;
-using bytePassion.Lib.TimeLib;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
+using System;
+using System.Collections.Generic;
+using System.Xml;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.XMLDataStores
 {

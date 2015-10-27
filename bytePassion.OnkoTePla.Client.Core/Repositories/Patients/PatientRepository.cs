@@ -1,8 +1,9 @@
-﻿using System;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Repository;
+using bytePassion.OnkoTePla.Contracts.Patients;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients

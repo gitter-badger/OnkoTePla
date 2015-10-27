@@ -1,6 +1,7 @@
-﻿using System;
+﻿using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config

@@ -1,12 +1,13 @@
-﻿using System;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Repository;
+using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Enums;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 using System.Xml;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Contracts.Enums;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.XMLDataStores
 {

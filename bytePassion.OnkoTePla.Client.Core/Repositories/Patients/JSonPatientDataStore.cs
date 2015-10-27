@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
 {

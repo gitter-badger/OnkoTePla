@@ -1,18 +1,18 @@
-﻿using System;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Repository;
+using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Client.Resources;
+using bytePassion.OnkoTePla.Contracts.Patients;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Repositories;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Client.Resources;
-using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
 {
-	public static class PatientDataBase
+    public static class PatientDataBase
 	{
 
 		public static void TestLoad()
