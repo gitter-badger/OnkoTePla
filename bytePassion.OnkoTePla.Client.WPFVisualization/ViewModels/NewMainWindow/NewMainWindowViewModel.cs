@@ -13,8 +13,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
     {
         
 
-        private int selectedPage;
-        private bool notificationVisible;        
+        private int selectedPage;        
 
         public NewMainWindowViewModel(IOverviewPageViewModel overviewPageViewModel,
 									  ISearchPageViewModel searchPageViewModel,
@@ -39,8 +38,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
         }
 
         public ICommand ShowOverviewPage { get; }
-        public ICommand ShowSearchPage { get; }
-        public ICommand ShowOptionsPage { get; }
+        public ICommand ShowSearchPage   { get; }
+        public ICommand ShowOptionsPage  { get; }
 
         public IOverviewPageViewModel OverviewPageViewModel { get; }
         public ISearchPageViewModel   SearchPageViewModel   { get; }
