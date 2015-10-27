@@ -27,6 +27,7 @@
 				  VerticalAlignment="Top"
 				  SelectionMode="SingleDate"		
                   Style="{StaticResource CalendarStyle}"
+                  PreviewMouseUp="UIElement_OnPreviewMouseUp"
 				  SelectedDate="{Binding SelectedDate, 
 										 Converter={StaticResource DateToDateTimeConverter}, 
 										 Mode=TwoWay}"/>
