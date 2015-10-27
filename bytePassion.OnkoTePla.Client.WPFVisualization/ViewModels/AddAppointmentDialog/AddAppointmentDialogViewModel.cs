@@ -23,9 +23,8 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog
-{
-	public class AddAppointmentDialogViewModel : DisposingObject,
-		IAddAppointmentDialogViewModel
+{ 
+	public class AddAppointmentDialogViewModel : DisposingObject, IAddAppointmentDialogViewModel
 	{
 		private readonly IViewModelCommunication superViewModelCommunication;
 		private readonly IDataCenter dataCenter;

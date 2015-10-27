@@ -29,9 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 
 			ShowOverviewPage = new Command(() => SelectedPage = 0);
             ShowSearchPage   = new Command(() => SelectedPage = 1);
-            ShowOptionsPage  = new Command(() => SelectedPage = 2);
-
-            NotificationVisible = false;          
+            ShowOptionsPage  = new Command(() => SelectedPage = 2);            
         }
 
         public int SelectedPage
@@ -49,13 +47,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
         public IOptionsPageViewModel  OptionsPageViewModel  { get; }
 
 	    public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
-
-	    public bool NotificationVisible
-        {
-            get { return notificationVisible; }
-            private set { PropertyChanged.ChangeAndNotify(this, ref notificationVisible, value); }
-        }        
-
+	    
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
