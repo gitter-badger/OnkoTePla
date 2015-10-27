@@ -96,6 +96,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 			var sessionAndUserSpecificEventHistory = new SessionAndUserSpecificEventHistory(eventBus,
 																							commandBus,
 																							readModelRepository,
+                                                                                            patientReadRepository,
+                                                                                            configReadRepository,
 																							sessionInformation.LoggedInUser,
 																							50);
 

@@ -1,6 +1,5 @@
-﻿using System;
-using bytePassion.Lib.FrameworkExtensions;
-
+﻿using bytePassion.Lib.FrameworkExtensions;
+using System;
 using static bytePassion.Lib.FrameworkExtensions.EqualsExtension;
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure

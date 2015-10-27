@@ -2,9 +2,12 @@
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
+using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using MahApps.Metro.Controls.Dialogs;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 
 
@@ -129,23 +132,53 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 			}
 		}
 
-		private void RedoAction()
+		private async void RedoAction()
 		{
 			switch (currentButtonMode)
 			{
 				case ButtonMode.StartOfEditMode:
-				case ButtonMode.EditsAvailable: { currentAppointmentModifications.Redo();    break; }
-				case ButtonMode.ViewMode:       { sessionAndUserSpecificEventHistory.Redo(); break; }
+				case ButtonMode.EditsAvailable:
+			    {
+			        currentAppointmentModifications.Redo();
+                    break;
+			    }
+				case ButtonMode.ViewMode:
+			    {                   
+                    sessionAndUserSpecificEventHistory.Redo();                                           
+                    break;
+			    }
 			}
 		}
 
-		private void UndoAction()
+		private async void UndoAction()
 		{
 			switch (currentButtonMode)
 			{
-				case ButtonMode.EditsAvailable:  { currentAppointmentModifications.Undo();           break; }
-				case ButtonMode.StartOfEditMode: { viewModelCommunication.Send(new RejectChanges()); break; }
-				case ButtonMode.ViewMode:        { sessionAndUserSpecificEventHistory.Undo();        break; }
+				case ButtonMode.EditsAvailable:
+			    {
+			        currentAppointmentModifications.Undo();
+                    break;
+			    }
+				case ButtonMode.StartOfEditMode:
+			    {
+			        viewModelCommunication.Send(new RejectChanges());
+                    break;
+			    }
+				case ButtonMode.ViewMode:
+			    {
+                    var dialog = new UserDialogBox("", 
+                                                   sessionAndUserSpecificEventHistory.GetUndoActionMessage(),
+                                                   MessageBoxButton.OKCancel, 
+                                                   MessageBoxImage.Question);
+
+                    var result = await dialog.ShowMahAppsDialog();
+
+                    if (result == MessageDialogResult.Affirmative)
+                    {
+                        sessionAndUserSpecificEventHistory.Undo();
+                    }                        
+                    break;
+			    }
 			}
 		}
 
