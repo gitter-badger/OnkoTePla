@@ -113,6 +113,8 @@
     <Compile Include="WpfLib\Behaviors\GetFocusOnLoadedBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\HeightWidthReportingBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\MoveHorizontalBehavior.cs" />
+    <Compile Include="WpfLib\Behaviors\ObjectDragBehavior.cs" />
+    <Compile Include="WpfLib\Behaviors\ObjectDropBehavior.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnClickBehavior.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnEscape.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
