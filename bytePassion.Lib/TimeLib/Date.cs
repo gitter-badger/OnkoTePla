@@ -1,50 +1,42 @@
-﻿using System;
+﻿using bytePassion.Lib.FrameworkExtensions;
+using System;
 using System.Globalization;
-using System.Runtime.Serialization;
 using System.Text;
-using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
 {
-    [DataContract]
-	public class Date
+    public class Date
 	{		
 		public static readonly Date Dummy = new Date(0,0,0);
 
-        [DataMember(Name = "Day")]   private readonly byte day;
-        [DataMember(Name = "Month")] private readonly byte month;
-        [DataMember(Name = "Year")]  private readonly ushort year;
-
-	    public Date() : this(0,0,0)
-	    {
-		    
+	    public Date() 
+            : this(0,0,0)
+	    {		    
 	    }
 
-		public Date(DateTime dateTime)
-		{			
-			day   =   (byte) dateTime.Day;
-			month =   (byte) dateTime.Month;
-			year  = (ushort) dateTime.Year;
+		public Date(DateTime dateTime) 
+            : this((byte)dateTime.Day, (byte)dateTime.Month, (ushort)dateTime.Year)
+		{						
 		}
 
 		public Date(byte day, byte month, ushort year)
 		{
-			this.day   = day;
-			this.month = month;
-			this.year  = year;
+			Day   = day;
+			Month = month;
+			Year  = year;
 		}
 
 		public override bool Equals(object obj)
 		{					
-			return this.Equals(obj, (date1, date2) => date1.day == date2.day &&
-												      date1.month == date2.month &&
-													  date1.year == date2.year);
+			return this.Equals(obj, (date1, date2) => date1.Day == date2.Day &&
+												      date1.Month == date2.Month &&
+													  date1.Year == date2.Year);
 		}
 
 		public override int GetHashCode()
 		{
-			return year.GetHashCode() ^ month.GetHashCode() ^ day.GetHashCode();
+			return Year.GetHashCode() ^ Month.GetHashCode() ^ Day.GetHashCode();
 		}
 
 		public static bool operator == (Date d1, Date d2) { return d1.Equals(d2); }
@@ -78,17 +70,10 @@ namespace bytePassion.Lib.TimeLib
 			return false;
 		}
 
-	    public static bool operator <=(Date d1, Date d2)
-	    {
-		    return d1 < d2 || d1 == d2;
-	    }
+	    public static bool operator <=(Date d1, Date d2)  => d1 < d2 || d1 == d2;
+	    public static bool operator >= (Date d1, Date d2) => d1 > d2 || d1 == d2;
 
-		public static bool operator >= (Date d1, Date d2)
-		{
-			return d1 > d2 || d1 == d2;
-		}
-
-		/// <summary>
+	    /// <summary>
 		/// return Date as String in format: dd.mm.yyyy
 		/// </summary>
 		/// <returns>Date in format dd.mm.yyyy</returns>
@@ -96,35 +81,51 @@ namespace bytePassion.Lib.TimeLib
 		{
 			var builder = new StringBuilder();
 
-			if (day < 10)
+			if (Day < 10)
 				builder.Append('0');
 
-			builder.Append(day);
+			builder.Append(Day);
 			builder.Append('.');
 
-			if (month < 10)
+			if (Month < 10)
 				builder.Append('0');
 
-			builder.Append(month);
+			builder.Append(Month);
 			builder.Append('.');
-			builder.Append(year);
+			builder.Append(Year);
 
 			return builder.ToString();
 		}
 
-		public string GetDisplayString(CultureInfo cultureInfo)
+        public string GetShortDisplayString(CultureInfo cultureInfo)
+        {
+            var dateTime = new DateTime(Year, Month, Day);
+            return $"{dateTime.ToString("d", cultureInfo)} {Year}";
+        }
+
+        public string GetDisplayString(CultureInfo cultureInfo)
 		{
-			var dateTime = new DateTime(year, month, day);
-			return dateTime.ToString("d", cultureInfo);
-		}
+			var dateTime = new DateTime(Year, Month, Day);
+			return $"{dateTime.ToString("m", cultureInfo)} {Year}" ;
+		}        
 
-		public byte   Day   { get { return day;   }}
-		public byte   Month { get { return month; }}
-		public ushort Year  { get { return year;  }}
+        public string GetDisplayStringWithDayOfWeek(CultureInfo cultureInfo)
+        {
+            var dateTime = new DateTime(Year, Month, Day);
+            return dateTime.ToString("D", cultureInfo);
+        }
 
-		#region static: Parse, IsDummy, GetDayOfWeekFrom
+		public byte   Day   { get; }
+	    public byte   Month { get; }
+	    public ushort Year  { get; }
 
-		public static Date Parse(string s)
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////                                                                                     ////////
+        ////////                               static members                                        ////////
+        ////////                                                                                     ////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        public static Date Parse(string s)
 		{
 			var elements = s.Split('.');
 
@@ -146,8 +147,6 @@ namespace bytePassion.Lib.TimeLib
 		public static DayOfWeek GetDayOfWeekFrom(Date d)
 		{
 			return new DateTime(d.Year, d.Month, d.Day).DayOfWeek;
-		}		
-
-		#endregion
+		}
 	}
 }

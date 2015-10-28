@@ -1,6 +1,6 @@
-﻿using System;
+﻿using bytePassion.Lib.FrameworkExtensions;
+using System;
 using System.Text;
-using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
@@ -51,17 +51,11 @@ namespace bytePassion.Lib.TimeLib
 			SecondsFromDayBegin = (uint)(hour * 3600 + minute * 60 + second);
 		}
 
-		#region Properties: Hour / Minute / Second / SecondsFromDayBegin
-
 	    public byte Hour   { get; }
 	    public byte Minute { get; }
 		public byte Second { get; }
 
 		public uint SecondsFromDayBegin { get; }
-
-		#endregion
-
-		#region operators: == , != , < , > . <= , >= , + , -
 
 	    public static bool operator ==(Time t1, Time t2) => EqualsExtension.EqualsForEqualityOperator(t1, t2);
 	    public static bool operator !=(Time t1, Time t2) => !(t1 == t2);
@@ -75,18 +69,14 @@ namespace bytePassion.Lib.TimeLib
 	    public static Time operator +(Time t, Duration d) => new Time(t.SecondsFromDayBegin + d.Seconds);
 	    public static Time operator -(Time t, Duration d) => new Time(t.SecondsFromDayBegin - d.Seconds);
 
-		#endregion
-
-		public int CompareTo (Time other)
+	    public int CompareTo (Time other)
 		{
 			if (this > other) return 1;
 			if (this == other) return 0;
 			return -1;
 		}
 
-		#region ToString / Equals / GetHashCOde		
-
-		public override bool Equals (object obj)
+	    public override bool Equals (object obj)
 		{
 			return this.Equals(obj, (time1, time2) => time1.SecondsFromDayBegin == time2.SecondsFromDayBegin);
 		}
@@ -120,12 +110,13 @@ namespace bytePassion.Lib.TimeLib
 			return builder.ToString();
 		}
 
-		#endregion
-
-		#region static: Parse / IsDummy
-		
-
-		public static Time Parse(string s)
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////                                                                                     ////////
+        ////////                               static members                                        ////////
+        ////////                                                                                     ////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        public static Time Parse(string s)
 		{
 			var elements = s.Split(':');
 
@@ -152,8 +143,6 @@ namespace bytePassion.Lib.TimeLib
 		public static bool IsDummy(Time t)
 		{
 			return t == Dummy;
-		}		
-
-		#endregion
-	}	
+		}
+    }	
 }
