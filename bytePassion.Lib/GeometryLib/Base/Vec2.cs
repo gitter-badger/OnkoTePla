@@ -1,7 +1,7 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.Types.SemanticTypes;
 using System;
 using System.Windows;
-
 using static bytePassion.Lib.MathLib.GeometryLibUtils;
 
 

@@ -61,11 +61,9 @@
     <Compile Include="FrameworkExtensions\DispatcherExtension.cs" />
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="FrameworkExtensions\FrameworkElementExtensions.cs" />
-    <Compile Include="GeometryLib\Base\Degree.cs" />
-    <Compile Include="GeometryLib\Base\Radians.cs" />
     <Compile Include="Types\Repository\IPersistable.cs" />
     <Compile Include="Types\Repository\IPersistenceService.cs" />
-    <Compile Include="Types\ValueType.cs" />
+    <Compile Include="Types\SemanticTypes\Base\SemanticType.cs" />
     <Compile Include="GeometryLib\Intersections\Intersection.cs" />
     <Compile Include="GeometryLib\Intersections\IntersectionResult.cs" />
     <Compile Include="GeometryLib\Intersections\IntersectionResultType.cs" />
@@ -102,6 +100,14 @@
     <Compile Include="GeometryLib\Base\Vec2.cs" />
     <Compile Include="GeometryLib\Base\Vec3.cs" />
     <Compile Include="TimeLib\TimeSlot.cs" />
+    <Compile Include="Types\SemanticTypes\Base\SimpleDoubleSemanticType.cs" />
+    <Compile Include="Types\SemanticTypes\Degree.cs" />
+    <Compile Include="Types\SemanticTypes\Length.cs" />
+    <Compile Include="Types\SemanticTypes\Radians.cs" />
+    <Compile Include="Types\SemanticTypes\Width.cs" />
+    <Compile Include="Types\SemanticTypes\XCoord.cs" />
+    <Compile Include="Types\SemanticTypes\YCoord.cs" />
+    <Compile Include="Types\SemanticTypes\ZCoord.cs" />
     <Compile Include="Utils\Guard.cs" />
     <Compile Include="Utils\IUndoRedo.cs" />
     <Compile Include="Utils\IWindowBuilder.cs" />

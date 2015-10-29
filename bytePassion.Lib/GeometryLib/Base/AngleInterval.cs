@@ -1,4 +1,5 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.Types.SemanticTypes;
 
 
 namespace bytePassion.Lib.GeometryLib.Base
