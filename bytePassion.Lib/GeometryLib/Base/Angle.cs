@@ -20,12 +20,12 @@ namespace bytePassion.Lib.GeometryLib.Base
 		private double tan;				//
 
         public Angle(Degree degValue) 
-            : this(degValue.Value)
+            : this((double)degValue)
         {            
         }
 
         public Angle(Radians radValue) 
-            : this((180.0 / Math.PI) * radValue.Value)
+            : this((180.0 / Math.PI) * radValue)
         {            
         }
 
