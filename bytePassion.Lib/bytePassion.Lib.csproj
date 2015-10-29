@@ -102,6 +102,7 @@
     <Compile Include="TimeLib\TimeSlot.cs" />
     <Compile Include="Types\SemanticTypes\Base\SimpleDoubleSemanticType.cs" />
     <Compile Include="Types\SemanticTypes\Degree.cs" />
+    <Compile Include="Types\SemanticTypes\Height.cs" />
     <Compile Include="Types\SemanticTypes\Length.cs" />
     <Compile Include="Types\SemanticTypes\Radians.cs" />
     <Compile Include="Types\SemanticTypes\Width.cs" />
