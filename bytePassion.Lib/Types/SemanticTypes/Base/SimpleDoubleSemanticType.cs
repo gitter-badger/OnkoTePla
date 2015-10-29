@@ -12,6 +12,11 @@ namespace bytePassion.Lib.Types.SemanticTypes.Base
         }
         
         protected override Func<double, double, bool> EqualsFunc => GeometryLibUtils.DoubleEquals;
-        protected override string String => $"{GeometryLibUtils.DoubleFormat(Value)}";    
+        protected override string String => $"{GeometryLibUtils.DoubleFormat(Value)}";
+
+        public static implicit operator double (SimpleDoubleSemanticType doubleType)
+        {
+            return doubleType.Value;
+        }
     }
 }
