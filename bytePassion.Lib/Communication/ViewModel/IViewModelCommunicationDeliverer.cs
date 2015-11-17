@@ -1,6 +1,4 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
-
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels
+﻿namespace bytePassion.Lib.Communication.ViewModel
 {
 	public interface IViewModelCommunicationDeliverer
 	{

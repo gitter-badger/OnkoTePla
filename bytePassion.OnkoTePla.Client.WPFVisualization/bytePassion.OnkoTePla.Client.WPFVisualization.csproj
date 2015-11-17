@@ -127,7 +127,6 @@
     <Compile Include="ViewModels\AppointmentView\Helper\AppointmentModifications.cs" />
     <Compile Include="ViewModelMessages\RestoreOriginalValues.cs" />
     <Compile Include="ViewModels\IDataCenterDeliverer.cs" />
-    <Compile Include="ViewModels\IViewModelCommunicationDeliverer.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModelSampleData.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\IChangeConfirmationViewModel.cs" />
@@ -425,7 +424,7 @@
       <Project>{85958036-DFEF-4C68-ABF4-FD241EAAB47F}</Project>
       <Name>bytePassion.OnkoTePla.Contracts</Name>
     </ProjectReference>
-  </ItemGroup> 
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

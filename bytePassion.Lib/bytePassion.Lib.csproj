@@ -50,6 +50,7 @@
     <Compile Include="Communication\State\IGlobalState.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCollectionItem.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCommunication.cs" />
+    <Compile Include="Communication\ViewModel\IViewModelCommunicationDeliverer.cs" />
     <Compile Include="Communication\ViewModel\Messages\IViewModelRequestHandler.cs" />
     <Compile Include="Communication\ViewModel\Messages\ViewModelMessage.cs" />
     <Compile Include="Communication\ViewModel\Messages\ViewModelRequest.cs" />

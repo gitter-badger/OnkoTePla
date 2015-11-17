@@ -1,5 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
+using System.Collections.ObjectModel;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
