@@ -75,7 +75,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 
 		public AggregateIdentifier Identifier { get; }
 
-		public override void CleanUp ()
+        protected override void CleanUp ()
 		{
 			viewModelCommunication.DeregisterViewModelAtCollection<TimeGridViewModel, AggregateIdentifier>(
 				TimeGridViewModelCollection,

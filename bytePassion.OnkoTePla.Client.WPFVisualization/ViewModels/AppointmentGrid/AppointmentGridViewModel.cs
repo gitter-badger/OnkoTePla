@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
@@ -19,6 +14,11 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowVi
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages.DeleteAppointment;
 using DeleteAppointmentCommand = bytePassion.OnkoTePla.Client.Core.Domain.Commands.DeleteAppointment;
@@ -220,9 +220,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public void Process(Deactivate message)
 		{
 			IsActive = false;
-		}		
+		}
 
-		public override void CleanUp()
+        protected override void CleanUp()
 		{			
 			globalGridSizeVariable.StateChanged   -= OnGridSizeChanged;			
 			globalRoomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;			

@@ -567,9 +567,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			}
 		}
 
-		#endregion
+        #endregion
 
-		public override void CleanUp()
+        protected override void CleanUp()
 		{
 			selectedDateVariable.StateChanged -= OnSelectedDateVariableChanged;
 			gridSizeVariable.StateChanged     -= OnGridSizeVariableChanged;

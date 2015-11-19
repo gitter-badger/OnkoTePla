@@ -225,9 +225,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			ShowDisabledOverlay = false;
 		}
 
-		#endregion
+        #endregion
 
-		public override void CleanUp()
+        protected override void CleanUp()
 		{
 			ViewModelCommunication.DeregisterViewModelAtCollection<AppointmentViewModel, Guid>(
 				AppointmentViewModelCollection,

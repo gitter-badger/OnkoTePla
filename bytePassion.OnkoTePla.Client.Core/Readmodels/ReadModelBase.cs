@@ -1,8 +1,8 @@
-﻿using System;
-using bytePassion.Lib.FrameworkExtensions;
+﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+using System;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Readmodels
@@ -41,7 +41,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			eventBus.DeregisterEventHander<AppointmentDeleted>(this);
 		}
 
-		public override void CleanUp()
+        protected override void CleanUp()
 		{
 			DeregisterAtEventBus();
 		}

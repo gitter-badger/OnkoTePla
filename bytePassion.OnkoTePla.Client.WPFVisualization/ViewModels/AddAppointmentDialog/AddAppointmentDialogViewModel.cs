@@ -285,7 +285,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 			get { return description; }
 		}
 
-		public override void CleanUp()
+        protected override void CleanUp()
 		{
 			selectedPatientVariable.StateChanged -= OnSelectedPatientVariableChanged;
 

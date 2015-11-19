@@ -113,7 +113,7 @@ namespace bytePassion.Lib.GeometryLib.MeshGeometry.ObjectBase
 
         public void SetDefaultOrientation() { Orientation = Orientation.DefaultOrientation; }
 
-        public override void CleanUp()
+        protected override void CleanUp()
         {
             mesh?.Dispose();
             boundingbox?.Dispose();

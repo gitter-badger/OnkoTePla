@@ -64,9 +64,9 @@ namespace bytePassion.Lib.WpfLib.Commands
             execute(parameter);
         }                     		
 		
-		public event EventHandler CanExecuteChanged;	
+		public event EventHandler CanExecuteChanged;
 
-	    public override void CleanUp()
+        protected override void CleanUp()
 	    {
             updateCommandInformation.UpdateOfCanExecuteChangedRequired -= CanExecuteChangedRequired;
             updateCommandInformation.Dispose();

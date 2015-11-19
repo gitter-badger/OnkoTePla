@@ -4,7 +4,7 @@ namespace bytePassion.Lib.FrameworkExtensions
 {
 	public abstract class DisposingObject : IDisposable
 	{
-		public abstract void CleanUp();
+		protected abstract void CleanUp();
 
 		private bool disposed = false;
 		

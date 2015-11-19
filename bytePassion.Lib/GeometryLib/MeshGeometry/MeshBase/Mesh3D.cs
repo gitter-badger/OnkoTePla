@@ -112,7 +112,7 @@ namespace bytePassion.Lib.GeometryLib.MeshGeometry.MeshBase
             WorldSpacePositionsChanged?.Invoke(this, new EventArgs());
         }
 
-        public override void CleanUp()
+        protected override void CleanUp()
         {
             geoObject.SizeChanged        -= OnGeoObjectSizeChanged;
             geoObject.StructureChanged   -= OnGeoObjectStructureChanged;

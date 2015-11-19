@@ -52,7 +52,7 @@ namespace bytePassion.Lib.WpfLib.Commands
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public override void CleanUp()
+        protected override void CleanUp()
         {
             if (updateCommandInformation != null)
             {

@@ -56,7 +56,7 @@ namespace bytePassion.Lib.GeometryLib.MeshGeometry
             return AreBoxesIntersecting(this, b);            
         }
 
-        public override void CleanUp()
+        protected override void CleanUp()
         {
             if (keepUpdated)
                 geometricObject.Mesh.WorldSpacePositionsChanged -= OnMeshChanged;
