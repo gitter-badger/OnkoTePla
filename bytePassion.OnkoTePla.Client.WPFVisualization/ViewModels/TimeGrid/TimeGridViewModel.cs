@@ -1,6 +1,6 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.MathLib;
+using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
@@ -15,7 +15,7 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 {
-	public class TimeGridViewModel : DisposingObject,
+    public class TimeGridViewModel : DisposingObject,
 									 ITimeGridViewModel									 
 	{		
 		private enum GridViewDivisionState

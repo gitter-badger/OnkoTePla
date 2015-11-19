@@ -1,7 +1,7 @@
 ﻿using bytePassion.Lib.GeometryLib.Base;
 using bytePassion.Lib.GeometryLib.MeshGeometry;
 using bytePassion.Lib.GeometryLib.MeshGeometry.ObjectBase;
-using bytePassion.Lib.MathLib;
+using bytePassion.Lib.GeometryLib.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

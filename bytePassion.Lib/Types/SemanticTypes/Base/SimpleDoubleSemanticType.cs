@@ -1,4 +1,4 @@
-﻿using bytePassion.Lib.MathLib;
+﻿using bytePassion.Lib.GeometryLib.Utils;
 using System;
 
 
@@ -11,10 +11,14 @@ namespace bytePassion.Lib.Types.SemanticTypes.Base
         {            
         }
         
-        protected override Func<double, double, bool> EqualsFunc => GeometryLibUtils.DoubleEquals;
-        protected override string String => $"{GeometryLibUtils.DoubleFormat(Value)}";
+        protected override Func<SemanticType<double>, SemanticType<double>, bool> EqualsFunc
+        {
+            get { return (st1, st2) => GeometryLibUtils.DoubleEquals(st1.Value, st2.Value); }
+        }
+        
+        protected override string StringRepresentation => $"{GeometryLibUtils.DoubleFormat(Value)}";        
 
-        public static implicit operator double (SimpleDoubleSemanticType doubleType)
+        public static implicit operator double(SimpleDoubleSemanticType doubleType)
         {
             return doubleType.Value;
         }

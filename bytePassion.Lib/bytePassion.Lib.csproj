@@ -64,7 +64,6 @@
     <Compile Include="FrameworkExtensions\FrameworkElementExtensions.cs" />
     <Compile Include="Types\Repository\IPersistable.cs" />
     <Compile Include="Types\Repository\IPersistenceService.cs" />
-    <Compile Include="Types\SemanticTypes\Base\SemanticType.cs" />
     <Compile Include="GeometryLib\Intersections\Intersection.cs" />
     <Compile Include="GeometryLib\Intersections\IntersectionResult.cs" />
     <Compile Include="GeometryLib\Intersections\IntersectionResultType.cs" />
@@ -101,11 +100,16 @@
     <Compile Include="GeometryLib\Base\Vec2.cs" />
     <Compile Include="GeometryLib\Base\Vec3.cs" />
     <Compile Include="TimeLib\TimeSlot.cs" />
+    <Compile Include="Types\SemanticTypes\Base\SemanticType1.cs" />
+    <Compile Include="Types\SemanticTypes\Base\SemanticType2.cs" />
     <Compile Include="Types\SemanticTypes\Base\SimpleDoubleSemanticType.cs" />
+    <Compile Include="Types\SemanticTypes\Base\TupleDoubleSemanticType.cs" />
     <Compile Include="Types\SemanticTypes\Degree.cs" />
     <Compile Include="Types\SemanticTypes\Height.cs" />
     <Compile Include="Types\SemanticTypes\Length.cs" />
+    <Compile Include="Types\SemanticTypes\Point.cs" />
     <Compile Include="Types\SemanticTypes\Radians.cs" />
+    <Compile Include="Types\SemanticTypes\Size.cs" />
     <Compile Include="Types\SemanticTypes\Width.cs" />
     <Compile Include="Types\SemanticTypes\XCoord.cs" />
     <Compile Include="Types\SemanticTypes\YCoord.cs" />
