@@ -1,13 +1,13 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Text;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
 {
-    public class Date
-	{		
+    public class Date : IComparable<Date>
+    {		
 		public static readonly Date Dummy = new Date(0,0,0);
 
 	    public Date() 
@@ -70,10 +70,18 @@ namespace bytePassion.Lib.TimeLib
 			return false;
 		}
 
-	    public static bool operator <=(Date d1, Date d2)  => d1 < d2 || d1 == d2;
+	    public static bool operator <= (Date d1, Date d2) => d1 < d2 || d1 == d2;
 	    public static bool operator >= (Date d1, Date d2) => d1 > d2 || d1 == d2;
+		
 
-	    /// <summary>
+		public int CompareTo(Date other)
+	    {
+			if (this >  other) return 1;
+			if (this == other) return 0;
+			return -1;
+		}
+
+		/// <summary>
 		/// return Date as String in format: dd.mm.yyyy
 		/// </summary>
 		/// <returns>Date in format dd.mm.yyyy</returns>
