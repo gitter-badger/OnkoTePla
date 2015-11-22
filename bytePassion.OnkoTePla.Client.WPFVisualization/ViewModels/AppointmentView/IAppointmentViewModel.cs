@@ -16,8 +16,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
                                              IViewModelMessageHandler<Dispose>,											 
 											 IViewModelMessageHandler<RestoreOriginalValues>,
 											 IViewModelMessageHandler<ShowDisabledOverlay>,
-											 IViewModelMessageHandler<HideDisabledOverlay>
-    {
+											 IViewModelMessageHandler<HideDisabledOverlay>,
+											 IViewModelMessageHandler<SwitchToEditMode>
+	{
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }		
 		

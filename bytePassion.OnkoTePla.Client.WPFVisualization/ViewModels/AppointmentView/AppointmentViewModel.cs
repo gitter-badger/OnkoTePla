@@ -1,4 +1,8 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -11,10 +15,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.H
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using MahApps.Metro.Controls.Dialogs;
-using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Input;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages.DeleteAppointment;
 
@@ -225,9 +225,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			ShowDisabledOverlay = false;
 		}
 
-        #endregion
+		public void Process (SwitchToEditMode message)
+		{
+			SwitchToEditMode.Execute(false);
+		}
 
-        protected override void CleanUp()
+		#endregion
+
+		protected override void CleanUp()
 		{
 			ViewModelCommunication.DeregisterViewModelAtCollection<AppointmentViewModel, Guid>(
 				AppointmentViewModelCollection,

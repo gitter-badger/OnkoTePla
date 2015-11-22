@@ -50,10 +50,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 		public Guid Identifier { get; }
 
-		public void Process (Dispose message) { }		
+		public void Process (Dispose               message) { }		
 		public void Process (RestoreOriginalValues message) { }
-		public void Process (ShowDisabledOverlay message) { }
-		public void Process (HideDisabledOverlay message) { }
+		public void Process (ShowDisabledOverlay   message) { }
+		public void Process (HideDisabledOverlay   message) { }
+		public void Process (SwitchToEditMode      message) { }
 
 		public void Dispose() {}
 
