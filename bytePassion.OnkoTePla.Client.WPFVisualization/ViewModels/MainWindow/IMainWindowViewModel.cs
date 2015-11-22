@@ -6,10 +6,10 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 {
-	interface INewMainWindowViewModel : IViewModel,
-										IViewModelMessageHandler<ShowPage>
+	interface IMainWindowViewModel : IViewModel,
+									 IViewModelMessageHandler<ShowPage>
 
 	{
 		int SelectedPage { get; }

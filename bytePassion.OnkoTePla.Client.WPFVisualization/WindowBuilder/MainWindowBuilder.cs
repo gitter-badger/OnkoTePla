@@ -22,8 +22,8 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmatio
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
@@ -150,7 +150,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 
 			var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
 
-			var mainWindowViewModel = new NewMainWindowViewModel(overviewPageViewModel,
+			var mainWindowViewModel = new MainWindowViewModel(overviewPageViewModel,
 																 searchPageViewModel,
 																 optionsPageViewModel,
 																 notificationServiceContainerViewModel);

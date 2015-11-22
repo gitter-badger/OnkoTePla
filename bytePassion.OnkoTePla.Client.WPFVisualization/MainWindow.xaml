@@ -3,11 +3,11 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 					  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"                     
-                      xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
                       xmlns:panels="clr-namespace:bytePassion.Lib.WpfLib.Panels;assembly=bytePassion.Lib"
                       xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Enums"
+                      xmlns:mainWindow="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow"
                       Title="OnkoTePla"
                       MinWidth="700"
                       MinHeight="500"
@@ -16,7 +16,7 @@
                       mc:Ignorable="d">
     
     <d:UserControl.DataContext>
-        <sampleData:NewMainWindowViewModelSampleData />
+        <mainWindow:MainWindowViewModelSampleData />
     </d:UserControl.DataContext>
 
     <Grid>

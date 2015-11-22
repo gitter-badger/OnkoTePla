@@ -9,16 +9,16 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 {
-	public class NewMainWindowViewModel : INewMainWindowViewModel
+	public class MainWindowViewModel : IMainWindowViewModel
     {        
         private int selectedPage;        
 
-        public NewMainWindowViewModel(IOverviewPageViewModel overviewPageViewModel,
-									  ISearchPageViewModel searchPageViewModel,
-									  IOptionsPageViewModel optionsPageViewModel,									 
-									  INotificationServiceContainerViewModel notificationServiceContainerViewModel)
+        public MainWindowViewModel(IOverviewPageViewModel overviewPageViewModel,
+								   ISearchPageViewModel searchPageViewModel,
+								   IOptionsPageViewModel optionsPageViewModel,									 
+								   INotificationServiceContainerViewModel notificationServiceContainerViewModel)
         {           
 	        OverviewPageViewModel = overviewPageViewModel;
             SearchPageViewModel = searchPageViewModel;

@@ -8,11 +8,11 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 {
-	public class NewMainWindowViewModelSampleData : INewMainWindowViewModel
+	public class MainWindowViewModelSampleData : IMainWindowViewModel
 	{
-		public NewMainWindowViewModelSampleData()
+		public MainWindowViewModelSampleData()
 		{
 			SelectedPage = 0;
 
