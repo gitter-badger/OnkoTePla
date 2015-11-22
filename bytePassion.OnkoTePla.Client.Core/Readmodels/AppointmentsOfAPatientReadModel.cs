@@ -4,7 +4,6 @@ using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.Core.Domain.Events;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Exceptions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
@@ -37,10 +36,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			patient = patientsRepository.GetPatientById(patientId);
 
 			appointmentSet = new AppointmentSet(patientsRepository, config);
-
-		}
-
-		public uint AggregateVersion { private set; get; }		
+		}		
 
 		public void LoadFromEventStream (EventStream<Guid> eventStream)
 		{
@@ -55,33 +51,32 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 
 		public override void Process (AppointmentAdded domainEvent)
 		{
-			if (domainEvent.CreateAppointmentData.PatientId != patient.Id) return;
-
-			//if (AggregateVersion + 1 != domainEvent.AggregateVersion)
-			//	throw new VersionNotApplicapleException("@handle appointmentAdded @readmodel");		
+			if (domainEvent.PatientId != patient.Id) return;			
 
 			appointmentSet.AddAppointment(domainEvent.AggregateId.MedicalPracticeId,
 										  domainEvent.AggregateId.PracticeVersion,
-										  domainEvent.CreateAppointmentData);			
-
-			AggregateVersion = domainEvent.AggregateVersion;
+										  domainEvent.CreateAppointmentData);						
 		}
 
 		public override void Process (AppointmentReplaced domainEvent)
-		{			
-			throw new NotImplementedException();
+		{
+			if (domainEvent.PatientId != patient.Id) return;
+
+			appointmentSet.ReplaceAppointment(domainEvent.AggregateId.MedicalPracticeId,
+											  domainEvent.AggregateId.PracticeVersion,
+											  domainEvent.NewDescription,
+											  domainEvent.NewDate,
+											  domainEvent.NewStartTime,
+											  domainEvent.NewEndTime,
+											  domainEvent.NewTherapyPlaceId,
+											  domainEvent.OriginalAppointmendId);
 		}
 		 
 		public override void Process (AppointmentDeleted domainEvent)
 		{
-			if (domainEvent.PatientId != patient.Id) return;
-
-			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
-				throw new VersionNotApplicapleException("@handle appointmentDeleted @readmodel");	
+			if (domainEvent.PatientId != patient.Id) return;			
 	
-			appointmentSet.DeleteAppointment(domainEvent.RemovedAppointmentId);
-
-			AggregateVersion = domainEvent.AggregateVersion;
+			appointmentSet.DeleteAppointment(domainEvent.RemovedAppointmentId);			
 		}		
 	}
 }
