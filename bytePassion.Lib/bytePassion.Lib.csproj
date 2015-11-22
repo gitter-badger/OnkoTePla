@@ -62,6 +62,7 @@
     <Compile Include="FrameworkExtensions\DispatcherExtension.cs" />
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="FrameworkExtensions\FrameworkElementExtensions.cs" />
+    <Compile Include="FrameworkExtensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Types\Repository\IPersistable.cs" />
     <Compile Include="Types\Repository\IPersistenceService.cs" />
     <Compile Include="GeometryLib\Intersections\Intersection.cs" />
