@@ -14,6 +14,7 @@ using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
@@ -109,7 +110,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 
 			viewModelCommunication.RegisterViewModelMessageHandler(new ConfirmChangesMessageHandler(viewModelCommunication));
 			viewModelCommunication.RegisterViewModelMessageHandler(new RejectChangesMessageHandler(viewModelCommunication));
-
 			viewModelCommunication.RegisterViewModelMessageHandler(adornerControl);
 
 			// create permanent ViewModels
@@ -141,7 +141,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 
 			IPatientSelectorViewModel patientSelectorViewModel = new PatientSelectorViewModel(dataCenter, selectedPatientVariable);
 
-			var searchPageViewModel   = new SearchPageViewModel(patientSelectorViewModel, selectedPatientVariable);
+			var searchPageViewModel   = new SearchPageViewModel(patientSelectorViewModel, 
+																selectedPatientVariable, 
+																commandBus,
+																viewModelCommunication, 
+																dataCenter);
 			var optionsPageViewModel  = new OptionsPageViewModel();
 
 			var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
@@ -150,6 +154,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 																 searchPageViewModel,
 																 optionsPageViewModel,
 																 notificationServiceContainerViewModel);
+
+			viewModelCommunication.RegisterViewModelMessageHandler<ShowPage>(mainWindowViewModel);
 
 			return new MainWindow
 			{

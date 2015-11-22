@@ -8,12 +8,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 	public interface ISearchPageViewModel : IViewModel
 	{
 		ICommand DeleteAppointment { get; }
-		ICommand ModifyAppointment { get; }
-
-		ICommand ShowPreviousAppoointments { get; }
-		ICommand HidePreviousAppoointments { get; }
+		ICommand ModifyAppointment { get; }		
 		
 		IPatientSelectorViewModel PatientSelectorViewModel { get; }
+
+		bool ShowPreviousAppointments { get; set; }
 
 		string SelectedPatient { get; }
 

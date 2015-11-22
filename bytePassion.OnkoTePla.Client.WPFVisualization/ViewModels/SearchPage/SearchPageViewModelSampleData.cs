@@ -42,15 +42,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 			};
 
 			SelectedPatient = "John Doe";
+			ShowPreviousAppointments = true;
 		}
 
 		public ICommand DeleteAppointment { get; } = null;
-		public ICommand ModifyAppointment { get; } = null;
-
-		public ICommand ShowPreviousAppoointments { get; } = null;
-		public ICommand HidePreviousAppoointments { get; } = null;
+		public ICommand ModifyAppointment { get; } = null;		
 
 		public IPatientSelectorViewModel PatientSelectorViewModel { get; }
+
+		public bool ShowPreviousAppointments { get; set; }
 
 		public string SelectedPatient { get; }
 

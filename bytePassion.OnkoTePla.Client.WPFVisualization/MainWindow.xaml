@@ -7,6 +7,7 @@
                       xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow"
                       xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
                       xmlns:panels="clr-namespace:bytePassion.Lib.WpfLib.Panels;assembly=bytePassion.Lib"
+                      xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Enums"
                       Title="OnkoTePla"
                       MinWidth="700"
                       MinHeight="500"
@@ -39,19 +40,22 @@
 
             <Button Grid.Column="0"
                     Margin="5,0"
-                    Command="{Binding ShowOverviewPage}"
+                    Command="{Binding ShowPage}"
+					CommandParameter="{x:Static enum:MainPage.Overview}"
                     Content="Übersicht"
                     Style="{StaticResource TitleBarButton}" />
 
             <Button Grid.Column="1"
                     Margin="5,0"
-                    Command="{Binding ShowSearchPage}"
+                    Command="{Binding ShowPage}"
+					CommandParameter="{x:Static enum:MainPage.Search}"
                     Content="Suchen"
                     Style="{StaticResource TitleBarButton}" />
 
             <Button Grid.Column="2"
                     Margin="5,0"
-                    Command="{Binding ShowOptionsPage}"
+                    Command="{Binding ShowPage}"
+					CommandParameter="{x:Static enum:MainPage.Options}"
                     Content="Einstellungen"
                     Style="{StaticResource TitleBarButton}" />
         </Grid>

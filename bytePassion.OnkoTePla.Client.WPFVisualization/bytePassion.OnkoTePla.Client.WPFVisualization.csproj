@@ -95,6 +95,7 @@
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
     <Compile Include="Converter\TimeFromDateConverter.cs" />
+    <Compile Include="Enums\MainPage.cs" />
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Model\DataCenter.cs" />
     <Compile Include="Model\IDataCenter.cs" />
@@ -111,6 +112,8 @@
     <Compile Include="ViewModelMessages\RejectChanges.cs" />
     <Compile Include="ViewModelMessages\SetVisibility.cs" />
     <Compile Include="ViewModelMessages\ShowDisabledOverlay.cs" />
+    <Compile Include="ViewModelMessages\ShowPage.cs" />
+    <Compile Include="ViewModelMessages\SwitchToEditMode.cs" />
     <Compile Include="ViewModelMessages\UIInstance.cs" />
     <Compile Include="ViewModelMessages\SendCurrentChangesToCommandBus.cs" />
     <Compile Include="ViewModelMessages\ShowNotification.cs" />
