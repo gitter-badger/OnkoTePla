@@ -1,4 +1,6 @@
 ﻿using System.Windows.Input;
+using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
@@ -6,14 +8,13 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 {
-	interface INewMainWindowViewModel : IViewModel
-										
+	interface INewMainWindowViewModel : IViewModel,
+										IViewModelMessageHandler<ShowPage>
+
 	{
 		int SelectedPage { get; }
 
-		ICommand ShowOverviewPage { get; }
-		ICommand ShowSearchPage   { get; }
-		ICommand ShowOptionsPage  { get; }
+		ICommand ShowPage { get; }		
 
 		IOverviewPageViewModel OverviewPageViewModel { get; }
 		ISearchPageViewModel   SearchPageViewModel   { get; }

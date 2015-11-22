@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
@@ -24,9 +25,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 
 		public int SelectedPage { get; }
 
-		public ICommand ShowOverviewPage { get; } = null;
-		public ICommand ShowSearchPage   { get; } = null;
-		public ICommand ShowOptionsPage  { get; } = null;
+		public ICommand ShowPage { get; } = null;
 
 		public IOverviewPageViewModel OverviewPageViewModel { get; }
 		public ISearchPageViewModel   SearchPageViewModel   { get; }
@@ -34,6 +33,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NewMainWindow
 
 		public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public void Process (ShowPage message) { }
+
+		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }
