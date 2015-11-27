@@ -1,12 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.Reflection.Emit;
+﻿using System.ComponentModel;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
 {
-	public class DateDisplayViewModelSampleData : IDateDisplayViewModel
+    public class DateDisplayViewModelSampleData : IDateDisplayViewModel
     {
 	    public DateDisplayViewModelSampleData()
 	    {
@@ -14,8 +12,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
 	    }
 
 	    public string Date { get; }
-
-
-	    public event PropertyChangedEventHandler PropertyChanged;
-	}
+	    
+	    public void Dispose() {	}
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

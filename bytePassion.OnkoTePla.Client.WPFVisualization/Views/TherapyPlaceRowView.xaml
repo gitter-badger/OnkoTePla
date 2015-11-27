@@ -62,7 +62,11 @@
                 <behaviors:AcceptAppointmentDropBehavior Appointments="{Binding AppointmentViewModels, Mode=OneTime}"
                                                          DataCenter="{Binding DataCenter, Mode=OneTime}"
                                                          TherapyPlaceRowIdentifier="{Binding Identifier, Mode=OneTime}"
-                                                         ViewModelCommunication="{Binding ViewModelCommunication, Mode=OneTime}"/>
+                                                         AppointmentModifications="{Binding AppointmentModifications}"
+														 AdornerControl="{Binding AdornerControl}"
+														 GridWidth="{Binding GridWidth}"
+														 CurrentSelectedDate="{Binding CurrentSelectedDate}"
+														 CurrentMedicalPracticeId="{Binding CurrentSelectedMedicalPracticeId}"/>
             </i:Interaction.Behaviors>
 			
 			<Border Margin="0,3"

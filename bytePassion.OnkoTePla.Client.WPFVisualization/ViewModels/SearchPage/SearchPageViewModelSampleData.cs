@@ -54,10 +54,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 
 		public string SelectedPatient { get; }
 
-
 		public ObservableCollection<Appointment> DisplayedAppointments { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;
 		
+		public void Dispose() { }
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

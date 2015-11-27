@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer
 {
-	public class NotificationServiceContainerViewModel : INotificationServiceContainerViewModel
+	public class NotificationServiceContainerViewModel : ViewModel, INotificationServiceContainerViewModel
 	{
 
 		private readonly IViewModelCommunication viewModelCommunication;
@@ -60,8 +60,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationS
 		}
 
 		public ObservableCollection<INotificationViewModel> CurrentVisibleNotifications { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
-
+		
+	    protected override void CleanUp()
+	    {
+            viewModelCommunication.DeregisterViewModelMessageHandler<ShowNotification>(this);
+            viewModelCommunication.DeregisterViewModelMessageHandler<HideNotification>(this);
+        }
+        public override event PropertyChangedEventHandler PropertyChanged;
+    }
 }

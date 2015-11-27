@@ -10,12 +10,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public AppointmentViewDragAdornerViewModelSampleData()
 		{
 			DropPossible = true;
-			Content = "John Doh";
+			Content = "John Doe";
 		}
 
-		public bool DropPossible { get; set; }
-		public string Content { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+		public bool   DropPossible { get; set; }
+		public string Content      { get; }
+		
+	    public void Dispose() { }
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

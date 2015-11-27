@@ -4,18 +4,7 @@
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Global
 {
 	public static class Constants
-	{
-		// Global ViewModel-Vairables
-
-		public const string AppointmentGridSizeVariable              = "AppointmentGridSize";
-		public const string AppointmentGridSelectedDateVariable      = "AppointmentGridSelectedDate";
-		public const string AppointmentGridDisplayedPracticeVariable = "AppointmentGridDisplayedPractice";
-		public const string AppointmentGridRoomFilterVariable        = "AppointmentGridSelectedRoom";
-		public const string SideBarStateVariable                     = "SideBarState";
-		public const string CurrentModifiedAppointmentVariable	     = "CurrentModifiedAppointment";
-		public const string SelectedPatientVariable                  = "SelectedPatient";
-		public const string AdornerControlVariable                   = "AdornerControl";
-
+	{		
 		// ViewModel-Collections
 
 		public const string TherapyPlaceRowViewModelCollection = "TherpyPlaceRowCollection";

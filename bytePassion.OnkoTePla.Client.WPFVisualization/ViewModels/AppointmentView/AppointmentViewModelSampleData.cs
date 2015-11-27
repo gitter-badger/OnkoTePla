@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 
@@ -43,7 +44,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public string TimeSpan           { get; }
 		public string AppointmentDate    { get; }
 		public string Description        { get; }
-		public string Room               { get; }				
+		public string Room               { get; }
+
+		public AppointmentModifications CurrentAppointmentModifications { get; } = null;
+		public AdornerControl AdornerControl { get; } = null;
 
 		public OperatingMode OperatingMode  { get; set; }
 		public bool ShowDisabledOverlay { get; }

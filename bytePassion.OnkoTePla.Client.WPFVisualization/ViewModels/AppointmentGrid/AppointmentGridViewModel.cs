@@ -1,11 +1,18 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
@@ -14,11 +21,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowVi
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages.DeleteAppointment;
 using DeleteAppointmentCommand = bytePassion.OnkoTePla.Client.Core.Domain.Commands.DeleteAppointment;
@@ -36,29 +38,36 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
 		private readonly AppointmentsOfADayReadModel readModel;
 
-		private readonly IGlobalState<Size> globalGridSizeVariable;
-		private readonly IGlobalState<Guid?> globalRoomFilterVariable;		
+		private readonly IGlobalState<Size> gridSizeVariable;
+		private readonly IGlobalState<Guid?> roomFilterVariable;
+		private readonly IGlobalState<Date> selectedDateVariable; 
+	    private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
+		private readonly AdornerControl adornerControl;
 
 		public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
 										ICommandBus commandBus,
-										IViewModelCommunication viewModelCommunication)
+										IViewModelCommunication viewModelCommunication,
+                                        IGlobalState<Size> gridSizeVariable,
+										IGlobalState<Guid?> roomFilterVariable,
+										IGlobalState<Date> selectedDateVariable,
+                                        IGlobalState<AppointmentModifications> appointmentModificationsVariable,
+										IGlobalState<Guid> selectedMedicalPracticeIdVariable,
+										AdornerControl adornerControl)
 		{
 			this.dataCenter = dataCenter;
 			this.commandBus = commandBus;
 			this.viewModelCommunication = viewModelCommunication;
+		    this.gridSizeVariable = gridSizeVariable;
+		    this.roomFilterVariable = roomFilterVariable;
+            this.appointmentModificationsVariable = appointmentModificationsVariable;
+			this.adornerControl = adornerControl;
+			this.selectedDateVariable = selectedDateVariable;
 
-			IsActive = false;
+	        IsActive = false;
 			
-			globalGridSizeVariable = viewModelCommunication.GetGlobalViewModelVariable<Size>(
-				AppointmentGridSizeVariable
-			);
-			globalGridSizeVariable.StateChanged += OnGridSizeChanged;
-
-			globalRoomFilterVariable = viewModelCommunication.GetGlobalViewModelVariable<Guid?>(
-				AppointmentGridRoomFilterVariable	
-			);
-			globalRoomFilterVariable.StateChanged += OnGlobalRoomFilterVariableChanged;
+			
+			roomFilterVariable.StateChanged += OnGlobalRoomFilterVariableChanged;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,
@@ -72,7 +81,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			readModel.AppointmentChanged += OnReadModelAppointmentChanged;
 
 			TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication, 
-													  dataCenter, globalGridSizeVariable.Value);
+													  dataCenter, gridSizeVariable.Value);
 
 			var medicalPractice = dataCenter.Configuration.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
 			                                                                                Identifier.PracticeVersion);
@@ -88,7 +97,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 																			   dataCenter, 
 																			   therapyPlace, 																										 
 																			   room.DisplayedColor, 
-																			   location));
+																			   location,
+																			   adornerControl,
+																			   appointmentModificationsVariable,
+																			   selectedDateVariable,
+																			   selectedMedicalPracticeIdVariable));
 				}
 			}
 
@@ -97,7 +110,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				AddAppointment(appointment);
 			}			
 
-			OnGlobalRoomFilterVariableChanged(globalRoomFilterVariable.Value);
+			OnGlobalRoomFilterVariableChanged(roomFilterVariable.Value);
 
 			PracticeIsClosedAtThisDay = false;
 		}
@@ -160,7 +173,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		private void AddAppointment(Appointment newAppointment)
 		{
 			var location = new TherapyPlaceRowIdentifier(Identifier, newAppointment.TherapyPlace.Id);
-			new AppointmentViewModel(newAppointment, viewModelCommunication, dataCenter, location);			
+			new AppointmentViewModel(newAppointment, 
+									 viewModelCommunication, 
+									 dataCenter, 
+									 location, 
+									 appointmentModificationsVariable, 
+									 selectedDateVariable, 
+									 gridSizeVariable,
+									 adornerControl);			
 		}
 		
 		private void RemoveAppointment(Appointment appointmentToRemove)
@@ -214,7 +234,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public void Process(Activate message)
 		{
 			IsActive = true;
-			OnGridSizeChanged(globalGridSizeVariable.Value);
+			OnGridSizeChanged(gridSizeVariable.Value);
 		}
 
 		public void Process(Deactivate message)
@@ -224,8 +244,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
         protected override void CleanUp()
 		{			
-			globalGridSizeVariable.StateChanged   -= OnGridSizeChanged;			
-			globalRoomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;			
+			gridSizeVariable.StateChanged   -= OnGridSizeChanged;			
+			roomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;			
 			readModel.AppointmentChanged          -= OnReadModelAppointmentChanged;
 
 			viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
@@ -258,21 +278,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		}
 		
 		public void Process(SendCurrentChangesToCommandBus message)
-		{
-			var appointmentModificationVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-				CurrentModifiedAppointmentVariable	
-			);
-
-			if (appointmentModificationVariable.Value == null)
+		{			
+			if (appointmentModificationsVariable.Value == null)
 				return;
 
-			var originalAppointment = appointmentModificationVariable.Value.OriginalAppointment;
+			var originalAppointment = appointmentModificationsVariable.Value.OriginalAppointment;
 
-			if (originalAppointment.Description     == appointmentModificationVariable.Value.Description &&
-				originalAppointment.StartTime       == appointmentModificationVariable.Value.BeginTime &&
-				originalAppointment.EndTime         == appointmentModificationVariable.Value.EndTime &&
-				originalAppointment.Day             == appointmentModificationVariable.Value.CurrentLocation.PlaceAndDate.Date &&
-				originalAppointment.TherapyPlace.Id == appointmentModificationVariable.Value.CurrentLocation.TherapyPlaceId)
+			if (originalAppointment.Description     == appointmentModificationsVariable.Value.Description &&
+				originalAppointment.StartTime       == appointmentModificationsVariable.Value.BeginTime &&
+				originalAppointment.EndTime         == appointmentModificationsVariable.Value.EndTime &&
+				originalAppointment.Day             == appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date &&
+				originalAppointment.TherapyPlace.Id == appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId)
 			{
 				return; // no changes to report
 			}
@@ -284,9 +300,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			uint destinationAggregateVersion = readModel.AggregateVersion;
 
 
-			if (appointmentModificationVariable.Value.OriginalAppointment.Day != Identifier.Date)
+			if (appointmentModificationsVariable.Value.OriginalAppointment.Day != Identifier.Date)
 			{
-				sourceAggregateId = new AggregateIdentifier(appointmentModificationVariable.Value.OriginalAppointment.Day, 
+				sourceAggregateId = new AggregateIdentifier(appointmentModificationsVariable.Value.OriginalAppointment.Day, 
 															Identifier.MedicalPracticeId);
 
 				var tmpReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(sourceAggregateId);
@@ -304,33 +320,26 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 														  dataCenter.SessionInfo.LoggedInUser.Id,
 														  originalAppointment.Patient.Id, 
 														  ActionTag.RegularAction, 
-														  appointmentModificationVariable.Value.Description,
-														  appointmentModificationVariable.Value.CurrentLocation.PlaceAndDate.Date,
-														  appointmentModificationVariable.Value.BeginTime,
-														  appointmentModificationVariable.Value.EndTime,															 
-														  appointmentModificationVariable.Value.CurrentLocation.TherapyPlaceId,
+														  appointmentModificationsVariable.Value.Description,
+														  appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date,
+														  appointmentModificationsVariable.Value.BeginTime,
+														  appointmentModificationsVariable.Value.EndTime,															 
+														  appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId,
 														  originalAppointment.Id,
 														  originalAppointment.Day));
 		}
 
 		public void Process (CreateNewAppointmentFromModificationsAndSendToCommandBus message)
-		{
-			var appointmentModificationVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-				CurrentModifiedAppointmentVariable
-			);
-
-			if (appointmentModificationVariable.Value == null)
-				throw new Exception("internal error");
-			
-			commandBus.SendCommand(new AddAppointment(appointmentModificationVariable.Value.CurrentLocation.PlaceAndDate, 
+		{			
+			commandBus.SendCommand(new AddAppointment(appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate, 
 													  readModel.AggregateVersion, 
 													  dataCenter.SessionInfo.LoggedInUser.Id, 
 													  ActionTag.RegularAction, 
-													  appointmentModificationVariable.Value.OriginalAppointment.Patient.Id, 
-													  appointmentModificationVariable.Value.Description, 
-													  appointmentModificationVariable.Value.BeginTime, 
-													  appointmentModificationVariable.Value.EndTime, 
-													  appointmentModificationVariable.Value.CurrentLocation.TherapyPlaceId));			
+													  appointmentModificationsVariable.Value.OriginalAppointment.Patient.Id, 
+													  appointmentModificationsVariable.Value.Description, 
+													  appointmentModificationsVariable.Value.BeginTime, 
+													  appointmentModificationsVariable.Value.EndTime, 
+													  appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId));			
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;		

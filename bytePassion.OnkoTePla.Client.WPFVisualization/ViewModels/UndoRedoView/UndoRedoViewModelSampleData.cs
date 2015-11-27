@@ -1,5 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 {
@@ -7,5 +9,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 	{
 		public ICommand Undo { get; } = null;
 		public ICommand Redo { get; } = null;
+		
+		public void Dispose() { }
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

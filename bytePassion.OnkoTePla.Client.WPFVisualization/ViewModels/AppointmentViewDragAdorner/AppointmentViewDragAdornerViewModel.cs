@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using bytePassion.Lib.FrameworkExtensions;
+﻿using bytePassion.Lib.FrameworkExtensions;
+using System.ComponentModel;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewDragAdorner
@@ -23,6 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		public string Content { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
+	    public void Dispose() {	}
 	}
 
 }

@@ -85,7 +85,8 @@
 
         <local:GridContainer Grid.Column="1"
                              Margin="5"
-                             DataContext="{Binding GridContainerViewModel}" />
+                             DataContext="{Binding GridContainerViewModel}" 
+                             x:Name="GridContainer"/>
 
         <Button Grid.Column="1"
                 Grid.ColumnSpan="2"

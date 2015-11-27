@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
 
 #pragma warning disable 0067
 
@@ -24,7 +24,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 		public ObservableCollection<RoomSelectorData> AvailableRoomFilters { get; }
 
 		public RoomSelectorData SelectedRoomFilter { get; set;  }		
-
-		public event PropertyChangedEventHandler PropertyChanged;	
-	}
+		
+	    public void Dispose() {	}
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

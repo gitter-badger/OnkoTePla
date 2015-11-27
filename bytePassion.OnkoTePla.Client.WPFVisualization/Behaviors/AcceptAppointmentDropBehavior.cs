@@ -1,48 +1,94 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Interactivity;
-using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.TimeLib;
+﻿using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Interactivity;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 {
-	public class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
+    public class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
     {
-        public static readonly DependencyProperty ViewModelCommunicationProperty =
-            DependencyProperty.Register(nameof(ViewModelCommunication),
-										typeof (IViewModelCommunication),
-										typeof (AcceptAppointmentDropBehavior),
-										new PropertyMetadata(default(IViewModelCommunication)));
+        
 
         public static readonly DependencyProperty AppointmentsProperty =
             DependencyProperty.Register(nameof(Appointments),
 										typeof (ObservableCollection<IAppointmentViewModel>),
-										typeof (AcceptAppointmentDropBehavior),
-										new PropertyMetadata(default(ObservableCollection<IAppointmentViewModel>)));
+										typeof (AcceptAppointmentDropBehavior));
 
         public static readonly DependencyProperty DataCenterProperty =
             DependencyProperty.Register(nameof(DataCenter),
 										typeof (IDataCenter),
-										typeof (AcceptAppointmentDropBehavior),
-										new PropertyMetadata(default(IDataCenter)));
+										typeof (AcceptAppointmentDropBehavior));
 
         public static readonly DependencyProperty TherapyPlaceRowIdentifierProperty =
             DependencyProperty.Register(nameof(TherapyPlaceRowIdentifier),
 										typeof (TherapyPlaceRowIdentifier),
-										typeof (AcceptAppointmentDropBehavior),
-										new PropertyMetadata(default(TherapyPlaceRowIdentifier)));       
+										typeof (AcceptAppointmentDropBehavior));
+
+	    public static readonly DependencyProperty AppointmentModificationsProperty = 
+            DependencyProperty.Register(nameof(AppointmentModifications), 
+                                        typeof (AppointmentModifications), 
+                                        typeof (AcceptAppointmentDropBehavior));
+
+	    public static readonly DependencyProperty AdornerControlProperty = 
+            DependencyProperty.Register(nameof(AdornerControl), 
+                                        typeof (AdornerControl), 
+                                        typeof (AcceptAppointmentDropBehavior));
+
+	    public static readonly DependencyProperty GridWidthProperty = 
+            DependencyProperty.Register(nameof(GridWidth), 
+                                        typeof (double), 
+                                        typeof (AcceptAppointmentDropBehavior));
+
+        public static readonly DependencyProperty CurrentSelectedDateProperty = 
+            DependencyProperty.Register(nameof(CurrentSelectedDate), 
+                                        typeof (Date), 
+                                        typeof (AcceptAppointmentDropBehavior));
+
+        public static readonly DependencyProperty CurrentMedicalPracticeIdProperty = 
+            DependencyProperty.Register(nameof(CurrentMedicalPracticeId), 
+                                        typeof (Guid), 
+                                        typeof (AcceptAppointmentDropBehavior));
+
+        public Guid CurrentMedicalPracticeId
+        {
+            get { return (Guid) GetValue(CurrentMedicalPracticeIdProperty); }
+            set { SetValue(CurrentMedicalPracticeIdProperty, value); }
+        }
+
+        public Date CurrentSelectedDate
+        {
+            get { return (Date) GetValue(CurrentSelectedDateProperty); }
+            set { SetValue(CurrentSelectedDateProperty, value); }
+        }
+
+	    public double GridWidth
+	    {
+	        get { return (double) GetValue(GridWidthProperty); }
+	        set { SetValue(GridWidthProperty, value); }
+	    }
+
+	    public AdornerControl AdornerControl
+	    {
+	        get { return (AdornerControl) GetValue(AdornerControlProperty); }
+	        set { SetValue(AdornerControlProperty, value); }
+	    }
+
+	    public AppointmentModifications AppointmentModifications
+	    {
+	        get { return (AppointmentModifications) GetValue(AppointmentModificationsProperty); }
+	        set { SetValue(AppointmentModificationsProperty, value); }
+	    }  
 
         public TherapyPlaceRowIdentifier TherapyPlaceRowIdentifier
         {
@@ -60,20 +106,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
         {
             get { return (ObservableCollection<IAppointmentViewModel>) GetValue(AppointmentsProperty); }
             set { SetValue(AppointmentsProperty, value); }
-        }
-
-        public IViewModelCommunication ViewModelCommunication
-        {
-            get { return (IViewModelCommunication) GetValue(ViewModelCommunicationProperty); }
-            set { SetValue(ViewModelCommunicationProperty, value); }
-        }
-
-        private AppointmentModifications appointmentModification;
-		private AdornerControl adornerControl;
+        }       
+        		
         private IList<TimeSlot> slots = null;
         private Time openingTime;
-        private Time closingTime;
-        private double gridWidth;
+        private Time closingTime;        
 
         private bool dropIsPossible;              
         private Appointment currentDraggedAppointment;
@@ -105,15 +142,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
                 CalculateCorrectAppointmentPosition(dragEventArgs, out newBeginTime, out newEndTime);
 
-                appointmentModification.SetNewLocation(TherapyPlaceRowIdentifier, newBeginTime, newEndTime);
+                AppointmentModifications.SetNewLocation(TherapyPlaceRowIdentifier, newBeginTime, newEndTime);
              }            			                      
         }
 
         private void CalculateCorrectAppointmentPosition(DragEventArgs dragEventArgs, out Time newBeginTime, out Time newEndTime)
         {
             var timeAtDropPosition = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
-            var appointmentDuration = new Duration(appointmentModification.BeginTime,
-                appointmentModification.EndTime);
+            var appointmentDuration = new Duration(AppointmentModifications.BeginTime,
+                AppointmentModifications.EndTime);
             var halfappointmentDuration = appointmentDuration / 2u;
 
             var slotAtDropPosition = GetSlot(timeAtDropPosition);
@@ -141,19 +178,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
         {
             if (dragEventArgs.Data.GetDataPresent(typeof (Appointment)))
             {
-                if (Appointments != null && adornerControl != null)
+                if (Appointments != null && AdornerControl != null)
                 {
                     if (slots == null)
                     {
                         ComputeSlots(currentDraggedAppointment.Id);
-
-                        appointmentModification =
-                            ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-                                Constants.CurrentModifiedAppointmentVariable
-                                ).Value;
                     }
 
-					adornerControl.NewMousePositionForAdorner(dragEventArgs.GetPosition(adornerControl.ReferenceElement));
+                    AdornerControl.NewMousePositionForAdorner(dragEventArgs.GetPosition(AdornerControl.ReferenceElement));
 
                     var mousePositionTime = GetTimeForPosition(dragEventArgs.GetPosition(AssociatedObject).X);
                     var currentPointedSlot = GetSlot(mousePositionTime);
@@ -162,18 +194,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                     if (currentPointedSlot != null)
                     {
                         var slotLength = new Duration(currentPointedSlot.Begin, currentPointedSlot.End);
-                        var appointmentLength = new Duration(appointmentModification.BeginTime,
-															 appointmentModification.EndTime);
+                        var appointmentLength = new Duration(AppointmentModifications.BeginTime,
+                                                             AppointmentModifications.EndTime);
 
                         if (slotLength >= appointmentLength)
                         {
-							adornerControl.ShowAdornerLikeDropIsPossible();
+                            AdornerControl.ShowAdornerLikeDropIsPossible();
 							dropIsPossible = true;
                             return;
                         }
                     }
 
-					adornerControl.ShowAdornerLikeDropIsNotPossible();
+                    AdornerControl.ShowAdornerLikeDropIsNotPossible();
 					dropIsPossible = false;
                 }
             }
@@ -181,7 +213,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 	    private void OnDragLeave(object sender, DragEventArgs dragEventArgs)
         {
-            adornerControl.ShowAdornerLikeDropIsNotPossible();           
+            AdornerControl.ShowAdornerLikeDropIsNotPossible();           
         }
 
         private void OnDragEnter(object sender, DragEventArgs dragEventArgs)
@@ -192,14 +224,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                 {
                     currentDraggedAppointment = (Appointment) dragEventArgs.Data.GetData(typeof (Appointment));
                     ComputeSlots(currentDraggedAppointment.Id);
-
-                    appointmentModification = ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-						Constants.CurrentModifiedAppointmentVariable
-                    ).Value;
-
-	                adornerControl = ViewModelCommunication.GetGlobalViewModelVariable<AdornerControl>(
-		                Constants.AdornerControlVariable
-					).Value;
                  }
             }
         }
@@ -208,7 +232,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
         {
             var durationOfWholeDay = new Duration(closingTime, openingTime);
 
-            double relativePosition = xPosition/gridWidth;
+            double relativePosition = xPosition / GridWidth;
 
             var resultTime = openingTime +
                              new Duration((uint) Math.Floor((durationOfWholeDay.Seconds*relativePosition)));
@@ -231,21 +255,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                 (appointment, appointment1) => appointment.BeginTime.CompareTo(appointment1.BeginTime)
 			);
 
-            gridWidth = ViewModelCommunication.GetGlobalViewModelVariable<Size>(
-                Constants.AppointmentGridSizeVariable
-            ).Value.Width;
-
-            var currentDate = ViewModelCommunication.GetGlobalViewModelVariable<Date>(
-                Constants.AppointmentGridSelectedDateVariable
-            ).Value;
-
-            var currentMedicalPracticeId = ViewModelCommunication.GetGlobalViewModelVariable<Guid>(
-                Constants.AppointmentGridDisplayedPracticeVariable
-            ).Value;
-
-            var medicalPractice = DataCenter.GetMedicalPracticeByDateAndId(currentDate, currentMedicalPracticeId);
-            openingTime = medicalPractice.HoursOfOpening.GetOpeningTime(currentDate);
-            closingTime = medicalPractice.HoursOfOpening.GetClosingTime(currentDate);
+            var medicalPractice = DataCenter.GetMedicalPracticeByDateAndId(CurrentSelectedDate, CurrentMedicalPracticeId);
+            openingTime = medicalPractice.HoursOfOpening.GetOpeningTime(CurrentSelectedDate);
+            closingTime = medicalPractice.HoursOfOpening.GetClosingTime(CurrentSelectedDate);
 
             startOfSlots.Add(openingTime);
 

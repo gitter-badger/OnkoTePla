@@ -5,9 +5,11 @@ using System.Windows.Media;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 
 #pragma warning disable 0067
@@ -42,8 +44,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 
 		public Time TimeSlotBegin { get; }
 		public Time TimeSlotEnd   { get; }
+
 		public double GridWidth { get; }
-		public bool IsVisible { get; }
+		public bool IsVisible   { get; }
+
+
+		public AppointmentModifications AppointmentModifications         { get; } = null;
+		public AdornerControl           AdornerControl                   { get; } = null;
+		public Date                     CurrentSelectedDate              { get; } = Date.Dummy;
+		public Guid                     CurrentSelectedMedicalPracticeId { get; } = Guid.Empty;
+		
 
 		public TherapyPlaceRowIdentifier Identifier { get; }
 

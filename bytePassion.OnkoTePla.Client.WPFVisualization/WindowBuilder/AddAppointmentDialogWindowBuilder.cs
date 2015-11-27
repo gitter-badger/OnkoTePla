@@ -1,62 +1,69 @@
 ﻿using System;
 using System.Windows;
-using bytePassion.Lib.Communication.MessageBus;
-using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Views;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
+
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
 {
-	public class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
+    public class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
 	{
 		private readonly IDataCenter dataCenter;
-		private readonly IViewModelCommunication superViewModelCommunication;		
+		private readonly IViewModelCommunication viewModelCommunication;
+                
+	    private readonly IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable;
 
-		public AddAppointmentDialogWindowBuilder(IDataCenter dataCenter,
-												 IViewModelCommunication superViewModelCommunication)
+        private readonly IGlobalState<AppointmentModifications> appointmentModificationVariable;
+        private readonly IGlobalState<Date> selectedDateVariable;
+	    private readonly IGlobalState<Size> gridSizeVariable;
+
+	    private readonly AdornerControl adornerControl;
+
+	    public AddAppointmentDialogWindowBuilder(IDataCenter dataCenter,
+												 IViewModelCommunication viewModelCommunication,                                                  
+                                                 IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable, 
+                                                 IGlobalState<AppointmentModifications> appointmentModificationVariable, 
+                                                 IGlobalState<Date> selectedDateVariable, 
+												 IGlobalState<Size> gridSizeVariable,
+												 AdornerControl adornerControl)
 		{
 			this.dataCenter = dataCenter;
-			this.superViewModelCommunication = superViewModelCommunication;			
+			this.viewModelCommunication = viewModelCommunication;
+            this.selectedMedicalPractiveVariable = selectedMedicalPractiveVariable;
+            this.appointmentModificationVariable = appointmentModificationVariable;
+            this.selectedDateVariable = selectedDateVariable;
+	        this.gridSizeVariable = gridSizeVariable;
+		    this.adornerControl = adornerControl;
 		}
 
 		public AddAppointmentDialog BuildWindow()
 		{
-			var creationDate      = superViewModelCommunication.GetGlobalViewModelVariable<Date>(AppointmentGridSelectedDateVariable).Value;
-			var medicalPracticeId = superViewModelCommunication.GetGlobalViewModelVariable<Guid>(AppointmentGridDisplayedPracticeVariable).Value;
 
-			IHandlerCollection<ViewModelMessage> handlerCollection = new MultiHandlerCollection<ViewModelMessage>();
-			IMessageBus<ViewModelMessage> viewModelMessageBus = new LocalMessageBus<ViewModelMessage>(handlerCollection);
-			IStateEngine viewModelStateEngine = new StateEngine();
-			IViewModelCollections viewModelCollections = new ViewModelCollections();
-
-			IViewModelCommunication subViewModelCommunication = new ViewModelCommunication(viewModelMessageBus,
-																						   viewModelStateEngine,
-																						   viewModelCollections);
-
-			subViewModelCommunication.RegisterGlobalViewModelVariable(SelectedPatientVariable, (Patient)null);
-
-			var selectedPatientVariable = subViewModelCommunication.GetGlobalViewModelVariable<Patient>(SelectedPatientVariable);
-
+            var selectedPatientVariable = new GlobalState<Patient>();
+		    						
 			IPatientSelectorViewModel patientSelectorViewModel = new PatientSelectorViewModel(dataCenter, selectedPatientVariable);
 
 			return new AddAppointmentDialog
 			       {
 						Owner = Application.Current.MainWindow,
-						DataContext = new AddAppointmentDialogViewModel(patientSelectorViewModel, 
-																		subViewModelCommunication, 
-																		superViewModelCommunication,
-																		dataCenter, 
-																		creationDate, 
-																		medicalPracticeId)
+						DataContext = new AddAppointmentDialogViewModel(patientSelectorViewModel, 																		
+																		viewModelCommunication,
+                                                                        selectedPatientVariable,
+                                                                        appointmentModificationVariable,
+                                                                        selectedDateVariable,
+																		gridSizeVariable,
+                                                                        dataCenter, 																		
+																		selectedMedicalPractiveVariable.Value,
+																		adornerControl)
 			       };
 		}
 

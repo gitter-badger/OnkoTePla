@@ -1,6 +1,4 @@
-﻿using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.Lib.WpfLib.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
+﻿using bytePassion.Lib.WpfLib.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewDragAdorner;
 using System.Windows;
 using System.Windows.Documents;
@@ -8,10 +6,9 @@ using System.Windows.Documents;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Adorner
 {
-	public class AdornerControl : IViewModelMessageHandler<UIInstance>
+    public class AdornerControl 
 	{		
-		private UIElement appointmentGridContainer;
-
+		
 		private UIElementAdorner appointmentAdorner;
 		private IAppointmentViewDragAdornerViewModel adornerViewModel;
 
@@ -19,7 +16,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Adorner
 
 		public void CreateAdorner(string content, double width)
 		{
-			if (appointmentAdorner == null && appointmentGridContainer != null)
+			if (appointmentAdorner == null && ReferenceElement != null)
 			{
 				currentAdornerWidth = width;
 				adornerViewModel = new AppointmentViewDragAdornerViewModel(content);
@@ -31,14 +28,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Adorner
 					                  Width = width
 				                  };
 
-				appointmentAdorner = new UIElementAdorner(appointmentGridContainer,
+				appointmentAdorner = new UIElementAdorner(ReferenceElement,
 				                                          adornerView,
-				                                          AdornerLayer.GetAdornerLayer(appointmentGridContainer));
+				                                          AdornerLayer.GetAdornerLayer(ReferenceElement));
 			}
 		}
 
-		public UIElement ReferenceElement { get { return appointmentGridContainer; }}
-
+	    public UIElement ReferenceElement { get; set; }
+	
 		public void NewMousePositionForAdorner (Point newMousePosition)
 		{
 			appointmentAdorner.UpdatePosition(newMousePosition.X-(currentAdornerWidth / 2), newMousePosition.Y - 15);
@@ -58,11 +55,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Adorner
 		{
 			appointmentAdorner?.Destroy();
 			appointmentAdorner = null;
-		}
-
-		public void Process(UIInstance message)
-		{
-			appointmentGridContainer = message.Instance;
-		}
+		}         		
 	}
 }

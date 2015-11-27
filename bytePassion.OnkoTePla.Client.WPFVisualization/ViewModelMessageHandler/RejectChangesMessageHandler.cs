@@ -13,26 +13,24 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
     public class RejectChangesMessageHandler : IViewModelMessageHandler<RejectChanges>
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IGlobalState<AppointmentModifications> currentModifiedAppointmentVariable;
+		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
 
-		public RejectChangesMessageHandler (IViewModelCommunication viewModelCommunication)
+		public RejectChangesMessageHandler (IViewModelCommunication viewModelCommunication, 
+                                            IGlobalState<AppointmentModifications> appointmentModificationsVariable)
 		{
-			this.viewModelCommunication = viewModelCommunication;
-
-			currentModifiedAppointmentVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-				CurrentModifiedAppointmentVariable
-			);
+		    this.viewModelCommunication = viewModelCommunication;
+		    this.appointmentModificationsVariable = appointmentModificationsVariable;
 		}
 
-		public void Process(RejectChanges message)
+        public void Process(RejectChanges message)
 		{
 			ProcessMesageAsync();
 		}
 
 		private async void ProcessMesageAsync()
 		{
-			var currentMods = currentModifiedAppointmentVariable.Value;
-			var original = currentModifiedAppointmentVariable.Value.OriginalAppointment;
+			var currentMods = appointmentModificationsVariable.Value;
+			var original = appointmentModificationsVariable.Value.OriginalAppointment;
 
 			if (currentMods.BeginTime == original.StartTime &&
 			    currentMods.EndTime == original.EndTime &&
@@ -56,11 +54,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 
 		private void RejectChanges()
 		{
-			var isInitial = currentModifiedAppointmentVariable.Value.IsInitialAdjustment;
-            var originalAppointmentId = currentModifiedAppointmentVariable.Value.OriginalAppointment.Id;
+			var isInitial = appointmentModificationsVariable.Value.IsInitialAdjustment;
+            var originalAppointmentId = appointmentModificationsVariable.Value.OriginalAppointment.Id;
 
-			currentModifiedAppointmentVariable.Value.Dispose();
-			currentModifiedAppointmentVariable.Value = null;
+			appointmentModificationsVariable.Value.Dispose();
+			appointmentModificationsVariable.Value = null;
 
 			if (isInitial)
 			{

@@ -1,33 +1,51 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
-using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
-
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 {
-	public class MoveWholeAppointmentBehavior : Behavior<FrameworkElement>
+    public class MoveWholeAppointmentBehavior : Behavior<FrameworkElement>
 	{
 
-		public static readonly DependencyProperty ViewModelCommunicationProperty =
-			DependencyProperty.Register(nameof(ViewModelCommunication),
-										typeof (IViewModelCommunication),
-										typeof (MoveWholeAppointmentBehavior),
-										new PropertyMetadata(default(IViewModelCommunication)));
+        public static readonly DependencyProperty AppointmentModificationsProperty =
+            DependencyProperty.Register(nameof(AppointmentModifications),
+                                        typeof(AppointmentModifications),
+                                        typeof(MoveWholeAppointmentBehavior));
 
-		public IViewModelCommunication ViewModelCommunication
-		{
-			get { return (IViewModelCommunication)GetValue(ViewModelCommunicationProperty); }
-			set { SetValue(ViewModelCommunicationProperty, value); }
-		}
+	    public static readonly DependencyProperty AdornerControlProperty = 
+            DependencyProperty.Register(nameof(AdornerControl), 
+                                        typeof (AdornerControl), 
+                                        typeof (MoveWholeAppointmentBehavior));
 
-		protected override void OnAttached ()
+        public static readonly DependencyProperty ViewModelCommunicationProperty = 
+            DependencyProperty.Register(nameof(ViewModelCommunication), 
+                                        typeof (IViewModelCommunication), 
+                                        typeof (MoveWholeAppointmentBehavior));
+
+        public IViewModelCommunication ViewModelCommunication
+        {
+            get { return (IViewModelCommunication) GetValue(ViewModelCommunicationProperty); }
+            set { SetValue(ViewModelCommunicationProperty, value); }
+        }
+
+	    public AdornerControl AdornerControl
+	    {
+	        get { return (AdornerControl) GetValue(AdornerControlProperty); }
+	        set { SetValue(AdornerControlProperty, value); }
+	    }
+
+        public AppointmentModifications AppointmentModifications
+        {
+            get { return (AppointmentModifications)GetValue(AppointmentModificationsProperty); }
+            set { SetValue(AppointmentModificationsProperty, value); }
+        }
+
+        protected override void OnAttached ()
 		{
 			base.OnAttached();
 			AssociatedObject.PreviewMouseLeftButtonDown += OnAssociatedObjectMouseLeftButtonDown;
@@ -60,27 +78,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 				ViewModelCommunication.SendTo(
 					AppointmentViewModelCollection,
-					currentModifiedAppointmentVariable.Value.OriginalAppointment.Id, 
+                    AppointmentModifications.OriginalAppointment.Id, 
 					new ShowDisabledOverlay()
-				);
+				);				
 
-				var adornerControl = ViewModelCommunication.GetGlobalViewModelVariable<AdornerControl>(
-					AdornerControlVariable
-				).Value;
-
-				adornerControl.CreateAdorner(currentModifiedAppointmentVariable.Value.OriginalAppointment.Patient.Name,
-											 currentModifiedAppointmentVariable.Value.CurrentAppointmentPixelWidth);
+                AdornerControl.CreateAdorner(AppointmentModifications.OriginalAppointment.Patient.Name,
+                                             AppointmentModifications.CurrentAppointmentPixelWidth);
 				
 
 				DragDrop.DoDragDrop((DependencyObject)sender,
-									currentModifiedAppointmentVariable.Value.OriginalAppointment,
+                                    AppointmentModifications.OriginalAppointment,
 				                    DragDropEffects.Link);
 
-				adornerControl.DisposeAdorner();
+                AdornerControl.DisposeAdorner();
 
 				ViewModelCommunication.SendTo(
 					AppointmentViewModelCollection,
-					currentModifiedAppointmentVariable.Value.OriginalAppointment.Id,
+                    AppointmentModifications.OriginalAppointment.Id,
 					new HideDisabledOverlay()
 				);
 			}
@@ -105,9 +119,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 		private FrameworkElement container;
 
 		private bool  mouseIsDown;
-		private Point referencePoint;
-
-		private IGlobalState<AppointmentModifications> currentModifiedAppointmentVariable;
+		private Point referencePoint;		
 
 	    private void OnAssociatedObjectMouseMove (object sender, MouseEventArgs mouseEventArgs)
 		{
@@ -115,7 +127,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			{
 			    var mousePos = mouseEventArgs.GetPosition(container);
                 var displacement =  mousePos- referencePoint;
-				currentModifiedAppointmentVariable.Value.SetNewTimeShiftDelta(displacement.X);
+                AppointmentModifications.SetNewTimeShiftDelta(displacement.X);
 			}
 		}
 
@@ -134,13 +146,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 		private void InitDrag (Point startinPoint)
 		{
-			
-
-			currentModifiedAppointmentVariable = ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-				CurrentModifiedAppointmentVariable
-			);
-
-			if (currentModifiedAppointmentVariable.Value != null)
+						
+			if (AppointmentModifications != null)
 			{
 
 				mouseIsDown = true;
@@ -152,7 +159,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 
 		private void EndDrag ()
 		{
-			currentModifiedAppointmentVariable.Value.FixTimeShiftDelta();
+            AppointmentModifications.FixTimeShiftDelta();
 			mouseIsDown = false;
 		    //Mouse.Capture(null);
 		}

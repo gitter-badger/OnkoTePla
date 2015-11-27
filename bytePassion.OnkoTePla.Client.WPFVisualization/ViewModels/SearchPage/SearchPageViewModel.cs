@@ -27,7 +27,7 @@ using DeleteAppointment = bytePassion.OnkoTePla.Client.Core.Domain.Commands.Dele
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 {
-	public class SearchPageViewModel : ISearchPageViewModel
+	public class SearchPageViewModel : ViewModel, ISearchPageViewModel
     {
 		private class AppointmentSorter : IComparer<Appointment>
 		{
@@ -43,6 +43,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 
 
 		private readonly IGlobalState<Patient> selectedPatientVariable;
+		private readonly IGlobalState<Date> selectedDateVariable;
+		private readonly IGlobalState<Guid> selectedMedicalPracticeIdVariable; 
+
 		private readonly ICommandBus commandBus;
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IDataCenter dataCenter;
@@ -52,14 +55,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 
 		public SearchPageViewModel(IPatientSelectorViewModel patientSelectorViewModel,
 								   IGlobalState<Patient> selectedPatientVariable,
-								   ICommandBus commandBus,
+								   IGlobalState<Date> selectedDateVariable,
+								   IGlobalState<Guid> selectedMedicalPracticeIdVariable,
+                                   ICommandBus commandBus,
 								   IViewModelCommunication viewModelCommunication,
 								   IDataCenter dataCenter)
 		{
-			this.selectedPatientVariable = selectedPatientVariable;
+			this.selectedPatientVariable = selectedPatientVariable; 
 			this.commandBus = commandBus;
 			this.viewModelCommunication = viewModelCommunication;
 			this.dataCenter = dataCenter;
+			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
+			this.selectedDateVariable = selectedDateVariable;
 			selectedPatientVariable.StateChanged += OnSelectedPatientVariableChanged;
 
 			PatientSelectorViewModel = patientSelectorViewModel;
@@ -73,8 +80,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 		}
 
 		private void DoModifyAppointment(Appointment appointment)
-		{
-			var selectedDateVariable = viewModelCommunication.GetGlobalViewModelVariable<Date>(AppointmentGridSelectedDateVariable);
+		{			
 			selectedDateVariable.Value = appointment.Day;
 
 			viewModelCommunication.SendTo(
@@ -94,7 +100,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 
 			if (result == MessageDialogResult.Affirmative)
 			{
-				var currentMedicalPracticeId = viewModelCommunication.GetGlobalViewModelVariable<Guid>(AppointmentGridDisplayedPracticeVariable).Value;
+				var currentMedicalPracticeId = selectedMedicalPracticeIdVariable.Value;
 				var readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(new AggregateIdentifier(appointment.Day, currentMedicalPracticeId));
 
 				commandBus.SendCommand(new DeleteAppointment(readModel.Identifier,
@@ -169,7 +175,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 		}
 
 		public ObservableCollection<Appointment> DisplayedAppointments { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;		
-	}
+		
+	    protected override void CleanUp()
+	    {	        
+	    }
+        public override event PropertyChangedEventHandler PropertyChanged;
+    }
 }

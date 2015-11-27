@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Media;
-using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Media;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 {
-	public class RoomFilterViewModel : IRoomFilterViewModel
+    public class RoomFilterViewModel : DisposingObject,
+                                       IRoomFilterViewModel
 	{
 		private readonly RoomSelectorData allRoomFilter = new RoomSelectorData("Alle Räume", null, Colors.White);
 
@@ -33,24 +31,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 
 
 		public RoomFilterViewModel(IDataCenter dataCenter,
-								   IViewModelCommunication viewModelCommunication)
+								   IGlobalState<Guid?> roomFilter, 
+                                   IGlobalState<Date> selectedDate, 
+                                   IGlobalState<Guid> displayedMedicalPractice)
 		{
 			this.dataCenter = dataCenter;
+		    this.roomFilter = roomFilter;
+		    this.selectedDate = selectedDate;
+		    this.displayedMedicalPractice = displayedMedicalPractice;
 
-			roomFilter = viewModelCommunication.GetGlobalViewModelVariable<Guid?>(
-				AppointmentGridRoomFilterVariable
-			);
-
-			selectedDate = viewModelCommunication.GetGlobalViewModelVariable<Date>(
-				AppointmentGridSelectedDateVariable
-			);
-
-			displayedMedicalPractice = viewModelCommunication.GetGlobalViewModelVariable<Guid>(
-				AppointmentGridDisplayedPracticeVariable	
-			);
-
-
-			roomFilter.StateChanged += OnRoomFilterChanged;
+		    roomFilter.StateChanged += OnRoomFilterChanged;
 			displayedMedicalPractice.StateChanged += OnDisplayedPracticeStateChanged;						
 			selectedDate.StateChanged += OnSelectedDateChanged;
 
@@ -115,8 +105,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 
 				PropertyChanged.ChangeAndNotify(this, ref selectedRoomFilter, value);
 			}
-		}		
+		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+
+        protected override void CleanUp()
+        {
+            roomFilter.StateChanged += OnRoomFilterChanged;
+            displayedMedicalPractice.StateChanged += OnDisplayedPracticeStateChanged;
+            selectedDate.StateChanged += OnSelectedDateChanged;
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

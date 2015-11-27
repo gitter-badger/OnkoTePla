@@ -1,31 +1,28 @@
 ﻿using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
 using System.ComponentModel;
 using System.Windows.Input;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 {
-	public class DateSelectorViewModel : IDateSelectorViewModel
+    public class DateSelectorViewModel : DisposingObject, 
+                                         IDateSelectorViewModel
 	{		
-		private readonly IGlobalState<Date> selectedDateState;
+		private readonly IGlobalState<Date> selectedDateVariable;
 
 		private Date selectedDate;
 
-		public DateSelectorViewModel(IViewModelCommunication viewModelCommunication)
+		public DateSelectorViewModel(IGlobalState<Date> selectedDateVariable)
 		{
-			selectedDateState = viewModelCommunication.GetGlobalViewModelVariable<Date>(
-				AppointmentGridSelectedDateVariable
-			);
-						
-			selectedDateState.StateChanged += OnSelectedDateChanged;
+		    this.selectedDateVariable = selectedDateVariable;
 
-			SelectedDate = selectedDateState.Value;
+            SelectToday = new Command(() => SelectedDate = TimeTools.Today());
 
-			SelectToday = new Command(() => SelectedDate = TimeTools.Today());
+            selectedDateVariable.StateChanged += OnSelectedDateChanged;
+
+			SelectedDate = selectedDateVariable.Value;			
 		}
 
 		private void OnSelectedDateChanged(Date date)
@@ -41,7 +38,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 			{
 				if (value != selectedDate)
 				{					
-					selectedDateState.Value = value;
+					selectedDateVariable.Value = value;
 					PropertyChanged.ChangeAndNotify(this, ref selectedDate, value);					
 				}
 			}
@@ -49,6 +46,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 
 		public ICommand SelectToday { get; }
 
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+
+        protected override void CleanUp()
+        {
+            selectedDateVariable.StateChanged -= OnSelectedDateChanged;
+        }        
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

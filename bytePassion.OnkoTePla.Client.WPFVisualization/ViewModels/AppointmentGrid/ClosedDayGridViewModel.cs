@@ -1,4 +1,8 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Domain;
@@ -6,10 +10,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
@@ -19,29 +19,26 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 	{
 		private bool isActive;
 		
-		private readonly IViewModelCommunication viewModelCommunication;
+		private readonly IViewModelCommunication viewModelCommunication;		         
+		private readonly IGlobalState<Size> appointmentGridSizeVariable;
 		
-
-		private readonly IGlobalState<Size> globalGridSizeVariable;
-		
-
+         
 		public ClosedDayGridViewModel (AggregateIdentifier identifier,
 									   IDataCenter dataCenter,										
-									   IViewModelCommunication viewModelCommunication)
+									   IViewModelCommunication viewModelCommunication,
+									   IGlobalState<Size> appointmentGridSizeVariable)
 		{			
 			this.viewModelCommunication = viewModelCommunication;
-			
-			IsActive = false;
+		    this.appointmentGridSizeVariable = appointmentGridSizeVariable;
+
+		    IsActive = false;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,
 				this
 			);
-
-			globalGridSizeVariable = viewModelCommunication.GetGlobalViewModelVariable<Size>(
-				AppointmentGridSizeVariable
-				);
-			globalGridSizeVariable.StateChanged += OnGridSizeChanged;
+			
+			appointmentGridSizeVariable.StateChanged += OnGridSizeChanged;
 
 			var readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(identifier);
 
@@ -50,7 +47,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			readModel.Dispose();
 
 			TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication,
-													  dataCenter, globalGridSizeVariable.Value);
+													  dataCenter, appointmentGridSizeVariable.Value);
 
 			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();
 
@@ -88,7 +85,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public void Process (Activate message)
 		{
 			IsActive = true;
-			OnGridSizeChanged(globalGridSizeVariable.Value);
+			OnGridSizeChanged(appointmentGridSizeVariable.Value);
 		}
 
 		public void Process (Deactivate message)
@@ -98,7 +95,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 
         protected override void CleanUp ()
 		{
-			globalGridSizeVariable.StateChanged -= OnGridSizeChanged;
+			appointmentGridSizeVariable.StateChanged -= OnGridSizeChanged;
 			
 			viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 #pragma warning disable 0067
 
@@ -29,7 +29,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 		public MedicalPractice SelectedMedicalPractice { get; set; }
 		public ObservableCollection<MedicalPractice> AvailableMedicalPractices { get; }
 		public bool PracticeIsSelectable { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+		
+	    public void Dispose() {	}
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

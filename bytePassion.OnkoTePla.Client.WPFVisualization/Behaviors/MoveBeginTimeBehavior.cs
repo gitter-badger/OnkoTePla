@@ -1,28 +1,23 @@
-﻿using System.Windows;
+﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
-using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
-
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 {
-	public class MoveBeginTimeBehavior : Behavior<FrameworkElement>
+    public class MoveBeginTimeBehavior : Behavior<FrameworkElement>
 	{
-				
-		public static readonly DependencyProperty ViewModelCommunicationProperty =
-			DependencyProperty.Register(nameof(ViewModelCommunication), 
-										typeof (IViewModelCommunication), 
-										typeof (MoveBeginTimeBehavior), 
-										new PropertyMetadata(default(IViewModelCommunication)));
 
-		public IViewModelCommunication ViewModelCommunication
-		{
-			get { return (IViewModelCommunication) GetValue(ViewModelCommunicationProperty); }
-			set { SetValue(ViewModelCommunicationProperty, value); }
-		}		
+	    public static readonly DependencyProperty AppointmentModificationsProperty = 
+            DependencyProperty.Register(nameof(AppointmentModifications), 
+                                        typeof (AppointmentModifications), 
+                                        typeof (MoveBeginTimeBehavior));
+
+	    public AppointmentModifications AppointmentModifications
+	    {
+	        get { return (AppointmentModifications) GetValue(AppointmentModificationsProperty); }
+	        set { SetValue(AppointmentModificationsProperty, value); }
+	    }
 
 		protected override void OnAttached()
 		{
@@ -48,7 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 		private bool  mouseIsDown;		
 		private Point referencePoint;
 
-		private IGlobalState<AppointmentModifications> currentModifiedAppointmentVariable; 
+		
 
 		private void OnAssociatedObjectMouseMove(object sender, MouseEventArgs mouseEventArgs)
 		{
@@ -56,7 +51,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 			{
 				var displacement = mouseEventArgs.GetPosition(container) - referencePoint;
 
-				currentModifiedAppointmentVariable.Value.SetNewBeginTimeDelta(displacement.X);				
+                AppointmentModifications.SetNewBeginTimeDelta(displacement.X);				
 			}
 		}
 
@@ -68,25 +63,19 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 		private void OnAssociatedObjectMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{			
 			InitDrag(mouseButtonEventArgs.GetPosition(container));
-
 			mouseButtonEventArgs.Handled = true;
 		}
 
 		private void InitDrag (Point startinPoint)
 		{
 			mouseIsDown = true;
-			referencePoint = startinPoint;
-
-			currentModifiedAppointmentVariable = ViewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-				CurrentModifiedAppointmentVariable
-			);
-
+			referencePoint = startinPoint;			
 			AssociatedObject.CaptureMouse();
 		}
 
 		private void EndDrag ()
 		{
-			currentModifiedAppointmentVariable.Value.FixBeginTimeDelta();
+            AppointmentModifications.FixBeginTimeDelta();
 			mouseIsDown = false;
 			Mouse.Capture(null);
 		}

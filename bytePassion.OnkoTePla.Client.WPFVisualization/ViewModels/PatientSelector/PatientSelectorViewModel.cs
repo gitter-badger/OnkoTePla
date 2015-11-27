@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Data;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Data;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector
 {
-    internal class PatientSelectorViewModel : IPatientSelectorViewModel
+    internal class PatientSelectorViewModel : ViewModel, IPatientSelectorViewModel
     {
 	    private readonly IGlobalState<Patient> selectedPatientGlobalVariable;
         private bool listIsEmpty;
@@ -76,9 +76,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
             get { return listIsEmpty; }
             private set { PropertyChanged.ChangeAndNotify(this, ref listIsEmpty, value); }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
+       
         private void CheckList()
         {
             var count = ((ListCollectionView) Patients.View).Count;
@@ -110,5 +108,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 
 	        return false;
         }
+
+        protected override void CleanUp()
+        {
+            Patients.Filter -= Filter;
+        }
+        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

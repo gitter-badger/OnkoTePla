@@ -1,31 +1,54 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Media;
+using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Media;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
 {
 	public class TherapyPlaceRowViewModel : DisposingObject,
-											ITherapyPlaceRowViewModel											
+											ITherapyPlaceRowViewModel
 	{
+		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
+		private readonly IGlobalState<Date> selectedDateVariable;
+		private readonly IGlobalState<Guid> selectedMedicalPracticeIdVariable;
+
 		private double gridWidth;
 		private bool isVisible;
+		private AppointmentModifications appointmentModifications;
+		private Date currentSelectedDate;
+		private Guid currentSelectedMedicalPracticeId;
 
 		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication, 
 									    IDataCenter dataCenter,
 										TherapyPlace therapyPlace, 
 										Color roomDisplayColor,										
-										TherapyPlaceRowIdentifier identifier)
+										TherapyPlaceRowIdentifier identifier,
+										AdornerControl adornerControl,
+										IGlobalState<AppointmentModifications> appointmentModificationsVariable, 
+										IGlobalState<Date> selectedDateVariable, 
+										IGlobalState<Guid> selectedMedicalPracticeIdVariable)
 		{
+			this.appointmentModificationsVariable = appointmentModificationsVariable;
+			this.selectedDateVariable = selectedDateVariable;
+			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
+
+			appointmentModificationsVariable.StateChanged += OnAppointmentModificationsChanged;
+			selectedDateVariable.StateChanged += OnSelectedDateChanged;
+			selectedMedicalPracticeIdVariable.StateChanged += OnSelectedMedicalPracticeIdChanged;
+
 			ViewModelCommunication = viewModelCommunication;
 			DataCenter = dataCenter;
 
@@ -46,6 +69,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 
 			TimeSlotBegin = medicalPractice.HoursOfOpening.GetOpeningTime(identifier.PlaceAndDate.Date);
 			TimeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(identifier.PlaceAndDate.Date);
+
+			AdornerControl = adornerControl;			
+		}
+
+		private void OnSelectedMedicalPracticeIdChanged(Guid newMedicalPracticeId)
+		{
+			CurrentSelectedMedicalPracticeId = newMedicalPracticeId;
+		}
+
+		private void OnSelectedDateChanged(Date newDate)
+		{
+			CurrentSelectedDate = newDate;
+		}
+
+		private void OnAppointmentModificationsChanged(AppointmentModifications newAppointmentModifications)
+		{
+			AppointmentModifications = newAppointmentModifications;
 		}
 
 		public TherapyPlaceRowIdentifier Identifier { get; }
@@ -62,6 +102,26 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		{
 			get { return gridWidth; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref gridWidth, value); }
+		}
+
+		public AdornerControl AdornerControl { get; }
+
+		public AppointmentModifications AppointmentModifications
+		{
+			get { return appointmentModifications; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref appointmentModifications, value); }
+		}
+
+		public Date CurrentSelectedDate
+		{
+			get { return currentSelectedDate; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref currentSelectedDate, value); }
+		}
+
+		public Guid CurrentSelectedMedicalPracticeId
+		{
+			get { return currentSelectedMedicalPracticeId; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref currentSelectedMedicalPracticeId, value); }
 		}
 
 		public bool IsVisible
@@ -96,6 +156,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 				Constants.TherapyPlaceRowViewModelCollection,
 				this
 			);
+
+			appointmentModificationsVariable.StateChanged  -= OnAppointmentModificationsChanged;
+			selectedDateVariable.StateChanged              -= OnSelectedDateChanged;
+			selectedMedicalPracticeIdVariable.StateChanged -= OnSelectedMedicalPracticeIdChanged;
 		}
 
 		public IViewModelCommunication ViewModelCommunication { get; }

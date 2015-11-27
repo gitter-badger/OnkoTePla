@@ -1,8 +1,7 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
@@ -11,16 +10,16 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder;
 using System.ComponentModel;
 using System.Windows.Input;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 {
-	public class OverviewPageViewModel : IOverviewPageViewModel
+    public class OverviewPageViewModel : ViewModel, IOverviewPageViewModel
 	{
-		private bool changeConfirmationVisible;
+        private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
+
+        private bool changeConfirmationVisible;
 		private bool addAppointmentPossible;
 		private bool disabledOverlayVisible;
 
@@ -29,12 +28,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 									 IRoomFilterViewModel roomFilterViewModel, 
 									 IDateSelectorViewModel dateSelectorViewModel, 
 									 IGridContainerViewModel gridContainerViewModel, 
-									 IChangeConfirmationViewModel changeConfirmationViewModel, 
-									 IViewModelCommunication viewModelCommunication, 
-									 IUndoRedoViewModel undoRedoViewModel,
-									 IDataCenter dataCenter)
+									 IChangeConfirmationViewModel changeConfirmationViewModel, 									
+									 IUndoRedoViewModel undoRedoViewModel,									 
+                                     IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder,
+                                     IGlobalState<AppointmentModifications> appointmentModificationsVariable)
 		{
-			DateDisplayViewModel = dateDisplayViewModel;
+		    this.appointmentModificationsVariable = appointmentModificationsVariable;
+		    DateDisplayViewModel = dateDisplayViewModel;
 			MedicalPracticeSelectorViewModel = medicalPracticeSelectorViewModel;
 			RoomFilterViewModel = roomFilterViewModel;
 			DateSelectorViewModel = dateSelectorViewModel;
@@ -46,13 +46,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 			AddAppointmentPossible = true;
 			DisabledOverlayVisible = false;
 
-			var currentModifiedAppointmentVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-				CurrentModifiedAppointmentVariable	
-			);
-			
-			currentModifiedAppointmentVariable.StateChanged += OnCurrentModifiedAppointmentVariableChanged;
 
-			IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder = new AddAppointmentDialogWindowBuilder(dataCenter, viewModelCommunication);
+            appointmentModificationsVariable.StateChanged += OnCurrentModifiedAppointmentVariableChanged;			
 
 			ShowAddAppointmentDialog = new Command(() =>
 			{
@@ -98,7 +93,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 			get { return disabledOverlayVisible; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref disabledOverlayVisible, value); }
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+		
+        protected override void CleanUp()
+        {
+            appointmentModificationsVariable.StateChanged -= OnCurrentModifiedAppointmentVariableChanged;
+        }
+        public override event PropertyChangedEventHandler PropertyChanged;
+    }
 }

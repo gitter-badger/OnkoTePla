@@ -8,6 +8,7 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
@@ -27,7 +28,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private readonly Appointment appointment;
 		private readonly TherapyPlaceRowIdentifier initialLocalisation;
 
-		private readonly IGlobalState<AppointmentModifications> currentModifiedAppointment;
+		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
+	    private readonly IGlobalState<Date> selectedDateVariable;
 
 		private TherapyPlaceRowIdentifier currentLocation;
 		private OperatingMode operatingMode;
@@ -35,21 +37,25 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private Time   beginTime;
 		private Time   endTime;
 
-		private AppointmentModifications currentAppointmentModification;
+		
 		private bool showDisabledOverlay;
+		private AppointmentModifications currentAppointmentModifications;
 
 		public AppointmentViewModel(Appointment appointment,
 									IViewModelCommunication viewModelCommunication,
 									IDataCenter dataCenter,									
-									TherapyPlaceRowIdentifier initialLocalisation)
+									TherapyPlaceRowIdentifier initialLocalisation, 
+                                    IGlobalState<AppointmentModifications> appointmentModificationsVariable,
+                                    IGlobalState<Date> selectedDateVariable,
+									IGlobalState<Size> gridSizeVariable,
+									AdornerControl adornerControl)
 		{ 						
-			this.appointment = appointment;
+			this.appointment = appointment; 
 			this.initialLocalisation = initialLocalisation;
-			ViewModelCommunication = viewModelCommunication;		
-
-			currentModifiedAppointment = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-				CurrentModifiedAppointmentVariable
-			);
+		    this.appointmentModificationsVariable = appointmentModificationsVariable;
+		    this.selectedDateVariable = selectedDateVariable;
+		    ViewModelCommunication = viewModelCommunication;
+			AdornerControl = adornerControl;					
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentViewModel, Guid>(
 				AppointmentViewModelCollection,
@@ -58,19 +64,21 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			SwitchToEditMode = new ParameterrizedCommand<bool>(isInitalAdjusting =>
 				{
-					if (currentModifiedAppointment.Value == null)
+					if (appointmentModificationsVariable.Value == null)
 					{
-						currentAppointmentModification = new AppointmentModifications(appointment,
-																					  initialLocalisation.PlaceAndDate.MedicalPracticeId, 
-																					  dataCenter, 
-																					  viewModelCommunication,
-																					  isInitalAdjusting);
+						CurrentAppointmentModifications = new AppointmentModifications(appointment,
+																					   initialLocalisation.PlaceAndDate.MedicalPracticeId, 
+																					   dataCenter, 
+																					   viewModelCommunication,
+																					   selectedDateVariable,
+																					   gridSizeVariable,
+																					   isInitalAdjusting);
 
 
-						currentAppointmentModification.PropertyChanged += OnAppointmentModificationsPropertyChanged;
-						currentModifiedAppointment.Value = currentAppointmentModification;
+						CurrentAppointmentModifications.PropertyChanged += OnAppointmentModificationsPropertyChanged;
+						appointmentModificationsVariable.Value = CurrentAppointmentModifications;
 						OperatingMode = OperatingMode.Edit;
-						currentModifiedAppointment.StateChanged += OnCurrentModifiedAppointmentChanged;
+						appointmentModificationsVariable.StateChanged += OnCurrentModifiedAppointmentChanged;
 					}
 				}
 			);
@@ -83,7 +91,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 				    if (result == MessageDialogResult.Affirmative)
 				    {
-						currentModifiedAppointment.Value = null;
+						appointmentModificationsVariable.Value = null;
 
 						viewModelCommunication.SendTo(
 							AppointmentGridViewModelCollection,
@@ -130,8 +138,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			if (newModifiedAppointment == null || appointment != newModifiedAppointment.OriginalAppointment)
 			{
 				OperatingMode = OperatingMode.View;
-				currentAppointmentModification.PropertyChanged -= OnAppointmentModificationsPropertyChanged;
-				currentModifiedAppointment.StateChanged -= OnCurrentModifiedAppointmentChanged;
+				CurrentAppointmentModifications.PropertyChanged -= OnAppointmentModificationsPropertyChanged;
+				appointmentModificationsVariable.StateChanged -= OnCurrentModifiedAppointmentChanged;
 			}
 		}
 
@@ -180,8 +188,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
         public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
 		public string AppointmentDate    => appointment.Day.ToString();
 		public string Description        => appointment.Description;
-		public string Room               => appointment.TherapyPlace.Name;		
-	
+		public string Room               => appointment.TherapyPlace.Name;
+
+
+		public AppointmentModifications CurrentAppointmentModifications												// TODO: evtl noch benachrichtigung von der Variable
+		{
+			get { return currentAppointmentModifications; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref currentAppointmentModifications, value); }
+		}
+
+		public AdornerControl AdornerControl { get; }
+
 
 		public OperatingMode OperatingMode
 		{
@@ -209,10 +226,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			if (initialLocalisation != currentLocation)			
 				SetNewLocation(initialLocalisation, false);
-
-			ViewModelCommunication.GetGlobalViewModelVariable<Date>(
-				AppointmentGridSelectedDateVariable
-			).Value = appointment.Day;
+			
+            selectedDateVariable.Value = appointment.Day;
 		}
 
 		public void Process (ShowDisabledOverlay message)

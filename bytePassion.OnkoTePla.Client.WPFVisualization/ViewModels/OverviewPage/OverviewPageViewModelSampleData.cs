@@ -1,12 +1,12 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
+﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView;
+using System.ComponentModel;
+using System.Windows.Input;
 
 #pragma warning disable 0067
 
@@ -43,6 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 		public bool AddAppointmentPossible { get; }
 		public bool DisabledOverlayVisible { get; }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        public void Dispose() { }
+        public event PropertyChangedEventHandler PropertyChanged;	    
 	}
 }

@@ -63,7 +63,7 @@
         <panels:DeckPanel Grid.Row="1" SelectedLayer="{Binding SelectedPage}">
 
 
-            <views:OverviewPage DataContext="{Binding OverviewPageViewModel}"/>
+            <views:OverviewPage DataContext="{Binding OverviewPageViewModel}" x:Name="OverviewPage"/>
             <views:SearchPage   DataContext="{Binding SearchPageViewModel}"  />
             <views:OptionsPage  DataContext="{Binding OptionsPageViewModel}" />
 

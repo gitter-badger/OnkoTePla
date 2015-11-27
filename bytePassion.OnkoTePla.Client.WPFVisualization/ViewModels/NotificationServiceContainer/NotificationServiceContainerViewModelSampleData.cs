@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
+﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 #pragma warning disable 0067
 
@@ -25,6 +25,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationS
 
 		public ObservableCollection<INotificationViewModel> CurrentVisibleNotifications { get; }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        public void Dispose() { }
+        public event PropertyChangedEventHandler PropertyChanged;	    
 	}
 }

@@ -1,59 +1,47 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector
 {
-	public class MedicalPracticeSelectorViewModel : IMedicalPracticeSelectorViewModel
+    public class MedicalPracticeSelectorViewModel : DisposingObject, 
+                                                    IMedicalPracticeSelectorViewModel
 	{
-		private readonly IConfigurationReadRepository configuration;		
-		private readonly IGlobalState<Guid>            displayedPracticeState; 
+		private readonly IConfigurationReadRepository           configuration;		
+		private readonly IGlobalState<Guid>                     selectedMedicalPracticeIdVariable;
+	    private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable; 
 
 		private MedicalPractice selectedPractice;
 		private bool practiceIsSelectable;
 
-		public MedicalPracticeSelectorViewModel (IDataCenter dataCenter,
-												 IViewModelCommunication viewModelCommunication)
+		public MedicalPracticeSelectorViewModel (IDataCenter dataCenter, 
+                                                 IGlobalState<Guid> selectedMedicalPracticeIdVariable, 
+                                                 IGlobalState<AppointmentModifications> appointmentModificationsVariable)
 		{
-			configuration = dataCenter.Configuration;			 
+		    this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
+		    this.appointmentModificationsVariable = appointmentModificationsVariable;
+		    configuration = dataCenter.Configuration;			 
 
-			displayedPracticeState = viewModelCommunication.GetGlobalViewModelVariable<Guid>(
-				AppointmentGridDisplayedPracticeVariable
-			);			
-			displayedPracticeState.StateChanged += OnDisplayedPracticeStateChanged;
+			
+			selectedMedicalPracticeIdVariable.StateChanged += OnSelectedMedicalPracticeIdVariableChanged;
+            appointmentModificationsVariable.StateChanged += OnAppointmentModificationVariableChanged;
 
-			var appointmentModificationVariable = viewModelCommunication.GetGlobalViewModelVariable<AppointmentModifications>(
-				CurrentModifiedAppointmentVariable
-			);
-			appointmentModificationVariable.StateChanged += OnAppointmentModificationVariableChanged;
+			AvailableMedicalPractices = configuration.GetAllMedicalPractices()
+                                                     .ToObservableCollection();
 
-			AvailableMedicalPractices = new ObservableCollection<MedicalPractice>(configuration.GetAllMedicalPractices());
-
-			SelectedMedicalPractice = configuration.GetMedicalPracticeById(displayedPracticeState.Value);
+			SelectedMedicalPractice = configuration.GetMedicalPracticeById(selectedMedicalPracticeIdVariable.Value);
 
 			PracticeIsSelectable = true;
 		}
 
-		private void OnAppointmentModificationVariableChanged(AppointmentModifications appointmentModifications)
-		{
-			PracticeIsSelectable = appointmentModifications == null;
-		}
-
-		private void OnDisplayedPracticeStateChanged (Guid medicalPracticeId)
-		{
-			selectedPractice = configuration.GetMedicalPracticeById(medicalPracticeId);
-			PropertyChanged.Notify(this, nameof(SelectedMedicalPractice));
-		}		 		
+        public ObservableCollection<MedicalPractice> AvailableMedicalPractices { get; }         		
 
 		public MedicalPractice SelectedMedicalPractice
 		{
@@ -62,21 +50,35 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
 			{
 				if (!Equals(selectedPractice, value))
 				{					
-					displayedPracticeState.Value = value.Id;
+					selectedMedicalPracticeIdVariable.Value = value.Id;
 				}
 
 				PropertyChanged.ChangeAndNotify(this, ref selectedPractice, value);
 			}
 		}
-
-		public ObservableCollection<MedicalPractice> AvailableMedicalPractices { get; }
-
+		
 		public bool PracticeIsSelectable
 		{
 			get { return practiceIsSelectable; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref practiceIsSelectable, value); }
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+        private void OnAppointmentModificationVariableChanged(AppointmentModifications appointmentModifications)
+        {
+            PracticeIsSelectable = appointmentModifications == null;
+        }
+
+        private void OnSelectedMedicalPracticeIdVariableChanged(Guid medicalPracticeId)
+        {
+            selectedPractice = configuration.GetMedicalPracticeById(medicalPracticeId);
+            PropertyChanged.Notify(this, nameof(SelectedMedicalPractice));
+        }
+
+        protected override void CleanUp()
+        {
+            selectedMedicalPracticeIdVariable.StateChanged -= OnSelectedMedicalPracticeIdVariableChanged;
+            appointmentModificationsVariable.StateChanged -= OnAppointmentModificationVariableChanged;
+        }      
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

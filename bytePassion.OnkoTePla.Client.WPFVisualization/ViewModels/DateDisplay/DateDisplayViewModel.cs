@@ -1,24 +1,21 @@
-﻿using System;
-using System.ComponentModel;
-using System.Globalization;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
-
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
 {
-	public class DateDisplayViewModel : IDateDisplayViewModel
+    public class DateDisplayViewModel : DisposingObject, 
+                                        IDateDisplayViewModel
 	{
+	    private readonly IGlobalState<Date> selectedDateVariable; 
+
 		private string date;
 
-		public DateDisplayViewModel(IViewModelCommunication viewModelCommunication)
+		public DateDisplayViewModel(IGlobalState<Date> selectedDateVariable)
 		{
-			var selectedDateVariable = viewModelCommunication.GetGlobalViewModelVariable<Date>(
-				AppointmentGridSelectedDateVariable
-			);
-
+		    this.selectedDateVariable = selectedDateVariable;		    
 			selectedDateVariable.StateChanged += OnSelectedDateVariableChanged;
 
 			OnSelectedDateVariableChanged(selectedDateVariable.Value);
@@ -26,6 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
 
 		private void OnSelectedDateVariableChanged(Date newDate)
 		{
+            // TODO: getCulture from settings
 			Date = newDate.GetDisplayString(new CultureInfo("de-DE"));
 		}
 
@@ -34,7 +32,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
 			get { return date; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref date, value); }
 		}
+		
+	    protected override void CleanUp()
+	    {
+            selectedDateVariable.StateChanged -= OnSelectedDateVariableChanged;
+        }
 
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

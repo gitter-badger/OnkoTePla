@@ -1,9 +1,9 @@
-﻿using System;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Contracts.Patients;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Contracts.Patients;
 
 #pragma warning disable 0067
 
@@ -31,12 +31,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelect
 			ShowDeceasedPatients = true;
 		}
 
-		public string SearchFilter { get; set; }
-		public Patient SelectedPatient { get; set; }
-		public bool ListIsEmpty { get; }
-		public bool ShowDeceasedPatients { get; set; }
-		public CollectionViewSource Patients { get;  }
+		public string  SearchFilter         { get; set; }
+		public Patient SelectedPatient      { get; set; }
+		public bool    ListIsEmpty          { get; }
+		public bool    ShowDeceasedPatients { get; set; }
 
-		public event PropertyChangedEventHandler PropertyChanged;		
-	}
+		public CollectionViewSource Patients { get; }
+		
+	    public void Dispose() {	}
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
-using bytePassion.Lib.FrameworkExtensions;
+﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Enums;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
@@ -8,10 +6,12 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServi
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 {
-	public class MainWindowViewModel : IMainWindowViewModel
+	public class MainWindowViewModel : ViewModel, IMainWindowViewModel
     {        
         private int selectedPage;        
 
@@ -47,7 +47,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
 		}
 
 		public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
-	    
-        public event PropertyChangedEventHandler PropertyChanged;		
+	            
+	    protected override void CleanUp() {	}
+        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

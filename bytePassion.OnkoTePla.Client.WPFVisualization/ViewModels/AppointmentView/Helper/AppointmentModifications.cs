@@ -14,8 +14,6 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper
@@ -76,11 +74,15 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 										Guid medicalPracticeId, 
 										IDataCenter dataCenter, 
 										IViewModelCommunication viewModelCommunication,
+										IGlobalState<Date> selectedDateVariable, 
+										IGlobalState<Size> gridSizeVariable, 
 										bool isInitialAdjustment)
 		{
 			OriginalAppointment = originalAppointment;						
 			IsInitialAdjustment = isInitialAdjustment;
-
+			this.selectedDateVariable = selectedDateVariable;
+			this.gridSizeVariable = gridSizeVariable;
+			
 			this.dataCenter = dataCenter;
 			this.viewModelCommunication = viewModelCommunication;
 
@@ -103,14 +105,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 
 			versions.AddnewVersion(initialDataSet);
 
-			selectedDateVariable = viewModelCommunication.GetGlobalViewModelVariable<Date>(
-				AppointmentGridSelectedDateVariable
-			);
-			selectedDateVariable.StateChanged += OnSelectedDateVariableChanged;
-
-			gridSizeVariable = viewModelCommunication.GetGlobalViewModelVariable<Size>(
-				AppointmentGridSizeVariable	
-			);
+			
 			gridSizeVariable.StateChanged += OnGridSizeVariableChanged;
 
 			OnGridSizeVariableChanged(gridSizeVariable.Value);
