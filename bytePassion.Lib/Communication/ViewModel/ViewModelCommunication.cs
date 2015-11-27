@@ -1,50 +1,25 @@
-﻿using System;
-using bytePassion.Lib.Communication.MessageBus;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.ViewModel.Messages;
+using System;
 
 
 namespace bytePassion.Lib.Communication.ViewModel
 {
 
-	public class ViewModelCommunication : IViewModelCommunication
+    public class ViewModelCommunication : IViewModelCommunication
 	{
 		private readonly IMessageBus<ViewModelMessage> viewModelMessageBus;
-		private readonly IViewModelCollections     viewModelCollections;
-		private readonly IStateEngine              viewModelVariableEngine;
+		private readonly IViewModelCollections     viewModelCollections;		
 		
 
-		public ViewModelCommunication(IMessageBus<ViewModelMessage> viewModelMessageBus, 
-									  IStateEngine viewModelVariableEngine, 
+		public ViewModelCommunication(IMessageBus<ViewModelMessage> viewModelMessageBus, 									  
 									  IViewModelCollections viewModelCollections)
 		{
-			this.viewModelMessageBus = viewModelMessageBus;
-			this.viewModelVariableEngine = viewModelVariableEngine;
+			this.viewModelMessageBus = viewModelMessageBus;			
 			this.viewModelCollections = viewModelCollections;			
 		}
 
-
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////                                                                                   ///////////
-		/////////                               global variables                                    ///////////
-		/////////                                                                                   ///////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		public void RegisterGlobalViewModelVariable<TVariableType>(string identifier, TVariableType initialValue = default(TVariableType))
-		{
-			viewModelVariableEngine.RegisterState(identifier, initialValue);
-		}
-
-		public void RegisterGlobalReadOnlyViewModelVariable<TVariableType>(string identifier, TVariableType value)
-		{
-			viewModelVariableEngine.RegisterStateReadOnly(identifier, value);
-		}
-
-		public IGlobalState<TVariableType> GetGlobalViewModelVariable<TVariableType>(string identifier)
-		{
-			return viewModelVariableEngine.GetState<TVariableType>(identifier);
-		}
-
+		
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////                                                                                   ///////////

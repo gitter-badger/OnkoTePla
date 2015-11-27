@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\MessageBus\IRequestHandler.cs" />
-    <Compile Include="Communication\State\GlobalReadOnlyState.cs" />
     <Compile Include="Communication\State\IGlobalState.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCollectionItem.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCommunication.cs" />
@@ -137,8 +136,6 @@
     <Compile Include="WpfLib\Commands\Command.cs" />
     <Compile Include="WpfLib\Commands\ParameterrizedCommand.cs" />
     <Compile Include="Communication\State\GlobalState.cs" />
-    <Compile Include="Communication\State\IStateEngine.cs" />
-    <Compile Include="Communication\State\StateEngine.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCollections.cs" />
     <Compile Include="Communication\ViewModel\Messages\IViewModelMessageHandler.cs" />
     <Compile Include="Communication\ViewModel\ViewModelCollection.cs" />

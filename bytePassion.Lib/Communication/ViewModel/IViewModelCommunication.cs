@@ -1,28 +1,11 @@
-using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 
 
 namespace bytePassion.Lib.Communication.ViewModel
 {
 
-	public interface IViewModelCommunication {
-
-
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////                                                                                   ///////////
-		/////////                               global variables                                    ///////////
-		/////////                                                                                   ///////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		void RegisterGlobalViewModelVariable<TVariableType>(string identifier, 
-		                                                    TVariableType initialValue = default(TVariableType));
-
-		void RegisterGlobalReadOnlyViewModelVariable<TVariableType>(string identifier,
-		                                                            TVariableType value);
-
-		IGlobalState<TVariableType> GetGlobalViewModelVariable<TVariableType>(string identifier);
-
-
+    public interface IViewModelCommunication {
+		
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////                                                                                   ///////////
