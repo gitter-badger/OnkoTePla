@@ -51,6 +51,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 
 			OnSelectedDateChanged(selectedDateVariable.Value);
 			OnSelectedMedicalPracticeIdChanged(selectedMedicalPracticeIdVariable.Value);
+			OnAppointmentModificationsChanged(appointmentModificationsVariable.Value);
 
 			ViewModelCommunication = viewModelCommunication;
 			DataCenter = dataCenter;
