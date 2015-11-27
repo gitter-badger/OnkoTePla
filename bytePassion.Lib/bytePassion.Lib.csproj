@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Communication\MessageBus\IRequestHandler.cs" />
     <Compile Include="Communication\State\IGlobalState.cs" />
+    <Compile Include="Communication\State\IGlobalStateReadOnly.cs" />
+    <Compile Include="Communication\State\IGlobalStateWriteOnly.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCollectionItem.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCommunication.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCommunicationDeliverer.cs" />
