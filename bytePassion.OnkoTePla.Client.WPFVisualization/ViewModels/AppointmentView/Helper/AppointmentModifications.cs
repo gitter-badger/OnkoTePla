@@ -87,8 +87,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			this.viewModelCommunication = viewModelCommunication;
 
 			versions = new VersionManager<ModificationDataSet>(100);
-			versions.CurrentVersionChanged += OnCurrentVersionChanged;
-			versions.PropertyChanged += OnVersionsManagerPropertyChanged;
+
+			versions.CurrentVersionChanged    += OnCurrentVersionChanged;
+			versions.PropertyChanged          += OnVersionsManagerPropertyChanged;			
+			selectedDateVariable.StateChanged += OnSelectedDateVariableChanged;						
+			gridSizeVariable.StateChanged     += OnGridSizeVariableChanged;
+
+			OnGridSizeVariableChanged(gridSizeVariable.Value);
 
 			var aggregateIdentifier = new AggregateIdentifier(originalAppointment.Day, medicalPracticeId);
 			InitialLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, originalAppointment.TherapyPlace.Id);
@@ -103,12 +108,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 														 InitialLocation,
 														 true);
 
-			versions.AddnewVersion(initialDataSet);
-
-			
-			gridSizeVariable.StateChanged += OnGridSizeVariableChanged;
-
-			OnGridSizeVariableChanged(gridSizeVariable.Value);
+			versions.AddnewVersion(initialDataSet);									
 		}
 
 		private void OnVersionsManagerPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
