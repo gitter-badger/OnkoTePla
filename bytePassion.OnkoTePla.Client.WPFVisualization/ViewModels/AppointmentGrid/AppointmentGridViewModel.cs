@@ -65,8 +65,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			this.selectedDateVariable = selectedDateVariable;
 
 	        IsActive = false;
-			
-			
+
+			gridSizeVariable.StateChanged += OnGridSizeChanged;			
 			roomFilterVariable.StateChanged += OnGlobalRoomFilterVariableChanged;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
@@ -246,7 +246,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		{			
 			gridSizeVariable.StateChanged   -= OnGridSizeChanged;			
 			roomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;			
-			readModel.AppointmentChanged          -= OnReadModelAppointmentChanged;
+			readModel.AppointmentChanged    -= OnReadModelAppointmentChanged;
 
 			viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
 				AppointmentGridViewModelCollection,
