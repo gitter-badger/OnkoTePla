@@ -52,7 +52,7 @@ namespace bytePassion.Lib.GeometryLib.Base
 
         public override bool   Equals (object obj) => this.Equals(obj, (a1, a2) => GeometryLibUtils.DoubleEquals(a1.PosValue.Value, a2.PosValue.Value));
 		public override int    GetHashCode ()      => Value.GetHashCode();
-	    public override string ToString()          => GeometryLibUtils.DoubleFormat(Value);
+	    public override string ToString()          => GeometryLibUtils.DoubleFormat(Value) + " deg";
 
         public static bool operator >  (Angle a1, Angle a2) => a1.Value > a2.Value;
 		public static bool operator >= (Angle a1, Angle a2) => a1 > a2 || a1 == a2;
