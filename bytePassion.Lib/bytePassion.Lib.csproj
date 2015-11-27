@@ -157,6 +157,9 @@
     <Compile Include="WpfLib\ConverterBase\GenericFiveToOneValueConverter.cs" />
     <Compile Include="WpfLib\ConverterBase\GenericFourToOneValueConverter.cs" />
     <Compile Include="WpfLib\Converter\BoolToHiddenVisibilityConverter.cs" />
+    <Compile Include="WpfLib\Converter\SemanticDoubleTypeToDoubleConverter.cs" />
+    <Compile Include="WpfLib\Converter\XCoordToDoubleConverter.cs" />
+    <Compile Include="WpfLib\Converter\YCoordToDoubleConverter.cs" />
     <Compile Include="WpfLib\Dialogs\Input\InputBox.cs" />
     <Compile Include="WpfLib\Dialogs\Input\InputBoxWindow\Helper\InputBoxResult.cs" />
     <Compile Include="WpfLib\Dialogs\Input\InputBoxWindow\InputBoxWindow.xaml.cs">
