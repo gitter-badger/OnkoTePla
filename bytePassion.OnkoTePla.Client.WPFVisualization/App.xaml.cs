@@ -1,4 +1,7 @@
-﻿using bytePassion.Lib.Communication.MessageBus;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Types.Repository;
 using bytePassion.Lib.Utils;
@@ -13,14 +16,11 @@ using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Client.Resources;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
-using bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization
 {

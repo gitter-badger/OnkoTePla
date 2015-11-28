@@ -263,8 +263,8 @@
     <Compile Include="Views\UndoRedoView.xaml.cs">
       <DependentUpon>UndoRedoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowBuilder\AddAppointmentDialogWindowBuilder.cs" />
-    <Compile Include="WindowBuilder\MainWindowBuilder.cs" />
+    <Compile Include="Factorys\WindowBuilder\AddAppointmentDialogWindowBuilder.cs" />
+    <Compile Include="Factorys\WindowBuilder\MainWindowBuilder.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>

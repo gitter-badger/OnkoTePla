@@ -12,8 +12,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Views;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
-
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
 {
     public class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
 	{

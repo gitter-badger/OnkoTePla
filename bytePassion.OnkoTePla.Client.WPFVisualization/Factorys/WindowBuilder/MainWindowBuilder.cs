@@ -13,6 +13,7 @@ using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
@@ -36,10 +37,8 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowVi
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
-
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
 {
     public class MainWindowBuilder : IWindowBuilder<MainWindow>
 	{		
@@ -85,19 +84,19 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.WindowBuilder
             // Create ViewModelCollection
 
             viewModelCommunication.CreateViewModelCollection<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
-				TherapyPlaceRowViewModelCollection
+				Constants.TherapyPlaceRowViewModelCollection
 			);
 
 			viewModelCommunication.CreateViewModelCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-				AppointmentGridViewModelCollection
+				Constants.AppointmentGridViewModelCollection
 			);
 
 			viewModelCommunication.CreateViewModelCollection<ITimeGridViewModel, AggregateIdentifier>(
-				TimeGridViewModelCollection
+				Constants.TimeGridViewModelCollection
 			);
 
 			viewModelCommunication.CreateViewModelCollection<IAppointmentViewModel, Guid>(
-				AppointmentViewModelCollection
+				Constants.AppointmentViewModelCollection
 			);
 
             // build modules
