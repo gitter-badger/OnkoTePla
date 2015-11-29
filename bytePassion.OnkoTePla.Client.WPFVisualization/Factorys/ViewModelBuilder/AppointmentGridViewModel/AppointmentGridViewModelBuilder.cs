@@ -6,6 +6,7 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
@@ -23,6 +24,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilde
 		private readonly IGlobalState<Date> selectedDateVariable;
 		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
 		private readonly IGlobalState<Guid> selectedMedicalPracticeIdVariable;
+		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 
 		public AppointmentGridViewModelBuilder(IDataCenter dataCenter, 
 											   IViewModelCommunication viewModelCommunication, 
@@ -32,7 +34,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilde
 											   IGlobalState<Guid?> roomFilterVariable, 
 											   IGlobalState<Date> selectedDateVariable, 
 											   IGlobalState<AppointmentModifications> appointmentModificationsVariable, 
-											   IGlobalState<Guid> selectedMedicalPracticeIdVariable)
+											   IGlobalState<Guid> selectedMedicalPracticeIdVariable, 
+											   IAppointmentViewModelBuilder appointmentViewModelBuilder)
+											   
 		{
 			this.dataCenter = dataCenter;
 			this.viewModelCommunication = viewModelCommunication;
@@ -43,6 +47,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilde
 			this.selectedDateVariable = selectedDateVariable;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;
 			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
+			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 		}
 
 		public IAppointmentGridViewModel Build(AggregateIdentifier identifier)
@@ -52,21 +57,27 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilde
 			IAppointmentGridViewModel gridViewModel;
 
 			if (medicalPractice.HoursOfOpening.IsOpen(identifier.Date))
+			{
 				gridViewModel = new ViewModels.AppointmentGrid.AppointmentGridViewModel(identifier,
-															 dataCenter,
-															 commandBus,
-															 viewModelCommunication,
-															 gridSizeVariable,
-															 roomFilterVariable,
-															 selectedDateVariable,
-															 appointmentModificationsVariable,
-															 selectedMedicalPracticeIdVariable,
-															 adornerControl);
+																						dataCenter,
+																						commandBus,
+																						viewModelCommunication,
+																						gridSizeVariable,
+																						roomFilterVariable,
+																						selectedDateVariable,
+																						appointmentModificationsVariable,
+																						selectedMedicalPracticeIdVariable,
+																						adornerControl,
+																						appointmentViewModelBuilder);
+			}
 			else
+			{
 				gridViewModel = new ClosedDayGridViewModel(identifier,
 														   dataCenter,
 														   viewModelCommunication,
 														   gridSizeVariable);
+			}
+				
 
 			return gridViewModel;
 		}

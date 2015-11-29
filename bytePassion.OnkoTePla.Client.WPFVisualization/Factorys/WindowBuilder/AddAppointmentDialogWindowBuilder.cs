@@ -5,6 +5,7 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
@@ -27,13 +28,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
 
 	    private readonly AdornerControl adornerControl;
 
+	    private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
+
 	    public AddAppointmentDialogWindowBuilder(IDataCenter dataCenter,
 												 IViewModelCommunication viewModelCommunication,                                                  
                                                  IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable, 
                                                  IGlobalState<AppointmentModifications> appointmentModificationVariable, 
                                                  IGlobalState<Date> selectedDateVariable, 
 												 IGlobalState<Size> gridSizeVariable,
-												 AdornerControl adornerControl)
+												 AdornerControl adornerControl, 
+												 IAppointmentViewModelBuilder appointmentViewModelBuilder)
 		{
 			this.dataCenter = dataCenter;
 			this.viewModelCommunication = viewModelCommunication;
@@ -42,6 +46,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
             this.selectedDateVariable = selectedDateVariable;
 	        this.gridSizeVariable = gridSizeVariable;
 		    this.adornerControl = adornerControl;
+		    this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 		}
 
 		public AddAppointmentDialog BuildWindow()
@@ -62,7 +67,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
 																		gridSizeVariable,
                                                                         dataCenter, 																		
 																		selectedMedicalPractiveVariable.Value,
-																		adornerControl)
+																		adornerControl,
+																		appointmentViewModelBuilder)
 			       };
 		}
 
