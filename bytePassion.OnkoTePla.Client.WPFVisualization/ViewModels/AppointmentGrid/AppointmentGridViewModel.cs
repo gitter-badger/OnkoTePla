@@ -6,13 +6,12 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.TherapyPlaceRowViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
@@ -41,19 +40,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		private readonly IGlobalState<Size> gridSizeVariable;
 		private readonly IGlobalState<Guid?> roomFilterVariable;		
 	    private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;		
-		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
+		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;		
 
 		public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
 										ICommandBus commandBus,
 										IViewModelCommunication viewModelCommunication,
                                         IGlobalState<Size> gridSizeVariable,
-										IGlobalState<Guid?> roomFilterVariable,
-										IGlobalState<Date> selectedDateVariable,
-                                        IGlobalState<AppointmentModifications> appointmentModificationsVariable,
-										IGlobalState<Guid> selectedMedicalPracticeIdVariable,
-										AdornerControl adornerControl,
-										IAppointmentViewModelBuilder appointmentViewModelBuilder)
+										IGlobalState<Guid?> roomFilterVariable,										
+                                        IGlobalState<AppointmentModifications> appointmentModificationsVariable,										
+										IAppointmentViewModelBuilder appointmentViewModelBuilder,
+										ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 		{
 			this.dataCenter = dataCenter;
 			this.commandBus = commandBus;
@@ -61,9 +58,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		    this.gridSizeVariable = gridSizeVariable;
 		    this.roomFilterVariable = roomFilterVariable;
             this.appointmentModificationsVariable = appointmentModificationsVariable;			
-			this.appointmentViewModelBuilder = appointmentViewModelBuilder;			
+			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 
-	        IsActive = false;
+			IsActive = false;
 
 			gridSizeVariable.StateChanged += OnGridSizeChanged;			
 			roomFilterVariable.StateChanged += OnGlobalRoomFilterVariableChanged;
@@ -92,15 +89,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				foreach (var therapyPlace in room.TherapyPlaces)
 				{
 					var location = new TherapyPlaceRowIdentifier(Identifier, therapyPlace.Id);
-					TherapyPlaceRowViewModels.Add(new TherapyPlaceRowViewModel(viewModelCommunication,
-																			   dataCenter, 
-																			   therapyPlace, 																										 
-																			   room.DisplayedColor, 
-																			   location,
-																			   adornerControl,
-																			   appointmentModificationsVariable,
-																			   selectedDateVariable,
-																			   selectedMedicalPracticeIdVariable));
+
+					TherapyPlaceRowViewModels.Add(therapyPlaceRowViewModelBuilder.Build(therapyPlace, room, location));					
 				}
 			}
 
