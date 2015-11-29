@@ -94,8 +94,8 @@
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
     <Compile Include="Converter\TimeFromDateConverter.cs" />
     <Compile Include="Enums\MainPage.cs" />
-    <Compile Include="Factorys\ViewModelBuilder\AppointmentGridViewModelBuilder.cs" />
-    <Compile Include="Factorys\ViewModelBuilder\IAppointmentGridViewModelBuilder.cs" />
+    <Compile Include="Factorys\ViewModelBuilder\AppointmentGridViewModel\AppointmentGridViewModelBuilder.cs" />
+    <Compile Include="Factorys\ViewModelBuilder\AppointmentGridViewModel\IAppointmentGridViewModelBuilder.cs" />
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Model\DataCenter.cs" />
     <Compile Include="Model\IDataCenter.cs" />

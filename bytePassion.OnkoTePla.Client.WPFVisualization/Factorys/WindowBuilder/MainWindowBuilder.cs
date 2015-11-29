@@ -13,7 +13,7 @@ using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentGridViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Global;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler;
@@ -41,7 +41,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
 {
-    public class MainWindowBuilder : IWindowBuilder<MainWindow>
+	public class MainWindowBuilder : IWindowBuilder<MainWindow>
 	{		
 		private readonly IDataCenter dataCenter;
 		private readonly ICommandBus commandBus;
