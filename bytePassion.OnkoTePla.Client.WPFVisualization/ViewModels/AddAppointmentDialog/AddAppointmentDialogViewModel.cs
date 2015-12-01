@@ -5,16 +5,13 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -28,16 +25,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 	public class AddAppointmentDialogViewModel : DisposingObject, 
                                                  IAddAppointmentDialogViewModel
 	{
-		private readonly IViewModelCommunication viewModelCommunication;
+		
 		private readonly IDataCenter dataCenter;
 		private readonly Date creationDate;
 		private readonly Guid medicalPracticeId;
-	    private readonly AdornerControl adornerControl;
+	   
 	    private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
-	    private readonly IGlobalState<Patient> selectedPatientVariable;
-        private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
-        private readonly IGlobalState<Date> selectedDateVariable;
-	    private readonly IGlobalState<Size> gridSizeVariable; 
+	    private readonly IGlobalState<Patient> selectedPatientVariable;        
         private readonly IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> allAvailableTimeSlots;
 
 		private Patient selectedPatient;
@@ -49,27 +43,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 		
 		private Tuple<TherapyPlaceRowIdentifier, TimeSlot> firstFittingTimeSlot; 
          
-		public AddAppointmentDialogViewModel(IPatientSelectorViewModel patientSelectorViewModel,											 
-											 IViewModelCommunication viewModelCommunication,
+		public AddAppointmentDialogViewModel(IPatientSelectorViewModel patientSelectorViewModel,											 											 
                                              IGlobalState<Patient> selectedPatientVariable,
-                                             IGlobalState<AppointmentModifications> appointmentModificationsVariable,
                                              IGlobalState<Date> selectedDateVariable,
-											 IGlobalState<Size> gridSizeVariable,
                                              IDataCenter dataCenter,											 
 											 Guid medicalPracticeId,
-											 AdornerControl adornerControl,
 											 IAppointmentViewModelBuilder appointmentViewModelBuilder)
-		{
-			this.viewModelCommunication = viewModelCommunication;
+		{			
 			this.dataCenter = dataCenter;
-			this.creationDate = selectedDateVariable.Value;
+			creationDate = selectedDateVariable.Value;
 			this.medicalPracticeId = medicalPracticeId;
-			this.adornerControl = adornerControl;
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
-			this.gridSizeVariable = gridSizeVariable;
 			this.selectedPatientVariable = selectedPatientVariable;
-		    this.appointmentModificationsVariable = appointmentModificationsVariable;
-		    this.selectedDateVariable = selectedDateVariable;
 
 		    allAvailableTimeSlots = GetFreeTimeSlotsForADay(creationDate, medicalPracticeId);					
 
@@ -78,6 +63,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 			PatientSelectorViewModel = patientSelectorViewModel;
 
 			CloseDialog = new Command(CloseWindow);
+
 			CreateAppointment = new Command(CreateNewAppointment,
 											() => CreationState != AppointmentCreationState.NoPatientSelected && 
 												  CreationState != AppointmentCreationState.NoSpaceAvailable,
@@ -345,8 +331,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 			return allSlots;
 		}
 
-		private static IEnumerable<TimeSlot> ComputeSlots(Time openingTime, Time closingTime,
-			IEnumerable<Appointment> appointments)
+		private static IEnumerable<TimeSlot> ComputeSlots(Time openingTime, Time closingTime, IEnumerable<Appointment> appointments)
 		{
 			var sortedAppointments = appointments.ToList();
 			sortedAppointments.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));

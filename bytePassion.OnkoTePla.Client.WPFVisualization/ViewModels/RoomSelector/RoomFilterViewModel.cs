@@ -1,20 +1,20 @@
-﻿using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media;
+using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 {
-    public class RoomFilterViewModel : DisposingObject,
+    public class RoomFilterViewModel : ViewModel,
                                        IRoomFilterViewModel
 	{
 		private readonly RoomSelectorData allRoomFilter = new RoomSelectorData("Alle Räume", null, Colors.White);
@@ -114,6 +114,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
             displayedMedicalPractice.StateChanged += OnDisplayedPracticeStateChanged;
             selectedDate.StateChanged += OnSelectedDateChanged;
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }
