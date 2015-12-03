@@ -185,7 +185,6 @@
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnEnter.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnMouseUp.cs" />
     <Compile Include="WpfLib\Behaviors\SizeReportingBehavior.cs" />
-    <Compile Include="WpfLib\Behaviors\ZoomOnMouseWheelBehavior.cs" />
     <Compile Include="WpfLib\Computations\AddOffsetToDoubleConverter.cs" />
     <Compile Include="WpfLib\Computations\AngleInverter.cs" />
     <Compile Include="WpfLib\Computations\BoolInverter.cs" />
