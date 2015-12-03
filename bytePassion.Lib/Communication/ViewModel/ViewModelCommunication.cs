@@ -1,111 +1,121 @@
 ﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.Lib.FrameworkExtensions;
 using System;
+using System.Linq;
 
 
 namespace bytePassion.Lib.Communication.ViewModel
 {
 
     public class ViewModelCommunication : IViewModelCommunication
-	{
-		private readonly IMessageBus<ViewModelMessage> viewModelMessageBus;
-		private readonly IViewModelCollections     viewModelCollections;		
-		
+    {
+        private readonly IMessageBus<ViewModelMessage> viewModelMessageBus;
+        private readonly IViewModelCollections viewModelCollections;
 
-		public ViewModelCommunication(IMessageBus<ViewModelMessage> viewModelMessageBus, 									  
-									  IViewModelCollections viewModelCollections)
-		{
-			this.viewModelMessageBus = viewModelMessageBus;			
-			this.viewModelCollections = viewModelCollections;			
-		}
+        public ViewModelCommunication(IMessageBus<ViewModelMessage> viewModelMessageBus,
+                                      IViewModelCollections viewModelCollections)
+        {
+            this.viewModelMessageBus = viewModelMessageBus;
+            this.viewModelCollections = viewModelCollections;
+        }
 
-		
 
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////                                                                                   ///////////
-		/////////                               viewModelCollections                                ///////////
-		/////////                                                                                   ///////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		public void CreateViewModelCollection<TViewModel, TIdent>(string identifier)
-			where TViewModel : IViewModelCollectionItem<TIdent>
-		{
-			viewModelCollections.CreateViewModelCollection<TViewModel, TIdent>(identifier);
-		}
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////                                                                                   ///////////
+        /////////                               viewModelCollections                                ///////////
+        /////////                                                                                   ///////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		public void RemoveViewModelCollection(string identifier)
-		{
-			viewModelCollections.RemoveViewModelCollection(identifier);
-		}
+        public void CreateViewModelCollection<TViewModel, TIdent>(string identifier)
+            where TViewModel : IViewModelCollectionItem<TIdent>
+        {
+            viewModelCollections.CreateViewModelCollection<TViewModel, TIdent>(identifier);
+        }
 
-		public void RegisterViewModelAtCollection<TViewModel, TIdent>(string collectionIdentifier, 
-																	  TViewModel viewModel)
-			where TViewModel : IViewModelCollectionItem<TIdent>
-		{
-			var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(collectionIdentifier);
-			viewModelCollection.AddViewModel(viewModel);
-		}
+        public void RemoveViewModelCollection(string identifier)
+        {
+            viewModelCollections.RemoveViewModelCollection(identifier);
+        }
 
-		public void DeregisterViewModelAtCollection<TViewModel, TIdent>(string collectionIdentifier, TViewModel viewModel)
-			where TViewModel : IViewModelCollectionItem<TIdent>
-		{
-			var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(collectionIdentifier);
-			viewModelCollection.RemoveViewModel(viewModel);
-		}
+        public void RegisterViewModelAtCollection<TViewModel, TIdent>(string collectionIdentifier,
+                                                                      TViewModel viewModel)
+            where TViewModel : IViewModelCollectionItem<TIdent>
+        {
+            var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(collectionIdentifier);
+            viewModelCollection.AddViewModel(viewModel);
+        }
 
-		public void SendTo<TIdent, TMessage>(string viewModelCollectionIdentifier, 
-											 TIdent viewModelIdentifier, 
-											 TMessage message)
-			where TMessage : ViewModelMessage
-		{
-			var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(viewModelCollectionIdentifier);
+        public void DeregisterViewModelAtCollection<TViewModel, TIdent>(string collectionIdentifier, TViewModel viewModel)
+            where TViewModel : IViewModelCollectionItem<TIdent>
+        {
+            var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(collectionIdentifier);
+            viewModelCollection.RemoveViewModel(viewModel);
+        }
 
-			var viewModel = viewModelCollection.GetViewModel(viewModelIdentifier);
+        public void SendTo<TIdent, TMessage>(string viewModelCollectionIdentifier,
+                                             TIdent viewModelIdentifier,
+                                             TMessage message)
+            where TMessage : ViewModelMessage
+        {
+            var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(viewModelCollectionIdentifier);
 
-			var viewModelAsMessageHandler = viewModel as IViewModelMessageHandler<TMessage>;
-			viewModelAsMessageHandler?.Process(message);
-		}
+            var viewModel = viewModelCollection.GetViewModel(viewModelIdentifier);
 
-		public TResult SynchronRequest<TResult, TIdent, TMessage>(string viewModelCollectionIdentifier, 
-																  TIdent viewModelIdentifier, 
-																  TMessage requestMessage)
-			where TMessage : ViewModelRequest
-		{
-			var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(viewModelCollectionIdentifier);
+            var viewModelAsMessageHandler = viewModel as IViewModelMessageHandler<TMessage>;
+            viewModelAsMessageHandler?.Process(message);
+        }
 
-			var viewModel = viewModelCollection.GetViewModel(viewModelIdentifier);
+        public void SendToCollection<TIdent, TMessage>(string viewModelCollectionIdentifier, TMessage message)
+            where TMessage : ViewModelMessage
+        {
+            var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(viewModelCollectionIdentifier);
 
-			var viewModelAsRequestHandler = viewModel as IViewModelRequestHandler<TMessage, TResult>;
+            viewModelCollection.GetAllViewModelsFromCollection()
+                               .Select(viewModel => viewModel as IViewModelMessageHandler<TMessage>)
+                               .Do(viewModelAsMessageHandler => viewModelAsMessageHandler?.Process(message));
+        }
 
-			if (viewModelAsRequestHandler == null)
-				throw new InvalidOperationException("there is no handler for this request");
+        public TResult SynchronRequest<TResult, TIdent, TMessage>(string viewModelCollectionIdentifier,
+                                                                  TIdent viewModelIdentifier,
+                                                                  TMessage requestMessage)
+            where TMessage : ViewModelRequest
+        {
+            var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(viewModelCollectionIdentifier);
 
-			return viewModelAsRequestHandler.Process(requestMessage);
-		}
+            var viewModel = viewModelCollection.GetViewModel(viewModelIdentifier);
 
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////                                                                                   ///////////
-		/////////                               viewModelMessageBus                                 ///////////
-		/////////                                                                                   ///////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
+            var viewModelAsRequestHandler = viewModel as IViewModelRequestHandler<TMessage, TResult>;
 
-		public void RegisterViewModelMessageHandler<TMessage>(IViewModelMessageHandler<TMessage> viewModelMessageHandler)
-			where TMessage: ViewModelMessage
-		{
-			viewModelMessageBus.RegisterMessageHandler(viewModelMessageHandler);
-		}
+            if (viewModelAsRequestHandler == null)
+                throw new InvalidOperationException("there is no handler for this request");
 
-		public void DeregisterViewModelMessageHandler<TMessage>(IViewModelMessageHandler<TMessage> viewModelMessageHandler)
-			where TMessage : ViewModelMessage
-		{
-			viewModelMessageBus.DeregisterMessageHander(viewModelMessageHandler);
-		}
+            return viewModelAsRequestHandler.Process(requestMessage);
+        }
 
-		public void Send<TMessage>(TMessage message) 
-			where TMessage : ViewModelMessage
-		{
-			viewModelMessageBus.Send(message);
-		}
-		
-	}
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////                                                                                   ///////////
+        /////////                               viewModelMessageBus                                 ///////////
+        /////////                                                                                   ///////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public void RegisterViewModelMessageHandler<TMessage>(IViewModelMessageHandler<TMessage> viewModelMessageHandler)
+            where TMessage : ViewModelMessage
+        {
+            viewModelMessageBus.RegisterMessageHandler(viewModelMessageHandler);
+        }
+
+        public void DeregisterViewModelMessageHandler<TMessage>(IViewModelMessageHandler<TMessage> viewModelMessageHandler)
+            where TMessage : ViewModelMessage
+        {
+            viewModelMessageBus.DeregisterMessageHander(viewModelMessageHandler);
+        }
+
+        public void Send<TMessage>(TMessage message)
+            where TMessage : ViewModelMessage
+        {
+            viewModelMessageBus.Send(message);
+        }
+
+    }
 }
