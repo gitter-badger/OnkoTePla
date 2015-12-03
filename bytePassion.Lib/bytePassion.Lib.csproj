@@ -131,7 +131,6 @@
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnEscape.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\GridViewSplitColumnsEqualyBehavior.cs" />
-    <Compile Include="WpfLib\Commands\UpdateCommandInformation.cs" />
     <Compile Include="Types\Clonable\ClonableList.cs" />
     <Compile Include="WpfLib\Commands\Command.cs" />
     <Compile Include="WpfLib\Commands\ParameterrizedCommand.cs" />
@@ -151,6 +150,10 @@
     <Compile Include="TimeLib\TimeExtensions.cs" />
     <Compile Include="Utils\Converter.cs" />
     <Compile Include="FrameworkExtensions\EqualsExtension.cs" />
+    <Compile Include="WpfLib\Commands\Updater\GlobalStateCommandUpdate.cs" />
+    <Compile Include="WpfLib\Commands\Updater\GlobalStateReadOnlyCommandUpdate.cs" />
+    <Compile Include="WpfLib\Commands\Updater\ICommandUpdater.cs" />
+    <Compile Include="WpfLib\Commands\Updater\PropertyChangedCommandUpdater.cs" />
     <Compile Include="WpfLib\ConverterBase\GenericFiveToOneValueConverter.cs" />
     <Compile Include="WpfLib\ConverterBase\GenericFourToOneValueConverter.cs" />
     <Compile Include="WpfLib\Converter\BoolToHiddenVisibilityConverter.cs" />

@@ -1,5 +1,7 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.WpfLib.Commands.Updater;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 
@@ -7,24 +9,30 @@ namespace bytePassion.Lib.WpfLib.Commands
 {
     public class Command : DisposingObject, ICommand
     {
+        public event EventHandler CanExecuteChanged;
+
         private readonly Func<bool> canExecute;
         private readonly Action execute;
-        private readonly UpdateCommandInformation updateCommandInformation;
+        private readonly IReadOnlyList<ICommandUpdater> commandUpdaterList;
 
 
         public Command(Action execute, Func<bool> canExecute = null)
         {
             this.execute = execute;
             this.canExecute = canExecute;
+            this.commandUpdaterList = null;
         }
 
-        public Command(Action execute, Func<bool> canExecute, UpdateCommandInformation updateCommandInformation)
+        public Command(Action execute, Func<bool> canExecute, params ICommandUpdater[] commandUpdaterList)
         {
             this.execute = execute;
             this.canExecute = canExecute;
-            this.updateCommandInformation = updateCommandInformation;
+            this.commandUpdaterList = commandUpdaterList;
 
-            updateCommandInformation.UpdateOfCanExecuteChangedRequired += CanExecuteChangedRequired;
+            foreach (var commandUpdater in commandUpdaterList)
+            {
+                commandUpdater.UpdateOfCanExecuteChangedRequired += CanExecuteChangedRequired;
+            }
         }
 
         private void CanExecuteChangedRequired(object sender, EventArgs eventArgs)
@@ -45,8 +53,6 @@ namespace bytePassion.Lib.WpfLib.Commands
             execute();
         }
 
-        public event EventHandler CanExecuteChanged;
-
         public void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
@@ -54,10 +60,13 @@ namespace bytePassion.Lib.WpfLib.Commands
 
         protected override void CleanUp()
         {
-            if (updateCommandInformation != null)
+            if (commandUpdaterList != null)
             {
-                updateCommandInformation.UpdateOfCanExecuteChangedRequired -= CanExecuteChangedRequired;
-                updateCommandInformation.Dispose();
+                foreach (var commandUpdater in commandUpdaterList)
+                {
+                    commandUpdater.UpdateOfCanExecuteChangedRequired -= CanExecuteChangedRequired;
+                    commandUpdater.Dispose();
+                }
             }
         }
     }

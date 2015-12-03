@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.Lib.WpfLib.Commands.Updater;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
@@ -17,6 +12,12 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowVi
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
@@ -67,23 +68,23 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 			CreateAppointment = new Command(CreateNewAppointment,
 											() => CreationState != AppointmentCreationState.NoPatientSelected && 
 												  CreationState != AppointmentCreationState.NoSpaceAvailable,
-											new UpdateCommandInformation(this, nameof(CreationState)));
+											new PropertyChangedCommandUpdater(this, nameof(CreationState)));
 
 			HourPlusOne = new Command(DoHourPlusOne,
 									  CanHourPlusOne,
-									  new UpdateCommandInformation(this, nameof(DurationHours)));
+									  new PropertyChangedCommandUpdater(this, nameof(DurationHours)));
 
 			HourMinusOne = new Command(DoHourMinusOne,
 									   CanHourMinusOne,
-									   new UpdateCommandInformation(this, nameof(DurationHours), nameof(DurationMinutes)));
+									   new PropertyChangedCommandUpdater(this, nameof(DurationHours), nameof(DurationMinutes)));
 
 			MinutePlusFifteen = new Command(DoMinutePlusFifteen,
 											CanMinutePlusFifteen,
-											new UpdateCommandInformation(this, nameof(DurationHours), nameof(DurationMinutes)));
+											new PropertyChangedCommandUpdater(this, nameof(DurationHours), nameof(DurationMinutes)));
 
 			MinuteMinusFifteen = new Command(DoMinuteMinusFifteen,
 											 CanMinuteMinusFifteen,
-											 new UpdateCommandInformation(this, nameof(DurationHours), nameof(DurationMinutes)));
+											 new PropertyChangedCommandUpdater(this, nameof(DurationHours), nameof(DurationMinutes)));
 
 			SelectedPatient = Patient.Dummy;
 
