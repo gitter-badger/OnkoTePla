@@ -35,11 +35,6 @@ namespace bytePassion.Lib.Communication.ViewModel
                                                 TMessage message)
             where TMessage : ViewModelMessage;
 
-        TResult SynchronRequest<TResult, TIdent, TMessage>(string viewModelCollectionIdentfier,
-                                                           TIdent viewModelIdentifier,
-                                                           TMessage requestMessage)
-            where TMessage : ViewModelRequest;
-
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////                                                                                   ///////////

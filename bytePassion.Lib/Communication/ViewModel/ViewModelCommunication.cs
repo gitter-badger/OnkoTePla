@@ -1,7 +1,6 @@
 ﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.Lib.FrameworkExtensions;
-using System;
 using System.Linq;
 
 
@@ -74,24 +73,7 @@ namespace bytePassion.Lib.Communication.ViewModel
             viewModelCollection.GetAllViewModelsFromCollection()
                                .Select(viewModel => viewModel as IViewModelMessageHandler<TMessage>)
                                .Do(viewModelAsMessageHandler => viewModelAsMessageHandler?.Process(message));
-        }
-
-        public TResult SynchronRequest<TResult, TIdent, TMessage>(string viewModelCollectionIdentifier,
-                                                                  TIdent viewModelIdentifier,
-                                                                  TMessage requestMessage)
-            where TMessage : ViewModelRequest
-        {
-            var viewModelCollection = viewModelCollections.GetViewModelCollection<TIdent>(viewModelCollectionIdentifier);
-
-            var viewModel = viewModelCollection.GetViewModel(viewModelIdentifier);
-
-            var viewModelAsRequestHandler = viewModel as IViewModelRequestHandler<TMessage, TResult>;
-
-            if (viewModelAsRequestHandler == null)
-                throw new InvalidOperationException("there is no handler for this request");
-
-            return viewModelAsRequestHandler.Process(requestMessage);
-        }
+        }       
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////                                                                                   ///////////

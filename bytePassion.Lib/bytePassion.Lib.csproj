@@ -52,9 +52,7 @@
     <Compile Include="Communication\ViewModel\IViewModelCollectionItem.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCommunication.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCommunicationDeliverer.cs" />
-    <Compile Include="Communication\ViewModel\Messages\IViewModelRequestHandler.cs" />
     <Compile Include="Communication\ViewModel\Messages\ViewModelMessage.cs" />
-    <Compile Include="Communication\ViewModel\Messages\ViewModelRequest.cs" />
     <Compile Include="ConcurrencyLib\BlockingExchanger.cs" />
     <Compile Include="ConcurrencyLib\BlockingQueue.cs" />
     <Compile Include="ConcurrencyLib\FixedThreadExecutor.cs" />
