@@ -4,6 +4,7 @@ using bytePassion.FileRename.ViewModel.Helper;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.Lib.WpfLib.Commands.Updater;
 using Ookii.Dialogs.Wpf;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -70,24 +71,24 @@ namespace bytePassion.FileRename.ViewModel
 
 					return true;
 				},
-				new UpdateCommandInformation(this, nameof(IsProcessStartable), 
-												   nameof(IsProcessStartable),
-												   nameof(ReplaceString),
-												   nameof(ReplaceType),
-												   nameof(SearchType),
-												   nameof(SearchString))
+				new PropertyChangedCommandUpdater(this, nameof(IsProcessStartable), 
+												  nameof(IsProcessStartable),
+												  nameof(ReplaceString),
+												  nameof(ReplaceType),
+												  nameof(SearchType),
+												  nameof(SearchString))
 			);
 
 			abortCommand = new Command(
 				() =>  renamer.AbortRenaming(),						
 				() =>  IsProcessAbortable,
-				new UpdateCommandInformation(this, nameof(IsProcessAbortable))
+				new PropertyChangedCommandUpdater(this, nameof(IsProcessAbortable))
 			);
 
 			selectFolderCommand = new Command(
 				ShowDirectoryDialog,
 				() => !IsProcessRunning,
-				new UpdateCommandInformation(this, nameof(IsProcessRunning))
+				new PropertyChangedCommandUpdater(this, nameof(IsProcessRunning))
 			);
 
 			undoLastRenamingCommand = new Command(
@@ -99,9 +100,9 @@ namespace bytePassion.FileRename.ViewModel
 					IsProcessRunning = true;
 				},
 				() => IsProcessUndoable,
-				new UpdateCommandInformation(this, nameof(IsProcessUndoable))
+				new PropertyChangedCommandUpdater(this, nameof(IsProcessUndoable))
 			);
-
+            
 			Columns = new ObservableCollection<ColumnDescriptor>()
 			{
 				new ColumnDescriptor { Header = "Aktueller Ordner", DisplayMember = FileListItem.CurrentDirectoryVariableName },
