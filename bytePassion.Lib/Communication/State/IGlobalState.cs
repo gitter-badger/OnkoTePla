@@ -9,5 +9,4 @@ namespace bytePassion.Lib.Communication.State
 
 		T Value { get; set; }
 	}
-
 }

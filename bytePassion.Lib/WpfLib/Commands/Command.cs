@@ -15,7 +15,7 @@ namespace bytePassion.Lib.WpfLib.Commands
         private readonly Action execute;
         private readonly IReadOnlyList<ICommandUpdater> commandUpdaterList;
 
-
+        
         public Command(Action execute, Func<bool> canExecute = null)
         {
             this.execute = execute;
@@ -32,7 +32,7 @@ namespace bytePassion.Lib.WpfLib.Commands
             foreach (var commandUpdater in commandUpdaterList)
             {
                 commandUpdater.UpdateOfCanExecuteChangedRequired += CanExecuteChangedRequired;
-            }
+            }            
         }
 
         private void CanExecuteChangedRequired(object sender, EventArgs eventArgs)
@@ -51,10 +51,10 @@ namespace bytePassion.Lib.WpfLib.Commands
         public void Execute(object parameter = null)
         {
             execute();
-        }
+        }        
 
         public void RaiseCanExecuteChanged()
-        {
+        {           
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
@@ -66,7 +66,7 @@ namespace bytePassion.Lib.WpfLib.Commands
                 {
                     commandUpdater.UpdateOfCanExecuteChangedRequired -= CanExecuteChangedRequired;
                     commandUpdater.Dispose();
-                }
+                }                
             }
         }
     }

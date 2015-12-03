@@ -5,48 +5,48 @@ using Size = bytePassion.Lib.Types.SemanticTypes.Size;
 
 namespace bytePassion.Lib.WpfLib.Behaviors
 {
-    public class SizeReportingBehavior : Behavior<FrameworkElement>
-    {
+	public class SizeReportingBehavior : Behavior<FrameworkElement>
+	{
+		
+		public static readonly DependencyProperty ReportedSizeProperty = 
+			DependencyProperty.Register("ReportedSize", 
+										typeof (Size), 
+										typeof (SizeReportingBehavior), 
+										new PropertyMetadata(default(Size)));
 
-        public static readonly DependencyProperty ReportedSizeProperty =
-            DependencyProperty.Register("ReportedSize",
-                                        typeof(Size),
-                                        typeof(SizeReportingBehavior),
-                                        new PropertyMetadata(default(Size)));
+		public Size ReportedSize
+		{
+			get { return (Size) GetValue(ReportedSizeProperty); }
+			set { SetValue(ReportedSizeProperty, value); }
+		}
+				
+		protected override void OnAttached()
+		{
+			base.OnAttached();			
+			AssociatedObject.SizeChanged += OnSizeChanged;	
+			AssociatedObject.Loaded      += OnLoaded;
+		}		
 
-        public Size ReportedSize
-        {
-            get { return (Size)GetValue(ReportedSizeProperty); }
-            set { SetValue(ReportedSizeProperty, value); }
-        }
+		protected override void OnDetaching()
+		{
+			base.OnDetaching();
+			AssociatedObject.SizeChanged -= OnSizeChanged;
+			AssociatedObject.Loaded      -= OnLoaded;
+		}
 
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-            AssociatedObject.SizeChanged += OnSizeChanged;
-            AssociatedObject.Loaded += OnLoaded;
-        }
+		private void OnLoaded (object sender, RoutedEventArgs routedEventArgs)
+		{
+			ReportSize((UIElement) sender);
+		}
 
-        protected override void OnDetaching()
-        {
-            base.OnDetaching();
-            AssociatedObject.SizeChanged -= OnSizeChanged;
-            AssociatedObject.Loaded -= OnLoaded;
-        }
+		private void OnSizeChanged (object sender, SizeChangedEventArgs sizeChangedEventArgs)
+		{
+			ReportSize((UIElement)sender);
+		}
 
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            ReportSize((UIElement)sender);
-        }
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
-        {
-            ReportSize((UIElement)sender);
-        }
-
-        private void ReportSize(UIElement sender)
-        {
-            ReportedSize = (Size)sender.RenderSize;
-        }
-    }
+		private void ReportSize(UIElement sender)
+		{
+			ReportedSize = (Size)sender.RenderSize;			
+		}
+	}
 }

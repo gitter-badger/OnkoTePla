@@ -1,5 +1,4 @@
-﻿
-namespace bytePassion.Lib.Types.Repository
+﻿namespace bytePassion.Lib.Types.Repository
 {
 	public interface IPersistenceService<T>
 	{
