@@ -103,6 +103,111 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
 			CheckIfUndoAndRedoIsPossible();
 		}
 
+	    public string GetRedoActionMessage()
+	    {
+            if (!RedoPossible)
+                throw new InvalidOperationException("redo not possible");
+
+	        string result ="";
+
+            var domainEventToBeRestored = eventPointer.Next.Value;
+            var readModel = readModelRepository.GetAppointmentsOfADayReadModel(domainEventToBeRestored.AggregateId);
+
+            switch (domainEventToBeRestored.ActionTag)
+            {
+                case ActionTag.RegularAction:
+                    {
+                        if (domainEventToBeRestored.GetType() == typeof(AppointmentAdded))
+                        {
+                            var addAppointmentEventToBeRestored = (AppointmentAdded)domainEventToBeRestored;
+
+                            result = RedoStringGenerator.ForAddedEvent(patientRepository.GetPatientById(addAppointmentEventToBeRestored.PatientId),
+                                                                       addAppointmentEventToBeRestored.CreateAppointmentData.Day,
+                                                                       addAppointmentEventToBeRestored.CreateAppointmentData.StartTime,
+                                                                       addAppointmentEventToBeRestored.CreateAppointmentData.EndTime);
+                           
+                        }
+                        else if (domainEventToBeRestored.GetType() == typeof(AppointmentReplaced))
+                        {
+                            var replacedEventToBeRestored = (AppointmentReplaced)domainEventToBeRestored;
+
+                            var currentVersionOfAppointment = readModel.Appointments.First(
+                                appointment => appointment.Id == replacedEventToBeRestored.OriginalAppointmendId
+                            );
+
+                           result = RedoStringGenerator.ForReplacedEvent(patientRepository.GetPatientById(replacedEventToBeRestored.PatientId), 
+																		 replacedEventToBeRestored.NewDate,
+                                                                         currentVersionOfAppointment.StartTime,
+                                                                         currentVersionOfAppointment.EndTime,
+                                                                         currentVersionOfAppointment.TherapyPlace,
+                                                                         replacedEventToBeRestored.NewStartTime,
+                                                                         replacedEventToBeRestored.NewEndTime,
+                                                                         configuration.GetMedicalPracticeByIdAndVersion(readModel.Identifier.MedicalPracticeId,
+                                                                                                                        readModel.Identifier.PracticeVersion)
+                                                                                      .GetTherapyPlaceById(replacedEventToBeRestored.NewTherapyPlaceId)
+                                                                         );
+                        }
+                        else if (domainEventToBeRestored.GetType() == typeof(AppointmentDeleted))
+                        {
+                            var deletedEventToBeRestored = (AppointmentDeleted) domainEventToBeRestored;
+
+                            var currentVersionOfAppointment = readModel.Appointments.First(
+                                appointment => appointment.Id == deletedEventToBeRestored.RemovedAppointmentId
+                            );
+
+                            result = RedoStringGenerator.ForDeletedEvent(patientRepository.GetPatientById(deletedEventToBeRestored.PatientId),
+                                                                         currentVersionOfAppointment.Day,
+                                                                         currentVersionOfAppointment.StartTime,
+                                                                         currentVersionOfAppointment.EndTime);
+
+                        }
+                        else
+                            throw new Exception("internal error");
+                       
+                        break;
+                    }
+
+                case ActionTag.RegularDividedReplaceAction:
+                    {
+                        var currentEvent = eventPointer.Next.Value;
+                        var nextEvent = eventPointer.Next.Next.Value;
+
+                        if (currentEvent.GetType() != typeof(AppointmentDeleted) || nextEvent.GetType() != typeof(AppointmentAdded))
+                            throw new Exception("internal error");
+
+                        var addedEvent   = (AppointmentAdded)nextEvent;
+                        var deletedEvent = (AppointmentDeleted)currentEvent;
+
+                        var readModelWhereTheAppointmentIsToBeAdded   = readModelRepository.GetAppointmentsOfADayReadModel(addedEvent.AggregateId);
+                        var readModelWhereTheAppointmentIsToBeDeleted = readModelRepository.GetAppointmentsOfADayReadModel(deletedEvent.AggregateId);
+
+                        var currentVersionOfAppointment = readModelWhereTheAppointmentIsToBeDeleted.Appointments.First(
+                            appointment => appointment.Id == deletedEvent.RemovedAppointmentId
+                        );
+
+                        result = RedoStringGenerator.ForDividedReplacedEvent(patientRepository.GetPatientById(addedEvent.PatientId),
+                                                                             currentVersionOfAppointment.Day,
+                                                                             addedEvent.CreateAppointmentData.Day,
+                                                                             currentVersionOfAppointment.StartTime,
+                                                                             addedEvent.CreateAppointmentData.StartTime,
+                                                                             currentVersionOfAppointment.EndTime,
+                                                                             addedEvent.CreateAppointmentData.EndTime,
+                                                                             currentVersionOfAppointment.TherapyPlace,
+                                                                             configuration.GetMedicalPracticeByIdAndVersion(readModelWhereTheAppointmentIsToBeAdded.Identifier.MedicalPracticeId,
+                                                                                                                            readModelWhereTheAppointmentIsToBeAdded.Identifier.PracticeVersion)
+                                                                                          .GetTherapyPlaceById(addedEvent.CreateAppointmentData.TherapyPlaceId)
+                                                                             );
+
+                        readModelWhereTheAppointmentIsToBeAdded.Dispose();
+                        readModelWhereTheAppointmentIsToBeDeleted.Dispose();                        
+                        break;
+                    }
+            }
+
+            readModel.Dispose();
+
+	        return result;
+	    }
 
 		public string GetUndoActionMessage()
 		{
@@ -133,7 +238,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
                         var replacedEvent = (AppointmentReplaced)domainEvent;
 
                         var fixedAppointmentSet = readModelRepository.GetAppointmentSetOfADay(readModel.Identifier,
-                                                                                                eventPointer.Value.AggregateVersion - 1);
+                                                                                              eventPointer.Value.AggregateVersion - 1);
                                                 
                         var lastVersionOfTheAppointment = fixedAppointmentSet.Appointments.First(
                             appointment => appointment.Id == replacedEvent.OriginalAppointmendId
@@ -145,7 +250,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
                                                                       replacedEvent.NewEndTime,
                                                                       configuration.GetMedicalPracticeByIdAndVersion(readModel.Identifier.MedicalPracticeId, 
                                                                                                                      readModel.Identifier.PracticeVersion)
-                                                                          .GetTherapyPlaceById(replacedEvent.NewTherapyPlaceId),
+																				   .GetTherapyPlaceById(replacedEvent.NewTherapyPlaceId),
                                                                       lastVersionOfTheAppointment.StartTime,
                                                                       lastVersionOfTheAppointment.EndTime,
                                                                       lastVersionOfTheAppointment.TherapyPlace);                                                        
@@ -189,7 +294,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels
                     var readModelWhereTheAppointmentWasDeleted = readModelRepository.GetAppointmentsOfADayReadModel(deletedEvent.AggregateId);
 
                     var fixedAppointmentSet = readModelRepository.GetAppointmentSetOfADay(readModelWhereTheAppointmentWasDeleted.Identifier,
-                                                                                            eventPointer.Previous.Value.AggregateVersion - 1);
+                                                                                          eventPointer.Previous.Value.AggregateVersion - 1);
 
                     var lastVersionOfTheAppointment = fixedAppointmentSet.Appointments.First(
                             appointment => appointment.Id == deletedEvent.RemovedAppointmentId

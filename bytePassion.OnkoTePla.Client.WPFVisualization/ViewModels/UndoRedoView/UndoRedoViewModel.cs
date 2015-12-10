@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using System.Windows.Input;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
@@ -9,6 +6,9 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using MahApps.Metro.Controls.Dialogs;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
 
 #pragma warning disable 0067
 
@@ -146,8 +146,18 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
                     break;
 			    }
 				case ButtonMode.ViewMode:
-			    {                   
-                    sessionAndUserSpecificEventHistory.Redo();                                           
+			    {         
+                    var dialog = new UserDialogBox("", 
+                                                   sessionAndUserSpecificEventHistory.GetRedoActionMessage(),
+                                                   MessageBoxButton.OKCancel, 
+                                                   MessageBoxImage.Question);
+
+                    var result = await dialog.ShowMahAppsDialog();
+
+                    if (result == MessageDialogResult.Affirmative)
+                    {
+                        sessionAndUserSpecificEventHistory.Redo(); 
+                    }                                                                                                            
                     break;
 			    }
 			}

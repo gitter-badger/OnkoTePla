@@ -1,17 +1,20 @@
 ﻿using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using System.Globalization;
 
 
 namespace bytePassion.OnkoTePla.Client.Core.Readmodels.Helper
 {
     public static class UndoStringGenerator
     {
+        private static readonly CultureInfo CultureInfo = new CultureInfo("de-DE");
+
         public static string ForAddedEvent(Patient patient, Date day, Time startTime, Time endTime)
-        {
+        {                     
             return "Wollen Sie den neu erstellten Termin\n" +
                   $"des Patienten {patient.Name}\n" +
-                  $"der momentan am {day}\n" +
+                  $"der momentan am {day.GetDisplayStringWithDayOfWeek(CultureInfo)}\n" +
                   $"von {startTime} bis {endTime}\n" +
                    "besteht wieder löschen?";
         }
@@ -20,7 +23,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels.Helper
         {
             return "Wollen Sie den gelöschten Termin\n" +
                   $"des Patienten {patient.Name}\n" +
-                  $"vom {day} [{lastStartTime} bis {lastEndTime}]\n" +
+                  $"vom {day.GetDisplayStringWithDayOfWeek(CultureInfo)} [{lastStartTime} bis {lastEndTime}]\n" +
                    "wieder herstellen?";
         }
         
@@ -32,8 +35,8 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels.Helper
         {
             return "Wollen Sie den Termin\n" +
                   $"des Patienten {patient.Name}\n" +
-                  $"vom {lastDate} [{lastStartTime} bis {lastEndTime}; Therapieplatz {lastTherapyPlace.Name}]\n" +
-                  $"zum {currentDate} [{currentStartTime} bis {currentEndTime}; Therapieplatz {currentTherapyPlace.Name}]\n" +
+                  $"vom {lastDate.GetDisplayStringWithDayOfWeek(CultureInfo)} [{lastStartTime} bis {lastEndTime}; Therapieplatz {lastTherapyPlace.Name}]\n" +
+                  $"zum {currentDate.GetDisplayStringWithDayOfWeek(CultureInfo)} [{currentStartTime} bis {currentEndTime}; Therapieplatz {currentTherapyPlace.Name}]\n" +
                    "verschieben?";
         }
 
@@ -45,7 +48,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels.Helper
             {
                 return "Wollen Sie das Terminende\n" +
                       $"des Patienten {patient.Name}\n" +
-                      $"am {day}\n" +
+                      $"am {day.GetDisplayStringWithDayOfWeek(CultureInfo)}\n" +
                       $"von {currentEndTime}\n" +
                       $"nach {lastEndTime}\n" +
                       "verschieben?";
@@ -55,7 +58,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels.Helper
             {
                 return "Wollen Sie den Terminbegin\n" +
                       $"des Patienten {patient.Name}\n" +
-                      $"am {day}\n" +
+                      $"am {day.GetDisplayStringWithDayOfWeek(CultureInfo)}\n" +
                       $"von {currentStartTime}\n" +
                       $"nach {lastStartTime}\n" +
                       "verschieben?";
@@ -66,15 +69,15 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels.Helper
 
             if (currentTherapyPlace != lastTherapyPlaceType)
             {
-                fromExtension = $"[Therapieplatz {currentTherapyPlace.Name}]";
-                toExtension   = $"[Therapieplatz {lastTherapyPlaceType.Name}]";
+                fromExtension = $"\t[Therapieplatz {currentTherapyPlace.Name}]";
+                toExtension   = $"\t[Therapieplatz {lastTherapyPlaceType.Name}]";
             }
 
             if (new Duration(currentStartTime, currentEndTime) == new Duration(lastStartTime, lastEndTime))
             {
                 return "Wollen Sie den Termin\n" +
                       $"des Patienten {patient.Name}\n" +
-                      $"am {day}\n" +
+                      $"am {day.GetDisplayStringWithDayOfWeek(CultureInfo)}\n" +
                       $"von {currentStartTime} " + fromExtension + "\n" +
                       $"nach {lastStartTime}" + toExtension + "\n" +
                       "verschieben?";
@@ -82,7 +85,7 @@ namespace bytePassion.OnkoTePla.Client.Core.Readmodels.Helper
 
             return "Wollen Sie den Termin\n" +
                   $"des Patienten {patient.Name}\n" +
-                  $"am {day}\n" +
+                  $"am {day.GetDisplayStringWithDayOfWeek(CultureInfo)}\n" +
                   $"von {currentStartTime} bis {currentEndTime} " + fromExtension + "\n" +
                   $"nach {lastStartTime} bis {lastEndTime} " + toExtension + "\n" +
                   "verschieben?";

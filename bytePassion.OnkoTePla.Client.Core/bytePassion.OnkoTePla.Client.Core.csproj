@@ -65,6 +65,7 @@
     <Compile Include="Exceptions\VersionNotApplicapleException.cs" />
     <Compile Include="Domain\AppointmentLogic\INotifyAppointmentChanged.cs" />
     <Compile Include="Readmodels\FixedAppointmentSet.cs" />
+    <Compile Include="Readmodels\Helper\RedoStringGenerator.cs" />
     <Compile Include="Readmodels\Helper\UndoStringGenerator.cs" />
     <Compile Include="Readmodels\ReadModelBase.cs" />
     <Compile Include="Readmodels\SessionAndUserSpecificEventHistory.cs" />
