@@ -1,5 +1,4 @@
-﻿using System;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
@@ -8,8 +7,10 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.H
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.TherapyPlaceRowViewModel
+
+namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel
 {
 	public class TherapyPlaceRowViewModelBuilder : ITherapyPlaceRowViewModelBuilder
 	{
