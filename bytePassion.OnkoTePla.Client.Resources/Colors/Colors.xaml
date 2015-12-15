@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="SemiTransparentWhiteBrush"
+                     Opacity="0.5"
+                     Color="White" />
+    <SolidColorBrush x:Key="WhiteColorBrush" Color="White" />
+    <!--<SolidColorBrush x:Key="AccentColorBrush" Color="#41b3d3"></SolidColorBrush>-->
+</ResourceDictionary>

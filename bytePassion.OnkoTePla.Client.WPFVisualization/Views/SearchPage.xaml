@@ -16,8 +16,8 @@
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 		
         <local:PatientSelector Grid.Column="0" 
@@ -29,7 +29,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
@@ -42,14 +42,7 @@
             <TextBlock Grid.Row="0"					   
 					   Text="{Binding SelectedPatient}"
 					   FontFamily="{StaticResource StandardFontFamily}"
-					   FontSize="40"/>
-
-            <Border Grid.Row="1" 					
-					Height="1"
-					BorderThickness="1"
-					BorderBrush="Black"
-					Margin="0,0,80,0"/>
-
+					   FontSize="30pt"/>
 
             <ScrollViewer Grid.Row="2" 						  
 						  Margin="0,10,0,0">
@@ -70,21 +63,15 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type contracts:Appointment}">
-                            <Border>
+                            <Border Background="#e4e4e4">
 
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
-                                        <GradientStop Color="LightCoral" Offset="0" />
-                                        <GradientStop Color="Red" Offset="1.0" />
-                                    </LinearGradientBrush>
-                                </Border.Background>
 
                                 <Grid Margin="10">
 
                                     <Grid.Resources>
 
                                         <Style TargetType="TextBlock">
-                                            <Setter Property="Foreground" Value="Black"/>
+                                            <Setter Property="Foreground" Value="#444444"/>
                                             <Setter Property="FontFamily" Value="{StaticResource StandardFontFamily}"/>
                                             <Setter Property="FontSize"   Value="20"/>
                                         </Style>
