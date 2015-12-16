@@ -2,7 +2,8 @@
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage
 {
-    internal class OptionsPageViewModel : ViewModel
+    internal class OptionsPageViewModel : ViewModel, 
+                                          IOptionsPageViewModel
     {
         protected override void CleanUp() { }
         public override event PropertyChangedEventHandler PropertyChanged;
