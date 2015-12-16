@@ -8,5 +8,21 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="0"
+                    Orientation="Vertical">
+                        
+            <Button Content="Übersicht"/>
+            <Button Content="Verbindungen"/>
+            <Button Content="Lizenz"/>
+            <Button Content="Infrastruktur"/>
+            <Button Content="Einstellungen"/>
+            
+        </StackPanel>
+        
     </Grid>
 </Window>
