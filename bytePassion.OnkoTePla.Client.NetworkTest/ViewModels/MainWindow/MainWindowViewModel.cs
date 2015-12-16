@@ -37,7 +37,7 @@ namespace bytePassion.OnkoTePla.Client.NetworkTest.ViewModels.MainWindow
 
                                                Application.Current.Dispatcher.Invoke(() =>
                                                                                      {
-                                                                                         Text = msg;
+                                                                                         Text = "\"" + msg + "\" was received";
                                                                                      });
                                            });
             receiveThread.Start();

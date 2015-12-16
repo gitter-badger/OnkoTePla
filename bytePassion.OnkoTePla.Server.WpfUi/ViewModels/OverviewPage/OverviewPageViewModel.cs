@@ -30,6 +30,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage
         private void DoIt()
         {
             sender.Send("first msg with zeroMQ");
+            Text = "\"first msg with zeroMQ\" was sended";
         }
 
         public ICommand DoSomeThing { get; }
