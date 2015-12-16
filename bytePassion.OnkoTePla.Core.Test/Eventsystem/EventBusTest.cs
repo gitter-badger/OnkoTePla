@@ -1,16 +1,17 @@
-﻿using System;
-using bytePassion.Lib.Communication.MessageBus;
+﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Core.Domain.Events;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using System;
 using Xunit;
 
-namespace bytePassion.OnkoTePla.Client.Core.Test.Eventsystem
+
+namespace bytePassion.OnkoTePla.Core.Test.Eventsystem
 {
-	public class EventBusTest
+    public class EventBusTest
 	{
 
 		private static AppointmentAdded GetAppointmentAddedDummy()

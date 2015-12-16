@@ -1,11 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 {
-	public interface ISearchPageViewModel : IViewModel
+    public interface ISearchPageViewModel : IViewModel
 	{
 		ICommand DeleteAppointment { get; }
 		ICommand ModifyAppointment { get; }		

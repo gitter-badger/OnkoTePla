@@ -1,13 +1,14 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 {
     internal class PatientSelectorViewModel : ViewModel, 
                                               IPatientSelectorViewModel

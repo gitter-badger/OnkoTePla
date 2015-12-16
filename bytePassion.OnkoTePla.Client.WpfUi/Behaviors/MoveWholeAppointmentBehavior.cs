@@ -1,13 +1,14 @@
-﻿using System.Windows;
+﻿using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
+using bytePassion.OnkoTePla.Client.WpfUi.Global;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
-using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
     public class MoveWholeAppointmentBehavior : Behavior<FrameworkElement>
 	{
@@ -77,7 +78,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
 				EndDrag();				
 
 				ViewModelCommunication.SendTo(
-					AppointmentViewModelCollection,
+					Constants.AppointmentViewModelCollection,
                     AppointmentModifications.OriginalAppointment.Id, 
 					new ShowDisabledOverlay()
 				);				
@@ -93,7 +94,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
                 AdornerControl.DisposeAdorner();
 
 				ViewModelCommunication.SendTo(
-					AppointmentViewModelCollection,
+					Constants.AppointmentViewModelCollection,
                     AppointmentModifications.OriginalAppointment.Id,
 					new HideDisabledOverlay()
 				);

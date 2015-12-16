@@ -1,9 +1,9 @@
-﻿using bytePassion.OnkoTePla.Client.Core.Domain;
+﻿using bytePassion.OnkoTePla.Core.Domain;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate
+namespace bytePassion.OnkoTePla.Core.Repositories.Aggregate
 {
-	public interface IAggregateRepository
+    public interface IAggregateRepository
 	{
 		AppointmentsOfDayAggregate GetById(AggregateIdentifier aggregateId);
 		void Save(AppointmentsOfDayAggregate aggregate);		

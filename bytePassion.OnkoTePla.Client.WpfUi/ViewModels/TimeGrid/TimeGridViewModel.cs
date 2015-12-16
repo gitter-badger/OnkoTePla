@@ -1,19 +1,19 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.Global;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid.Helper;
+using bytePassion.OnkoTePla.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 {
     public class TimeGridViewModel : ViewModel,
 									 ITimeGridViewModel									 
@@ -43,7 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 			this.viewModelCommunication = viewModelCommunication;
 
 			viewModelCommunication.RegisterViewModelAtCollection<ITimeGridViewModel, AggregateIdentifier>(
-				TimeGridViewModelCollection,
+				Constants.TimeGridViewModelCollection,
 				this
 			);
 
@@ -172,9 +172,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 
 		private static GridViewDivisionState GetDevisionForWidth (double width)
 		{ 
-			if (width < ThresholdGridWidthHoursToTwoHours)         return GridViewDivisionState.TwoHours;
-			if (width < ThresholdGridWidthHalfHoursToHours)        return GridViewDivisionState.Hours;
-			if (width < ThresholdGridWidthQuarterHoursToHalfHours) return GridViewDivisionState.HalfHours;
+			if (width < Constants.ThresholdGridWidthHoursToTwoHours)         return GridViewDivisionState.TwoHours;
+			if (width < Constants.ThresholdGridWidthHalfHoursToHours)        return GridViewDivisionState.Hours;
+			if (width < Constants.ThresholdGridWidthQuarterHoursToHalfHours) return GridViewDivisionState.HalfHours;
 
 			return GridViewDivisionState.QuarterHours;
 		}
@@ -194,7 +194,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
         protected override void CleanUp()
         {
             viewModelCommunication.DeregisterViewModelAtCollection<TimeGridViewModel, AggregateIdentifier>(
-                TimeGridViewModelCollection,
+                Constants.TimeGridViewModelCollection,
                 this
             );
         }

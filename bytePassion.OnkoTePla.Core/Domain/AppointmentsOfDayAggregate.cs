@@ -1,16 +1,16 @@
-﻿using System;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Exceptions;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Core.Domain.Events;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Exceptions;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain
+namespace bytePassion.OnkoTePla.Core.Domain
 {
-	public class AppointmentsOfDayAggregate : AggregateRootBase<AggregateIdentifier>
+    public class AppointmentsOfDayAggregate : AggregateRootBase<AggregateIdentifier>
 	{
 
 		private readonly AppointmentSet appointments;		

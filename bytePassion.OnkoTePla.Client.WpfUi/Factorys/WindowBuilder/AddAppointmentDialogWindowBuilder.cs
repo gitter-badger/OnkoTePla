@@ -1,16 +1,17 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Views;
+using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
+using bytePassion.OnkoTePla.Client.WpfUi.Views;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using System;
 using System.Windows;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 {
     public class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
 	{

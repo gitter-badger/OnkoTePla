@@ -1,14 +1,14 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using System;
 using System.Windows;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.AppointmentModification
+namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification
 {
     public class AppointmentModificationsBuilder : IAppointmentModificationsBuilder
     {

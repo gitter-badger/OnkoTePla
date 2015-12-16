@@ -1,14 +1,15 @@
-﻿using System.Windows.Input;
-using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
+﻿using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage;
+using System.Windows.Input;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 {
-	interface IMainWindowViewModel : IViewModel,
+    interface IMainWindowViewModel : IViewModel,
 									 IViewModelMessageHandler<ShowPage>
 
 	{

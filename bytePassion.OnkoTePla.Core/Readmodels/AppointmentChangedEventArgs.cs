@@ -1,10 +1,10 @@
-﻿using System;
-using bytePassion.OnkoTePla.Contracts.Appointments;
+﻿using bytePassion.OnkoTePla.Contracts.Appointments;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Readmodels
+namespace bytePassion.OnkoTePla.Core.Readmodels
 {
-	public class AppointmentChangedEventArgs : EventArgs
+    public class AppointmentChangedEventArgs : EventArgs
 	{
 		public AppointmentChangedEventArgs(Appointment appointment, ChangeAction changeAction)
 		{

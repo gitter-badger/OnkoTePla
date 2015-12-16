@@ -1,16 +1,16 @@
-﻿using System;
-using System.Windows.Input;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using System;
+using System.Windows.Input;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
-	public interface IAppointmentViewModel : IViewModel,
+    public interface IAppointmentViewModel : IViewModel,
 											 IViewModelCommunicationDeliverer,
 											 IViewModelCollectionItem<Guid>,											
                                              IViewModelMessageHandler<Dispose>,											 

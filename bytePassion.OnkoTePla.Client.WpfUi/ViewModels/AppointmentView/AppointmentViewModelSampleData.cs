@@ -1,17 +1,17 @@
-﻿using System;
+﻿using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using System;
 using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
-	public class AppointmentViewModelSampleData : IAppointmentViewModel
+    public class AppointmentViewModelSampleData : IAppointmentViewModel
 	{
 		public AppointmentViewModelSampleData()
 			: this(new Time(9,0), new Time(11,0))

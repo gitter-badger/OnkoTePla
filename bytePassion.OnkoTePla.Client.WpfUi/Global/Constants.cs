@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Global
+namespace bytePassion.OnkoTePla.Client.WpfUi.Global
 {
-	public static class Constants
+    public static class Constants
 	{		
 		// ViewModel-Collections
 

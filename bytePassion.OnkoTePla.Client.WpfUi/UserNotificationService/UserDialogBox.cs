@@ -1,15 +1,14 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
-using MahApps.Metro;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using System.Threading.Tasks;
+using System.Windows;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService
+namespace bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService
 {
-	// TODO : replace with mahapps dialog
+    // TODO : replace with mahapps dialog
 
-	public class UserDialogBox
+    public class UserDialogBox
 	{
 		private readonly string caption;
 		private readonly string messageText;

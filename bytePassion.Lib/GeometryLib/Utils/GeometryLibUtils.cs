@@ -1,11 +1,10 @@
-﻿using bytePassion.Lib.MathLib;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows;
 
 
 namespace bytePassion.Lib.GeometryLib.Utils
-{ 
+{
     public static class GeometryLibUtils
     {
         private static readonly IFormatProvider Numberformat = CultureInfo.CreateSpecificCulture("en-US");

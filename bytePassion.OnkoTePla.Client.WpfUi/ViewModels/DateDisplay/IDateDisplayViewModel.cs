@@ -1,7 +1,7 @@
 ﻿
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay
 {
-	public interface IDateDisplayViewModel : IViewModel
+    public interface IDateDisplayViewModel : IViewModel
 	{
 		string Date { get; }
 	}

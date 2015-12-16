@@ -3,9 +3,9 @@ using bytePassion.Lib.WpfLib.ConverterBase;
 using System.Globalization;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
+namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 {
-	public class ComputeAppointmentPosition : GenericThreeToOneValueConverter<Time, Time, double, double>
+    public class ComputeAppointmentPosition : GenericThreeToOneValueConverter<Time, Time, double, double>
 	{
 		protected override double Convert(Time appointmentStartTime, Time slotStartTime, double lengthOfOneHour, CultureInfo culture)
 		{

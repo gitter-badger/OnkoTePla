@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
+namespace bytePassion.OnkoTePla.Core.Repositories.Config
 {
-	public class ConfigurationRepository : IConfigurationReadRepository, 
+    public class ConfigurationRepository : IConfigurationReadRepository, 
 										   IConfigurationWriteRepository
 	{
 		private Configuration configuration;

@@ -1,22 +1,22 @@
-﻿using System;
+﻿using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
+using bytePassion.OnkoTePla.Core.Domain;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
-using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 {
-	public class TherapyPlaceRowViewModelSampleData : ITherapyPlaceRowViewModel
+    public class TherapyPlaceRowViewModelSampleData : ITherapyPlaceRowViewModel
 	{
 		public TherapyPlaceRowViewModelSampleData()
 		{

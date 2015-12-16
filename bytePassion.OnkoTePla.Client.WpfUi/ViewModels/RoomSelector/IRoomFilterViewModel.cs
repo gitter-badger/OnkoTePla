@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper;
+using System.Collections.ObjectModel;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 {
-	public interface IRoomFilterViewModel : IViewModel
+    public interface IRoomFilterViewModel : IViewModel
 	{
 		ObservableCollection<RoomSelectorData> AvailableRoomFilters { get; }
 

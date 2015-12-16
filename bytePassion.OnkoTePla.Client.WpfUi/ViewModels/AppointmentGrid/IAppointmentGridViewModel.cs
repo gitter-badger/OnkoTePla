@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Core.Domain;
+using System;
+using System.Collections.ObjectModel;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
-	public interface IAppointmentGridViewModel : IViewModel,
+    public interface IAppointmentGridViewModel : IViewModel,
 												 IDisposable,
 												 IViewModelCollectionItem<AggregateIdentifier>,
 												 IViewModelMessageHandler<Activate>,

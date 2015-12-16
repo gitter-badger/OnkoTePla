@@ -3,9 +3,9 @@ using bytePassion.Lib.WpfLib.ConverterBase;
 using System.Globalization;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Computations
+namespace bytePassion.OnkoTePla.Client.WpfUi.Computations
 {
-	public class ComputeAppointmentPixelLeft : GenericFourToOneValueConverter<Time, double, Time, Time, double>
+    public class ComputeAppointmentPixelLeft : GenericFourToOneValueConverter<Time, double, Time, Time, double>
 	{
 		protected override double Convert(Time staringTime, double gridWidth, Time timeSlotStart, Time timeSlotEnd, CultureInfo culture)
 		{

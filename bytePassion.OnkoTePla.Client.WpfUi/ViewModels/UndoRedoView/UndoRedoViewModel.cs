@@ -1,10 +1,10 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.Core.Readmodels;
-using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Core.Readmodels;
 using MahApps.Metro.Controls.Dialogs;
 using System.ComponentModel;
 using System.Windows;
@@ -12,9 +12,9 @@ using System.Windows.Input;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 {
-	public class UndoRedoViewModel : ViewModel, 
+    public class UndoRedoViewModel : ViewModel, 
                                      IUndoRedoViewModel
 	{
 		private enum ButtonMode

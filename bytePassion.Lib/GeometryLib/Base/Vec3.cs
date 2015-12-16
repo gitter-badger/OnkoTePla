@@ -1,6 +1,5 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.GeometryLib.Utils;
-using bytePassion.Lib.MathLib;
 using bytePassion.Lib.Types.SemanticTypes;
 using System;
 

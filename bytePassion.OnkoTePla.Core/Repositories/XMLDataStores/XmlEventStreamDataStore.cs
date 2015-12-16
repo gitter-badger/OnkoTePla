@@ -1,17 +1,18 @@
 ﻿using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Repository;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Core.Domain.Events;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using System;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.XMLDataStores
+
+namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 {
-	public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
+    public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
 	{
 
 		private static XmlWriterSettings WriterSettings

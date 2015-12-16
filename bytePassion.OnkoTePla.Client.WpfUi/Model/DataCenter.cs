@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WpfUi.SessionInfo;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
+using System;
+using System.Collections.Generic;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Model
+namespace bytePassion.OnkoTePla.Client.WpfUi.Model
 {
 
-	public class DataCenter : IDataCenter
+    public class DataCenter : IDataCenter
 	{
 		public DataCenter(IConfigurationReadRepository configuration, 
 						  IPatientReadRepository patients, 

@@ -1,6 +1,6 @@
-﻿namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage
+﻿namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage
 {
-	public interface IOptionsPageViewModel
+    public interface IOptionsPageViewModel
 	{
 	}
 }

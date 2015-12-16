@@ -5,7 +5,8 @@ using bytePassion.Lib.WpfLib.Commands;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector
 {
     public class DateSelectorViewModel : ViewModel, 
                                          IDateSelectorViewModel

@@ -3,24 +3,24 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.AppointmentModification;
-using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
+using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
+using bytePassion.OnkoTePla.Client.WpfUi.Global;
+using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Core.Eventsystem;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
-using DeleteAppointment = bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages.DeleteAppointment;
+using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.DeleteAppointment;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
     public class AppointmentViewModel : ViewModel, 
 										IAppointmentViewModel										
@@ -57,7 +57,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			AdornerControl = adornerControl;					
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentViewModel, Guid>(
-				AppointmentViewModelCollection,
+				Constants.AppointmentViewModelCollection,
 				this	
 			);
 
@@ -88,7 +88,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 						appointmentModificationsVariable.Value = null;
 
 						viewModelCommunication.SendTo(
-							AppointmentGridViewModelCollection,
+							Constants.AppointmentGridViewModelCollection,
 							initialLocalisation.PlaceAndDate,
 							new DeleteAppointment(appointment.Id, appointment.Patient.Id, ActionTag.RegularAction)
 						);
@@ -143,7 +143,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			if (!isInitialLocation)
 			{
 				ViewModelCommunication.SendTo(
-					TherapyPlaceRowViewModelCollection,
+					Constants.TherapyPlaceRowViewModelCollection,
 					currentLocation,
 					new RemoveAppointmentFromTherapyPlaceRow(this)
 				);
@@ -152,7 +152,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 			currentLocation = therapyPlaceRowIdentifier;
 
 			ViewModelCommunication.SendTo(
-				TherapyPlaceRowViewModelCollection,
+				Constants.TherapyPlaceRowViewModelCollection,
 				therapyPlaceRowIdentifier,
 				new AddAppointmentToTherapyPlaceRow(this)	
 			);				
@@ -244,12 +244,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		protected override void CleanUp()
 		{
 			ViewModelCommunication.DeregisterViewModelAtCollection<AppointmentViewModel, Guid>(
-				AppointmentViewModelCollection,
+				Constants.AppointmentViewModelCollection,
 				this
 			);
 
 			ViewModelCommunication.SendTo(
-				TherapyPlaceRowViewModelCollection,
+				Constants.TherapyPlaceRowViewModelCollection,
 				currentLocation,
 				new RemoveAppointmentFromTherapyPlaceRow(this)
 			);

@@ -1,10 +1,10 @@
-﻿using System.Windows.Data;
-using bytePassion.OnkoTePla.Contracts.Patients;
+﻿using bytePassion.OnkoTePla.Contracts.Patients;
+using System.Windows.Data;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 {
-	public interface IPatientSelectorViewModel : IViewModel
+    public interface IPatientSelectorViewModel : IViewModel
 	{
 		CollectionViewSource Patients { get; }
 

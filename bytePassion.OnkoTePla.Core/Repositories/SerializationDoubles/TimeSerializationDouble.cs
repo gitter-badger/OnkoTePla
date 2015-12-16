@@ -1,8 +1,9 @@
 ﻿using bytePassion.Lib.TimeLib;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
+
+namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
-	public class TimeSerializationDouble
+    public class TimeSerializationDouble
 	{
 		public TimeSerializationDouble()
 		{			

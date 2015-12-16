@@ -1,14 +1,14 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Types.SemanticTypes;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 {
-	public class GridContainerViewModelSampleData : IGridContainerViewModel 
+    public class GridContainerViewModelSampleData : IGridContainerViewModel 
 	{
 		public GridContainerViewModelSampleData()
 		{

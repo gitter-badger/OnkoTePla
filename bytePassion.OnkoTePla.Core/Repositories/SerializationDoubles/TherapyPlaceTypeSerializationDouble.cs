@@ -1,10 +1,11 @@
-﻿using System;
-using bytePassion.OnkoTePla.Contracts.Enums;
+﻿using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
+
+namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
-	internal class TherapyPlaceTypeSerializationDouble
+    internal class TherapyPlaceTypeSerializationDouble
 	{
 		public TherapyPlaceTypeSerializationDouble()
 		{			

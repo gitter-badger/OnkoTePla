@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage
 {
     public class AccentColorMenuData
     {

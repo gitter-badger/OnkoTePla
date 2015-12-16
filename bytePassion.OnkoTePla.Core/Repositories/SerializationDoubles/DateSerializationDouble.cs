@@ -1,10 +1,10 @@
 ﻿using bytePassion.Lib.TimeLib;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
+namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
 
-	public class DateSerializationDouble
+    public class DateSerializationDouble
 	{						
 		public DateSerializationDouble ()
 		{			

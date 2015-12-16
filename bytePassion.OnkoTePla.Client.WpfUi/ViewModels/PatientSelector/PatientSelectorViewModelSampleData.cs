@@ -7,9 +7,9 @@ using System.Windows.Data;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 {
-	internal class PatientSelectorViewModelSampleData : IPatientSelectorViewModel 
+    internal class PatientSelectorViewModelSampleData : IPatientSelectorViewModel 
 	{
 		public PatientSelectorViewModelSampleData()
 		{			

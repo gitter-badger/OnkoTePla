@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
+namespace bytePassion.OnkoTePla.Core.Repositories.Patients
 {
-	public class PatientRepository : IPatientReadRepository, IPatientWriteRepository
+    public class PatientRepository : IPatientReadRepository, IPatientWriteRepository
 	{
 		public event Action<Patient> PatientAdded;
 		public event Action<Patient> PatientModified;

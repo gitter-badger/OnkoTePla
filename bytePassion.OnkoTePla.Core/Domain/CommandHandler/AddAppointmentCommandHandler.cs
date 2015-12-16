@@ -1,11 +1,11 @@
-﻿using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate;
+﻿using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Core.Domain.Commands;
+using bytePassion.OnkoTePla.Core.Repositories.Aggregate;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
+namespace bytePassion.OnkoTePla.Core.Domain.CommandHandler
 {
-	public class AddAppointmentCommandHandler : IDomainCommandHandler<AddAppointment>
+    public class AddAppointmentCommandHandler : IDomainCommandHandler<AddAppointment>
 	{
 
 		private readonly IAggregateRepository repository;

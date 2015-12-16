@@ -1,15 +1,16 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.Global;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Core.Domain;
 using System;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 {
-	public class ConfirmChangesMessageHandler : IViewModelMessageHandler<ConfirmChanges>
+    public class ConfirmChangesMessageHandler : IViewModelMessageHandler<ConfirmChanges>
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
@@ -32,13 +33,13 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 			if (currentAppointmentModification.IsInitialAdjustment)
 			{
 				viewModelCommunication.SendTo(
-					AppointmentViewModelCollection,
+					Constants.AppointmentViewModelCollection,
 					currentAppointmentModification.OriginalAppointment.Id,
 					new Dispose()						
 				);
 
 				viewModelCommunication.SendTo(
-					AppointmentGridViewModelCollection,
+					Constants.AppointmentGridViewModelCollection,
 					new AggregateIdentifier(appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date,
                                             currentMedicalPracticeId.Value),
 					new CreateNewAppointmentFromModificationsAndSendToCommandBus()
@@ -47,7 +48,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 			else
 			{
 				viewModelCommunication.SendTo(
-					AppointmentGridViewModelCollection,
+					Constants.AppointmentGridViewModelCollection,
 					new AggregateIdentifier(appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date,
                                             currentMedicalPracticeId.Value),
 					new SendCurrentChangesToCommandBus()

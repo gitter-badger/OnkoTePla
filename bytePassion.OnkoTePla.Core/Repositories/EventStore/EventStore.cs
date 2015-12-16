@@ -1,15 +1,15 @@
 ﻿using bytePassion.Lib.Types.Repository;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
+namespace bytePassion.OnkoTePla.Core.Repositories.EventStore
 {
-	public class EventStore : IEventStore
+    public class EventStore : IEventStore
 	{
 		private readonly IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService;
 

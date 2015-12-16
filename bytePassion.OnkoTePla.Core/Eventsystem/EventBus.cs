@@ -1,9 +1,9 @@
 ﻿using bytePassion.Lib.Communication.MessageBus;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
+namespace bytePassion.OnkoTePla.Core.Eventsystem
 {
-	public class EventBus : IEventBus
+    public class EventBus : IEventBus
 	{
 		private readonly IMessageBus<DomainEvent> eventMessageBus;
 

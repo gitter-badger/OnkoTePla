@@ -1,16 +1,16 @@
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
+using bytePassion.OnkoTePla.Contracts.Patients;
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
-using bytePassion.OnkoTePla.Contracts.Patients;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 {
-	public class AddAppointmentDialogViewModelSampleData : IAddAppointmentDialogViewModel
+    public class AddAppointmentDialogViewModelSampleData : IAddAppointmentDialogViewModel
 	{
 		public AddAppointmentDialogViewModelSampleData()
 		{

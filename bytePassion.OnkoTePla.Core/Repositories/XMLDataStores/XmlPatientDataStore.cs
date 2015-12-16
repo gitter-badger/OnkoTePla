@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.XMLDataStores
+
+namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 {
 
-	public class XmlPatientDataStore : IPersistenceService<IEnumerable<Patient>>
+    public class XmlPatientDataStore : IPersistenceService<IEnumerable<Patient>>
 	{
 
 		private readonly string filename;

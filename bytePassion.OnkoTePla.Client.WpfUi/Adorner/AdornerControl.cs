@@ -1,10 +1,11 @@
 ﻿using bytePassion.Lib.WpfLib.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewDragAdorner;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentViewDragAdorner;
+using bytePassion.OnkoTePla.Client.WpfUi.Views;
 using System.Windows;
 using System.Windows.Documents;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Adorner
+namespace bytePassion.OnkoTePla.Client.WpfUi.Adorner
 {
     public class AdornerControl 
 	{		
@@ -21,7 +22,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Adorner
 				currentAdornerWidth = width;
 				adornerViewModel = new AppointmentViewDragAdornerViewModel(content);
 
-				var adornerView = new Views.AppointmentViewDragAdorner
+				var adornerView = new AppointmentViewDragAdorner
 				                  {
 					                  DataContext = adornerViewModel,
 					                  Height = 30,

@@ -1,14 +1,15 @@
 ﻿using bytePassion.Lib.Types.Repository;
-using bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
+
+namespace bytePassion.OnkoTePla.Core.Repositories.Patients
 {
-	public class JSonPatientDataStore : IPersistenceService<IEnumerable<Patient>>
+    public class JSonPatientDataStore : IPersistenceService<IEnumerable<Patient>>
     {		
 		private readonly string filename;
 

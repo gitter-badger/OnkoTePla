@@ -1,9 +1,10 @@
 ﻿using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Enums;
+using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-	public class ShowPage : ViewModelMessage
+    public class ShowPage : ViewModelMessage
 	{		
 		public ShowPage(MainPage page)
 		{

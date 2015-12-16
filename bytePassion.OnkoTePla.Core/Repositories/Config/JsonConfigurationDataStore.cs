@@ -1,10 +1,11 @@
 ﻿using bytePassion.Lib.Types.Repository;
-using bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
+
+namespace bytePassion.OnkoTePla.Core.Repositories.Config
 {
     public class JsonConfigurationDataStore : IPersistenceService<Configuration>
     {

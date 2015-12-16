@@ -3,17 +3,18 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Readmodels;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Enums;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
+using bytePassion.OnkoTePla.Client.WpfUi.Enums;
+using bytePassion.OnkoTePla.Client.WpfUi.Global;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Readmodels;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -22,10 +23,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
-using DeleteAppointment = bytePassion.OnkoTePla.Client.Core.Domain.Commands.DeleteAppointment;
+using DeleteAppointment = bytePassion.OnkoTePla.Core.Domain.Commands.DeleteAppointment;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 {
     public class SearchPageViewModel : ViewModel, 
                                        ISearchPageViewModel
@@ -84,7 +84,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 			selectedDateVariable.Value = appointment.Day;
 
 			viewModelCommunication.SendTo(
-				AppointmentViewModelCollection,
+				Constants.AppointmentViewModelCollection,
 				appointment.Id,
 				new SwitchToEditMode()	
 			);

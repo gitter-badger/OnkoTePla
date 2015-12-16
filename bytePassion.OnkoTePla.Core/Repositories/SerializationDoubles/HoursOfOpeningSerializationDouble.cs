@@ -1,10 +1,11 @@
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using System.Collections.Generic;
 using System.Linq;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
+
+namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
-	public class HoursOfOpeningSerializationDouble
+    public class HoursOfOpeningSerializationDouble
 	{
 		public HoursOfOpeningSerializationDouble()
 		{			

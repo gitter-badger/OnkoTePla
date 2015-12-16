@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
-using bytePassion.Lib.FrameworkExtensions;
+﻿using bytePassion.Lib.FrameworkExtensions;
+using System.ComponentModel;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid.Helper
 {
-	public class TimeSlotLabel : INotifyPropertyChanged
+    public class TimeSlotLabel : INotifyPropertyChanged
 	{
 		private double xCoord;
 		private double yCoord;

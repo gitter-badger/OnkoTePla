@@ -1,11 +1,11 @@
-using System;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain
+namespace bytePassion.OnkoTePla.Core.Domain
 {
-	public struct AggregateIdentifier 
+    public struct AggregateIdentifier 
 	{
 		private readonly uint? practiceVersion;
 

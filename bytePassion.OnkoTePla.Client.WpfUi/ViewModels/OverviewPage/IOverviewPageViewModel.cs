@@ -1,16 +1,16 @@
-﻿using System.Windows.Input;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
+using System.Windows.Input;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 {
-	public interface IOverviewPageViewModel : IViewModel
+    public interface IOverviewPageViewModel : IViewModel
 	{
 		IDateDisplayViewModel             DateDisplayViewModel             { get; }
 		IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }

@@ -4,9 +4,9 @@ using System.Windows.Input;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector
 {
-	public class DateSelectorViewModelSampleData : IDateSelectorViewModel
+    public class DateSelectorViewModelSampleData : IDateSelectorViewModel
 	{
 		public DateSelectorViewModelSampleData()
 		{

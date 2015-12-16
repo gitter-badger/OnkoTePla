@@ -1,13 +1,13 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Core.Domain.Events;
+using bytePassion.OnkoTePla.Core.Eventsystem;
 using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Readmodels
+namespace bytePassion.OnkoTePla.Core.Readmodels
 {
-	public abstract class ReadModelBase : DisposingObject, INotifyAppointmentChanged,
+    public abstract class ReadModelBase : DisposingObject, INotifyAppointmentChanged,
 														   IDomainEventHandler<AppointmentAdded>,
 													       IDomainEventHandler<AppointmentReplaced>,
 													       IDomainEventHandler<AppointmentDeleted>

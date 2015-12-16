@@ -2,10 +2,10 @@
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewDragAdorner
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentViewDragAdorner
 {
 
-	public class AppointmentViewDragAdornerViewModelSampleData : IAppointmentViewDragAdornerViewModel
+    public class AppointmentViewDragAdornerViewModelSampleData : IAppointmentViewDragAdornerViewModel
 	{
 		public AppointmentViewDragAdornerViewModelSampleData()
 		{

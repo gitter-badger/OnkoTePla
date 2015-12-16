@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
+﻿using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using System.Linq;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate
+namespace bytePassion.OnkoTePla.Core.Repositories.Aggregate
 {
-	public class AggregateRepository : IAggregateRepository
+    public class AggregateRepository : IAggregateRepository
 	{				
 		private readonly IEventStore eventStore;		
 		private readonly IEventBus eventBus;

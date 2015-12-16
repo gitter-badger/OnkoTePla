@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Media;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper
 {
     public class RoomSelectorData
 	{				

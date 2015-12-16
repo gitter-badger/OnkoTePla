@@ -1,17 +1,17 @@
-﻿using System;
+﻿using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Core.Domain.Events;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using System;
 using System.Collections.Generic;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Contracts.Appointments;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Readmodels
+namespace bytePassion.OnkoTePla.Core.Readmodels
 {
-	public class FixedAppointmentSet
+    public class FixedAppointmentSet
 	{
 		private readonly AppointmentSet appointmentSet;
 

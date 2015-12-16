@@ -1,8 +1,9 @@
 ﻿using System.Windows.Input;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationView
 {
-	public interface INotificationViewModel
+    public interface INotificationViewModel
 	{
 		string Message { get; }
 

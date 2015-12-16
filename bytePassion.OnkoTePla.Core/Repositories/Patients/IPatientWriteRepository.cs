@@ -3,9 +3,9 @@ using bytePassion.Lib.Types.Repository;
 using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
+namespace bytePassion.OnkoTePla.Core.Repositories.Patients
 {
-	public interface IPatientWriteRepository : IPersistable
+    public interface IPatientWriteRepository : IPersistable
 	{
 		void AddPatient(string name, Date birthday, bool alive, string externalId);
 

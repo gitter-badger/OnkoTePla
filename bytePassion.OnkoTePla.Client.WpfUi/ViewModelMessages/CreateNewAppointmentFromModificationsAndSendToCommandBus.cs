@@ -1,8 +1,9 @@
 ﻿using bytePassion.Lib.Communication.ViewModel.Messages;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-	public class CreateNewAppointmentFromModificationsAndSendToCommandBus : ViewModelMessage
+    public class CreateNewAppointmentFromModificationsAndSendToCommandBus : ViewModelMessage
 	{
 	}
 }

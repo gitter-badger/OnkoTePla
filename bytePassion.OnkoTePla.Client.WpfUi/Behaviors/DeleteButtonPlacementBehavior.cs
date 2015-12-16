@@ -1,11 +1,12 @@
-﻿using System.Windows;
+﻿using bytePassion.Lib.FrameworkExtensions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
-using bytePassion.Lib.FrameworkExtensions;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
-	public class DeleteButtonPlacementBehavior : Behavior<Button>
+    public class DeleteButtonPlacementBehavior : Behavior<Button>
     {
         public static readonly DependencyProperty ReferenceElementProperty = DependencyProperty.Register(
             "ReferenceElement", typeof (UIElement), typeof (DeleteButtonPlacementBehavior), new PropertyMetadata(default(UIElement)));

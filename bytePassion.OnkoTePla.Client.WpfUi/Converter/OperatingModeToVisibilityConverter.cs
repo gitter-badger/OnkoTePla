@@ -1,12 +1,12 @@
 ﻿using bytePassion.Lib.WpfLib.ConverterBase;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using System.Globalization;
 using System.Windows;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
+namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 {
-	public class OperatingModeToVisibilityConverter : GenericValueConverter<OperatingMode, Visibility>
+    public class OperatingModeToVisibilityConverter : GenericValueConverter<OperatingMode, Visibility>
 	{
 		protected override Visibility Convert(OperatingMode value, CultureInfo culture)
 		{

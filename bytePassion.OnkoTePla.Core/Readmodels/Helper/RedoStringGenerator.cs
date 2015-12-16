@@ -3,7 +3,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Readmodels.Helper
+namespace bytePassion.OnkoTePla.Core.Readmodels.Helper
 {
     public static class RedoStringGenerator
     {

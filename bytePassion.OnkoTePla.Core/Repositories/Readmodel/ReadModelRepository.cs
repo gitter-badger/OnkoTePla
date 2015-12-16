@@ -1,16 +1,15 @@
-﻿
+﻿using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Readmodels;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
 using System;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Readmodels;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel
+namespace bytePassion.OnkoTePla.Core.Repositories.Readmodel
 {
-	public class ReadModelRepository : IReadModelRepository
+    public class ReadModelRepository : IReadModelRepository
 	{
 		private readonly IEventBus eventBus;
 		private readonly IEventStore eventStore;

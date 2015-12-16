@@ -1,6 +1,6 @@
-﻿namespace bytePassion.OnkoTePla.Client.WPFVisualization.Views
-{	
-	public partial class AddAppointmentDialog
+﻿namespace bytePassion.OnkoTePla.Client.WpfUi.Views
+{
+    public partial class AddAppointmentDialog
 	{
 		public AddAppointmentDialog ()
 		{

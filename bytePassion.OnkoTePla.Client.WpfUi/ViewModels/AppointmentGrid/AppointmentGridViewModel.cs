@@ -1,30 +1,30 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Readmodels;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
+using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
+using bytePassion.OnkoTePla.Client.WpfUi.Global;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Domain.Commands;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Readmodels;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
-using DeleteAppointment = bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages.DeleteAppointment;
-using DeleteAppointmentCommand = bytePassion.OnkoTePla.Client.Core.Domain.Commands.DeleteAppointment;
+using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.DeleteAppointment;
+using DeleteAppointmentCommand = bytePassion.OnkoTePla.Core.Domain.Commands.DeleteAppointment;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
     public class AppointmentGridViewModel : ViewModel,
 											IAppointmentGridViewModel											
@@ -65,7 +65,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			roomFilterVariable.StateChanged += OnGlobalRoomFilterVariableChanged;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-				AppointmentGridViewModelCollection,
+				Constants.AppointmentGridViewModelCollection,
 				this					
 			);
 
@@ -110,7 +110,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				TherapyPlaceRowViewModels.Do(viewModel =>
 				{
 					viewModelCommunication.SendTo(
-						TherapyPlaceRowViewModelCollection,
+						Constants.TherapyPlaceRowViewModelCollection,
 						viewModel.Identifier,
 						new SetVisibility(true) 	
 					);                             
@@ -121,7 +121,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				TherapyPlaceRowViewModels.Do(viewModel =>
 				{
 					viewModelCommunication.SendTo(
-						TherapyPlaceRowViewModelCollection,
+						Constants.TherapyPlaceRowViewModelCollection,
 						viewModel.Identifier,
 						new SetVisibility(false)
 					);
@@ -135,7 +135,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 							   .Do(id =>
 							       {
 									   viewModelCommunication.SendTo(
-											TherapyPlaceRowViewModelCollection,
+											Constants.TherapyPlaceRowViewModelCollection,
 											new TherapyPlaceRowIdentifier(Identifier, id), 
 											new SetVisibility(true)
 									   );
@@ -166,7 +166,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		private void RemoveAppointment(Appointment appointmentToRemove)
 		{
 			viewModelCommunication.SendTo( 
-				AppointmentViewModelCollection, 
+				Constants.AppointmentViewModelCollection, 
 				appointmentToRemove.Id, 
 				new Dispose()
 			);
@@ -177,7 +177,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			if (IsActive)
 			{
 				viewModelCommunication.SendTo(
-					TimeGridViewModelCollection,
+					Constants.TimeGridViewModelCollection,
 					Identifier,
 					new NewSizeAvailable(newGridSize)	
 				);
@@ -185,7 +185,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 				foreach (var therapyPlaceRowIdentifier in TherapyPlaceRowViewModels.Select(viewModel => viewModel.Identifier))
 				{ 
 					viewModelCommunication.SendTo(
-						TherapyPlaceRowViewModelCollection,
+						Constants.TherapyPlaceRowViewModelCollection,
 						therapyPlaceRowIdentifier,
 						new NewSizeAvailable(newGridSize)
 					);
@@ -304,12 +304,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
             readModel.AppointmentChanged -= OnReadModelAppointmentChanged;
 
             viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-                AppointmentGridViewModelCollection,
+                Constants.AppointmentGridViewModelCollection,
                 this
             );
 
             viewModelCommunication.SendTo(
-                TimeGridViewModelCollection,
+                Constants.TimeGridViewModelCollection,
                 Identifier,
                 new Dispose()
             );

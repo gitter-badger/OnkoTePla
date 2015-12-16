@@ -1,9 +1,9 @@
 ﻿using bytePassion.Lib.Communication.ViewModel.Messages;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-	public class ShowNotification : ViewModelMessage
+    public class ShowNotification : ViewModelMessage
 	{
 		public ShowNotification(string notificationMessage,
 								int secondsToShow)

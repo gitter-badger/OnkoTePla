@@ -4,9 +4,9 @@ using System.Globalization;
 using System.Windows.Media.Imaging;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
+namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 {
-	internal class AliveDeadToImageConverter : GenericValueConverter<bool, BitmapImage>
+    internal class AliveDeadToImageConverter : GenericValueConverter<bool, BitmapImage>
 	{
 		protected override BitmapImage Convert(bool alive, CultureInfo culture)
 		{

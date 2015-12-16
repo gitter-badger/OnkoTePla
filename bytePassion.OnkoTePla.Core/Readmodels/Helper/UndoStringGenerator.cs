@@ -4,7 +4,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 using System.Globalization;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Readmodels.Helper
+namespace bytePassion.OnkoTePla.Core.Readmodels.Helper
 {
     public static class UndoStringGenerator
     {

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using bytePassion.OnkoTePla.Core.Eventsystem;
+using System.Collections.Generic;
 using System.Linq;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.EventStore
+namespace bytePassion.OnkoTePla.Core.Repositories.EventStore
 {
-	public class EventStream<TIdentifier>
+    public class EventStream<TIdentifier>
 	{
 		private readonly List<DomainEvent> events; 
 

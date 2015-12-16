@@ -6,9 +6,9 @@ using System.ComponentModel;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 {
-	public class MedicalPracticeSelectorViewModelSampleData : IMedicalPracticeSelectorViewModel
+    public class MedicalPracticeSelectorViewModelSampleData : IMedicalPracticeSelectorViewModel
 	{
 		public MedicalPracticeSelectorViewModelSampleData()
 		{

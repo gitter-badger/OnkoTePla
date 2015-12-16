@@ -1,12 +1,12 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationView
 {
     public class NotificationViewModel : ViewModel, 
                                          INotificationViewModel

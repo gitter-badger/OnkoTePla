@@ -1,11 +1,11 @@
-﻿using System.Windows;
-using bytePassion.OnkoTePla.Config.WpfVisualization.SampleData;
+﻿using bytePassion.OnkoTePla.SampleDataCreation.SampleData;
+using System.Windows;
 
 
-namespace bytePassion.OnkoTePla.Config.WpfVisualization
+namespace bytePassion.OnkoTePla.SampleDataCreation
 {
-	
-	public partial class MainWindow
+
+    public partial class MainWindow
 	{
 		public MainWindow ()
 		{

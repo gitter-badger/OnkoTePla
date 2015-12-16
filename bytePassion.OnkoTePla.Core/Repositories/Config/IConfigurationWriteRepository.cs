@@ -4,9 +4,9 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
+namespace bytePassion.OnkoTePla.Core.Repositories.Config
 {
-	public interface IConfigurationWriteRepository : IPersistable
+    public interface IConfigurationWriteRepository : IPersistable
 	{
 		
 		/////////////////////////////////////////////////////////////////////////////////////

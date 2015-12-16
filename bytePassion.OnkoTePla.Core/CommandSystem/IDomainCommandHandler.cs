@@ -1,10 +1,10 @@
 ﻿using bytePassion.Lib.Communication.MessageBus;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
+namespace bytePassion.OnkoTePla.Core.CommandSystem
 {
 
-	public interface IDomainCommandHandler<in TCommand> : IMessageHandler<TCommand>
+    public interface IDomainCommandHandler<in TCommand> : IMessageHandler<TCommand>
 	{		
 	}
 }

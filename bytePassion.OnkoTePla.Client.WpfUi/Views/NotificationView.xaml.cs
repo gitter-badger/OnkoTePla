@@ -1,4 +1,4 @@
-﻿namespace bytePassion.OnkoTePla.Client.WPFVisualization.Views
+﻿namespace bytePassion.OnkoTePla.Client.WpfUi.Views
 {
     public partial class NotificationView
 	{

@@ -1,6 +1,6 @@
-﻿namespace bytePassion.OnkoTePla.Client.WPFVisualization.Enums
+﻿namespace bytePassion.OnkoTePla.Client.WpfUi.Enums
 {
-	public enum MainPage { Overview,
+    public enum MainPage { Overview,
 						   Search,
 						   Options }
 }

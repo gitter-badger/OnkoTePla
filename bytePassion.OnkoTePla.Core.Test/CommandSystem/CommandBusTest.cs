@@ -1,16 +1,17 @@
-﻿using System;
-using bytePassion.Lib.Communication.MessageBus;
+﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Domain.Commands;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using System;
 using Xunit;
 
-namespace bytePassion.OnkoTePla.Client.Core.Test.CommandSystem
+
+namespace bytePassion.OnkoTePla.Core.Test.CommandSystem
 {
-	public class CommandBusTest
+    public class CommandBusTest
 	{		
 
 		private class TestCommandHandler : IDomainCommandHandler<AddAppointment>

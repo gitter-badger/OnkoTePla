@@ -1,17 +1,17 @@
 ﻿using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Repository;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
 
-namespace bytePassion.OnkoTePla.Config.WpfVisualization.SampleData
+namespace bytePassion.OnkoTePla.SampleDataCreation.SampleData
 {
     public static class ConfigurationData
 	{

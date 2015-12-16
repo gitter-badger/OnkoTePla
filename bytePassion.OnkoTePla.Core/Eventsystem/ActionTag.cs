@@ -1,6 +1,6 @@
-﻿namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
+﻿namespace bytePassion.OnkoTePla.Core.Eventsystem
 {
-	public enum ActionTag
+    public enum ActionTag
     {
 		RegularAction,		
 		UndoAction,

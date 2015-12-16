@@ -1,12 +1,12 @@
-﻿using System;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain.Events
+namespace bytePassion.OnkoTePla.Core.Domain.Events
 {
-	public class AppointmentAdded : DomainEvent
+    public class AppointmentAdded : DomainEvent
 	{
 		public AppointmentAdded(AggregateIdentifier aggregateId, uint aggregateVersion, 
 								Guid userId, Tuple<Date, Time> timeStamp, ActionTag actionTag,

@@ -3,9 +3,9 @@ using System.Windows.Controls;
 using System.Windows.Interactivity;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
+namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
-	internal class PatientViewTextBoxBehavior : Behavior<TextBox>
+    internal class PatientViewTextBoxBehavior : Behavior<TextBox>
 	{
 		private const string TextBoxPromt = "Hier tippen um Liste zu filtern";
 

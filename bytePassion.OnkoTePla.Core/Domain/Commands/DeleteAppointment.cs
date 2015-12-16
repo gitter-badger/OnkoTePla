@@ -1,11 +1,11 @@
-﻿using System;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+﻿using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands
+namespace bytePassion.OnkoTePla.Core.Domain.Commands
 {
-	public class DeleteAppointment : DomainCommand
+    public class DeleteAppointment : DomainCommand
 	{
 		public DeleteAppointment(AggregateIdentifier aggregateId, uint aggregateVersion, 
 								 Guid userId, Guid patientId, ActionTag actionTag, 

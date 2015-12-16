@@ -1,15 +1,15 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 {
     public class MedicalPracticeSelectorViewModel : ViewModel, 
                                                     IMedicalPracticeSelectorViewModel

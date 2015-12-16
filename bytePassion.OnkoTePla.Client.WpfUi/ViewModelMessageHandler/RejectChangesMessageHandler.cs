@@ -1,14 +1,15 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.Global;
+using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 {
     public class RejectChangesMessageHandler : IViewModelMessageHandler<RejectChanges>
 	{
@@ -63,7 +64,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 			if (isInitial)
 			{
 				viewModelCommunication.SendTo(           //
-					AppointmentViewModelCollection,      // do nothing but
+					Constants.AppointmentViewModelCollection,      // do nothing but
 					originalAppointmentId,				 // deleting the temporarly
 					new Dispose()                        // created Appointment
 				);                                       //
@@ -71,7 +72,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessageHandler
 			else
 			{
 				viewModelCommunication.SendTo(
-					AppointmentViewModelCollection,
+					Constants.AppointmentViewModelCollection,
 					originalAppointmentId,
 					new RestoreOriginalValues()
 				);

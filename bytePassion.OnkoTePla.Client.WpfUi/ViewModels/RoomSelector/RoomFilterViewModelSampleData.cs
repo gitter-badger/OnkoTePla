@@ -1,13 +1,13 @@
-﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 {
-	class RoomFilterViewModelSampleData : IRoomFilterViewModel
+    class RoomFilterViewModelSampleData : IRoomFilterViewModel
 	{
 		public RoomFilterViewModelSampleData()
 		{

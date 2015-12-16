@@ -1,8 +1,9 @@
 ﻿using bytePassion.Lib.Communication.MessageBus;
 
-namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
+
+namespace bytePassion.OnkoTePla.Core.CommandSystem
 {
-	public class CommandBus : ICommandBus
+    public class CommandBus : ICommandBus
 	{
 		private readonly IMessageBus<DomainCommand> commandMessageBus;
 

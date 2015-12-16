@@ -1,6 +1,6 @@
 ﻿
 
-namespace bytePassion.Lib.MathLib
+namespace bytePassion.Lib.GeometryLib
 {
     public static class Constants
     {

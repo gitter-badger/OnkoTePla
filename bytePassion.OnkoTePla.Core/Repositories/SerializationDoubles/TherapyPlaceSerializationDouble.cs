@@ -1,9 +1,10 @@
-﻿using System;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
+﻿using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
+
+namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
-	public class TherapyPlaceSerializationDouble
+    public class TherapyPlaceSerializationDouble
 	{
 		public TherapyPlaceSerializationDouble()
 		{			

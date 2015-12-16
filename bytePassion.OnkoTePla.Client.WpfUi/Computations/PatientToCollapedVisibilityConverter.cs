@@ -3,9 +3,10 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 using System.Globalization;
 using System.Windows;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Computations
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.Computations
 {
-	public class PatientToCollapedVisibilityConverter : GenericParameterizedValueConverter<Patient, Visibility, bool>
+    public class PatientToCollapedVisibilityConverter : GenericParameterizedValueConverter<Patient, Visibility, bool>
 	{
 		protected override Visibility Convert(Patient value, bool invert, CultureInfo culture)
 		{

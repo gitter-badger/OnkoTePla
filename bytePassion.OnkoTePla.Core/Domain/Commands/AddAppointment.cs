@@ -1,13 +1,13 @@
-﻿using System;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands
+namespace bytePassion.OnkoTePla.Core.Domain.Commands
 {
-	public class AddAppointment : DomainCommand
+    public class AddAppointment : DomainCommand
 	{
 		public AddAppointment(AggregateIdentifier aggregateId, uint aggregateVersion, 
 							  Guid userId, ActionTag actionTag,

@@ -1,8 +1,8 @@
-﻿<Application x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.App"
+﻿<Application x:Class="bytePassion.OnkoTePla.Client.WpfUi.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Converter"             
-             xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts">
+             xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts"
+             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Converter">
     <Application.Resources>
 
         <ResourceDictionary>

@@ -1,8 +1,9 @@
 ﻿using System;
 
-namespace bytePassion.OnkoTePla.Client.Core.Exceptions
+
+namespace bytePassion.OnkoTePla.Core.Exceptions
 {
-	public class VersionNotApplicapleException : Exception
+    public class VersionNotApplicapleException : Exception
 	{
 		public VersionNotApplicapleException()
 		{			

@@ -1,12 +1,12 @@
 ﻿using bytePassion.Lib.WpfLib.ConverterBase;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using System.Globalization;
 using System.Windows.Media;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
+namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 {
-	public class OperatingModeToBackgroundBrush : GenericValueConverter<OperatingMode, SolidColorBrush>
+    public class OperatingModeToBackgroundBrush : GenericValueConverter<OperatingMode, SolidColorBrush>
 	{
 		protected override SolidColorBrush Convert(OperatingMode value, CultureInfo culture)
 		{

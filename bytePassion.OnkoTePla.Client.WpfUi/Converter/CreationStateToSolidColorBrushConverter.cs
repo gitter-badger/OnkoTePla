@@ -1,12 +1,13 @@
 ﻿using bytePassion.Lib.WpfLib.ConverterBase;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog.Helper;
 using System;
 using System.Globalization;
 using System.Windows.Media;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 {
-	public class CreationStateToSolidColorBrushConverter : GenericValueConverter<AppointmentCreationState, SolidColorBrush>
+    public class CreationStateToSolidColorBrushConverter : GenericValueConverter<AppointmentCreationState, SolidColorBrush>
 	{
 		protected override SolidColorBrush Convert(AppointmentCreationState value, CultureInfo culture)
 		{

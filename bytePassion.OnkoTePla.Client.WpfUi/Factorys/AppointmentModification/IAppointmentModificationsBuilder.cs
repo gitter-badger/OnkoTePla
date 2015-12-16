@@ -1,9 +1,9 @@
-﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using System;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.AppointmentModification
+namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification
 {
     public interface IAppointmentModificationsBuilder
     {

@@ -1,15 +1,15 @@
-﻿using System;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Contracts.Appointments;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
+namespace bytePassion.OnkoTePla.Core.Domain.AppointmentLogic
 {
-	public class AppointmentSet
+    public class AppointmentSet
 	{		
 		private readonly IPatientReadRepository patientRepository;
 		private readonly IConfigurationReadRepository configurationRepository;

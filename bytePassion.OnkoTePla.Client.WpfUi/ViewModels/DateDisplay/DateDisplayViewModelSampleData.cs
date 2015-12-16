@@ -2,7 +2,7 @@
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay
 {
     public class DateDisplayViewModelSampleData : IDateDisplayViewModel
     {

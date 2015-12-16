@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
+using System.Collections.Generic;
 using System.Linq;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
+
+namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
-	public class EventStreamSerializationDouble
+    public class EventStreamSerializationDouble
 	{
 
 		public EventStreamSerializationDouble()

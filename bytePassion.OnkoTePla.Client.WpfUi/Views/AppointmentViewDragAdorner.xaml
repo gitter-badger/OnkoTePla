@@ -1,16 +1,16 @@
-﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.AppointmentViewDragAdorner"
+﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WpfUi.Views.AppointmentViewDragAdorner"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
-             xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewDragAdorner"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:appointmentViewDragAdorner="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentViewDragAdorner"
              mc:Ignorable="d" 
              d:DesignHeight="30" 
 			 d:DesignWidth="300">
 	
 	<d:DesignData.DataContext>
-		<sampleData:AppointmentViewDragAdornerViewModelSampleData/>
+		<appointmentViewDragAdorner:AppointmentViewDragAdornerViewModelSampleData/>
 	</d:DesignData.DataContext>
 	
 	<UserControl.Resources>

@@ -3,7 +3,8 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 {
     class NullToVisibilityConverter : IValueConverter
     {

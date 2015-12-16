@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.ChangeConfirmationView"
+﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WpfUi.Views.ChangeConfirmationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:changeConfirmationView="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView"
+             xmlns:changeConfirmationView="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView"
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="200">
 	

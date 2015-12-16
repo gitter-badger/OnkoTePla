@@ -1,9 +1,9 @@
 using bytePassion.Lib.Communication.MessageBus;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
+namespace bytePassion.OnkoTePla.Core.Eventsystem
 {
-	public interface IDomainEventHandler<in TEvent> : IMessageHandler<TEvent>
+    public interface IDomainEventHandler<in TEvent> : IMessageHandler<TEvent>
 	{				
 	}
 }

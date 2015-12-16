@@ -1,8 +1,8 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Windows.Media;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 {
     public class RoomFilterViewModel : ViewModel,
                                        IRoomFilterViewModel

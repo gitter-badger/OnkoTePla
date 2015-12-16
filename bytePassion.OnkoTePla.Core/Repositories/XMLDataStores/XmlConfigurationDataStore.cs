@@ -9,9 +9,10 @@ using System.Linq;
 using System.Windows.Media;
 using System.Xml;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.XMLDataStores
+
+namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 {
-	public class XmlConfigurationDataStore : IPersistenceService<Configuration>
+    public class XmlConfigurationDataStore : IPersistenceService<Configuration>
 	{
 		private readonly string filename;
 

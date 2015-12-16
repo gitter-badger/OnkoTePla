@@ -1,12 +1,13 @@
-﻿using System;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Core.Domain.Events;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using System;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
+
+namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
-	public class DomainEventSerializationDouble
+    public class DomainEventSerializationDouble
 	{
 		public enum EventType
 		{

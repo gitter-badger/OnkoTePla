@@ -1,9 +1,9 @@
 ﻿using bytePassion.Lib.Communication.ViewModel.Messages;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-	public class SetVisibility : ViewModelMessage
+    public class SetVisibility : ViewModelMessage
 	{
 		public SetVisibility(bool visible)
 		{

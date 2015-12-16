@@ -1,12 +1,12 @@
-﻿using System;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain.Commands
+namespace bytePassion.OnkoTePla.Core.Domain.Commands
 {
-	public class ReplaceAppointment : DomainCommand
+    public class ReplaceAppointment : DomainCommand
 	{
 		public ReplaceAppointment (AggregateIdentifier sourceAggregateId, 
 								   AggregateIdentifier destinationAggregateId,

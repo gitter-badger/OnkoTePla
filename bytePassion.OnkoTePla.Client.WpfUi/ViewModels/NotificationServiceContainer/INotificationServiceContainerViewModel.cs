@@ -1,13 +1,13 @@
-using System.Collections.ObjectModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationView;
+using System.Collections.ObjectModel;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer
 {
 
-	public interface INotificationServiceContainerViewModel : IViewModel,
+    public interface INotificationServiceContainerViewModel : IViewModel,
 															  IViewModelMessageHandler<ShowNotification>,
 															  IViewModelMessageHandler<HideNotification>
 	{

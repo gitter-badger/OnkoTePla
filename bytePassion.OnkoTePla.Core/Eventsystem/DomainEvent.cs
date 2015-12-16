@@ -1,11 +1,11 @@
-﻿using System;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Core.Domain;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Eventsystem
+namespace bytePassion.OnkoTePla.Core.Eventsystem
 {
-	public class DomainEvent
+    public class DomainEvent
 	{
 		public DomainEvent (AggregateIdentifier aggregateId, 
 							uint aggregateVersion, 

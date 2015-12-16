@@ -1,10 +1,10 @@
-﻿using System.Windows.Input;
-using bytePassion.Lib.TimeLib;
+﻿using bytePassion.Lib.TimeLib;
+using System.Windows.Input;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector
 {
-	public interface IDateSelectorViewModel : IViewModel
+    public interface IDateSelectorViewModel : IViewModel
 	{
 		Date SelectedDate { get; set; }
 

@@ -1,16 +1,16 @@
-﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage;
 using System.ComponentModel;
 using System.Windows.Input;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MainWindow
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 {
-	public class MainWindowViewModelSampleData : IMainWindowViewModel
+    public class MainWindowViewModelSampleData : IMainWindowViewModel
 	{
 		public MainWindowViewModelSampleData()
 		{

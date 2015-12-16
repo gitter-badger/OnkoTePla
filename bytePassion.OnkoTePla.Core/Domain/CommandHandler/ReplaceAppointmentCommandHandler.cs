@@ -1,14 +1,14 @@
-﻿using System;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Aggregate;
+﻿using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Core.Domain.Commands;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Repositories.Aggregate;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler
+namespace bytePassion.OnkoTePla.Core.Domain.CommandHandler
 {
-	public class ReplaceAppointmentCommandHandler : IDomainCommandHandler<ReplaceAppointment>
+    public class ReplaceAppointmentCommandHandler : IDomainCommandHandler<ReplaceAppointment>
 	{
 		private readonly IAggregateRepository repository;
 

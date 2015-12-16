@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Patients
+namespace bytePassion.OnkoTePla.Core.Repositories.Patients
 {
-	public interface IPatientReadRepository : IPersistable
+    public interface IPatientReadRepository : IPersistable
 	{
 		event Action<Patient> PatientAdded;
 		event Action<Patient> PatientModified;

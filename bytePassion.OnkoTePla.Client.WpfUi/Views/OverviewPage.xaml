@@ -1,18 +1,18 @@
-﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WPFVisualization.Views.OverviewPage"
+﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WpfUi.Views.OverviewPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage"
-             xmlns:local="clr-namespace:bytePassion.OnkoTePla.Client.WPFVisualization.Views"
              xmlns:converter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+             xmlns:overviewPage="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage"
+             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Views"
 
              d:DesignHeight="600"
              d:DesignWidth="900"
              mc:Ignorable="d">
 
     <d:UserControl.DataContext>
-        <sampleData:OverviewPageViewModelSampleData />
+        <overviewPage:OverviewPageViewModelSampleData />
     </d:UserControl.DataContext>
 
     <UserControl.Resources>
@@ -52,10 +52,10 @@
 			<StackPanel Grid.Row="0"
 						Margin="5">
 
-				<local:UndoRedoView Height="30"
+				<views:UndoRedoView Height="30"
 									DataContext="{Binding UndoRedoViewModel}"/>
-                <local:DateDisplay  DataContext="{Binding DateDisplayViewModel}"  />
-                <local:DateSelector DataContext="{Binding DateSelectorViewModel}" />
+                <views:DateDisplay  DataContext="{Binding DateDisplayViewModel}"  />
+                <views:DateSelector DataContext="{Binding DateSelectorViewModel}" />
 
             </StackPanel>
 
@@ -70,20 +70,20 @@
                     <TextBlock Text="Praxis" Foreground="{StaticResource SemiTransparentWhiteBrush}" ></TextBlock>
                 </Border>
 
-                <local:MedicalPracticeSelector DataContext="{Binding MedicalPracticeSelectorViewModel}" />
-                <local:RoomSelector DataContext="{Binding RoomFilterViewModel}" />
+                <views:MedicalPracticeSelector DataContext="{Binding MedicalPracticeSelectorViewModel}" />
+                <views:RoomSelector DataContext="{Binding RoomFilterViewModel}" />
 
             </StackPanel>
 
             <Grid Grid.Row="4" Visibility="{Binding ChangeConfirmationVisible, 
 													Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
 
-                <local:ChangeConfirmationView Margin="5" DataContext="{Binding ChangeConfirmationViewModel}" />
+                <views:ChangeConfirmationView Margin="5" DataContext="{Binding ChangeConfirmationViewModel}" />
             </Grid>
 
         </Grid>
 
-        <local:GridContainer Grid.Column="1"
+        <views:GridContainer Grid.Column="1"
                              Margin="5"
                              DataContext="{Binding GridContainerViewModel}" 
                              x:Name="GridContainer"/>

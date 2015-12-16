@@ -1,9 +1,9 @@
 ﻿using bytePassion.Lib.Communication.MessageBus;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.CommandSystem
+namespace bytePassion.OnkoTePla.Core.CommandSystem
 {
-	public interface ICommandBus
+    public interface ICommandBus
 	{
 		void RegisterCommandHandler<TDomainCommand>(IMessageHandler<TDomainCommand> commandHandler) 
 			where TDomainCommand : DomainCommand;

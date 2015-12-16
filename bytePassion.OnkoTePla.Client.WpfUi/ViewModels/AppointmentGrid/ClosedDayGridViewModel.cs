@@ -1,18 +1,19 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Client.WpfUi.Global;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
     public class ClosedDayGridViewModel : ViewModel, 
 										  IAppointmentGridViewModel
@@ -34,7 +35,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		    IsActive = false;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-				AppointmentGridViewModelCollection,
+				Constants.AppointmentGridViewModelCollection,
 				this
 			);
 			
@@ -60,7 +61,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 			if (IsActive)
 			{
 				viewModelCommunication.SendTo(
-					TimeGridViewModelCollection,
+					Constants.TimeGridViewModelCollection,
 					Identifier,
 					new NewSizeAvailable(newGridSize)
 				);			
@@ -113,12 +114,12 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
             appointmentGridSizeVariable.StateChanged -= OnGridSizeChanged;
 
             viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-                AppointmentGridViewModelCollection,
+                Constants.AppointmentGridViewModelCollection,
                 this
             );
 
             viewModelCommunication.SendTo(
-                TimeGridViewModelCollection,
+                Constants.TimeGridViewModelCollection,
                 Identifier,
                 new Dispose()
             );

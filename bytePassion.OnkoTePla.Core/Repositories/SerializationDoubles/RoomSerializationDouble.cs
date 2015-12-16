@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
+
+namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
-	public class RoomSerializationDouble
+    public class RoomSerializationDouble
 	{
 		public RoomSerializationDouble()
 		{			

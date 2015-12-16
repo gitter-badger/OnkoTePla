@@ -1,6 +1,6 @@
-﻿namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog.Helper
+﻿namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog.Helper
 {
-	public enum AppointmentCreationState
+    public enum AppointmentCreationState
 	{
 		NoPatientSelected,
 		PatientSelected,

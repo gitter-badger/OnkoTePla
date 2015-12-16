@@ -4,9 +4,9 @@ using System;
 using System.Globalization;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
+namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 {
-	public class DateToDateTimeConverter : GenericValueConverter<Date, DateTime>
+    public class DateToDateTimeConverter : GenericValueConverter<Date, DateTime>
 	{
 		protected override DateTime Convert(Date value, CultureInfo culture)
 		{

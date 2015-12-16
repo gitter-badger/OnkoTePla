@@ -1,7 +1,8 @@
 ﻿using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Views
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.Views
 {
     public partial class DateSelector
 	{

@@ -1,16 +1,16 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.Core.Domain.Commands;
-using bytePassion.OnkoTePla.Client.Core.Domain.Events;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Readmodels.Helper;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Client.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Domain.Commands;
+using bytePassion.OnkoTePla.Core.Domain.Events;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Readmodels.Helper;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,9 +18,9 @@ using System.Linq;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.Core.Readmodels
+namespace bytePassion.OnkoTePla.Core.Readmodels
 {
-	public class SessionAndUserSpecificEventHistory : ReadModelBase,
+    public class SessionAndUserSpecificEventHistory : ReadModelBase,
 													  IUndoRedo													  
 	{
 		private class InitialDummyEvent : DomainEvent

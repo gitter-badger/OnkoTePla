@@ -1,14 +1,13 @@
-﻿
+﻿using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using System.Collections.Generic;
 using System.Linq;
-using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
-using bytePassion.OnkoTePla.Client.Core.Repositories.EventStore;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain
+namespace bytePassion.OnkoTePla.Core.Domain
 {
-	public abstract class AggregateRootBase<TIdentifier>
+    public abstract class AggregateRootBase<TIdentifier>
 	{
 		private readonly IList<DomainEvent> uncommitedChanges;
 

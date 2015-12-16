@@ -1,10 +1,10 @@
-﻿using System;
-using bytePassion.OnkoTePla.Client.Core.Readmodels;
+﻿using bytePassion.OnkoTePla.Core.Readmodels;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Domain.AppointmentLogic
+namespace bytePassion.OnkoTePla.Core.Domain.AppointmentLogic
 {
-	public interface INotifyAppointmentChanged
+    public interface INotifyAppointmentChanged
 	{
 		event EventHandler<AppointmentChangedEventArgs> AppointmentChanged;
 	}

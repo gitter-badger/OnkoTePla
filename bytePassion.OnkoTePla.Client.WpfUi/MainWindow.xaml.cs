@@ -1,6 +1,6 @@
-﻿namespace bytePassion.OnkoTePla.Client.WPFVisualization
-{	
-	public partial class MainWindow
+﻿namespace bytePassion.OnkoTePla.Client.WpfUi
+{
+    public partial class MainWindow
 	{
 		public MainWindow ()
 		{

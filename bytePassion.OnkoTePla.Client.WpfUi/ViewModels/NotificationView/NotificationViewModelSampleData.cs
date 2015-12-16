@@ -1,9 +1,9 @@
 ﻿using System.Windows.Input;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationView
 {
-	public class NotificationViewModelSampleData : INotificationViewModel
+    public class NotificationViewModelSampleData : INotificationViewModel
 	{
 		public NotificationViewModelSampleData()
 		{

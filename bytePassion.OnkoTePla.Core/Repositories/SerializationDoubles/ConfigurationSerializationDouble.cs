@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using bytePassion.OnkoTePla.Contracts.Config;
+using System.Collections.Generic;
 using System.Linq;
-using bytePassion.OnkoTePla.Contracts.Config;
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.SerializationDoubles
+
+namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
-	class ConfigurationSerializationDouble
+    class ConfigurationSerializationDouble
 	{
 
 		public ConfigurationSerializationDouble()

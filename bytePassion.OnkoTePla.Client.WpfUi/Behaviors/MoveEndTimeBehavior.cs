@@ -1,9 +1,10 @@
-﻿using System.Windows;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
     public class MoveEndTimeBehavior : Behavior<FrameworkElement>
 	{

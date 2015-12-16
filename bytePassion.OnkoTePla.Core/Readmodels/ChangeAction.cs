@@ -1,6 +1,6 @@
-﻿namespace bytePassion.OnkoTePla.Client.Core.Readmodels
+﻿namespace bytePassion.OnkoTePla.Core.Readmodels
 {
-	public enum ChangeAction
+    public enum ChangeAction
 	{
 		Added,
 		Modified,

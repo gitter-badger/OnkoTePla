@@ -1,14 +1,14 @@
-﻿using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationView;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer
 {
 
-	public class NotificationServiceContainerViewModelSampleData : INotificationServiceContainerViewModel
+    public class NotificationServiceContainerViewModelSampleData : INotificationServiceContainerViewModel
 	{
 		public NotificationServiceContainerViewModelSampleData()
 		{

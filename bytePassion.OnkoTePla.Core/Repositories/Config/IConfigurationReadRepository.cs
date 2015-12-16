@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 
 
-namespace bytePassion.OnkoTePla.Client.Core.Repositories.Config
+namespace bytePassion.OnkoTePla.Core.Repositories.Config
 {
-	public interface IConfigurationReadRepository : IPersistable
+    public interface IConfigurationReadRepository : IPersistable
 	{
 		uint GetLatestVersionFor(Guid medicalPractiveId);		
 

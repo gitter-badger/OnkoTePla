@@ -1,9 +1,10 @@
-﻿using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
+using bytePassion.OnkoTePla.Core.Domain;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentGridViewModel
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel
 {
-	public interface IAppointmentGridViewModelBuilder
+    public interface IAppointmentGridViewModelBuilder
 	{
 		IAppointmentGridViewModel Build(AggregateIdentifier identifier);
 	}

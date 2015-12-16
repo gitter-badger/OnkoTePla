@@ -1,9 +1,10 @@
-﻿using System.Windows;
-using bytePassion.Lib.Communication.ViewModel.Messages;
+﻿using bytePassion.Lib.Communication.ViewModel.Messages;
+using System.Windows;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-	public class NewSizeAvailable : ViewModelMessage
+    public class NewSizeAvailable : ViewModelMessage
 	{
 		public NewSizeAvailable(Size newSize)
 		{

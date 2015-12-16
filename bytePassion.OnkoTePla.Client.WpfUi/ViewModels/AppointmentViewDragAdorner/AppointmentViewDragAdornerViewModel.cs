@@ -2,7 +2,7 @@
 using System.ComponentModel;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewDragAdorner
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentViewDragAdorner
 {
     public class AppointmentViewDragAdornerViewModel : ViewModel, 
                                                        IAppointmentViewDragAdornerViewModel

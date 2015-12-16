@@ -4,7 +4,8 @@ using bytePassion.Lib.TimeLib;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay
 {
     public class DateDisplayViewModel : ViewModel, 
                                         IDateDisplayViewModel

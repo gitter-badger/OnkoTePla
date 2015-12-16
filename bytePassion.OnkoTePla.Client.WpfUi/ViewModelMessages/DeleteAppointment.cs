@@ -1,11 +1,11 @@
-﻿using System;
-using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.Core.Eventsystem;
+﻿using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.OnkoTePla.Core.Eventsystem;
+using System;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-	public class DeleteAppointment : ViewModelMessage
+    public class DeleteAppointment : ViewModelMessage
     {
 	    
 	    public DeleteAppointment(Guid appointmentId, Guid patientId, ActionTag actionTag)

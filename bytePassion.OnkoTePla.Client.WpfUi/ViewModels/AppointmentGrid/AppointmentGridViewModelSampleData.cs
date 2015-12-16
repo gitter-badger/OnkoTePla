@@ -1,17 +1,17 @@
-﻿using System;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Core.Domain;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.Core.Domain;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid;
 
 #pragma warning disable 0067
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
-	public class AppointmentGridViewModelSampleData : IAppointmentGridViewModel
+    public class AppointmentGridViewModelSampleData : IAppointmentGridViewModel
 	{
 		public AppointmentGridViewModelSampleData()
 		{			

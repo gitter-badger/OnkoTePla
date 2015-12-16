@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
+﻿using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System.Collections.ObjectModel;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 {
-	public interface IMedicalPracticeSelectorViewModel : IViewModel
+    public interface IMedicalPracticeSelectorViewModel : IViewModel
 	{
 		MedicalPractice SelectedMedicalPractice { get; set; }
 

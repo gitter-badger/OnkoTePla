@@ -1,11 +1,11 @@
 ﻿using bytePassion.Lib.WpfLib.ConverterBase;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using System.Globalization;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Computations
+namespace bytePassion.OnkoTePla.Client.WpfUi.Computations
 {
-	public class ControlAdornerVisibility : GenericTwoToOneValueConverter<OperatingMode, bool, bool>
+    public class ControlAdornerVisibility : GenericTwoToOneValueConverter<OperatingMode, bool, bool>
 	{
 		protected override bool Convert(OperatingMode operatingMode, bool showDisabledOverlay, CultureInfo culture)
 		{

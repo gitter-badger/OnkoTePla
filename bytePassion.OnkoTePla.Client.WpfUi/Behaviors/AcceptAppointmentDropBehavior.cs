@@ -1,20 +1,20 @@
-﻿using System;
+﻿using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
+using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
+using bytePassion.OnkoTePla.Contracts.Appointments;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Interactivity;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
-using bytePassion.OnkoTePla.Contracts.Appointments;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Behaviors
+namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
     public class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
     {

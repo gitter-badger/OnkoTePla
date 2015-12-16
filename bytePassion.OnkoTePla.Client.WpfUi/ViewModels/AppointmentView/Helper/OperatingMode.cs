@@ -1,7 +1,7 @@
 ﻿
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 {
-	public enum OperatingMode
+    public enum OperatingMode
 	{
 		View,
 		Edit

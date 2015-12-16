@@ -1,8 +1,9 @@
 ﻿using bytePassion.Lib.Communication.ViewModel.Messages;
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-	public class ConfirmChanges : ViewModelMessage
+    public class ConfirmChanges : ViewModelMessage
     {
 
     }
