@@ -1,17 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using bytePassion.OnkoTePla.Client.NetworkTest.ViewModels.MainWindow;
 using System.Windows;
+
 
 namespace bytePassion.OnkoTePla.Client.NetworkTest
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            ////////                                                                             //////////
+            ////////                          Composition Root and Setup                         //////////
+            ////////                                                                             //////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            
+            var mainWindowViewModel = new MainWindowViewModel();
+
+            var mainWindow = new MainWindow
+            {
+                DataContext = mainWindowViewModel
+            };
+
+            mainWindow.ShowDialog();
+        }
     }
 }
