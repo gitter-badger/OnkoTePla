@@ -1,5 +1,7 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib.Commands;
+using NetMQ;
+using NetMQ.Sockets;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -8,17 +10,26 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage
 {
     internal class OverviewPageViewModel : ViewModel, IOverviewPageViewModel
     {
+        private readonly NetMQContext networkContext;
+        private readonly DealerSocket sender;
+
+        private const string Address = @"tcp://127.0.0.1:10000";
+
         private string text;
 
         public OverviewPageViewModel()
         {
             DoSomeThing = new Command(DoIt);
-            Text = "no text";
+            Text = "nothing Done";
+
+            networkContext = NetMQContext.Create();            
+            sender = networkContext.CreateDealerSocket();
+            sender.Connect(Address);
         }
 
         private void DoIt()
         {
-            Text = "testText";
+            sender.Send("first msg with zeroMQ");
         }
 
         public ICommand DoSomeThing { get; }
