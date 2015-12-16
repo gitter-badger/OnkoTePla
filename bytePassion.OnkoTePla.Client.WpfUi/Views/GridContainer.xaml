@@ -51,7 +51,7 @@
             <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
 			
             <ItemsControl.ItemContainerStyle>
-                <Style TargetType="FrameworkElement">
+                <Style TargetType="ContentPresenter">
                     <Setter Property="Visibility" Value="{Binding IsActive, 
 																  Converter={StaticResource BoolToHiddenVisibilityConverter}}"/>					
 				</Style>
