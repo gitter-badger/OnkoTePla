@@ -3,9 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi"
+        xmlns:panels="clr-namespace:bytePassion.Lib.WpfLib.Panels;assembly=bytePassion.Lib"
+        xmlns:views="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Views"
+        xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow"
+        xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Enums"
+        xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    
+    <d:DesignData.DataContext>
+        <sampleData:MainWindowViewModelSampleData/>
+    </d:DesignData.DataContext>
+    
+    <Window.Resources>
+        <converter:MainPageToIntConverter x:Key="MainPageToIntConverter"/>
+    </Window.Resources>
+    
     <Grid>
         
         <Grid.ColumnDefinitions>
@@ -16,13 +29,39 @@
         <StackPanel Grid.Column="0"
                     Orientation="Vertical">
                         
-            <Button Content="Übersicht"/>
-            <Button Content="Verbindungen"/>
-            <Button Content="Lizenz"/>
-            <Button Content="Infrastruktur"/>
-            <Button Content="Einstellungen"/>
+            <Button Content="Übersicht"
+                    Command="{Binding SwitchToPage}"
+                    CommandParameter="{x:Static enum:MainPage.Overview}"/>
+            
+            <Button Content="Verbindungen"
+                    Command="{Binding SwitchToPage}"
+                    CommandParameter="{x:Static enum:MainPage.Connections}"/>
+            
+            <Button Content="Lizenz"
+                    Command="{Binding SwitchToPage}"
+                    CommandParameter="{x:Static enum:MainPage.Licence}"/>
+            
+            <Button Content="Infrastruktur"
+                    Command="{Binding SwitchToPage}"
+                    CommandParameter="{x:Static enum:MainPage.Infrastructure}"/>
+            
+            <Button Content="Einstellungen"
+                    Command="{Binding SwitchToPage}"
+                    CommandParameter="{x:Static enum:MainPage.Options}"/>
             
         </StackPanel>
+
+        <panels:DeckPanel Grid.Column="1" 
+                          SelectedLayer="{Binding SelectedPage, 
+                                                  Converter={StaticResource MainPageToIntConverter}}">
+            
+            <views:OverviewPage       DataContext="{Binding OverviewPageViewModel}"/>
+            <views:ConnectionsPage    DataContext="{Binding ConnectionsPageViewModel}"/>
+            <views:LicencePage        DataContext="{Binding LicencePageViewModel}"/>
+            <views:InfrastructurePage DataContext="{Binding InfrastructurePageViewModel}"/>
+            <views:OptionsPage        DataContext="{Binding OptionsPageViewModel}"/>
+            
+        </panels:DeckPanel>
         
     </Grid>
 </Window>
