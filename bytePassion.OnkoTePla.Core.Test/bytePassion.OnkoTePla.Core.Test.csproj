@@ -9,8 +9,8 @@
     <ProjectGuid>{D3BC5548-ED91-4D37-8A1C-4FC5089436B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>bytePassion.OnkoTePla.Client.Core.Test</RootNamespace>
-    <AssemblyName>bytePassion.OnkoTePla.Client.Core.Test</AssemblyName>
+    <RootNamespace>bytePassion.OnkoTePla.Core.Test</RootNamespace>
+    <AssemblyName>bytePassion.OnkoTePla.Core.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>6fb81c7c</NuGetPackageImportStamp>
@@ -67,9 +67,9 @@
       <Project>{825B03A5-FD0F-417A-ADC5-D3A0AAD2C36B}</Project>
       <Name>bytePassion.Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\bytePassion.OnkoTePla.Client.Core\bytePassion.OnkoTePla.Client.Core.csproj">
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Core\bytePassion.OnkoTePla.Core.csproj">
       <Project>{d6dec4c7-d919-4528-ae91-510317a1d0fc}</Project>
-      <Name>bytePassion.OnkoTePla.Client.Core</Name>
+      <Name>bytePassion.OnkoTePla.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Contracts\bytePassion.OnkoTePla.Contracts.csproj">
       <Project>{85958036-dfef-4c68-abf4-fd241eaab47f}</Project>

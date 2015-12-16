@@ -7,8 +7,8 @@
     <ProjectGuid>{62C6DA20-0932-4CA4-B1CC-F8E3FF6EFE45}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>bytePassion.OnkoTePla.Config.WpfVisualization</RootNamespace>
-    <AssemblyName>bytePassion.OnkoTePla.Config.WpfVisualization</AssemblyName>
+    <RootNamespace>bytePassion.OnkoTePla.SampleDataCreation</RootNamespace>
+    <AssemblyName>bytePassion.OnkoTePla.SampleDataCreation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -104,9 +104,9 @@
       <Project>{825b03a5-fd0f-417a-adc5-d3a0aad2c36b}</Project>
       <Name>bytePassion.Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\bytePassion.OnkoTePla.Client.Core\bytePassion.OnkoTePla.Client.Core.csproj">
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Core\bytePassion.OnkoTePla.Core.csproj">
       <Project>{d6dec4c7-d919-4528-ae91-510317a1d0fc}</Project>
-      <Name>bytePassion.OnkoTePla.Client.Core</Name>
+      <Name>bytePassion.OnkoTePla.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Client.Resources\bytePassion.OnkoTePla.Client.Resources.csproj">
       <Project>{1ff3c490-8680-46a5-ab65-6329863326dc}</Project>

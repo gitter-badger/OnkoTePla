@@ -9,8 +9,8 @@
     <ProjectGuid>{0ACDBD07-774D-4CDB-A9F4-53173B7819D6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>bytePassion.OnkoTePla.Client.WPFVisualization.Test</RootNamespace>
-    <AssemblyName>bytePassion.OnkoTePla.Client.WPFVisualization.Test</AssemblyName>
+    <RootNamespace>bytePassion.OnkoTePla.Client.Test</RootNamespace>
+    <AssemblyName>bytePassion.OnkoTePla.Client.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>0c502a55</NuGetPackageImportStamp>

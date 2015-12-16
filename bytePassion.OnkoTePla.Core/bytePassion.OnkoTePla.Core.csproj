@@ -7,8 +7,8 @@
     <ProjectGuid>{D6DEC4C7-D919-4528-AE91-510317A1D0FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>bytePassion.OnkoTePla.Client.Core</RootNamespace>
-    <AssemblyName>bytePassion.OnkoTePla.Client.Core</AssemblyName>
+    <RootNamespace>bytePassion.OnkoTePla.Core</RootNamespace>
+    <AssemblyName>bytePassion.OnkoTePla.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

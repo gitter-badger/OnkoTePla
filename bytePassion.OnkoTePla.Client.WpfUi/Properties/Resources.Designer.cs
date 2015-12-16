@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Properties {
+namespace bytePassion.OnkoTePla.Client.WpfUi.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("bytePassion.OnkoTePla.Client.WPFVisualization.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("bytePassion.OnkoTePla.Client.WpfUi.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

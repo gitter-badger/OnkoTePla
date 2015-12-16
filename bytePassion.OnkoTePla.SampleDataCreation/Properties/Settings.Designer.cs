@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace bytePassion.OnkoTePla.Client.WPFVisualization.Properties {
+namespace bytePassion.OnkoTePla.SampleDataCreation.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

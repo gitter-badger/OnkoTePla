@@ -1,25 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Client.Core", "bytePassion.OnkoTePla.Client.Core\bytePassion.OnkoTePla.Client.Core.csproj", "{D6DEC4C7-D919-4528-AE91-510317A1D0FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Core", "bytePassion.OnkoTePla.Core\bytePassion.OnkoTePla.Core.csproj", "{D6DEC4C7-D919-4528-AE91-510317A1D0FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Client.Core.Test", "bytePassion.OnkoTePla.Client.Core.Test\bytePassion.OnkoTePla.Client.Core.Test.csproj", "{D3BC5548-ED91-4D37-8A1C-4FC5089436B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Core.Test", "bytePassion.OnkoTePla.Core.Test\bytePassion.OnkoTePla.Core.Test.csproj", "{D3BC5548-ED91-4D37-8A1C-4FC5089436B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.Lib", "bytePassion.Lib\bytePassion.Lib.csproj", "{825B03A5-FD0F-417A-ADC5-D3A0AAD2C36B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.Lib.Test", "bytePassion.Lib.Test\bytePassion.Lib.Test.csproj", "{24728878-25A0-4360-BFD5-817A73795C82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Client.WPFVisualization.Test", "bytePassion.OnkoTePla.Client.WPFVisualization.Test\bytePassion.OnkoTePla.Client.WPFVisualization.Test.csproj", "{0ACDBD07-774D-4CDB-A9F4-53173B7819D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Client.Test", "bytePassion.OnkoTePla.Client.Test\bytePassion.OnkoTePla.Client.Test.csproj", "{0ACDBD07-774D-4CDB-A9F4-53173B7819D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Client.Resources", "bytePassion.OnkoTePla.Client.Resources\bytePassion.OnkoTePla.Client.Resources.csproj", "{1FF3C490-8680-46A5-AB65-6329863326DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Client.WPFVisualization", "bytePassion.OnkoTePla.Client.WPFVisualization\bytePassion.OnkoTePla.Client.WPFVisualization.csproj", "{7139072C-0298-4A71-B9B8-8CA1443DE591}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Client.WpfUi", "bytePassion.OnkoTePla.Client.WpfUi\bytePassion.OnkoTePla.Client.WpfUi.csproj", "{7139072C-0298-4A71-B9B8-8CA1443DE591}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Contracts", "bytePassion.OnkoTePla.Contracts\bytePassion.OnkoTePla.Contracts.csproj", "{85958036-DFEF-4C68-ABF4-FD241EAAB47F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Config.WpfVisualization", "bytePassion.OnkoTePla.Config.WpfVisualization\bytePassion.OnkoTePla.Config.WpfVisualization.csproj", "{62C6DA20-0932-4CA4-B1CC-F8E3FF6EFE45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.SampleDataCreation", "bytePassion.OnkoTePla.SampleDataCreation\bytePassion.OnkoTePla.SampleDataCreation.csproj", "{62C6DA20-0932-4CA4-B1CC-F8E3FF6EFE45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
