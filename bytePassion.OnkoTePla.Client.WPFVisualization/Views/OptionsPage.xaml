@@ -21,23 +21,10 @@
                                 Mode=OneWay}"
                  x:Shared="False" />
 
-        <Style x:Key="AccentColorMenuItemStyle"
-               BasedOn="{StaticResource MetroMenuItem}"
-               TargetType="{x:Type MenuItem}">
-            <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
-            <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
-            <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
-        </Style>
+
     </UserControl.Resources>
 
     <Grid Background="{StaticResource WhiteColorBrush}">
-        <StackPanel>
-            <Menu HorizontalAlignment="Left">
-                <MenuItem Header="Accent"
-                          ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
-                          ItemsSource="{Binding AccentColors,
-                                                Mode=OneWay}" />
-            </Menu>
-        </StackPanel>
+
     </Grid>
 </UserControl>

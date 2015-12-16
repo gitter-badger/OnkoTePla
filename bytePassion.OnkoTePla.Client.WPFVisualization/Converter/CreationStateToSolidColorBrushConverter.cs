@@ -14,7 +14,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Converter
 			{
 				case AppointmentCreationState.NoSpaceAvailable:
 				case AppointmentCreationState.NoPatientSelected:              return new SolidColorBrush(Colors.Red); 
-				case AppointmentCreationState.PatientAndDespriptionAvailable: return new SolidColorBrush(Colors.LawnGreen); 
+				case AppointmentCreationState.PatientAndDespriptionAvailable: return new SolidColorBrush(Color.FromRgb(0, 174, 0)); 
 				case AppointmentCreationState.PatientSelected:                return new SolidColorBrush(Colors.Orange); 
 			}
 
