@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Media;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -14,11 +10,15 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Media;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView
 {
-	public class TherapyPlaceRowViewModel : DisposingObject,
+    public class TherapyPlaceRowViewModel : ViewModel,
 											ITherapyPlaceRowViewModel
 	{
 		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
@@ -169,6 +169,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceR
 		public IViewModelCommunication ViewModelCommunication { get; }
 		public IDataCenter DataCenter { get; }
 
-		public event PropertyChangedEventHandler PropertyChanged;		
+		public override event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

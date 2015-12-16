@@ -1,28 +1,28 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Input;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.AppointmentModification;
 using bytePassion.OnkoTePla.Client.WPFVisualization.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using MahApps.Metro.Controls.Dialogs;
+using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages.DeleteAppointment;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView
 {
-	public class AppointmentViewModel : DisposingObject, 
+    public class AppointmentViewModel : ViewModel, 
 										IAppointmentViewModel										
 	{		
 		private readonly Appointment appointment;
@@ -42,12 +42,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private AppointmentModifications currentAppointmentModifications;
 
 		public AppointmentViewModel(Appointment appointment,
-									IViewModelCommunication viewModelCommunication,
-									IDataCenter dataCenter,									
+									IViewModelCommunication viewModelCommunication,																
 									TherapyPlaceRowIdentifier initialLocalisation, 
                                     IGlobalState<AppointmentModifications> appointmentModificationsVariable,
-                                    IGlobalState<Date> selectedDateVariable,
-									IGlobalState<Size> gridSizeVariable,
+                                    IGlobalState<Date> selectedDateVariable,									
+                                    IAppointmentModificationsBuilder appointmentModificationsBuilder,
 									AdornerControl adornerControl)
 		{ 						
 			this.appointment = appointment; 
@@ -66,14 +65,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 				{
 					if (appointmentModificationsVariable.Value == null)
 					{
-						CurrentAppointmentModifications = new AppointmentModifications(appointment,
-																					   initialLocalisation.PlaceAndDate.MedicalPracticeId, 
-																					   dataCenter, 
-																					   viewModelCommunication,
-																					   selectedDateVariable,
-																					   gridSizeVariable,
-																					   isInitalAdjusting);
-
+					    CurrentAppointmentModifications = appointmentModificationsBuilder.Build(appointment,
+					                                                                            initialLocalisation.PlaceAndDate.MedicalPracticeId,
+					                                                                            isInitalAdjusting); 
 
 						CurrentAppointmentModifications.PropertyChanged += OnAppointmentModificationsPropertyChanged;
 						appointmentModificationsVariable.Value = CurrentAppointmentModifications;
@@ -262,7 +256,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		}
 
 		public IViewModelCommunication ViewModelCommunication { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;		
+        
+		public override event PropertyChangedEventHandler PropertyChanged;		
 	}	
 }

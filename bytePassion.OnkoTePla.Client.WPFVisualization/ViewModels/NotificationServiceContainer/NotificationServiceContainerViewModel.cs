@@ -12,7 +12,8 @@ using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationServiceContainer
 {
-	public class NotificationServiceContainerViewModel : ViewModel, INotificationServiceContainerViewModel
+    public class NotificationServiceContainerViewModel : ViewModel, 
+                                                         INotificationServiceContainerViewModel
 	{
 
 		private readonly IViewModelCommunication viewModelCommunication;

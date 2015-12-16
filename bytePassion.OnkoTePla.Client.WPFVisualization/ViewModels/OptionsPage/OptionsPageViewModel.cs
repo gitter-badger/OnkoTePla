@@ -1,10 +1,13 @@
 ﻿using bytePassion.Lib.WpfLib.Commands;
 using MahApps.Metro;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage
 {
@@ -28,7 +31,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage
         }
     }
 
-    public class OptionsPageViewModel : IOptionsPageViewModel
+    public class OptionsPageViewModel : ViewModel, 
+                                        IOptionsPageViewModel
     {
         public List<AccentColorMenuData> AccentColors { get; set; }
         public ICommand ChangeAccent { get; }
@@ -41,5 +45,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OptionsPage
                         new AccentColorMenuData() {Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush})
                 .ToList();
         }
+
+        protected override void CleanUp() { }
+        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

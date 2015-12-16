@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -14,11 +9,16 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper
 {
-	public class AppointmentModifications : DisposingObject, 
+    public class AppointmentModifications : DisposingObject, 
 											INotifyPropertyChanged
 	{
 
@@ -50,7 +50,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		private readonly IViewModelCommunication viewModelCommunication;
 		
 		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalState<Size> gridSizeVariable;
+		private readonly IGlobalStateReadOnly<Size> gridSizeVariable;
 
 		private readonly VersionManager<ModificationDataSet> versions;		
 
@@ -75,7 +75,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 										IDataCenter dataCenter, 
 										IViewModelCommunication viewModelCommunication,
 										IGlobalState<Date> selectedDateVariable, 
-										IGlobalState<Size> gridSizeVariable, 
+										IGlobalStateReadOnly<Size> gridSizeVariable, 
 										bool isInitialAdjustment)
 		{
 			OriginalAppointment = originalAppointment;						

@@ -12,23 +12,23 @@ using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentGridViewModel
 {
-	public class AppointmentGridViewModelBuilder : IAppointmentGridViewModelBuilder 
+    public class AppointmentGridViewModelBuilder : IAppointmentGridViewModelBuilder 
 	{
 		private readonly IDataCenter dataCenter;
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ICommandBus commandBus;		
-		private readonly IGlobalState<Size> gridSizeVariable;
-		private readonly IGlobalState<Guid?> roomFilterVariable;		
-		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;		
+		private readonly IGlobalStateReadOnly<Size> gridSizeVariable;
+		private readonly IGlobalStateReadOnly<Guid?> roomFilterVariable;		
+		private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable;		
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 		private readonly ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder;
 
 		public AppointmentGridViewModelBuilder(IDataCenter dataCenter, 
 											   IViewModelCommunication viewModelCommunication, 
 											   ICommandBus commandBus, 											  
-											   IGlobalState<Size> gridSizeVariable, 
-											   IGlobalState<Guid?> roomFilterVariable, 											  
-											   IGlobalState<AppointmentModifications> appointmentModificationsVariable, 											  
+											   IGlobalStateReadOnly<Size> gridSizeVariable, 
+											   IGlobalStateReadOnly<Guid?> roomFilterVariable, 											  
+											   IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable, 											  
 											   IAppointmentViewModelBuilder appointmentViewModelBuilder, 
 											   ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 											   
@@ -68,8 +68,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilde
 														   viewModelCommunication,
 														   gridSizeVariable);
 			}
-				
-
+            				
 			return gridViewModel;
 		}
 	}

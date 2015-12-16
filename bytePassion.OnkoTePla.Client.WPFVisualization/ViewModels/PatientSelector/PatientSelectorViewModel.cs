@@ -9,7 +9,8 @@ using System.Windows.Data;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector
 {
-    internal class PatientSelectorViewModel : ViewModel, IPatientSelectorViewModel
+    internal class PatientSelectorViewModel : ViewModel, 
+                                              IPatientSelectorViewModel
     {
 	    private readonly IGlobalState<Patient> selectedPatientGlobalVariable;
         private bool listIsEmpty;

@@ -26,29 +26,28 @@ using DeleteAppointmentCommand = bytePassion.OnkoTePla.Client.Core.Domain.Comman
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid
 {
-	public class AppointmentGridViewModel : DisposingObject,
+    public class AppointmentGridViewModel : ViewModel,
 											IAppointmentGridViewModel											
 	{
 		private bool isActive;
 
 		private readonly IDataCenter dataCenter;
 		private readonly ICommandBus commandBus;
-		private readonly IViewModelCommunication viewModelCommunication;
+		private readonly IViewModelCommunication viewModelCommunication;		
+		private readonly IGlobalStateReadOnly<Size> gridSizeVariable;
+		private readonly IGlobalStateReadOnly<Guid?> roomFilterVariable;		
+	    private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable;		
+		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 
-		private readonly AppointmentsOfADayReadModel readModel;
+        private readonly AppointmentsOfADayReadModel readModel;
 
-		private readonly IGlobalState<Size> gridSizeVariable;
-		private readonly IGlobalState<Guid?> roomFilterVariable;		
-	    private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;		
-		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;		
-
-		public AppointmentGridViewModel(AggregateIdentifier identifier, 
+        public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
 										ICommandBus commandBus,
 										IViewModelCommunication viewModelCommunication,
-                                        IGlobalState<Size> gridSizeVariable,
-										IGlobalState<Guid?> roomFilterVariable,										
-                                        IGlobalState<AppointmentModifications> appointmentModificationsVariable,										
+                                        IGlobalStateReadOnly<Size> gridSizeVariable,
+										IGlobalStateReadOnly<Guid?> roomFilterVariable,										
+                                        IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable,										
 										IAppointmentViewModelBuilder appointmentViewModelBuilder,
 										ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 		{
@@ -221,32 +220,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 		public void Process(Deactivate message)
 		{
 			IsActive = false;
-		}
-
-        protected override void CleanUp()
-		{			
-			gridSizeVariable.StateChanged   -= OnGridSizeChanged;			
-			roomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;			
-			readModel.AppointmentChanged    -= OnReadModelAppointmentChanged;
-
-			viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-				AppointmentGridViewModelCollection,
-				this					
-			);
-
-			viewModelCommunication.SendTo(
-				TimeGridViewModelCollection,
-				Identifier,
-				new Dispose()	
-			);
-
-			readModel.Appointments
-					 .Do(RemoveAppointment);
-
-			readModel.Dispose();
-
-			TherapyPlaceRowViewModels.Do(viewModel => viewModel.Dispose());			
-		}
+		}        
 
 		public void Process(DeleteAppointment message)
 		{
@@ -323,6 +297,31 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGr
 													  appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId));			
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;		
+        protected override void CleanUp()
+        {
+            gridSizeVariable.StateChanged -= OnGridSizeChanged;
+            roomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;
+            readModel.AppointmentChanged -= OnReadModelAppointmentChanged;
+
+            viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
+                AppointmentGridViewModelCollection,
+                this
+            );
+
+            viewModelCommunication.SendTo(
+                TimeGridViewModelCollection,
+                Identifier,
+                new Dispose()
+            );
+
+            readModel.Appointments
+                     .Do(RemoveAppointment);
+
+            readModel.Dispose();
+
+            TherapyPlaceRowViewModels.Do(viewModel => viewModel.Dispose());
+        }
+
+        public override event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
@@ -8,6 +7,7 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid.Helper;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using Duration = bytePassion.Lib.TimeLib.Duration;
@@ -15,7 +15,7 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 {
-    public class TimeGridViewModel : DisposingObject,
+    public class TimeGridViewModel : ViewModel,
 									 ITimeGridViewModel									 
 	{		
 		private enum GridViewDivisionState
@@ -74,15 +74,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 		public ObservableCollection<TimeSlotLine>  TimeSlotLines  { get; }
 
 		public AggregateIdentifier Identifier { get; }
-
-        protected override void CleanUp ()
-		{
-			viewModelCommunication.DeregisterViewModelAtCollection<TimeGridViewModel, AggregateIdentifier>(
-				TimeGridViewModelCollection,
-				this
-			);
-		}
-
+        
 		private void SetnewSize (Size newGridSize)
 		{
 			gridSize = newGridSize;
@@ -197,6 +189,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TimeGrid
 				case GridViewDivisionState.TwoHours:     return 7200;
 			}
 			throw new ArgumentException();
-		}		
+		}
+
+        protected override void CleanUp()
+        {
+            viewModelCommunication.DeregisterViewModelAtCollection<TimeGridViewModel, AggregateIdentifier>(
+                TimeGridViewModelCollection,
+                this
+            );
+        }
+
+        public override event PropertyChangedEventHandler PropertyChanged;
 	}
 }

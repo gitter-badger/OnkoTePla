@@ -1,51 +1,32 @@
-﻿using System;
-using System.Windows;
-using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Views;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using System;
+using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
 {
     public class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
 	{
-		private readonly IDataCenter dataCenter;
-		private readonly IViewModelCommunication viewModelCommunication;
-                
-	    private readonly IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable;
-
-        private readonly IGlobalState<AppointmentModifications> appointmentModificationVariable;
-        private readonly IGlobalState<Date> selectedDateVariable;
-	    private readonly IGlobalState<Size> gridSizeVariable;
-
-	    private readonly AdornerControl adornerControl;
-
+		private readonly IDataCenter dataCenter;		                
+	    private readonly IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable;       
+        private readonly IGlobalStateReadOnly<Date> selectedDateVariable;	    	   
 	    private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 
-	    public AddAppointmentDialogWindowBuilder(IDataCenter dataCenter,
-												 IViewModelCommunication viewModelCommunication,                                                  
-                                                 IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable, 
-                                                 IGlobalState<AppointmentModifications> appointmentModificationVariable, 
-                                                 IGlobalState<Date> selectedDateVariable, 
-												 IGlobalState<Size> gridSizeVariable,
-												 AdornerControl adornerControl, 
+	    public AddAppointmentDialogWindowBuilder(IDataCenter dataCenter,												 
+                                                 IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable,                                                 
+                                                 IGlobalStateReadOnly<Date> selectedDateVariable, 												
 												 IAppointmentViewModelBuilder appointmentViewModelBuilder)
 		{
-			this.dataCenter = dataCenter;
-			this.viewModelCommunication = viewModelCommunication;
-            this.selectedMedicalPractiveVariable = selectedMedicalPractiveVariable;
-            this.appointmentModificationVariable = appointmentModificationVariable;
-            this.selectedDateVariable = selectedDateVariable;
-	        this.gridSizeVariable = gridSizeVariable;
-		    this.adornerControl = adornerControl;
+			this.dataCenter = dataCenter;			
+            this.selectedMedicalPractiveVariable = selectedMedicalPractiveVariable;            
+            this.selectedDateVariable = selectedDateVariable;	        
 		    this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 		}
 

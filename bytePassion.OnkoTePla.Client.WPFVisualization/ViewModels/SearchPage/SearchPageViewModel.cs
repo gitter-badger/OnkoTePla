@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -22,12 +15,20 @@ using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using MahApps.Metro.Controls.Dialogs;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.Core.Domain.Commands.DeleteAppointment;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 {
-	public class SearchPageViewModel : ViewModel, ISearchPageViewModel
+    public class SearchPageViewModel : ViewModel, 
+                                       ISearchPageViewModel
     {
 		private class AppointmentSorter : IComparer<Appointment>
 		{
@@ -40,13 +41,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 		}
 
 		private const string NoPatientSelected = "- noch kein Patient ausgewählt -";
-
-
-		private readonly IGlobalState<Patient> selectedPatientVariable;
+		
 		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalState<Guid> selectedMedicalPracticeIdVariable; 
-
-		private readonly ICommandBus commandBus;
+		private readonly IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
+        private readonly IGlobalStateReadOnly<Patient> selectedPatientVariable;
+        private readonly ICommandBus commandBus;
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IDataCenter dataCenter;
 
@@ -54,19 +53,20 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 		private string selectedPatient;
 
 		public SearchPageViewModel(IPatientSelectorViewModel patientSelectorViewModel,
-								   IGlobalState<Patient> selectedPatientVariable,
+								   IGlobalStateReadOnly<Patient> selectedPatientVariable,
 								   IGlobalState<Date> selectedDateVariable,
-								   IGlobalState<Guid> selectedMedicalPracticeIdVariable,
+								   IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
                                    ICommandBus commandBus,
 								   IViewModelCommunication viewModelCommunication,
 								   IDataCenter dataCenter)
 		{
-			this.selectedPatientVariable = selectedPatientVariable; 
-			this.commandBus = commandBus;
+		    this.selectedPatientVariable = selectedPatientVariable;
+		    this.commandBus = commandBus;
 			this.viewModelCommunication = viewModelCommunication;
 			this.dataCenter = dataCenter;
 			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 			this.selectedDateVariable = selectedDateVariable;
+
 			selectedPatientVariable.StateChanged += OnSelectedPatientVariableChanged;
 
 			PatientSelectorViewModel = patientSelectorViewModel;
@@ -177,8 +177,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.SearchPage
 		public ObservableCollection<Appointment> DisplayedAppointments { get; }
 		
 	    protected override void CleanUp()
-	    {	        
-	    }
+	    {
+            selectedPatientVariable.StateChanged -= OnSelectedPatientVariableChanged;
+        }
         public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

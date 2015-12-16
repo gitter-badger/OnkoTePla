@@ -9,6 +9,7 @@ using bytePassion.OnkoTePla.Client.Core.CommandSystem;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.AppointmentModification;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentGridViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
@@ -41,9 +42,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
+
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
 {
-	public class MainWindowBuilder : IWindowBuilder<MainWindow>
+    public class MainWindowBuilder : IWindowBuilder<MainWindow>
 	{		
 		private readonly IDataCenter dataCenter;
 		private readonly ICommandBus commandBus;
@@ -108,13 +110,16 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
 
 			// build factorys
 
+		    var appointmentModificationsBuilder = new AppointmentModificationsBuilder(dataCenter,
+                                                                                      viewModelCommunication,
+                                                                                      selectedDateVariable,
+                                                                                      gridSizeVariable);
 
-			var appointmentViewModelBuilder = new AppointmentViewModelBuilder(viewModelCommunication,
-																			  dataCenter, 
-																			  appointmentModificationsVariable, 
-																			  selectedDateVariable, 
-																			  gridSizeVariable, 
-																			  adornerControl);
+		    var appointmentViewModelBuilder = new AppointmentViewModelBuilder(viewModelCommunication,
+                                                                              appointmentModificationsVariable,
+                                                                              selectedDateVariable,
+                                                                              adornerControl,
+                                                                              appointmentModificationsBuilder);
 
 			var therapyPlaceRowViewModelBuilder = new TherapyPlaceRowViewModelBuilder(viewModelCommunication,
 																					  dataCenter,
@@ -132,13 +137,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder
 																					  appointmentViewModelBuilder,
 																					  therapyPlaceRowViewModelBuilder);
 
-			var addAppointmentDialogWindowBuilder = new AddAppointmentDialogWindowBuilder(dataCenter,
-																						  viewModelCommunication,
-																						  selectedMedicalPracticeIdVariable,
-																						  appointmentModificationsVariable,
-																						  selectedDateVariable,
-																						  gridSizeVariable,
-																						  adornerControl,
+			var addAppointmentDialogWindowBuilder = new AddAppointmentDialogWindowBuilder(dataCenter,																						  
+																						  selectedMedicalPracticeIdVariable,																						  
+																						  selectedDateVariable,																						 
 																						  appointmentViewModelBuilder);
 
 			// register stand-alone viewModelMessageHandler

@@ -4,7 +4,8 @@ using System.ComponentModel;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentViewDragAdorner
 {
-	public class AppointmentViewDragAdornerViewModel : IAppointmentViewDragAdornerViewModel
+    public class AppointmentViewDragAdornerViewModel : ViewModel, 
+                                                       IAppointmentViewDragAdornerViewModel
 	{
 		private bool dropPossible;
 
@@ -21,9 +22,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentVi
 		}
 
 		public string Content { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;
-	    public void Dispose() {	}
-	}
-
+		
+	    protected override void CleanUp() {	 }
+        public override event PropertyChangedEventHandler PropertyChanged;
+    }
 }

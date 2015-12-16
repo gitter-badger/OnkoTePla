@@ -6,14 +6,14 @@ using System.Globalization;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
 {
-    public class DateDisplayViewModel : DisposingObject, 
+    public class DateDisplayViewModel : ViewModel, 
                                         IDateDisplayViewModel
 	{
-	    private readonly IGlobalState<Date> selectedDateVariable; 
+	    private readonly IGlobalStateReadOnly<Date> selectedDateVariable; 
 
 		private string date;
 
-		public DateDisplayViewModel(IGlobalState<Date> selectedDateVariable)
+		public DateDisplayViewModel(IGlobalStateReadOnly<Date> selectedDateVariable)
 		{
 		    this.selectedDateVariable = selectedDateVariable;		    
 			selectedDateVariable.StateChanged += OnSelectedDateVariableChanged;
@@ -38,6 +38,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateDisplay
             selectedDateVariable.StateChanged -= OnSelectedDateVariableChanged;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

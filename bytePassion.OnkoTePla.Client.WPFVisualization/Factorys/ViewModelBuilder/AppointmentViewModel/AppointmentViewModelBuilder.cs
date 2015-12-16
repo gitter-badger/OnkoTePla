@@ -1,38 +1,34 @@
-﻿using System.Windows;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Adorner;
-using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
+using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.AppointmentModification;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView;
-using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentViewModel
 {
-	public class AppointmentViewModelBuilder : IAppointmentViewModelBuilder 
+    public class AppointmentViewModelBuilder : IAppointmentViewModelBuilder 
 	{
-		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IDataCenter dataCenter;
-		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
-		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalState<Size> gridSizeVariable;
+		private readonly IViewModelCommunication viewModelCommunication;		
+		private readonly IGlobalState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable;
+		private readonly IGlobalState<Date> selectedDateVariable;		
 		private readonly AdornerControl adornerControl;
+	    private readonly IAppointmentModificationsBuilder appointmentModificationsBuilder;
 
-		public AppointmentViewModelBuilder(IViewModelCommunication viewModelCommunication, 
-										   IDataCenter dataCenter, 
-										   IGlobalState<AppointmentModifications> appointmentModificationsVariable, 
+	    public AppointmentViewModelBuilder(IViewModelCommunication viewModelCommunication, 										   
+										   IGlobalState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable, 
 										   IGlobalState<Date> selectedDateVariable, 
-										   IGlobalState<Size> gridSizeVariable, AdornerControl adornerControl)
+										   AdornerControl adornerControl,
+                                           IAppointmentModificationsBuilder appointmentModificationsBuilder)
 		{
-			this.viewModelCommunication = viewModelCommunication;
-			this.dataCenter = dataCenter;
+			this.viewModelCommunication = viewModelCommunication;			
 			this.appointmentModificationsVariable = appointmentModificationsVariable;
-			this.selectedDateVariable = selectedDateVariable;
-			this.gridSizeVariable = gridSizeVariable;
+			this.selectedDateVariable = selectedDateVariable;			
 			this.adornerControl = adornerControl;
+	        this.appointmentModificationsBuilder = appointmentModificationsBuilder;
 		}
 
 		public IAppointmentViewModel Build (Appointment appointment, AggregateIdentifier location)
@@ -40,12 +36,11 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilde
 			var exactLocation = new TherapyPlaceRowIdentifier(location, appointment.TherapyPlace.Id);
 
 			return new ViewModels.AppointmentView.AppointmentViewModel(appointment,
-																	   viewModelCommunication,
-																	   dataCenter,
+																	   viewModelCommunication,																	  
 																	   exactLocation,
 																	   appointmentModificationsVariable,
 																	   selectedDateVariable,
-																	   gridSizeVariable,
+																	   appointmentModificationsBuilder,
 																	   adornerControl);
 		}
 	}

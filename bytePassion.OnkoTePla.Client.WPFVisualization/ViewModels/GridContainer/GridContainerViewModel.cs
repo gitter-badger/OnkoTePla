@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -11,18 +6,23 @@ using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.ViewModelBuilder.AppointmentGridViewModel;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AppointmentGrid;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
 using static bytePassion.OnkoTePla.Client.WPFVisualization.Global.Constants;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 {
-	public class GridContainerViewModel : DisposingObject, 
+    public class GridContainerViewModel : ViewModel, 
                                           IGridContainerViewModel
 	{
 		private readonly IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder;		
          
-		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalState<Guid> selectedMedicalPracticeIdVariable;
+		private readonly IGlobalStateReadOnly<Date> selectedDateVariable;
+		private readonly IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
 	    private readonly IGlobalState<Size> appointmentGridSizeVariable;
 	   		
 
@@ -32,8 +32,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 		private AggregateIdentifier? currentDisplayedAppointmentGridIdentifier;
 		
 		public GridContainerViewModel(IViewModelCommunication viewModelCommunication,
-                                      IGlobalState<Date> selectedDateVariable, 
-                                      IGlobalState<Guid> selectedMedicalPracticeIdVariable,
+                                      IGlobalStateReadOnly<Date> selectedDateVariable, 
+                                      IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
 									  IGlobalState<Size> appointmentGridSizeVariable,									  
                                       IEnumerable<AggregateIdentifier> initialGridViewModelsToCache,									  
 									  int maximumCashedGrids, 
@@ -166,6 +166,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.GridContainer
 	        selectedDateVariable.StateChanged              -= OnSelectedDateStateChanged;
 			selectedMedicalPracticeIdVariable.StateChanged -= OnDisplayedPracticeStateChanged;
 	    }
-        public event PropertyChangedEventHandler PropertyChanged;
+        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

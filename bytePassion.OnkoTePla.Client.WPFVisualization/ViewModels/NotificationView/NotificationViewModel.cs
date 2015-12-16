@@ -1,13 +1,15 @@
-﻿using System;
-using System.Windows.Input;
-using bytePassion.Lib.Communication.ViewModel;
+﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
+using System;
+using System.ComponentModel;
+using System.Windows.Input;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationView
 {
-	public class NotificationViewModel : INotificationViewModel
+    public class NotificationViewModel : ViewModel, 
+                                         INotificationViewModel
 	{
 		
 		public NotificationViewModel(string message,
@@ -24,6 +26,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.NotificationV
 
 		public string   Message          { get; }
 		public ICommand HideNotification { get; }
-	}
 
+        protected override void CleanUp() { }
+        public override event PropertyChangedEventHandler PropertyChanged;
+	}
 }

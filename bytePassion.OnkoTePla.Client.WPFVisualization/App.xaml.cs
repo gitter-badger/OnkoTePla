@@ -1,12 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using bytePassion.Lib.Communication.MessageBus;
+﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
-using bytePassion.Lib.Types.Repository;
-using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.Core.CommandSystem;
-using bytePassion.OnkoTePla.Client.Core.Domain;
 using bytePassion.OnkoTePla.Client.Core.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Client.Core.Eventsystem;
 using bytePassion.OnkoTePla.Client.Core.Readmodels;
@@ -19,8 +13,8 @@ using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Factorys.WindowBuilder;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.SessionInfo;
-using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Contracts.Patients;
+using System.Linq;
+using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization
 {
@@ -40,41 +34,40 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Patient-Repository
 
-			IPersistenceService<IEnumerable<Patient>> patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
-			IPatientReadRepository patientReadRepository = new PatientRepository(patientPersistenceService);
+			var patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
+			var patientReadRepository = new PatientRepository(patientPersistenceService);
 			patientReadRepository.LoadRepository();
 
 
 			// Config-Repository
 
-			IPersistenceService<Configuration> configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
-			IConfigurationReadRepository configReadRepository = new ConfigurationRepository(configPersistenceService);
+			var configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
+			var configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
 
 			// EventStore
 
-			IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
-			IEventStore eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
+			var eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
+			var eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 			eventStore.LoadRepository(); 
 
 
 			// Event- and CommandBus
 
-			IHandlerCollection<DomainEvent>   eventHandlerCollection   = new MultiHandlerCollection <DomainEvent>();
-			IHandlerCollection<DomainCommand> commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
+			var eventHandlerCollection = new MultiHandlerCollection <DomainEvent>();
+            var eventMessageBus        = new LocalMessageBus<DomainEvent>(eventHandlerCollection);
+            var eventBus               = new EventBus(eventMessageBus);
 
-			IMessageBus<DomainEvent>   eventMessageBus   = new LocalMessageBus<DomainEvent>  (eventHandlerCollection);			
-			IMessageBus<DomainCommand> commandMessageBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
-
-			IEventBus   eventBus   = new EventBus(eventMessageBus);
-			ICommandBus commandBus = new CommandBus(commandMessageBus);
+            var commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();					
+			var commandMessageBus        = new LocalMessageBus<DomainCommand>(commandHandlerCollection);			
+			var commandBus               = new CommandBus(commandMessageBus);
 
 
 			// Aggregate- and Readmodel-Repositories
 
-			IAggregateRepository aggregateRepository = new AggregateRepository(eventBus, eventStore, patientReadRepository, configReadRepository);
-			IReadModelRepository readModelRepository = new ReadModelRepository(eventBus, eventStore, patientReadRepository, configReadRepository);
+			var aggregateRepository = new AggregateRepository(eventBus, eventStore, patientReadRepository, configReadRepository);
+			var readModelRepository = new ReadModelRepository(eventBus, eventStore, patientReadRepository, configReadRepository);
 
 
 			// Register CommandHandler
@@ -91,6 +84,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 				LoggedInUser = configReadRepository.GetAllUsers().First()
 			};
 
+
 			// SessionAndUserSpecificEventHistory
 
 			var sessionAndUserSpecificEventHistory = new SessionAndUserSpecificEventHistory(eventBus,
@@ -103,17 +97,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization
 
 			// Data-Model
 
-			IDataCenter dataCenter = new DataCenter(configReadRepository, 
-													patientReadRepository, 
-													readModelRepository, 
-													sessionInformation);
+			var dataCenter = new DataCenter(configReadRepository, 
+											patientReadRepository, 
+											readModelRepository, 
+											sessionInformation);
 
 
 			// Create MainWindow
 			
-			IWindowBuilder<MainWindow> mainWindowBuilder = new MainWindowBuilder(dataCenter, 
-																				 commandBus, 
-																				 sessionAndUserSpecificEventHistory);
+			var mainWindowBuilder = new MainWindowBuilder(dataCenter, 
+														  commandBus, 
+														  sessionAndUserSpecificEventHistory);
 
 			var mainWindow = mainWindowBuilder.BuildWindow();
 			mainWindow.ShowDialog();

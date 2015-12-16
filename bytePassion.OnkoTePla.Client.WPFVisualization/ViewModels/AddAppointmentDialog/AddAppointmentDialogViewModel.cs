@@ -23,7 +23,7 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmentDialog
 {
-	public class AddAppointmentDialogViewModel : DisposingObject, 
+    public class AddAppointmentDialogViewModel : ViewModel, 
                                                  IAddAppointmentDialogViewModel
 	{
 		
@@ -32,7 +32,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 		private readonly Guid medicalPracticeId;
 	   
 	    private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
-	    private readonly IGlobalState<Patient> selectedPatientVariable;        
+	    private readonly IGlobalStateReadOnly<Patient> selectedPatientVariable;        
         private readonly IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> allAvailableTimeSlots;
 
 		private Patient selectedPatient;
@@ -45,8 +45,8 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 		private Tuple<TherapyPlaceRowIdentifier, TimeSlot> firstFittingTimeSlot; 
          
 		public AddAppointmentDialogViewModel(IPatientSelectorViewModel patientSelectorViewModel,											 											 
-                                             IGlobalState<Patient> selectedPatientVariable,
-                                             IGlobalState<Date> selectedDateVariable,
+                                             IGlobalStateReadOnly<Patient> selectedPatientVariable,
+                                             IGlobalStateReadOnly<Date> selectedDateVariable,
                                              IDataCenter dataCenter,											 
 											 Guid medicalPracticeId,
 											 IAppointmentViewModelBuilder appointmentViewModelBuilder)
@@ -57,7 +57,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.selectedPatientVariable = selectedPatientVariable;
 
-		    allAvailableTimeSlots = GetFreeTimeSlotsForADay(creationDate, medicalPracticeId);					
+		    allAvailableTimeSlots = GetFreeTimeSlotsForADay(creationDate);					
 
 			selectedPatientVariable.StateChanged += OnSelectedPatientVariableChanged;
 
@@ -280,22 +280,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 				DetermineCreationState();
 			}
 			get { return description; }
-		}
+		}                 
 
-        protected override void CleanUp()
-		{
-			selectedPatientVariable.StateChanged -= OnSelectedPatientVariableChanged;
-
-			((Command) HourPlusOne).Dispose();
-			((Command) HourMinusOne).Dispose();
-			((Command) MinutePlusFifteen).Dispose();
-			((Command) MinuteMinusFifteen).Dispose();
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-
-		private IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> GetFreeTimeSlotsForADay(Date date, Guid medicalPracticeId)
+		private IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> GetFreeTimeSlotsForADay(Date date)
 		{
 
 			IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> allSlots =
@@ -379,5 +366,17 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.AddAppointmen
 
 			return null;
 		}
-	}
+
+        protected override void CleanUp()
+        {
+            selectedPatientVariable.StateChanged -= OnSelectedPatientVariableChanged;
+
+            ((Command)HourPlusOne).Dispose();
+            ((Command)HourMinusOne).Dispose();
+            ((Command)MinutePlusFifteen).Dispose();
+            ((Command)MinuteMinusFifteen).Dispose();
+        }
+
+        public override event PropertyChangedEventHandler PropertyChanged;
+    }
 }

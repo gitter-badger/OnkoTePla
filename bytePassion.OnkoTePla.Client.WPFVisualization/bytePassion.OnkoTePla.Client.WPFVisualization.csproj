@@ -94,6 +94,8 @@
     <Compile Include="Converter\AliveDeadToImageConverter.cs" />
     <Compile Include="Converter\TimeFromDateConverter.cs" />
     <Compile Include="Enums\MainPage.cs" />
+    <Compile Include="Factorys\AppointmentModification\AppointmentModificationsBuilder.cs" />
+    <Compile Include="Factorys\AppointmentModification\IAppointmentModificationsBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\TherapyPlaceRowViewModel\ITherapyPlaceRowViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\TherapyPlaceRowViewModel\TherapyPlaceRowViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\AppointmentGridViewModel\AppointmentGridViewModelBuilder.cs" />

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 {
-    public class DateSelectorViewModel : DisposingObject, 
+    public class DateSelectorViewModel : ViewModel, 
                                          IDateSelectorViewModel
 	{		
 		private readonly IGlobalState<Date> selectedDateVariable;
@@ -46,11 +46,10 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.DateSelector
 
 		public ICommand SelectToday { get; }
 
-
         protected override void CleanUp()
         {
             selectedDateVariable.StateChanged -= OnSelectedDateChanged;
         }        
-        public event PropertyChangedEventHandler PropertyChanged;
+        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -11,19 +11,19 @@ using System.ComponentModel;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracticeSelector
 {
-    public class MedicalPracticeSelectorViewModel : DisposingObject, 
+    public class MedicalPracticeSelectorViewModel : ViewModel, 
                                                     IMedicalPracticeSelectorViewModel
 	{
-		private readonly IConfigurationReadRepository           configuration;		
-		private readonly IGlobalState<Guid>                     selectedMedicalPracticeIdVariable;
-	    private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable; 
+		private readonly IConfigurationReadRepository                   configuration;		
+		private readonly IGlobalState<Guid>                             selectedMedicalPracticeIdVariable;
+	    private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable; 
 
 		private MedicalPractice selectedPractice;
 		private bool practiceIsSelectable;
 
 		public MedicalPracticeSelectorViewModel (IDataCenter dataCenter, 
                                                  IGlobalState<Guid> selectedMedicalPracticeIdVariable, 
-                                                 IGlobalState<AppointmentModifications> appointmentModificationsVariable)
+                                                 IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable)
 		{
 		    this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
@@ -79,6 +79,6 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.MedicalPracti
             selectedMedicalPracticeIdVariable.StateChanged -= OnSelectedMedicalPracticeIdVariableChanged;
             appointmentModificationsVariable.StateChanged -= OnAppointmentModificationVariableChanged;
         }      
-        public event PropertyChangedEventHandler PropertyChanged;
+        public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

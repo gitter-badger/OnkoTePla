@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Media;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WPFVisualization.Model;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Media;
 
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
@@ -21,39 +21,39 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 
 		private readonly IDataCenter dataCenter;		
 
-		private readonly IGlobalState<Guid?> roomFilter;
-		private readonly IGlobalState<Date>  selectedDate;
-		private readonly IGlobalState<Guid>  displayedMedicalPractice;
-
+		private readonly IGlobalState<Guid?>         roomFilterVariable;
+		private readonly IGlobalStateReadOnly<Date>  selectedDateVariable;
+		private readonly IGlobalStateReadOnly<Guid>  displayedMedicalPracticeVariable;
+        
 		private IList<Room> currentSelectableRoomFilters;
 		private RoomSelectorData selectedRoomFilter;
 		private ObservableCollection<RoomSelectorData> availableRoomFilters;
 
 
 		public RoomFilterViewModel(IDataCenter dataCenter,
-								   IGlobalState<Guid?> roomFilter, 
-                                   IGlobalState<Date> selectedDate, 
-                                   IGlobalState<Guid> displayedMedicalPractice)
+								   IGlobalState<Guid?> roomFilterVariable, 
+                                   IGlobalStateReadOnly<Date> selectedDateVariable, 
+                                   IGlobalStateReadOnly<Guid> displayedMedicalPracticeVariable)
 		{
 			this.dataCenter = dataCenter;
-		    this.roomFilter = roomFilter;
-		    this.selectedDate = selectedDate;
-		    this.displayedMedicalPractice = displayedMedicalPractice;
+		    this.roomFilterVariable = roomFilterVariable;
+		    this.selectedDateVariable = selectedDateVariable;
+		    this.displayedMedicalPracticeVariable = displayedMedicalPracticeVariable;
 
-		    roomFilter.StateChanged += OnRoomFilterChanged;
-			displayedMedicalPractice.StateChanged += OnDisplayedPracticeStateChanged;						
-			selectedDate.StateChanged += OnSelectedDateChanged;
+		    roomFilterVariable.StateChanged += OnRoomFilterVariableChanged;
+			displayedMedicalPracticeVariable.StateChanged += OnDisplayedPracticeVariableStateChanged;						
+			selectedDateVariable.StateChanged += OnSelectedDateVariableChanged;
 
-			SetRoomData(selectedDate.Value, displayedMedicalPractice.Value);
+			SetRoomData(selectedDateVariable.Value, displayedMedicalPracticeVariable.Value);
 		}
 
-		private void OnRoomFilterChanged(Guid? guid)
+		private void OnRoomFilterVariableChanged(Guid? guid)
 		{
 			if (guid == null)
 				SelectedRoomFilter = allRoomFilter;
 			else
 			{
-				var room = dataCenter.GetMedicalPracticeByDateAndId(selectedDate.Value, displayedMedicalPractice.Value)
+				var room = dataCenter.GetMedicalPracticeByDateAndId(selectedDateVariable.Value, displayedMedicalPracticeVariable.Value)
 					                 .GetRoomById(guid.Value);
 
 				selectedRoomFilter = new RoomSelectorData(room.Name, room.Id, room.DisplayedColor);
@@ -61,14 +61,14 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 			}
 		}
 
-		private void OnSelectedDateChanged(Date date)
+		private void OnSelectedDateVariableChanged(Date date)
 		{			
-			SetRoomData(date, displayedMedicalPractice.Value);
+			SetRoomData(date, displayedMedicalPracticeVariable.Value);
 		}
 		
-		private void OnDisplayedPracticeStateChanged (Guid medicalPracticeId)
+		private void OnDisplayedPracticeVariableStateChanged (Guid medicalPracticeId)
 		{			
-			SetRoomData(selectedDate.Value, medicalPracticeId);
+			SetRoomData(selectedDateVariable.Value, medicalPracticeId);
 		}
 
 		private void SetRoomData (Date date, Guid medicalPracticeId)
@@ -100,7 +100,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 
 				if (value != selectedRoomFilter)
 				{
-					roomFilter.Value = value.RoomId;
+					roomFilterVariable.Value = value.RoomId;
 				}
 
 				PropertyChanged.ChangeAndNotify(this, ref selectedRoomFilter, value);
@@ -110,9 +110,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.RoomSelector
 
         protected override void CleanUp()
         {
-            roomFilter.StateChanged += OnRoomFilterChanged;
-            displayedMedicalPractice.StateChanged += OnDisplayedPracticeStateChanged;
-            selectedDate.StateChanged += OnSelectedDateChanged;
+            roomFilterVariable.StateChanged               -= OnRoomFilterVariableChanged;
+            displayedMedicalPracticeVariable.StateChanged -= OnDisplayedPracticeVariableStateChanged;
+            selectedDateVariable.StateChanged             -= OnSelectedDateVariableChanged;
         }
         public override event PropertyChangedEventHandler PropertyChanged;
     }

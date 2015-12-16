@@ -15,9 +15,10 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 {
-    public class OverviewPageViewModel : ViewModel, IOverviewPageViewModel
+    public class OverviewPageViewModel : ViewModel, 
+                                         IOverviewPageViewModel
 	{
-        private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
+        private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
 
         private bool changeConfirmationVisible;
 		private bool addAppointmentPossible;
@@ -31,7 +32,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.OverviewPage
 									 IChangeConfirmationViewModel changeConfirmationViewModel, 									
 									 IUndoRedoViewModel undoRedoViewModel,									 
                                      IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder,
-                                     IGlobalState<AppointmentModifications> appointmentModificationsVariable)
+                                     IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable)
 		{
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
 		    DateDisplayViewModel = dateDisplayViewModel;

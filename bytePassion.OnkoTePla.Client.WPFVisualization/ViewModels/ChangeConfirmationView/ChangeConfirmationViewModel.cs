@@ -1,11 +1,15 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WPFVisualization.ViewModelMessages;
+using System.ComponentModel;
 using System.Windows.Input;
+
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirmationView
 {
-	public class ChangeConfirmationViewModel : IChangeConfirmationViewModel
+    public class ChangeConfirmationViewModel : ViewModel, 
+                                               IChangeConfirmationViewModel
 	{
 		public ChangeConfirmationViewModel(IViewModelCommunication viewModelCommunication)
 		{
@@ -14,6 +18,9 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.ChangeConfirm
 		}
 
 		public ICommand ConfirmChanges { get; }
-		public ICommand RejectChanges { get; }
+		public ICommand RejectChanges  { get; }
+
+        protected override void CleanUp() { }
+        public override event PropertyChangedEventHandler PropertyChanged;
 	}
 }

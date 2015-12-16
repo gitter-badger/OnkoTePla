@@ -14,7 +14,8 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 {
-	public class UndoRedoViewModel : ViewModel, IUndoRedoViewModel
+	public class UndoRedoViewModel : ViewModel, 
+                                     IUndoRedoViewModel
 	{
 		private enum ButtonMode
 		{
@@ -201,9 +202,7 @@ namespace bytePassion.OnkoTePla.Client.WPFVisualization.ViewModels.UndoRedoView
 		protected override void CleanUp()
 		{
 			appointmentModificationsVariable.StateChanged      -= OnAppointmentModificationsVariableChanged;
-			sessionAndUserSpecificEventHistory.PropertyChanged -= OnSessionAndUserSpecificEventHistoryChanged;
-
-			sessionAndUserSpecificEventHistory.Dispose();
+			sessionAndUserSpecificEventHistory.PropertyChanged -= OnSessionAndUserSpecificEventHistoryChanged;			
 		}
 
 		public override event PropertyChangedEventHandler PropertyChanged;
