@@ -2,7 +2,6 @@
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage;
@@ -13,13 +12,13 @@ using System.Windows.Input;
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
 {
     public class MainViewModel : ViewModel, 
-                                       IMainViewModel
+                                 IMainViewModel
     {        
         private int selectedPage;        
 
         public MainViewModel(IOverviewPageViewModel overviewPageViewModel,
-								   ISearchPageViewModel searchPageViewModel,
-								   IOptionsPageViewModel optionsPageViewModel)
+						     ISearchPageViewModel searchPageViewModel,
+						     IOptionsPageViewModel optionsPageViewModel)
         {           
 	        OverviewPageViewModel = overviewPageViewModel;
             SearchPageViewModel = searchPageViewModel;
