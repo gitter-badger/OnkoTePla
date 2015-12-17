@@ -232,6 +232,9 @@
     <Compile Include="Views\ChangeConfirmationView.xaml.cs">
       <DependentUpon>ChangeConfirmationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConnectionStatusView.xaml.cs">
+      <DependentUpon>ConnectionStatusView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DateDisplay.xaml.cs">
       <DependentUpon>DateDisplay.xaml</DependentUpon>
     </Compile>
@@ -322,6 +325,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ChangeConfirmationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConnectionStatusView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
