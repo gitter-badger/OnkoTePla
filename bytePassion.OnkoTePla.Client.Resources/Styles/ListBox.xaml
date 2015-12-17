@@ -3,8 +3,8 @@
                     xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.Resources.Converter">
     <converter:BrushRoundConverter x:Key="BrushRoundConverter" />
     <Style x:Key="ListBoxItem" TargetType="{x:Type ListBoxItem}">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="#f4f4f4" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -15,7 +15,8 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            ClipToBounds="{TemplateBinding ClipToBounds}">
+                            ClipToBounds="{TemplateBinding ClipToBounds}"
+                            CornerRadius="5">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup Name="CommonStates">
                                 <VisualStateGroup.Transitions>
@@ -110,5 +111,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>
