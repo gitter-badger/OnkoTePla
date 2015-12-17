@@ -268,9 +268,6 @@
     <Compile Include="Views\OverviewPage.xaml.cs">
       <DependentUpon>OverviewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PatientDetailView.xaml.cs">
-      <DependentUpon>PatientDetailView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\PatientSelector.xaml.cs">
       <DependentUpon>PatientSelector.xaml</DependentUpon>
     </Compile>
@@ -375,10 +372,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PatientDetailView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\PatientSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -463,6 +456,9 @@
       <Project>{85958036-DFEF-4C68-ABF4-FD241EAAB47F}</Project>
       <Name>bytePassion.OnkoTePla.Contracts</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\ActionBar\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
