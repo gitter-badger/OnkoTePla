@@ -13,7 +13,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 			if (alive)
 				return new BitmapImage(new Uri(@"pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;Component/Icons/AliveDead/alive.png"));
 			else
-				return new BitmapImage(new Uri(@"pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;Component/Icons/AliveDead/dead.png"));
+				return new BitmapImage(new Uri(@"pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;Component/Icons/AliveDead/black-ribbon.png"));
 		}		
 	}
 }

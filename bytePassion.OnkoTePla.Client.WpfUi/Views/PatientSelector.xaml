@@ -26,6 +26,8 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0"
+                           Width="32"
+                           Height="32"
                            Source="{Binding Alive,
                                             Converter={StaticResource AliveDeadToImageConverter}}"
                            Stretch="None" />

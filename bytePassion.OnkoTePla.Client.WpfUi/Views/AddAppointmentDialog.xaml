@@ -52,7 +52,7 @@
 
         <!--  ReSharper disable Xaml.BindingWithContextNotResolved  -->
         <ControlTemplate x:Key="PatientControlTemplate">
-            <TextBlock FontSize="24" Text="{Binding SelectedPatient.Name}" />
+            <TextBlock FontSize="30pt" FontWeight="Bold" Text="{Binding SelectedPatient.Name}" />
         </ControlTemplate>
         <!--  ReSharper restore Xaml.BindingWithContextNotResolved  -->
 
@@ -117,16 +117,44 @@
 
         <TextBlock Grid.Row="0"
                    Grid.Column="0"
-                   Margin="20"
+                   Margin="20,10,0,0"
+                   FontWeight="Normal"
+                   FontSize="30pt"
                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
                    Style="{StaticResource HeaderTextBlock}"
-                   Text="Patient" />
+                   Text="Patient" VerticalAlignment="Center" />
 
         <views:PatientSelector Grid.Row="2"
                                Grid.RowSpan="2"
                                Grid.Column="0"
                                Margin="20,20,20,0"
                                DataContext="{Binding PatientSelectorViewModel}" />
+
+        <ContentControl Grid.Row="0" Grid.Column="2"
+                            Margin="0,10,0,0"
+                            Content="{Binding SelectedPatient}"
+                            Foreground="#FF494949">
+
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+
+                    <Setter Property="Template" Value="{StaticResource PatientControlTemplate}" />
+
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedPatient}" Value="{x:Static contracts:Patient.Dummy}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <TextBlock FontSize="30pt" Foreground="#a4a4a4" Style="{StaticResource StandardTextBlock}" Text="-noch kein Patient ausgewählt-" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+
+        </ContentControl>
 
         <Grid Grid.Row="2"
               Grid.RowSpan="3"
@@ -137,45 +165,14 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-
-            <ContentControl Grid.Row="1"
-                            Margin="0,10,0,0"
-                            Content="{Binding SelectedPatient}"
-                            Foreground="#FF494949">
-
-                <ContentControl.Style>
-                    <Style TargetType="ContentControl">
-
-                        <Setter Property="Template" Value="{StaticResource PatientControlTemplate}" />
-
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelectedPatient}" Value="{x:Static contracts:Patient.Dummy}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate>
-                                            <TextBlock Style="{StaticResource StandardTextBlock}" Text="-noch kein Patient ausgewählt-" />
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ContentControl.Style>
-
-            </ContentControl>
-
-
-            <TextBlock Grid.Row="3"
+            <TextBlock Grid.Row="0"
                        Style="{StaticResource HeaderTextBlock}"
-                       Text="Beschreibung" />
+                       Text="Beschreibung" Margin="0,10,0,0" />
 
-            <TextBox Grid.Row="4"
-                     Height="80"
+            <TextBox Grid.Row="1"
+                     Height="120"
                      Margin="0,10,0,0"
                      AcceptsReturn="True"
                      FontSize="24"
@@ -186,12 +183,12 @@
                      TextWrapping="Wrap"
                      VerticalScrollBarVisibility="Auto" />
 
-            <TextBlock Grid.Row="6"
+            <TextBlock Grid.Row="3"
                        Style="{StaticResource HeaderTextBlock}"
                        Text="Dauer" />
 
 
-            <StackPanel Grid.Row="7" Margin="0,10,0,0">
+            <StackPanel Grid.Row="4" Margin="0,10,0,0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
