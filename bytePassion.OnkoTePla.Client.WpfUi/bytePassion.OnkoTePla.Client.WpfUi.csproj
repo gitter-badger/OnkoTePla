@@ -142,6 +142,9 @@
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModel.cs" />
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModelSampleData.cs" />
     <Compile Include="ViewModels\DateDisplay\IDateDisplayViewModel.cs" />
+    <Compile Include="ViewModels\LoginView\ILoginViewModel.cs" />
+    <Compile Include="ViewModels\LoginView\LoginViewModel.cs" />
+    <Compile Include="ViewModels\LoginView\LoginViewModelSampleData.cs" />
     <Compile Include="ViewModels\MainView\IMainViewModel.cs" />
     <Compile Include="ViewModels\MainView\MainViewModel.cs" />
     <Compile Include="ViewModels\MainView\MainViewModelSampleData.cs" />
