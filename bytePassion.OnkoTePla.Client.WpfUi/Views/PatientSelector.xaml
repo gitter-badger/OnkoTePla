@@ -19,10 +19,7 @@
         <converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
 
         <DataTemplate x:Key="listItemTemplate">
-            <Border x:Name="Border"
-                    BorderBrush="#e4e4e4"
-                    BorderThickness="0 0 0 1"
-                    Padding="8">
+            <Border x:Name="Border" Padding="8">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50" />
@@ -54,16 +51,15 @@
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0"
-                 Margin="5,5,20,5"
                  FontFamily="{StaticResource StandardFontFamily}"
                  FontSize="12pt"
                  Text="{Binding SearchFilter,
                                 UpdateSourceTrigger=PropertyChanged,
                                 Mode=OneWayToSource}" />
         <CheckBox Grid.Row="1"
-                  Margin="5"
+                  Margin="0,5"
                   Content="Verstorbene Patienten einblenden"
-                  Foreground="#444444"
+                  Foreground="{StaticResource SemiTransparentWhiteBrush}"
                   IsChecked="{Binding ShowDeceasedPatients,
                                       Mode=TwoWay,
                                       UpdateSourceTrigger=PropertyChanged}" />
@@ -80,11 +76,10 @@
 
         </Border>
         <ListBox Grid.Row="3"
-                 Margin="0,0"
                  HorizontalContentAlignment="Stretch"
-                 BorderThickness="0"
                  Foreground="#444444"
                  IsSynchronizedWithCurrentItem="False"
+                 ItemContainerStyle="{StaticResource ListBoxItem}"
                  ItemTemplate="{StaticResource listItemTemplate}"
                  ItemsSource="{Binding Patients.View}"
                  SelectedItem="{Binding SelectedPatient,

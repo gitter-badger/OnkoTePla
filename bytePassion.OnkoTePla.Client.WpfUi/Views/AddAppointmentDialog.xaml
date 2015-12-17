@@ -1,20 +1,19 @@
 ﻿<controls:MetroWindow x:Class="bytePassion.OnkoTePla.Client.WpfUi.Views.AddAppointmentDialog"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:addAppointmentDialog="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog"
                       xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Converter"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:addAppointmentDialog="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog"
-                      xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Converter"
                       xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Views"
                       Title="AddAppointmentDialog"
                       Width="1000"
-                      Height="620"
+                      Height="720"
                       ResizeMode="NoResize"
                       ShowTitleBar="False"
-                      SizeToContent="Height"
                       WindowStartupLocation="CenterOwner"
                       WindowStyle="ToolWindow"
                       mc:Ignorable="d">
@@ -104,19 +103,34 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-       <views:PatientSelector Grid.Row="0"
+        <Border Grid.Row="0"
+                Grid.RowSpan="5"
+                Grid.Column="0"
+                Background="#FF3373F2" />
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Margin="20"
+                   Foreground="{StaticResource SemiTransparentWhiteBrush}"
+                   Style="{StaticResource HeaderTextBlock}"
+                   Text="Patient" />
+
+        <views:PatientSelector Grid.Row="2"
                                Grid.RowSpan="2"
                                Grid.Column="0"
-                               Height="550"
-                               Margin="20"
+                               Margin="20,20,20,0"
                                DataContext="{Binding PatientSelectorViewModel}" />
 
-        <Grid Grid.Row="0" Grid.Column="2">
+        <Grid Grid.Row="2"
+              Grid.RowSpan="3"
+              Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -127,9 +141,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0"
-                       Style="{StaticResource HeaderTextBlock}"
-                       Text="Patient" />
+
 
             <ContentControl Grid.Row="1"
                             Margin="0,10,0,0"
@@ -250,7 +262,7 @@
 
         </Grid>
 
-        <StackPanel Grid.Row="1"
+        <StackPanel Grid.Row="3"
                     Grid.Column="2"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
