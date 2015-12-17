@@ -137,6 +137,9 @@
     <Compile Include="ViewModels\AppointmentViewDragAdorner\IAppointmentViewDragAdornerViewModel.cs" />
     <Compile Include="ViewModels\AppointmentView\Helper\AppointmentModifications.cs" />
     <Compile Include="ViewModelMessages\RestoreOriginalValues.cs" />
+    <Compile Include="ViewModels\ConnectionStatusView\ConnectionStatusViewModel.cs" />
+    <Compile Include="ViewModels\ConnectionStatusView\ConnectionStatusViewModelSampleData.cs" />
+    <Compile Include="ViewModels\ConnectionStatusView\IConnectionStatusViewModel.cs" />
     <Compile Include="ViewModels\IDataCenterDeliverer.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModelSampleData.cs" />
