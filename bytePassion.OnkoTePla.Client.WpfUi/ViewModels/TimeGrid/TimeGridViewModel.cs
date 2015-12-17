@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Windows;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 {

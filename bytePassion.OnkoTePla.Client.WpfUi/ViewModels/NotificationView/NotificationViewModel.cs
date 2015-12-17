@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Input;
 
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationView
 {
