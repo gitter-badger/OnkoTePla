@@ -19,8 +19,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
 
 		IOverviewPageViewModel OverviewPageViewModel { get; }
 		ISearchPageViewModel   SearchPageViewModel   { get; }
-		IOptionsPageViewModel  OptionsPageViewModel  { get; }	
-					
-		INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
+		IOptionsPageViewModel  OptionsPageViewModel  { get; }								
 	}
 }

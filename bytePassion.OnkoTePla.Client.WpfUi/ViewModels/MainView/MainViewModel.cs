@@ -19,14 +19,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
 
         public MainViewModel(IOverviewPageViewModel overviewPageViewModel,
 								   ISearchPageViewModel searchPageViewModel,
-								   IOptionsPageViewModel optionsPageViewModel,									 
-								   INotificationServiceContainerViewModel notificationServiceContainerViewModel)
+								   IOptionsPageViewModel optionsPageViewModel)
         {           
 	        OverviewPageViewModel = overviewPageViewModel;
             SearchPageViewModel = searchPageViewModel;
-            OptionsPageViewModel = optionsPageViewModel;
-
-			NotificationServiceContainerViewModel = notificationServiceContainerViewModel;		  
+            OptionsPageViewModel = optionsPageViewModel;			
 			
 			ShowPage = new ParameterrizedCommand<MainPage>(page => SelectedPage = (int)page);        
         }
@@ -46,9 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
 		public void Process (ShowPage message)
 		{
 			ShowPage.Execute(message.Page);
-		}
-
-		public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
+		}		
 	            
 	    protected override void CleanUp() {	}
         public override event PropertyChangedEventHandler PropertyChanged;

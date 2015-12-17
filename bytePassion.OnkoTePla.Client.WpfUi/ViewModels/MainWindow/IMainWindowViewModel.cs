@@ -1,4 +1,5 @@
 ﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
@@ -8,5 +9,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 		IMainViewModel MainViewModel { get; }
 
         bool IsMainViewVisible { get; }
-	}
+
+        INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
+    }
 }

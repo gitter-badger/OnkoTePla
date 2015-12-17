@@ -30,6 +30,11 @@
                         Visibility="{Binding DataContext.IsMainViewVisible,
                                              Converter={StaticResource BoolToCollapsedVisibilityConverter},
                                              RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"/>
-                                      
+
+        <views:NotificationServiceContainer Width="700"										  
+										    HorizontalAlignment="Center"
+										    VerticalAlignment="Top"
+											DataContext="{Binding NotificationServiceContainerViewModel}"/>
+
     </Grid>
 </controls:MetroWindow>

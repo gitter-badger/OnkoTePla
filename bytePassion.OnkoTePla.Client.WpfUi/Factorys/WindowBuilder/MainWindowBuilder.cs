@@ -4,6 +4,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Model;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Readmodels;
 using System;
@@ -41,7 +42,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
                                                                 sessionAndUserSpecificEventHistory,
                                                                 adornerControl);
 
-		    var mainWindowViewModel = new MainWindowViewModel(mainViewModelBuilder);
+            var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
+
+            var mainWindowViewModel = new MainWindowViewModel(mainViewModelBuilder,
+                                                              notificationServiceContainerViewModel);
 
 			var mainWindow = new MainWindow
 			{

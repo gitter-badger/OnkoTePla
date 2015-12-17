@@ -64,11 +64,6 @@
             <views:OptionsPage  DataContext="{Binding OptionsPageViewModel}" />
 
         </panels:DeckPanel>
-
-        <views:NotificationServiceContainer Grid.Row="1"
-										    Width="700"										  
-										    HorizontalAlignment="Center"
-										    VerticalAlignment="Top"
-											DataContext="{Binding NotificationServiceContainerViewModel}"/>
+        
     </Grid>
 </UserControl>

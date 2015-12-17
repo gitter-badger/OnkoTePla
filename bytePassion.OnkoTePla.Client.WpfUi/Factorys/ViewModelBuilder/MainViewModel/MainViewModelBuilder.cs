@@ -1,8 +1,5 @@
-﻿using bytePassion.Lib.Communication.MessageBus;
-using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
-using bytePassion.Lib.Communication.State;
+﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
@@ -23,7 +20,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
@@ -197,14 +193,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                 commandBus,
                                                                 viewModelCommunication,
                                                                 dataCenter);
-            var optionsPageViewModel = new OptionsPageViewModel();
-
-            var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
+            var optionsPageViewModel = new OptionsPageViewModel();            
 
             var mainViewModel = new ViewModels.MainView.MainViewModel(overviewPageViewModel,
                                                                       searchPageViewModel,
-                                                                      optionsPageViewModel,
-                                                                      notificationServiceContainerViewModel);
+                                                                      optionsPageViewModel);
 
             viewModelCommunication.RegisterViewModelMessageHandler<ShowPage>(mainViewModel);
 
