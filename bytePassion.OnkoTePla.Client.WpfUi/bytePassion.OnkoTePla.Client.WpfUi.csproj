@@ -96,6 +96,7 @@
     <Compile Include="Enums\MainPage.cs" />
     <Compile Include="Factorys\AppointmentModification\AppointmentModificationsBuilder.cs" />
     <Compile Include="Factorys\AppointmentModification\IAppointmentModificationsBuilder.cs" />
+    <Compile Include="Factorys\ViewModelBuilder\MainViewModel\MainViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\TherapyPlaceRowViewModel\ITherapyPlaceRowViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\TherapyPlaceRowViewModel\TherapyPlaceRowViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\AppointmentGridViewModel\AppointmentGridViewModelBuilder.cs" />
@@ -141,6 +142,9 @@
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModel.cs" />
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModelSampleData.cs" />
     <Compile Include="ViewModels\DateDisplay\IDateDisplayViewModel.cs" />
+    <Compile Include="ViewModels\MainView\IMainViewModel.cs" />
+    <Compile Include="ViewModels\MainView\MainViewModel.cs" />
+    <Compile Include="ViewModels\MainView\MainViewModelSampleData.cs" />
     <Compile Include="ViewModels\NotificationServiceContainer\INotificationServiceContainerViewModel.cs" />
     <Compile Include="ViewModels\NotificationServiceContainer\NotificationServiceContainerViewModel.cs" />
     <Compile Include="ViewModels\NotificationServiceContainer\NotificationServiceContainerViewModelSampleData.cs" />
@@ -235,6 +239,9 @@
     <Compile Include="Views\LoginDialogView.xaml.cs">
       <DependentUpon>LoginDialogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MedicalPracticeSelector.xaml.cs">
       <DependentUpon>MedicalPracticeSelector.xaml</DependentUpon>
     </Compile>
@@ -322,6 +329,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoginDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

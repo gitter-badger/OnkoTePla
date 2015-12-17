@@ -1,5 +1,7 @@
 ﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
+using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
 using bytePassion.OnkoTePla.Client.WpfUi.Model;
@@ -103,10 +105,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 											readModelRepository, 
 											sessionInformation);
 
+            // initiate ViewModelCommunication			
 
-			// Create MainWindow
-			
-			var mainWindowBuilder = new MainWindowBuilder(dataCenter, 
+            IHandlerCollection<ViewModelMessage> handlerCollection = new MultiHandlerCollection<ViewModelMessage>();
+            IMessageBus<ViewModelMessage> viewModelMessageBus = new LocalMessageBus<ViewModelMessage>(handlerCollection);
+            IViewModelCollections viewModelCollections = new ViewModelCollections();
+
+            IViewModelCommunication viewModelCommunication = new ViewModelCommunication(viewModelMessageBus,
+                                                                                        viewModelCollections);
+
+
+            // Create MainWindow
+
+            var mainWindowBuilder = new MainWindowBuilder(dataCenter, 
+                                                          viewModelCommunication,
 														  commandBus, 
 														  sessionAndUserSpecificEventHistory);
 

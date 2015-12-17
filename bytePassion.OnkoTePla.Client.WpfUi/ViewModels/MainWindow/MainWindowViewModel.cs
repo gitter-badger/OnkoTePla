@@ -1,56 +1,41 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.WpfUi.Enums;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage;
+using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using System.ComponentModel;
-using System.Windows.Input;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 {
-    public class MainWindowViewModel : ViewModel, 
-                                       IMainWindowViewModel
-    {        
-        private int selectedPage;        
+    internal class MainWindowViewModel : ViewModel, 
+                                         IMainWindowViewModel
+    {
+        private readonly IMainViewModelBuilder mainViewModelBuilder;
 
-        public MainWindowViewModel(IOverviewPageViewModel overviewPageViewModel,
-								   ISearchPageViewModel searchPageViewModel,
-								   IOptionsPageViewModel optionsPageViewModel,									 
-								   INotificationServiceContainerViewModel notificationServiceContainerViewModel)
-        {           
-	        OverviewPageViewModel = overviewPageViewModel;
-            SearchPageViewModel = searchPageViewModel;
-            OptionsPageViewModel = optionsPageViewModel;
+        private IMainViewModel mainViewModel;
+        private bool isMainViewVisible;
 
-			NotificationServiceContainerViewModel = notificationServiceContainerViewModel;		  
-			
-			ShowPage = new ParameterrizedCommand<MainPage>(page => SelectedPage = (int)page);        
-        }
 
-        public int SelectedPage
+        public MainWindowViewModel(IMainViewModelBuilder mainViewModelBuilder)
         {
-            get { return selectedPage; }
-            private set { PropertyChanged.ChangeAndNotify(this, ref selectedPage, value); }
+            this.mainViewModelBuilder = mainViewModelBuilder;
+            MainViewModel = mainViewModelBuilder.Build();
+            IsMainViewVisible = true;
         }
 
-		public ICommand ShowPage { get; }
-		
-        public IOverviewPageViewModel OverviewPageViewModel { get; }
-        public ISearchPageViewModel   SearchPageViewModel   { get; }
-        public IOptionsPageViewModel  OptionsPageViewModel  { get; }
 
-		public void Process (ShowPage message)
-		{
-			ShowPage.Execute(message.Page);
-		}
+        public IMainViewModel MainViewModel
+        {
+            get { return mainViewModel; }
+            private set { PropertyChanged.ChangeAndNotify(this, ref mainViewModel, value); }
+        }
 
-		public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
-	            
-	    protected override void CleanUp() {	}
+        public bool IsMainViewVisible
+        {
+            get { return isMainViewVisible; }
+            private set { PropertyChanged.ChangeAndNotify(this, ref isMainViewVisible, value); }
+        }
+
+        protected override void CleanUp() { }
         public override event PropertyChangedEventHandler PropertyChanged;
     }
 }
