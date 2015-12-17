@@ -289,6 +289,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Workflow\ApplicationState.cs" />
+    <Compile Include="Workflow\ClientWorkflow.cs" />
+    <Compile Include="Workflow\IClientWorkflow.cs" />
+    <Compile Include="Workflow\WorkflowCommands.cs" />
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
