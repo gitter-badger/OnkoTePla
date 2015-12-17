@@ -24,7 +24,7 @@
                 <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WpfUi;component/Views/Templates/ExpandedNavigationTemplate.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WpfUi;component/Views/Templates/NavBarIcons.xaml" />
             </ResourceDictionary.MergedDictionaries>
-			
+
             <converter:AliveDeadToImageConverter x:Key="AliveDeadToImageConverter" />
             <converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter" />
             <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
@@ -32,7 +32,7 @@
 
 
             <FontFamily x:Key="StandardFontFamily">Segoe UI Light</FontFamily>
-           
+
         </ResourceDictionary>
 
 
