@@ -4,10 +4,11 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 					  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"                     
-                      xmlns:mainWindow="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow"                      
+                      xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow"                      
                       xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Views"
-                      xmlns:converter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+                      xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
                       xmlns:local="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi"
+                      xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Global"
                       Title="OnkoTePla"
                       MinWidth="700"
                       MinHeight="500"
@@ -16,11 +17,11 @@
                       mc:Ignorable="d">
     
     <d:UserControl.DataContext>
-        <mainWindow:MainWindowViewModelSampleData/>
+        <sampleData:MainWindowViewModelSampleData/>
     </d:UserControl.DataContext>
 
     <controls:MetroWindow.Resources>
-        <converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+        <libConverter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
     </controls:MetroWindow.Resources>
 
     <Grid>
@@ -31,7 +32,7 @@
                                              Converter={StaticResource BoolToCollapsedVisibilityConverter},
                                              RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"/>
 
-        <views:NotificationServiceContainer Width="700"										  
+        <views:NotificationServiceContainer Width="{x:Static global:Constants.NotificationServiceWidth}"										  
 										    HorizontalAlignment="Center"
 										    VerticalAlignment="Top"
 											DataContext="{Binding NotificationServiceContainerViewModel}"/>

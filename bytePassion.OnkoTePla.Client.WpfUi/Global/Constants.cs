@@ -15,6 +15,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Global
 		
 		// View-Constants
 
+        public const double NotificationServiceWidth = 700.0;
+
 		public static readonly GridLength AppointmentGridLeftColumsSize = new GridLength(150.0, GridUnitType.Pixel);
 		public static readonly GridLength AppointmentGridTopRowSizw     = new GridLength( 50.0, GridUnitType.Pixel);
 
