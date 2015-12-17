@@ -23,8 +23,8 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 {
-    public class AddAppointmentDialogViewModel : ViewModel, 
-                                                 IAddAppointmentDialogViewModel
+    internal class AddAppointmentDialogViewModel : ViewModel, 
+                                                   IAddAppointmentDialogViewModel
 	{
 		
 		private readonly IDataCenter dataCenter;

@@ -16,8 +16,8 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 {
-    public class TimeGridViewModel : ViewModel,
-									 ITimeGridViewModel									 
+    internal class TimeGridViewModel : ViewModel,
+									   ITimeGridViewModel									 
 	{		
 		private enum GridViewDivisionState
 		{

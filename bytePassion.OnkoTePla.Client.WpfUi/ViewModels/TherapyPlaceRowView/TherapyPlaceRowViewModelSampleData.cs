@@ -16,7 +16,7 @@ using System.Windows.Media;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 {
-    public class TherapyPlaceRowViewModelSampleData : ITherapyPlaceRowViewModel
+    internal class TherapyPlaceRowViewModelSampleData : ITherapyPlaceRowViewModel
 	{
 		public TherapyPlaceRowViewModelSampleData()
 		{

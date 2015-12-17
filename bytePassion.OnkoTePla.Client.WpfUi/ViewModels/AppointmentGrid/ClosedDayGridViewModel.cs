@@ -15,8 +15,8 @@ using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
-    public class ClosedDayGridViewModel : ViewModel, 
-										  IAppointmentGridViewModel
+    internal class ClosedDayGridViewModel : ViewModel, 
+										    IAppointmentGridViewModel
 	{
 		private bool isActive;
 		

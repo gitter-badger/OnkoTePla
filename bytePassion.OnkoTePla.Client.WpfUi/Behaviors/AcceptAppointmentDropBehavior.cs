@@ -16,7 +16,7 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
-    public class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
+    internal class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
     {
         
 

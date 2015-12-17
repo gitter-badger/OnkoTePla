@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 {
-    public class RejectChangesMessageHandler : IViewModelMessageHandler<RejectChanges>
+    internal class RejectChangesMessageHandler : IViewModelMessageHandler<RejectChanges>
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;

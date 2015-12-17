@@ -10,7 +10,7 @@ using System.Windows.Interactivity;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
-    public class MoveWholeAppointmentBehavior : Behavior<FrameworkElement>
+    internal class MoveWholeAppointmentBehavior : Behavior<FrameworkElement>
 	{
 
         public static readonly DependencyProperty AppointmentModificationsProperty =

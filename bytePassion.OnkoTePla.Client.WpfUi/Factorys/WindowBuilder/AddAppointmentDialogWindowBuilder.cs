@@ -13,7 +13,7 @@ using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 {
-    public class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
+    internal class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
 	{
 		private readonly IDataCenter dataCenter;		                
 	    private readonly IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable;       

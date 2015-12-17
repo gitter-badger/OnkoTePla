@@ -12,7 +12,7 @@ using System;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel
 {
-    public class TherapyPlaceRowViewModelBuilder : ITherapyPlaceRowViewModelBuilder
+    internal class TherapyPlaceRowViewModelBuilder : ITherapyPlaceRowViewModelBuilder
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IDataCenter dataCenter;

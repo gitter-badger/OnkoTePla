@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
 {
-    public class MainViewModelSampleData : IMainViewModel
+    internal class MainViewModelSampleData : IMainViewModel
 	{
 		public MainViewModelSampleData()
 		{

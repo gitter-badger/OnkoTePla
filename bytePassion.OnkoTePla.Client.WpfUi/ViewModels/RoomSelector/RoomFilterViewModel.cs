@@ -14,8 +14,8 @@ using System.Windows.Media;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 {
-    public class RoomFilterViewModel : ViewModel,
-                                       IRoomFilterViewModel
+    internal class RoomFilterViewModel : ViewModel,
+                                         IRoomFilterViewModel
 	{
 		private readonly RoomSelectorData allRoomFilter = new RoomSelectorData("Alle Räume", null, Colors.White);
 

@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 {
-    public interface IOverviewPageViewModel : IViewModel
+    internal interface IOverviewPageViewModel : IViewModel
 	{
 		IDateDisplayViewModel             DateDisplayViewModel             { get; }
 		IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }

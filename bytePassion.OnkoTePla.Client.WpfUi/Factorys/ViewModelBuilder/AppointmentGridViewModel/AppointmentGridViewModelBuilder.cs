@@ -13,7 +13,7 @@ using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel
 {
-    public class AppointmentGridViewModelBuilder : IAppointmentGridViewModelBuilder 
+    internal class AppointmentGridViewModelBuilder : IAppointmentGridViewModelBuilder 
 	{
 		private readonly IDataCenter dataCenter;
 		private readonly IViewModelCommunication viewModelCommunication;

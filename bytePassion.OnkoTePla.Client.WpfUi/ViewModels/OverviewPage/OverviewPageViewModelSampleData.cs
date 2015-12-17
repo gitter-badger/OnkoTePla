@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 {
-    public class OverviewPageViewModelSampleData : IOverviewPageViewModel
+    internal class OverviewPageViewModelSampleData : IOverviewPageViewModel
 	{
 		public OverviewPageViewModelSampleData()
 		{

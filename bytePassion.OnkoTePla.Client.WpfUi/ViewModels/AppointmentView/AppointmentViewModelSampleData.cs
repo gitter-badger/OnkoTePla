@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
-    public class AppointmentViewModelSampleData : IAppointmentViewModel
+    internal class AppointmentViewModelSampleData : IAppointmentViewModel
 	{
 		public AppointmentViewModelSampleData()
 			: this(new Time(9,0), new Time(11,0))

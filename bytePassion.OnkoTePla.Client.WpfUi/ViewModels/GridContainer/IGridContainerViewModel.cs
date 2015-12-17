@@ -6,8 +6,8 @@ using System.Collections.ObjectModel;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 {
-    public interface IGridContainerViewModel : IViewModel,
-											   IViewModelCommunicationDeliverer
+    internal interface IGridContainerViewModel : IViewModel,
+											     IViewModelCommunicationDeliverer
 	{
 		ObservableCollection<IAppointmentGridViewModel> LoadedAppointmentGrids { get; }
 		

@@ -5,7 +5,7 @@ using System;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification
 {
-    public interface IAppointmentModificationsBuilder
+    internal interface IAppointmentModificationsBuilder
     {
         AppointmentModifications Build(Appointment originalAppointment, Guid medicalPracticeId, bool isInitialAdjustment);
     }

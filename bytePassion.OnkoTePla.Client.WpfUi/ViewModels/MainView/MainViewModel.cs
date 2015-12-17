@@ -11,8 +11,8 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
 {
-    public class MainViewModel : ViewModel, 
-                                 IMainViewModel
+    internal class MainViewModel : ViewModel, 
+                                   IMainViewModel
     {        
         private int selectedPage;        
 

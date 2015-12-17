@@ -27,8 +27,8 @@ using DeleteAppointment = bytePassion.OnkoTePla.Core.Domain.Commands.DeleteAppoi
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 {
-    public class SearchPageViewModel : ViewModel, 
-                                       ISearchPageViewModel
+    internal class SearchPageViewModel : ViewModel, 
+                                         ISearchPageViewModel
     {
 		private class AppointmentSorter : IComparer<Appointment>
 		{

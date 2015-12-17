@@ -11,7 +11,7 @@ using bytePassion.OnkoTePla.Core.Domain;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel
 {
-    public class AppointmentViewModelBuilder : IAppointmentViewModelBuilder 
+    internal class AppointmentViewModelBuilder : IAppointmentViewModelBuilder 
 	{
 		private readonly IViewModelCommunication viewModelCommunication;		
 		private readonly IGlobalState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable;

@@ -14,8 +14,8 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 {
-    public class UndoRedoViewModel : ViewModel, 
-                                     IUndoRedoViewModel
+    internal class UndoRedoViewModel : ViewModel, 
+                                       IUndoRedoViewModel
 	{
 		private enum ButtonMode
 		{

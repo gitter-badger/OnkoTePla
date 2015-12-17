@@ -10,14 +10,14 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
-    public interface IAppointmentViewModel : IViewModel,
-											 IViewModelCommunicationDeliverer,
-											 IViewModelCollectionItem<Guid>,											
-                                             IViewModelMessageHandler<Dispose>,											 
-											 IViewModelMessageHandler<RestoreOriginalValues>,
-											 IViewModelMessageHandler<ShowDisabledOverlay>,
-											 IViewModelMessageHandler<HideDisabledOverlay>,
-											 IViewModelMessageHandler<SwitchToEditMode>
+    internal interface IAppointmentViewModel : IViewModel,
+											   IViewModelCommunicationDeliverer,
+											   IViewModelCollectionItem<Guid>,											
+                                               IViewModelMessageHandler<Dispose>,											 
+											   IViewModelMessageHandler<RestoreOriginalValues>,
+											   IViewModelMessageHandler<ShowDisabledOverlay>,
+											   IViewModelMessageHandler<HideDisabledOverlay>,
+											   IViewModelMessageHandler<SwitchToEditMode>
 	{
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }		

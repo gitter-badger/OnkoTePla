@@ -10,7 +10,7 @@ using System;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 {
-    public class ConfirmChangesMessageHandler : IViewModelMessageHandler<ConfirmChanges>
+    internal class ConfirmChangesMessageHandler : IViewModelMessageHandler<ConfirmChanges>
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;

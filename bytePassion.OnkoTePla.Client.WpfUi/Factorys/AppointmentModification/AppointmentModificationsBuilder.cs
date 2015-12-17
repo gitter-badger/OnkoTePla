@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification
 {
-    public class AppointmentModificationsBuilder : IAppointmentModificationsBuilder
+    internal class AppointmentModificationsBuilder : IAppointmentModificationsBuilder
     {
         private readonly IDataCenter dataCenter;
         private readonly IViewModelCommunication viewModelCommunication;

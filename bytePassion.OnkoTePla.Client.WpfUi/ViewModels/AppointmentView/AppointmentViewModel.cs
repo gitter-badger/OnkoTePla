@@ -22,8 +22,8 @@ using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.D
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
-    public class AppointmentViewModel : ViewModel, 
-										IAppointmentViewModel										
+    internal class AppointmentViewModel : ViewModel, 
+										  IAppointmentViewModel										
 	{		
 		private readonly Appointment appointment;
 		private readonly TherapyPlaceRowIdentifier initialLocalisation;

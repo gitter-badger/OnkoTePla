@@ -16,8 +16,8 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 {
-    public class OverviewPageViewModel : ViewModel, 
-                                         IOverviewPageViewModel
+    internal class OverviewPageViewModel : ViewModel, 
+                                           IOverviewPageViewModel
 	{
         private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
 

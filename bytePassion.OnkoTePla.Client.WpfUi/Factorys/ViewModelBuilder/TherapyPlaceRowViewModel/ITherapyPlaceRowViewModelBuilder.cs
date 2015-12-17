@@ -5,7 +5,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel
 {
-    public interface ITherapyPlaceRowViewModelBuilder
+    internal interface ITherapyPlaceRowViewModelBuilder
 	{
 		ITherapyPlaceRowViewModel Build(TherapyPlace therapyPlace, Room room, TherapyPlaceRowIdentifier location);
 	}

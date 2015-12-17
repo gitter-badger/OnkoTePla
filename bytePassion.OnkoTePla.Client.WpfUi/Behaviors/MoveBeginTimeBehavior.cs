@@ -6,7 +6,7 @@ using System.Windows.Interactivity;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
-    public class MoveBeginTimeBehavior : Behavior<FrameworkElement>
+    internal class MoveBeginTimeBehavior : Behavior<FrameworkElement>
 	{
 
 	    public static readonly DependencyProperty AppointmentModificationsProperty = 

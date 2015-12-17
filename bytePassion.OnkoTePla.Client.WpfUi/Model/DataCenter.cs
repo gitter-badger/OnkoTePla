@@ -1,5 +1,6 @@
 ﻿using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.SessionInfo;
+using bytePassion.OnkoTePla.Client.WpfUi.Workflow;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
@@ -12,25 +13,28 @@ using System.Collections.Generic;
 namespace bytePassion.OnkoTePla.Client.WpfUi.Model
 {
 
-    public class DataCenter : IDataCenter
+    internal class DataCenter : IDataCenter
 	{
 		public DataCenter(IConfigurationReadRepository configuration, 
 						  IPatientReadRepository patients, 
 						  IReadModelRepository readModelRepository, 
-						  SessionInformation sessionInfo)
+						  SessionInformation sessionInfo, 
+                          IClientWorkflow workflow)
 		{
 			Configuration = configuration;
 			Patients = patients;
 			ReadModelRepository = readModelRepository;
 			SessionInfo = sessionInfo;
+		    Workflow = workflow;
 
-			dataCache = new Dictionary<Guid, IDictionary<Date, MedicalPractice>>();
+		    dataCache = new Dictionary<Guid, IDictionary<Date, MedicalPractice>>();
 		}
 
 		public IConfigurationReadRepository Configuration       { get; }
 		public IPatientReadRepository       Patients            { get; }
 		public IReadModelRepository         ReadModelRepository { get; }
 		public SessionInformation           SessionInfo         { get; }
+        public IClientWorkflow              Workflow            { get; }
 
 
 		private readonly IDictionary<Guid, IDictionary<Date, MedicalPractice>> dataCache;

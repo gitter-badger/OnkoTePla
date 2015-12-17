@@ -4,20 +4,18 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Core.Domain;
-using System;
 using System.Collections.ObjectModel;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
-    public interface IAppointmentGridViewModel : IViewModel,
-												 IDisposable,
-												 IViewModelCollectionItem<AggregateIdentifier>,
-												 IViewModelMessageHandler<Activate>,
-												 IViewModelMessageHandler<Deactivate>,
-												 IViewModelMessageHandler<DeleteAppointment>, 
-												 IViewModelMessageHandler<SendCurrentChangesToCommandBus>,
-												 IViewModelMessageHandler<CreateNewAppointmentFromModificationsAndSendToCommandBus>
+    internal interface IAppointmentGridViewModel : IViewModel,												 
+												   IViewModelCollectionItem<AggregateIdentifier>,
+												   IViewModelMessageHandler<Activate>,
+												   IViewModelMessageHandler<Deactivate>,
+												   IViewModelMessageHandler<DeleteAppointment>, 
+												   IViewModelMessageHandler<SendCurrentChangesToCommandBus>,
+												   IViewModelMessageHandler<CreateNewAppointmentFromModificationsAndSendToCommandBus>
 	{						
 		ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; } 	
 		

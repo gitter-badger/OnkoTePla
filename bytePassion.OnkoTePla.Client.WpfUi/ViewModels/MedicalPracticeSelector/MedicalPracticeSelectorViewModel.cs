@@ -11,8 +11,8 @@ using System.ComponentModel;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 {
-    public class MedicalPracticeSelectorViewModel : ViewModel, 
-                                                    IMedicalPracticeSelectorViewModel
+    internal class MedicalPracticeSelectorViewModel : ViewModel, 
+                                                      IMedicalPracticeSelectorViewModel
 	{
 		private readonly IConfigurationReadRepository                   configuration;		
 		private readonly IGlobalState<Guid>                             selectedMedicalPracticeIdVariable;

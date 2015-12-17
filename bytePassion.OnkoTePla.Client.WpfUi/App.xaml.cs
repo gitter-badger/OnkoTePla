@@ -6,6 +6,7 @@ using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
 using bytePassion.OnkoTePla.Client.WpfUi.Model;
 using bytePassion.OnkoTePla.Client.WpfUi.SessionInfo;
+using bytePassion.OnkoTePla.Client.WpfUi.Workflow;
 using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Core.Eventsystem;
@@ -87,6 +88,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 				LoggedInUser = configReadRepository.GetAllUsers().First()
 			};
 
+            // Application-Workflow
+
+            var applicationWorkflow = new ClientWorkflow();
 
 			// SessionAndUserSpecificEventHistory
 
@@ -103,7 +107,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			var dataCenter = new DataCenter(configReadRepository, 
 											patientReadRepository, 
 											readModelRepository, 
-											sessionInformation);
+											sessionInformation,
+                                            applicationWorkflow);
 
             // initiate ViewModelCommunication			
 

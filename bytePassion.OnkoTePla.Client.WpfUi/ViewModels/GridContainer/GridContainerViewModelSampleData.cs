@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 {
-    public class GridContainerViewModelSampleData : IGridContainerViewModel 
+    internal class GridContainerViewModelSampleData : IGridContainerViewModel 
 	{
 		public GridContainerViewModelSampleData()
 		{

@@ -26,8 +26,8 @@ using DeleteAppointmentCommand = bytePassion.OnkoTePla.Core.Domain.Commands.Dele
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
-    public class AppointmentGridViewModel : ViewModel,
-											IAppointmentGridViewModel											
+    internal class AppointmentGridViewModel : ViewModel,
+											  IAppointmentGridViewModel											
 	{
 		private bool isActive;
 

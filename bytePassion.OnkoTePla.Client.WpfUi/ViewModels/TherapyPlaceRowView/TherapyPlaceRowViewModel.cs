@@ -18,8 +18,8 @@ using System.Windows.Media;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 {
-    public class TherapyPlaceRowViewModel : ViewModel,
-											ITherapyPlaceRowViewModel
+    internal class TherapyPlaceRowViewModel : ViewModel,
+											  ITherapyPlaceRowViewModel
 	{
 		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
 		private readonly IGlobalState<Date> selectedDateVariable;

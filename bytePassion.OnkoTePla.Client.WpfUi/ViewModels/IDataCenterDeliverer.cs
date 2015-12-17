@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels
 {
-    public interface IDataCenterDeliverer
+    internal interface IDataCenterDeliverer
 	{
 		IDataCenter DataCenter { get; }
 	}

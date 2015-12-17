@@ -13,7 +13,7 @@ using System;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 {
-    public class MainWindowBuilder : IWindowBuilder<MainWindow>
+    internal class MainWindowBuilder : IWindowBuilder<MainWindow>
 	{		
 		private readonly IDataCenter dataCenter;
         private readonly IViewModelCommunication viewModelCommunication;

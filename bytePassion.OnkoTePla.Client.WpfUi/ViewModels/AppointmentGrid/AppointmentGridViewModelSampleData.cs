@@ -11,7 +11,7 @@ using System.ComponentModel;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
-    public class AppointmentGridViewModelSampleData : IAppointmentGridViewModel
+    internal class AppointmentGridViewModelSampleData : IAppointmentGridViewModel
 	{
 		public AppointmentGridViewModelSampleData()
 		{			

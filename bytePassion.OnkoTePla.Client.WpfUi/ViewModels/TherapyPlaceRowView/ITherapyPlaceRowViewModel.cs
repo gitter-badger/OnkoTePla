@@ -13,14 +13,14 @@ using System.Windows.Media;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 {
-    public interface ITherapyPlaceRowViewModel : IViewModel,
-												 IViewModelCollectionItem<TherapyPlaceRowIdentifier>,
-												 IViewModelCommunicationDeliverer,
-												 IDataCenterDeliverer,												
-												 IViewModelMessageHandler<NewSizeAvailable>,
-												 IViewModelMessageHandler<AddAppointmentToTherapyPlaceRow>,
-												 IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>,
-												 IViewModelMessageHandler<SetVisibility>
+    internal interface ITherapyPlaceRowViewModel : IViewModel,
+												   IViewModelCollectionItem<TherapyPlaceRowIdentifier>,
+												   IViewModelCommunicationDeliverer,
+												   IDataCenterDeliverer,												
+												   IViewModelMessageHandler<NewSizeAvailable>,
+												   IViewModelMessageHandler<AddAppointmentToTherapyPlaceRow>,
+												   IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>,
+												   IViewModelMessageHandler<SetVisibility>
 	{		
 		ObservableCollection<IAppointmentViewModel> AppointmentViewModels { get; }				
 		

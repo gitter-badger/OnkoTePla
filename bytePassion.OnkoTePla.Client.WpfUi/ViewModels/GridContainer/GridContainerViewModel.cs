@@ -16,8 +16,8 @@ using System.Windows;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 {
-    public class GridContainerViewModel : ViewModel, 
-                                          IGridContainerViewModel
+    internal class GridContainerViewModel : ViewModel, 
+                                            IGridContainerViewModel
 	{
 		private readonly IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder;		
          
