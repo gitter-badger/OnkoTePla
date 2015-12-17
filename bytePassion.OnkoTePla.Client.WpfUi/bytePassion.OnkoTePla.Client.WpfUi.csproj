@@ -125,6 +125,9 @@
     <Compile Include="ViewModelMessages\SwitchToEditMode.cs" />
     <Compile Include="ViewModelMessages\SendCurrentChangesToCommandBus.cs" />
     <Compile Include="ViewModelMessages\ShowNotification.cs" />
+    <Compile Include="ViewModels\ActionBar\ActionBarViewModel.cs" />
+    <Compile Include="ViewModels\ActionBar\ActionBarViewModelSampleData.cs" />
+    <Compile Include="ViewModels\ActionBar\IActionBarViewModel.cs" />
     <Compile Include="ViewModels\AddAppointmentDialog\AddAppointmentDialogViewModel.cs" />
     <Compile Include="ViewModels\AddAppointmentDialog\AddAppointmentDialogViewModelSampleData.cs" />
     <Compile Include="ViewModels\AddAppointmentDialog\Helper\AppointmentCreationState.cs" />
@@ -457,9 +460,7 @@
       <Name>bytePassion.OnkoTePla.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\ActionBar\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
