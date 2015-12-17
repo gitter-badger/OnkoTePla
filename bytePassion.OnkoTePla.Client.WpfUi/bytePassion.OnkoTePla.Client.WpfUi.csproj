@@ -96,6 +96,8 @@
     <Compile Include="Enums\MainPage.cs" />
     <Compile Include="Factorys\AppointmentModification\AppointmentModificationsBuilder.cs" />
     <Compile Include="Factorys\AppointmentModification\IAppointmentModificationsBuilder.cs" />
+    <Compile Include="Factorys\ViewModelBuilder\LoginViewModel\ILoginViewModelBuilder.cs" />
+    <Compile Include="Factorys\ViewModelBuilder\LoginViewModel\LoginViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\MainViewModel\MainViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\TherapyPlaceRowViewModel\ITherapyPlaceRowViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\TherapyPlaceRowViewModel\TherapyPlaceRowViewModelBuilder.cs" />

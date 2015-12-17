@@ -1,6 +1,7 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
+using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Model;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow;
@@ -36,16 +37,24 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
             var adornerControl = new AdornerControl();
 
+            // build viewModels
+
             var mainViewModelBuilder = new MainViewModelBuilder(dataCenter, 
                                                                 viewModelCommunication, 
                                                                 commandBus, 
                                                                 sessionAndUserSpecificEventHistory,
                                                                 adornerControl);
 
+            var loginViewModelBuilder = new LoginViewModelBuilder();
+
             var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
 
-            var mainWindowViewModel = new MainWindowViewModel(mainViewModelBuilder,
+		    
+		    var mainWindowViewModel = new MainWindowViewModel(mainViewModelBuilder,
+                                                              loginViewModelBuilder,
                                                               notificationServiceContainerViewModel);
+
+            // build mainWindow
 
 			var mainWindow = new MainWindow
 			{

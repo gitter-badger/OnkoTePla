@@ -11,7 +11,7 @@
         <loginView:LoginViewModelSampleData/>
     </d:DesignData.DataContext>
     
-    <Grid>
+    <Grid Background="Aquamarine">
             
     </Grid>
 </UserControl>

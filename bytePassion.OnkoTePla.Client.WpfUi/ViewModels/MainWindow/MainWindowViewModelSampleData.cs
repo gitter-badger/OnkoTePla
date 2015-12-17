@@ -1,4 +1,5 @@
-﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
 using System.ComponentModel;
 
@@ -11,14 +12,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 		public MainWindowViewModelSampleData()
 		{
 			MainViewModel = new MainViewModelSampleData();
-		    IsMainViewVisible = true;
 
+		    IsMainViewVisible = true;
+		    IsLoginViewVisible = true;
+
+            LoginViewModel = new LoginViewModelSampleData();
             NotificationServiceContainerViewModel = new NotificationServiceContainerViewModelSampleData();
 		}
 					            
         public IMainViewModel MainViewModel { get; }
         public bool IsMainViewVisible { get; }
+        public bool IsLoginViewVisible { get; }
 
+        public ILoginViewModel LoginViewModel { get; }
         public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
 
         public void Dispose() { }
