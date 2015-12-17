@@ -236,8 +236,8 @@
     <Compile Include="Views\GridContainer.xaml.cs">
       <DependentUpon>GridContainer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LoginDialogView.xaml.cs">
-      <DependentUpon>LoginDialogView.xaml</DependentUpon>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -328,7 +328,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LoginDialogView.xaml">
+    <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

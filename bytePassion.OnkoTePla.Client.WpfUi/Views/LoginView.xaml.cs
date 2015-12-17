@@ -1,8 +1,8 @@
 ﻿namespace bytePassion.OnkoTePla.Client.WpfUi.Views
 {
-    public partial class LoginDialogView
+    public partial class LoginView
     {
-        public LoginDialogView()
+        public LoginView()
         {
             InitializeComponent();
         }
