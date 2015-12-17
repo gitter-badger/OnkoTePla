@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Model
 		IPatientReadRepository       Patients            { get; }
 		IReadModelRepository         ReadModelRepository { get; }
 		SessionInformation           SessionInfo         { get; }
-        IClientWorkflow               Workflow           { get; }
+        IClientWorkflow              Workflow            { get; }
 
 		MedicalPractice GetMedicalPracticeByDateAndId(Date date, Guid medicalPracticeId);
 	}

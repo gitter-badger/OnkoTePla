@@ -79,7 +79,7 @@
                         <Button Grid.Row="0"
                                 Grid.Column="2"
                                 Grid.RowSpan="2"
-                                Margin="10">
+                                Margin="13">
 
                             <Viewbox Width="48" Height="48">
                                 <Canvas Width="24" Height="24">
