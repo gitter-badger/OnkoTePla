@@ -1,7 +1,6 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
@@ -9,6 +8,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceR
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ServiceModules;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;

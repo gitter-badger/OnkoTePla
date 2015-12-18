@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Documents;
 
 
-namespace bytePassion.OnkoTePla.Client.WpfUi.Adorner
+namespace bytePassion.OnkoTePla.Client.WpfUi.ServiceModules
 {
     public class AdornerControl 
 	{		

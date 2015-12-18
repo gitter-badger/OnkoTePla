@@ -1,6 +1,6 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
+using bytePassion.OnkoTePla.Client.WpfUi.ServiceModules;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using System.Windows;
