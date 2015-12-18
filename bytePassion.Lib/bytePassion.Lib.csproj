@@ -62,6 +62,17 @@
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="FrameworkExtensions\FrameworkElementExtensions.cs" />
     <Compile Include="FrameworkExtensions\ObservableCollectionExtensions.cs" />
+    <Compile Include="Types\Communication\Address.cs" />
+    <Compile Include="Types\Communication\AddressIdentifier.cs" />
+    <Compile Include="Types\Communication\AddressIdentifierType.cs" />
+    <Compile Include="Types\Communication\InProcIdentifier.cs" />
+    <Compile Include="Types\Communication\InProcProtocol.cs" />
+    <Compile Include="Types\Communication\IpPort.cs" />
+    <Compile Include="Types\Communication\IpV4AddressIdentifier.cs" />
+    <Compile Include="Types\Communication\IpV6AddressIdentifier.cs" />
+    <Compile Include="Types\Communication\Protocol.cs" />
+    <Compile Include="Types\Communication\ProtocolType.cs" />
+    <Compile Include="Types\Communication\TcpIpProtocol.cs" />
     <Compile Include="Types\Repository\IPersistable.cs" />
     <Compile Include="Types\Repository\IPersistenceService.cs" />
     <Compile Include="GeometryLib\Intersections\Intersection.cs" />
