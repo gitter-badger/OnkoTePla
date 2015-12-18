@@ -65,6 +65,9 @@
     </ApplicationDefinition>
     <Compile Include="Converter\MainPageToIntConverter.cs" />
     <Compile Include="Enums\MainPage.cs" />
+    <Compile Include="ViewModels\AboutPage\AboutPageViewModel.cs" />
+    <Compile Include="ViewModels\AboutPage\AboutPageViewModelSampleData.cs" />
+    <Compile Include="ViewModels\AboutPage\IAboutPageViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\ConnectionsPage\IConnectionsPageViewModel.cs" />
@@ -88,6 +91,9 @@
     <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConnectionsPage.xaml.cs">
       <DependentUpon>ConnectionsPage.xaml</DependentUpon>
     </Compile>
@@ -118,6 +124,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ConnectionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

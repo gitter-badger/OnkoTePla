@@ -52,6 +52,10 @@
             <Button Content="Einstellungen"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Options}"/>
+            
+            <Button Content="Über ..."
+                    Command="{Binding SwitchToPage}"
+                    CommandParameter="{x:Static enum:MainPage.About}"/>
 
         </StackPanel>
 
@@ -61,10 +65,11 @@
             
             <views:OverviewPage       DataContext="{Binding OverviewPageViewModel}"/>
             <views:ConnectionsPage    DataContext="{Binding ConnectionsPageViewModel}"/>
-            <views:UserPage DataContext="{Binding}"></views:UserPage>
+            <views:UserPage           DataContext="{Binding UserPageViewModel}"/>
             <views:LicencePage        DataContext="{Binding LicencePageViewModel}"/>
             <views:InfrastructurePage DataContext="{Binding InfrastructurePageViewModel}"/>
             <views:OptionsPage        DataContext="{Binding OptionsPageViewModel}"/>
+            <views:AboutPage          DataContext="{Binding AboutPageViewModel}"/>
             
         </panels:DeckPanel>
         

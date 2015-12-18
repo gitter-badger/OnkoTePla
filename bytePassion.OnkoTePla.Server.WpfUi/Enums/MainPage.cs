@@ -7,6 +7,7 @@
         User,
         Licence,
         Infrastructure,
-        Options
+        Options,
+        About
     }
 }

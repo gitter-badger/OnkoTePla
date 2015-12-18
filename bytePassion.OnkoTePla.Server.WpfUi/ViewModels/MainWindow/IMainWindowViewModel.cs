@@ -1,4 +1,5 @@
 ﻿using bytePassion.OnkoTePla.Server.WpfUi.Enums;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
@@ -21,5 +22,6 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         ILicencePageViewModel        LicencePageViewModel        { get; }
         IInfrastructurePageViewModel InfrastructurePageViewModel { get; }
         IOptionsPageViewModel        OptionsPageViewModel        { get; }
+        IAboutPageViewModel          AboutPageViewModel          { get; }
     }
 }

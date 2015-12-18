@@ -1,6 +1,7 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
@@ -22,14 +23,16 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
                                    IUserPageViewModel userPageViewModel,
                                    ILicencePageViewModel licencePageViewModel, 
                                    IInfrastructurePageViewModel infrastructurePageViewModel, 
-                                   IOptionsPageViewModel optionsPageViewModel)
+                                   IOptionsPageViewModel optionsPageViewModel, 
+                                   IAboutPageViewModel aboutPageViewModel)
         {
             OverviewPageViewModel       = overviewPageViewModel;
             ConnectionsPageViewModel    = connectionsPageViewModel;
             UserPageViewModel           = userPageViewModel;
             LicencePageViewModel        = licencePageViewModel;
             InfrastructurePageViewModel = infrastructurePageViewModel;
-            OptionsPageViewModel        = optionsPageViewModel;            
+            OptionsPageViewModel        = optionsPageViewModel;
+            AboutPageViewModel          = aboutPageViewModel;
 
             SwitchToPage = new ParameterrizedCommand<MainPage>(page => SelectedPage = page);
         }
@@ -48,6 +51,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         public ILicencePageViewModel        LicencePageViewModel        { get; }
         public IInfrastructurePageViewModel InfrastructurePageViewModel { get; }
         public IOptionsPageViewModel        OptionsPageViewModel        { get; }
+        public IAboutPageViewModel          AboutPageViewModel          { get; }
 
         protected override void CleanUp() { }
         public override event PropertyChangedEventHandler PropertyChanged;        

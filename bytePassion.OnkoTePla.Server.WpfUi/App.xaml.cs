@@ -1,4 +1,5 @@
-﻿using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
+﻿using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow;
@@ -28,13 +29,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             var licencePageViewModel = new LicencePageViewModel();
             var infrastructurePageViewModel = new InfrastructurePageViewModel();
             var optionsPageViewModel = new OptionsPageViewModel();
-            
+            var aboutPageViewModel = new AboutPageViewModel();
+
             var mainWindowViewModel = new MainWindowViewModel(overviewPageViewModel,
                                                               connectionsPageViewModel,
                                                               userPageViewModel,
                                                               licencePageViewModel,
                                                               infrastructurePageViewModel,                                                              
-                                                              optionsPageViewModel);
+                                                              optionsPageViewModel,
+                                                              aboutPageViewModel);
             var mainWindow = new MainWindow
                              {
                                  DataContext = mainWindowViewModel
