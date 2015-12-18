@@ -101,6 +101,7 @@
     <Compile Include="Factorys\ViewModelBuilder\AppointmentGridViewModel\IAppointmentGridViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\AppointmentViewModel\AppointmentViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\AppointmentViewModel\IAppointmentViewModelBuilder.cs" />
+    <Compile Include="Factorys\WindowBuilder\AboutDialogWindowBuilder.cs" />
     <Compile Include="Global\Constants.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -119,6 +120,9 @@
     <Compile Include="ViewModelMessages\SwitchToEditMode.cs" />
     <Compile Include="ViewModelMessages\SendCurrentChangesToCommandBus.cs" />
     <Compile Include="ViewModelMessages\ShowNotification.cs" />
+    <Compile Include="ViewModels\AboutDialog\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\AboutDialog\AboutDialogViewModelSampleData.cs" />
+    <Compile Include="ViewModels\AboutDialog\IAboutDialogViewModel.cs" />
     <Compile Include="ViewModels\ActionBar\ActionBarViewModel.cs" />
     <Compile Include="ViewModels\ActionBar\ActionBarViewModelSampleData.cs" />
     <Compile Include="ViewModels\ActionBar\IActionBarViewModel.cs" />
@@ -288,6 +292,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -385,6 +392,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UndoRedoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AboutDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

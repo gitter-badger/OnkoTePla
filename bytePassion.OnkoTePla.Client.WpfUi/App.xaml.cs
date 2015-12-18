@@ -125,7 +125,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
             var mainWindowBuilder = new MainWindowBuilder(dataCenter, 
                                                           viewModelCommunication,
 														  commandBus, 
-														  sessionAndUserSpecificEventHistory);
+														  sessionAndUserSpecificEventHistory,
+                                                          "0.1.0.0");                               // TODO: get real versionNumber
 
 			var mainWindow = mainWindowBuilder.BuildWindow();
 			mainWindow.ShowDialog();

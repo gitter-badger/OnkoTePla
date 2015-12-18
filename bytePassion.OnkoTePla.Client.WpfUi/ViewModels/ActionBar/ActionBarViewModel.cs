@@ -1,4 +1,5 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
@@ -11,15 +12,33 @@ using System.Windows.Input;
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
 {
     internal class ActionBarViewModel : ViewModel, IActionBarViewModel
-    {        
+    {
+        private readonly IViewModelCommunication viewModelCommunication;
+        private readonly IWindowBuilder<Views.AboutDialog> dialogBuilder;
+
         public ActionBarViewModel(IConnectionStatusViewModel connectionStatusViewModel,
-                                  IViewModelCommunication viewModelCommunication)
-        {            
+                                  IViewModelCommunication viewModelCommunication,
+                                  IWindowBuilder<Views.AboutDialog> dialogBuilder)
+        {
+            this.viewModelCommunication = viewModelCommunication;
+            this.dialogBuilder = dialogBuilder;
             ConnectionStatusViewModel = connectionStatusViewModel;
 
             ShowOverview = new Command(() => viewModelCommunication.Send(new ShowPage(MainPage.Overview)));
             ShowSearch   = new Command(() => viewModelCommunication.Send(new ShowPage(MainPage.Search)));
             ShowOptions  = new Command(() => viewModelCommunication.Send(new ShowPage(MainPage.Options)));
+
+            ShowAbout = new Command(ShowAboutDialog);
+        }
+
+        private void ShowAboutDialog()
+        {
+            viewModelCommunication.Send(new ShowDisabledOverlay());
+
+            var dialogWindow = dialogBuilder.BuildWindow();
+            dialogWindow.ShowDialog();
+
+            viewModelCommunication.Send(new HideDisabledOverlay());
         }
 
         public ICommand ShowOverview { get; }
@@ -27,6 +46,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
         public ICommand ShowOptions  { get; }
         public ICommand Logout       { get; }
         public ICommand ShowAbout    { get; }
+
+
 
         public IConnectionStatusViewModel ConnectionStatusViewModel { get; }
 

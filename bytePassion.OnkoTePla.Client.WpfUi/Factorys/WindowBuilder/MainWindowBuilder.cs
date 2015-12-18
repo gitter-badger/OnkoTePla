@@ -12,6 +12,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer
 using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Readmodels;
 using System;
+using bytePassion.OnkoTePla.Client.WpfUi.Views;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
@@ -22,16 +23,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
         private readonly IViewModelCommunication viewModelCommunication;
         private readonly ICommandBus commandBus;
 		private readonly SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory;
-		
-		public MainWindowBuilder(IDataCenter dataCenter,
+        private readonly string versionNumber;
+
+        public MainWindowBuilder(IDataCenter dataCenter,
                                  IViewModelCommunication viewModelCommunication,
 								 ICommandBus commandBus,
-								 SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory)
+								 SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory,
+                                 string versionNumber)
 		{			
 			this.dataCenter = dataCenter;
 		    this.viewModelCommunication = viewModelCommunication;
 		    this.commandBus = commandBus;
 			this.sessionAndUserSpecificEventHistory = sessionAndUserSpecificEventHistory;
+            this.versionNumber = versionNumber;
 		}
 
 		public MainWindow BuildWindow()
@@ -54,8 +58,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
 		    var connectionStatusViewModel = new ConnectionStatusViewModel();
 
+		    var dialogBuilder = new AboutDialogWindowBuilder(versionNumber);
+
 		    var actionBarViewModel = new ActionBarViewModel(connectionStatusViewModel,
-                                                            viewModelCommunication);
+                                                            viewModelCommunication,
+                                                            dialogBuilder);
 
 		    var mainWindowViewModel = new MainWindowViewModel(mainViewModelBuilder,
                                                               loginViewModelBuilder,
