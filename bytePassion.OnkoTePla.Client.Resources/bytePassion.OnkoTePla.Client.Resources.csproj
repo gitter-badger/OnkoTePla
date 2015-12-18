@@ -67,7 +67,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\AliveDead\alive.png" />
     <Resource Include="Icons\AliveDead\dead.png" />
   </ItemGroup>
   <ItemGroup>
