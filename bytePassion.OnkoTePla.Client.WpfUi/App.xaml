@@ -17,9 +17,7 @@
                 <!--  change "BaseLight" to the theme you want  -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;component/LookAndFeel.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WpfUi;component/Views/Templates/CompactNavigationTemplate.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WpfUi;component/Views/Templates/ExpandedNavigationTemplate.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WpfUi;component/Views/Templates/NavBarIcons.xaml" />
+                
             </ResourceDictionary.MergedDictionaries>
 
             <FontFamily x:Key="StandardFontFamily">Segoe UI Light</FontFamily>
