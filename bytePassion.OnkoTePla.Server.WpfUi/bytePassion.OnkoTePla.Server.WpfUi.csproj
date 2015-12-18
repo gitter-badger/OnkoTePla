@@ -84,6 +84,9 @@
     <Compile Include="ViewModels\OverviewPage\IOverviewPageViewModel.cs" />
     <Compile Include="ViewModels\OverviewPage\OverviewPageViewModel.cs" />
     <Compile Include="ViewModels\OverviewPage\OverviewPageViewModelSampleData.cs" />
+    <Compile Include="ViewModels\UserPage\IUserPageViewModel.cs" />
+    <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
+    <Compile Include="ViewModels\UserPage\UserPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\ConnectionsPage.xaml.cs">
       <DependentUpon>ConnectionsPage.xaml</DependentUpon>
@@ -99,6 +102,9 @@
     </Compile>
     <Compile Include="Views\OverviewPage.xaml.cs">
       <DependentUpon>OverviewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserPage.xaml.cs">
+      <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -129,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OverviewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

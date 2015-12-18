@@ -4,6 +4,7 @@
     {
         Overview,
         Connections,
+        User,
         Licence,
         Infrastructure,
         Options

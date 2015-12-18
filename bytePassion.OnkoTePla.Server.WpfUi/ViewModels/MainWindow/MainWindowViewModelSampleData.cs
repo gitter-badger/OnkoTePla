@@ -4,6 +4,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -18,6 +19,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 
             OverviewPageViewModel       = new OverviewPageViewModelSampleData();
             ConnectionsPageViewModel    = new ConnectionsPageViewModelSampleData();
+            UserPageViewModel           = new UserPageViewModelSampleData();
             LicencePageViewModel        = new LicencePageViewModelSampleData();
             InfrastructurePageViewModel = new InfrastructurePageViewModelSampleData();
             OptionsPageViewModel        = new OptionsPageViewModelSampleData();
@@ -28,6 +30,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 
         public IOverviewPageViewModel       OverviewPageViewModel       { get; }
         public IConnectionsPageViewModel    ConnectionsPageViewModel    { get; }
+        public IUserPageViewModel           UserPageViewModel           { get; }
         public ILicencePageViewModel        LicencePageViewModel        { get; }
         public IInfrastructurePageViewModel InfrastructurePageViewModel { get; }
         public IOptionsPageViewModel        OptionsPageViewModel        { get; }

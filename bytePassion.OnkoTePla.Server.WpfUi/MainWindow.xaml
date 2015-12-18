@@ -37,6 +37,10 @@
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Connections}"/>
             
+            <Button Content="Benutzer"
+                    Command="{Binding SwitchToPage}"
+                    CommandParameter="{x:Static enum:MainPage.User}"/>
+            
             <Button Content="Lizenz"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Licence}"/>
@@ -44,11 +48,11 @@
             <Button Content="Infrastruktur"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Infrastructure}"/>
-            
+
             <Button Content="Einstellungen"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Options}"/>
-            
+
         </StackPanel>
 
         <panels:DeckPanel Grid.Column="1" 
@@ -57,6 +61,7 @@
             
             <views:OverviewPage       DataContext="{Binding OverviewPageViewModel}"/>
             <views:ConnectionsPage    DataContext="{Binding ConnectionsPageViewModel}"/>
+            <views:UserPage DataContext="{Binding}"></views:UserPage>
             <views:LicencePage        DataContext="{Binding LicencePageViewModel}"/>
             <views:InfrastructurePage DataContext="{Binding InfrastructurePageViewModel}"/>
             <views:OptionsPage        DataContext="{Binding OptionsPageViewModel}"/>

@@ -6,6 +6,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -17,16 +18,18 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         private MainPage selectedPage;
 
         public MainWindowViewModel(IOverviewPageViewModel overviewPageViewModel, 
-                                   IConnectionsPageViewModel connectionsPageViewModel, 
+                                   IConnectionsPageViewModel connectionsPageViewModel,
+                                   IUserPageViewModel userPageViewModel,
                                    ILicencePageViewModel licencePageViewModel, 
                                    IInfrastructurePageViewModel infrastructurePageViewModel, 
                                    IOptionsPageViewModel optionsPageViewModel)
         {
             OverviewPageViewModel       = overviewPageViewModel;
             ConnectionsPageViewModel    = connectionsPageViewModel;
+            UserPageViewModel           = userPageViewModel;
             LicencePageViewModel        = licencePageViewModel;
             InfrastructurePageViewModel = infrastructurePageViewModel;
-            OptionsPageViewModel        = optionsPageViewModel;
+            OptionsPageViewModel        = optionsPageViewModel;            
 
             SwitchToPage = new ParameterrizedCommand<MainPage>(page => SelectedPage = page);
         }
@@ -41,6 +44,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 
         public IOverviewPageViewModel       OverviewPageViewModel       { get; }
         public IConnectionsPageViewModel    ConnectionsPageViewModel    { get; }
+        public IUserPageViewModel           UserPageViewModel           { get; }
         public ILicencePageViewModel        LicencePageViewModel        { get; }
         public IInfrastructurePageViewModel InfrastructurePageViewModel { get; }
         public IOptionsPageViewModel        OptionsPageViewModel        { get; }
