@@ -1,6 +1,7 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
@@ -21,6 +22,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 
         private bool isMainViewVisible;
         private bool isLoginViewVisible;
+        private bool isDisabledOverlayVisible;
 
 
         public MainWindowViewModel(IMainViewModelBuilder mainViewModelBuilder, 
@@ -59,6 +61,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
             private set { PropertyChanged.ChangeAndNotify(this, ref isLoginViewVisible, value); }
         }
 
+        public bool IsDisabledOverlayVisible
+        {
+            get { return isDisabledOverlayVisible; }
+            private set { PropertyChanged.ChangeAndNotify(this, ref isDisabledOverlayVisible, value); }
+        }
+
         public ILoginViewModel LoginViewModel
         {
             get { return loginViewModel; }
@@ -69,7 +77,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 
         public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
 
+        public void Process(ShowDisabledOverlay message)
+        {
+            IsDisabledOverlayVisible = true;
+        }
+
+        public void Process(HideDisabledOverlay message)
+        {
+            IsDisabledOverlayVisible = false;
+        }
+
         protected override void CleanUp() { }
-        public override event PropertyChangedEventHandler PropertyChanged;
+        public override event PropertyChangedEventHandler PropertyChanged;        
     }
 }

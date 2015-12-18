@@ -171,7 +171,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                           appointmentModificationsVariable,
                                                           sessionAndUserSpecificEventHistory);
 
-            var overviewPageViewModel = new OverviewPageViewModel(dateDisplayViewModel,
+            var overviewPageViewModel = new OverviewPageViewModel(viewModelCommunication,
+                                                                  dateDisplayViewModel,
                                                                   medicalPracticeSelectorViewModel,
                                                                   roomSelectorViewModel,
                                                                   dateSelectorViewModel,

@@ -1,4 +1,5 @@
-﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
+﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
@@ -16,6 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 
 		    IsMainViewVisible = true;
 		    IsLoginViewVisible = true;
+		    IsDisabledOverlayVisible = false;
 
             LoginViewModel = new LoginViewModelSampleData();
             ActionBarViewModel = new ActionBarViewModelSampleData();
@@ -25,12 +27,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
         public IMainViewModel MainViewModel { get; }
         public bool IsMainViewVisible { get; }
         public bool IsLoginViewVisible { get; }
+        public bool IsDisabledOverlayVisible { get; }
 
         public ILoginViewModel LoginViewModel { get; }
         public IActionBarViewModel ActionBarViewModel { get; }
         public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
 
+        public void Process(ShowDisabledOverlay message) { }
+        public void Process(HideDisabledOverlay message) { }
+
         public void Dispose() { }
-        public event PropertyChangedEventHandler PropertyChanged;
-    }
+        public event PropertyChangedEventHandler PropertyChanged;        
+	}
 }

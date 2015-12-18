@@ -20,25 +20,13 @@
     </UserControl.Resources>
 
     <Grid Background="White">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
-        <Grid.Style>
-            <Style TargetType="Grid">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding DisabledOverlayVisible}" Value="True">
-                        <Setter Property="Effect">
-                            <Setter.Value>
-                                <BlurEffect Radius="5" KernelType="Gaussian"></BlurEffect>
-                            </Setter.Value>
-                        </Setter>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Grid.Style>
-
+        
         <Grid Grid.Column="0" Background="{DynamicResource AccentColorBrush}">
 
             <Grid.RowDefinitions>
@@ -144,13 +132,6 @@
             </Button.Template>
 
         </Button>
-		
-		<Rectangle Grid.Column="0"
-				   Grid.ColumnSpan="3"
-				   Fill="Gray"
-				   Opacity="0.6"
-				   Visibility="{Binding DisabledOverlayVisible, 
-										Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
 
     </Grid>
 </UserControl>

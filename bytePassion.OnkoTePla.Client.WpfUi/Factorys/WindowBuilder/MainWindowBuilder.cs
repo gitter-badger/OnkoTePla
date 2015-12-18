@@ -4,6 +4,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Model;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow;
@@ -72,7 +73,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
 		    adornerControl.ReferenceElement = mainWindow.MainView.OverviewPage.GridContainer;
 
-		    return mainWindow;
+            viewModelCommunication.RegisterViewModelMessageHandler<ShowDisabledOverlay>(mainWindowViewModel);
+            viewModelCommunication.RegisterViewModelMessageHandler<HideDisabledOverlay>(mainWindowViewModel);
+
+            return mainWindow;
 		}
 
 		public void DisposeWindow(MainWindow buildedWindow)

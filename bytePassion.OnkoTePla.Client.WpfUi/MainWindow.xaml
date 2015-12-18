@@ -26,6 +26,20 @@
 
     <Grid>
 
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsDisabledOverlayVisible}" Value="True">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <BlurEffect Radius="5" KernelType="Gaussian"></BlurEffect>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        
         <views:ActionBar Margin="120,-29,110,0"
                          VerticalAlignment="Top"
                          DataContext="{Binding ActionBarViewModel}"/>
@@ -45,6 +59,11 @@
 										    HorizontalAlignment="Center"
 										    VerticalAlignment="Top"
 											DataContext="{Binding NotificationServiceContainerViewModel}"/>
+
+        <Rectangle Fill="Gray"
+				   Opacity="0.6"
+				   Visibility="{Binding IsDisabledOverlayVisible, 
+										Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
 
     </Grid>
 </controls:MetroWindow>

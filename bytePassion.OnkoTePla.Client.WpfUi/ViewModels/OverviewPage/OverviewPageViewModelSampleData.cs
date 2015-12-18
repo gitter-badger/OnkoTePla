@@ -25,8 +25,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 			UndoRedoViewModel                = new UndoRedoViewModelSampleData();
 
 			ChangeConfirmationVisible = true;
-			AddAppointmentPossible = true;
-			DisabledOverlayVisible = false;
+			AddAppointmentPossible = true;			
 		}
 
 		public IDateDisplayViewModel             DateDisplayViewModel             { get; }
@@ -40,8 +39,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		public ICommand ShowAddAppointmentDialog { get; } = null;
 
 		public bool ChangeConfirmationVisible { get; }
-		public bool AddAppointmentPossible { get; }
-		public bool DisabledOverlayVisible { get; }
+		public bool AddAppointmentPossible { get; }		
 
         public void Dispose() { }
         public event PropertyChangedEventHandler PropertyChanged;	    

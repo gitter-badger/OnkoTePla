@@ -1,7 +1,9 @@
 ﻿using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay;
@@ -22,10 +24,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
         private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
 
         private bool changeConfirmationVisible;
-		private bool addAppointmentPossible;
-		private bool disabledOverlayVisible;
+		private bool addAppointmentPossible;		
 
-		public OverviewPageViewModel(IDateDisplayViewModel dateDisplayViewModel,
+		public OverviewPageViewModel(IViewModelCommunication viewModelCommunication,
+                                     IDateDisplayViewModel dateDisplayViewModel,
 									 IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel, 
 									 IRoomFilterViewModel roomFilterViewModel, 
 									 IDateSelectorViewModel dateSelectorViewModel, 
@@ -45,21 +47,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 			UndoRedoViewModel = undoRedoViewModel;
 
 			ChangeConfirmationVisible = false;
-			AddAppointmentPossible = true;
-			DisabledOverlayVisible = false;
+			AddAppointmentPossible = true;			
 
 
             appointmentModificationsVariable.StateChanged += OnCurrentModifiedAppointmentVariableChanged;			
 
 			ShowAddAppointmentDialog = new Command(() =>
 			{
-				DisabledOverlayVisible = true;
+				viewModelCommunication.Send(new ShowDisabledOverlay());
 
 				var dialogWindow = dialogBuilder.BuildWindow();
 				dialogWindow.ShowDialog();
 
-				DisabledOverlayVisible = false;
-			});
+                viewModelCommunication.Send(new HideDisabledOverlay());                
+            });
 		}
 
 		private void OnCurrentModifiedAppointmentVariableChanged(AppointmentModifications appointment)
@@ -88,13 +89,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		{
 			get { return addAppointmentPossible; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref addAppointmentPossible, value); }
-		}
-
-		public bool DisabledOverlayVisible
-		{
-			get { return disabledOverlayVisible; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref disabledOverlayVisible, value); }
-		}
+		}		
 		
         protected override void CleanUp()
         {
