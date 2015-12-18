@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="ServiceModules\AdornerControl.cs" />
     <Compile Include="Behaviors\AcceptAppointmentDropBehavior.cs" />
     <Compile Include="Behaviors\DeleteButtonPlacementBehavior.cs" />
@@ -88,11 +89,6 @@
     <Compile Include="Computations\PatientToCollapedVisibilityConverter.cs" />
     <Compile Include="Converter\OperatingModeToBackgroundBrush.cs" />
     <Compile Include="Converter\OperatingModeToVisibilityConverter.cs" />
-    <Compile Include="Converter\ComputeAppointmentPosition.cs" />
-    <Compile Include="Converter\NullToVisibilityConverter.cs" />
-    <Compile Include="Converter\BirthdayToStringConverter.cs" />
-    <Compile Include="Converter\AliveDeadToImageConverter.cs" />
-    <Compile Include="Converter\TimeFromDateConverter.cs" />
     <Compile Include="Enums\MainPage.cs" />
     <Compile Include="Factorys\AppointmentModification\AppointmentModificationsBuilder.cs" />
     <Compile Include="Factorys\AppointmentModification\IAppointmentModificationsBuilder.cs" />
