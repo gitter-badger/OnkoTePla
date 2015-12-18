@@ -1,8 +1,6 @@
 ﻿<Application x:Class="bytePassion.OnkoTePla.Client.WpfUi.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts"
-             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Converter">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
 
         <ResourceDictionary>
@@ -13,7 +11,6 @@
 
                 <!--  accent resource  -->
                 <!--  change "Cobalt" to the accent color you want  -->
-
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cobalt.xaml" />
 
                 <!--  theme resource  -->
@@ -25,16 +22,9 @@
                 <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.WpfUi;component/Views/Templates/NavBarIcons.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <converter:AliveDeadToImageConverter x:Key="AliveDeadToImageConverter" />
-            <converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter" />
-            <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
-            <converter:TimeFromDateConverter x:Key="TimeFromDateConverter" />
-
-
             <FontFamily x:Key="StandardFontFamily">Segoe UI Light</FontFamily>
 
         </ResourceDictionary>
-
 
     </Application.Resources>
 </Application>
