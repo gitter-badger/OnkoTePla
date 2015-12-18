@@ -3,7 +3,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage;
-using System.Windows.Input;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
@@ -12,9 +11,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
 							            IViewModelMessageHandler<ShowPage>
 
 	{
-		int SelectedPage { get; }
-
-		ICommand ShowPage { get; }		
+		int SelectedPage { get; }			
 
 		IOverviewPageViewModel OverviewPageViewModel { get; }
 		ISearchPageViewModel   SearchPageViewModel   { get; }
