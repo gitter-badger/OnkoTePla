@@ -8,7 +8,9 @@
             Identifier = identifier;
         }
 
-        public Protocol Protocol { get; }
+        public Protocol          Protocol   { get; }
         public AddressIdentifier Identifier { get; }
+
+        public string ZmqAddress => $"{Protocol.ZmqName}://{Identifier}";
     }
 }
