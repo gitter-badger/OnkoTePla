@@ -9,6 +9,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 using System.ComponentModel;
 using System.Windows.Input;
 
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 {
