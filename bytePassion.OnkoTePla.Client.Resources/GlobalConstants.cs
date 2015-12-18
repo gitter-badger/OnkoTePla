@@ -1,7 +1,7 @@
 ﻿
 namespace bytePassion.OnkoTePla.Client.Resources
 {
-	public static class GlobalConstants
+    public static class GlobalConstants
 	{
 		public const string PatientPersistenceFile          = @"..\..\..\AppData\patients.xml";		
 		public const string ConfigPersistenceFile           = @"..\..\..\AppData\config.xml";
@@ -9,11 +9,6 @@ namespace bytePassion.OnkoTePla.Client.Resources
 
 		public const string PatientJsonPersistenceFile      = @"..\..\..\AppData\patients.json";
 		public const string ConfigJsonPersistenceFile       = @"..\..\..\AppData\config.json";		
-		public const string EventHistoryJsonPersistenceFile = @"..\..\..\AppData\eventHistory.json";
-
-		public const string GlobalStateMainGridSelectedDate      = "mainGridSelectedDate";
-		public const string GlobalStateMainGridDisplayedPractice = "mainGridDisplayedPractice";
-		public const string GlobalStateMainGridSelectedRoom      = "mainGridSelectedRoom";
-		public const string GlobalStateSideBarState              = "sideBarState";
+		public const string EventHistoryJsonPersistenceFile = @"..\..\..\AppData\eventHistory.json";		
 	}
 }
