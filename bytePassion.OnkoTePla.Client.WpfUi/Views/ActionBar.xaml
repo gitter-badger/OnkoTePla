@@ -6,8 +6,8 @@
              xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Views"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar"
              mc:Ignorable="d"
-             d:DesignWidth="700"
-             d:DesignHeight="40">
+             d:DesignWidth="900"
+             d:DesignHeight="27">
 
     <d:DesignData.DataContext>
         <sampleData:ActionBarViewModelSampleData/>
@@ -18,7 +18,7 @@
         <Style TargetType="Button" BasedOn="{StaticResource TitleBarButton}">
             
             <Setter Property="Height" Value="27"/>
-            <Setter Property="Width" Value="27"/>
+            <Setter Property="Width" Value="50"/>
             
         </Style>
         
@@ -36,12 +36,13 @@
         </Grid.ColumnDefinitions>
 
 
-        <Button Grid.Column="0">
+        <Button Grid.Column="0"
+                Command="{Binding ShowOverview}">
 
             <Canvas Width="24" Height="24">
                 <Viewbox Width="30" 
                             Height="30" 
-                            Canvas.Left="-11"
+                            Canvas.Left="-7"
                             Canvas.Top="-13">
                     <Path Data="F1 M 20,23.0001L 55.9999,23.0001C 57.1045,23.0001 57.9999,23.8955 57.9999,25.0001L 
                                 58,47C 58,48.1045 57.1045,49 56,49L 41.0001,48.9999L 41.0001,52.9999L 45.0001,52.9999C 
@@ -58,12 +59,13 @@
         </Button>
 
         <Button Grid.Column="1"
+                Command="{Binding ShowSearch}"
                 Margin="5,0">
 
             <Canvas Width="24" Height="24">
                 <Viewbox Width="20" 
                          Height="20"
-                         Canvas.Left="-1"
+                         Canvas.Left="2"
                          Canvas.Top="-2">
                     <Path Data="F1 M 20.6464,1.52588e-005C 27.55,1.52588e-005 33.1464,5.59645 33.1464,12.5C 33.1464,19.4036 
                                 27.55,25 20.6464,25C 18.282,25 16.0709,24.3435 14.1464,23.2427L 5.12132,32.2678C 3.94975,33.4394 
@@ -77,12 +79,13 @@
             </Canvas>
         </Button>
 
-        <Button Grid.Column="2">
+        <Button Grid.Column="2"
+                Command="{Binding ShowSettings}">
 
             <Canvas Width="24" Height="24">
                 <Viewbox Width="22" 
                          Height="22" 
-                         Canvas.Left="-3"
+                         Canvas.Left="0"
                          Canvas.Top="-4">
                     <Path Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 
                                 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 
@@ -108,15 +111,17 @@
                     Foreground="#FFD8D8D8"
                     Text="OnkoTePla - Version 0.1" />
 
-        <views:ConnectionStatusView Grid.Column="4"/>
+        <views:ConnectionStatusView Grid.Column="4"
+                                    DataContext="{Binding ConnectionStatusViewModel}"/>
 
         <Button Grid.Column="5"
+                Command="{Binding Logout}"
                 Margin="5,0">
 
             <Canvas Width="24" Height="24">
                 <Viewbox Width="20" 
                          Height="20"
-                         Canvas.Left="-1"
+                         Canvas.Left="4"
                          Canvas.Top="-3">
                     <Path Data="M17,17.25V14H10V10H17V6.75L22.25,12L17,17.25M13,2A2,2 0 0,1 
                                 15,4V8H13V4H4V20H13V16H15V20A2,2 0 0,1 13,22H4A2,2 0 0,1 
@@ -127,12 +132,13 @@
 
         </Button>
 
-        <Button Grid.Column="6">
+        <Button Grid.Column="6"
+                Command="{Binding ShowAbout}">
 
             <Canvas Width="24" Height="24">
                 <Viewbox Width="30" 
                             Height="30" 
-                            Canvas.Left="-12"
+                            Canvas.Left="-7"
                             Canvas.Top="-12">
                     <Path Data="F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 
                                 19,38C 19,27.5066 27.5066,19 38,19 Z M 33.25,33.25L 33.25,36.4167L 36.4166,36.4167L 
