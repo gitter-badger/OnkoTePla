@@ -27,7 +27,8 @@
     <Grid>
 
         <views:ActionBar Margin="120,-29,110,0"
-                         VerticalAlignment="Top"></views:ActionBar>
+                         VerticalAlignment="Top"
+                         DataContext="{Binding ActionBarViewModel}"/>
         
         <views:MainView x:Name="MainView" 
                         DataContext="{Binding MainViewModel}"

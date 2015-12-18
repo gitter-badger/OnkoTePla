@@ -4,6 +4,8 @@ using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
 using bytePassion.OnkoTePla.Core.CommandSystem;
@@ -49,10 +51,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
             var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
 
-		    
+		    var connectionStatusViewModel = new ConnectionStatusViewModel();
+
+		    var actionBarViewModel = new ActionBarViewModel(connectionStatusViewModel,
+                                                            viewModelCommunication);
+
 		    var mainWindowViewModel = new MainWindowViewModel(mainViewModelBuilder,
                                                               loginViewModelBuilder,
-                                                              notificationServiceContainerViewModel);
+                                                              notificationServiceContainerViewModel,
+                                                              actionBarViewModel);
 
             // build mainWindow
 

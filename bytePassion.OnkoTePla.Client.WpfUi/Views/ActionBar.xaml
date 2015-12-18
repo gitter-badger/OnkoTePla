@@ -80,7 +80,7 @@
         </Button>
 
         <Button Grid.Column="2"
-                Command="{Binding ShowSettings}">
+                Command="{Binding ShowOptions}">
 
             <Canvas Width="24" Height="24">
                 <Viewbox Width="22" 

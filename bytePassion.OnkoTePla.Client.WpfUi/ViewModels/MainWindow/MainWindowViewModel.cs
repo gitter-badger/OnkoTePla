@@ -1,6 +1,7 @@
 ﻿using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
@@ -24,11 +25,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 
         public MainWindowViewModel(IMainViewModelBuilder mainViewModelBuilder, 
                                    ILoginViewModelBuilder loginViewModelBuilder,
-                                   INotificationServiceContainerViewModel notificationServiceContainerViewModel)
+                                   INotificationServiceContainerViewModel notificationServiceContainerViewModel, 
+                                   IActionBarViewModel actionBarViewModel)
         {
             this.mainViewModelBuilder = mainViewModelBuilder;
             this.loginViewModelBuilder = loginViewModelBuilder;
             NotificationServiceContainerViewModel = notificationServiceContainerViewModel;
+            ActionBarViewModel = actionBarViewModel;
 
             MainViewModel = mainViewModelBuilder.Build();
             LoginViewModel = loginViewModelBuilder.Build();
@@ -61,6 +64,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
             get { return loginViewModel; }
             private set { PropertyChanged.ChangeAndNotify(this, ref loginViewModel, value); }
         }
+
+        public IActionBarViewModel ActionBarViewModel { get; }
 
         public INotificationServiceContainerViewModel NotificationServiceContainerViewModel { get; }
 
