@@ -52,7 +52,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Model
             return readModelRepository.GetAppointmentsOfAPatientReadModel(patientId);
         }
 
-        public MedicalPractice GetMedicalPracticeByDateAndId(Date date, Guid medicalPracticeId)
+        public MedicalPractice GetMedicalPracticeByIdAndDate(Guid medicalPracticeId, Date date)
 		{			
 			if (!dataCache.ContainsKey(medicalPracticeId))
 				dataCache.Add(medicalPracticeId, new Dictionary<Date, MedicalPractice>());
@@ -75,6 +75,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Model
         public MedicalPractice GetMedicalPracticeByIdAndVersion(Guid medicalPracticeId, uint version = 0)
         {
             return configuration.GetMedicalPracticeByIdAndVersion(medicalPracticeId, version);
+        }
+
+        public MedicalPractice GetMedicalPracticeById(Guid medicalPracticeId)
+        {
+            return configuration.GetMedicalPracticeById(medicalPracticeId);
         }
 
         public IEnumerable<MedicalPractice> GetAllMedicalPractices()

@@ -68,8 +68,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 				this	
 			);
 
-			var medicalPractice = dataCenter.GetMedicalPracticeByDateAndId(identifier.PlaceAndDate.Date,
-																		   identifier.PlaceAndDate.MedicalPracticeId);
+			var medicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(identifier.PlaceAndDate.MedicalPracticeId,
+                                                                           identifier.PlaceAndDate.Date);
 
 			TimeSlotBegin = medicalPractice.HoursOfOpening.GetOpeningTime(identifier.PlaceAndDate.Date);
 			TimeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(identifier.PlaceAndDate.Date);

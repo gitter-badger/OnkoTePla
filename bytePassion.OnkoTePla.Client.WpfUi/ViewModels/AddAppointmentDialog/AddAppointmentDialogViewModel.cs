@@ -168,7 +168,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 
 		private void CreateNewAppointment()
 		{
-			var therapyPlace = dataCenter.GetMedicalPracticeByDateAndId(creationDate, medicalPracticeId)
+			var therapyPlace = dataCenter.GetMedicalPracticeByIdAndDate(medicalPracticeId, creationDate)
 										 .GetTherapyPlaceById(firstFittingTimeSlot.Item1.TherapyPlaceId);
 
 			var duration = new Duration((uint) (DurationHours * 3600 + DurationMinutes * 60));
@@ -288,7 +288,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 			IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> allSlots =
 				new Dictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>>();
 
-			var newMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(date, medicalPracticeId);
+			var newMedicalPracticeVersion = dataCenter.GetMedicalPracticeByIdAndDate(medicalPracticeId, date);
 
 			if (newMedicalPracticeVersion.HoursOfOpening.IsOpen(date))
 			{

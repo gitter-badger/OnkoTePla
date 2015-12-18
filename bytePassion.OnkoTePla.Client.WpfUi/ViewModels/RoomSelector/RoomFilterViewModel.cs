@@ -53,7 +53,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 				SelectedRoomFilter = allRoomFilter;
 			else
 			{
-				var room = dataCenter.GetMedicalPracticeByDateAndId(selectedDateVariable.Value, displayedMedicalPracticeVariable.Value)
+				var room = dataCenter.GetMedicalPracticeByIdAndDate(displayedMedicalPracticeVariable.Value, selectedDateVariable.Value)
 					                 .GetRoomById(guid.Value);
 
 				selectedRoomFilter = new RoomSelectorData(room.Name, room.Id, room.DisplayedColor);
@@ -73,7 +73,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 
 		private void SetRoomData (Date date, Guid medicalPracticeId)
 		{
-			var correctMedicalPractice = dataCenter.GetMedicalPracticeByDateAndId(date, medicalPracticeId);
+			var correctMedicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(medicalPracticeId, date);
 
 			currentSelectableRoomFilters = correctMedicalPractice.Rooms.ToList();
 

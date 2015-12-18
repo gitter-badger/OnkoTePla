@@ -18,8 +18,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Model
         AppointmentsOfADayReadModel     GetAppointmentsOfADayReadModel    (AggregateIdentifier identifier);
         AppointmentsOfAPatientReadModel GetAppointmentsOfAPatientReadModel(Guid                patientId);
 
-        MedicalPractice GetMedicalPracticeByDateAndId(Date date, Guid medicalPracticeId);
-        MedicalPractice GetMedicalPracticeByIdAndVersion(Guid medicalPracticeId, uint version=0);
+        MedicalPractice GetMedicalPracticeByIdAndDate   (Guid medicalPracticeId, Date date);
+        MedicalPractice GetMedicalPracticeByIdAndVersion(Guid medicalPracticeId, uint version);
+        MedicalPractice GetMedicalPracticeById          (Guid medicalPracticeId);
 
         IEnumerable<MedicalPractice> GetAllMedicalPractices();
         IEnumerable<Patient>         GetAllPatients();

@@ -99,8 +99,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 			InitialLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, originalAppointment.TherapyPlace.Id);
 			
 			
-			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(InitialLocation.PlaceAndDate.Date,
-																					 InitialLocation.PlaceAndDate.MedicalPracticeId);
+			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByIdAndDate(InitialLocation.PlaceAndDate.MedicalPracticeId,
+                                                                                     InitialLocation.PlaceAndDate.Date);
 
 			var initialDataSet = new ModificationDataSet(originalAppointment.StartTime,
 													     originalAppointment.EndTime,
@@ -202,7 +202,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 		{
 			if (date != CurrentLocation.PlaceAndDate.Date)
 			{
-				var newMedicalPractice = dataCenter.GetMedicalPracticeByDateAndId(date, currentMedicalPracticeVersion.Id);
+				var newMedicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(currentMedicalPracticeVersion.Id, date);
 
 				if (newMedicalPractice.HoursOfOpening.IsOpen(date))
 				{
@@ -513,8 +513,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 
 		private void ComputeBoundariesOfCurrentTimeSlot()
 		{
-			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByDateAndId(CurrentLocation.PlaceAndDate.Date,
-																					 CurrentLocation.PlaceAndDate.MedicalPracticeId);
+			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByIdAndDate(CurrentLocation.PlaceAndDate.MedicalPracticeId,
+                                                                                     CurrentLocation.PlaceAndDate.Date);
 
 			currentDayOpeningTime = currentMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(CurrentLocation.PlaceAndDate.Date);
 			currentDayClosingTime = currentMedicalPracticeVersion.HoursOfOpening.GetClosingTime(CurrentLocation.PlaceAndDate.Date);			

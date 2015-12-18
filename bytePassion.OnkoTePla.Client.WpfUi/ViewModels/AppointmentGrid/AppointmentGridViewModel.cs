@@ -127,7 +127,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 					);
 				});
 
-				var medicalPractice = dataCenter.GetMedicalPracticeByDateAndId(Identifier.Date, Identifier.MedicalPracticeId);
+				var medicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(Identifier.MedicalPracticeId, Identifier.Date);
 
 				medicalPractice.GetRoomById(newRoomFilter.Value)
 							   .TherapyPlaces

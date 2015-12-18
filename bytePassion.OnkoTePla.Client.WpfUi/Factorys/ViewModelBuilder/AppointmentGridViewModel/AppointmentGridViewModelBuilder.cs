@@ -46,7 +46,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 
 		public IAppointmentGridViewModel Build(AggregateIdentifier identifier)
 		{
-			var medicalPractice = dataCenter.GetMedicalPracticeByDateAndId(identifier.Date, identifier.MedicalPracticeId);
+			var medicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(identifier.MedicalPracticeId, identifier.Date);
 
 			IAppointmentGridViewModel gridViewModel;
 

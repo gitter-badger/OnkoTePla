@@ -255,7 +255,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
                 (appointment, appointment1) => appointment.BeginTime.CompareTo(appointment1.BeginTime)
 			);
 
-            var medicalPractice = DataCenter.GetMedicalPracticeByDateAndId(CurrentSelectedDate, CurrentMedicalPracticeId);
+            var medicalPractice = DataCenter.GetMedicalPracticeByIdAndDate(CurrentMedicalPracticeId, CurrentSelectedDate);
             openingTime = medicalPractice.HoursOfOpening.GetOpeningTime(CurrentSelectedDate);
             closingTime = medicalPractice.HoursOfOpening.GetClosingTime(CurrentSelectedDate);
 
