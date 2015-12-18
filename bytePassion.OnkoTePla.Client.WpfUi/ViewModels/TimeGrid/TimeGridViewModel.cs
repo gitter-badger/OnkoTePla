@@ -1,8 +1,8 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.DataAndService.Model;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
-using bytePassion.OnkoTePla.Client.WpfUi.Model;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid.Helper;
 using bytePassion.OnkoTePla.Core.Domain;

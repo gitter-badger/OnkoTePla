@@ -1,6 +1,6 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.WpfUi.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Model;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using System.Collections.Generic;
 using System.ComponentModel;

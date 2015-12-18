@@ -72,8 +72,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Adorner\AdornerControl.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
-    <Compile Include="ServiceModules\AdornerControl.cs" />
     <Compile Include="Behaviors\AcceptAppointmentDropBehavior.cs" />
     <Compile Include="Behaviors\DeleteButtonPlacementBehavior.cs" />
     <Compile Include="Behaviors\MoveEndTimeBehavior.cs" />
@@ -102,12 +102,9 @@
     <Compile Include="Factorys\ViewModelBuilder\AppointmentViewModel\AppointmentViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\AppointmentViewModel\IAppointmentViewModelBuilder.cs" />
     <Compile Include="Global\Constants.cs" />
-    <Compile Include="Model\DataCenter.cs" />
-    <Compile Include="Model\IDataCenter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ServiceModules\ConnectionService.cs" />
     <Compile Include="ViewModelMessageHandler\ConfirmChangesMessageHandler.cs" />
     <Compile Include="ViewModelMessageHandler\RejectChangesMessageHandler.cs" />
     <Compile Include="ViewModelMessages\ConfirmChanges.cs" />
@@ -186,7 +183,6 @@
     <Compile Include="ViewModelMessages\RemoveAppointmentFromTherapyPlaceRow.cs" />
     <Compile Include="ViewModelMessages\AddAppointmentToTherapyPlaceRow.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\TherapyPlaceRowViewModelSampleData.cs" />
-    <Compile Include="SessionInfo\SessionInformation.cs" />
     <Compile Include="UserNotificationService\UserDialogBox.cs" />
     <Compile Include="ViewModels\DateSelector\DateSelectorViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModel.cs" />
@@ -292,10 +288,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Workflow\ApplicationState.cs" />
-    <Compile Include="Workflow\ClientWorkflow.cs" />
-    <Compile Include="Workflow\IClientWorkflow.cs" />
-    <Compile Include="Workflow\WorkflowCommands.cs" />
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

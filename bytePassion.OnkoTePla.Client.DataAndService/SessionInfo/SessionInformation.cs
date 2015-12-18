@@ -1,7 +1,7 @@
 ﻿using bytePassion.OnkoTePla.Contracts.Config;
 
 
-namespace bytePassion.OnkoTePla.Client.WpfUi.SessionInfo
+namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 {
     public class SessionInformation
 	{

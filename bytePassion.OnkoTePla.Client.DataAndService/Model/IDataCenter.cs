@@ -8,10 +8,10 @@ using System;
 using System.Collections.Generic;
 
 
-namespace bytePassion.OnkoTePla.Client.WpfUi.Model
+namespace bytePassion.OnkoTePla.Client.DataAndService.Model
 {
 
-    internal interface IDataCenter
+    public interface IDataCenter
     {
         User LoggedInUser { get; }
 

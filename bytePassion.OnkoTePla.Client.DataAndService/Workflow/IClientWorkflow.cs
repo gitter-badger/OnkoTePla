@@ -1,9 +1,9 @@
 ﻿using System;
 
 
-namespace bytePassion.OnkoTePla.Client.WpfUi.Workflow
+namespace bytePassion.OnkoTePla.Client.DataAndService.Workflow
 {
-    internal interface IClientWorkflow
+    public interface IClientWorkflow
     {
         event Action<ApplicationState> StateChanged;
 

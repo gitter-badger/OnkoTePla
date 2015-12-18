@@ -2,9 +2,9 @@
 using System;
 
 
-namespace bytePassion.OnkoTePla.Client.WpfUi.ServiceModules
+namespace bytePassion.OnkoTePla.Client.DataAndService.ServiceModules
 {
-    internal class ConnectionService
+    public class ConnectionService
     {
         public event EventHandler<EventArgs> ConnectionStatusChanged;
 

@@ -1,9 +1,9 @@
 ﻿using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
-using bytePassion.OnkoTePla.Client.WpfUi.Model;
-using bytePassion.OnkoTePla.Client.WpfUi.ServiceModules;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow;

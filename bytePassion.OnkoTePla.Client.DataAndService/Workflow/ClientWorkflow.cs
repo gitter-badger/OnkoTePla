@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 
-namespace bytePassion.OnkoTePla.Client.WpfUi.Workflow
+namespace bytePassion.OnkoTePla.Client.DataAndService.Workflow
 {
-    internal class ClientWorkflow : StateEngine<ApplicationState, WorkflowCommands>, 
+    public class ClientWorkflow : StateEngine<ApplicationState, WorkflowCommands>, 
                                     IClientWorkflow
     {
         private static readonly IReadOnlyList<StateTransition<ApplicationState, WorkflowCommands>> Transitions = new List<StateTransition<ApplicationState, WorkflowCommands>>

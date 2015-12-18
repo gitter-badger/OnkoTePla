@@ -1,4 +1,4 @@
-﻿using bytePassion.OnkoTePla.Client.WpfUi.Model;
+﻿using bytePassion.OnkoTePla.Client.DataAndService.Model;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels

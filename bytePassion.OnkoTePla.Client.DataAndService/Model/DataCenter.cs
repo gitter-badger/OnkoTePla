@@ -1,6 +1,6 @@
 ﻿using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WpfUi.SessionInfo;
-using bytePassion.OnkoTePla.Client.WpfUi.Workflow;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
+using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -13,10 +13,10 @@ using System;
 using System.Collections.Generic;
 
 
-namespace bytePassion.OnkoTePla.Client.WpfUi.Model
+namespace bytePassion.OnkoTePla.Client.DataAndService.Model
 {
 
-    internal class DataCenter : IDataCenter
+    public class DataCenter : IDataCenter
 	{
         private readonly IConfigurationReadRepository configuration;
         private readonly IPatientReadRepository patientRepository;

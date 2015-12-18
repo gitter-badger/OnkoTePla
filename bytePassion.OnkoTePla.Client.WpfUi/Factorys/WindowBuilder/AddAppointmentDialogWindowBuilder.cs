@@ -1,8 +1,8 @@
 ﻿using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Client.DataAndService.Model;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
-using bytePassion.OnkoTePla.Client.WpfUi.Model;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.Views;

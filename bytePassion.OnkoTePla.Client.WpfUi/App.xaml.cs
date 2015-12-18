@@ -2,11 +2,11 @@
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
+using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
+using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
-using bytePassion.OnkoTePla.Client.WpfUi.Model;
-using bytePassion.OnkoTePla.Client.WpfUi.SessionInfo;
-using bytePassion.OnkoTePla.Client.WpfUi.Workflow;
 using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Core.Eventsystem;
