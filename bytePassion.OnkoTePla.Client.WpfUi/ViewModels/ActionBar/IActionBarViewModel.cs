@@ -8,7 +8,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
     {
         ICommand ShowOverview { get; }
         ICommand ShowSearch   { get; }
-        ICommand ShowOptions { get; }
+        ICommand ShowOptions  { get; }
         ICommand Logout       { get; }
         ICommand ShowAbout    { get; }
 
