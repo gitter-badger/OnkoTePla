@@ -44,15 +44,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 		
 		private Tuple<TherapyPlaceRowIdentifier, TimeSlot> firstFittingTimeSlot; 
          
-		public AddAppointmentDialogViewModel(IPatientSelectorViewModel patientSelectorViewModel,											 											 
+		public AddAppointmentDialogViewModel(IDataCenter dataCenter,
+                                             IPatientSelectorViewModel patientSelectorViewModel,											 											 
                                              IGlobalStateReadOnly<Patient> selectedPatientVariable,
-                                             IGlobalStateReadOnly<Date> selectedDateVariable,
-                                             IDataCenter dataCenter,											 
-											 Guid medicalPracticeId,
+                                             Date creationDate,
+                                             Guid medicalPracticeId,
 											 IAppointmentViewModelBuilder appointmentViewModelBuilder)
 		{			
 			this.dataCenter = dataCenter;
-			creationDate = selectedDateVariable.Value;
+			this.creationDate = creationDate;
 			this.medicalPracticeId = medicalPracticeId;
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.selectedPatientVariable = selectedPatientVariable;

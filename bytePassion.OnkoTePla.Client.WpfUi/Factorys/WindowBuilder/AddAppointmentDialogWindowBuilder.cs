@@ -41,10 +41,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 			return new AddAppointmentDialog
 			       {
 						Owner = Application.Current.MainWindow,
-						DataContext = new AddAppointmentDialogViewModel(patientSelectorViewModel, 																		
+						DataContext = new AddAppointmentDialogViewModel(dataCenter,
+                                                                        patientSelectorViewModel, 																		
                                                                         selectedPatientVariable,
-                                                                        selectedDateVariable,
-                                                                        dataCenter, 																		
+                                                                        selectedDateVariable.Value,                                                                         																		
 																		selectedMedicalPractiveVariable.Value,
 																		appointmentViewModelBuilder)
 			       };
