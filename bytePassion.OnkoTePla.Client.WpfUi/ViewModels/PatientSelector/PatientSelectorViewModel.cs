@@ -24,7 +24,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
         {
 	        this.selectedPatientGlobalVariable = selectedPatientGlobalVariable;
 
-            IReadOnlyList<Patient> allPatients = dataCenter.Patients.GetAllPatients().ToList();
+            IReadOnlyList<Patient> allPatients = dataCenter.GetAllPatients().ToList();
 
             Patients = new CollectionViewSource();
             Patients.Filter += Filter;

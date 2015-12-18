@@ -206,9 +206,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 
 				if (newMedicalPractice.HoursOfOpening.IsOpen(date))
 				{
-					var readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(
+					var readModel = dataCenter.GetAppointmentsOfADayReadModel(
 						new AggregateIdentifier(date, CurrentLocation.PlaceAndDate.MedicalPracticeId)
-						);
+					);
 
 					IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments =
 						new Dictionary<TherapyPlace, IList<Appointment>>();
@@ -519,7 +519,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 			currentDayOpeningTime = currentMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(CurrentLocation.PlaceAndDate.Date);
 			currentDayClosingTime = currentMedicalPracticeVersion.HoursOfOpening.GetClosingTime(CurrentLocation.PlaceAndDate.Date);			
 
-			var currentReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(CurrentLocation.PlaceAndDate);
+			var currentReadModel = dataCenter.GetAppointmentsOfADayReadModel(CurrentLocation.PlaceAndDate);
 
 			var appointmentWithCorrectStartAndEnd = new Appointment(OriginalAppointment.Patient, 
 																	OriginalAppointment.Description,

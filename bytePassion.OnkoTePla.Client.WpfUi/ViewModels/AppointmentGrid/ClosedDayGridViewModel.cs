@@ -41,7 +41,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			
 			appointmentGridSizeVariable.StateChanged += OnGridSizeChanged;
 
-			var readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(identifier);
+			var readModel = dataCenter.GetAppointmentsOfADayReadModel(identifier);
 
 			Identifier = readModel.Identifier; // because now the identifier contains the correct Version
 			

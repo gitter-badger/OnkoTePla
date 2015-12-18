@@ -1,25 +1,28 @@
 ﻿using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.WpfUi.SessionInfo;
-using bytePassion.OnkoTePla.Client.WpfUi.Workflow;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Contracts.Patients;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Readmodels;
 using System;
+using System.Collections.Generic;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Model
 {
 
-    internal interface IDataCenter {
+    internal interface IDataCenter
+    {
+        User LoggedInUser { get; }
 
-		IConfigurationReadRepository Configuration       { get; }
-		IPatientReadRepository       Patients            { get; }
-		IReadModelRepository         ReadModelRepository { get; }
-		SessionInformation           SessionInfo         { get; }
-        IClientWorkflow              Workflow            { get; }
+        AppointmentsOfADayReadModel     GetAppointmentsOfADayReadModel    (AggregateIdentifier identifier);
+        AppointmentsOfAPatientReadModel GetAppointmentsOfAPatientReadModel(Guid                patientId);
 
-		MedicalPractice GetMedicalPracticeByDateAndId(Date date, Guid medicalPracticeId);
-	}
+        MedicalPractice GetMedicalPracticeByDateAndId(Date date, Guid medicalPracticeId);
+        MedicalPractice GetMedicalPracticeByIdAndVersion(Guid medicalPracticeId, uint version=0);
+
+        IEnumerable<MedicalPractice> GetAllMedicalPractices();
+        IEnumerable<Patient>         GetAllPatients();
+    }
 
 }

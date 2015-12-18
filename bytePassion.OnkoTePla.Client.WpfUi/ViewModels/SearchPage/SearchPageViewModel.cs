@@ -101,11 +101,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 			if (result == MessageDialogResult.Affirmative)
 			{
 				var currentMedicalPracticeId = selectedMedicalPracticeIdVariable.Value;
-				var readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(new AggregateIdentifier(appointment.Day, currentMedicalPracticeId));
+				var readModel = dataCenter.GetAppointmentsOfADayReadModel(new AggregateIdentifier(appointment.Day, currentMedicalPracticeId));
 
 				commandBus.SendCommand(new DeleteAppointment(readModel.Identifier,
 															 readModel.AggregateVersion,
-															 dataCenter.SessionInfo.LoggedInUser.Id,
+															 dataCenter.LoggedInUser.Id,
 															 appointment.Patient.Id,
 															 ActionTag.RegularAction,
 															 appointment.Id));
@@ -122,7 +122,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 			if (patient != null)
 			{
-				currentReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfAPatientReadModel(patient.Id);
+				currentReadModel = dataCenter.GetAppointmentsOfAPatientReadModel(patient.Id);
 				currentReadModel.Appointments.Do(DisplayedAppointments.Add);
 				currentReadModel.AppointmentChanged += OnCurrentReadModelAppointmentsChanged;
 

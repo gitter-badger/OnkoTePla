@@ -292,9 +292,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 
 			if (newMedicalPracticeVersion.HoursOfOpening.IsOpen(date))
 			{
-				var readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(
+				var readModel = dataCenter.GetAppointmentsOfADayReadModel(
 					new AggregateIdentifier(date, medicalPracticeId)
-					);
+			    );
 
 				IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments =
 					new Dictionary<TherapyPlace, IList<Appointment>>();

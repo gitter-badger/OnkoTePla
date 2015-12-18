@@ -3,7 +3,6 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WpfUi.Model;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Core.Repositories.Config;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,7 +13,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
     internal class MedicalPracticeSelectorViewModel : ViewModel, 
                                                       IMedicalPracticeSelectorViewModel
 	{
-		private readonly IConfigurationReadRepository                   configuration;		
+		private readonly IDataCenter                                    dataCenter;		
 		private readonly IGlobalState<Guid>                             selectedMedicalPracticeIdVariable;
 	    private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable; 
 
@@ -27,16 +26,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 		{
 		    this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
-		    configuration = dataCenter.Configuration;			 
+		    this.dataCenter = dataCenter;
 
 			
 			selectedMedicalPracticeIdVariable.StateChanged += OnSelectedMedicalPracticeIdVariableChanged;
             appointmentModificationsVariable.StateChanged += OnAppointmentModificationVariableChanged;
 
-			AvailableMedicalPractices = configuration.GetAllMedicalPractices()
-                                                     .ToObservableCollection();
+			AvailableMedicalPractices = dataCenter.GetAllMedicalPractices()
+                                                  .ToObservableCollection();
 
-			SelectedMedicalPractice = configuration.GetMedicalPracticeById(selectedMedicalPracticeIdVariable.Value);
+			SelectedMedicalPractice = dataCenter.GetMedicalPracticeByIdAndVersion(selectedMedicalPracticeIdVariable.Value);
 
 			PracticeIsSelectable = true;
 		}
@@ -70,7 +69,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 
         private void OnSelectedMedicalPracticeIdVariableChanged(Guid medicalPracticeId)
         {
-            selectedPractice = configuration.GetMedicalPracticeById(medicalPracticeId);
+            selectedPractice = dataCenter.GetMedicalPracticeByIdAndVersion(medicalPracticeId);
             PropertyChanged.Notify(this, nameof(SelectedMedicalPractice));
         }
 

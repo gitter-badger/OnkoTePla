@@ -69,7 +69,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 				this					
 			);
 
-			readModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(identifier);
+			readModel = dataCenter.GetAppointmentsOfADayReadModel(identifier);
 
 			Identifier = readModel.Identifier; // because now the identifier contains the correct Version
 
@@ -78,8 +78,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication, 
 													  dataCenter, gridSizeVariable.Value);
 
-			var medicalPractice = dataCenter.Configuration.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
-			                                                                                Identifier.PracticeVersion);
+			var medicalPractice = dataCenter.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
+			                                                                  Identifier.PracticeVersion);
 
 			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();			
 
@@ -226,7 +226,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		{
 			commandBus.SendCommand(new DeleteAppointmentCommand(Identifier, 
 																readModel.AggregateVersion, 
-																dataCenter.SessionInfo.LoggedInUser.Id, 
+																dataCenter.LoggedInUser.Id, 
 																message.PatientId,
 																message.ActionTag,
                                                                 message.AppointmentId));
@@ -260,7 +260,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 				sourceAggregateId = new AggregateIdentifier(appointmentModificationsVariable.Value.OriginalAppointment.Day, 
 															Identifier.MedicalPracticeId);
 
-				var tmpReadModel = dataCenter.ReadModelRepository.GetAppointmentsOfADayReadModel(sourceAggregateId);
+				var tmpReadModel = dataCenter.GetAppointmentsOfADayReadModel(sourceAggregateId);
 
 				sourceAggregateVersion = tmpReadModel.AggregateVersion;
 			}
@@ -272,7 +272,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
 			commandBus.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
 														  sourceAggregateVersion, destinationAggregateVersion,
-														  dataCenter.SessionInfo.LoggedInUser.Id,
+														  dataCenter.LoggedInUser.Id,
 														  originalAppointment.Patient.Id, 
 														  ActionTag.RegularAction, 
 														  appointmentModificationsVariable.Value.Description,
@@ -288,7 +288,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		{			
 			commandBus.SendCommand(new AddAppointment(appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate, 
 													  readModel.AggregateVersion, 
-													  dataCenter.SessionInfo.LoggedInUser.Id, 
+													  dataCenter.LoggedInUser.Id, 
 													  ActionTag.RegularAction, 
 													  appointmentModificationsVariable.Value.OriginalAppointment.Patient.Id, 
 													  appointmentModificationsVariable.Value.Description, 

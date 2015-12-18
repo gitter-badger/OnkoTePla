@@ -66,9 +66,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
         {            
             // Register Global ViewModelVariables
 
-            var initialMedicalPractice = dataCenter.Configuration.GetAllMedicalPractices().First();  // TODO set last usage
-
-
+            var initialMedicalPractice = dataCenter.GetAllMedicalPractices().First();  // TODO set last usage
 
             var gridSizeVariable = new GlobalState<Size>(new Size(400, 400));
             var selectedDateVariable = new GlobalState<Date>(initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday());     // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört

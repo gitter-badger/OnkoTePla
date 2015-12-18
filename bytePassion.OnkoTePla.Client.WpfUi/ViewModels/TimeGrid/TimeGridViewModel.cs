@@ -49,8 +49,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 			);
 
 			Identifier = identifierWithCorrectMedPracVersion;
-			var medicalPractice = dataCenter.Configuration.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
-																							Identifier.PracticeVersion);
+			var medicalPractice = dataCenter.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
+																		      Identifier.PracticeVersion);
 			
 			timeSlotStart = medicalPractice.HoursOfOpening.GetOpeningTime(identifierWithCorrectMedPracVersion.Date);
 			timeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(identifierWithCorrectMedPracVersion.Date);
