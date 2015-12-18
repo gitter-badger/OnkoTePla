@@ -111,6 +111,7 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServiceModules\ConnectionService.cs" />
     <Compile Include="ViewModelMessageHandler\ConfirmChangesMessageHandler.cs" />
     <Compile Include="ViewModelMessageHandler\RejectChangesMessageHandler.cs" />
     <Compile Include="ViewModelMessages\ConfirmChanges.cs" />
