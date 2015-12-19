@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace bytePassion.Lib.Utils.Workflows
+namespace bytePassion.Lib.Utils.Workflow
 {
-    public class IllegalStateTransitionException : Exception
+	public class IllegalStateTransitionException : Exception
     {
         public IllegalStateTransitionException()
         {

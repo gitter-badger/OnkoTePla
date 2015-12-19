@@ -1,4 +1,6 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
+﻿using System.ComponentModel;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
@@ -6,18 +8,18 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
-using System.ComponentModel;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 {
-    internal class MainWindowViewModel : ViewModel, 
+	internal class MainWindowViewModel : ViewModel, 
                                          IMainWindowViewModel
     {
-        private readonly IMainViewModelBuilder mainViewModelBuilder;
+        private readonly IMainViewModelBuilder  mainViewModelBuilder;
         private readonly ILoginViewModelBuilder loginViewModelBuilder;
+	    private readonly ISession               session;
 
-        private IMainViewModel mainViewModel;        
+	    private IMainViewModel mainViewModel;        
         private ILoginViewModel loginViewModel;
 
         private bool isMainViewVisible;
@@ -28,11 +30,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
         public MainWindowViewModel(IMainViewModelBuilder mainViewModelBuilder, 
                                    ILoginViewModelBuilder loginViewModelBuilder,
                                    INotificationServiceContainerViewModel notificationServiceContainerViewModel, 
-                                   IActionBarViewModel actionBarViewModel)
+                                   IActionBarViewModel actionBarViewModel,
+								   ISession session)
         {
             this.mainViewModelBuilder = mainViewModelBuilder;
             this.loginViewModelBuilder = loginViewModelBuilder;
-            NotificationServiceContainerViewModel = notificationServiceContainerViewModel;
+	        this.session = session;
+
+	        NotificationServiceContainerViewModel = notificationServiceContainerViewModel;
             ActionBarViewModel = actionBarViewModel;
 
             MainViewModel = mainViewModelBuilder.Build();

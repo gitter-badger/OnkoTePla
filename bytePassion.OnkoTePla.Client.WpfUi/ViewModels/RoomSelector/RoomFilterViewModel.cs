@@ -1,20 +1,20 @@
-﻿using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media;
+using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 {
-    internal class RoomFilterViewModel : ViewModel,
+	internal class RoomFilterViewModel : ViewModel,
                                          IRoomFilterViewModel
 	{
 		private readonly RoomSelectorData allRoomFilter = new RoomSelectorData("Alle Räume", null, Colors.White);

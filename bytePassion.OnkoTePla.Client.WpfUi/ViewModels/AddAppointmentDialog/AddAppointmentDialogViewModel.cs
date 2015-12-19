@@ -1,9 +1,15 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.Commands.Updater;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
@@ -12,18 +18,12 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 {
-    internal class AddAppointmentDialogViewModel : ViewModel, 
+	internal class AddAppointmentDialogViewModel : ViewModel, 
                                                    IAddAppointmentDialogViewModel
 	{
 		
@@ -154,13 +154,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 			SelectedPatient = patient ?? Patient.Dummy;
 		}
 
-		private void CloseWindow()
+		private static void CloseWindow()
 		{
 			var windows = Application.Current.Windows
 											 .OfType<Views.AddAppointmentDialog>()
 											 .ToList();
 
-			if (windows.Count() == 1)
+			if (windows.Count == 1)
 				windows[0].Close();
 			else
 				throw new Exception("inner error");

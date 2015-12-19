@@ -29,11 +29,11 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 
-                <TextBox Grid.Row="0"
-                         Text="Login"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         FontSize="50"/>
+                <TextBlock Grid.Row="0"
+                           Text="Login"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="50"/>
 
                 <Border Grid.Row="1"
                         BorderThickness="0,1"

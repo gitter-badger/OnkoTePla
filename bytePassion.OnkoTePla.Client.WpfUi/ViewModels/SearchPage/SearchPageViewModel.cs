@@ -1,9 +1,17 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
@@ -16,18 +24,11 @@ using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Readmodels;
 using MahApps.Metro.Controls.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
 using DeleteAppointment = bytePassion.OnkoTePla.Core.Domain.Commands.DeleteAppointment;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 {
-    internal class SearchPageViewModel : ViewModel, 
+	internal class SearchPageViewModel : ViewModel, 
                                          ISearchPageViewModel
     {
 		private class AppointmentSorter : IComparer<Appointment>
@@ -48,6 +49,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
         private readonly ICommandBus commandBus;
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IDataCenter dataCenter;
+		private readonly ISession session;
 
 		private AppointmentsOfAPatientReadModel currentReadModel;
 		private string selectedPatient;
@@ -58,12 +60,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 								   IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
                                    ICommandBus commandBus,
 								   IViewModelCommunication viewModelCommunication,
-								   IDataCenter dataCenter)
+								   IDataCenter dataCenter,
+								   ISession session)
 		{
 		    this.selectedPatientVariable = selectedPatientVariable;
 		    this.commandBus = commandBus;
 			this.viewModelCommunication = viewModelCommunication;
 			this.dataCenter = dataCenter;
+			this.session = session;
 			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 			this.selectedDateVariable = selectedDateVariable;
 
@@ -105,7 +109,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 				commandBus.SendCommand(new DeleteAppointment(readModel.Identifier,
 															 readModel.AggregateVersion,
-															 dataCenter.LoggedInUser.Id,
+															 session.LoggedInUser.Id,
 															 appointment.Patient.Id,
 															 ActionTag.RegularAction,
 															 appointment.Id));

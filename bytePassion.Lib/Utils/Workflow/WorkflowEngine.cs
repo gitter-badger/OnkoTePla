@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-
-namespace bytePassion.Lib.Utils.Workflows
+namespace bytePassion.Lib.Utils.Workflow
 {
 
-    public class StateEngine<TState, TCommand> : IStateEngine<TState, TCommand>
+	public class WorkflowEngine<TState, TEvent> : IWorkflowEngine<TState, TEvent>
     {
         public event Action<TState> StateChanged;
 
-        private readonly IReadOnlyList<StateTransition<TState, TCommand>> transitions;
+        private readonly IReadOnlyList<StateTransition<TState, TEvent>> transitions;
 
         private TState currentState;
 
@@ -27,28 +26,27 @@ namespace bytePassion.Lib.Utils.Workflows
             }
         }
 
-        public StateEngine(IReadOnlyList<StateTransition<TState, TCommand>> transitions, 
-                           TState initialState)
+        public WorkflowEngine(IReadOnlyList<StateTransition<TState, TEvent>> transitions, 
+                              TState initialState)
         {
             this.transitions = transitions;
             CurrentState = initialState;            
         } 
 
-        public bool IsCommandApplyable(TCommand command)
+        public bool IsCommandApplyable(TEvent transitionEvent)
         {
-            return transitions.Any(transition => transition.Command.Equals(command) &&
+            return transitions.Any(transition => transition.TransitionEvent.Equals(transitionEvent) &&
                                                  transition.StateBefore.Equals(CurrentState));
         }
         
-        public TState MoveNext(TCommand command)
+        public void ApplyEvent(TEvent transitionEvent)
         {
-            var currentTransition = transitions.FirstOrDefault(transition => transition.Command.Equals(command) &&
+            var currentTransition = transitions.FirstOrDefault(transition => transition.TransitionEvent.Equals(transitionEvent) &&
                                                                              transition.StateBefore.Equals(CurrentState));
             if (currentTransition == null)
-                throw new IllegalStateTransitionException($"there is no transition from {CurrentState} with the Command {command}");
+                throw new IllegalStateTransitionException($"there is no transition from >>{CurrentState}<< with the Event >>{transitionEvent}<<");
             
-            CurrentState = currentTransition.StateAfter;
-            return CurrentState;
+            CurrentState = currentTransition.StateAfter;            
         }
     }
 }

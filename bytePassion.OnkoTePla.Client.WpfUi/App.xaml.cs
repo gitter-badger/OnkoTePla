@@ -1,8 +1,10 @@
-﻿using bytePassion.Lib.Communication.MessageBus;
+﻿using System.Windows;
+using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Connection;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.Resources;
@@ -10,20 +12,17 @@ using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
 using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Core.Eventsystem;
-using bytePassion.OnkoTePla.Core.Readmodels;
 using bytePassion.OnkoTePla.Core.Repositories.Aggregate;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
-using System.Linq;
-using System.Windows;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi
 {
 
-    public partial class App
+	public partial class App
 	{
 		protected override void OnStartup (StartupEventArgs e)
 		{
@@ -80,35 +79,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			commandBus.RegisterCommandHandler(new DeleteAppointmentCommandHandler(aggregateRepository));
 			commandBus.RegisterCommandHandler(new ReplaceAppointmentCommandHandler(aggregateRepository));
 
+			// create session
 
-			// SessionInformation
+			var connectionService = new ConnectionService();
+			var workFlow = new ClientWorkflow();
 
-			var sessionInformation = new SessionInformation
-			{
-				LoggedInUser = configReadRepository.GetAllUsers().First()
-			};
+			var session = new Session(connectionService, workFlow);
+		
 
-            // Application-Workflow
-
-            var applicationWorkflow = new ClientWorkflow();
-
-			// SessionAndUserSpecificEventHistory
-
-			var sessionAndUserSpecificEventHistory = new SessionAndUserSpecificEventHistory(eventBus,
-																							commandBus,
-																							readModelRepository,
-                                                                                            patientReadRepository,
-                                                                                            configReadRepository,
-																							sessionInformation.LoggedInUser,
-																							50);
-
-			// Data-Model
+			// Data-Center
 
 			var dataCenter = new DataCenter(configReadRepository, 
 											patientReadRepository, 
-											readModelRepository, 
-											sessionInformation,
-                                            applicationWorkflow);
+											readModelRepository);
 
             // initiate ViewModelCommunication			
 
@@ -117,16 +100,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
             IViewModelCollections viewModelCollections = new ViewModelCollections();
 
             IViewModelCommunication viewModelCommunication = new ViewModelCommunication(viewModelMessageBus,
-                                                                                        viewModelCollections);
-
+                                                                                        viewModelCollections);			
 
             // Create MainWindow
 
             var mainWindowBuilder = new MainWindowBuilder(dataCenter, 
                                                           viewModelCommunication,
-														  commandBus, 
-														  sessionAndUserSpecificEventHistory,
-                                                          "0.1.0.0");                               // TODO: get real versionNumber
+														  session,
+														  commandBus, 														 
+                                                          "0.1.0.0");                // TODO: get real versionNumber
 
 			var mainWindow = mainWindowBuilder.BuildWindow();
 			mainWindow.ShowDialog();

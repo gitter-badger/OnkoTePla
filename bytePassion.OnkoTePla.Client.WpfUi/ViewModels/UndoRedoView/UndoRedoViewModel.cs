@@ -1,20 +1,20 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Core.Readmodels;
 using MahApps.Metro.Controls.Dialogs;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Input;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 {
-    internal class UndoRedoViewModel : ViewModel, 
+	internal class UndoRedoViewModel : ViewModel, 
                                        IUndoRedoViewModel
 	{
 		private enum ButtonMode
@@ -26,8 +26,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
-
-		private readonly SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory;		
+	    private readonly ISession session;
+	   
 
 		private AppointmentModifications currentAppointmentModifications;
 		private ButtonMode currentButtonMode;
@@ -35,11 +35,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 		public UndoRedoViewModel(IViewModelCommunication viewModelCommunication,
 								 IGlobalState<AppointmentModifications> appointmentModificationsVariable, 
-								 SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory)
+								 ISession session)
 		{
 			this.viewModelCommunication = viewModelCommunication;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;
-			this.sessionAndUserSpecificEventHistory = sessionAndUserSpecificEventHistory;
+			this.session = session;
+			
 			
 			currentButtonMode = ButtonMode.ViewMode;
 			currentAppointmentModifications = null;
@@ -49,17 +50,28 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 			
 			appointmentModificationsVariable.StateChanged += OnAppointmentModificationsVariableChanged;
+			
+			session.UndoPossibleChanged += OnUndoPossibleChanged;
+			session.RedoPossibleChanged += OnRedoPossibleChanged;			
+		}
 
-			sessionAndUserSpecificEventHistory.PropertyChanged += OnSessionAndUserSpecificEventHistoryChanged;
-		}		
+	    private void OnUndoPossibleChanged(bool isUndoPossible)
+	    {
+			((Command)Undo).RaiseCanExecuteChanged();
+		}
 
-		private bool RedoPossible()
+	    private void OnRedoPossibleChanged(bool isRedoPossible)
+	    {
+			((Command)Redo).RaiseCanExecuteChanged();
+		}
+
+	    private bool RedoPossible()
 		{
 			switch (currentButtonMode)
 			{
 				case ButtonMode.EditsAvailable:  
 				case ButtonMode.StartOfEditMode: return currentAppointmentModifications.RedoPossible;
-				case ButtonMode.ViewMode:		 return sessionAndUserSpecificEventHistory.RedoPossible;
+				case ButtonMode.ViewMode:		 return session.RedoPossible();
 			}
 
 			return false;
@@ -71,7 +83,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 			{
 				case ButtonMode.EditsAvailable:  
 				case ButtonMode.StartOfEditMode: return true;
-				case ButtonMode.ViewMode:		 return sessionAndUserSpecificEventHistory.UndoPossible;
+				case ButtonMode.ViewMode:		 return session.UndoPossible();
 			}
 
 			return false;
@@ -92,23 +104,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 			((Command)Redo).RaiseCanExecuteChanged();
 		}
 
-		private void OnSessionAndUserSpecificEventHistoryChanged (object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-		{
-			switch (propertyChangedEventArgs.PropertyName)
-			{			
-				case nameof(SessionAndUserSpecificEventHistory.UndoPossible):
-				{
-					((Command)Undo).RaiseCanExecuteChanged();
-					break;
-				}
-				case nameof(SessionAndUserSpecificEventHistory.RedoPossible):
-				{
-					((Command)Redo).RaiseCanExecuteChanged();
-					break;
-				}
-			}
-		}
-
+		
 		private void OnCurrentAppointmentModificationsChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
 			switch (propertyChangedEventArgs.PropertyName)
@@ -149,7 +145,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 				case ButtonMode.ViewMode:
 			    {         
                     var dialog = new UserDialogBox("", 
-                                                   sessionAndUserSpecificEventHistory.GetRedoActionMessage(),
+                                                   session.GetRedoActionMessage(),
                                                    MessageBoxButton.OKCancel, 
                                                    MessageBoxImage.Question);
 
@@ -157,7 +153,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
                     if (result == MessageDialogResult.Affirmative)
                     {
-                        sessionAndUserSpecificEventHistory.Redo(); 
+                        session.Redo(); 
                     }                                                                                                            
                     break;
 			    }
@@ -181,7 +177,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 				case ButtonMode.ViewMode:
 			    {
                     var dialog = new UserDialogBox("", 
-                                                   sessionAndUserSpecificEventHistory.GetUndoActionMessage(),
+                                                   session.GetUndoActionMessage(),
                                                    MessageBoxButton.OKCancel, 
                                                    MessageBoxImage.Question);
 
@@ -189,7 +185,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
                     if (result == MessageDialogResult.Affirmative)
                     {
-                        sessionAndUserSpecificEventHistory.Undo();
+                        session.Undo();
                     }                        
                     break;
 			    }
@@ -201,8 +197,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 		protected override void CleanUp()
 		{
-			appointmentModificationsVariable.StateChanged      -= OnAppointmentModificationsVariableChanged;
-			sessionAndUserSpecificEventHistory.PropertyChanged -= OnSessionAndUserSpecificEventHistoryChanged;			
+			appointmentModificationsVariable.StateChanged -= OnAppointmentModificationsVariableChanged;
+
+			session.UndoPossibleChanged -= OnUndoPossibleChanged;
+			session.RedoPossibleChanged -= OnRedoPossibleChanged;
 		}
 
 		public override event PropertyChangedEventHandler PropertyChanged;

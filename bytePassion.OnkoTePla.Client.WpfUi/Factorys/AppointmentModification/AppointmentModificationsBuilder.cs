@@ -1,16 +1,16 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using System;
-using System.Windows;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification
 {
-    internal class AppointmentModificationsBuilder : IAppointmentModificationsBuilder
+	internal class AppointmentModificationsBuilder : IAppointmentModificationsBuilder
     {
         private readonly IDataCenter dataCenter;
         private readonly IViewModelCommunication viewModelCommunication;

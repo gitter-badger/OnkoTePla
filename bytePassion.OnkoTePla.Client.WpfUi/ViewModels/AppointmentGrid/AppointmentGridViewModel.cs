@@ -1,7 +1,13 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
@@ -16,22 +22,18 @@ using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Readmodels;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.DeleteAppointment;
 using DeleteAppointmentCommand = bytePassion.OnkoTePla.Core.Domain.Commands.DeleteAppointment;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
-    internal class AppointmentGridViewModel : ViewModel,
+	internal class AppointmentGridViewModel : ViewModel,
 											  IAppointmentGridViewModel											
 	{
 		private bool isActive;
 
 		private readonly IDataCenter dataCenter;
+		private readonly ISession session;
 		private readonly ICommandBus commandBus;
 		private readonly IViewModelCommunication viewModelCommunication;		
 		private readonly IGlobalStateReadOnly<Size> gridSizeVariable;
@@ -43,6 +45,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
         public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
+										ISession session,
 										ICommandBus commandBus,
 										IViewModelCommunication viewModelCommunication,
                                         IGlobalStateReadOnly<Size> gridSizeVariable,
@@ -52,7 +55,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 										ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 		{
 			this.dataCenter = dataCenter;
-			this.commandBus = commandBus;
+	        this.session = session;
+	        this.commandBus = commandBus;
 			this.viewModelCommunication = viewModelCommunication;
 		    this.gridSizeVariable = gridSizeVariable;
 		    this.roomFilterVariable = roomFilterVariable;
@@ -226,7 +230,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		{
 			commandBus.SendCommand(new DeleteAppointmentCommand(Identifier, 
 																readModel.AggregateVersion, 
-																dataCenter.LoggedInUser.Id, 
+																session.LoggedInUser.Id, 
 																message.PatientId,
 																message.ActionTag,
                                                                 message.AppointmentId));
@@ -272,7 +276,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
 			commandBus.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
 														  sourceAggregateVersion, destinationAggregateVersion,
-														  dataCenter.LoggedInUser.Id,
+														  session.LoggedInUser.Id,
 														  originalAppointment.Patient.Id, 
 														  ActionTag.RegularAction, 
 														  appointmentModificationsVariable.Value.Description,
@@ -288,7 +292,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		{			
 			commandBus.SendCommand(new AddAppointment(appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate, 
 													  readModel.AggregateVersion, 
-													  dataCenter.LoggedInUser.Id, 
+													  session.LoggedInUser.Id, 
 													  ActionTag.RegularAction, 
 													  appointmentModificationsVariable.Value.OriginalAppointment.Patient.Id, 
 													  appointmentModificationsVariable.Value.Description, 

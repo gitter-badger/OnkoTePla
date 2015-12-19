@@ -1,16 +1,16 @@
-﻿using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 {
-    internal class MedicalPracticeSelectorViewModel : ViewModel, 
+	internal class MedicalPracticeSelectorViewModel : ViewModel, 
                                                       IMedicalPracticeSelectorViewModel
 	{
 		private readonly IDataCenter                                    dataCenter;		

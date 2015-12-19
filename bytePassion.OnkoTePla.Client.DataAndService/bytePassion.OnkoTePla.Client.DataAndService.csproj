@@ -31,25 +31,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\DataCenter.cs" />
-    <Compile Include="Model\IDataCenter.cs" />
+    <Compile Include="Data\DataCenter.cs" />
+    <Compile Include="Data\IDataCenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceModules\ConnectionService.cs" />
-    <Compile Include="SessionInfo\SessionInformation.cs" />
+    <Compile Include="Connection\ConnectionService.cs" />
+    <Compile Include="Connection\ConnectionStatus.cs" />
+    <Compile Include="Connection\IConnectionService.cs" />
+    <Compile Include="SessionInfo\ApplicationStateEventArgs.cs" />
+    <Compile Include="SessionInfo\ISession.cs" />
+    <Compile Include="SessionInfo\Session.cs" />
     <Compile Include="Workflow\ApplicationState.cs" />
     <Compile Include="Workflow\ClientWorkflow.cs" />
     <Compile Include="Workflow\IClientWorkflow.cs" />
-    <Compile Include="Workflow\WorkflowCommands.cs" />
+    <Compile Include="Workflow\WorkflowEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">

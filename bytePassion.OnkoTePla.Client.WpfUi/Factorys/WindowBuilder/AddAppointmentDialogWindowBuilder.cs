@@ -1,19 +1,19 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.Views;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using System;
-using System.Windows;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 {
-    internal class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
+	internal class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
 	{
 		private readonly IDataCenter dataCenter;		                
 	    private readonly IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable;       

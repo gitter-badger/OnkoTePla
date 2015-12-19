@@ -1,38 +1,37 @@
 using bytePassion.Lib.FrameworkExtensions;
 
-
-namespace bytePassion.Lib.Utils.Workflows
+namespace bytePassion.Lib.Utils.Workflow
 {
-    public class StateTransition<TState, TCommand>        
+	public class StateTransition<TState, TEvent>        
     {               
-        public StateTransition(TState stateBefore, TCommand command, TState stateAfter)
+        public StateTransition(TState stateBefore, TEvent transitionEvent, TState stateAfter)
         {
             StateBefore = stateBefore;
-            Command = command;
+            TransitionEvent = transitionEvent;
             StateAfter = stateAfter;
         }
 
-        public TState   StateBefore { get; }
-        public TCommand Command     { get; }
-        public TState   StateAfter  { get; }
+        public TState StateBefore     { get; }
+        public TEvent TransitionEvent { get; }
+        public TState StateAfter      { get; }
 
         public override int GetHashCode()
         {
             return StateBefore.GetHashCode() ^ 
-                   Command.GetHashCode() ^ 
+                   TransitionEvent.GetHashCode() ^ 
                    StateAfter.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             return this.Equals(obj, (st1, st2) => st1.StateBefore.Equals(st2) && 
-                                                  st1.Command.Equals(st2) &&
+                                                  st1.TransitionEvent.Equals(st2) &&
                                                   st1.StateAfter.Equals(st2.StateAfter));
         }
 
         public override string ToString()
         {
-            return $"[{StateBefore}] --- {Command} ---> [{StateAfter}]";
+            return $"[{StateBefore}] --- {TransitionEvent} ---> [{StateAfter}]";
         }
     }
 }

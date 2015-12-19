@@ -1,21 +1,21 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Core.Domain;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
-    internal class ClosedDayGridViewModel : ViewModel, 
+	internal class ClosedDayGridViewModel : ViewModel, 
 										    IAppointmentGridViewModel
 	{
 		private bool isActive;

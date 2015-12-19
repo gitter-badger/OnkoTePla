@@ -1,22 +1,22 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid.Helper;
 using bytePassion.OnkoTePla.Core.Domain;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 {
-    internal class TimeGridViewModel : ViewModel,
+	internal class TimeGridViewModel : ViewModel,
 									   ITimeGridViewModel									 
 	{		
 		private enum GridViewDivisionState

@@ -1,16 +1,16 @@
-﻿using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
-using bytePassion.OnkoTePla.Contracts.Patients;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
+using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 {
-    internal class PatientSelectorViewModel : ViewModel, 
+	internal class PatientSelectorViewModel : ViewModel, 
                                               IPatientSelectorViewModel
     {
 	    private readonly IGlobalState<Patient> selectedPatientGlobalVariable;

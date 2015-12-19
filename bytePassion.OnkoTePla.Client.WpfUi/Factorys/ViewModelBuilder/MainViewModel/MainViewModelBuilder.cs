@@ -1,7 +1,12 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Model;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel;
@@ -32,33 +37,28 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
-using bytePassion.OnkoTePla.Core.Readmodels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel
 {
-    internal class MainViewModelBuilder : IMainViewModelBuilder
+	internal class MainViewModelBuilder : IMainViewModelBuilder
     {
         private readonly IDataCenter dataCenter;
         private readonly IViewModelCommunication viewModelCommunication;
-        private readonly ICommandBus commandBus;
-        private readonly SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory;
+		private readonly ISession session;
+		private readonly ICommandBus commandBus;        
         private readonly AdornerControl adornerControl;
 
         public MainViewModelBuilder(IDataCenter dataCenter,
                                     IViewModelCommunication viewModelCommunication,
-                                    ICommandBus commandBus,
-                                    SessionAndUserSpecificEventHistory sessionAndUserSpecificEventHistory,
+									ISession session,
+                                    ICommandBus commandBus,                                    
                                     AdornerControl adornerControl)
         {
             this.dataCenter = dataCenter;
             this.viewModelCommunication = viewModelCommunication;
-            this.commandBus = commandBus;
-            this.sessionAndUserSpecificEventHistory = sessionAndUserSpecificEventHistory;
+	        this.session = session;
+	        this.commandBus = commandBus;            
             this.adornerControl = adornerControl;
         }
 
@@ -116,6 +116,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                                       selectedMedicalPracticeIdVariable);
 
             var appointmentGridViewModelBuilder = new AppointmentGridViewModelBuilder(dataCenter,
+																					  session,
                                                                                       viewModelCommunication,
                                                                                       commandBus,
                                                                                       gridSizeVariable,
@@ -169,7 +170,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);
             var undoRedoViewModel = new UndoRedoViewModel(viewModelCommunication,
                                                           appointmentModificationsVariable,
-                                                          sessionAndUserSpecificEventHistory);
+                                                          session);
 
             var overviewPageViewModel = new OverviewPageViewModel(viewModelCommunication,
                                                                   dateDisplayViewModel,
@@ -186,12 +187,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                         selectedPatientForAppointmentSearchVariable);
 
             var searchPageViewModel = new SearchPageViewModel(patientSelectorViewModel,
-                                                                selectedPatientForAppointmentSearchVariable,
-                                                                selectedDateVariable,
-                                                                selectedMedicalPracticeIdVariable,
-                                                                commandBus,
-                                                                viewModelCommunication,
-                                                                dataCenter);
+                                                              selectedPatientForAppointmentSearchVariable,
+                                                              selectedDateVariable,
+                                                              selectedMedicalPracticeIdVariable,
+                                                              commandBus,
+                                                              viewModelCommunication,
+                                                              dataCenter,
+															  session);
+
             var optionsPageViewModel = new OptionsPageViewModel();            
 
             var mainViewModel = new ViewModels.MainView.MainViewModel(overviewPageViewModel,

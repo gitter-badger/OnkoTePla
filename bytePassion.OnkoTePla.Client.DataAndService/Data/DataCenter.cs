@@ -1,7 +1,6 @@
-﻿using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
-using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
-using bytePassion.OnkoTePla.Contracts.Config;
+﻿using System;
+using System.Collections.Generic;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.Domain;
@@ -9,38 +8,29 @@ using bytePassion.OnkoTePla.Core.Readmodels;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
-using System;
-using System.Collections.Generic;
 
-
-namespace bytePassion.OnkoTePla.Client.DataAndService.Model
+namespace bytePassion.OnkoTePla.Client.DataAndService.Data
 {
 
-    public class DataCenter : IDataCenter
+	public class DataCenter : IDataCenter
 	{
         private readonly IConfigurationReadRepository configuration;
         private readonly IPatientReadRepository patientRepository;
         private readonly IReadModelRepository readModelRepository;
-        private readonly SessionInformation sessionInfo;
-
+        
         public DataCenter(IConfigurationReadRepository configuration, 
 						  IPatientReadRepository patientRepository, 
-						  IReadModelRepository readModelRepository, 
-						  SessionInformation sessionInfo, 
-                          IClientWorkflow workflow)
+						  IReadModelRepository readModelRepository)
         {
             this.configuration = configuration;
             this.patientRepository = patientRepository;
-            this.readModelRepository = readModelRepository;
-            this.sessionInfo = sessionInfo;
+            this.readModelRepository = readModelRepository;            
 
             dataCache = new Dictionary<Guid, IDictionary<Date, MedicalPractice>>();
         }
 
-
         private readonly IDictionary<Guid, IDictionary<Date, MedicalPractice>> dataCache;
-
-        public User LoggedInUser => sessionInfo.LoggedInUser;
+        
 
         public AppointmentsOfADayReadModel GetAppointmentsOfADayReadModel(AggregateIdentifier identifier)
         {

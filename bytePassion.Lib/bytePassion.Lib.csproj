@@ -126,10 +126,10 @@
     <Compile Include="Types\SemanticTypes\XCoord.cs" />
     <Compile Include="Types\SemanticTypes\YCoord.cs" />
     <Compile Include="Types\SemanticTypes\ZCoord.cs" />
-    <Compile Include="Utils\Workflows\IllegalStateTransitionException.cs" />
-    <Compile Include="Utils\Workflows\IStateEngine.cs" />
-    <Compile Include="Utils\Workflows\StateTransition.cs" />
-    <Compile Include="Utils\Workflows\StateEngine.cs" />
+    <Compile Include="Utils\Workflow\IllegalStateTransitionException.cs" />
+    <Compile Include="Utils\Workflow\IWorkflowEngine.cs" />
+    <Compile Include="Utils\Workflow\StateTransition.cs" />
+    <Compile Include="Utils\Workflow\WorkflowEngine.cs" />
     <Compile Include="Utils\Guard.cs" />
     <Compile Include="Utils\IUndoRedo.cs" />
     <Compile Include="Utils\IWindowBuilder.cs" />
