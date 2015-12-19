@@ -135,15 +135,15 @@
                     Visibility="{Binding OperatingMode,
                                          Converter={StaticResource OperatingModeToVisibilityConverter}}">
 
-                    <StackPanel Margin="5,0"
+					<i:Interaction.Behaviors>
+						<behaviors:MoveBeginTimeBehavior AppointmentModifications="{Binding CurrentAppointmentModifications}"/>
+					</i:Interaction.Behaviors>
+
+					<StackPanel Margin="5,0"
                             Background="Transparent"
                             Orientation="Horizontal">
 
-                        <i:Interaction.Behaviors>
-                            <behaviors:MoveBeginTimeBehavior AppointmentModifications="{Binding CurrentAppointmentModifications}"/>
-                        </i:Interaction.Behaviors>
-
-                        <Border Style="{StaticResource WhiteLineBorderStyle}" />
+						<Border Style="{StaticResource WhiteLineBorderStyle}" />
                         <Border Style="{StaticResource WhiteLineBorderStyle}" />
 
                     </StackPanel>
