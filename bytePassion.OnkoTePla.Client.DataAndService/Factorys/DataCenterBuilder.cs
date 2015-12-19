@@ -66,7 +66,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 
 			return new DataCenter(configReadRepository,
 								  patientReadRepository,
-								  readModelRepository);
+								  readModelRepository,
+								  commandBus,
+								  eventStore);
 		}
 	}
 }
