@@ -13,11 +13,6 @@ using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 {
-	public interface IDataCenterBuilder
-	{
-		IDataCenter Build();
-	}
-
 	public class DataCenterBuilder : IDataCenterBuilder
 	{
 		public IDataCenter Build()

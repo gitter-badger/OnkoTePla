@@ -3,10 +3,7 @@ using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.DataAndService.Connection;
 using bytePassion.OnkoTePla.Client.DataAndService.Factorys;
-using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
-using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
 
 
@@ -26,16 +23,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			///////////////////////////////////////////////////////////////////////////////////////////////
 		
 
-			// create session
-
-			var connectionService = new ConnectionService();
-			var workFlow = new ClientWorkflow();
-
-			var session = new Session(connectionService, workFlow);
-		
-
-			// Data-Center
-
+			
+			var session    = new SessionBuilder().Build();					
 			var dataCenter = new DataCenterBuilder().Build();
 
 
@@ -47,8 +36,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 
             IViewModelCommunication viewModelCommunication = new ViewModelCommunication(viewModelMessageBus,
                                                                                         viewModelCollections);			
-
-            // Create MainWindow
+          
 
             var mainWindowBuilder = new MainWindowBuilder(dataCenter, 
                                                           viewModelCommunication,
@@ -65,7 +53,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
 
-			dataCenter.PersistEventstore();
+			dataCenter.PersistEventstore();		// TODO: just for testing
 		}		
 	}
 }

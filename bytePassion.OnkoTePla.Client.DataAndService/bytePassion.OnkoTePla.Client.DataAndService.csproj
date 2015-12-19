@@ -48,6 +48,9 @@
     <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Data\IDataCenter.cs" />
     <Compile Include="Factorys\DataCenterBuilder.cs" />
+    <Compile Include="Factorys\IDataCenterBuilder.cs" />
+    <Compile Include="Factorys\ISessionBuilder.cs" />
+    <Compile Include="Factorys\SessionBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Connection\ConnectionStatus.cs" />
