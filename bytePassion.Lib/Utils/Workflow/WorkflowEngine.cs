@@ -32,8 +32,8 @@ namespace bytePassion.Lib.Utils.Workflow
             this.transitions = transitions;
             CurrentState = initialState;            
         } 
-
-        public bool IsCommandApplyable(TEvent transitionEvent)
+		
+        public bool IsEventApplyable(TEvent transitionEvent)
         {
             return transitions.Any(transition => transition.TransitionEvent.Equals(transitionEvent) &&
                                                  transition.StateBefore.Equals(CurrentState));
