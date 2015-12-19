@@ -2,10 +2,10 @@
 {
 	public enum WorkflowEvent
     {
-		TryConnect,
+		StartedTryConnect,
+		StartedTryDisconnect,
 		ConnectionEstablished,
-		ConAttemptUnsuccessful,
-		TryDisconnect,
+		ConAttemptUnsuccessful,		
 		Disconnected,
 		LoggedIn,
         LoggedOut,

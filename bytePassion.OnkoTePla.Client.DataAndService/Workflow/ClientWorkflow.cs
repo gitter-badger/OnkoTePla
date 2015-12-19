@@ -13,10 +13,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Workflow
         private static readonly IReadOnlyList<StateTransition<State, Event>> Transitions 
 			= new List<StateTransition<State, Event>>
         {
-            new Transition(State.DisconnectedFromServer,  Event.TryConnect,             State.TryingToConnect),
+            new Transition(State.DisconnectedFromServer,  Event.StartedTryConnect,      State.TryingToConnect),
 			new Transition(State.TryingToConnect,         Event.ConAttemptUnsuccessful, State.DisconnectedFromServer),
 			new Transition(State.TryingToConnect,         Event.ConnectionEstablished,  State.ConnectedButNotLoggedIn),
-			new Transition(State.ConnectedButNotLoggedIn, Event.TryDisconnect,          State.TryingToDisconnect),
+			new Transition(State.ConnectedButNotLoggedIn, Event.StartedTryDisconnect,   State.TryingToDisconnect),
 			new Transition(State.TryingToDisconnect,      Event.Disconnected,           State.DisconnectedFromServer),
 			new Transition(State.TryingToConnect,         Event.ConnectionLost,         State.DisconnectedFromServer),
 			new Transition(State.ConnectedButNotLoggedIn, Event.ConnectionLost,         State.DisconnectedFromServer),
