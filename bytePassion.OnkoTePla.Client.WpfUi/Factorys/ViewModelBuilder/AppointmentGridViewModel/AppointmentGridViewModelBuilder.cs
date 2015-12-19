@@ -8,7 +8,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentVi
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
 
 
@@ -18,8 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 	{
 		private readonly IDataCenter dataCenter;
 		private readonly ISession session;
-		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly ICommandBus commandBus;		
+		private readonly IViewModelCommunication viewModelCommunication;				
 		private readonly IGlobalStateReadOnly<Size> gridSizeVariable;
 		private readonly IGlobalStateReadOnly<Guid?> roomFilterVariable;		
 		private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable;		
@@ -28,8 +26,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 
 		public AppointmentGridViewModelBuilder(IDataCenter dataCenter, 
 											   ISession session,
-											   IViewModelCommunication viewModelCommunication, 
-											   ICommandBus commandBus, 											  
+											   IViewModelCommunication viewModelCommunication, 											   
 											   IGlobalStateReadOnly<Size> gridSizeVariable, 
 											   IGlobalStateReadOnly<Guid?> roomFilterVariable, 											  
 											   IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable, 											  
@@ -39,8 +36,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 		{
 			this.dataCenter = dataCenter;
 			this.session = session;
-			this.viewModelCommunication = viewModelCommunication;
-			this.commandBus = commandBus;			
+			this.viewModelCommunication = viewModelCommunication;						
 			this.gridSizeVariable = gridSizeVariable;
 			this.roomFilterVariable = roomFilterVariable;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;
@@ -58,8 +54,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 			{
 				gridViewModel = new ViewModels.AppointmentGrid.AppointmentGridViewModel(identifier,
 																						dataCenter,
-																						session,
-																						commandBus,
+																						session,																						
 																						viewModelCommunication,
 																						gridSizeVariable,
 																						roomFilterVariable,																						

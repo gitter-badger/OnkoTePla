@@ -17,7 +17,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Core.Eventsystem;
@@ -33,8 +32,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		private bool isActive;
 
 		private readonly IDataCenter dataCenter;
-		private readonly ISession session;
-		private readonly ICommandBus commandBus;
+		private readonly ISession session;		
 		private readonly IViewModelCommunication viewModelCommunication;		
 		private readonly IGlobalStateReadOnly<Size> gridSizeVariable;
 		private readonly IGlobalStateReadOnly<Guid?> roomFilterVariable;		
@@ -45,8 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
         public AppointmentGridViewModel(AggregateIdentifier identifier, 
 									    IDataCenter dataCenter, 
-										ISession session,
-										ICommandBus commandBus,
+										ISession session,										
 										IViewModelCommunication viewModelCommunication,
                                         IGlobalStateReadOnly<Size> gridSizeVariable,
 										IGlobalStateReadOnly<Guid?> roomFilterVariable,										
@@ -55,8 +52,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 										ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 		{
 			this.dataCenter = dataCenter;
-	        this.session = session;
-	        this.commandBus = commandBus;
+	        this.session = session;	        
 			this.viewModelCommunication = viewModelCommunication;
 		    this.gridSizeVariable = gridSizeVariable;
 		    this.roomFilterVariable = roomFilterVariable;
@@ -228,7 +224,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
 		public void Process(DeleteAppointment message)
 		{
-			commandBus.SendCommand(new DeleteAppointmentCommand(Identifier, 
+			dataCenter.SendCommand(new DeleteAppointmentCommand(Identifier, 
 																readModel.AggregateVersion, 
 																session.LoggedInUser.Id, 
 																message.PatientId,
@@ -274,7 +270,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 				sourceAggregateVersion = destinationAggregateVersion;
 			}
 
-			commandBus.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
+			dataCenter.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
 														  sourceAggregateVersion, destinationAggregateVersion,
 														  session.LoggedInUser.Id,
 														  originalAppointment.Patient.Id, 
@@ -289,8 +285,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		}
 
 		public void Process (CreateNewAppointmentFromModificationsAndSendToCommandBus message)
-		{			
-			commandBus.SendCommand(new AddAppointment(appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate, 
+		{
+			dataCenter.SendCommand(new AddAppointment(appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate, 
 													  readModel.AggregateVersion, 
 													  session.LoggedInUser.Id, 
 													  ActionTag.RegularAction, 

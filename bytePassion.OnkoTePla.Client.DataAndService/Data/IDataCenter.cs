@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Readmodels;
 
@@ -20,5 +21,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
 
         IEnumerable<MedicalPractice> GetAllMedicalPractices();
         IEnumerable<Patient>         GetAllPatients();
+
+		void SendCommand(DomainCommand command);
+
+		void PersistEventstore(); // TODO: just for testing
     }
 }

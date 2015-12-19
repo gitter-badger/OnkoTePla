@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Readmodels;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 
@@ -17,16 +19,22 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
         private readonly IConfigurationReadRepository configuration;
         private readonly IPatientReadRepository patientRepository;
         private readonly IReadModelRepository readModelRepository;
-        
-        public DataCenter(IConfigurationReadRepository configuration, 
-						  IPatientReadRepository patientRepository, 
-						  IReadModelRepository readModelRepository)
+		private readonly ICommandBus commandBus;
+		private readonly IEventStore eventStore;
+
+		internal DataCenter(IConfigurationReadRepository configuration, 
+						    IPatientReadRepository patientRepository, 
+						    IReadModelRepository readModelRepository,
+							ICommandBus commandBus,
+							IEventStore eventStore)
         {
             this.configuration = configuration;
             this.patientRepository = patientRepository;
-            this.readModelRepository = readModelRepository;            
+            this.readModelRepository = readModelRepository;
+			this.commandBus = commandBus;
+			this.eventStore = eventStore;
 
-            dataCache = new Dictionary<Guid, IDictionary<Date, MedicalPractice>>();
+			dataCache = new Dictionary<Guid, IDictionary<Date, MedicalPractice>>();
         }
 
         private readonly IDictionary<Guid, IDictionary<Date, MedicalPractice>> dataCache;
@@ -81,5 +89,15 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
         {
             return patientRepository.GetAllPatients();
         }
+
+		public void SendCommand(DomainCommand command)
+		{
+			commandBus.SendCommand(command);
+		}
+
+		public void PersistEventstore()
+		{
+			eventStore.PersistRepository();
+		}
 	}
 }

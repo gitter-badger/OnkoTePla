@@ -11,7 +11,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
-using bytePassion.OnkoTePla.Core.CommandSystem;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
@@ -20,20 +19,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 	{		
 		private readonly IDataCenter dataCenter;
         private readonly IViewModelCommunication viewModelCommunication;
-		private readonly ISession session;		
-	    private readonly ICommandBus commandBus;		
+		private readonly ISession session;			    	
         private readonly string versionNumber;
 
         public MainWindowBuilder(IDataCenter dataCenter,
                                  IViewModelCommunication viewModelCommunication,
-								 ISession session,
-								 ICommandBus commandBus,								
+								 ISession session,								
                                  string versionNumber)
 		{			
 			this.dataCenter = dataCenter;
 		    this.viewModelCommunication = viewModelCommunication;
-	        this.session = session;
-	        this.commandBus = commandBus;			
+	        this.session = session;	        
             this.versionNumber = versionNumber;
 		}
 
@@ -47,8 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
             var mainViewModelBuilder = new MainViewModelBuilder(dataCenter, 
                                                                 viewModelCommunication,
-																session, 
-                                                                commandBus,                                                                 
+																session,                                                                
                                                                 adornerControl);
 
             var loginViewModelBuilder = new LoginViewModelBuilder(session);

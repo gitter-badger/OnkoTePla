@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Data\IDataCenter.cs" />
+    <Compile Include="Factorys\DataCenterBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Connection\ConnectionStatus.cs" />
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
       <Project>{825b03a5-fd0f-417a-adc5-d3a0aad2c36b}</Project>
       <Name>bytePassion.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Client.Resources\bytePassion.OnkoTePla.Client.Resources.csproj">
+      <Project>{1ff3c490-8680-46a5-ab65-6329863326dc}</Project>
+      <Name>bytePassion.OnkoTePla.Client.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Communication\bytePassion.OnkoTePla.Communication.csproj">
       <Project>{64b9b70a-75c7-402f-a156-6c3b404533f5}</Project>

@@ -35,7 +35,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
 
 
@@ -45,20 +44,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
     {
         private readonly IDataCenter dataCenter;
         private readonly IViewModelCommunication viewModelCommunication;
-		private readonly ISession session;
-		private readonly ICommandBus commandBus;        
+		private readonly ISession session;		
         private readonly AdornerControl adornerControl;
 
         public MainViewModelBuilder(IDataCenter dataCenter,
                                     IViewModelCommunication viewModelCommunication,
-									ISession session,
-                                    ICommandBus commandBus,                                    
+									ISession session,                                   
                                     AdornerControl adornerControl)
         {
             this.dataCenter = dataCenter;
             this.viewModelCommunication = viewModelCommunication;
-	        this.session = session;
-	        this.commandBus = commandBus;            
+	        this.session = session;	        
             this.adornerControl = adornerControl;
         }
 
@@ -117,8 +113,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
             var appointmentGridViewModelBuilder = new AppointmentGridViewModelBuilder(dataCenter,
 																					  session,
-                                                                                      viewModelCommunication,
-                                                                                      commandBus,
+                                                                                      viewModelCommunication,                                                                                      
                                                                                       gridSizeVariable,
                                                                                       roomFilterVariable,
                                                                                       appointmentModificationsVariable,
@@ -189,8 +184,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             var searchPageViewModel = new SearchPageViewModel(patientSelectorViewModel,
                                                               selectedPatientForAppointmentSearchVariable,
                                                               selectedDateVariable,
-                                                              selectedMedicalPracticeIdVariable,
-                                                              commandBus,
+                                                              selectedMedicalPracticeIdVariable,                                                              
                                                               viewModelCommunication,
                                                               dataCenter,
 															  session);

@@ -19,7 +19,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Readmodels;
@@ -45,8 +44,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		
 		private readonly IGlobalState<Date> selectedDateVariable;
 		private readonly IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
-        private readonly IGlobalStateReadOnly<Patient> selectedPatientVariable;
-        private readonly ICommandBus commandBus;
+        private readonly IGlobalStateReadOnly<Patient> selectedPatientVariable;        
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IDataCenter dataCenter;
 		private readonly ISession session;
@@ -57,14 +55,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		public SearchPageViewModel(IPatientSelectorViewModel patientSelectorViewModel,
 								   IGlobalStateReadOnly<Patient> selectedPatientVariable,
 								   IGlobalState<Date> selectedDateVariable,
-								   IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
-                                   ICommandBus commandBus,
+								   IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable,                                   
 								   IViewModelCommunication viewModelCommunication,
 								   IDataCenter dataCenter,
 								   ISession session)
 		{
-		    this.selectedPatientVariable = selectedPatientVariable;
-		    this.commandBus = commandBus;
+		    this.selectedPatientVariable = selectedPatientVariable;		    
 			this.viewModelCommunication = viewModelCommunication;
 			this.dataCenter = dataCenter;
 			this.session = session;
@@ -107,7 +103,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 				var currentMedicalPracticeId = selectedMedicalPracticeIdVariable.Value;
 				var readModel = dataCenter.GetAppointmentsOfADayReadModel(new AggregateIdentifier(appointment.Day, currentMedicalPracticeId));
 
-				commandBus.SendCommand(new DeleteAppointment(readModel.Identifier,
+				dataCenter.SendCommand(new DeleteAppointment(readModel.Identifier,
 															 readModel.AggregateVersion,
 															 session.LoggedInUser.Id,
 															 appointment.Patient.Id,
