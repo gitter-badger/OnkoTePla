@@ -69,7 +69,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 				{
 					if (MainViewModel != null)
 					{
-						MainViewModel.Dispose();
+						mainViewModelBuilder.DisposeViewModel(MainViewModel);
 						MainViewModel = null;
 
 						LoginViewModel = loginViewModelBuilder.Build();
