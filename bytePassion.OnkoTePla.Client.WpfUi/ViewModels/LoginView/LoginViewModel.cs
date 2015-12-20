@@ -89,7 +89,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 		public bool AutoConnectOnNextStart { get; set; }
 
-		protected override void CleanUp () { }
+		protected override void CleanUp()
+		{
+			session.UserListAvailable -= OnNewUserListAvailable;
+		}
 		public override event PropertyChangedEventHandler PropertyChanged;
 	}
 }
