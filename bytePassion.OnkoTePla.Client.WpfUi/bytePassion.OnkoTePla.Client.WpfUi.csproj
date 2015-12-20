@@ -73,6 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Adorner\AdornerControl.cs" />
+    <Compile Include="Computations\ConnectionStatusToBackgroundBrush.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Behaviors\AcceptAppointmentDropBehavior.cs" />
     <Compile Include="Behaviors\DeleteButtonPlacementBehavior.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Computations\PatientToCollapedVisibilityConverter.cs" />
     <Compile Include="Converter\OperatingModeToBackgroundBrush.cs" />
     <Compile Include="Converter\OperatingModeToVisibilityConverter.cs" />
+    <Compile Include="Enums\ConnectionStatus.cs" />
     <Compile Include="Enums\MainPage.cs" />
     <Compile Include="Factorys\AppointmentModification\AppointmentModificationsBuilder.cs" />
     <Compile Include="Factorys\AppointmentModification\IAppointmentModificationsBuilder.cs" />
