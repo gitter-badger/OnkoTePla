@@ -13,11 +13,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 	    private readonly IConnectionService connectionService;
 	    private readonly IClientWorkflow clientWorkflow;
 	    private ApplicationState currentApplicationState;
-
 	    
 
-
-	    public Session(IConnectionService connectionService, IClientWorkflow clientWorkflow)
+	    internal Session(IConnectionService connectionService, IClientWorkflow clientWorkflow)
 	    {
 		    this.connectionService = connectionService;
 		    this.clientWorkflow = clientWorkflow;
@@ -26,18 +24,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			AvailableUsers = new List<User>();
 
 			clientWorkflow.StateChanged += OnApplicationStateChanged;
-			//connectionService.ConnectionStatusChanged 
+			connectionService.ConnectionEventInvoked += OnConnectionServiceEventInvoked;
 	    }
-
 		
-		
-		private void OnApplicationStateChanged(ApplicationState newApplicationState)
-		{
-			CurrentApplicationState = newApplicationState;
-		}
-
-
-
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////                                                                                   ///////////
@@ -55,6 +44,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 				currentApplicationState = value;
 				ApplicationStateChanged?.Invoke(CurrentApplicationState);
 			}
+		}
+
+		private void OnApplicationStateChanged (ApplicationState newApplicationState)
+		{
+			CurrentApplicationState = newApplicationState;
 		}
 
 		private void ApplyWorkflowEvent (WorkflowEvent workflowEvent)
@@ -81,6 +75,20 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+		private void OnConnectionServiceEventInvoked (ConnectionEvent connectionEvent)
+		{
+			switch (connectionEvent)
+			{
+				case ConnectionEvent.ConnectionEstablished:  ApplyWorkflowEvent(WorkflowEvent.ConnectionEstablished);  break;
+				case ConnectionEvent.Disconnected:           ApplyWorkflowEvent(WorkflowEvent.Disconnected);           break;
+				case ConnectionEvent.ConAttemptUnsuccessful: ApplyWorkflowEvent(WorkflowEvent.ConAttemptUnsuccessful); break;
+				case ConnectionEvent.ConnectionLost:         ApplyWorkflowEvent(WorkflowEvent.ConnectionLost);         break;
+				case ConnectionEvent.StartedTryConnect:      ApplyWorkflowEvent(WorkflowEvent.StartedTryConnect);      break;
+				case ConnectionEvent.StartedTryDisconnect:   ApplyWorkflowEvent(WorkflowEvent.StartedTryDisconnect);   break;
+			}
+		}		
+
 		public void TryConnect (Address serverAddress)
 		{
 			connectionService.TryConnect(serverAddress);
@@ -101,6 +109,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 
 		public event Action<bool> UndoPossibleChanged;
 		public event Action<bool> RedoPossibleChanged;
+
 		public bool UndoPossible ()
 		{
 			return false;
