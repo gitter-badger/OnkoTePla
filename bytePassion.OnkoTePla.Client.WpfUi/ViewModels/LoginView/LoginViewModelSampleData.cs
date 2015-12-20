@@ -1,12 +1,40 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 {
-    internal class LoginViewModelSampleData : ILoginViewModel
+	internal class LoginViewModelSampleData : ILoginViewModel
     {
-        public void Dispose() { }
-        public event PropertyChangedEventHandler PropertyChanged;        
-    }
+	    public LoginViewModelSampleData()
+	    {
+		    AvailableUsers = new ObservableCollection<string>
+		    {
+			    "User1",
+				"User2"
+		    };
+
+		    SelectedUserName = "User2";
+		    ServerAddress = "192.168.128.12:6656";
+
+		    AutoConnectOnNextStart = true;
+	    }
+
+	    public ICommand Login      { get; } = null;
+	    public ICommand Connect    { get; } = null;
+		public ICommand Disconnect { get; } = null;
+
+	    public ObservableCollection<string> AvailableUsers { get; }
+
+	    public string SelectedUserName  { get; set;  }
+	    public string Password      {      set {}}
+	    public string ServerAddress { get; set;  }
+
+	    public bool AutoConnectOnNextStart { get; set; }
+
+		public void Dispose () { }
+		public event PropertyChangedEventHandler PropertyChanged;
+	}
 }

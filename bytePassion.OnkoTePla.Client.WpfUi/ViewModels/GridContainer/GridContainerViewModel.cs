@@ -75,7 +75,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 
 		public Lib.Types.SemanticTypes.Size ReportedGridSize
 		{
-			set { appointmentGridSizeVariable.Value = value; }
+			set
+			{
+				if (value != null)
+					appointmentGridSizeVariable.Value = value;
+			}
 		}
 
 		private void AddGridViewModel(AggregateIdentifier identifier)

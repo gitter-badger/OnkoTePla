@@ -50,11 +50,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
             var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
 
-		    var connectionStatusViewModel = new ConnectionStatusViewModel();
+		    var connectionStatusViewModel = new ConnectionStatusViewModel(session);
 
 		    var dialogBuilder = new AboutDialogWindowBuilder(versionNumber);
 
-		    var actionBarViewModel = new ActionBarViewModel(connectionStatusViewModel,
+		    var actionBarViewModel = new ActionBarViewModel(session,
+															connectionStatusViewModel,
                                                             viewModelCommunication,
                                                             dialogBuilder);
 

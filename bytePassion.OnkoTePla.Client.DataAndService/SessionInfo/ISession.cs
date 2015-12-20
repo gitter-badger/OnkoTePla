@@ -21,12 +21,17 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////                                                                                   ///////////
-		/////////                                     userInfo                                      ///////////
+		/////////                                       user                                        ///////////
 		/////////                                                                                   ///////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		event Action<IReadOnlyList<User>> UserListAvailable;
+
 		User LoggedInUser { get; }
 		IReadOnlyList<User> AvailableUsers { get; }
+
+		void TryLogin(User user, string password);
+		void Logout();
 
 
 

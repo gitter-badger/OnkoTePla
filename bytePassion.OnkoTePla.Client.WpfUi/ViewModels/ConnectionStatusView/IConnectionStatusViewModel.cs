@@ -1,7 +1,10 @@
-﻿namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView
+﻿using bytePassion.OnkoTePla.Client.WpfUi.Enums;
+
+namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView
 {
-    internal interface IConnectionStatusViewModel : IViewModel
+	internal interface IConnectionStatusViewModel : IViewModel
     {
-        bool ConnectionIsEstablished { get; }
+        ConnectionStatus ConnectionStatus { get; }
+		string Text { get; }
     }
 }

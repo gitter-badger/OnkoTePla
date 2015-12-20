@@ -14,7 +14,7 @@ using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 namespace bytePassion.OnkoTePla.Client.DataAndService.Data
 {
 
-	public class DataCenter : IDataCenter
+	internal class DataCenter : IDataCenter
 	{
         private readonly IConfigurationReadRepository configuration;
         private readonly IPatientReadRepository patientRepository;

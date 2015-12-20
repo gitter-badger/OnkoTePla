@@ -3,11 +3,11 @@ using bytePassion.Lib.Types.Communication;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
-	public interface IConnectionService
+	internal interface IConnectionService
 	{
-		event Action<ConnectionStatus> ConnectionStatusChanged;
-
-		Address CurrentServerAddress { get; }
+		event Action<ConnectionEvent> ConnectionEventInvoked;
+		
+		Address          ServerAddress    { get; }
 		ConnectionStatus ConnectionStatus { get; }
 		
 		void TryConnect (Address serverAddress);

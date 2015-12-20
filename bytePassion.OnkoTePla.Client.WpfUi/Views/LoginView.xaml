@@ -14,7 +14,7 @@
     <Grid Background="White">
         
         <Border Width="400"
-                Height="330"
+                Height="340"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 BorderBrush="Black"
@@ -24,8 +24,8 @@
             <Grid>
                 
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 
@@ -69,17 +69,25 @@
                         <ComboBox Grid.Row="0"
                                   Grid.Column="1"
                                   Height="30"
-                                  Margin="10"/>
+                                  Margin="5"
+								  ItemsSource="{Binding AvailableUsers}"
+								  SelectedItem="{Binding SelectedUserName, 
+													     Mode=TwoWay, 
+														 UpdateSourceTrigger=PropertyChanged}"/>
                         
                         <TextBox Grid.Row="1"
                                  Grid.Column="1"
                                  Height="30"
-                                 Margin="10"/>
+                                 Margin="5"
+								 Text="{Binding Password, 
+												Mode=OneWayToSource, 
+												UpdateSourceTrigger=PropertyChanged}"/>
                         
                         <Button Grid.Row="0"
                                 Grid.Column="2"
                                 Grid.RowSpan="2"
-                                Margin="13">
+                                Margin="13"
+								Command="{Binding Login}">
 
                             <Viewbox Width="48" Height="48">
                                 <Canvas Width="24" Height="24">
@@ -99,25 +107,36 @@
                 
                 <StackPanel Grid.Row="2">
 
+					<CheckBox Margin="10"
+							  Content="AutoConnect on next Start"
+							  IsChecked="{Binding AutoConnectOnNextStart, 
+												  Mode=TwoWay, 
+												  UpdateSourceTrigger=PropertyChanged}"/>
+					
                     <TextBlock Margin="10"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
-                               Text="Server-IP-Adresse + Port (bsp: '192.128.1.234:4000'):"/>
+                               Text="Server-IP-Adresse(bsp: '192.128.1.234'):"/>
 
                     <TextBox Height="25"
-                             Margin="10,0"/>
+                             Margin="10,0"
+							 Text="{Binding ServerAddress, 
+											Mode=OneWayToSource, 
+										    UpdateSourceTrigger=PropertyChanged}"/>
                     
                     <StackPanel Orientation="Horizontal">
 
                         <Button Height="25"
                                 Margin="50,5"
                                 Width="100"
-                                Content="Connect"/>
+                                Content="Connect"
+								Command="{Binding Connect}"/>
 
                         <Button Height="25"
                                 Margin="50,5"
                                 Width="100"
-                                Content="Disconnect"></Button>
+                                Content="Disconnect"
+								Command="{Binding Disconnect}"/>
                         
                     </StackPanel>
                     

@@ -5,10 +5,9 @@ using bytePassion.Lib.Types.Communication;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
-	public class ConnectionService : IConnectionService
+	internal class ConnectionService : IConnectionService
 	{
-		private ConnectionStatus connectionStatus;
-		public event Action<ConnectionStatus> ConnectionStatusChanged;
+		public event Action<ConnectionEvent> ConnectionEventInvoked;
 
 
 		public ConnectionService()
@@ -16,37 +15,38 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			ConnectionStatus = ConnectionStatus.Disconnected;
 		}
 
-		public ConnectionStatus ConnectionStatus
-		{
-			get { return connectionStatus; }
-			private set
-			{
-				connectionStatus = value;
-				ConnectionStatusChanged?.Invoke(ConnectionStatus);
-			}
-		}
-
-		public Address CurrentServerAddress { get; private set; }
+		public ConnectionStatus ConnectionStatus { get; private set; }
+		public Address          ServerAddress    { get; private set; }
 
         public void TryConnect(Address serverAddress)
         {
-	        CurrentServerAddress = serverAddress;
+	        ServerAddress = serverAddress;
 
-			ConnectionStatus = ConnectionStatus.TryConnect;
+			ConnectionStatus = ConnectionStatus.TryingToConnect;
+			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
 
 			Application.Current.Dispatcher.DelayInvoke(
-					() => ConnectionStatus = ConnectionStatus.Connected,
-					TimeSpan.FromSeconds(10)
+				() =>
+				{
+					ConnectionStatus = ConnectionStatus.Connected;
+					ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
+				},
+				TimeSpan.FromSeconds(2)
 			);
 		}
 
         public void TryDisconnect()
         {
-			ConnectionStatus = ConnectionStatus.TryDisconnect;
+			ConnectionStatus = ConnectionStatus.TryingToDisconnect;
+			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryDisconnect);
 
 			Application.Current.Dispatcher.DelayInvoke(
-					() => ConnectionStatus = ConnectionStatus.Disconnected,
-					TimeSpan.FromSeconds(10)
+				() =>
+				{
+					ConnectionStatus = ConnectionStatus.Disconnected;
+					ConnectionEventInvoked?.Invoke(ConnectionEvent.Disconnected);					
+				},
+				TimeSpan.FromSeconds(2)
 			);
 		}
     }

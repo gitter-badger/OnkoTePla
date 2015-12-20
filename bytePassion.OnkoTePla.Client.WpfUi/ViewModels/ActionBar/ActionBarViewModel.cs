@@ -1,26 +1,32 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
+﻿using System.ComponentModel;
+using System.Windows.Input;
+using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
+using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
-using System.ComponentModel;
-using System.Windows.Input;
 
-#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
 {
-    internal class ActionBarViewModel : ViewModel, IActionBarViewModel
+	internal class ActionBarViewModel : ViewModel, IActionBarViewModel
     {
-        private readonly IViewModelCommunication viewModelCommunication;
+		private readonly ISession session;
+		private readonly IViewModelCommunication viewModelCommunication;
         private readonly IWindowBuilder<Views.AboutDialog> dialogBuilder;
+		private bool navigationAndLogoutButtonVisibility;
 
-        public ActionBarViewModel(IConnectionStatusViewModel connectionStatusViewModel,
+		public ActionBarViewModel(ISession session,
+								  IConnectionStatusViewModel connectionStatusViewModel,
                                   IViewModelCommunication viewModelCommunication,
                                   IWindowBuilder<Views.AboutDialog> dialogBuilder)
         {
-            this.viewModelCommunication = viewModelCommunication;
+	        this.session = session;
+	        this.viewModelCommunication = viewModelCommunication;
             this.dialogBuilder = dialogBuilder;
             ConnectionStatusViewModel = connectionStatusViewModel;
 
@@ -29,9 +35,23 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
             ShowOptions  = new Command(() => viewModelCommunication.Send(new ShowPage(MainPage.Options)));
 
             ShowAbout = new Command(ShowAboutDialog);
+			Logout    = new Command(DoLogOut);
+
+			session.ApplicationStateChanged += OnApplicationStateChanged;
+			OnApplicationStateChanged(session.CurrentApplicationState);
         }
 
-        private void ShowAboutDialog()
+		private void OnApplicationStateChanged(ApplicationState newApplicationState)
+		{
+			NavigationAndLogoutButtonVisibility = newApplicationState == ApplicationState.LoggedIn;
+		}
+
+		private void DoLogOut()
+	    {
+			session.Logout();
+	    }
+
+	    private void ShowAboutDialog()
         {
             viewModelCommunication.Send(new ShowDisabledOverlay());
 
@@ -47,13 +67,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
         public ICommand Logout       { get; }
         public ICommand ShowAbout    { get; }
 
+		public bool NavigationAndLogoutButtonVisibility
+		{
+			get { return navigationAndLogoutButtonVisibility; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref navigationAndLogoutButtonVisibility, value); }
+		}
 
-
-        public IConnectionStatusViewModel ConnectionStatusViewModel { get; }
+		public IConnectionStatusViewModel ConnectionStatusViewModel { get; }
 
         protected override void CleanUp()
         {
-        }
+			session.ApplicationStateChanged -= OnApplicationStateChanged;
+		}
         public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

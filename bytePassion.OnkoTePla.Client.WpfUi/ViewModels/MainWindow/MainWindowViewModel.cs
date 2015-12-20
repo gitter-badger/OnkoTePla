@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
+using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
@@ -40,15 +41,50 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 	        NotificationServiceContainerViewModel = notificationServiceContainerViewModel;
             ActionBarViewModel = actionBarViewModel;
 
-            MainViewModel = mainViewModelBuilder.Build();
+			session.ApplicationStateChanged += OnApplicationStateChanged;
+            
             LoginViewModel = loginViewModelBuilder.Build();
 
-            IsMainViewVisible = true;
-            IsLoginViewVisible = false;
+            IsMainViewVisible = false;
+            IsLoginViewVisible = true;
         }
 
+		private void OnApplicationStateChanged(ApplicationState newApplicationState)
+		{
+			switch (newApplicationState)
+			{
+				case ApplicationState.LoggedIn:
+				{
+					LoginViewModel.Dispose();					
 
-        public IMainViewModel MainViewModel
+					MainViewModel = mainViewModelBuilder.Build();
+
+					IsMainViewVisible = true;
+					IsLoginViewVisible = false;
+
+					break;
+				}
+
+				default:
+				{
+					if (MainViewModel != null)
+					{
+						MainViewModel.Dispose();
+						MainViewModel = null;
+
+						LoginViewModel = loginViewModelBuilder.Build();
+
+						IsMainViewVisible = false;
+						IsLoginViewVisible = true;
+					}
+
+					break;
+				}
+			}
+		}
+
+
+		public IMainViewModel MainViewModel
         {
             get { return mainViewModel; }
             private set { PropertyChanged.ChangeAndNotify(this, ref mainViewModel, value); }

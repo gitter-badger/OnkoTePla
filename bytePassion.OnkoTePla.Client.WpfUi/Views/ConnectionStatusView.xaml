@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView"
+             xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Computations"
              mc:Ignorable="d"             
              Width="250"
              Height="27">
@@ -11,13 +12,18 @@
     <d:DesignData.DataContext>
         <sampleData:ConnectionStatusViewModelSampleData/>
     </d:DesignData.DataContext>
+	
+	<UserControl.Resources>
+		<computations:ConnectionStatusToBackgroundBrush x:Key="ConnectionStatusToBackgroundBrush"/>
+	</UserControl.Resources>
     
     <Border BorderThickness="1"
             BorderBrush="Black"
             CornerRadius="5"
-            Background="GreenYellow">
+            Background="{Binding ConnectionStatus, 
+								 Converter={StaticResource ConnectionStatusToBackgroundBrush}}">
             
-        <TextBlock Text="connected to Server"
+        <TextBlock Text="{Binding Text}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="17"/>
