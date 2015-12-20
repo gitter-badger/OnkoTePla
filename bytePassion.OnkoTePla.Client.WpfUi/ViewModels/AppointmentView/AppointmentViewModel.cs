@@ -96,6 +96,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				}
 			);	
 
+            EditDescription = new Command(async () =>
+            {
+                
+            });
+
 			BeginTime = appointment.StartTime;
 			EndTime = appointment.EndTime;
 
@@ -163,6 +168,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		
 		public ICommand DeleteAppointment { get; }
 		public ICommand SwitchToEditMode  { get; }
+        public ICommand EditDescription { get; }
 
 
 		public Time BeginTime

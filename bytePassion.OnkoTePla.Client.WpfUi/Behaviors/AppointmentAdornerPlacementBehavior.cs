@@ -6,10 +6,10 @@ using System.Windows.Interactivity;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
-    public class DeleteButtonPlacementBehavior : Behavior<Button>
+    public class AppointmentAdornerPlacementBehavior : Behavior<StackPanel>
     {
         public static readonly DependencyProperty ReferenceElementProperty = DependencyProperty.Register(
-            "ReferenceElement", typeof (UIElement), typeof (DeleteButtonPlacementBehavior), new PropertyMetadata(default(UIElement)));
+            "ReferenceElement", typeof (UIElement), typeof (AppointmentAdornerPlacementBehavior), new PropertyMetadata(default(UIElement)));
 
         private int zindex;
 

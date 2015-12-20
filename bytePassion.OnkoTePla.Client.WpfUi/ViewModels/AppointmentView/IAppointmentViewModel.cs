@@ -20,7 +20,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 											   IViewModelMessageHandler<SwitchToEditMode>
 	{
 		ICommand DeleteAppointment { get; }
-		ICommand SwitchToEditMode  { get; }		
+		ICommand SwitchToEditMode  { get; }	
+        ICommand EditDescription { get; }	
 		
 		Time BeginTime { get; }
 		Time EndTime   { get; }
