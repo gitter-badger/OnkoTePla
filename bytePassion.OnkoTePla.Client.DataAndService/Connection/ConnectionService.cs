@@ -31,7 +31,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					ConnectionStatus = ConnectionStatus.Connected;
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
 				},
-				TimeSpan.FromSeconds(10)
+				TimeSpan.FromSeconds(2)
 			);
 		}
 
@@ -46,7 +46,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					ConnectionStatus = ConnectionStatus.Disconnected;
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.Disconnected);					
 				},
-				TimeSpan.FromSeconds(10)
+				TimeSpan.FromSeconds(2)
 			);
 		}
     }
