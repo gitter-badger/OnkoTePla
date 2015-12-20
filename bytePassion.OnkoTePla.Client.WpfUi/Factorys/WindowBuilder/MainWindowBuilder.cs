@@ -54,7 +54,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
 		    var dialogBuilder = new AboutDialogWindowBuilder(versionNumber);
 
-		    var actionBarViewModel = new ActionBarViewModel(connectionStatusViewModel,
+		    var actionBarViewModel = new ActionBarViewModel(session,
+															connectionStatusViewModel,
                                                             viewModelCommunication,
                                                             dialogBuilder);
 

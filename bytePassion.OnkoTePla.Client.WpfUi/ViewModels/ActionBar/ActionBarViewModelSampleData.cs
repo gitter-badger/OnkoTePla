@@ -1,16 +1,18 @@
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
 using System.ComponentModel;
 using System.Windows.Input;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
 {
-    internal class ActionBarViewModelSampleData : IActionBarViewModel
+	internal class ActionBarViewModelSampleData : IActionBarViewModel
     {
         public ActionBarViewModelSampleData()
         {
             ConnectionStatusViewModel = new ConnectionStatusViewModelSampleData();
+
+	        NavigationAndLogoutButtonVisibility = true;
         }
 
         public ICommand ShowOverview { get; } = null;
@@ -19,7 +21,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
         public ICommand Logout       { get; } = null;
         public ICommand ShowAbout    { get; } = null;
 
-        public IConnectionStatusViewModel ConnectionStatusViewModel { get; }
+	    public bool NavigationAndLogoutButtonVisibility { get; }
+
+	    public IConnectionStatusViewModel ConnectionStatusViewModel { get; }
 
         public void Dispose() { }
         public event PropertyChangedEventHandler PropertyChanged;

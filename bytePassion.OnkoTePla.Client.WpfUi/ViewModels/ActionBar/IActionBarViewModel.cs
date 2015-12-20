@@ -1,16 +1,18 @@
-﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
 {
-    internal interface IActionBarViewModel : IViewModel
+	internal interface IActionBarViewModel : IViewModel
     {
         ICommand ShowOverview { get; }
         ICommand ShowSearch   { get; }
         ICommand ShowOptions  { get; }
         ICommand Logout       { get; }
         ICommand ShowAbout    { get; }
+
+		bool NavigationAndLogoutButtonVisibility { get; }
 
         IConnectionStatusViewModel ConnectionStatusViewModel { get; }
     }
