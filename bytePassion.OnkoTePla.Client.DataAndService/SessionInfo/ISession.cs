@@ -25,6 +25,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		/////////                                                                                   ///////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		event Action<IReadOnlyList<User>> UserListAvailable;
+
 		User LoggedInUser { get; }
 		IReadOnlyList<User> AvailableUsers { get; }
 

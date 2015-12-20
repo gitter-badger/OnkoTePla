@@ -13,19 +13,27 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 	    private readonly IConnectionService connectionService;
 	    private readonly IClientWorkflow clientWorkflow;
 	    private ApplicationState currentApplicationState;
-	    
 
-	    internal Session(IConnectionService connectionService, IClientWorkflow clientWorkflow)
+		private IReadOnlyList<User> availableUsers;
+
+
+		internal Session(IConnectionService connectionService, IClientWorkflow clientWorkflow)
 	    {
 		    this.connectionService = connectionService;
 		    this.clientWorkflow = clientWorkflow;
 
 			CurrentApplicationState = clientWorkflow.CurrentState;
-			AvailableUsers = new List<User>();
+
+			AvailableUsers = new List<User>
+			{
+				new User("exampleUser1", new List<Guid> {Guid.Parse("9b95563a-039d-44b3-b95f-8ee7fabc41e3")}, "1234", Guid.Parse("f74605e6-3f54-4f08-b127-f52201d03d20")),
+				new User("exampleUser2", new List<Guid> {Guid.Parse("9b95563a-039d-44b3-b95f-8ee7fabc41e3"),
+														 Guid.Parse("d6c3e8c6-6281-4041-97ea-724a3d5379a5")}, "2345", Guid.Parse("1ca9e57c-9fee-42d9-8067-292abbfb29fb")),
+			};
 
 			clientWorkflow.StateChanged += OnApplicationStateChanged;
 			connectionService.ConnectionEventInvoked += OnConnectionServiceEventInvoked;
-	    }
+		}
 		
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +52,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 				currentApplicationState = value;
 				ApplicationStateChanged?.Invoke(CurrentApplicationState);
 			}
-		}
+		}		
 
 		private void OnApplicationStateChanged (ApplicationState newApplicationState)
 		{
@@ -63,9 +71,19 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		/////////                                                                                   ///////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		public event Action<IReadOnlyList<User>> UserListAvailable;
+
 		public User LoggedInUser { get; set; }
 
-		public IReadOnlyList<User> AvailableUsers { get; private set; }
+		public IReadOnlyList<User> AvailableUsers
+		{
+			get { return availableUsers; }
+			private set
+			{
+				availableUsers = value;
+				UserListAvailable?.Invoke(AvailableUsers);
+			}
+		}
 
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,7 +91,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		/////////                                 serverConnection                                  ///////////
 		/////////                                                                                   ///////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 		private void OnConnectionServiceEventInvoked (ConnectionEvent connectionEvent)
