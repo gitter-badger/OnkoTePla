@@ -85,6 +85,18 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			}
 		}
 
+		public void TryLogin(User user, string password)
+		{
+			LoggedInUser = user;
+			ApplyWorkflowEvent(WorkflowEvent.LoggedIn);
+		}
+
+		public void Logout()
+		{
+			LoggedInUser = null;
+			ApplyWorkflowEvent(WorkflowEvent.LoggedOut);
+		}
+
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////                                                                                   ///////////
