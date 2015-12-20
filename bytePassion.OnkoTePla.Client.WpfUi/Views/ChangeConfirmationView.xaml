@@ -11,57 +11,63 @@
     <d:DesignData.DataContext>
         <changeConfirmationView:ChangeConfirmationViewModelSampleData />
     </d:DesignData.DataContext>
+    <Border Background="{StaticResource SemiTransparentWhiteBrush}" CornerRadius="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
 
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
 
-        <TextBlock Grid.Row="0"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontFamily="{StaticResource StandardFontFamily}"
-                   FontSize="16"
-                   Text="Änderungen übernehmen?" />
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontFamily="{StaticResource StandardFontFamily}"
+                       FontSize="16"
+                       Foreground="White"
+                       Text="übernehmen?" />
 
-        <Button Grid.Row="1"
-                Grid.Column="0"
-                Margin="50,5,5,5"
-                Command="{Binding ConfirmChanges}">
+            <Button Grid.Row="2"
+                    Grid.Column="0"
+                    Width="80"
+                    
+                    Command="{Binding ConfirmChanges}">
 
-            <Canvas>
-                <Viewbox Canvas.Left="-13"
-                         Canvas.Top="-14"
-                         Width="25">
-                    <Path Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" Fill="Black" />
+                <Canvas>
+                    <Viewbox Canvas.Left="-13"
+                             Canvas.Top="-14"
+                             Width="25">
+                        <Path Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" Fill="#444444" />
+                    </Viewbox>
+                </Canvas>
+
+            </Button>
+
+            <Button Grid.Row="2"
+                    Grid.Column="1"
+                    Width="80"
+                    Command="{Binding RejectChanges}">
+
+                <Viewbox Width="25" Height="25">
+                    <Path Width="24"
+                          Height="24"
+                          Data="F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 19,38C 19,27.5066 27.5066,19 38,19 Z M 38,23.75C 35.2116,23.75 32.6102,24.5509 30.4134,25.9352L 50.0648,45.5866C 51.4491,43.3898 52.25,40.7884 52.25,38C 52.25,30.13 45.87,23.75 38,23.75 Z M 23.75,38C 23.75,45.8701 30.1299,52.25 38,52.25C 40.7884,52.25 43.3897,51.4491 45.5865,50.0649L 25.9351,30.4136C 24.5509,32.6103 23.75,35.2117 23.75,38 Z "
+                          Fill="#444444"
+                          Stretch="Fill" />
                 </Viewbox>
-            </Canvas>
 
-        </Button>
+            </Button>
+        </Grid>
+    </Border>
 
-        <Button Grid.Row="1"
-                Grid.Column="1"
-                Margin="5,5,50,5"
-                Command="{Binding RejectChanges}">
-
-            <Canvas>
-                <Viewbox Canvas.Left="-13"
-                         Canvas.Top="-12"
-                         Width="20">
-                    <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" Fill="Black" />
-                </Viewbox>
-            </Canvas>
-
-        </Button>
-    </Grid>
 
 </UserControl>

@@ -36,6 +36,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 
 		public ICommand DeleteAppointment => null;
 		public ICommand SwitchToEditMode  => null;
+        public ICommand EditDescription => null;
 
 		public Time   BeginTime     { get; }
 		public Time   EndTime       { get; }		

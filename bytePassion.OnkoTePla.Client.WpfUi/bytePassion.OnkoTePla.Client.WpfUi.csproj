@@ -76,7 +76,7 @@
     <Compile Include="Computations\ConnectionStatusToBackgroundBrush.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Behaviors\AcceptAppointmentDropBehavior.cs" />
-    <Compile Include="Behaviors\DeleteButtonPlacementBehavior.cs" />
+    <Compile Include="Behaviors\AppointmentAdornerPlacementBehavior.cs" />
     <Compile Include="Behaviors\MoveEndTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveBeginTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveWholeAppointmentBehavior.cs" />
