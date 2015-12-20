@@ -1,14 +1,14 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
+﻿using System.ComponentModel;
+using System.Windows.Input;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
-using System.ComponentModel;
-using System.Windows.Input;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView
 {
-    public class ChangeConfirmationViewModel : ViewModel, 
+	public class ChangeConfirmationViewModel : ViewModel, 
                                                IChangeConfirmationViewModel
 	{
 		public ChangeConfirmationViewModel(IViewModelCommunication viewModelCommunication)

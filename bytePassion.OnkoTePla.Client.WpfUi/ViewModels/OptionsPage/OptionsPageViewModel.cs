@@ -1,17 +1,17 @@
-﻿using bytePassion.Lib.WpfLib.Commands;
-using MahApps.Metro;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using bytePassion.Lib.WpfLib.Commands;
+using MahApps.Metro;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage
 {
-    public class AccentColorMenuData
+	public class AccentColorMenuData
     {
         public string Name { get; set; }
         public Brush BorderColorBrush { get; set; }
