@@ -2,11 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:contracts="clr-namespace:bytePassion.OnkoTePla.Contracts.Patients;assembly=bytePassion.OnkoTePla.Contracts"
-             xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:patientSelector="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector"
-             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Converter"
              d:DesignHeight="500"
              d:DesignWidth="300"
              mc:Ignorable="d">
@@ -18,7 +18,7 @@
     <UserControl.Resources>
 
         <libConverter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
-        <libConverter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter"/>
+        <libConverter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter" />
         <converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter" />
 
         <DataTemplate x:Key="ListItemTemplate" DataType="{x:Type contracts:Patient}">
@@ -28,15 +28,15 @@
                         <ColumnDefinition Width="50" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                   
+
                     <Image Grid.Column="0"
                            Width="32"
                            Height="32"
                            Source="pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;Component/Icons/AliveDead/black-ribbon.png"
-                           Stretch="None" 
-                           Visibility="{Binding Alive, 
-                                                Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}"/>
-                    
+                           Stretch="None"
+                           Visibility="{Binding Alive,
+                                                Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}" />
+
                     <StackPanel Grid.Column="1" Margin="8 0 0 0">
                         <TextBlock FontSize="14pt" Text="{Binding Name}" />
                         <TextBlock FontSize="10pt"
@@ -47,7 +47,7 @@
                 </Grid>
             </Border>
         </DataTemplate>
-        
+
     </UserControl.Resources>
 
     <Grid>

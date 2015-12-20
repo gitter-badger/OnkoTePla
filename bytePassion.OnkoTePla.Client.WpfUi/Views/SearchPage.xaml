@@ -62,45 +62,43 @@
 
             <ScrollViewer Grid.Row="2">
 
-                <ItemsControl Margin="0,10,0,0" ItemsSource="{Binding DisplayedAppointments}">
-
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="ContentPresenter">
-                            <Setter Property="Margin" Value="0,5" />
+                <ListBox Margin="0,10,0,0"
+                         Foreground="#444444"
+                         ItemsSource="{Binding DisplayedAppointments}">
+                    <ListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource ListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Margin" Value="0,0,0,5" />
                         </Style>
-                    </ItemsControl.ItemContainerStyle>
-
+                    </ListBox.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type contracts:Appointment}">
-                            <Border Background="#e4e4e4">
+                            <Border Name="ItemBorder" Padding="15">
 
-
-                                <Grid Margin="10">
+                                <Grid>
 
                                     <Grid.Resources>
 
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="#444444" />
                                             <Setter Property="FontFamily" Value="{StaticResource StandardFontFamily}" />
-                                            <Setter Property="FontSize" Value="20" />
+                                            <Setter Property="FontSize" Value="15pt" />
                                         </Style>
 
                                     </Grid.Resources>
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="40" />
                                         <ColumnDefinition Width="40" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0" Text="{Binding Day}" />
+                                    <TextBlock Grid.Column="0"
+                                               Margin="0,0,20,0"
+                                               FontFamily="Segoe UI "
+                                               FontWeight="Bold"
+                                               Foreground="#666666"
+                                               Text="{Binding Day}" />
                                     <TextBlock Grid.Column="1" Text="{Binding Description}" />
 
                                     <Button Grid.Column="2"
@@ -141,7 +139,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
-                </ItemsControl>
+                </ListBox>
             </ScrollViewer>
 
         </Grid>
