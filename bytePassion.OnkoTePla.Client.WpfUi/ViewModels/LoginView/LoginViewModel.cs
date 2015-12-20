@@ -8,6 +8,7 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
+using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Contracts.Config;
@@ -21,22 +22,39 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 		private readonly ISession session;
 		private string selectedUserName;
-		
+		private string serverAddress;
+
 		public LoginViewModel(ISession session)
 	    {
 		    this.session = session;
 
-			Login = new Command(DoLogin);
-			Connect = new Command(DoConnect);
-			Disconnect = new Command(DoDisconnect);
+			Login = new Command(DoLogin,
+								IsLoginPossible);
+
+			Connect = new Command(DoConnect,
+								  IsConnectPossible);
+
+			Disconnect = new Command(DoDisconnect,
+									 IsDisconnectPossible);
 
 			AvailableUsers = session.AvailableUsers
 									.Select(user => user.Name)
 									.ToObservableCollection();
 
-			session.UserListAvailable += OnNewUserListAvailable;
+			session.UserListAvailable       += OnNewUserListAvailable;
+			session.ApplicationStateChanged += OnApplicationStateChanged; 
 	    }
 
+		
+
+		private void OnApplicationStateChanged(ApplicationState applicationState)
+		{
+			((Command)Login).RaiseCanExecuteChanged();
+			((Command)Connect).RaiseCanExecuteChanged();
+			((Command)Disconnect).RaiseCanExecuteChanged();
+		}	
+		
+		
 		private void OnNewUserListAvailable(IReadOnlyList<User> newUserList)
 		{
 			AvailableUsers.Clear();
@@ -48,6 +66,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private void DoDisconnect()
 		{
 			session.TryDisconnect();
+		}
+		private bool IsDisconnectPossible ()
+		{
+			return session.CurrentApplicationState == ApplicationState.ConnectedButNotLoggedIn;
 		}
 
 		private async void DoConnect()
@@ -63,6 +85,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				await dialog.ShowMahAppsDialog();
 			}
 		}
+		private bool IsConnectPossible ()
+		{
+			return IpV4AddressIdentifier.IsIpV4Address(ServerAddress) &&
+				   session.CurrentApplicationState == ApplicationState.DisconnectedFromServer;
+		}
 
 		private void DoLogin()
 		{
@@ -70,7 +97,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			session.TryLogin(selectedUser, Password);
 		}
-
+		private bool IsLoginPossible ()
+		{
+			return session.CurrentApplicationState == ApplicationState.ConnectedButNotLoggedIn &&
+				   !string.IsNullOrWhiteSpace(SelectedUserName);
+		}
 
 		public ICommand Login      { get; }
 		public ICommand Connect    { get; }
@@ -81,17 +112,31 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		public string SelectedUserName
 		{
 			get { return selectedUserName; }
-			set { PropertyChanged.ChangeAndNotify(this, ref selectedUserName, value); }
+			set
+			{
+				PropertyChanged.ChangeAndNotify(this, ref selectedUserName, value);
+				((Command)Login).RaiseCanExecuteChanged();
+			}
 		}
 
 		public string Password { private get; set; }
-		public string ServerAddress { get; set; }
+
+		public string ServerAddress
+		{
+			get { return serverAddress; }
+			set
+			{
+				serverAddress = value;
+				((Command)Connect).RaiseCanExecuteChanged();
+			}
+		}
 
 		public bool AutoConnectOnNextStart { get; set; }
 
 		protected override void CleanUp()
 		{
-			session.UserListAvailable -= OnNewUserListAvailable;
+			session.UserListAvailable       -= OnNewUserListAvailable;			
+			session.ApplicationStateChanged -= OnApplicationStateChanged;
 		}
 		public override event PropertyChangedEventHandler PropertyChanged;
 	}
