@@ -47,7 +47,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 		private readonly ISession session;		
         private readonly AdornerControl adornerControl;
 
-        public MainViewModelBuilder(IDataCenter dataCenter,
+		private ConfirmChangesMessageHandler confirmChangesMessageHandler;
+		private RejectChangesMessageHandler rejectChangesMessageHandler;
+
+		public MainViewModelBuilder(IDataCenter dataCenter,
                                     IViewModelCommunication viewModelCommunication,
 									ISession session,                                   
                                     AdornerControl adornerControl)
@@ -58,17 +61,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             this.adornerControl = adornerControl;
         }
 
+
+
         public IMainViewModel Build()
         {            
             // Register Global ViewModelVariables
 
             var initialMedicalPractice = dataCenter.GetAllMedicalPractices().First();  // TODO set last usage
 
-            var gridSizeVariable = new GlobalState<Size>(new Size(400, 400));
-            var selectedDateVariable = new GlobalState<Date>(initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday());     // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
+            var gridSizeVariable                  = new GlobalState<Size>(new Size(400, 400));
+            var selectedDateVariable              = new GlobalState<Date>(initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday());     // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
             var selectedMedicalPracticeIdVariable = new GlobalState<Guid>(initialMedicalPractice.Id);
-            var roomFilterVariable = new GlobalState<Guid?>();
-            var appointmentModificationsVariable = new GlobalState<AppointmentModifications>();
+            var roomFilterVariable                = new GlobalState<Guid?>();
+            var appointmentModificationsVariable  = new GlobalState<AppointmentModifications>();
 
             var selectedPatientForAppointmentSearchVariable = new GlobalState<Patient>();
 
@@ -125,14 +130,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                                           selectedDateVariable,
                                                                                           appointmentViewModelBuilder);
 
-            // register stand-alone viewModelMessageHandler
+            // build stand-alone viewModelMessageHandler
 
-            viewModelCommunication.RegisterViewModelMessageHandler(new ConfirmChangesMessageHandler(viewModelCommunication,
-                                                                                                    appointmentModificationsVariable,
-                                                                                                    selectedMedicalPracticeIdVariable));
+	        confirmChangesMessageHandler = new ConfirmChangesMessageHandler(viewModelCommunication,
+																		    appointmentModificationsVariable,
+																		    selectedMedicalPracticeIdVariable);
 
-            viewModelCommunication.RegisterViewModelMessageHandler(new RejectChangesMessageHandler(viewModelCommunication,
-                                                                                                   appointmentModificationsVariable));
+	        rejectChangesMessageHandler = new RejectChangesMessageHandler(viewModelCommunication,
+																		  appointmentModificationsVariable);
+			
 
             // build factories
 
@@ -196,19 +202,47 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                       optionsPageViewModel);
 
             viewModelCommunication.RegisterViewModelMessageHandler<ShowPage>(mainViewModel);
+			viewModelCommunication.RegisterViewModelMessageHandler(confirmChangesMessageHandler);
+			viewModelCommunication.RegisterViewModelMessageHandler(rejectChangesMessageHandler);
 
-            return mainViewModel;
+			return mainViewModel;
         }
 
         public void DisposeViewModel(IMainViewModel viewModelToDispose)
         {
-            throw new NotImplementedException();
-        }
-    }
+			viewModelCommunication.RemoveViewModelCollection(Constants.TherapyPlaceRowViewModelCollection);
+			viewModelCommunication.RemoveViewModelCollection(Constants.AppointmentGridViewModelCollection);
+			viewModelCommunication.RemoveViewModelCollection(Constants.TimeGridViewModelCollection);
+			viewModelCommunication.RemoveViewModelCollection(Constants.AppointmentViewModelCollection);
+	
+			viewModelCommunication.DeregisterViewModelMessageHandler<ShowPage>(viewModelToDispose);
+			viewModelCommunication.DeregisterViewModelMessageHandler(confirmChangesMessageHandler);
+			viewModelCommunication.DeregisterViewModelMessageHandler(rejectChangesMessageHandler);
 
-    internal interface IMainViewModelBuilder
-    {
-        IMainViewModel Build();
-        void DisposeViewModel(IMainViewModel viewModelToDispose);
+			var optionsPageViewModel             = viewModelToDispose.OptionsPageViewModel;
+	        var searchPageViewModel              = viewModelToDispose.SearchPageViewModel;
+	        var overviewPageViewModel            = viewModelToDispose.OverviewPageViewModel;
+	        var patientSelectorViewModel         = searchPageViewModel.PatientSelectorViewModel;
+	        var dateDisplayViewModel             = overviewPageViewModel.DateDisplayViewModel;
+	        var medicalPracticeSelectorViewModel = overviewPageViewModel.MedicalPracticeSelectorViewModel;
+	        var roomSelectorViewModel            = overviewPageViewModel.RoomFilterViewModel;
+	        var dateSelectorViewModel            = overviewPageViewModel.DateSelectorViewModel;
+	        var gridContainerViewModel           = overviewPageViewModel.GridContainerViewModel;
+	        var changeConfirmationViewModel      = overviewPageViewModel.ChangeConfirmationViewModel;
+	        var undoRedoViewModel                = overviewPageViewModel.UndoRedoViewModel;
+
+	        optionsPageViewModel.Dispose();
+			searchPageViewModel.Dispose();
+			overviewPageViewModel.Dispose();
+			patientSelectorViewModel.Dispose();
+			dateDisplayViewModel.Dispose();
+			medicalPracticeSelectorViewModel.Dispose();
+			roomSelectorViewModel.Dispose();
+			dateSelectorViewModel.Dispose();
+			gridContainerViewModel.Dispose();
+			changeConfirmationViewModel.Dispose();
+			undoRedoViewModel.Dispose();
+
+		}
     }
 }
