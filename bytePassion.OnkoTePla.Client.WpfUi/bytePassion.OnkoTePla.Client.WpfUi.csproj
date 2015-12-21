@@ -446,7 +446,7 @@
       <Project>{D6DEC4C7-D919-4528-AE91-510317A1D0FC}</Project>
       <Name>bytePassion.OnkoTePla.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\bytePassion.OnkoTePla.Client.Resources\bytePassion.OnkoTePla.Client.Resources.csproj">
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Resources\bytePassion.OnkoTePla.Resources.csproj">
       <Project>{1ff3c490-8680-46a5-ab65-6329863326dc}</Project>
       <Name>bytePassion.OnkoTePla.Client.Resources</Name>
     </ProjectReference>

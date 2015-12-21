@@ -73,7 +73,7 @@
       <Project>{825b03a5-fd0f-417a-adc5-d3a0aad2c36b}</Project>
       <Name>bytePassion.Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\bytePassion.OnkoTePla.Client.Resources\bytePassion.OnkoTePla.Client.Resources.csproj">
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Resources\bytePassion.OnkoTePla.Resources.csproj">
       <Project>{1ff3c490-8680-46a5-ab65-6329863326dc}</Project>
       <Name>bytePassion.OnkoTePla.Client.Resources</Name>
     </ProjectReference>
