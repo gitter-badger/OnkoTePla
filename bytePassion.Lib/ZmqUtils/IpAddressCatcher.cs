@@ -2,7 +2,7 @@
 using System.Net;
 using bytePassion.Lib.Types.Communication;
 
-namespace bytePassion.OnkoTePla.Resources.ZqmUtils
+namespace bytePassion.Lib.ZmqUtils
 {
 	public static class IpAddressCatcher
 	{

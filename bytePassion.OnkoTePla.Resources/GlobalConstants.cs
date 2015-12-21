@@ -1,12 +1,7 @@
-﻿
-using System.Text;
-
-namespace bytePassion.OnkoTePla.Resources
+﻿namespace bytePassion.OnkoTePla.Resources
 {
 	public static class GlobalConstants
-    {
-		public static readonly Encoding Encoding = new UTF8Encoding();
-
+    {		
 		public static class TcpIpPort
 		{
 			public const uint BeginConnection = 6656;

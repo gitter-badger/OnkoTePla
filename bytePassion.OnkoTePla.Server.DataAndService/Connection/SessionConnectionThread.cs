@@ -1,9 +1,9 @@
 ﻿using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
-using bytePassion.OnkoTePla.Resources.ZqmUtils;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
