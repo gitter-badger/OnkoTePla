@@ -1,7 +1,7 @@
-﻿using bytePassion.OnkoTePla.Communication.Connection;
+﻿using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using NetMQ;
 
-namespace bytePassion.OnkoTePla.Communication.Factorys
+namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 {
 	public class ConnectionServiceBuilder : IConnectionServiceBuilder
 	{
@@ -18,12 +18,8 @@ namespace bytePassion.OnkoTePla.Communication.Factorys
 
 		public void DisposeConnectionService(IConnectionService connectionService)
 		{
+			connectionService.Dispose();
 			zmqContext.Dispose();
 		}
-	}
-
-	public interface IConnectionServiceBuilder
-	{
-		
 	}
 }

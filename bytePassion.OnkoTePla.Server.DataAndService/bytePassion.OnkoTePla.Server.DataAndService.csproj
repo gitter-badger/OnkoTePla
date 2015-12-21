@@ -7,8 +7,8 @@
     <ProjectGuid>{64B9B70A-75C7-402F-A156-6C3B404533F5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>bytePassion.OnkoTePla.Communication</RootNamespace>
-    <AssemblyName>bytePassion.OnkoTePla.Communication</AssemblyName>
+    <RootNamespace>bytePassion.OnkoTePla.Server.DataAndService</RootNamespace>
+    <AssemblyName>bytePassion.OnkoTePla.Server.DataAndService</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -51,11 +51,28 @@
   <ItemGroup>
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
+    <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Factorys\ConnectionServiceBuilder.cs" />
+    <Compile Include="Factorys\DataCenterBuilder.cs" />
+    <Compile Include="Factorys\IConnectionServiceBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">
+      <Project>{825b03a5-fd0f-417a-adc5-d3a0aad2c36b}</Project>
+      <Name>bytePassion.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Contracts\bytePassion.OnkoTePla.Contracts.csproj">
+      <Project>{85958036-dfef-4c68-abf4-fd241eaab47f}</Project>
+      <Name>bytePassion.OnkoTePla.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Core\bytePassion.OnkoTePla.Core.csproj">
+      <Project>{d6dec4c7-d919-4528-ae91-510317a1d0fc}</Project>
+      <Name>bytePassion.OnkoTePla.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
