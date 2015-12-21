@@ -13,16 +13,19 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 	{
 	    private readonly IConnectionService connectionService;
 	    private readonly IClientWorkflow clientWorkflow;
-	    private ApplicationState currentApplicationState;
+		private readonly ILogger logger;
 
-		private IReadOnlyList<User> availableUsers;
+		private ApplicationState currentApplicationState;
 
-	    private static Logger logger = LogManager.GetLogger("Session");
+		private IReadOnlyList<User> availableUsers;	    
 
-		internal Session(IConnectionService connectionService, IClientWorkflow clientWorkflow)
+		internal Session(IConnectionService connectionService, 
+						 IClientWorkflow clientWorkflow,
+						 ILogger logger)
 	    {
 		    this.connectionService = connectionService;
 		    this.clientWorkflow = clientWorkflow;
+			this.logger = logger;
 
 			CurrentApplicationState = clientWorkflow.CurrentState;
 
