@@ -5,19 +5,19 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Connection
 {
 	public class Response
 	{
-		public Response (ConnectionSessionId sessionId)
+		public Response(ConnectionSessionId sessionId)
 		{
 			SessionId = sessionId;
 		}
 
 		public ConnectionSessionId SessionId { get; }
 
-		public string AsString ()
+		public string AsString()
 		{
 			return $"Confirmed;{SessionId}";
 		}
 
-		public static Response Parse (string s)
+		public static Response Parse(string s)
 		{
 			var parts = s.Split(';');
 
@@ -31,4 +31,5 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Connection
 
 			return new Response(sessionId);
 		}
+	}
 }
