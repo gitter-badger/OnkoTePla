@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Text;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
+using bytePassion.OnkoTePla.Resources.ZqmUtils;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
@@ -35,34 +35,20 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			using (var socket = context.CreateResponseSocket())
 			{
 
+				socket.Bind(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.BeginConnection);
+
 				while (!stopRunning)
-				{
-					Encoding encoding = new UTF8Encoding();
+				{					
+					var inMessage = socket.ReceiveAString();
 
-					socket.Bind(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort);
-
-					var inMsg = new Msg();
-					socket.Receive(ref inMsg);
-
-					inMsg.InitEmpty();
-					socket.Receive(ref inMsg);					
-					var str = inMsg.Size > 0
-									? encoding.GetString(inMsg.Data, 0, inMsg.Size)
-									: string.Empty;
-					inMsg.Close();
-
-					var addressIdentifier = AddressIdentifier.GetIpAddressIdentifierFromString(str);
+					var addressIdentifier = AddressIdentifier.GetIpAddressIdentifierFromString(inMessage);
 					var newSessionId = new ConnectionSessionId(Guid.NewGuid());
 
 					NewConnectionEstablished?.Invoke(addressIdentifier, newSessionId);
 
-					var message = $"ok;{newSessionId}";
+					var outMessage = $"ok;{newSessionId}";
 
-					var outMsg = new Msg();
-					outMsg.InitPool(encoding.GetByteCount(message));
-					encoding.GetBytes(message, 0, message.Length, outMsg.Data, 0);
-					socket.Send(ref outMsg, more:false);
-					outMsg.Close();
+					socket.SendAString(outMessage);
 				}
 			}
 

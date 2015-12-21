@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Windows;
+using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.OnkoTePla.Contracts.Types;
+using bytePassion.OnkoTePla.Resources;
+using NetMQ;
 using NLog;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
@@ -21,13 +25,19 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 		public ConnectionStatus ConnectionStatus { get; private set; }
 		public Address          ServerAddress    { get; private set; }
+		public Address			ClientAddress    { get; private set; }
 
-        public void TryConnect(Address serverAddress, IpPort port)
+
+
+        public void TryConnect(Address serverAddress, Address clientAddress)
         {
 	        ServerAddress = serverAddress;
+	        ClientAddress = clientAddress;
 
 			ConnectionStatus = ConnectionStatus.TryingToConnect;
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
+
+
 
 			Application.Current.Dispatcher.DelayInvoke(
 				() =>
@@ -54,4 +64,52 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			);
 		}
     }
+
+	internal class ConnectionThead : IThread
+	{
+		private readonly NetMQContext context;
+		private readonly Address serverAddress;
+		private readonly Address clientAddress;
+		private readonly Action<ConnectionSessionId> responseCallback;
+
+
+		public ConnectionThead(NetMQContext context, 
+							  Address serverAddress,
+							  Address clientAddress,
+							  Action<ConnectionSessionId> responseCallback)
+		{
+			this.context = context;
+			this.serverAddress = serverAddress;
+			this.clientAddress = clientAddress;
+			this.responseCallback = responseCallback;
+			IsRunning = true;
+		}
+
+		public void Run()
+		{
+			using (var socket = context.CreateResponseSocket())
+			{
+
+				socket.Bind(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.BeginConnection);
+
+				
+//				var inMessage = socket.ReceiveAString();
+//
+//				var addressIdentifier = AddressIdentifier.GetIpAddressIdentifierFromString(inMessage);
+//				var newSessionId = new ConnectionSessionId(Guid.NewGuid());
+//
+//
+//				var outMessage = $"ok;{newSessionId}";
+//
+//				socket.SendAString(outMessage);
+				
+			}
+		}
+
+		public void Stop()
+		{			
+		}
+
+		public bool IsRunning { get; }
+	}
 }

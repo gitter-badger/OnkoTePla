@@ -8,9 +8,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		event Action<ConnectionEvent> ConnectionEventInvoked;
 		
 		Address          ServerAddress    { get; }
+		Address          ClientAddress    { get; }
 		ConnectionStatus ConnectionStatus { get; }
 		
-		void TryConnect (Address serverAddress, IpPort port);
+		void TryConnect (Address serverAddress, Address clientAddress);
 		void TryDisconnect ();
 	}
 }
