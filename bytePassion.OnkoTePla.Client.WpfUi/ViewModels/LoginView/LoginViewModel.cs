@@ -74,9 +74,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 		private async void DoConnect()
 		{
-			if (IpV4AddressIdentifier.IsIpV4Address(ServerAddress + ":" + GlobalConstants.TcpIpPort))
+			if (IpV4AddressIdentifier.IsIpV4Address(ServerAddress))
 			{
-				session.TryConnect(new Address(Protocol, IpV4AddressIdentifier.Parse(ServerAddress + ":" + GlobalConstants.TcpIpPort)));
+				session.TryConnect(new Address(Protocol, IpV4AddressIdentifier.Parse(ServerAddress)), 
+								   new IpPort(GlobalConstants.TcpIpPort));
 			}
 			else
 			{

@@ -23,11 +23,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 			foreach (var ipaddress in iphostentry.AddressList)
 			{
 				addressList.Add(new Address(new TcpIpProtocol(), 
-											AddressIdentifier.GetIpAddressIdentifierFromString(ipaddress.ToString() + ":" + GlobalConstants.TcpIpPort)));				
+											AddressIdentifier.GetIpAddressIdentifierFromString(ipaddress.ToString())));				
 			}
 
 			if (addressList.Count == 0)
-				addressList.Add(new Address(new TcpIpProtocol(), new IpV4AddressIdentifier(127,0,0,1,new IpPort(GlobalConstants.TcpIpPort))));
+				addressList.Add(new Address(new TcpIpProtocol(), new IpV4AddressIdentifier(127,0,0,1)));
 
 			return addressList;			
 		}

@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using bytePassion.Lib.FrameworkExtensions;
 
@@ -7,7 +6,7 @@ namespace bytePassion.Lib.Types.Communication
 {
 	public class IpV6AddressIdentifier : AddressIdentifier
     {
-        public IpV6AddressIdentifier(byte part1, byte part2, byte part3, byte part4, byte part5, byte part6, IpPort port)
+        public IpV6AddressIdentifier(byte part1, byte part2, byte part3, byte part4, byte part5, byte part6)
             : base(AddressIdentifierType.IpV4)
         {
             Part1 = part1;
@@ -15,8 +14,7 @@ namespace bytePassion.Lib.Types.Communication
             Part3 = part3;
             Part4 = part4;
             Part5 = part5;
-            Part6 = part6;
-            Port = port;
+            Part6 = part6;           
         }
 
         public byte Part1 { get; }
@@ -24,9 +22,7 @@ namespace bytePassion.Lib.Types.Communication
         public byte Part3 { get; }
         public byte Part4 { get; }
         public byte Part5 { get; }
-        public byte Part6 { get; }
-
-        public IpPort Port { get; }
+        public byte Part6 { get; }        
 
         public override bool Equals(object obj)
         {
@@ -35,8 +31,7 @@ namespace bytePassion.Lib.Types.Communication
                                                 a1.Part3 == a2.Part3 &&
                                                 a1.Part4 == a2.Part4 &&
                                                 a1.Part5 == a2.Part5 &&
-                                                a1.Part6 == a2.Part6 &&
-                                                a1.Port == a2.Port);
+                                                a1.Part6 == a2.Part6);
         }
 
         public override int GetHashCode()
@@ -46,13 +41,12 @@ namespace bytePassion.Lib.Types.Communication
                    Part3.GetHashCode() ^
                    Part4.GetHashCode() ^
                    Part5.GetHashCode() ^
-                   Part6.GetHashCode()^
-                   Port.GetHashCode();
+                   Part6.GetHashCode();
         }
 
         public override string ToString()
         {
-            return $"{Part1}.{Part2}.{Part3}.{Part4}.{Part5}.{Part6}:{Port}";
+            return $"{Part1}.{Part2}.{Part3}.{Part4}.{Part5}.{Part6}";
         }
 
         public static bool operator ==(IpV6AddressIdentifier a1, IpV6AddressIdentifier a2) => EqualsExtension.EqualsForEqualityOperator(a1, a2);
@@ -60,28 +54,18 @@ namespace bytePassion.Lib.Types.Communication
 
 		public static IpV6AddressIdentifier Parse (string s)
 		{
-			var indexOfColon = s.IndexOf(":", StringComparison.Ordinal);
+			
 
-			var parts = s.Substring(0, indexOfColon)
-						 .Split('.')
+			var parts = s.Split('.')
 						 .Select(byte.Parse)
-						 .ToList();
+						 .ToList();			
 
-			var port = new IpPort(uint.Parse(s.Substring(indexOfColon + 1, s.Length - (indexOfColon + 1))));
-
-			return new IpV6AddressIdentifier(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], port);
+			return new IpV6AddressIdentifier(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
 		}
 
 		public static bool IsIpV6Address (string s)
 		{
-
-			var indexOfColon = s.IndexOf(":", StringComparison.Ordinal);
-
-			if (indexOfColon == -1)
-				return false;
-
-			var parts = s.Substring(0, indexOfColon)
-						 .Split('.')
+			var parts = s.Split('.')
 						 .ToList();
 
 			if (parts.Count != 6)
@@ -93,10 +77,6 @@ namespace bytePassion.Lib.Types.Communication
 				if (!byte.TryParse(part, out partResult))
 					return false;
 			}
-
-			uint portResult;
-			if (!uint.TryParse(s.Substring(indexOfColon + 1, s.Length - (indexOfColon + 1)), out portResult))
-				return false;
 
 			return true;
 		}

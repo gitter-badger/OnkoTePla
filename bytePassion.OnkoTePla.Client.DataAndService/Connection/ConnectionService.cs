@@ -22,7 +22,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		public ConnectionStatus ConnectionStatus { get; private set; }
 		public Address          ServerAddress    { get; private set; }
 
-        public void TryConnect(Address serverAddress)
+        public void TryConnect(Address serverAddress, IpPort port)
         {
 	        ServerAddress = serverAddress;
 

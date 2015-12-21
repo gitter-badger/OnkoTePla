@@ -127,9 +127,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			}
 		}		
 
-		public void TryConnect (Address serverAddress)
+		public void TryConnect (Address serverAddress, IpPort port)
 		{
-			connectionService.TryConnect(serverAddress);
+			connectionService.TryConnect(serverAddress, port);
 		}
 
 		public void TryDisconnect ()

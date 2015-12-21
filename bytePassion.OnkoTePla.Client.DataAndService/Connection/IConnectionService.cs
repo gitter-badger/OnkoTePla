@@ -10,7 +10,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		Address          ServerAddress    { get; }
 		ConnectionStatus ConnectionStatus { get; }
 		
-		void TryConnect (Address serverAddress);
+		void TryConnect (Address serverAddress, IpPort port);
 		void TryDisconnect ();
 	}
 }
