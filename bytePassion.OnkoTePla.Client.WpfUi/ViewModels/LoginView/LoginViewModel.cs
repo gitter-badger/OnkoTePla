@@ -7,11 +7,11 @@ using System.Windows.Input;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Resources.ZqmUtils;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 {
@@ -83,7 +83,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		{
 			if (IpV4AddressIdentifier.IsIpV4Address(ServerAddress))
 			{
-				session.TryConnect(new Address(Protocol, IpV4AddressIdentifier.Parse(ServerAddress)));
+				session.TryConnect(new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ServerAddress)),
+								   new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress)));
 			}
 			else
 			{
