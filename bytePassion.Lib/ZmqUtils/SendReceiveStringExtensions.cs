@@ -1,10 +1,13 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using NetMQ;
 
 namespace bytePassion.Lib.ZmqUtils
 {
 	public static class SendReceiveStringExtensions
 	{
+		public static readonly TimeSpan InfiniteTimeout = TimeSpan.FromMilliseconds(-1.0);
+
 		private static readonly Encoding Encoding = new UTF8Encoding();
 
 		public static void SendAString(this NetMQSocket socket, string message)
@@ -18,12 +21,12 @@ namespace bytePassion.Lib.ZmqUtils
 			outMsg.Close();
 		}
 
-		public static string ReceiveAString(this NetMQSocket socket)
+		public static string ReceiveAString(this NetMQSocket socket, TimeSpan timeout)
 		{
 			var inMsg = new Msg();			
 			inMsg.InitEmpty();
-
-			socket.Receive(ref inMsg);
+			
+			socket.TryReceive(ref inMsg, timeout);
 
 			var str = inMsg.Size > 0
 				? Encoding.GetString(inMsg.Data, 0, inMsg.Size)
