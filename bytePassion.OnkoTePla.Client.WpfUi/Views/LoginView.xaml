@@ -14,7 +14,7 @@
     <Grid Background="White">
         
         <Border Width="400"
-                Height="340"
+                Height="410"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 BorderBrush="Black"
@@ -123,8 +123,20 @@
 							 Text="{Binding ServerAddress, 
 											Mode=OneWayToSource, 
 										    UpdateSourceTrigger=PropertyChanged}"/>
-                    
-                    <StackPanel Orientation="Horizontal">
+
+					<TextBlock Margin="10"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Text="Client-IP-Addresse:"/>
+
+					<ComboBox Height="25"
+                              Margin="10,0"
+							  ItemsSource="{Binding ClientIpAddresses}"
+							  SelectedItem="{Binding ClientAddress, 
+													 Mode=TwoWay, 
+													 UpdateSourceTrigger=PropertyChanged}"/>
+
+					<StackPanel Orientation="Horizontal">
 
                         <Button Height="25"
                                 Margin="50,5"

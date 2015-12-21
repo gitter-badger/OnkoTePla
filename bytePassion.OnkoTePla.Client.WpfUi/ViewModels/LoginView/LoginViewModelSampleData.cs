@@ -16,10 +16,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				"User2"
 		    };
 
-		    SelectedUserName = "User2";
-		    ServerAddress = "192.168.128.12:6656";
+			ClientIpAddresses = new ObservableCollection<string>
+			{
+				"192.168.128.14",
+				"192.168.128.13"
+			};
 
-		    AutoConnectOnNextStart = true;
+		    SelectedUserName = "User2";
+		    ServerAddress = "192.168.128.12";
+			ClientAddress = "192.168.128.13";
+
+			AutoConnectOnNextStart = true;
 	    }
 
 	    public ICommand Login      { get; } = null;
@@ -27,12 +34,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		public ICommand Disconnect { get; } = null;
 
 	    public ObservableCollection<string> AvailableUsers { get; }
+		public ObservableCollection<string> ClientIpAddresses { get; }
 
-	    public string SelectedUserName  { get; set;  }
-	    public string Password      {      set {}}
-	    public string ServerAddress { get; set;  }
+		public string SelectedUserName  { get; set;  }
+	    public string Password          {      set {}}
+	    public string ServerAddress     { get; set;  }
+		public string ClientAddress     { get; set;  }
 
-	    public bool AutoConnectOnNextStart { get; set; }
+		public bool AutoConnectOnNextStart { get; set; }
 
 		public void Dispose () { }
 		public event PropertyChangedEventHandler PropertyChanged;

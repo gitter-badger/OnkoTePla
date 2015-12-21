@@ -11,7 +11,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Resources;
+using bytePassion.OnkoTePla.Resources.ZqmUtils;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 {
@@ -23,6 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private readonly ISession session;
 		private string selectedUserName;
 		private string serverAddress;
+		private string clientAddress;
 
 		public LoginViewModel(ISession session)
 	    {
@@ -40,6 +41,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			AvailableUsers = session.AvailableUsers
 									.Select(user => user.Name)
 									.ToObservableCollection();
+
+			ClientIpAddresses = IpAddressCatcher.GetAllAvailableLocalIpAddresses()
+												.Select(address => address.Identifier.ToString())
+												.ToObservableCollection();
+
+			ClientAddress = ClientIpAddresses.First();
 
 			session.UserListAvailable       += OnNewUserListAvailable;
 			session.ApplicationStateChanged += OnApplicationStateChanged; 
@@ -76,8 +83,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		{
 			if (IpV4AddressIdentifier.IsIpV4Address(ServerAddress))
 			{
-				session.TryConnect(new Address(Protocol, IpV4AddressIdentifier.Parse(ServerAddress)), 
-								   new IpPort(GlobalConstants.TcpIpPort));
+				session.TryConnect(new Address(Protocol, IpV4AddressIdentifier.Parse(ServerAddress)));
 			}
 			else
 			{
@@ -108,7 +114,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		public ICommand Connect    { get; }
 		public ICommand Disconnect { get; }
 
-		public ObservableCollection<string> AvailableUsers { get; }
+		public ObservableCollection<string> AvailableUsers    { get; }
+		public ObservableCollection<string> ClientIpAddresses { get; }
 
 		public string SelectedUserName
 		{
@@ -130,6 +137,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				serverAddress = value;
 				((Command)Connect).RaiseCanExecuteChanged();
 			}
+		}
+
+		public string ClientAddress
+		{
+			get { return clientAddress; }
+			set { PropertyChanged.ChangeAndNotify(this, ref clientAddress, value); }
 		}
 
 		public bool AutoConnectOnNextStart { get; set; }
