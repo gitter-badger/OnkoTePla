@@ -69,6 +69,7 @@
     <Compile Include="ViewModels\AboutPage\AboutPageViewModel.cs" />
     <Compile Include="ViewModels\AboutPage\AboutPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\AboutPage\IAboutPageViewModel.cs" />
+    <Compile Include="ViewModels\ConnectionsPage\Helper\ConnectedClientDisplayData.cs" />
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\ConnectionsPage\IConnectionsPageViewModel.cs" />
@@ -198,6 +199,14 @@
     <ProjectReference Include="..\bytePassion.OnkoTePla.Core\bytePassion.OnkoTePla.Core.csproj">
       <Project>{d6dec4c7-d919-4528-ae91-510317a1d0fc}</Project>
       <Name>bytePassion.OnkoTePla.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Resources\bytePassion.OnkoTePla.Resources.csproj">
+      <Project>{1ff3c490-8680-46a5-ab65-6329863326dc}</Project>
+      <Name>bytePassion.OnkoTePla.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Server.DataAndService\bytePassion.OnkoTePla.Server.DataAndService.csproj">
+      <Project>{64b9b70a-75c7-402f-a156-6c3b404533f5}</Project>
+      <Name>bytePassion.OnkoTePla.Server.DataAndService</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

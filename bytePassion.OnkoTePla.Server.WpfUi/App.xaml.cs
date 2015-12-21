@@ -1,4 +1,6 @@
-﻿using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
+﻿using System.Windows;
+using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
@@ -6,12 +8,11 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
-using System.Windows;
 
 
 namespace bytePassion.OnkoTePla.Server.WpfUi
 {
-    public partial class App : Application
+	public partial class App : Application
     {
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -23,13 +24,19 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             ////////                                                                             //////////
             ///////////////////////////////////////////////////////////////////////////////////////////////
 
-            var overviewPageViewModel = new OverviewPageViewModel();
-            var connectionsPageViewModel = new ConnectionsPageViewModel();
-            var userPageViewModel = new UserPageViewModel();
-            var licencePageViewModel = new LicencePageViewModel();
+	        var dataCenterBuilder = new DataCenterBuilder();
+			var connectionServiceBuilder = new ConnectionServiceBuilder();
+
+			var dataCenter = dataCenterBuilder.Build();
+			var connectionService = connectionServiceBuilder.Build();
+
+            var overviewPageViewModel       = new OverviewPageViewModel();
+            var connectionsPageViewModel    = new ConnectionsPageViewModel(dataCenter, connectionService);
+            var userPageViewModel           = new UserPageViewModel();
+            var licencePageViewModel        = new LicencePageViewModel();
             var infrastructurePageViewModel = new InfrastructurePageViewModel();
-            var optionsPageViewModel = new OptionsPageViewModel();
-            var aboutPageViewModel = new AboutPageViewModel();
+            var optionsPageViewModel        = new OptionsPageViewModel();
+            var aboutPageViewModel          = new AboutPageViewModel();
 
             var mainWindowViewModel = new MainWindowViewModel(overviewPageViewModel,
                                                               connectionsPageViewModel,
@@ -50,6 +57,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             ////////             Clean Up and store data after main Window was closed            //////////
             ////////                                                                             //////////
             ///////////////////////////////////////////////////////////////////////////////////////////////
+            
+			connectionServiceBuilder.DisposeConnectionService(connectionService);
         }
     }
 }
