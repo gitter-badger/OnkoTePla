@@ -9,11 +9,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 	{
 		public ISession Build()
 		{
-			var connectionService = new ConnectionService();
-			var workFlow = new ClientWorkflow();
-			var logger = LogManager.GetLogger("sessionLogger");
+			var sessionLogger    = LogManager.GetLogger("sessionLogger");
+			var connectionLogger = LogManager.GetLogger("connectionLogger");
 
-			return new Session(connectionService, workFlow, logger);
+			var connectionService = new ConnectionService(connectionLogger);
+			var workFlow = new ClientWorkflow();
+			
+
+			return new Session(connectionService, workFlow, sessionLogger);
 		}
 	}
 }

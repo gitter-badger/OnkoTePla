@@ -2,16 +2,20 @@
 using System.Windows;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
+using NLog;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
 	internal class ConnectionService : IConnectionService
 	{
+		private readonly ILogger logger;
+
 		public event Action<ConnectionEvent> ConnectionEventInvoked;
 
 
-		public ConnectionService()
-		{			
+		public ConnectionService(ILogger logger)
+		{
+			this.logger = logger;
 			ConnectionStatus = ConnectionStatus.Disconnected;
 		}
 
