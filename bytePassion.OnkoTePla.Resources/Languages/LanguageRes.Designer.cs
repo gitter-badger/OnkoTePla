@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace bytePassion.OnkoTePla.Client.Resources.Languages {
+namespace bytePassion.OnkoTePla.Resources.Languages {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Client.Resources.Languages {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("bytePassion.OnkoTePla.Client.Resources.Languages.LanguageRes", typeof(LanguageRes).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("bytePassion.OnkoTePla.Resources.Languages.LanguageRes", typeof(LanguageRes).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

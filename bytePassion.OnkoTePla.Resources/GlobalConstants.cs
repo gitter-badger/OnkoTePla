@@ -1,5 +1,5 @@
 ﻿
-namespace bytePassion.OnkoTePla.Client.Resources
+namespace bytePassion.OnkoTePla.Resources
 {
 	public static class GlobalConstants
     {

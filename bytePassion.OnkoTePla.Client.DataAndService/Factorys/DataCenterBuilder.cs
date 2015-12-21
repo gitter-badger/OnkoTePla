@@ -1,7 +1,6 @@
 ﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.OnkoTePla.Client.DataAndService.Data;
-using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Core.Eventsystem;
@@ -10,6 +9,7 @@ using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Resources;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 {

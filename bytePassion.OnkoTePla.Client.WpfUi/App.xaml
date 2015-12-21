@@ -16,7 +16,7 @@
                 <!--  theme resource  -->
                 <!--  change "BaseLight" to the theme you want  -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Client.Resources;component/LookAndFeel.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/bytePassion.OnkoTePla.Resources;component/LookAndFeel.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
 

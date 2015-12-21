@@ -3,9 +3,9 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace bytePassion.OnkoTePla.Client.Resources.Converter
+namespace bytePassion.OnkoTePla.Resources.Converter
 {
-    public class BrushRoundConverter : IValueConverter
+	public class BrushRoundConverter : IValueConverter
     {
         public Brush HighValue { get; set; } = Brushes.White;
 

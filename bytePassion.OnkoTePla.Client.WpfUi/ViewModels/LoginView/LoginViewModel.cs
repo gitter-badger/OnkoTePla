@@ -9,9 +9,9 @@ using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
-using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Resources;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 {
