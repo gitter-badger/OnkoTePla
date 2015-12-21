@@ -77,10 +77,6 @@
       <Project>{1ff3c490-8680-46a5-ab65-6329863326dc}</Project>
       <Name>bytePassion.OnkoTePla.Client.Resources</Name>
     </ProjectReference>
-    <ProjectReference Include="..\bytePassion.OnkoTePla.Communication\bytePassion.OnkoTePla.Communication.csproj">
-      <Project>{64b9b70a-75c7-402f-a156-6c3b404533f5}</Project>
-      <Name>bytePassion.OnkoTePla.Communication</Name>
-    </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Contracts\bytePassion.OnkoTePla.Contracts.csproj">
       <Project>{85958036-dfef-4c68-abf4-fd241eaab47f}</Project>
       <Name>bytePassion.OnkoTePla.Contracts</Name>

@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Contr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Core", "bytePassion.OnkoTePla.Core\bytePassion.OnkoTePla.Core.csproj", "{D6DEC4C7-D919-4528-AE91-510317A1D0FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Communication", "bytePassion.OnkoTePla.Communication\bytePassion.OnkoTePla.Communication.csproj", "{64B9B70A-75C7-402F-A156-6C3B404533F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Server.DataAndService", "bytePassion.OnkoTePla.Server.DataAndService\bytePassion.OnkoTePla.Server.DataAndService.csproj", "{64B9B70A-75C7-402F-A156-6C3B404533F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
