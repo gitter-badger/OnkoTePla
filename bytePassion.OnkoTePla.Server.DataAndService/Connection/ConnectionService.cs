@@ -1,6 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ;
 using NetMQ.Sockets;
@@ -13,13 +14,31 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		public event Action<ConnectionSessionId> NewSessionStarted;
 		public event Action<ConnectionSessionId> SessionTerminated;
 
+		public void InitiateCommunication(Address serverAddress)
+		{
+			Console.WriteLine("init");
+		}
+
+		public void StopCommunication()
+		{
+			Console.WriteLine("stop");
+		}
+
+		public AddressIdentifier GetAddress(ConnectionSessionId sessionId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public TimeSpan GetSessionStartTime(ConnectionSessionId sessionId)
+		{
+			throw new NotImplementedException();
+		}
+
 		private readonly NetMQContext zmqContext;
 		
 
 		internal ConnectionService(NetMQContext zmqContext)
-		{
-			//IThre blubbl;
-
+		{			
 			this.zmqContext = zmqContext;			
 		}
 

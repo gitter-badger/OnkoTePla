@@ -16,7 +16,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		public IReadOnlyList<Address> GetAllAvailableAddresses()
 		{			
 			string strHostName = Dns.GetHostName();						
-			var iphostentry = Dns.GetHostEntry(strHostName);
+			var iphostentry = Dns.GetHostByName(strHostName);
 
 			var addressList = new List<Address>();
 						
