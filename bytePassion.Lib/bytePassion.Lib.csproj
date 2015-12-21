@@ -57,6 +57,7 @@
     <Compile Include="ConcurrencyLib\BlockingExchanger.cs" />
     <Compile Include="ConcurrencyLib\BlockingQueue.cs" />
     <Compile Include="ConcurrencyLib\FixedThreadExecutor.cs" />
+    <Compile Include="ConcurrencyLib\IThread.cs" />
     <Compile Include="ConcurrencyLib\IThreadTask.cs" />
     <Compile Include="ConcurrencyLib\WorkPackage.cs" />
     <Compile Include="FrameworkExtensions\DispatcherExtension.cs" />
