@@ -25,6 +25,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private string serverAddress;
 		private string clientAddress;
 
+		private bool currentlyTryingToConnect;
+
 		public LoginViewModel(ISession session)
 	    {
 		    this.session = session;
@@ -49,13 +51,32 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			ClientAddress = ClientIpAddresses.First();
 
 			session.UserListAvailable       += OnNewUserListAvailable;
-			session.ApplicationStateChanged += OnApplicationStateChanged; 
+			session.ApplicationStateChanged += OnApplicationStateChanged;
+
+			currentlyTryingToConnect = false;
 	    }
 
 		
 
-		private void OnApplicationStateChanged(ApplicationState applicationState)
+		private async void OnApplicationStateChanged(ApplicationState applicationState)
 		{
+			if (applicationState == ApplicationState.TryingToConnect)
+				currentlyTryingToConnect = true;
+
+			if (applicationState == ApplicationState.DisconnectedFromServer && currentlyTryingToConnect)
+			{
+				var dialog = new UserDialogBox("", $"Es kann keine Verbindung mit {ServerAddress} hergestellt werden",
+											   MessageBoxButton.OK, MessageBoxImage.Error);
+				await dialog.ShowMahAppsDialog();				
+
+				currentlyTryingToConnect = false;
+			}
+
+			if (applicationState == ApplicationState.ConnectedButNotLoggedIn)
+			{
+				currentlyTryingToConnect = false;
+			}
+
 			((Command)Login).RaiseCanExecuteChanged();
 			((Command)Connect).RaiseCanExecuteChanged();
 			((Command)Disconnect).RaiseCanExecuteChanged();

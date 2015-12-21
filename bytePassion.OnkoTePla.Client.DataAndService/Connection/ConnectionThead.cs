@@ -35,14 +35,22 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			{
 				socket.Connect(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.BeginConnection);
 
-				var outMessage = new Request(clientAddress.Identifier).AsString();				
+				
+				var outMessage = new Request(clientAddress.Identifier).AsString();
 				socket.SendAString(outMessage);
+					
+				var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(2));
 
-				var inMessage = socket.ReceiveAString();
-				var response = Response.Parse(inMessage);
-
-				responseCallback(response.SessionId);
-			}
+				if (inMessage == "")
+				{
+					responseCallback(null);
+				}
+				else
+				{
+					var response = Response.Parse(inMessage);
+					responseCallback(response.SessionId);
+				}					
+			}							
 		}
 
 		public void Stop()

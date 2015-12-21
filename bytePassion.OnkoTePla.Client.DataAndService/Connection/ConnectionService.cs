@@ -42,21 +42,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			var threadLogic = new ConnectionThead(zmqContext, serverAddress, clientAddress,ConnectionResponeReceived);
 			var runningThread = new Thread(threadLogic.Run);
 			runningThread.Start();
-
-
-			Application.Current.Dispatcher.DelayInvoke(
-				() =>
-				{
-					if (ConnectionStatus == ConnectionStatus.TryingToConnect)
-					{						
-						ConnectionStatus = ConnectionStatus.Disconnected;
-						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConAttemptUnsuccessful);
-
-						// TODO: thread abschießen
-					}
-				},
-				TimeSpan.FromSeconds(2)
-			);
 		}
 
 		private void ConnectionResponeReceived(ConnectionSessionId connectionSessionId)
@@ -64,8 +49,19 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			Application.Current.Dispatcher.Invoke(
 				() =>
 				{
-					ConnectionStatus = ConnectionStatus.Connected;
-					ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
+					if (connectionSessionId == null)
+					{
+						if (ConnectionStatus == ConnectionStatus.TryingToConnect)
+						{						
+							ConnectionStatus = ConnectionStatus.Disconnected;
+							ConnectionEventInvoked?.Invoke(ConnectionEvent.ConAttemptUnsuccessful);																			
+						}
+					}
+					else
+					{
+						ConnectionStatus = ConnectionStatus.Connected;
+						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
+					}					
 				}				
 			);			
 		}
