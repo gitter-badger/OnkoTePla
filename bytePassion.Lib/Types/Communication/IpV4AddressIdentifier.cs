@@ -66,7 +66,31 @@ namespace bytePassion.Lib.Types.Communication
 
 		public static bool IsIpV4Address(string s)
 		{
-			return true; // TODO
+
+			var indexOfColon = s.IndexOf(":", StringComparison.Ordinal);
+
+			if (indexOfColon == -1)
+				return false;
+
+			var parts = s.Substring(0, indexOfColon)
+						 .Split('.')						 
+						 .ToList();
+
+			if (parts.Count != 4)
+				return false;
+
+			foreach (var part in parts)
+			{
+				byte partResult;
+				if (!byte.TryParse(part, out partResult))
+					return false;
+			}
+
+			uint portResult;
+			if (!uint.TryParse(s.Substring(indexOfColon + 1, s.Length - (indexOfColon + 1)), out portResult))
+				return false;
+
+			return true;
 		}
     }
 }

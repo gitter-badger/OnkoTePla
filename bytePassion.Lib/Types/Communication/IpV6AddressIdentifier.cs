@@ -1,9 +1,11 @@
+using System;
+using System.Linq;
 using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.Types.Communication
 {
-    public class IpV6AddressIdentifier : AddressIdentifier
+	public class IpV6AddressIdentifier : AddressIdentifier
     {
         public IpV6AddressIdentifier(byte part1, byte part2, byte part3, byte part4, byte part5, byte part6, IpPort port)
             : base(AddressIdentifierType.IpV4)
@@ -55,5 +57,48 @@ namespace bytePassion.Lib.Types.Communication
 
         public static bool operator ==(IpV6AddressIdentifier a1, IpV6AddressIdentifier a2) => EqualsExtension.EqualsForEqualityOperator(a1, a2);
         public static bool operator !=(IpV6AddressIdentifier a1, IpV6AddressIdentifier a2) => !(a1 == a2);
-    }
+
+		public static IpV6AddressIdentifier Parse (string s)
+		{
+			var indexOfColon = s.IndexOf(":", StringComparison.Ordinal);
+
+			var parts = s.Substring(0, indexOfColon)
+						 .Split('.')
+						 .Select(byte.Parse)
+						 .ToList();
+
+			var port = new IpPort(uint.Parse(s.Substring(indexOfColon + 1, s.Length - (indexOfColon + 1))));
+
+			return new IpV6AddressIdentifier(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], port);
+		}
+
+		public static bool IsIpV6Address (string s)
+		{
+
+			var indexOfColon = s.IndexOf(":", StringComparison.Ordinal);
+
+			if (indexOfColon == -1)
+				return false;
+
+			var parts = s.Substring(0, indexOfColon)
+						 .Split('.')
+						 .ToList();
+
+			if (parts.Count != 6)
+				return false;
+
+			foreach (var part in parts)
+			{
+				byte partResult;
+				if (!byte.TryParse(part, out partResult))
+					return false;
+			}
+
+			uint portResult;
+			if (!uint.TryParse(s.Substring(indexOfColon + 1, s.Length - (indexOfColon + 1)), out portResult))
+				return false;
+
+			return true;
+		}
+	}
 }

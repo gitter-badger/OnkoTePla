@@ -1,12 +1,26 @@
-﻿namespace bytePassion.Lib.Types.Communication
+﻿using System;
+
+namespace bytePassion.Lib.Types.Communication
 {
-    public abstract class AddressIdentifier
+	public abstract class AddressIdentifier
     {
         protected AddressIdentifier(AddressIdentifierType type)
         {
             Type = type;
         }
 
-        public AddressIdentifierType Type { get; }       
+        public AddressIdentifierType Type { get; }
+
+
+	    public static AddressIdentifier GetIpAddressIdentifierFromString(string s)
+	    {
+		    if (IpV4AddressIdentifier.IsIpV4Address(s))
+			    return IpV4AddressIdentifier.Parse(s);
+			 
+			if (IpV6AddressIdentifier.IsIpV6Address(s))
+				return IpV6AddressIdentifier.Parse(s);
+
+			throw new ArgumentException($"{s} is not a valid IpV4- or IpV6-Address");
+		}     
     }
 }
