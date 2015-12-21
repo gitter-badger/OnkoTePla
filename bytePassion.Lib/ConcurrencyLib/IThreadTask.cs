@@ -1,5 +1,6 @@
-﻿namespace bytePassion.Lib.ConcurrencyLib {
-	
+﻿namespace bytePassion.Lib.ConcurrencyLib
+{
+
 	public interface IThreadTask {
 
 		void DoWork ();

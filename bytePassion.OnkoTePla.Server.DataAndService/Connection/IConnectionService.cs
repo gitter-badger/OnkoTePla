@@ -1,7 +1,11 @@
-﻿namespace bytePassion.OnkoTePla.Communication.Connection
+﻿using System;
+using bytePassion.OnkoTePla.Contracts.Types;
+
+namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 {
-	public interface IConnectionService
+	public interface IConnectionService : IDisposable
 	{
-		//event Action<Guid>
+		event Action<ConnectionSessionId> NewSessionStarted;
+		event Action<ConnectionSessionId> SessionTerminated;
 	}
 }
