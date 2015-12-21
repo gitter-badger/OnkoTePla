@@ -44,11 +44,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			runnableThread.Start();			
 		}
 
-		private void OnNewConnectionEstablished(AddressIdentifier addressIdentifier, ConnectionSessionId id)
+		private void OnNewConnectionEstablished(AddressIdentifier clientAddress, ConnectionSessionId id)
 		{
 			currentSessions.Add(new SessionInfo
 			{
-				ClientAddress = addressIdentifier,
+				ClientAddress = clientAddress,
 				SessionId = id,
 				CreationTime = TimeTools.GetCurrentTimeStamp().Item2
 			});

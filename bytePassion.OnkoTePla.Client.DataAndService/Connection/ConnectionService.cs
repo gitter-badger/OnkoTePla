@@ -37,9 +37,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 	        ClientAddress = clientAddress;
 
 			ConnectionStatus = ConnectionStatus.TryingToConnect;
-			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
-
-			Console.WriteLine("tryingToConnect...");
+			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);			
 
 			var threadLogic = new ConnectionThead(zmqContext, serverAddress, clientAddress,ConnectionResponeReceived);
 			var runningThread = new Thread(threadLogic.Run);
@@ -50,9 +48,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 				() =>
 				{
 					if (ConnectionStatus == ConnectionStatus.TryingToConnect)
-					{
-						Console.WriteLine("connection unsuccessful...");
-
+					{						
 						ConnectionStatus = ConnectionStatus.Disconnected;
 						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConAttemptUnsuccessful);
 

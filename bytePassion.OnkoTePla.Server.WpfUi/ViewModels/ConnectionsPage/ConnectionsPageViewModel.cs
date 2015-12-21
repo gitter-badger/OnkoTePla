@@ -48,15 +48,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 		private void OnSessionTerminated(ConnectionSessionId id)
 		{
-			ConnectedClients.Add(new ConnectedClientDisplayData(id.ToString(),
-																connectionService.GetSessionStartTime(id).ToString(),
-																connectionService.GetAddress(id).ToString()));
+			var displayData = ConnectedClients.First(dd => dd.SessionId == id.ToString());
+			ConnectedClients.Remove(displayData);
 		}
 
-		private void OnNewSessionStarted(ConnectionSessionId connectionSessionId)
+		private void OnNewSessionStarted(ConnectionSessionId id)
 		{
-			var displayData = ConnectedClients.First(dd => dd.SessionId == connectionSessionId.ToString());
-			ConnectedClients.Remove(displayData);
+			ConnectedClients.Add(new ConnectedClientDisplayData(id.ToString(),
+																connectionService.GetSessionStartTime(id).ToString(),
+																connectionService.GetAddress(id).ToString()));			
 		}
 
 		private void UpdateAddresses()

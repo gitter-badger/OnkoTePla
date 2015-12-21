@@ -2,6 +2,7 @@
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
+using bytePassion.OnkoTePla.Contracts.NetworkMessages.Connection;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
@@ -38,17 +39,20 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 				socket.Bind(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.BeginConnection);
 
 				while (!stopRunning)
-				{					
+				{	
+					Console.WriteLine("waiting for request");
+									
 					var inMessage = socket.ReceiveAString();
-
-					var addressIdentifier = AddressIdentifier.GetIpAddressIdentifierFromString(inMessage);
+					var request = Request.Parse(inMessage);					
 					var newSessionId = new ConnectionSessionId(Guid.NewGuid());
 
-					NewConnectionEstablished?.Invoke(addressIdentifier, newSessionId);
+					System.Windows.Application.Current.Dispatcher.Invoke(() =>
+					{
+						NewConnectionEstablished?.Invoke(request.ClientAddress, newSessionId);
+					});					
 
-					var outMessage = $"ok;{newSessionId}";
-
-					socket.SendAString(outMessage);
+					var response = new Response(newSessionId);
+					socket.SendAString(response.AsString());
 				}
 			}
 

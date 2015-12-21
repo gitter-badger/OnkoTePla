@@ -14,7 +14,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 		string SelectedUserName { get; set; }
 
-		string Password { set; }
+		string Password      {      set; }
 		string ServerAddress { get; set; }
 		string ClientAddress { get; set; }
 

@@ -35,12 +35,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			{
 				socket.Connect(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.BeginConnection);
 
-				var outMessage = new Request(clientAddress.Identifier).AsString();
-				Console.WriteLine("send message: " + outMessage);
+				var outMessage = new Request(clientAddress.Identifier).AsString();				
 				socket.SendAString(outMessage);
 
 				var inMessage = socket.ReceiveAString();
-				Console.WriteLine("received Msg: " + inMessage);
 				var response = Response.Parse(inMessage);
 
 				responseCallback(response.SessionId);
