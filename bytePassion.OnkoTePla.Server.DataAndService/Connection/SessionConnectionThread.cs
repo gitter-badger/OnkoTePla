@@ -39,10 +39,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 				socket.Bind(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.BeginConnection);
 
 				while (!stopRunning)
-				{	
-					Console.WriteLine("waiting for request");
-									
-					var inMessage = socket.ReceiveAString();
+				{											
+					// set timeout to n-Seconds and then CONTINUE, to get the possibility to get this thread down				
+					var inMessage = socket.ReceiveAString(SendReceiveStringExtensions.InfiniteTimeout);
 					var request = Request.Parse(inMessage);					
 					var newSessionId = new ConnectionSessionId(Guid.NewGuid());
 
