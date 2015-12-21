@@ -1,86 +1,81 @@
 ﻿using System;
-using bytePassion.Lib.ConcurrencyLib;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ;
-using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 {
 	public class ConnectionService : DisposingObject, 
 								     IConnectionService
 	{
+		private class SessionInfo
+		{
+			public ConnectionSessionId SessionId     { get; set; }
+			public Time                CreationTime  { get; set; }
+			public AddressIdentifier   ClientAddress { get; set; }
+		}
+
 		public event Action<ConnectionSessionId> NewSessionStarted;
 		public event Action<ConnectionSessionId> SessionTerminated;
+		
+		private readonly NetMQContext zmqContext;
+		private readonly IList<SessionInfo> currentSessions;
+
+		private SessionConnectionThread acceptConnectionThread;
+
+		internal ConnectionService (NetMQContext zmqContext)
+		{
+			this.zmqContext = zmqContext;
+
+			currentSessions = new List<SessionInfo>();
+		}
 
 		public void InitiateCommunication(Address serverAddress)
 		{
-			Console.WriteLine("init");
+			acceptConnectionThread = new SessionConnectionThread(zmqContext, serverAddress);
+			acceptConnectionThread.NewConnectionEstablished += OnNewConnectionEstablished;
+
+			var runnableThread = new Thread(acceptConnectionThread.Run);
+			runnableThread.Start();			
+		}
+
+		private void OnNewConnectionEstablished(AddressIdentifier addressIdentifier, ConnectionSessionId id)
+		{
+			currentSessions.Add(new SessionInfo
+			{
+				ClientAddress = addressIdentifier,
+				SessionId = id,
+				CreationTime = TimeTools.GetCurrentTimeStamp().Item2
+			});
+			NewSessionStarted?.Invoke(id);
 		}
 
 		public void StopCommunication()
 		{
-			Console.WriteLine("stop");
+			acceptConnectionThread.Stop();
 		}
 
 		public AddressIdentifier GetAddress(ConnectionSessionId sessionId)
 		{
-			throw new NotImplementedException();
+			var info = currentSessions.First(infoObj => infoObj.SessionId == sessionId);
+			return info.ClientAddress;
 		}
 
-		public TimeSpan GetSessionStartTime(ConnectionSessionId sessionId)
+		public Time GetSessionStartTime(ConnectionSessionId sessionId)
 		{
-			throw new NotImplementedException();
+			var info = currentSessions.First(infoObj => infoObj.SessionId == sessionId);
+			return info.CreationTime;
 		}
 
-		private readonly NetMQContext zmqContext;
-		
-
-		internal ConnectionService(NetMQContext zmqContext)
-		{			
-			this.zmqContext = zmqContext;			
-		}
-
+	
 		protected override void CleanUp()
 		{
 			
 		}
 	}
-
-	internal class SessionConnectionThread : IThread
-	{
-		private volatile bool stopRunning;
-
-		private readonly ResponseSocket responseSocket;
-
-		public SessionConnectionThread(ResponseSocket responseSocket)
-		{
-			this.responseSocket = responseSocket;
-
-			stopRunning = false;
-			IsRunning = false;
-		}
-
-		public void Run()
-		{
-			IsRunning = true;
-
-			while (!stopRunning)
-			{
-				
-			}
-
-			IsRunning = false;
-			stopRunning = false;
-		}
-
-		public void Stop()
-		{
-			stopRunning = true;
-		}
-
-		public bool IsRunning { get; private set; }
-	}
-
 }

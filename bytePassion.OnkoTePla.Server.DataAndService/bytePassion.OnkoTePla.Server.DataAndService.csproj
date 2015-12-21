@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
+    <Compile Include="Connection\SessionConnectionThread.cs" />
     <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Data\IDataCenter.cs" />
     <Compile Include="Factorys\ConnectionServiceBuilder.cs" />

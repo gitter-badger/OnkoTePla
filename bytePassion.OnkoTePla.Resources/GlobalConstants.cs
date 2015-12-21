@@ -3,7 +3,7 @@ namespace bytePassion.OnkoTePla.Resources
 {
 	public static class GlobalConstants
     {
-	    public const uint TcpIpPort = 5565;
+	    public const uint TcpIpPort = 6656;
 
 		public const string PatientPersistenceFile          = @"..\..\..\AppData\patients.xml";		
 		public const string ConfigPersistenceFile           = @"..\..\..\AppData\config.xml";

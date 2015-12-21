@@ -1,4 +1,5 @@
 ﻿using System;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
 
@@ -12,7 +13,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		void InitiateCommunication(Address serverAddress);
 		void StopCommunication();
 
-		AddressIdentifier GetAddress(ConnectionSessionId sessionId);
-		TimeSpan GetSessionStartTime(ConnectionSessionId sessionId);
+		AddressIdentifier GetAddress         (ConnectionSessionId sessionId);
+		Time              GetSessionStartTime(ConnectionSessionId sessionId);
 	}
 }
