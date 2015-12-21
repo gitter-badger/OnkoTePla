@@ -2,11 +2,8 @@
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 {
-	public class DataCenterBuilder : IDataCenterBuilder
+	public interface IDataCenterBuilder
 	{
-		public IDataCenter Build()
-		{
-			return new DataCenter();
-		}
+		IDataCenter Build();
 	}
 }

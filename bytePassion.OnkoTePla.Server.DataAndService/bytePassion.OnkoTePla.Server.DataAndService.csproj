@@ -52,9 +52,11 @@
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
     <Compile Include="Data\DataCenter.cs" />
+    <Compile Include="Data\IDataCenter.cs" />
     <Compile Include="Factorys\ConnectionServiceBuilder.cs" />
     <Compile Include="Factorys\DataCenterBuilder.cs" />
     <Compile Include="Factorys\IConnectionServiceBuilder.cs" />
+    <Compile Include="Factorys\IDataCenterBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +74,10 @@
     <ProjectReference Include="..\bytePassion.OnkoTePla.Core\bytePassion.OnkoTePla.Core.csproj">
       <Project>{d6dec4c7-d919-4528-ae91-510317a1d0fc}</Project>
       <Name>bytePassion.OnkoTePla.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Resources\bytePassion.OnkoTePla.Resources.csproj">
+      <Project>{1ff3c490-8680-46a5-ab65-6329863326dc}</Project>
+      <Name>bytePassion.OnkoTePla.Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
