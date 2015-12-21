@@ -3,7 +3,7 @@ using bytePassion.Lib.Types.Communication;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
-	internal interface IConnectionService
+	internal interface IConnectionService : IDisposable
 	{
 		event Action<ConnectionEvent> ConnectionEventInvoked;
 		
