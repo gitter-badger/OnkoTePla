@@ -28,6 +28,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		private readonly IList<SessionInfo> currentSessions;
 
 		private AcceptConnectionBeginThread acceptConnectionBeginThread;
+		private AcceptConnectionEndThread   acceptConnectionEndThread;
 		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads; 
 
 		internal ConnectionService (NetMQContext zmqContext)
@@ -41,11 +42,26 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		public void InitiateCommunication(Address serverAddress)
 		{
 			ServerAddress = serverAddress;
+
 			acceptConnectionBeginThread = new AcceptConnectionBeginThread(zmqContext, serverAddress);
 			acceptConnectionBeginThread.NewConnectionEstablished += OnNewConnectionEstablished;			
 
+			acceptConnectionEndThread = new AcceptConnectionEndThread(zmqContext, serverAddress);
+			acceptConnectionEndThread.ConnectionEnded += OnConnectionEnded;
+
 			var runnableThread = new Thread(acceptConnectionBeginThread.Run);
 			runnableThread.Start();			
+		}
+
+		private void OnConnectionEnded(ConnectionSessionId connectionSessionId)
+		{
+			var session = currentSessions.FirstOrDefault(s => s.SessionId == connectionSessionId);
+
+			if (session != null)                                    
+			{                                                       
+				currentSessions.Remove(session);               
+				SessionTerminated?.Invoke(connectionSessionId); 
+			}            
 		}
 
 		private void OnNewConnectionEstablished(AddressIdentifier clientAddress, ConnectionSessionId id)
@@ -74,10 +90,13 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
 			heartbeatThreads.Remove(connectionSessionId);
 
-			var session = currentSessions.First(s => s.SessionId == connectionSessionId);
-			currentSessions.Remove(session);
+			var session = currentSessions.FirstOrDefault(s => s.SessionId == connectionSessionId);
 
-			SessionTerminated?.Invoke(connectionSessionId);
+			if (session != null)									//
+			{														//	session will be null
+				currentSessions.Remove(session);					//  when ended by 
+				SessionTerminated?.Invoke(connectionSessionId);		//  connectionEndMessage
+			}														//
 		}
 
 		private Address ServerAddress { get; set; }
@@ -91,7 +110,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			}
 			heartbeatThreads.Clear();
 
+			acceptConnectionBeginThread.NewConnectionEstablished -= OnNewConnectionEstablished;
 			acceptConnectionBeginThread.Stop();
+
+			acceptConnectionEndThread.ConnectionEnded -= OnConnectionEnded;
+			acceptConnectionEndThread.Stop();
 
 			ServerAddress = null;
 		}

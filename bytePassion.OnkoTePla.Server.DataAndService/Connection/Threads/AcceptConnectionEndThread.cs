@@ -1,6 +1,8 @@
 using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.Lib.ZmqUtils;
+using bytePassion.OnkoTePla.Contracts.NetworkMessages.EndConnection;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
@@ -32,27 +34,25 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 			using (var socket = context.CreateResponseSocket())
 			{
+				socket.Bind(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.EndConnection);
 
-				socket.Bind(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.BeginConnection);
+				while (!stopRunning)
+				{
+					var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(1));
 
-//				while (!stopRunning)
-//				{
-//					var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(1));
-//
-//					if (inMessage == "")
-//						continue;
-//
-//					var request = Request.Parse(inMessage);
-//					var newSessionId = new ConnectionSessionId(Guid.NewGuid());
-//
-//					System.Windows.Application.Current.Dispatcher.Invoke(() =>
-//					{
-//						ConnectionEnded?.Invoke(newSessionId);
-//					});
-//
-//					var response = new Response(newSessionId);
-//					socket.SendAString(response.AsString(), TimeSpan.FromSeconds(2));
-//				}
+					if (inMessage == "")
+						continue;
+
+					var request = Request.Parse(inMessage);
+					
+					System.Windows.Application.Current.Dispatcher.Invoke(() =>
+					{
+						ConnectionEnded?.Invoke(request.SessionId);
+					});
+
+					var response = new Response();
+					socket.SendAString(response.AsString(), TimeSpan.FromSeconds(2));
+				}
 			}
 
 			IsRunning = false;

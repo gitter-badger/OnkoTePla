@@ -12,7 +12,7 @@
 			public const uint Heartbeat       = 6661;
 		}
 
-		public const int HeartbeatIntverval = 5000;
+		public const int HeartbeatIntverval = 5000;		// unit is milliseconds
 
 		public const string PatientPersistenceFile          = @"..\..\..\AppData\patients.xml";		
 		public const string ConfigPersistenceFile           = @"..\..\..\AppData\config.xml";
