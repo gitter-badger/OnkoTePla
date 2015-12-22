@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 
 namespace bytePassion.Lib.ZmqUtils
@@ -8,19 +10,18 @@ namespace bytePassion.Lib.ZmqUtils
 	{
 		public static IReadOnlyList<Address> GetAllAvailableLocalIpAddresses ()
 		{
-			string strHostName = Dns.GetHostName();
-			var iphostentry = Dns.GetHostByName(strHostName);
-
+			var hostName    = Dns.GetHostName();			
 			var addressList = new List<Address>();
+			var protocol    = new TcpIpProtocol();
 
-			foreach (var ipaddress in iphostentry.AddressList)
-			{
-				addressList.Add(new Address(new TcpIpProtocol(),
-											AddressIdentifier.GetIpAddressIdentifierFromString(ipaddress.ToString())));
-			}
+			Dns.GetHostEntry(hostName).AddressList
+									  .Select(address => address.ToString())
+									  .Where(AddressIdentifier.IsIpAddressIdentifier)
+									  .Select(address => new Address(protocol, AddressIdentifier.GetIpAddressIdentifierFromString(address)))
+									  .Do(addressList.Add);			
 
 			if (addressList.Count == 0)
-				addressList.Add(new Address(new TcpIpProtocol(), new IpV4AddressIdentifier(127, 0, 0, 1)));
+				addressList.Add(new Address(protocol, new IpV4AddressIdentifier(127, 0, 0, 1)));
 
 			return addressList;
 		}
