@@ -11,7 +11,9 @@
 			public const uint Logout          = 6660;
 			public const uint Heartbeat       = 6661;
 		}
-	    
+
+		public const int HeartbeatIntverval = 5000;
+
 		public const string PatientPersistenceFile          = @"..\..\..\AppData\patients.xml";		
 		public const string ConfigPersistenceFile           = @"..\..\..\AppData\config.xml";
 		public const string EventHistoryPersistenceFile     = @"..\..\..\AppData\eventHistory.xml";

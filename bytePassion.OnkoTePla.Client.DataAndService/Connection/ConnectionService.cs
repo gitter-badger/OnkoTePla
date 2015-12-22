@@ -29,8 +29,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		public Address          ServerAddress    { get; private set; }
 		public Address			ClientAddress    { get; private set; }
 
+		private ConnectionSessionId CurrentSessionId { get; set; }
 
-
+		private HeartbeatThead heartbeatThread;
+		
         public void TryConnect(Address serverAddress, Address clientAddress)
         {
 	        ServerAddress = serverAddress;
@@ -59,11 +61,26 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					}
 					else
 					{
+						CurrentSessionId = connectionSessionId;
+
+						heartbeatThread = new HeartbeatThead(zmqContext, ClientAddress, CurrentSessionId);
+						heartbeatThread.ServerVanished += OnServerVanished;
+						var runningThread = new Thread(heartbeatThread.Run);
+						runningThread.Start();
+
 						ConnectionStatus = ConnectionStatus.Connected;
 						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
 					}					
 				}				
 			);			
+		}
+
+		private void OnServerVanished()
+		{
+			heartbeatThread.ServerVanished -= OnServerVanished;
+
+			ConnectionStatus = ConnectionStatus.Disconnected;
+			Application.Current.Dispatcher.Invoke(() => ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost));
 		}
 
 		public void TryDisconnect()

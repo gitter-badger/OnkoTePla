@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Windows;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
@@ -73,7 +74,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
 			heartbeatThreads.Remove(connectionSessionId);
 
-			SessionTerminated?.Invoke(connectionSessionId);
+			var session = currentSessions.First(s => s.SessionId == connectionSessionId);
+			currentSessions.Remove(session);
+
+			Application.Current.Dispatcher.Invoke(() => SessionTerminated?.Invoke(connectionSessionId));
 		}
 
 		private Address ServerAddress { get; set; }

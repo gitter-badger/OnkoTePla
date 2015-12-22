@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Connection\ConnectionStatus.cs" />
     <Compile Include="Connection\ConnectionThead.cs" />
+    <Compile Include="Connection\HeartbeatThead.cs" />
     <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Data\IDataCenter.cs" />
     <Compile Include="Factorys\DataCenterBuilder.cs" />

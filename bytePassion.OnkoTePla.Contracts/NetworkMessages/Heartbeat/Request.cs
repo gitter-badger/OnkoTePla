@@ -24,7 +24,7 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Heartbeat
 			if (parts.Length != 2)
 				throw new ArgumentException($"{s} is not a HeartbeatRequest");
 
-			if (parts[0] != "ConnectionRequest")
+			if (parts[0] != "HeartbeatRequest")
 				throw new ArgumentException($"{s} is not a HeartbeatRequest");
 
 			var sessionId = new ConnectionSessionId(Guid.Parse(parts[1]));			

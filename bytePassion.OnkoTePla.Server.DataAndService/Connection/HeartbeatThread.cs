@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
@@ -45,6 +46,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 				while (!stopRunning)
 				{
+					Thread.Sleep(GlobalConstants.HeartbeatIntverval);
+					
 					var outMessage = new Request(sessionId);
 					socket.SendAString(outMessage.AsString(), TimeSpan.FromSeconds(2));
 
@@ -54,10 +57,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 					{
 						var response = Response.Parse(inMessage);
 
-						if (response.SessionId == sessionId)
+						if (response.SessionId == sessionId)												
 							continue;						
 					}
-
+					
 					ClientVanished?.Invoke(sessionId);
 					break;
 				}
