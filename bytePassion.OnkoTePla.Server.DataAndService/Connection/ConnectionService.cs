@@ -7,6 +7,7 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
+using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
@@ -27,7 +28,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		private readonly NetMQContext zmqContext;
 		private readonly IList<SessionInfo> currentSessions;
 
-		private SessionConnectionThread acceptConnectionThread;
+		private AcceptConnectionBeginThread acceptConnectionBeginThread;
 		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads; 
 
 		internal ConnectionService (NetMQContext zmqContext)
@@ -41,10 +42,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		public void InitiateCommunication(Address serverAddress)
 		{
 			ServerAddress = serverAddress;
-			acceptConnectionThread = new SessionConnectionThread(zmqContext, serverAddress);
-			acceptConnectionThread.NewConnectionEstablished += OnNewConnectionEstablished;			
+			acceptConnectionBeginThread = new AcceptConnectionBeginThread(zmqContext, serverAddress);
+			acceptConnectionBeginThread.NewConnectionEstablished += OnNewConnectionEstablished;			
 
-			var runnableThread = new Thread(acceptConnectionThread.Run);
+			var runnableThread = new Thread(acceptConnectionBeginThread.Run);
 			runnableThread.Start();			
 		}
 
@@ -91,7 +92,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			}
 			heartbeatThreads.Clear();
 
-			acceptConnectionThread.Stop();
+			acceptConnectionBeginThread.Stop();
 
 			ServerAddress = null;
 		}

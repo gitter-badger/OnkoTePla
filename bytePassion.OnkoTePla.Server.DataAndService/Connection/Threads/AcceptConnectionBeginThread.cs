@@ -7,9 +7,9 @@ using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
+namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 {
-	internal class SessionConnectionThread : IThread
+	internal class AcceptConnectionBeginThread : IThread
 	{
 		public event Action<AddressIdentifier, ConnectionSessionId> NewConnectionEstablished;
 
@@ -17,10 +17,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		private readonly Address serverAddress;
 
 		private volatile bool stopRunning;
-
 		
 
-		public SessionConnectionThread(NetMQContext context, Address serverAddress)
+		public AcceptConnectionBeginThread(NetMQContext context, Address serverAddress)
 		{
 			this.context = context;
 			this.serverAddress = serverAddress;
