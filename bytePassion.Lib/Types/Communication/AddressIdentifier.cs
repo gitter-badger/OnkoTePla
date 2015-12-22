@@ -11,6 +11,10 @@ namespace bytePassion.Lib.Types.Communication
 
         public AddressIdentifierType Type { get; }
 
+		public static bool IsIpAddressIdentifier(string s)
+		{
+			return IpV4AddressIdentifier.IsIpV4Address(s) || IpV6AddressIdentifier.IsIpV6Address(s);
+		}
 
 	    public static AddressIdentifier GetIpAddressIdentifierFromString(string s)
 	    {
