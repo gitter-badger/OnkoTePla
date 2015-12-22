@@ -37,7 +37,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 				
 				var outMessage = new Request(clientAddress.Identifier).AsString();
-				socket.SendAString(outMessage);
+				socket.SendAString(outMessage, TimeSpan.FromSeconds(2));
 					
 				var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(2));
 

@@ -54,7 +54,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 					});					
 
 					var response = new Response(newSessionId);
-					socket.SendAString(response.AsString());
+					socket.SendAString(response.AsString(), TimeSpan.FromSeconds(2));
 				}
 			}
 
