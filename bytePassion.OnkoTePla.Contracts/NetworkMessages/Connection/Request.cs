@@ -22,10 +22,10 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Connection
 			var parts = s.Split(';');
 
 			if (parts.Length != 2)
-				throw new ArgumentException($"{s} is not a connectionRequest");
+				throw new ArgumentException($"{s} is not a ConnectionRequest");
 
 			if (parts[0] != "ConnectionRequest")
-				throw new ArgumentException($"{s} is not a connectionRequest");
+				throw new ArgumentException($"{s} is not a ConnectionRequest");
 
 			var clientAddress = AddressIdentifier.GetIpAddressIdentifierFromString(parts[1]);
 

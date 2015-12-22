@@ -50,6 +50,8 @@
     <Compile Include="Infrastructure\MedicalPractice.cs" />
     <Compile Include="NetworkMessages\Connection\Request.cs" />
     <Compile Include="NetworkMessages\Connection\Response.cs" />
+    <Compile Include="NetworkMessages\Heartbeat\Request.cs" />
+    <Compile Include="NetworkMessages\Heartbeat\Response.cs" />
     <Compile Include="Patients\Patient.cs" />
     <Compile Include="Infrastructure\Room.cs" />
     <Compile Include="Infrastructure\TherapyPlace.cs" />
