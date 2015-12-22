@@ -69,6 +69,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 					socket.SendAString(response.AsString(), TimeSpan.FromSeconds(2));					
 				}			
 			}
+
+			Console.WriteLine("exit heartbeat");
 		}
 
 		public void Stop ()

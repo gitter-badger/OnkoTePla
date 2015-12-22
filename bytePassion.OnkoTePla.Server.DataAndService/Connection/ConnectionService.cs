@@ -44,17 +44,16 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			ServerAddress = serverAddress;
 
 			acceptConnectionBeginThread = new AcceptConnectionBeginThread(zmqContext, serverAddress);
-			acceptConnectionBeginThread.NewConnectionEstablished += OnNewConnectionEstablished;			
+			acceptConnectionBeginThread.NewConnectionEstablished += OnNewConnectionEstablished;
+			new Thread(acceptConnectionBeginThread.Run).Start();
 
 			acceptConnectionEndThread = new AcceptConnectionEndThread(zmqContext, serverAddress);
-			acceptConnectionEndThread.ConnectionEnded += OnConnectionEnded;
-
-			var runnableThread = new Thread(acceptConnectionBeginThread.Run);
-			runnableThread.Start();			
+			acceptConnectionEndThread.ConnectionEnded += OnConnectionEnded;			
+			new Thread(acceptConnectionEndThread.Run).Start();
 		}
 
 		private void OnConnectionEnded(ConnectionSessionId connectionSessionId)
-		{
+		{			
 			var session = currentSessions.FirstOrDefault(s => s.SessionId == connectionSessionId);
 
 			if (session != null)                                    

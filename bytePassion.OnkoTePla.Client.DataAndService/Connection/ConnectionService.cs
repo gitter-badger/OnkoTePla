@@ -32,22 +32,52 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 		private ConnectionSessionId CurrentSessionId { get; set; }
 
+		private bool ConnectionWasTerminated { get; set; }
+
 		private HeartbeatThead heartbeatThread;
 		
         public void TryConnect(Address serverAddress, Address clientAddress)
         {
-	        ServerAddress = serverAddress;
+	        ConnectionWasTerminated = false;
+
+			ServerAddress = serverAddress;
 	        ClientAddress = clientAddress;
 
 			ConnectionStatus = ConnectionStatus.TryingToConnect;
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);			
 
-			var threadLogic = new ConnectionBeginThead(zmqContext, serverAddress, clientAddress,ConnectionResponeReceived);
+			var threadLogic = new ConnectionBeginThead(zmqContext, serverAddress, 
+													   clientAddress, ConnectionBeginResponeReceived);
 			var runningThread = new Thread(threadLogic.Run);
 			runningThread.Start();
 		}
 
-		private void ConnectionResponeReceived(ConnectionSessionId connectionSessionId)
+		public void TryDisconnect ()
+		{
+			ConnectionStatus = ConnectionStatus.TryingToDisconnect;
+			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryDisconnect);
+
+			var threadLogic = new ConnectionEndThead(zmqContext, ServerAddress, 
+													 CurrentSessionId, ConnectionEndResponseReceived);
+			var runningThread = new Thread(threadLogic.Run);
+			runningThread.Start();
+		}
+
+		private void ConnectionEndResponseReceived()
+		{
+			Application.Current.Dispatcher.Invoke(
+				() =>
+				{
+					ConnectionWasTerminated = true;
+
+					heartbeatThread.Stop();
+
+					ConnectionStatus = ConnectionStatus.Disconnected;
+					ConnectionEventInvoked?.Invoke(ConnectionEvent.Disconnected);
+				});
+		}
+
+		private void ConnectionBeginResponeReceived(ConnectionSessionId connectionSessionId)
 		{
 			Application.Current.Dispatcher.Invoke(
 				() =>
@@ -80,24 +110,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		{
 			heartbeatThread.ServerVanished -= OnServerVanished;
 
-			ConnectionStatus = ConnectionStatus.Disconnected;
-			ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost);
-		}
-
-		public void TryDisconnect()
-        {
-			ConnectionStatus = ConnectionStatus.TryingToDisconnect;
-			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryDisconnect);
-
-			Application.Current.Dispatcher.DelayInvoke(
-				() =>
-				{
-					ConnectionStatus = ConnectionStatus.Disconnected;
-					ConnectionEventInvoked?.Invoke(ConnectionEvent.Disconnected);					
-				},
-				TimeSpan.FromSeconds(2)
-			);
-		}
+			if (!ConnectionWasTerminated)
+			{
+				ConnectionStatus = ConnectionStatus.Disconnected;
+				ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost);
+			}
+		}		
 
 		protected override void CleanUp()
 		{

@@ -27,7 +27,7 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.BeginConnection
 				throw new ArgumentException($"{s} is not a {MsgIdentifier}");
 
 			if (parts[0] != MsgIdentifier)
-				throw new ArgumentException($"{s} is not a {MsgIdentifier }");
+				throw new ArgumentException($"{s} is not a {MsgIdentifier}");
 
 			var clientAddress = AddressIdentifier.GetIpAddressIdentifierFromString(parts[1]);
 			return new Request(clientAddress);
