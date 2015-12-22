@@ -9,69 +9,79 @@
         xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Enums"
         xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Converter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    
-    <d:DesignData.DataContext>
-        <sampleData:MainWindowViewModelSampleData/>
-    </d:DesignData.DataContext>
-    
-    <Window.Resources>
-        <converter:MainPageToIntConverter x:Key="MainPageToIntConverter"/>
-    </Window.Resources>
-    
-    <Grid>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-        
-        <StackPanel Grid.Column="0"
+		WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="692" Width="1089">
+
+	<d:DesignData.DataContext>
+		<sampleData:MainWindowViewModelSampleData/>
+	</d:DesignData.DataContext>
+
+	<Window.Resources>
+		<converter:MainPageToIntConverter x:Key="MainPageToIntConverter"/>
+	</Window.Resources>
+
+	<Grid>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="3*"/>
+		</Grid.ColumnDefinitions>
+
+		<StackPanel Grid.Column="0"
                     Orientation="Vertical">
-                        
-            <Button Content="Übersicht"
+			
+			<StackPanel.Resources>
+				
+				<Style TargetType="Button">
+					<Setter Property="Height" Value="40"/>
+					<Setter Property="Margin" Value="5"></Setter>
+				</Style>
+				
+			</StackPanel.Resources>
+
+			<Button Content="Übersicht"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Overview}"/>
-            
-            <Button Content="Verbindungen"
+
+			<Button Content="Verbindungen"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Connections}"/>
-            
-            <Button Content="Benutzer"
+
+			<Button Content="Benutzer"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.User}"/>
-            
-            <Button Content="Lizenz"
+
+			<Button Content="Lizenz"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Licence}"/>
-            
-            <Button Content="Infrastruktur"
+
+			<Button Content="Infrastruktur"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Infrastructure}"/>
 
-            <Button Content="Einstellungen"
+			<Button Content="Einstellungen"
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Options}"/>
-            
-            <Button Content="Über ..."
+
+			<Button Content="Über ..."
                     Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.About}"/>
 
-        </StackPanel>
+		</StackPanel>
 
-        <panels:DeckPanel Grid.Column="1" 
+		<panels:DeckPanel Grid.Column="1" 
                           SelectedLayer="{Binding SelectedPage, 
                                                   Converter={StaticResource MainPageToIntConverter}}">
-            
-            <views:OverviewPage       DataContext="{Binding OverviewPageViewModel}"/>
-            <views:ConnectionsPage    DataContext="{Binding ConnectionsPageViewModel}"/>
-            <views:UserPage           DataContext="{Binding UserPageViewModel}"/>
-            <views:LicencePage        DataContext="{Binding LicencePageViewModel}"/>
-            <views:InfrastructurePage DataContext="{Binding InfrastructurePageViewModel}"/>
-            <views:OptionsPage        DataContext="{Binding OptionsPageViewModel}"/>
-            <views:AboutPage          DataContext="{Binding AboutPageViewModel}"/>
-            
-        </panels:DeckPanel>
-        
-    </Grid>
+
+			<views:OverviewPage       DataContext="{Binding OverviewPageViewModel}"/>
+			<views:ConnectionsPage    DataContext="{Binding ConnectionsPageViewModel}"/>
+			<views:UserPage           DataContext="{Binding UserPageViewModel}"/>
+			<views:LicencePage        DataContext="{Binding LicencePageViewModel}"/>
+			<views:InfrastructurePage DataContext="{Binding InfrastructurePageViewModel}"/>
+			<views:OptionsPage        DataContext="{Binding OptionsPageViewModel}"/>
+			<views:AboutPage          DataContext="{Binding AboutPageViewModel}"/>
+
+		</panels:DeckPanel>
+
+	</Grid>
 </Window>
