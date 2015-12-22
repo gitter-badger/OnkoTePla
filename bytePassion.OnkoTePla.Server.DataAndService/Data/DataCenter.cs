@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Net;
 using bytePassion.Lib.Types.Communication;
-using bytePassion.OnkoTePla.Resources;
+using bytePassion.Lib.ZmqUtils;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 {
@@ -14,22 +13,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 
 
 		public IReadOnlyList<Address> GetAllAvailableAddresses()
-		{			
-			string strHostName = Dns.GetHostName();						
-			var iphostentry = Dns.GetHostByName(strHostName);
-
-			var addressList = new List<Address>();
-						
-			foreach (var ipaddress in iphostentry.AddressList)
-			{
-				addressList.Add(new Address(new TcpIpProtocol(), 
-											AddressIdentifier.GetIpAddressIdentifierFromString(ipaddress.ToString())));				
-			}
-
-			if (addressList.Count == 0)
-				addressList.Add(new Address(new TcpIpProtocol(), new IpV4AddressIdentifier(127,0,0,1)));
-
-			return addressList;			
+		{
+			return IpAddressCatcher.GetAllAvailableLocalIpAddresses();
 		}
 	}
 }
