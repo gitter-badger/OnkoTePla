@@ -5,6 +5,8 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Heartbeat
 {
 	public class Response
 	{
+		private const string MsgIdentifier = "HearbeatConfirmed";
+
 		public Response(ConnectionSessionId sessionId)
 		{
 			SessionId = sessionId;
@@ -14,21 +16,20 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Heartbeat
 
 		public string AsString ()
 		{
-			return $"Confirmed;{SessionId}";
-		}
+			return $"{MsgIdentifier};{SessionId}";
+        }
 
 		public static Response Parse (string s)
 		{
 			var parts = s.Split(';');
 
 			if (parts.Length != 2)
-				throw new ArgumentException($"{s} is not a HeartbeatResponse");
-
-			if (parts[0] != "Confirmed")
-				throw new ArgumentException($"{s} is not a HeartbeatResponse");
+				throw new ArgumentException($"{s} is not a {MsgIdentifier}");
+			
+			if (parts[0] != MsgIdentifier)
+				throw new ArgumentException($"{s} is not a {MsgIdentifier}");
 
 			var sessionId = new ConnectionSessionId(Guid.Parse(parts[1]));
-
 			return new Response(sessionId);
 		}
 	}

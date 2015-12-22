@@ -1,13 +1,13 @@
 ﻿using System;
 using bytePassion.OnkoTePla.Contracts.Types;
 
-namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Heartbeat
+namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.EndConnection
 {
 	public class Request
 	{
-		private const string MsgIdentifier = "HeartbeatRequest";
+		private const string MsgIdentifier = "EndConnectionRequest";
 
-		public Request(ConnectionSessionId sessionId)
+		public Request (ConnectionSessionId sessionId)
 		{
 			SessionId = sessionId;
 		}
@@ -25,11 +25,11 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Heartbeat
 
 			if (parts.Length != 2)
 				throw new ArgumentException($"{s} is not a {MsgIdentifier}");
-			
+
 			if (parts[0] != MsgIdentifier)
 				throw new ArgumentException($"{s} is not a {MsgIdentifier}");
 
-			var sessionId = new ConnectionSessionId(Guid.Parse(parts[1]));			
+			var sessionId = new ConnectionSessionId(Guid.Parse(parts[1]));
 			return new Request(sessionId);
 		}
 	}

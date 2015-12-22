@@ -1,10 +1,12 @@
 ﻿using System;
 using bytePassion.OnkoTePla.Contracts.Types;
 
-namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Connection
+namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.BeginConnection
 {
 	public class Response
 	{
+		private const string MsgIdentifier = "ConnectionBeginConfirmed";
+
 		public Response(ConnectionSessionId sessionId)
 		{
 			SessionId = sessionId;
@@ -14,21 +16,20 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.Connection
 
 		public string AsString()
 		{
-			return $"Confirmed;{SessionId}";
-		}
+			return $"{MsgIdentifier};{SessionId}";
+        }
 
 		public static Response Parse(string s)
 		{
 			var parts = s.Split(';');
 
 			if (parts.Length != 2)
-				throw new ArgumentException($"{s} is not a ConnectionResponse");
+				throw new ArgumentException($"{s} is not a {MsgIdentifier}");
 
-			if (parts[0] != "Confirmed")
-				throw new ArgumentException($"{s} is not a ConnectionResponse");
+			if (parts[0] != MsgIdentifier)
+				throw new ArgumentException($"{s} is not a {MsgIdentifier}");
 
 			var sessionId = new ConnectionSessionId(Guid.Parse(parts[1]));
-
 			return new Response(sessionId);
 		}
 	}
