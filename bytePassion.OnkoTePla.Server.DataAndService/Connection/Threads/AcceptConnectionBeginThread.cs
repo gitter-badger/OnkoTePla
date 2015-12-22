@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
@@ -47,10 +48,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 					var request = Request.Parse(inMessage);					
 					var newSessionId = new ConnectionSessionId(Guid.NewGuid());
 
-					System.Windows.Application.Current.Dispatcher.Invoke(() =>
-					{
-						NewConnectionEstablished?.Invoke(request.ClientAddress, newSessionId);
-					});					
+					Application.Current.Dispatcher.Invoke(() => NewConnectionEstablished?.Invoke(request.ClientAddress, newSessionId));					
 
 					var response = new Response(newSessionId);
 					socket.SendAString(response.AsString(), TimeSpan.FromSeconds(2));

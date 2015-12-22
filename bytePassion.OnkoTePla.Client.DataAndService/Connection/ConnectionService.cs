@@ -81,7 +81,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			heartbeatThread.ServerVanished -= OnServerVanished;
 
 			ConnectionStatus = ConnectionStatus.Disconnected;
-			Application.Current.Dispatcher.Invoke(() => ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost));
+			ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost);
 		}
 
 		public void TryDisconnect()

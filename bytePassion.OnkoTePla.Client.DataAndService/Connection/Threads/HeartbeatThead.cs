@@ -1,4 +1,5 @@
 using System;
+using System.Windows;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
@@ -44,8 +45,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 					var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(10));
 
 					if (inMessage == "")
-					{						
-						ServerVanished?.Invoke();
+					{
+						Application.Current.Dispatcher.Invoke(() => ServerVanished?.Invoke());
 						break;
 					}
 					

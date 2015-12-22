@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Windows;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
@@ -61,7 +62,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 							continue;						
 					}
 					
-					ClientVanished?.Invoke(sessionId);
+					Application.Current.Dispatcher.Invoke(() => ClientVanished?.Invoke(sessionId));
 					break;
 				}
 			}
