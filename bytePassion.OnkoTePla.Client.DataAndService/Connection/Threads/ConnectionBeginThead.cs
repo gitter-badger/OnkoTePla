@@ -7,9 +7,9 @@ using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
 
-namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
+namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 {
-	internal class ConnectionThead : IThread
+	internal class ConnectionBeginThead : IThread
 	{
 		private readonly NetMQContext context;
 		private readonly Address serverAddress;
@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		private readonly Action<ConnectionSessionId> responseCallback;
 
 
-		public ConnectionThead(NetMQContext context, 
+		public ConnectionBeginThead(NetMQContext context, 
 			Address serverAddress,
 			Address clientAddress,
 			Action<ConnectionSessionId> responseCallback)

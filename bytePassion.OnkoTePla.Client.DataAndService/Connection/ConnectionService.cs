@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ;
 using NLog;
@@ -41,7 +42,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			ConnectionStatus = ConnectionStatus.TryingToConnect;
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);			
 
-			var threadLogic = new ConnectionThead(zmqContext, serverAddress, clientAddress,ConnectionResponeReceived);
+			var threadLogic = new ConnectionBeginThead(zmqContext, serverAddress, clientAddress,ConnectionResponeReceived);
 			var runningThread = new Thread(threadLogic.Run);
 			runningThread.Start();
 		}

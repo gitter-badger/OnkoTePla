@@ -7,7 +7,7 @@ using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
 
-namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
+namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 {
 	internal class HeartbeatThead : IThread
 	{
