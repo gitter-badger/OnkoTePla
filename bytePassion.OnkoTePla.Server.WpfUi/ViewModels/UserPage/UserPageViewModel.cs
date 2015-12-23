@@ -29,7 +29,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 
 	    private void DoAddUser()
 	    {
-		    
+		    var newUser = UserCreateAndUpdateLogic.Create();
+		    dataCenter.AddNewUser(newUser);
+			Users.Add(newUser);
 	    }
 
 	    public ICommand AddUser     { get; }

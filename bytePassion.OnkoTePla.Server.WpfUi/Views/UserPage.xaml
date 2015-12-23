@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage"
+             xmlns:config="clr-namespace:bytePassion.OnkoTePla.Contracts.Config;assembly=bytePassion.OnkoTePla.Contracts"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="900">
     
@@ -20,20 +21,43 @@
 
 		<StackPanel Orientation="Vertical">
 
-			<ListBox Margin="5,5,5,0">
+			<ListBox Margin="5,5,5,0"
+					 ItemsSource="{Binding Users}">
 
 				<ListBox.ItemsPanel>
 					<ItemsPanelTemplate>
 						<StackPanel/>
 					</ItemsPanelTemplate>
 				</ListBox.ItemsPanel>
+				
+				<ListBox.ItemTemplate>
+					<DataTemplate DataType="{x:Type config:User}">
+						<Border Height="40"
+								Width="220"
+								BorderBrush="Black"
+								BorderThickness="1">
 
+							<TextBlock Text="{Binding Name}"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center"
+									   FontSize="15"/>
+						</Border>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+
+				<ListBox.ItemContainerStyle>
+					<Style TargetType="ListBoxItem">
+						<Setter Property="Margin" Value="5"/>
+					</Style>
+				</ListBox.ItemContainerStyle>
+				
 			</ListBox>
 
 			<Button Height="40"				
 					Margin="5"
 					HorizontalAlignment="Center"
-					Content="add User">
+					Content="add User"
+					Command="{Binding AddUser}">
 
 				<Button.Template>
 					<ControlTemplate TargetType="Button">
