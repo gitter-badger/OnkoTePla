@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <therapyPlaceTypes count="0" />
+  <medicalPractices count="0" />
+  <users count="2">
+    <user name="user1" password="blubb" id="f3034a4e-831c-4b55-89f4-87f782614afc" isHidden="False" />
+    <user name="user2" password="1223345" id="8547b481-08d8-4305-97f5-3f3a4448e0be" isHidden="True" />
+  </users>
+</configuration>
