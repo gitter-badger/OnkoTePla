@@ -10,6 +10,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 
 
@@ -33,6 +34,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			var configRepository = new ConfigurationRepository(configPersistenceService);
 			configRepository.LoadRepository();
 
+
 			// DataAndService
 
 			var dataCenterBuilder = new DataCenterBuilder(configRepository, configRepository);
@@ -44,19 +46,21 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 			// ViewModels
 
-            var overviewPageViewModel       = new OverviewPageViewModel();
-            var connectionsPageViewModel    = new ConnectionsPageViewModel(dataCenter, connectionService);
-            var userPageViewModel           = new UserPageViewModel(dataCenter);
-            var licencePageViewModel        = new LicencePageViewModel();
-            var infrastructurePageViewModel = new InfrastructurePageViewModel();
-            var optionsPageViewModel        = new OptionsPageViewModel();
-            var aboutPageViewModel          = new AboutPageViewModel();
-
-            var mainWindowViewModel = new MainWindowViewModel(overviewPageViewModel,
+            var overviewPageViewModel          = new OverviewPageViewModel();
+            var connectionsPageViewModel       = new ConnectionsPageViewModel(dataCenter, connectionService);
+            var userPageViewModel              = new UserPageViewModel(dataCenter);
+            var licencePageViewModel           = new LicencePageViewModel();
+            var infrastructurePageViewModel    = new InfrastructurePageViewModel();
+			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel();
+			var optionsPageViewModel           = new OptionsPageViewModel();
+            var aboutPageViewModel             = new AboutPageViewModel();
+	        
+	        var mainWindowViewModel = new MainWindowViewModel(overviewPageViewModel,
                                                               connectionsPageViewModel,
                                                               userPageViewModel,
                                                               licencePageViewModel,
-                                                              infrastructurePageViewModel,                                                              
+                                                              infrastructurePageViewModel,   
+															  therapyPlaceTypesPageViewModel,                                                           
                                                               optionsPageViewModel,
                                                               aboutPageViewModel);
             var mainWindow = new MainWindow
