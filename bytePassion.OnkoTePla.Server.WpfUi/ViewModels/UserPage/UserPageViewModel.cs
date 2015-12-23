@@ -58,6 +58,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 		    var newUser = UserCreateAndUpdateLogic.Create();
 		    dataCenter.AddNewUser(newUser);
 			Users.Add(newUser);
+
+		    SelectedUser = newUser;
 	    }
 
 	    public ICommand AddUser        { get; }
