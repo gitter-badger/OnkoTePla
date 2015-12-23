@@ -78,6 +78,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 			var newTherapyPlaceType = TherapyPlaceTypeCreateAndEditLogic.Create();
 			dataCenter.AddNewTherapyPlaceType(newTherapyPlaceType);
 			TherapyPlaceTypes.Add(newTherapyPlaceType);
+
+			SelectedTherapyPlaceType = newTherapyPlaceType;
 		}
 		
 		public ICommand AddTherapyPlaceType { get; }
