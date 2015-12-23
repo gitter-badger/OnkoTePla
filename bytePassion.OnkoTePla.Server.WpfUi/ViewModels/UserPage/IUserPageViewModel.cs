@@ -16,6 +16,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 
 		bool ShowModificationView { get; }
 
-
+		string UserName { get; set; }
+		string Password { get; set; }
+		bool   IsHidden { get; set; }
     }
 }

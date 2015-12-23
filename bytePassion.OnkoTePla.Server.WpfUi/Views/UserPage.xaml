@@ -168,7 +168,10 @@
 			
 			<TextBox Grid.Row="1"
 					 Grid.Column="1"
-					 Margin="5"/>
+					 Margin="5"
+					 Text="{Binding UserName, 
+									Mode=TwoWay, 
+									UpdateSourceTrigger=PropertyChanged}"/>
 			
 			<TextBlock Grid.Row="2"
 					   Grid.Column="0"
@@ -179,7 +182,10 @@
 
 			<TextBox Grid.Row="2"
 					 Grid.Column="1"
-					 Margin="5"/>
+					 Margin="5"
+					 Text="{Binding Password, 
+									Mode=TwoWay, 
+									UpdateSourceTrigger=PropertyChanged}"/>
 
 			<TextBlock Grid.Row="3"
 					   Grid.Column="0"
@@ -190,7 +196,10 @@
 
 			<CheckBox Grid.Row="3"
 					  Grid.Column="1"
-					  Margin="5"/>
+					  Margin="5"
+					  IsChecked="{Binding IsHidden,
+										  Mode=TwoWay,
+										  UpdateSourceTrigger=PropertyChanged}"/>
 
 			<TextBlock Grid.Row="4"
 					   Grid.Column="0"

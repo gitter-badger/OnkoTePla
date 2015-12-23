@@ -14,6 +14,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 	    private readonly IDataCenter dataCenter;
 		private User selectedUser;
 		private bool showModificationView;
+		private string userName;
+		private string password;
+		private bool isHidden;
 
 		public UserPageViewModel(IDataCenter dataCenter)
 	    {
@@ -37,6 +40,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 
 		private void DoSaveChanges()
 	    {
+			var newUser = SelectedUser.SetNewUserValues(UserName,
+														Password,
+														SelectedUser.ListOfAccessableMedicalPractices,
+														IsHidden);
+			dataCenter.UpdateUser(newUser);
+
+			Users.Remove(SelectedUser);
+			Users.Add(newUser);
+
 		    SelectedUser = null;
 			ShowModificationView = false;
 		}
@@ -59,9 +71,18 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 			get { return selectedUser; }
 			set
 			{
+				var oldSelectedUser = SelectedUser;
+
 				PropertyChanged.ChangeAndNotify(this, ref selectedUser, value);
 
 				ShowModificationView = SelectedUser != null;
+
+				if (SelectedUser != null && SelectedUser != oldSelectedUser)
+				{
+					UserName = SelectedUser.Name;
+					Password = SelectedUser.Password;
+					IsHidden = SelectedUser.IsHidden;
+				}
 			}
 		}
 
@@ -69,6 +90,24 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 		{
 			get { return showModificationView; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref showModificationView, value); }
+		}
+
+		public string UserName
+		{
+			get { return userName; }
+			set { PropertyChanged.ChangeAndNotify(this, ref userName, value); }
+		}
+
+		public string Password
+		{
+			get { return password; }
+			set { PropertyChanged.ChangeAndNotify(this, ref password, value); }
+		}
+
+		public bool IsHidden
+		{
+			get { return isHidden; }
+			set { PropertyChanged.ChangeAndNotify(this, ref isHidden, value); }
 		}
 
 		protected override void CleanUp() {  }

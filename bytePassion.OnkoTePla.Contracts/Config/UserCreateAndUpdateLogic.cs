@@ -45,5 +45,16 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 							user.Id,
 							newIsHiddenStatus);
 		}
+
+		public static User SetNewUserValues(this User user, 
+										    string newUserName, string newPassword,
+											IReadOnlyList<Guid> newListOfAccessableMedicalPractices, 
+											bool newIsHiddenStatus)
+		{
+			return user.SetNewName(newUserName)
+					   .SetNewPassword(newPassword)
+					   .UpdateListOfAccessableMedicalPractices(newListOfAccessableMedicalPractices)
+					   .SetHiddenStatus(newIsHiddenStatus);
+		}
 	}
 }
