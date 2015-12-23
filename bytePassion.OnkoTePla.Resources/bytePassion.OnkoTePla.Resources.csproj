@@ -139,6 +139,19 @@
   <ItemGroup>
     <Resource Include="Icons\cancel.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\TherapyPlaceType\bed01.png" />
+    <Resource Include="Icons\TherapyPlaceType\bed02.png" />
+    <Resource Include="Icons\TherapyPlaceType\bed03.png" />
+    <Resource Include="Icons\TherapyPlaceType\bed04.png" />
+    <Resource Include="Icons\TherapyPlaceType\bed05.png" />
+    <Resource Include="Icons\TherapyPlaceType\chair01.png" />
+    <Resource Include="Icons\TherapyPlaceType\chair02.png" />
+    <Resource Include="Icons\TherapyPlaceType\chair03.png" />
+    <Resource Include="Icons\TherapyPlaceType\chair04.png" />
+    <Resource Include="Icons\TherapyPlaceType\chair05.png" />
+    <Resource Include="Icons\TherapyPlaceType\none.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
