@@ -51,7 +51,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             var userPageViewModel              = new UserPageViewModel(dataCenter);
             var licencePageViewModel           = new LicencePageViewModel();
             var infrastructurePageViewModel    = new InfrastructurePageViewModel();
-			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel();
+			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter);
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel();
 	        

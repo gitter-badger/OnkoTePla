@@ -101,6 +101,7 @@
     <Compile Include="ViewModels\OverviewPage\IOverviewPageViewModel.cs" />
     <Compile Include="ViewModels\OverviewPage\OverviewPageViewModel.cs" />
     <Compile Include="ViewModels\OverviewPage\OverviewPageViewModelSampleData.cs" />
+    <Compile Include="ViewModels\TherapyPlaceTypesPage\Helper\IconDisplayData.cs" />
     <Compile Include="ViewModels\TherapyPlaceTypesPage\ITherapyPlaceTypesPageViewModel.cs" />
     <Compile Include="ViewModels\TherapyPlaceTypesPage\TherapyPlaceTypesPageViewModel.cs" />
     <Compile Include="ViewModels\TherapyPlaceTypesPage\TherapyPlaceTypesPageViewModelSampleData.cs" />
