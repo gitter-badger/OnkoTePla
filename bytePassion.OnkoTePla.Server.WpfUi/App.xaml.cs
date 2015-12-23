@@ -1,4 +1,7 @@
 ﻿using System.Windows;
+using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.XMLDataStores;
+using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
@@ -18,17 +21,28 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
         {
             base.OnStartup(e);
 
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-            ////////                                                                             //////////
-            ////////                          Composition Root and Setup                         //////////
-            ////////                                                                             //////////
-            ///////////////////////////////////////////////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////////////////////////////////////////////
+			////////                                                                             //////////
+			////////                          Composition Root and Setup                         //////////
+			////////                                                                             //////////
+			///////////////////////////////////////////////////////////////////////////////////////////////
 
-	        var dataCenterBuilder = new DataCenterBuilder();
+			// Config-Repository
+
+			var configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
+			var configRepository = new ConfigurationRepository(configPersistenceService);
+			configRepository.LoadRepository();
+
+			// DataAndService
+
+			var dataCenterBuilder = new DataCenterBuilder(configRepository, configRepository);
 			var connectionServiceBuilder = new ConnectionServiceBuilder();
 
 			var dataCenter = dataCenterBuilder.Build();
 			var connectionService = connectionServiceBuilder.Build();
+
+
+			// ViewModels
 
             var overviewPageViewModel       = new OverviewPageViewModel();
             var connectionsPageViewModel    = new ConnectionsPageViewModel(dataCenter, connectionService);

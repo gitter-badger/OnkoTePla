@@ -1,13 +1,13 @@
-﻿using bytePassion.Lib.Types.Repository;
+﻿using System.IO;
+using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles;
 using Newtonsoft.Json;
-using System.IO;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.Config
 {
-    public class JsonConfigurationDataStore : IPersistenceService<Configuration>
+	public class JsonConfigurationDataStore : IPersistenceService<Configuration>
     {
         private readonly string fileName;
 
@@ -32,7 +32,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Config
 			ConfigurationSerializationDouble config;
 			var serializer = new JsonSerializer();
 
-			using (StreamReader file = File.OpenText(fileName))
+			using (var file = File.OpenText(fileName))
 			{
 				config = (ConfigurationSerializationDouble)serializer.Deserialize(file, typeof(ConfigurationSerializationDouble));
 			}

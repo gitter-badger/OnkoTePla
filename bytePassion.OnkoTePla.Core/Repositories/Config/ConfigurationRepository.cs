@@ -1,13 +1,13 @@
-﻿using bytePassion.Lib.Types.Repository;
+﻿using System;
+using System.Collections.Generic;
+using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using System;
-using System.Collections.Generic;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.Config
 {
-    public class ConfigurationRepository : IConfigurationReadRepository, 
+	public class ConfigurationRepository : IConfigurationReadRepository, 
 										   IConfigurationWriteRepository
 	{
 		private Configuration configuration;
@@ -32,6 +32,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Config
 		}
 
 		#region Wrapper around Configuration
+
 		public MedicalPractice GetMedicalPracticeByName(string name)
 		{
 			return configuration.GetMedicalPracticeByName(name);
@@ -100,13 +101,14 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Config
 		public void AddUser(User newUser)
 		{
 			configuration.AddUser(newUser);
-		}
+		}	
 
-		public void RemoveUser(Guid userId)
-		{
-			configuration.RemoveUser(userId);
-		}
-		#endregion
+	    public void UpdateUser(User updatedUser)
+	    {
+		    configuration.UpdateUser(updatedUser);
+	    }
+
+	    #endregion
 
 		public void PersistRepository()
 		{

@@ -1,11 +1,11 @@
-﻿using bytePassion.OnkoTePla.Contracts.Config;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using bytePassion.OnkoTePla.Contracts.Config;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 {
-    public class UserSerializationDouble
+	public class UserSerializationDouble
 	{
 		public UserSerializationDouble()
 		{			
@@ -20,13 +20,15 @@ namespace bytePassion.OnkoTePla.Core.Repositories.SerializationDoubles
 		}
 
 		public IReadOnlyList<Guid> ListOfAccessableMedicalPractices { get; set; }
-		public string              Name                             { get; set; }
-		public string              Password                         { get; set; }
-		public Guid                Id                               { get; set; }
+
+		public string Name     { get; set; }
+		public string Password { get; set; }
+		public Guid   Id       { get; set; }
+		public bool   IsHidden { get; set; }
 
 		public User GetUser()
 		{
-			return new User(Name, ListOfAccessableMedicalPractices, Password, Id);
+			return new User(Name, ListOfAccessableMedicalPractices, Password, Id, IsHidden);
 		}
 	}
 }

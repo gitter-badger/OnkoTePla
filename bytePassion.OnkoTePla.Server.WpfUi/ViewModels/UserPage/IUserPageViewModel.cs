@@ -1,6 +1,6 @@
 ﻿namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 {
-    internal interface IUserPageViewModel : IViewModel
+	internal interface IUserPageViewModel : IViewModel
     {
         
     }

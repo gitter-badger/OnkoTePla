@@ -46,6 +46,7 @@
     <Compile Include="Appointments\Appointment.cs" />
     <Compile Include="Config\Configuration.cs" />
     <Compile Include="Config\User.cs" />
+    <Compile Include="Config\UserCreateAndUpdateLogic.cs" />
     <Compile Include="Infrastructure\HoursOfOpening.cs" />
     <Compile Include="Infrastructure\MedicalPractice.cs" />
     <Compile Include="NetworkMessages\BeginConnection\Request.cs" />

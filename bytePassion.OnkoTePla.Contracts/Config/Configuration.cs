@@ -104,11 +104,12 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 		public void AddUser(User newUser)
 		{
 			configuredUsers.Add(newUser);
-		}
+		}	
 
-		public void RemoveUser(Guid userId)
+		public void UpdateUser(User updatedUser)
 		{
-			configuredUsers.Remove(GetUserById(userId));
+			configuredUsers.Remove(GetUserById(updatedUser.Id));
+			AddUser(updatedUser);
 		}
 
 		#endregion		

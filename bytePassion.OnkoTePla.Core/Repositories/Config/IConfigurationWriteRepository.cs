@@ -1,12 +1,12 @@
-﻿using bytePassion.Lib.Types.Repository;
+﻿using System;
+using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using System;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.Config
 {
-    public interface IConfigurationWriteRepository : IPersistable
+	public interface IConfigurationWriteRepository : IPersistable
 	{
 		
 		/////////////////////////////////////////////////////////////////////////////////////
@@ -34,8 +34,8 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Config
 		////////                                 User                               /////////
 		/////////////////////////////////////////////////////////////////////////////////////
 																					/////////
-		void AddUser (User newUser);												/////////
-		void RemoveUser (Guid userId);												/////////
+		void AddUser    (User newUser);												/////////
+		void UpdateUser (User updatedUser);											/////////
 																					/////////
 		/////////////////////////////////////////////////////////////////////////////////////
 	}

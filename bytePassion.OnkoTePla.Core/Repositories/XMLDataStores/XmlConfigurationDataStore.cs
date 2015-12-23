@@ -1,18 +1,19 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Media;
+using System.Xml;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Media;
-using System.Xml;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 {
-    public class XmlConfigurationDataStore : IPersistenceService<Configuration>
+	public class XmlConfigurationDataStore : IPersistenceService<Configuration>
 	{
 		private readonly string filename;
 
@@ -51,7 +52,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 
 		private const string Users = "users";
 		private const string User  = "user";
-
+		
 		private const string Room                 = "room";
 		private const string TherapyPlace         = "therapyPlace";
 		private const string HoursOfOpening       = "hoursOfOpening";
@@ -59,6 +60,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 		private const string AdditionalClosedDays = "additionalClosedDays";
 		private const string Day                  = "day";
 
+	    private const string IsHiddenAttribute            = "isHidden";
 		private const string IconTypeAttribute            = "iconType";			
 		private const string MPVersionAttribute           = "version";						
 		private const string TherapyPlaceTypeAttribute    = "type";		
@@ -138,6 +140,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 			writer.WriteAttributeString(NameAttribute, user.Name);
 			writer.WriteAttributeString(PassworAttribute, user.Password);
 			writer.WriteAttributeString(IdAttribute, user.Id.ToString());
+			writer.WriteAttributeString(IsHiddenAttribute, user.IsHidden.ToString());
 
 			var index = 0;
 			foreach (var id in user.ListOfAccessableMedicalPractices)
@@ -279,6 +282,11 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 
 		Configuration IPersistenceService<Configuration>.Load()
 		{
+			if (!File.Exists(filename))
+			{
+				return new Configuration(new List<TherapyPlaceType>(), new List<MedicalPractice>(), new List<User>());
+			}
+
 			IEnumerable<TherapyPlaceType> therapyPlaceTypes = null;
 			IList<MedicalPractice> practices = new List<MedicalPractice>();
 			IList<User> users = new List<User>();
@@ -358,11 +366,12 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 				if (reader.NodeType != XmlNodeType.Element || reader.Name != User) continue;
 				i++;
 
-				var name = String.Empty;
+				var name = string.Empty;
 				var id = new Guid();
-				var password = String.Empty;				
+				var password = string.Empty;				
 				var indexOfAccessablePractices = 0;
 				var listOfAccessableMedicalPractices = new List<Guid>();
+				var isHidden = false;
 
 				if (reader.HasAttributes)
 				{
@@ -371,6 +380,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 						if (reader.Name == NameAttribute) name = reader.Value;
 						if (reader.Name == PassworAttribute) password = reader.Value;
 						if (reader.Name == IdAttribute) id = Guid.Parse(reader.Value);
+						if (reader.Name == IsHiddenAttribute) isHidden = bool.Parse(reader.Value);
 
 						if (reader.Name == AccessablePratice + indexOfAccessablePractices)
 						{
@@ -380,7 +390,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 					}
 				}
 
-				users.Add(new User(name, listOfAccessableMedicalPractices, password, id));
+				users.Add(new User(name, listOfAccessableMedicalPractices, password, id, isHidden));
 			}
 
 			return users;
