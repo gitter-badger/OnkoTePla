@@ -21,14 +21,13 @@
 
 	<Grid Background="White">
 
-        <Grid.RowDefinitions>
+		<Grid.RowDefinitions>
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="40"/>
-			<RowDefinition Height="100"/>
+			<RowDefinition Height="110"/>
 			<RowDefinition/>
 		</Grid.RowDefinitions>
 
-		
 		<CheckBox Grid.Row="0"
 				  Margin="10"
 				  Content="Verbindungen aktivieren"

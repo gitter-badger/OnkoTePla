@@ -72,6 +72,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             ////////                                                                             //////////
             ///////////////////////////////////////////////////////////////////////////////////////////////
             
+			configRepository.PersistRepository();
+
 			connectionServiceBuilder.DisposeConnectionService(connectionService);
         }
     }
