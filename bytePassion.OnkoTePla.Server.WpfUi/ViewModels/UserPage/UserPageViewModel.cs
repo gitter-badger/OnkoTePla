@@ -19,16 +19,23 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 	    {
 		    this.dataCenter = dataCenter;	
 			
-			AddUser     = new Command(DoAddUser);	
-			SaveChanges = new Command(DoSaveChanges);
+			AddUser        = new Command(DoAddUser);	
+			SaveChanges    = new Command(DoSaveChanges);
+			DiscardChanges = new Command(DoDiscardChanges);
 
 		    Users = dataCenter.GetAllUsers()
 							  .ToObservableCollection();
 
 			ShowModificationView = false;
 	    }
-		
-	    private void DoSaveChanges()
+
+		private void DoDiscardChanges()
+		{
+			SelectedUser = null;
+			ShowModificationView = false;
+		}
+
+		private void DoSaveChanges()
 	    {
 		    SelectedUser = null;
 			ShowModificationView = false;
@@ -41,8 +48,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 			Users.Add(newUser);
 	    }
 
-	    public ICommand AddUser     { get; }
-		public ICommand SaveChanges { get; }
+	    public ICommand AddUser        { get; }
+		public ICommand SaveChanges    { get; }
+		public ICommand DiscardChanges { get; }
 
 		public ObservableCollection<User> Users { get; }
 

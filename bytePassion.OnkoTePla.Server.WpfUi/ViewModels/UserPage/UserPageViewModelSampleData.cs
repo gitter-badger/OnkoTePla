@@ -25,8 +25,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 		    ShowModificationView = true;
 	    }
 
-	    public ICommand AddUser     => null;
-	    public ICommand SaveChanges => null;
+	    public ICommand AddUser		   => null;
+	    public ICommand SaveChanges	   => null;
+		public ICommand DiscardChanges => null;
 
 		public ObservableCollection<User> Users { get; }
 		public User SelectedUser { get; set; }

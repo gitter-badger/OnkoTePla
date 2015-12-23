@@ -205,10 +205,21 @@
 			<Button Grid.Row="5"
 					Grid.Column="0"
 					Grid.ColumnSpan="2"
+					Width="250"
+					HorizontalAlignment="Left"
 					Content="Änderungen speichern"
 					Margin="5"
 					Command="{Binding SaveChanges}"/>
-			
+
+			<Button Grid.Row="5"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					Width="250"
+					HorizontalAlignment="Right"
+					Content="Änderungen verwerfen"
+					Margin="5"
+					Command="{Binding DiscardChanges}"/>
+ 
 		</Grid>
 
 	</Grid>
