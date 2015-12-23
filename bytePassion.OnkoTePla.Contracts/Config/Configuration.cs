@@ -45,6 +45,12 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 			configuredTherapyPlaceTypes.Add(newTherapyPlaceType);
 		}
 
+		public void UpdateTherapyPlaceTupe (TherapyPlaceType updatedTherapyPlaceType)
+		{
+			configuredTherapyPlaceTypes.Remove(GetTherapyPlaceTypeById(updatedTherapyPlaceType.Id));
+			AddTherapyPlaceType(updatedTherapyPlaceType);
+		}
+
 		#endregion
 
 

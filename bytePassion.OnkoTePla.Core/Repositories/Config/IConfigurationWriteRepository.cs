@@ -24,7 +24,8 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Config
 		////////                            Therapy Place                           /////////
 		/////////////////////////////////////////////////////////////////////////////////////
 																					/////////
-		void AddTherapyPlaceType (TherapyPlaceType newTherapyPlaceType);			/////////
+		void AddTherapyPlaceType   (TherapyPlaceType newTherapyPlaceType);			/////////
+		void UpdateTherapyPlaceType(TherapyPlaceType updatedTherapyPlaceType);		/////////
 																					/////////
 		/////////////////////////////////////////////////////////////////////////////////////
 

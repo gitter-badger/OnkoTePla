@@ -83,6 +83,11 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Config
 			configuration.AddTherapyPlaceType(newTherapyPlaceType);
 		}
 
+		public void UpdateTherapyPlaceType(TherapyPlaceType updatedTherapyPlaceType)
+		{
+			configuration.UpdateTherapyPlaceTupe(updatedTherapyPlaceType);
+		}
+
 		public User GetUserByName(string name)
 		{
 			return configuration.GetUserByName(name);

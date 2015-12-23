@@ -2,6 +2,7 @@
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Data
@@ -18,11 +19,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 			this.writeConfig = writeConfig;
 		}
 
+		
 
 		public IReadOnlyList<Address> GetAllAvailableAddresses()
 		{
 			return IpAddressCatcher.GetAllAvailableLocalIpAddresses();
 		}
+
+		#region users
 
 		public IEnumerable<User> GetAllUsers()
 		{
@@ -37,6 +41,27 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		public void UpdateUser(User updatedUser)
 		{
 			writeConfig.UpdateUser(updatedUser);
-		}		
+		}
+
+		#endregion
+
+		#region therapyPlaceType
+
+		public IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes()
+		{
+			return readConfig.GetAllTherapyPlaceTypes();
+		}
+
+		public void AddNewTherapyPlaceType(TherapyPlaceType newTherapyPlaceType)
+		{
+			writeConfig.AddTherapyPlaceType(newTherapyPlaceType);
+		}
+
+		public void UpdateTherapyPlaceType(TherapyPlaceType updatedTherapyPlaceType)
+		{ 
+			writeConfig.UpdateTherapyPlaceType(updatedTherapyPlaceType);
+		}
+
+		#endregion
 	}
 }
