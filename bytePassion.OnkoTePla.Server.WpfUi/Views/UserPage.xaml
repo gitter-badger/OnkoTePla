@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="700" d:DesignWidth="900">
     
     <d:DesignData.DataContext>
         <sampleData:UserPageViewModelSampleData/>
@@ -13,11 +13,153 @@
     
     <Grid Background="White">
 
-        <TextBlock Text="UserPage"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="25"
-                   FontFamily="Sigoe UI Light"/>
+       <Grid.ColumnDefinitions>
+		   <ColumnDefinition Width="250"/>
+		   <ColumnDefinition/>
+		</Grid.ColumnDefinitions>
 
-    </Grid>
+		<StackPanel Orientation="Vertical">
+
+			<ListBox Margin="5,5,5,0">
+
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+
+			</ListBox>
+
+			<Button Height="40"				
+					Margin="5"
+					HorizontalAlignment="Center"
+					Content="add User">
+
+				<Button.Template>
+					<ControlTemplate TargetType="Button">
+						<Grid x:Name="ButtonGrid">
+							
+							<Ellipse Width="44"
+									 Height="44">
+								<Ellipse.Style>
+									<Style TargetType="Ellipse">
+										<Setter Property="Fill" Value="{DynamicResource SemiTransparentWhiteBrush}" />
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding IsMouseOver, ElementName=ButtonGrid}"  Value="True" >
+												<Setter Property="Fill" Value="{DynamicResource AccentColorBrush4}" />
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</Ellipse.Style>
+							</Ellipse>
+
+							<Canvas Width="24" Height="24">
+
+								<Viewbox Canvas.Left="-20"
+                                     Canvas.Top="-19"
+                                     Width="58"
+                                     Height="58">
+
+									<Path x:Name="CrossPath"
+                                          Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,            
+												12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,            
+												10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z">
+										<Path.Style>
+											<Style TargetType="Path">
+												<Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+												<Style.Triggers>
+													<DataTrigger Binding="{Binding IsMouseOver, ElementName=ButtonGrid}"  Value="True">
+														<Setter Property="Fill" Value="{DynamicResource GrayBrush2}" />
+													</DataTrigger>
+												</Style.Triggers>
+											</Style>
+										</Path.Style>
+									</Path>
+
+								</Viewbox>
+							</Canvas>
+						</Grid>
+					</ControlTemplate>
+				</Button.Template>
+
+			</Button>
+
+		</StackPanel>
+		
+		<Grid Grid.Column="1">
+						
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="50"/>
+			</Grid.RowDefinitions>
+			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="150"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			
+			<TextBlock Grid.Row="0"
+					   Grid.Column="0"
+					   Grid.ColumnSpan="2"
+					   Text="User Bearbeiten:"
+					   Margin="5"
+					   FontSize="20"/>
+			
+			<TextBlock Grid.Row="1"
+					   Grid.Column="0"
+					   Text="Name:"
+					   Margin="5"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"/>
+			
+			<TextBox Grid.Row="1"
+					 Grid.Column="1"
+					 Margin="5"/>
+			
+			<TextBlock Grid.Row="2"
+					   Grid.Column="0"
+					   Text="Passwort:"
+					   Margin="5"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"/>
+
+			<TextBox Grid.Row="2"
+					 Grid.Column="1"
+					 Margin="5"/>
+
+			<TextBlock Grid.Row="3"
+					   Grid.Column="0"
+					   Text="Verbergen:"
+					   Margin="5"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"/>
+
+			<CheckBox Grid.Row="3"
+					  Grid.Column="1"
+					  Margin="5"/>
+
+			<TextBlock Grid.Row="4"
+					   Grid.Column="0"
+					   Text="Zugreifbare Praxen:"
+					   Margin="5"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"/>
+
+			<ItemsControl Grid.Row="4"
+						  Grid.Column="1"></ItemsControl>
+			
+			<Button Grid.Row="5"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					Content="Änderungen speichern"
+					Margin="5"></Button>
+			
+		</Grid>
+
+	</Grid>
 </UserControl>
