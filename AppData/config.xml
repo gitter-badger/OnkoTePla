@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
-  <therapyPlaceTypes count="0" />
+  <therapyPlaceTypes count="2">
+    <therapyPlaceType name="stuhl" iconType="ChairType4" id="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+    <therapyPlaceType name="bett" iconType="BedType2" id="7cfec758-993d-499a-b985-4d8c03bf9342" />
+  </therapyPlaceTypes>
   <medicalPractices count="0" />
   <users count="2">
     <user name="user1" password="blubb" id="f3034a4e-831c-4b55-89f4-87f782614afc" isHidden="False" />
