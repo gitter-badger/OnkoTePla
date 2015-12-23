@@ -22,6 +22,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 			};
 
 		    SelectedUser = Users.First();
+		    ShowModificationView = true;
 	    }
 
 	    public ICommand AddUser     => null;
@@ -29,6 +30,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 
 		public ObservableCollection<User> Users { get; }
 		public User SelectedUser { get; set; }
+		public bool ShowModificationView { get; }
 
 		public void Dispose() { }
         public event PropertyChangedEventHandler PropertyChanged;	    

@@ -8,11 +8,14 @@ using bytePassion.OnkoTePla.Server.DataAndService.Data;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 {
-	internal class UserPageViewModel : ViewModel, IUserPageViewModel
+	internal class UserPageViewModel : ViewModel, 
+									   IUserPageViewModel
     {
 	    private readonly IDataCenter dataCenter;
-		
-	    public UserPageViewModel(IDataCenter dataCenter)
+		private User selectedUser;
+		private bool showModificationView;
+
+		public UserPageViewModel(IDataCenter dataCenter)
 	    {
 		    this.dataCenter = dataCenter;	
 			
@@ -21,11 +24,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 
 		    Users = dataCenter.GetAllUsers()
 							  .ToObservableCollection();
+
+			ShowModificationView = false;
 	    }
 		
 	    private void DoSaveChanges()
-	    {		    
-	    }
+	    {
+		    SelectedUser = null;
+			ShowModificationView = false;
+		}
 
 	    private void DoAddUser()
 	    {
@@ -39,7 +46,22 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 
 		public ObservableCollection<User> Users { get; }
 
-		public User SelectedUser { get; set; }
+		public User SelectedUser
+		{
+			get { return selectedUser; }
+			set
+			{
+				PropertyChanged.ChangeAndNotify(this, ref selectedUser, value);
+
+				ShowModificationView = SelectedUser != null;
+			}
+		}
+
+		public bool ShowModificationView
+		{
+			get { return showModificationView; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref showModificationView, value); }
+		}
 
 		protected override void CleanUp() {  }
         public override event PropertyChangedEventHandler PropertyChanged;	    

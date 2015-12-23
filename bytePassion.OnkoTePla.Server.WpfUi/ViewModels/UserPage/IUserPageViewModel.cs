@@ -12,5 +12,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 		ObservableCollection<User> Users { get; } 
 
 		User SelectedUser { get; set; }
+
+		bool ShowModificationView { get; }
     }
 }

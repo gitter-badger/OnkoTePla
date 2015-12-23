@@ -5,14 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage"
              xmlns:config="clr-namespace:bytePassion.OnkoTePla.Contracts.Config;assembly=bytePassion.OnkoTePla.Contracts"
+             xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="900">
     
     <d:DesignData.DataContext>
         <sampleData:UserPageViewModelSampleData/>
     </d:DesignData.DataContext>
-    
-    <Grid Background="White">
+
+	<UserControl.Resources>
+		<libConverter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+		<libConverter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter"/>
+	</UserControl.Resources>
+
+	<Grid Background="White">
 
        <Grid.ColumnDefinitions>
 		   <ColumnDefinition Width="250"/>
@@ -22,8 +28,11 @@
 		<StackPanel Orientation="Vertical">
 
 			<ListBox Margin="5,5,5,0"
-					 ItemsSource="{Binding Users}">
-
+					 ItemsSource="{Binding Users}"
+					 SelectionMode="Single"
+					 SelectedItem="{Binding SelectedUser, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}">
 				<ListBox.ItemsPanel>
 					<ItemsPanelTemplate>
 						<StackPanel/>
@@ -54,7 +63,7 @@
 			</ListBox>
 
 			<Button Height="40"				
-					Margin="5"
+					Margin="5,10"
 					HorizontalAlignment="Center"
 					Content="add User"
 					Command="{Binding AddUser}">
@@ -109,8 +118,24 @@
 			</Button>
 
 		</StackPanel>
+
+		<Grid Grid.Column="1"
+			  Visibility="{Binding ShowModificationView, 
+								   Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}">
+			
+			<TextBlock HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   FontSize="30">
+				<Run Text="Klicken Sie auf einen User"/>
+				<LineBreak/>
+				<Run Text="um ihn zu bearbeiten"/>
+			</TextBlock>
+			
+		</Grid>
 		
-		<Grid Grid.Column="1">
+		<Grid Grid.Column="1"
+			  Visibility="{Binding ShowModificationView,
+								   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
 						
 			<Grid.RowDefinitions>
 				<RowDefinition Height="50"/>
@@ -181,7 +206,8 @@
 					Grid.Column="0"
 					Grid.ColumnSpan="2"
 					Content="Änderungen speichern"
-					Margin="5"></Button>
+					Margin="5"
+					Command="{Binding SaveChanges}"/>
 			
 		</Grid>
 
