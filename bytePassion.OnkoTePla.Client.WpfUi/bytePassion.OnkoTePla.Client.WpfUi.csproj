@@ -105,6 +105,7 @@
     <Compile Include="Factorys\ViewModelBuilder\AppointmentViewModel\AppointmentViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\AppointmentViewModel\IAppointmentViewModelBuilder.cs" />
     <Compile Include="Factorys\WindowBuilder\AboutDialogWindowBuilder.cs" />
+    <Compile Include="Factorys\WindowBuilder\EditDescriptionWindowBuilder.cs" />
     <Compile Include="Global\Constants.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -144,6 +145,7 @@
     <Compile Include="ViewModels\ConnectionStatusView\ConnectionStatusViewModel.cs" />
     <Compile Include="ViewModels\ConnectionStatusView\ConnectionStatusViewModelSampleData.cs" />
     <Compile Include="ViewModels\ConnectionStatusView\IConnectionStatusViewModel.cs" />
+    <Compile Include="ViewModels\EditDescriptionViewModel\EditDescriptionViewModel.cs" />
     <Compile Include="ViewModels\IDataCenterDeliverer.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModelSampleData.cs" />
@@ -247,6 +249,9 @@
     <Compile Include="Views\DateSelector.xaml.cs">
       <DependentUpon>DateSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditDescription.xaml.cs">
+      <DependentUpon>EditDescription.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GridContainer.xaml.cs">
       <DependentUpon>GridContainer.xaml</DependentUpon>
     </Compile>
@@ -339,6 +344,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DateSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditDescription.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

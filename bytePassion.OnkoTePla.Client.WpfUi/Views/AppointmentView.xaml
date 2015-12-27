@@ -96,7 +96,7 @@
                             Width="24"
                             Height="24"
                             Margin="10,0"
-                            Command="{Binding DeleteAppointment,
+                            Command="{Binding EditDescription,
                                               Mode=OneTime}"
                             Cursor="Hand">
 

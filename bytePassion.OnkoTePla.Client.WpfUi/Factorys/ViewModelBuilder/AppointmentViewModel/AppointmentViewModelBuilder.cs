@@ -3,6 +3,7 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
+using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -35,6 +36,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 		public IAppointmentViewModel Build (Appointment appointment, AggregateIdentifier location)
 		{
 			var exactLocation = new TherapyPlaceRowIdentifier(location, appointment.TherapyPlace.Id);
+            var editDescriptionWindowBuilder = new EditDescriptionWindowBuilder(appointment);
 
 			return new ViewModels.AppointmentView.AppointmentViewModel(appointment,
 																	   viewModelCommunication,																	  
@@ -42,6 +44,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 																	   appointmentModificationsVariable,
 																	   selectedDateVariable,
 																	   appointmentModificationsBuilder,
+                                                                       editDescriptionWindowBuilder,
 																	   adornerControl);
 		}
 	}

@@ -17,6 +17,8 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Client.WpfUi.Views;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.DeleteAppointment;
 
 
@@ -30,8 +32,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 
 		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
 	    private readonly IGlobalState<Date> selectedDateVariable;
+        private readonly IWindowBuilder<EditDescription> editDescriptionWindowBuilder;
 
-		private TherapyPlaceRowIdentifier currentLocation;
+        private TherapyPlaceRowIdentifier currentLocation;
 		private OperatingMode operatingMode;
 		
 		private Time   beginTime;
@@ -47,12 +50,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
                                     IGlobalState<AppointmentModifications> appointmentModificationsVariable,
                                     IGlobalState<Date> selectedDateVariable,									
                                     IAppointmentModificationsBuilder appointmentModificationsBuilder,
-									AdornerControl adornerControl)
+                                    IWindowBuilder<EditDescription> editDescriptionWindowBuilder,
+                                    AdornerControl adornerControl)
 		{ 						
 			this.appointment = appointment; 
 			this.initialLocalisation = initialLocalisation;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
 		    this.selectedDateVariable = selectedDateVariable;
+		    this.editDescriptionWindowBuilder = editDescriptionWindowBuilder;
 		    ViewModelCommunication = viewModelCommunication;
 			AdornerControl = adornerControl;					
 
@@ -77,7 +82,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				}
 			);
 
-			DeleteAppointment = new Command(async () =>
+			DeleteAppointment = new Command(async() =>
 				{
 					var dialog = new UserDialogBox("", "Wollen Sie den Termin wirklich löschen?", 
 												   MessageBoxButton.OKCancel, MessageBoxImage.Question);
@@ -96,9 +101,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				}
 			);	
 
-            EditDescription = new Command(async () =>
+            EditDescription = new Command( () =>
             {
-                
+               var dialog = editDescriptionWindowBuilder.BuildWindow();
+                dialog.ShowDialog();
             });
 
 			BeginTime = appointment.StartTime;
