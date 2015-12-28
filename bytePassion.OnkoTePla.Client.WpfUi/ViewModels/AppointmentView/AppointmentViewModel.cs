@@ -103,8 +103,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 
             EditDescription = new Command( () =>
             {
-               var dialog = editDescriptionWindowBuilder.BuildWindow();
+                viewModelCommunication.Send(new ShowDisabledOverlay());
+
+                var dialog = editDescriptionWindowBuilder.BuildWindow();
                 dialog.ShowDialog();
+
+                viewModelCommunication.Send(new HideDisabledOverlay());
             });
 
 			BeginTime = appointment.StartTime;
@@ -135,6 +139,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 					SetNewLocation(appointmentModifications.CurrentLocation, false);
 					break;
 				}
+                case nameof(AppointmentModifications.Description):
+			    {
+			        break;
+			    }
 			}
 		}
 

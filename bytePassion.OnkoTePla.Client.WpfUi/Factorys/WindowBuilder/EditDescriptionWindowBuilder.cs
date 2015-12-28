@@ -1,4 +1,6 @@
-﻿using bytePassion.Lib.Utils;
+﻿using System.Net.Mime;
+using System.Windows;
+using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.EditDescriptionViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Views;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -18,6 +20,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
         {
             var view = new EditDescription();
             view.DataContext = new EditDescriptionViewModel(appointmentToEdit);
+            view.Owner = Application.Current.MainWindow;
             return view;
         }
 
