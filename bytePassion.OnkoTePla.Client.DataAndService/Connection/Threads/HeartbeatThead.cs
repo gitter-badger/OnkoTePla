@@ -42,7 +42,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 
 				while (!stopRunning)
 				{
-					var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(10));
+					var inMessage = socket.ReceiveAString(TimeSpan.FromMilliseconds(GlobalConstants.ClientWaitTimeForHeartbeat));
 
 					if (inMessage == "")
 					{

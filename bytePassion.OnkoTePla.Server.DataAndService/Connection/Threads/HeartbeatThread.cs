@@ -52,7 +52,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 					var outMessage = new Request(sessionId);
 					socket.SendAString(outMessage.AsString(), TimeSpan.FromSeconds(2));
 
-					var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(2));
+					var inMessage = socket.ReceiveAString(TimeSpan.FromMilliseconds(GlobalConstants.ServerWaitTimeForHeartbeatResponse));
 
 					if (inMessage != "")					
 					{
