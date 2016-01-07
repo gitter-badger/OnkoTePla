@@ -16,9 +16,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 	{
 		private class SessionInfo
 		{
-			public ConnectionSessionId SessionId     { get; set; }
-			public Time                CreationTime  { get; set; }
-			public AddressIdentifier   ClientAddress { get; set; }
+			public ConnectionSessionId SessionId         { get; set; }
+			public Time                CreationTime      { get; set; }
+			public AddressIdentifier   ClientAddress     { get; set; }
+			public bool                IsDebugConnection { get; set; }
 		}
 
 		public event Action<ConnectionSessionId> NewSessionStarted;
@@ -28,6 +29,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		private readonly IList<SessionInfo> currentSessions;
 
 		private AcceptConnectionBeginThread acceptConnectionBeginThread;
+		private AcceptDebugConnectionBeginThread acceptDebugConnectionBeginThread;
 		private AcceptConnectionEndThread   acceptConnectionEndThread;
 		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads; 
 
@@ -47,10 +49,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			acceptConnectionBeginThread.NewConnectionEstablished += OnNewConnectionEstablished;
 			new Thread(acceptConnectionBeginThread.Run).Start();
 
+			acceptDebugConnectionBeginThread = new AcceptDebugConnectionBeginThread(zmqContext, serverAddress);
+			acceptDebugConnectionBeginThread.NewDebugConnectionEstablished += OnNewDebugConnectionEstablished;
+			new Thread(acceptDebugConnectionBeginThread.Run).Start();
+
 			acceptConnectionEndThread = new AcceptConnectionEndThread(zmqContext, serverAddress);
 			acceptConnectionEndThread.ConnectionEnded += OnConnectionEnded;			
 			new Thread(acceptConnectionEndThread.Run).Start();
-		}
+		}		
 
 		private void OnConnectionEnded(ConnectionSessionId connectionSessionId)
 		{			
@@ -63,13 +69,27 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			}            
 		}
 
+		private void OnNewDebugConnectionEstablished (AddressIdentifier clientAddress, ConnectionSessionId id)
+		{
+			currentSessions.Add(new SessionInfo
+			{
+				ClientAddress = clientAddress,
+				SessionId = id,
+				CreationTime = TimeTools.GetCurrentTimeStamp().Item2,
+				IsDebugConnection = true
+			});			
+
+			NewSessionStarted?.Invoke(id);
+		}
+
 		private void OnNewConnectionEstablished(AddressIdentifier clientAddress, ConnectionSessionId id)
 		{
 			currentSessions.Add(new SessionInfo
 			{
 				ClientAddress = clientAddress,
 				SessionId = id,
-				CreationTime = TimeTools.GetCurrentTimeStamp().Item2
+				CreationTime = TimeTools.GetCurrentTimeStamp().Item2,
+				IsDebugConnection = false
 			});
 
 			var clientAdd = new Address(new TcpIpProtocol(), clientAddress);
@@ -111,6 +131,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 			acceptConnectionBeginThread.NewConnectionEstablished -= OnNewConnectionEstablished;
 			acceptConnectionBeginThread.Stop();
+
+			acceptDebugConnectionBeginThread.NewDebugConnectionEstablished -= OnNewDebugConnectionEstablished;
+			acceptDebugConnectionBeginThread.Stop();
 
 			acceptConnectionEndThread.ConnectionEnded -= OnConnectionEnded;
 			acceptConnectionEndThread.Stop();

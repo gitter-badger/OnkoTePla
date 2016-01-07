@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\ConnectionService.cs" />
+    <Compile Include="Connection\Threads\AcceptDebugConnectionBeginThread.cs" />
     <Compile Include="Connection\Threads\AcceptConnectionEndThread.cs" />
     <Compile Include="Connection\Threads\HeartbeatThread.cs" />
     <Compile Include="Connection\IConnectionService.cs" />

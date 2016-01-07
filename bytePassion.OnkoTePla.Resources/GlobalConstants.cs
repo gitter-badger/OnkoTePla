@@ -4,6 +4,8 @@
     {		
 		public static class TcpIpPort
 		{
+			public const uint BeginDebugConnection = 6655;
+
 			public const uint BeginConnection = 6656;
 			public const uint RequestData     = 6657;
 			public const uint EndConnection   = 6658;
