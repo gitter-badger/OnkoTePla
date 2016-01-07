@@ -8,7 +8,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
 	public class Room
 	{
-		public Room (Guid id, string name, IReadOnlyList<TherapyPlace> therapyPlaces, Color displayColor)
+		public Room (Guid id, string name, IEnumerable<TherapyPlace> therapyPlaces, Color displayColor)
 		{
 			Id = id;			
 			Name = name;
@@ -20,7 +20,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		public string Name           { get; }
 		public Color  DisplayedColor { get; }
 
-		public IReadOnlyList<TherapyPlace> TherapyPlaces { get; }
+		public IEnumerable<TherapyPlace> TherapyPlaces { get; }
 		
 		public override string ToString    ()           => Name;
 		public override bool   Equals      (object obj) => this.Equals(obj, (room1, room2) => room1.Id == room2.Id);

@@ -50,6 +50,7 @@
     <Compile Include="Infrastructure\HoursOfOpening.cs" />
     <Compile Include="Infrastructure\MedicalPractice.cs" />
     <Compile Include="Infrastructure\MedicalPracticeCreateAndEditLogic.cs" />
+    <Compile Include="Infrastructure\RoomCreateAndEditLogic.cs" />
     <Compile Include="Infrastructure\TherapyPlaceTypeCreateAndEditLogic.cs" />
     <Compile Include="NetworkMessages\BeginConnection\Request.cs" />
     <Compile Include="NetworkMessages\BeginConnection\Response.cs" />

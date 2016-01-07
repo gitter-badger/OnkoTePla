@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
@@ -43,14 +42,22 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 									   medPractice.HoursOfOpening);
 		}
 
-		public static MedicalPractice UpdateRoom (this MedicalPractice medPractice, Guid roomToUpdate, Room newRoomVariant)
+		public static MedicalPractice UpdateRoom (this MedicalPractice medPractice, Room updatedRoom)
 		{
-			var updatedRoomList = medPractice.Rooms.Where(room => room.Id != roomToUpdate)
-												   .Append(newRoomVariant)
-												   .ToList();
+			var oldRoomList = medPractice.Rooms.ToList();
+			var newRoomList = new List<Room>();
+
+			foreach (var room in oldRoomList)
+			{
+				if (room.Id != updatedRoom.Id)
+					newRoomList.Add(room);
+				else
+					newRoomList.Add(updatedRoom);
+			}
+
 			var updatedVersion = medPractice.Version + 1;
 
-			return new MedicalPractice(updatedRoomList, 
+			return new MedicalPractice(newRoomList, 
 									   medPractice.Name, 
 									   updatedVersion, 
 									   medPractice.Id, 
