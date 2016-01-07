@@ -6,9 +6,21 @@ using bytePassion.Lib.TimeLib;
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
-
 	public class HoursOfOpening
 	{
+		public static HoursOfOpening CreateDefault ()
+		{
+			var defaultOpeningTime = new Time( 8,0);
+			var defaultClosingTime = new Time(17,0);
+
+			return new HoursOfOpening(defaultOpeningTime, defaultOpeningTime, defaultOpeningTime, defaultOpeningTime,
+									  defaultOpeningTime, defaultOpeningTime, defaultOpeningTime,
+									  defaultClosingTime, defaultClosingTime, defaultClosingTime, defaultClosingTime,
+									  defaultClosingTime, defaultClosingTime, defaultClosingTime,
+									  true, true, true, true, true, false, false,
+									  new List<Date>(), new List<Date>());
+		}
+
 		public HoursOfOpening(Time openingTimeMonday, Time openingTimeTuesday,  Time openingTimeWednesday, Time openingTimeThursday, 
 							  Time openingTimeFriday, Time openingTimeSaturday, Time openingTimeSunday, 
 							  Time closingTimeMonday, Time closingTimeTuesday,  Time closingTimeWednesday, Time closingTimeThursday,

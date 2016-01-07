@@ -7,13 +7,7 @@ using bytePassion.Lib.FrameworkExtensions;
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
 	public class MedicalPractice
-	{
-       
-		public static MedicalPractice CreateNewMedicalPractice(IReadOnlyList<Room> rooms, string name, HoursOfOpening hoursOfOpening)
-		{
-			return new MedicalPractice(rooms, name, 0, Guid.NewGuid(), null, hoursOfOpening);
-		}
-
+	{       		
 		public MedicalPractice(IEnumerable<Room> rooms, string name, uint version, Guid id, 
 							   MedicalPractice previousVersion, HoursOfOpening hoursOfOpening)
 		{
@@ -32,57 +26,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 	    public HoursOfOpening    HoursOfOpening  { get; }
 	    public MedicalPractice   PreviousVersion { get; }
 
-	    public bool HasPreviousVersion => PreviousVersion != null;
-
-	    #region modify rooms
-
-		public MedicalPractice AddRoom(Room newRoom)
-		{
-			var updatedRoomList = Rooms.Concat(new List<Room> {newRoom}).ToList();
-			var updatedVersion = Version + 1;
-
-			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this, HoursOfOpening);
-		}
-
-		public MedicalPractice RemoveRoom(Guid roomToRemove)
-		{
-			var updatedRoomList = Rooms.Where(room => room.Id != roomToRemove).ToList();
-			var updatedVersion = Version + 1;
-
-			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this, HoursOfOpening);
-		}
-
-		public MedicalPractice UpdateRoom(Guid roomToUpdate, Room newRoomVariant)
-		{
-			var updatedRoomList = Rooms.Where(room => room.Id != roomToUpdate)
-									   .Append(newRoomVariant)
-									   .ToList();
-			var updatedVersion = Version + 1;
-
-			return new MedicalPractice(updatedRoomList, Name, updatedVersion, Id, this, HoursOfOpening);
-		}
-
-		#endregion
-
-		#region modify name
-
-		public MedicalPractice Rename(string newName)
-		{
-			var updatedVersion = Version + 1;
-			return new MedicalPractice(Rooms, newName, updatedVersion, Id, this, HoursOfOpening);
-		}
-
-		#endregion
-
-		#region modify hoursOfOpening
-
-		public MedicalPractice SetNewHoursOfOpening(HoursOfOpening newHoursOfOpening)
-		{
-			var updatedVersion = Version + 1;
-			return new MedicalPractice(Rooms, Name, updatedVersion, Id, this, newHoursOfOpening);
-		}
-
-		#endregion
+	    public bool HasPreviousVersion => PreviousVersion != null;	    		
 
 		#region access previousVersions / therapyPlaces / Rooms
 
