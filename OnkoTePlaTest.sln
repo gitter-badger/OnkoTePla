@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Serve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Client.DataAndService", "bytePassion.OnkoTePla.Client.DataAndService\bytePassion.OnkoTePla.Client.DataAndService.csproj", "{76AEEB98-2A61-49DE-B8D2-A1448B302E8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bytePassion.OnkoTePla.Resources", "bytePassion.OnkoTePla.Resources\bytePassion.OnkoTePla.Resources.csproj", "{19B0E56B-428B-495A-AC4C-FFAC1D990FC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{76AEEB98-2A61-49DE-B8D2-A1448B302E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76AEEB98-2A61-49DE-B8D2-A1448B302E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76AEEB98-2A61-49DE-B8D2-A1448B302E8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19B0E56B-428B-495A-AC4C-FFAC1D990FC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19B0E56B-428B-495A-AC4C-FFAC1D990FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19B0E56B-428B-495A-AC4C-FFAC1D990FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19B0E56B-428B-495A-AC4C-FFAC1D990FC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
