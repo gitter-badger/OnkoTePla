@@ -1,8 +1,11 @@
-﻿using bytePassion.Lib.Communication.MessageBus;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Repository;
-using bytePassion.OnkoTePla.Client.Resources;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -17,16 +20,13 @@ using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+using bytePassion.OnkoTePla.Resources;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 
 namespace bytePassion.OnkoTePla.SampleDataCreation.SampleData
 {
-    public static class EventStreamDataBase
+	public static class EventStreamDataBase
 	{
 
 		private static readonly Random Rand = new Random();

@@ -1,18 +1,18 @@
-﻿using bytePassion.Lib.TimeLib;
-using bytePassion.Lib.Types.Repository;
-using bytePassion.OnkoTePla.Client.Resources;
-using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Repository;
+using bytePassion.OnkoTePla.Contracts.Patients;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Resources;
 
 
 namespace bytePassion.OnkoTePla.SampleDataCreation.SampleData
 {
-    public static class PatientDataBase
+	public static class PatientDataBase
 	{
 
 		public static void TestLoad()
