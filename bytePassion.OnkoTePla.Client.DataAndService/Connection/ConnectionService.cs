@@ -52,6 +52,22 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			runningThread.Start();
 		}
 
+		public void TryDebugConnect(Address serverAddress, Address clientAddress)
+		{
+			ConnectionWasTerminated = false;
+
+			ServerAddress = serverAddress;
+			ClientAddress = clientAddress;
+
+			ConnectionStatus = ConnectionStatus.TryingToConnect;
+			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
+			
+			var threadLogic = new DebugConnectionBeginThead(zmqContext, serverAddress,
+														    clientAddress, DebugConnectionBeginResponeReceived);
+			var runningThread = new Thread(threadLogic.Run);
+			runningThread.Start();
+		}
+
 		public void TryDisconnect ()
 		{
 			ConnectionStatus = ConnectionStatus.TryingToDisconnect;
@@ -104,6 +120,30 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					}					
 				}				
 			);			
+		}
+
+		private void DebugConnectionBeginResponeReceived (ConnectionSessionId connectionSessionId)
+		{
+			Application.Current.Dispatcher.Invoke(
+				() =>
+				{
+					if (connectionSessionId == null)
+					{
+						if (ConnectionStatus == ConnectionStatus.TryingToConnect)
+						{
+							ConnectionStatus = ConnectionStatus.Disconnected;
+							ConnectionEventInvoked?.Invoke(ConnectionEvent.ConAttemptUnsuccessful);
+						}
+					}
+					else
+					{
+						CurrentSessionId = connectionSessionId;						
+
+						ConnectionStatus = ConnectionStatus.Connected;
+						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
+					}
+				}
+			);
 		}
 
 		private void OnServerVanished()

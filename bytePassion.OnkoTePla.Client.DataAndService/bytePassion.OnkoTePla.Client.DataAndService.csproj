@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\ConnectionStatus.cs" />
+    <Compile Include="Connection\Threads\DebugConnectionBeginThead.cs" />
     <Compile Include="Connection\Threads\ConnectionBeginThead.cs" />
     <Compile Include="Connection\Threads\ConnectionEndThead.cs" />
     <Compile Include="Connection\Threads\HeartbeatThead.cs" />

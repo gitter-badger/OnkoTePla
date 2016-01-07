@@ -11,7 +11,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		Address          ClientAddress    { get; }
 		ConnectionStatus ConnectionStatus { get; }
 		
-		void TryConnect (Address serverAddress, Address clientAddress);
+		void TryConnect     (Address serverAddress, Address clientAddress);
+		void TryDebugConnect(Address serverAddress, Address clientAddress);
 		void TryDisconnect ();
 	}
 }
