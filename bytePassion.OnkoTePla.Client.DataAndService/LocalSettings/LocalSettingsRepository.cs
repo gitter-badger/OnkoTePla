@@ -1,4 +1,5 @@
-﻿using bytePassion.Lib.Types.Repository;
+﻿using bytePassion.Lib.Types.Communication;
+using bytePassion.Lib.Types.Repository;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 {
@@ -13,15 +14,19 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 
 		public void PersistRepository()
 		{
-			persistenceService.Persist(new LocalSettingsData(IsAutoConnectionEnabled));
+			persistenceService.Persist(new LocalSettingsData(IsAutoConnectionEnabled, 
+															 AutoConnectionAddress));
 		}
 
 		public void LoadRepository()
 		{
 			var newSettings = persistenceService.Load();
+
 			IsAutoConnectionEnabled = newSettings.IsAutoConnectionEnabled;
+			AutoConnectionAddress   = newSettings.AutoConnectionAddress;
 		}
 
-		public bool IsAutoConnectionEnabled { get; set; }
+		public bool              IsAutoConnectionEnabled { get; set; }
+		public AddressIdentifier AutoConnectionAddress   { get; set; }
 	}
 }

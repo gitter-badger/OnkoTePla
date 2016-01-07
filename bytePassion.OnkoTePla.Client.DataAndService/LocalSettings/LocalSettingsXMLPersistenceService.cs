@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Xml;
+using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.Types.Repository;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
@@ -31,6 +32,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 		private const string Values   = "values";
 
 		private const string IsAutoConnectionEnabledAttribute = "isAutoConnectionEnabled";
+		private const string AutoConnectionAddressAttribute   = "autoConnectionAddress";
 
 		public void Persist(LocalSettingsData data)
 		{
@@ -53,6 +55,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 			writer.WriteStartElement(Values);
 
 			writer.WriteAttributeString(IsAutoConnectionEnabledAttribute, data.IsAutoConnectionEnabled.ToString());
+			writer.WriteAttributeString(AutoConnectionAddressAttribute, data.AutoConnectionAddress.ToString());
 
 			writer.WriteEndElement();
 		}
@@ -63,6 +66,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 				return LocalSettingsData.CreateDefaultSettings();
 
 			bool isAutoConnectionEnabled = false;
+			AddressIdentifier autoConnectionAddress = null;
 
 			var reader = XmlReader.Create(filename);
 
@@ -79,7 +83,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 					{
 						switch (reader.Name)
 						{
-							case IsAutoConnectionEnabledAttribute: isAutoConnectionEnabled = bool.Parse(reader.Value);break;
+							case IsAutoConnectionEnabledAttribute: isAutoConnectionEnabled = bool.Parse(reader.Value);                                         break;
+							case AutoConnectionAddressAttribute:   autoConnectionAddress   = AddressIdentifier.GetIpAddressIdentifierFromString(reader.Value); break;
 						}
 					}
 					
@@ -87,7 +92,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 			}
 			reader.Close();
 
-			return new LocalSettingsData(isAutoConnectionEnabled);
+			return new LocalSettingsData(isAutoConnectionEnabled, autoConnectionAddress);
 		}
 	}
 }
