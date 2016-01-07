@@ -1,6 +1,7 @@
 ﻿using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
 using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Core.Eventsystem;
@@ -30,11 +31,20 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 			var configReadRepository = new ConfigurationRepository(configPersistenceService);
 			configReadRepository.LoadRepository();
 
+
+			// LocalSettings-Repository
+
+			var settingPersistenceService = new LocalSettingsXMLPersistenceService(GlobalConstants.LocalSettingsPersistenceFile);
+			var localSettingsRepository = new LocalSettingsRepository(settingPersistenceService);
+			localSettingsRepository.LoadRepository();
+
+
 			// EventStore
 
 			var eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
 			var eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
 			eventStore.LoadRepository();
+
 
 			// Event- and CommandBus
 
@@ -58,10 +68,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 			commandBus.RegisterCommandHandler(new AddAppointmentCommandHandler(aggregateRepository));
 			commandBus.RegisterCommandHandler(new DeleteAppointmentCommandHandler(aggregateRepository));
 			commandBus.RegisterCommandHandler(new ReplaceAppointmentCommandHandler(aggregateRepository));
-
+			
 			return new DataCenter(configReadRepository,
 								  patientReadRepository,
 								  readModelRepository,
+								  localSettingsRepository,
 								  commandBus,
 								  eventStore);
 		}

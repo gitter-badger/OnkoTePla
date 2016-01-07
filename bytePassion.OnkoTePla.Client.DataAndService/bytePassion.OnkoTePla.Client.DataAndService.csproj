@@ -68,6 +68,10 @@
     <Compile Include="Factorys\IDataCenterBuilder.cs" />
     <Compile Include="Factorys\ISessionBuilder.cs" />
     <Compile Include="Factorys\SessionBuilder.cs" />
+    <Compile Include="LocalSettings\ILocalSettingsRepository.cs" />
+    <Compile Include="LocalSettings\LocalSettingsData.cs" />
+    <Compile Include="LocalSettings\LocalSettingsRepository.cs" />
+    <Compile Include="LocalSettings\LocalSettingsXMLPersistenceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Connection\ConnectionEvent.cs" />

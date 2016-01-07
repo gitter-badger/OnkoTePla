@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.CommandSystem;
@@ -19,18 +20,21 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
         private readonly IConfigurationReadRepository configuration;
         private readonly IPatientReadRepository patientRepository;
         private readonly IReadModelRepository readModelRepository;
+		private readonly ILocalSettingsRepository localSettingsRepository;
 		private readonly ICommandBus commandBus;
 		private readonly IEventStore eventStore;
 
 		internal DataCenter(IConfigurationReadRepository configuration, 
 						    IPatientReadRepository patientRepository, 
 						    IReadModelRepository readModelRepository,
+							ILocalSettingsRepository localSettingsRepository,
 							ICommandBus commandBus,
 							IEventStore eventStore)
         {
             this.configuration = configuration;
             this.patientRepository = patientRepository;
             this.readModelRepository = readModelRepository;
+			this.localSettingsRepository = localSettingsRepository;
 			this.commandBus = commandBus;
 			this.eventStore = eventStore;
 
@@ -98,6 +102,17 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
 		public void PersistEventstore()
 		{
 			eventStore.PersistRepository();
+		}
+
+		public bool IsAutoConnectionEnabled
+		{
+			get { return localSettingsRepository.IsAutoConnectionEnabled; }
+			set { localSettingsRepository.IsAutoConnectionEnabled = value; }
+		}
+
+		public void PersistLocalSettings()
+		{
+			localSettingsRepository.PersistRepository();
 		}
 	}
 }

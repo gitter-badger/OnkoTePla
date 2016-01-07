@@ -54,6 +54,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			///////////////////////////////////////////////////////////////////////////////////////////////
 
 			dataCenter.PersistEventstore();		// TODO: just for testing
+			dataCenter.PersistLocalSettings();
 		}		
 	}
 }

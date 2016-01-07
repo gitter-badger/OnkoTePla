@@ -25,5 +25,15 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
 		void SendCommand<TDomainCommand>(TDomainCommand command) where TDomainCommand : DomainCommand;
 
 		void PersistEventstore(); // TODO: just for testing
+
+		///////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////                                                                                   ///////////
+		/////////                                  local settings                                   ///////////
+		/////////                                                                                   ///////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////
+		 
+		bool IsAutoConnectionEnabled { get; set; }
+
+		void PersistLocalSettings();
     }
 }
