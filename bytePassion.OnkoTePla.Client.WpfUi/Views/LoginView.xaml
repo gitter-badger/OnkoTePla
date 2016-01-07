@@ -164,7 +164,13 @@
                                     Command="{Binding Connect}"
                                     Content="Connect" />
 
-                            <Button Width="100"
+							<Button Width="100"
+                                    Height="25"
+                                    Margin="0,0,10,0"
+                                    Command="{Binding Connect}"
+                                    Content="Debug Connect" />
+
+							<Button Width="100"
                                     Height="25"
                                     Command="{Binding Disconnect}"
                                     Content="Disconnect" />

@@ -41,7 +41,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		/////////                                                                                   ///////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		void TryConnect (Address serverAddress, Address clientAddress);
+		void TryConnect     (Address serverAddress, Address clientAddress);
+		void TryDebugConnect(Address serverAddress, Address clientAddress);
 		void TryDisconnect();
 
 

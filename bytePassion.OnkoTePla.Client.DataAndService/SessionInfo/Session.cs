@@ -132,6 +132,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			connectionService.TryConnect(serverAddress, clientAddress);
 		}
 
+		public void TryDebugConnect(Address serverAddress, Address clientAddress)
+		{
+			connectionService.TryDebugConnect(serverAddress, clientAddress);
+		}
+
 		public void TryDisconnect ()
 		{
 			connectionService.TryDisconnect();

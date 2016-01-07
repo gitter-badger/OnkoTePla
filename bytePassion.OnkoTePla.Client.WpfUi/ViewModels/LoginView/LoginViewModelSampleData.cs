@@ -29,9 +29,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			AutoConnectOnNextStart = true;
 	    }
 
-	    public ICommand Login      { get; } = null;
-	    public ICommand Connect    { get; } = null;
-		public ICommand Disconnect { get; } = null;
+	    public ICommand Login        => null;
+	    public ICommand Connect      => null;
+		public ICommand DebugConnect => null;
+		public ICommand Disconnect   => null;
 
 	    public ObservableCollection<string> AvailableUsers { get; }
 		public ObservableCollection<string> ClientIpAddresses { get; }

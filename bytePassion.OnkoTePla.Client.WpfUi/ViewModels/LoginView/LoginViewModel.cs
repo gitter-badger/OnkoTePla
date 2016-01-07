@@ -37,6 +37,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			Connect = new Command(DoConnect,
 								  IsConnectPossible);
 
+			DebugConnect = new Command(DoDebugConnect,
+									   IsConnectPossible);
+
 			Disconnect = new Command(DoDisconnect,
 									 IsDisconnectPossible);
 
@@ -54,9 +57,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			session.ApplicationStateChanged += OnApplicationStateChanged;
 
 			currentlyTryingToConnect = false;
-	    }
-
-		
+	    }		
 
 		private async void OnApplicationStateChanged(ApplicationState applicationState)
 		{
@@ -79,6 +80,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			((Command)Login).RaiseCanExecuteChanged();
 			((Command)Connect).RaiseCanExecuteChanged();
+			((Command)DebugConnect).RaiseCanExecuteChanged();
 			((Command)Disconnect).RaiseCanExecuteChanged();
 		}	
 		
@@ -100,9 +102,24 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			return session.CurrentApplicationState == ApplicationState.ConnectedButNotLoggedIn;
 		}
 
+		private async void DoDebugConnect ()
+		{
+			if (AddressIdentifier.IsIpAddressIdentifier(ServerAddress))
+			{
+				session.TryDebugConnect(new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ServerAddress)),
+								        new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress)));
+			}
+			else
+			{
+				var dialog = new UserDialogBox("", $"{ServerAddress} ist keine gültige Ip-Adresse",
+											   MessageBoxButton.OK, MessageBoxImage.Error);
+				await dialog.ShowMahAppsDialog();
+			}
+		}
+
 		private async void DoConnect()
 		{
-			if (IpV4AddressIdentifier.IsIpV4Address(ServerAddress))
+			if (AddressIdentifier.IsIpAddressIdentifier(ServerAddress))
 			{
 				session.TryConnect(new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ServerAddress)),
 								   new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress)));
@@ -116,7 +133,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		}
 		private bool IsConnectPossible ()
 		{
-			return IpV4AddressIdentifier.IsIpV4Address(ServerAddress) &&
+			return AddressIdentifier.IsIpAddressIdentifier(ServerAddress) &&
 				   session.CurrentApplicationState == ApplicationState.DisconnectedFromServer;
 		}
 
@@ -132,9 +149,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				   !string.IsNullOrWhiteSpace(SelectedUserName);
 		}
 
-		public ICommand Login      { get; }
-		public ICommand Connect    { get; }
-		public ICommand Disconnect { get; }
+		public ICommand Login        { get; }
+		public ICommand Connect      { get; }
+		public ICommand DebugConnect { get; }
+		public ICommand Disconnect   { get; }
 
 		public ObservableCollection<string> AvailableUsers    { get; }
 		public ObservableCollection<string> ClientIpAddresses { get; }
