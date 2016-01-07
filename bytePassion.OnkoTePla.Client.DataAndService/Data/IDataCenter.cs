@@ -22,7 +22,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
         IEnumerable<MedicalPractice> GetAllMedicalPractices();
         IEnumerable<Patient>         GetAllPatients();
 
-		void SendCommand(DomainCommand command);
+		void SendCommand<TDomainCommand>(TDomainCommand command) where TDomainCommand : DomainCommand;
 
 		void PersistEventstore(); // TODO: just for testing
     }

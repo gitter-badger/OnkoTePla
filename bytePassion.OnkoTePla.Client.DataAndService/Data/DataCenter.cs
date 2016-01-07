@@ -90,7 +90,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
             return patientRepository.GetAllPatients();
         }
 
-		public void SendCommand(DomainCommand command)
+		public void SendCommand<TDomainCommand>(TDomainCommand command) where TDomainCommand : DomainCommand
 		{
 			commandBus.SendCommand(command);
 		}
