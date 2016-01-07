@@ -15,21 +15,18 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 	{
 		public event Action<ConnectionSessionId> ClientVanished;
 
-		private readonly NetMQContext context;
-		private readonly Address serverAddress;
+		private readonly NetMQContext context;		
 		private readonly Address clientAddress;
 		private readonly ConnectionSessionId sessionId;
 
 		private volatile bool stopRunning;
 
 
-		public HeartbeatThread (NetMQContext context, 
-								Address serverAddress, 
+		public HeartbeatThread (NetMQContext context, 								
 								Address clientAddress, 
 								ConnectionSessionId sessionId)
 		{
-			this.context = context;
-			this.serverAddress = serverAddress;
+			this.context = context;			
 			this.clientAddress = clientAddress;
 			this.sessionId = sessionId;
 

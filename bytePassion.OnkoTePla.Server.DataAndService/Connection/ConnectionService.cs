@@ -73,7 +73,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			});
 
 			var clientAdd = new Address(new TcpIpProtocol(), clientAddress);
-			var heartbeatThread = new HeartbeatThread(zmqContext, ServerAddress, clientAdd, id);
+			var heartbeatThread = new HeartbeatThread(zmqContext, clientAdd, id);
 
 			heartbeatThreads.Add(id, heartbeatThread);
 			heartbeatThread.ClientVanished += HeartbeatOnClientVanished;
