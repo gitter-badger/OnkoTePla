@@ -245,7 +245,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 		{
 			writer.WriteStartElement(Room);
 			writer.WriteAttributeString(IdAttribute, room.Id.ToString());
-			writer.WriteAttributeString(CountAttribute, room.TherapyPlaces.Count.ToString());
+			writer.WriteAttributeString(CountAttribute, room.TherapyPlaces.Count().ToString());
 			writer.WriteAttributeString(NameAttribute, room.Name);
 			writer.WriteAttributeString(ColorAttribute, room.DisplayedColor.ToString());
 
