@@ -30,6 +30,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 		private bool currentlyTryingToConnect;
 		private bool autoConnectOnNextStart;
+		private bool areConnectionSettingsVisible;
 
 		public LoginViewModel(ISession session,
 							  IDataCenter dataCenter)
@@ -66,6 +67,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			currentlyTryingToConnect = false;
 
+			AreConnectionSettingsVisible = !AutoConnectOnNextStart;
+
 			if (AutoConnectOnNextStart)
 			{
 				var clientIpAddress = dataCenter.AutoConnectionClientAddress.ToString();
@@ -91,11 +94,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				await dialog.ShowMahAppsDialog();				
 
 				currentlyTryingToConnect = false;
+				AreConnectionSettingsVisible = true;
 			}
 
 			if (applicationState == ApplicationState.ConnectedButNotLoggedIn)
 			{
 				currentlyTryingToConnect = false;
+				AreConnectionSettingsVisible = false;
 			}
 
 			((Command)Login).RaiseCanExecuteChanged();
@@ -174,6 +179,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 		private bool IsConnectPossible ()
 		{
+			if (ServerAddress == null)
+				return false;
+
 			return AddressIdentifier.IsIpAddressIdentifier(ServerAddress) &&
 				   session.CurrentApplicationState == ApplicationState.DisconnectedFromServer;
 		}
@@ -224,6 +232,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		{
 			get { return clientAddress; }
 			set { PropertyChanged.ChangeAndNotify(this, ref clientAddress, value); }
+		}
+
+		public bool AreConnectionSettingsVisible
+		{
+			get { return areConnectionSettingsVisible; }
+			set { PropertyChanged.ChangeAndNotify(this, ref areConnectionSettingsVisible, value); }
 		}
 
 		public bool AutoConnectOnNextStart

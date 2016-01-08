@@ -27,6 +27,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			ClientAddress = "192.168.128.13";
 
 			AutoConnectOnNextStart = true;
+		    AreConnectionSettingsVisible = true;
 	    }
 
 	    public ICommand Login        => null;
@@ -41,6 +42,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 	    public string Password          {      set {}}
 	    public string ServerAddress     { get; set;  }
 		public string ClientAddress     { get; set;  }
+
+		public bool AreConnectionSettingsVisible { get; set; }
 
 		public bool AutoConnectOnNextStart { get; set; }
 

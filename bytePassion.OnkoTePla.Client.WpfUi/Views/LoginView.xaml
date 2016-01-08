@@ -1,22 +1,17 @@
 ﻿<UserControl x:Class="bytePassion.OnkoTePla.Client.WpfUi.Views.LoginView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loginView="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:loginView="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView"             
              d:DesignHeight="500"
              d:DesignWidth="800"
              mc:Ignorable="d">
 
     <d:DesignData.DataContext>
-        <loginView:LoginViewModelSampleData />
-
-    </d:DesignData.DataContext>
-
-    <UserControl.Resources>
-        <converter:InvertBoolConverter x:Key="inverseBoolConverter" />
-    </UserControl.Resources>
+		<loginView:LoginViewModelSampleData />
+	</d:DesignData.DataContext>
+   
     <Grid>
 
         <Border Width="450"
@@ -116,10 +111,9 @@
                           Margin="0,20,0,0"
                           HorizontalContentAlignment="Stretch"
                           Header="Verbindungsdaten"
-                          IsExpanded="{Binding ElementName=ConnectionCheckBox,
-                                               Path=IsChecked,
-                                               Mode=OneWay,
-                                               Converter={StaticResource inverseBoolConverter}}">
+                          IsExpanded="{Binding AreConnectionSettingsVisible,
+											   Mode=TwoWay,
+											   UpdateSourceTrigger=PropertyChanged}">
                     <StackPanel>
 
                         <CheckBox Name="ConnectionCheckBox"
