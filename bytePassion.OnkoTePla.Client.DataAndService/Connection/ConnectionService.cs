@@ -86,7 +86,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 				{
 					ConnectionWasTerminated = true;
 
-					heartbeatThread.Stop();
+					heartbeatThread?.Stop();
 
 					ConnectionStatus = ConnectionStatus.Disconnected;
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.Disconnected);
