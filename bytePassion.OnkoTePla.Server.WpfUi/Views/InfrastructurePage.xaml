@@ -4,20 +4,240 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage"
+             xmlns:config="clr-namespace:bytePassion.OnkoTePla.Contracts.Config;assembly=bytePassion.OnkoTePla.Contracts"
+             xmlns:infra="clr-namespace:bytePassion.OnkoTePla.Contracts.Infrastructure;assembly=bytePassion.OnkoTePla.Contracts"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="900" d:DesignWidth="1000">
     
     <d:DesignData.DataContext>
         <sampleData:InfrastructurePageViewModelSampleData/>
     </d:DesignData.DataContext>
     
+	<UserControl.Resources>
+
+		<ControlTemplate TargetType="Button"
+						 x:Key="AddButtonControlTemplate">
+			
+			<Grid x:Name="ButtonGrid">
+
+				<Ellipse Width="44"
+										 Height="44">
+					<Ellipse.Style>
+						<Style TargetType="Ellipse">
+							<Setter Property="Fill" Value="{DynamicResource SemiTransparentWhiteBrush}" />
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding IsMouseOver, ElementName=ButtonGrid}"  Value="True" >
+									<Setter Property="Fill" Value="{DynamicResource AccentColorBrush4}" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</Ellipse.Style>
+				</Ellipse>
+
+				<Canvas Width="24" Height="24">
+
+					<Viewbox Canvas.Left="-20"
+										 Canvas.Top="-19"
+										 Width="58"
+										 Height="58">
+
+						<Path x:Name="CrossPath"
+											  Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,            
+													12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,            
+													10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z">
+							<Path.Style>
+								<Style TargetType="Path">
+									<Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding IsMouseOver, ElementName=ButtonGrid}"  Value="True">
+											<Setter Property="Fill" Value="{DynamicResource GrayBrush2}" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Path.Style>
+						</Path>
+
+					</Viewbox>
+				</Canvas>
+			</Grid>
+		</ControlTemplate>
+
+	</UserControl.Resources>
+	
     <Grid Background="White">
 
-        <TextBlock Text="InfrastructurePage"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="25"
-                   FontFamily="Sigoe UI Light"/>
+       <Grid.ColumnDefinitions>
+		   <ColumnDefinition/>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
 
-    </Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<ScrollViewer Grid.Column="0"
+					  Grid.Row="0"
+					  HorizontalScrollBarVisibility="Disabled"
+					  VerticalScrollBarVisibility="Visible">
+
+			<StackPanel Orientation="Vertical">
+
+				<ListBox Margin="5,5,5,0"
+						 ItemsSource="{Binding MedicalPractices}"
+						 SelectionMode="Single"
+						 SelectedItem="{Binding SelectedMedicalPractice, 
+												Mode=TwoWay, 
+												UpdateSourceTrigger=PropertyChanged}">
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+
+					<ListBox.ItemTemplate>
+						<DataTemplate DataType="{x:Type infra:MedicalPractice}">
+							<Border Height="40"
+									Width="220"
+									BorderBrush="Black"
+									BorderThickness="1">
+
+								<TextBlock Text="{Binding Name}"
+										   HorizontalAlignment="Center"
+										   VerticalAlignment="Center"
+										   FontSize="15"/>
+							</Border>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+
+					<ListBox.ItemContainerStyle>
+						<Style TargetType="ListBoxItem">
+							<Setter Property="Margin" Value="5"/>
+						</Style>
+					</ListBox.ItemContainerStyle>
+
+				</ListBox>
+
+				<Button Height="40"				
+						Margin="5,10"
+						HorizontalAlignment="Center"
+						Content="add User"
+						Command="{Binding AddMedicalPractice}"
+						Template="{StaticResource AddButtonControlTemplate}">
+				</Button>
+
+			</StackPanel>
+
+		</ScrollViewer>
+
+		<ScrollViewer Grid.Column="1"
+					  Grid.Row="0"
+					  HorizontalScrollBarVisibility="Disabled"
+					  VerticalScrollBarVisibility="Visible">
+
+			<StackPanel Orientation="Vertical">
+
+				<ListBox Margin="5,5,5,0"
+						 ItemsSource="{Binding Users}"
+						 SelectionMode="Single"
+						 SelectedItem="{Binding SelectedUser, 
+												Mode=TwoWay, 
+												UpdateSourceTrigger=PropertyChanged}">
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+
+					<ListBox.ItemTemplate>
+						<DataTemplate DataType="{x:Type config:User}">
+							<Border Height="40"
+									Width="220"
+									BorderBrush="Black"
+									BorderThickness="1">
+
+								<TextBlock Text="{Binding Name}"
+										   HorizontalAlignment="Center"
+										   VerticalAlignment="Center"
+										   FontSize="15"/>
+							</Border>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+
+					<ListBox.ItemContainerStyle>
+						<Style TargetType="ListBoxItem">
+							<Setter Property="Margin" Value="5"/>
+						</Style>
+					</ListBox.ItemContainerStyle>
+
+				</ListBox>
+
+				<Button Height="40"				
+						Margin="5,10"
+						HorizontalAlignment="Center"
+						Content="add User"
+						Command="{Binding AddUser}"
+						Template="{StaticResource AddButtonControlTemplate}">
+				</Button>
+
+			</StackPanel>
+
+		</ScrollViewer>
+
+		<ScrollViewer Grid.Column="2"
+					  Grid.Row="0"
+					  HorizontalScrollBarVisibility="Disabled"
+					  VerticalScrollBarVisibility="Visible">
+
+			<StackPanel Orientation="Vertical">
+
+				<ListBox Margin="5,5,5,0"
+						 ItemsSource="{Binding Users}"
+						 SelectionMode="Single"
+						 SelectedItem="{Binding SelectedUser, 
+												Mode=TwoWay, 
+												UpdateSourceTrigger=PropertyChanged}">
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+
+					<ListBox.ItemTemplate>
+						<DataTemplate DataType="{x:Type config:User}">
+							<Border Height="40"
+									Width="220"
+									BorderBrush="Black"
+									BorderThickness="1">
+
+								<TextBlock Text="{Binding Name}"
+										   HorizontalAlignment="Center"
+										   VerticalAlignment="Center"
+										   FontSize="15"/>
+							</Border>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+
+					<ListBox.ItemContainerStyle>
+						<Style TargetType="ListBoxItem">
+							<Setter Property="Margin" Value="5"/>
+						</Style>
+					</ListBox.ItemContainerStyle>
+
+				</ListBox>
+
+				<Button Height="40"				
+						Margin="5,10"
+						HorizontalAlignment="Center"
+						Content="add User"
+						Command="{Binding AddUser}"
+						Template="{StaticResource AddButtonControlTemplate}">
+				</Button>
+
+			</StackPanel>
+
+		</ScrollViewer>
+
+	</Grid>
 </UserControl>

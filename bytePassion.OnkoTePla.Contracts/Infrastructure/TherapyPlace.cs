@@ -1,5 +1,5 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
-using System;
+﻿using System;
+using bytePassion.Lib.FrameworkExtensions;
 using static bytePassion.Lib.FrameworkExtensions.EqualsExtension;
 
 namespace bytePassion.OnkoTePla.Contracts.Infrastructure
@@ -10,13 +10,12 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		{
 			Id     = id;
 			TypeId = typeId;
-			Name  = name;
+			Name   = name;
 		}
 
 		public Guid   Id     { get; }
 		public string Name   { get; }
 		public Guid   TypeId { get; }
-
 
 		public override string ToString ()         => Name;
 		public override int    GetHashCode ()      => Id.GetHashCode();
