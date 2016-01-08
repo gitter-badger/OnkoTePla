@@ -7,17 +7,21 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 		public static LocalSettingsData CreateDefaultSettings()
 		{
 			return new LocalSettingsData(false, 
-										 new InProcIdentifier("noAddressNeeded"));
+										 new IpV4AddressIdentifier(127, 0, 0, 1),
+										 new IpV4AddressIdentifier(127, 0, 0, 1));
 		}
 
 		public LocalSettingsData(bool isAutoConnectionEnabled, 
-								 AddressIdentifier autoConnectionAddress)
+								 AddressIdentifier autoConnectionClientAddress, 
+								 AddressIdentifier autoConnectionServerAddress)
 		{
 			IsAutoConnectionEnabled = isAutoConnectionEnabled;
-			AutoConnectionAddress = autoConnectionAddress;
+			AutoConnectionClientAddress = autoConnectionClientAddress;
+			AutoConnectionServerAddress = autoConnectionServerAddress;
 		}
 
-		public bool              IsAutoConnectionEnabled { get; }
-		public AddressIdentifier AutoConnectionAddress   { get; }
+		public bool              IsAutoConnectionEnabled     { get; }
+		public AddressIdentifier AutoConnectionClientAddress { get; }
+		public AddressIdentifier AutoConnectionServerAddress { get; }
 	}
 }

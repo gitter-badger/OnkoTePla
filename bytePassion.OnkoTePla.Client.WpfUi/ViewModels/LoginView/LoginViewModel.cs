@@ -8,6 +8,7 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.ZmqUtils;
+using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
@@ -21,15 +22,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private static readonly Protocol Protocol = new TcpIpProtocol();
 
 		private readonly ISession session;
+		private readonly IDataCenter dataCenter;
+
 		private string selectedUserName;
 		private string serverAddress;
 		private string clientAddress;
 
 		private bool currentlyTryingToConnect;
+		private bool autoConnectOnNextStart;
 
-		public LoginViewModel(ISession session)
+		public LoginViewModel(ISession session,
+							  IDataCenter dataCenter)
 	    {
 		    this.session = session;
+			this.dataCenter = dataCenter;
 
 			Login = new Command(DoLogin,
 								IsLoginPossible);
@@ -42,6 +48,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			Disconnect = new Command(DoDisconnect,
 									 IsDisconnectPossible);
+
+			AutoConnectOnNextStart = dataCenter.IsAutoConnectionEnabled;
 
 			AvailableUsers = session.AvailableUsers
 									.Select(user => user.Name)
@@ -57,6 +65,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			session.ApplicationStateChanged += OnApplicationStateChanged;
 
 			currentlyTryingToConnect = false;
+
+			if (AutoConnectOnNextStart)
+			{
+				var clientIpAddress = dataCenter.AutoConnectionClientAddress.ToString();
+
+				if (ClientIpAddresses.Contains(clientIpAddress))
+				{
+					ClientAddress = clientIpAddress;
+					ServerAddress = dataCenter.AutoConnectionServerAddress.ToString();
+					DebugConnect.Execute(null);
+				}
+			}
 	    }		
 
 		private async void OnApplicationStateChanged(ApplicationState applicationState)
@@ -115,6 +135,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 											   MessageBoxButton.OK, MessageBoxImage.Error);
 				await dialog.ShowMahAppsDialog();
 			}
+
+			SetAutoConnectToSettings();
 		}
 
 		private async void DoConnect()
@@ -130,7 +152,26 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 											   MessageBoxButton.OK, MessageBoxImage.Error);
 				await dialog.ShowMahAppsDialog();
 			}
+
+			SetAutoConnectToSettings();
 		}
+
+		private void SetAutoConnectToSettings()
+		{
+			if (AutoConnectOnNextStart)
+			{
+				dataCenter.IsAutoConnectionEnabled = true;
+				dataCenter.AutoConnectionServerAddress = AddressIdentifier.GetIpAddressIdentifierFromString(ServerAddress);
+				dataCenter.AutoConnectionClientAddress = AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress);
+			}
+			else
+			{
+				dataCenter.IsAutoConnectionEnabled = false;
+				dataCenter.AutoConnectionClientAddress = new IpV4AddressIdentifier(127, 0, 0, 1);
+				dataCenter.AutoConnectionServerAddress = new IpV4AddressIdentifier(127, 0, 0, 1);
+			}
+		}
+
 		private bool IsConnectPossible ()
 		{
 			return AddressIdentifier.IsIpAddressIdentifier(ServerAddress) &&
@@ -174,7 +215,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			get { return serverAddress; }
 			set
 			{
-				serverAddress = value;
+				PropertyChanged.ChangeAndNotify(this, ref serverAddress, value);
 				((Command)Connect).RaiseCanExecuteChanged();
 			}
 		}
@@ -185,7 +226,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			set { PropertyChanged.ChangeAndNotify(this, ref clientAddress, value); }
 		}
 
-		public bool AutoConnectOnNextStart { get; set; }
+		public bool AutoConnectOnNextStart
+		{
+			get { return autoConnectOnNextStart; }
+			set { PropertyChanged.ChangeAndNotify(this, ref autoConnectOnNextStart, value); }
+		}
 
 		protected override void CleanUp()
 		{

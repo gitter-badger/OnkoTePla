@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.CommandSystem;
@@ -32,8 +33,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
 		/////////                                                                                   ///////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		 
-		bool IsAutoConnectionEnabled { get; set; }
-
+		bool              IsAutoConnectionEnabled     { get; set; }
+		AddressIdentifier AutoConnectionClientAddress { get; set; }
+		AddressIdentifier AutoConnectionServerAddress { get; set; }
+		
 		void PersistLocalSettings();
     }
 }

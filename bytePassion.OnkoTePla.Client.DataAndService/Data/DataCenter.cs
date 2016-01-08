@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -108,6 +109,18 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Data
 		{
 			get { return localSettingsRepository.IsAutoConnectionEnabled; }
 			set { localSettingsRepository.IsAutoConnectionEnabled = value; }
+		}
+
+		public AddressIdentifier AutoConnectionServerAddress
+		{
+			get { return localSettingsRepository.AutoConnectionServerAddress; }
+			set { localSettingsRepository.AutoConnectionServerAddress = value; }
+		}
+
+		public AddressIdentifier AutoConnectionClientAddress
+		{
+			get { return localSettingsRepository.AutoConnectionClientAddress; }
+			set { localSettingsRepository.AutoConnectionClientAddress = value; }
 		}
 
 		public void PersistLocalSettings()

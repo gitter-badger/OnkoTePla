@@ -5,7 +5,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 {
 	internal interface ILocalSettingsRepository : IPersistable
 	{
-		bool              IsAutoConnectionEnabled { get; set; }
-		AddressIdentifier AutoConnectionAddress   { get; set; }
+		bool              IsAutoConnectionEnabled     { get; set; }
+		AddressIdentifier AutoConnectionClientAddress { get; set; }
+		AddressIdentifier AutoConnectionServerAddress { get; set; }
 	}
 }

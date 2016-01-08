@@ -46,7 +46,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 																session,                                                                
                                                                 adornerControl);
 
-            var loginViewModelBuilder = new LoginViewModelBuilder(session);
+            var loginViewModelBuilder = new LoginViewModelBuilder(session, 
+																  dataCenter);
 
             var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
 
