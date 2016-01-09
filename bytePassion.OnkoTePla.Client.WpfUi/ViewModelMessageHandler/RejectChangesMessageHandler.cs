@@ -1,17 +1,17 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
-using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using MahApps.Metro.Controls.Dialogs;
-using System.Windows;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 {
-    internal class RejectChangesMessageHandler : IViewModelMessageHandler<RejectChanges>
+	internal class RejectChangesMessageHandler : IViewModelMessageHandler<RejectChanges>
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
@@ -43,7 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 			else
 			{
 				var dialog = new UserDialogBox("", "Wollen Sie alle Änderungen verwerfen?",
-				                               MessageBoxButton.OKCancel, MessageBoxImage.Question);
+				                               MessageBoxButton.OKCancel);
 				var result = await dialog.ShowMahAppsDialog();
 
 				if (result == MessageDialogResult.Affirmative)

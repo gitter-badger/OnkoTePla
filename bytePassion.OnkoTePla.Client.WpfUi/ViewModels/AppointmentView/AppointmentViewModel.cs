@@ -1,30 +1,30 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
-using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
+using bytePassion.OnkoTePla.Client.WpfUi.Views;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using MahApps.Metro.Controls.Dialogs;
-using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Input;
-using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.WpfUi.Views;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.DeleteAppointment;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
-    internal class AppointmentViewModel : ViewModel, 
+	internal class AppointmentViewModel : ViewModel, 
 										  IAppointmentViewModel										
 	{		
 		private readonly Appointment appointment;
@@ -85,7 +85,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 			DeleteAppointment = new Command(async() =>
 				{
 					var dialog = new UserDialogBox("", "Wollen Sie den Termin wirklich löschen?", 
-												   MessageBoxButton.OKCancel, MessageBoxImage.Question);
+												   MessageBoxButton.OKCancel);
 					var result = await dialog.ShowMahAppsDialog();
 
 				    if (result == MessageDialogResult.Affirmative)

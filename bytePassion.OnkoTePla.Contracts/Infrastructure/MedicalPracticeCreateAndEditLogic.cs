@@ -64,8 +64,8 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 									   medPractice, 
 									   medPractice.HoursOfOpening);
 		}
-
-		public static MedicalPractice Rename (this MedicalPractice medPractice, string newName)
+		
+		public static MedicalPractice SetNewName (this MedicalPractice medPractice, string newName)
 		{
 			var updatedVersion = medPractice.Version + 1;
 

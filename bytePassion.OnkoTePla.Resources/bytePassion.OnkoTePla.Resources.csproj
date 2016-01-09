@@ -67,6 +67,7 @@
       <DependentUpon>LanguageRes.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserNotificationService\UserDialogBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\AliveDead\dead.png" />

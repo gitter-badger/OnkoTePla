@@ -192,7 +192,6 @@
     <Compile Include="ViewModelMessages\RemoveAppointmentFromTherapyPlaceRow.cs" />
     <Compile Include="ViewModelMessages\AddAppointmentToTherapyPlaceRow.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\TherapyPlaceRowViewModelSampleData.cs" />
-    <Compile Include="UserNotificationService\UserDialogBox.cs" />
     <Compile Include="ViewModels\DateSelector\DateSelectorViewModel.cs" />
     <Compile Include="ViewModels\AppointmentGrid\AppointmentGridViewModel.cs" />
     <Compile Include="ViewModels\AppointmentView\AppointmentViewModel.cs" />
