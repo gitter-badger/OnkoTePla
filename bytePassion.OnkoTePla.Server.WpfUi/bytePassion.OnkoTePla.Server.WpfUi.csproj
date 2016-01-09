@@ -85,9 +85,11 @@
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\ConnectionsPage\IConnectionsPageViewModel.cs" />
+    <Compile Include="ViewModels\InfrastructurePage\Helper\TherapyPlaceTypeDisplayData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\IInfrastructurePageViewModel.cs" />
     <Compile Include="ViewModels\InfrastructurePage\InfrastructurePageViewModel.cs" />
     <Compile Include="ViewModels\InfrastructurePage\InfrastructurePageViewModelSampleData.cs" />
+    <Compile Include="ViewModels\InfrastructurePage\Helper\ColorDisplayData.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\LicencePage\ILicencePageViewModel.cs" />
     <Compile Include="ViewModels\LicencePage\LicencePageViewModel.cs" />

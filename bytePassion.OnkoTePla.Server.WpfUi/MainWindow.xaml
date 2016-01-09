@@ -10,8 +10,10 @@
                       xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow"
                       xmlns:views="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Views"
                       Title="MainWindow"
-                      Width="1089"
-                      Height="692"
+                      Width="1300"
+                      Height="900"
+					  MinWidth="900"
+					  MinHeight="700"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
 

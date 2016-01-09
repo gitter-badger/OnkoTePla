@@ -21,17 +21,17 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 		{
 			AllIcons = new ObservableCollection<IconDisplayData>
 			{
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"bed01.png")),   TherapyPlaceIconType.BedType1,   "Bed1"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"bed02.png")),   TherapyPlaceIconType.BedType2,   "Bed2"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"bed03.png")),   TherapyPlaceIconType.BedType3,   "Bed3"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"bed04.png")),   TherapyPlaceIconType.BedType4,   "Bed4"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"bed05.png")),   TherapyPlaceIconType.BedType5,   "Bed5"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"chair01.png")), TherapyPlaceIconType.ChairType1, "Chair1"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"chair02.png")), TherapyPlaceIconType.ChairType2, "Chair2"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"chair03.png")), TherapyPlaceIconType.ChairType3, "Chair3"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"chair04.png")), TherapyPlaceIconType.ChairType4, "Chair4"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"chair05.png")), TherapyPlaceIconType.ChairType5, "Chair5"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath +"none.png")),    TherapyPlaceIconType.None,       "None"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed01.png")),   TherapyPlaceIconType.BedType1,   "Bed1"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed02.png")),   TherapyPlaceIconType.BedType2,   "Bed2"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed03.png")),   TherapyPlaceIconType.BedType3,   "Bed3"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed04.png")),   TherapyPlaceIconType.BedType4,   "Bed4"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed05.png")),   TherapyPlaceIconType.BedType5,   "Bed5"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair01.png")), TherapyPlaceIconType.ChairType1, "Chair1"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair02.png")), TherapyPlaceIconType.ChairType2, "Chair2"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair03.png")), TherapyPlaceIconType.ChairType3, "Chair3"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair04.png")), TherapyPlaceIconType.ChairType4, "Chair4"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair05.png")), TherapyPlaceIconType.ChairType5, "Chair5"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "none.png")),    TherapyPlaceIconType.None,       "None"),
 			};
 
 			TherapyPlaceTypes = new ObservableCollection<TherapyPlaceType>

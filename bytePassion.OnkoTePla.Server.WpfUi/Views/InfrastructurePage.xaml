@@ -6,6 +6,8 @@
              xmlns:infra="clr-namespace:bytePassion.OnkoTePla.Contracts.Infrastructure;assembly=bytePassion.OnkoTePla.Contracts"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage"
+             xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper"
              d:DesignHeight="900"
              d:DesignWidth="1000"
              mc:Ignorable="d">
@@ -16,6 +18,19 @@
 
     <UserControl.Resources>
 
+		<libConverter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+		<libConverter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter"/>
+		<libConverter:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
+		
+		<Style TargetType="TextBlock"
+			   x:Key="NotificationStyle">
+
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="FontSize" Value="25"/>
+
+		</Style>
+		
         <ControlTemplate x:Key="AddButtonControlTemplate" TargetType="Button">
 
             <Grid x:Name="ButtonGrid">
@@ -60,6 +75,7 @@
 
     </UserControl.Resources>
 
+	
     <Grid Background="White">
 
         <Grid.ColumnDefinitions>
@@ -69,12 +85,50 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="60" />
+			<RowDefinition />
+            <RowDefinition Height="210" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="0"
+		
+		<GridSplitter Grid.Column="0"
+					  Grid.Row="0"
+					  Grid.RowSpan="3"
+					  Width="2"
+					  IsEnabled="False"/>
+
+		<GridSplitter Grid.Column="1"
+					  Grid.Row="0"
+					  Grid.RowSpan="3"
+					  Width="2"
+					  IsEnabled="False"/>
+
+		
+		<TextBlock Grid.Row="0"
+				   Grid.Column="0"
+				   Text="Praxen"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   FontSize="35"/>
+
+		<TextBlock Grid.Row="0"
+				   Grid.Column="1"
+				   Text="Räume"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   FontSize="35"/>
+
+		<TextBlock Grid.Row="0"
+				   Grid.Column="2"
+				   Text="Therapieplätze"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   FontSize="35"/>
+
+		
+		<ScrollViewer Grid.Row="1"
                       Grid.Column="0"
+					  Margin="5,0"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Visible">
 
@@ -126,16 +180,20 @@
 
         </ScrollViewer>
 
-        <ScrollViewer Grid.Row="0"
+        <ScrollViewer Grid.Row="1"
                       Grid.Column="1"
+					  Margin="5,0"
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Visible">
+                      VerticalScrollBarVisibility="Visible"
+					  Visibility="{Binding IsRoomListVisible, 
+										   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
 
             <StackPanel Orientation="Vertical">
 
                 <ListBox Margin="5,5,5,0"
-                         ItemsSource="{Binding Users}"
-                         SelectedItem="{Binding SelectedUser,
+						 HorizontalContentAlignment="Stretch"
+                         ItemsSource="{Binding Rooms}"
+                         SelectedItem="{Binding SelectedRoom,
                                                 Mode=TwoWay,
                                                 UpdateSourceTrigger=PropertyChanged}"
                          SelectionMode="Single">
@@ -146,9 +204,8 @@
                     </ListBox.ItemsPanel>
 
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type config:User}">
-                            <Border Width="220"
-                                    Height="40"
+                        <DataTemplate DataType="{x:Type infra:Room}">
+                            <Border Height="40"
                                     BorderBrush="Black"
                                     BorderThickness="1">
 
@@ -171,7 +228,7 @@
                 <Button Height="40"
                         Margin="5,10"
                         HorizontalAlignment="Center"
-                        Command="{Binding AddUser}"
+                        Command="{Binding AddTherapyPlace}"
                         Content="add User"
                         Template="{StaticResource AddButtonControlTemplate}" />
 
@@ -179,16 +236,20 @@
 
         </ScrollViewer>
 
-        <ScrollViewer Grid.Row="0"
+        <ScrollViewer Grid.Row="1"
                       Grid.Column="2"
+					  Margin="5,0"
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Visible">
+                      VerticalScrollBarVisibility="Visible"
+					  Visibility="{Binding IsTherapyPlaceListVisible, 
+										   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
 
             <StackPanel Orientation="Vertical">
 
                 <ListBox Margin="5,5,5,0"
-                         ItemsSource="{Binding Users}"
-                         SelectedItem="{Binding SelectedUser,
+						 HorizontalContentAlignment="Stretch"
+                         ItemsSource="{Binding TherapyPlaces}"
+                         SelectedItem="{Binding SelectedTherapyPlace,
                                                 Mode=TwoWay,
                                                 UpdateSourceTrigger=PropertyChanged}"
                          SelectionMode="Single">
@@ -199,9 +260,8 @@
                     </ListBox.ItemsPanel>
 
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type config:User}">
-                            <Border Width="220"
-                                    Height="40"
+                        <DataTemplate DataType="{x:Type infra:TherapyPlace}">
+                            <Border Height="40"
                                     BorderBrush="Black"
                                     BorderThickness="1">
 
@@ -224,7 +284,7 @@
                 <Button Height="40"
                         Margin="5,10"
                         HorizontalAlignment="Center"
-                        Command="{Binding AddUser}"
+                        Command="{Binding AddTherapyPlace}"
                         Content="add User"
                         Template="{StaticResource AddButtonControlTemplate}" />
 
@@ -232,5 +292,294 @@
 
         </ScrollViewer>
 
-    </Grid>
+
+		<Grid Grid.Row="2"
+			  Grid.Column="0"
+			  Margin="5,0"
+			  Visibility="{Binding IsMedPracticeSettingVisible,
+								   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="15"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="80"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<TextBlock Grid.Row="0"
+					   Grid.Column="0"
+					   Grid.ColumnSpan="2"
+					   Text="Praxis Bearbeiten:"
+					   Margin="5"
+					   FontSize="20"/>
+
+			<TextBlock Grid.Row="1"
+					   Grid.Column="0"
+					   Text="Name:"
+					   Margin="5"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"/>
+
+			<TextBox Grid.Row="1"
+					 Grid.Column="1"
+					 Margin="5"
+					 Text="{Binding PracticeName, 
+									Mode=TwoWay, 
+									UpdateSourceTrigger=PropertyChanged}"/>
+					
+			<Button Grid.Row="4"
+					Grid.Column="1"										
+					HorizontalAlignment="Stretch"
+					Content="Änderung übernehmen"
+					Margin="5"
+					Command="{Binding SaveMedicalPracticeChanges}"/>
+
+			<Button Grid.Row="5"
+					Grid.Column="1"										
+					HorizontalAlignment="Stretch"
+					Content="Praxis löschen"
+					Margin="5"
+					Command="{Binding DeleteMedicalPractice}"/>
+
+		</Grid>
+
+		<Grid Grid.Row="2"
+			  Grid.Column="1"
+			  Margin="5,0"
+			  Visibility="{Binding IsRoomSettingVisible,
+								   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="15"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="80"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<TextBlock Grid.Row="0"
+					   Grid.Column="0"
+					   Grid.ColumnSpan="2"
+					   Text="Raum Bearbeiten:"
+					   Margin="5"
+					   FontSize="20"/>
+
+			<TextBlock Grid.Row="1"
+					   Grid.Column="0"
+					   Text="Name:"
+					   Margin="5"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"/>
+
+			<TextBox Grid.Row="1"
+					 Grid.Column="1"
+					 Margin="5"
+					 Text="{Binding RoomName, 
+									Mode=TwoWay, 
+									UpdateSourceTrigger=PropertyChanged}"/>
+				
+			<TextBlock Grid.Row="2"
+					   Grid.Column="0"
+					   Margin="5"
+					   Text="Farbe:"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"/>
+			
+			<ComboBox Grid.Row="2"
+					  Grid.Column="1"
+					  Margin="5"
+					  ItemsSource="{Binding AvailableColors}"
+					  SelectedItem="{Binding RoomDisplayColor, 
+											 Mode=TwoWay, 
+											 UpdateSourceTrigger=PropertyChanged}">
+		
+				<ComboBox.ItemTemplate>
+					<DataTemplate DataType="{x:Type helper:ColorDisplayData}">
+						<StackPanel Orientation="Horizontal">
+							<Rectangle Fill="{Binding Color, 
+													  Converter={StaticResource ColorToSolidColorBrushConverter}}"
+									   Width="50"
+									   Height="20"/>
+							<TextBlock Text="{Binding Name}"
+									   VerticalAlignment="Center"
+									   Margin="10,0,0,0"/>
+						</StackPanel>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>		
+			</ComboBox>
+
+			<Button Grid.Row="4"
+					Grid.Column="1"										
+					HorizontalAlignment="Stretch"
+					Content="Änderung übernehmen"
+					Margin="5"
+					Command="{Binding SaveRoomChanges}"/>
+
+			<Button Grid.Row="5"
+					Grid.Column="1"										
+					HorizontalAlignment="Stretch"
+					Content="Raum löschen"
+					Margin="5"
+					Command="{Binding DeleteRoom}"/>
+			
+		</Grid>
+
+		<Grid Grid.Row="2"
+			  Grid.Column="2"
+			  Margin="5,0"
+			  Visibility="{Binding IsTherapyPlaceSettingVisible,
+								   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="15"/>
+				<RowDefinition Height="35"/>
+				<RowDefinition Height="35"/>
+			</Grid.RowDefinitions>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="80"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<TextBlock Grid.Row="0"
+					   Grid.Column="0"
+					   Grid.ColumnSpan="2"
+					   Text="Therapieplatz Bearbeiten:"
+					   Margin="5"
+					   FontSize="20"/>
+
+			<TextBlock Grid.Row="1"
+					   Grid.Column="0"
+					   Text="Name:"
+					   Margin="5"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"/>
+
+			<TextBox Grid.Row="1"
+					 Grid.Column="1"
+					 Margin="5"
+					 Text="{Binding TherapyPlaceName, 
+									Mode=TwoWay, 
+									UpdateSourceTrigger=PropertyChanged}"/>
+
+			<TextBlock Grid.Row="2"
+					   Grid.Column="0"
+					   Margin="5"
+					   Text="Typ:"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"/>
+
+			<ComboBox Grid.Row="2"
+					  Grid.Column="1"
+					  Margin="5"
+					  ItemsSource="{Binding AvailableTherapyPlaceTypes}"
+					  SelectedItem="{Binding TherapyPlaceType,
+										     Mode=TwoWay,
+											 UpdateSourceTrigger=PropertyChanged}">
+				
+				<ComboBox.ItemTemplate>
+					<DataTemplate DataType="{x:Type helper:TherapyPlaceTypeDisplayData}">
+						<StackPanel Orientation="Horizontal">
+							<Image Source="{Binding Icon}"
+								   Height="20"
+								   Width="40"/>
+							<TextBlock Text="{Binding Name}"
+									   VerticalAlignment="Center"
+									   Margin="10,0,0,0"/>
+						</StackPanel>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+				
+			</ComboBox>
+
+			<Button Grid.Row="4"
+					Grid.Column="1"										
+					HorizontalAlignment="Stretch"
+					Content="Änderung übernehmen"
+					Margin="5"
+					Command="{Binding SaveTherapyPlaceChanges}"/>
+
+			<Button Grid.Row="5"
+					Grid.Column="1"										
+					HorizontalAlignment="Stretch"
+					Content="Therapieplatz löschen"
+					Margin="5"
+					Command="{Binding DeleteTherapyPlace}"/>
+
+		</Grid>
+
+		<TextBlock Grid.Row="1"
+				   Grid.Column="1"
+				   Style="{StaticResource NotificationStyle}"
+				   Visibility="{Binding IsRoomListVisible, 
+										Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}">
+			
+				<Run Text="Klicken Sie auf eine"/> <LineBreak/>
+				<Run Text="Praxis um deren"/>      <LineBreak/>
+				<Run Text="Räume zu bearbeiten"/>
+		</TextBlock>
+
+		<TextBlock Grid.Row="1"
+				   Grid.Column="2"
+				   Style="{StaticResource NotificationStyle}"
+				   Visibility="{Binding IsTherapyPlaceListVisible, 
+										Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}">
+			
+				<Run Text="Klicken Sie auf einen"/> <LineBreak/>
+				<Run Text="Raum um deren"/>         <LineBreak/>
+				<Run Text="Plätze zu bearbeiten"/>
+		</TextBlock>
+
+		<TextBlock Grid.Row="2"
+				   Grid.Column="0"
+				   Style="{StaticResource NotificationStyle}"
+				   Visibility="{Binding IsMedPracticeSettingVisible, 
+										Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}">
+			
+				<Run Text="Klicken Sie auf eine"/> <LineBreak/>
+				<Run Text="Praxis um sie zu"/>     <LineBreak/>
+				<Run Text="bearbeiten"/>
+		</TextBlock>
+
+		<TextBlock Grid.Row="2"
+				   Grid.Column="1"
+				   Style="{StaticResource NotificationStyle}"
+				   Visibility="{Binding IsRoomSettingVisible, 
+										Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}">
+			
+				<Run Text="Klicken Sie auf einen"/> <LineBreak/>
+				<Run Text="Raum um ihn zu"/>        <LineBreak/>
+				<Run Text="bearbeiten"/>
+		</TextBlock>
+
+		<TextBlock Grid.Row="2"
+				   Grid.Column="2"
+				   Style="{StaticResource NotificationStyle}"
+				   Visibility="{Binding IsTherapyPlaceSettingVisible, 
+										Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}">
+			
+				<Run Text="Klicken Sie auf einen"/>  <LineBreak/>
+				<Run Text="Therapieplatz um ihn"/>   <LineBreak/>
+				<Run Text="zu bearbeiten"/>
+		</TextBlock>
+		
+	</Grid>
 </UserControl>
