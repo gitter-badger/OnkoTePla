@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Contracts.Config;
@@ -20,7 +22,6 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		}
 
 		
-
 		public IReadOnlyList<Address> GetAllAvailableAddresses()
 		{
 			return IpAddressCatcher.GetAllAvailableLocalIpAddresses();
@@ -45,11 +46,12 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 
 		#endregion
 
-		#region therapyPlaceType
+		#region therapyPlaceTypes
 
 		public IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes()
 		{
-			return readConfig.GetAllTherapyPlaceTypes();
+			return readConfig.GetAllTherapyPlaceTypes()
+							 .Append(TherapyPlaceType.NoType);
 		}
 
 		public void AddNewTherapyPlaceType(TherapyPlaceType newTherapyPlaceType)
@@ -60,6 +62,41 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		public void UpdateTherapyPlaceType(TherapyPlaceType updatedTherapyPlaceType)
 		{ 
 			writeConfig.UpdateTherapyPlaceType(updatedTherapyPlaceType);
+		}
+
+		public TherapyPlaceType GetTherapyPlaceType(Guid id)
+		{
+			return readConfig.GetTherapyPlaceTypeById(id);
+		}
+
+		#endregion
+
+		#region medicalPractices
+
+		public IEnumerable<MedicalPractice> GetAllMedicalPractices ()
+		{
+			return readConfig.GetAllMedicalPractices();
+		}
+
+		public void AddNewMedicalPractice (MedicalPractice newMedicalPractice)
+		{
+			writeConfig.AddMedicalPractice(newMedicalPractice);
+		}
+
+		public void UpdateMedicalPractice (MedicalPractice updatedMedicalPractice)
+		{
+			writeConfig.RemoveMedicalPractice(updatedMedicalPractice.Id);
+			writeConfig.AddMedicalPractice(updatedMedicalPractice);
+		}
+
+		public void RemoveMedicalPractice(MedicalPractice medicalPracticeToRemove)
+		{
+			writeConfig.RemoveMedicalPractice(medicalPracticeToRemove.Id);
+		}
+
+		public MedicalPractice GetMedicalPractice(Guid id)
+		{
+			return readConfig.GetMedicalPracticeById(id);
 		}
 
 		#endregion

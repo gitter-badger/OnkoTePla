@@ -1,10 +1,9 @@
 ﻿<UserControl x:Class="bytePassion.OnkoTePla.Server.WpfUi.Views.InfrastructurePage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:config="clr-namespace:bytePassion.OnkoTePla.Contracts.Config;assembly=bytePassion.OnkoTePla.Contracts"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:infra="clr-namespace:bytePassion.OnkoTePla.Contracts.Infrastructure;assembly=bytePassion.OnkoTePla.Contracts"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:infra="clr-namespace:bytePassion.OnkoTePla.Contracts.Infrastructure;assembly=bytePassion.OnkoTePla.Contracts"             
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage"
              xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
              xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper"
@@ -74,7 +73,6 @@
         </ControlTemplate>
 
     </UserControl.Resources>
-
 	
     <Grid Background="White">
 
@@ -224,11 +222,11 @@
                     </ListBox.ItemContainerStyle>
 
                 </ListBox>
-
+ 
                 <Button Height="40"
                         Margin="5,10"
                         HorizontalAlignment="Center"
-                        Command="{Binding AddTherapyPlace}"
+                        Command="{Binding AddRoom}"
                         Content="add User"
                         Template="{StaticResource AddButtonControlTemplate}" />
 

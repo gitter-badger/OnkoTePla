@@ -1,16 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Windows.Media;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 {
 	internal interface IInfrastructurePageViewModel : IViewModel
     {
-	    ObservableCollection<MedicalPractice> MedicalPractices { get; }
-		ObservableCollection<Room>            Rooms            { get; } 
-		ObservableCollection<TherapyPlace>    TherapyPlaces    { get; } 
+	    ObservableCollection<ListItemDisplayData> MedicalPractices { get; }
+		ObservableCollection<ListItemDisplayData> Rooms            { get; } 
+		ObservableCollection<ListItemDisplayData> TherapyPlaces    { get; } 
 
 		ICommand AddMedicalPractice         { get; }
 		ICommand SaveMedicalPracticeChanges { get; }
@@ -24,9 +22,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		ICommand SaveTherapyPlaceChanges { get; }
 		ICommand DeleteTherapyPlace      { get; }
 
-		MedicalPractice SelectedMedicalPractice { get; set; }
-		Room            SelectedRoom            { get; set; }
-		TherapyPlace    SelectedTherapyPlace    { get; set; }
+		ListItemDisplayData SelectedMedicalPractice { get; set; }
+		ListItemDisplayData SelectedRoom            { get; set; }
+		ListItemDisplayData SelectedTherapyPlace    { get; set; }
 
 		string PracticeName     { get; set; }
 		string RoomName         { get; set; }

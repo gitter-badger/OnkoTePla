@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper;
 
 #pragma warning disable 0067
@@ -16,27 +15,27 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
     {
 	    public InfrastructurePageViewModelSampleData()
 	    {		    
-			MedicalPractices = new ObservableCollection<MedicalPractice>
+			MedicalPractices = new ObservableCollection<ListItemDisplayData>
 			{
-				MedicalPracticeCreateAndEditLogic.Create("practice1"),
-				MedicalPracticeCreateAndEditLogic.Create("practice2"),
-				MedicalPracticeCreateAndEditLogic.Create("practice3")
+				new ListItemDisplayData("practice1", Guid.NewGuid()),
+				new ListItemDisplayData("practice1", Guid.NewGuid()),
+				new ListItemDisplayData("practice1", Guid.NewGuid())
 			};
 
-			Rooms = new ObservableCollection<Room>
+			Rooms = new ObservableCollection<ListItemDisplayData>
 			{
-				RoomCreateAndEditLogic.Create("room1"),
-				RoomCreateAndEditLogic.Create("room2")
+				new ListItemDisplayData("room1", Guid.NewGuid()),
+				new ListItemDisplayData("room2", Guid.NewGuid())
 			};
 
-		    TherapyPlaces = new ObservableCollection<TherapyPlace>
+		    TherapyPlaces = new ObservableCollection<ListItemDisplayData>
 		    {
-				TherapyPlaceCreateAndEditLogic.Create("place1"),
-				TherapyPlaceCreateAndEditLogic.Create("place2"),
-				TherapyPlaceCreateAndEditLogic.Create("place3"),
-				TherapyPlaceCreateAndEditLogic.Create("place4"),
-				TherapyPlaceCreateAndEditLogic.Create("place5"),
-				TherapyPlaceCreateAndEditLogic.Create("place6")							
+				new ListItemDisplayData("place1", Guid.NewGuid()),
+				new ListItemDisplayData("place2", Guid.NewGuid()),
+				new ListItemDisplayData("place3", Guid.NewGuid()),
+				new ListItemDisplayData("place4", Guid.NewGuid()),
+				new ListItemDisplayData("place5", Guid.NewGuid()),
+				new ListItemDisplayData("place6", Guid.NewGuid())
 			};
 
 			AvailableColors = new ObservableCollection<ColorDisplayData>
@@ -50,9 +49,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 			AvailableTherapyPlaceTypes = new ObservableCollection<TherapyPlaceTypeDisplayData>
 			{
-				new TherapyPlaceTypeDisplayData("none" , ImageLoader.LoadImage(new Uri(iconBasePath + "none.png"))),
-				new TherapyPlaceTypeDisplayData("type1", ImageLoader.LoadImage(new Uri(iconBasePath + "bed02.png"))),
-				new TherapyPlaceTypeDisplayData("type2", ImageLoader.LoadImage(new Uri(iconBasePath + "bed04.png")))
+				new TherapyPlaceTypeDisplayData("none" , ImageLoader.LoadImage(new Uri(iconBasePath + "none.png" )), Guid.NewGuid()),
+				new TherapyPlaceTypeDisplayData("type1", ImageLoader.LoadImage(new Uri(iconBasePath + "bed02.png")), Guid.NewGuid()),
+				new TherapyPlaceTypeDisplayData("type2", ImageLoader.LoadImage(new Uri(iconBasePath + "bed04.png")), Guid.NewGuid())
 			};
 
 		    SelectedMedicalPractice = MedicalPractices.First();
@@ -74,9 +73,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		}
 
-	    public ObservableCollection<MedicalPractice> MedicalPractices { get; }
-	    public ObservableCollection<Room>            Rooms            { get; }
-	    public ObservableCollection<TherapyPlace>    TherapyPlaces    { get; }
+	    public ObservableCollection<ListItemDisplayData> MedicalPractices { get; }
+	    public ObservableCollection<ListItemDisplayData> Rooms            { get; }
+	    public ObservableCollection<ListItemDisplayData> TherapyPlaces    { get; }
 
 	    public ICommand AddMedicalPractice         => null;
 		public ICommand SaveMedicalPracticeChanges => null;
@@ -88,9 +87,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		public ICommand SaveTherapyPlaceChanges    => null;
 		public ICommand DeleteTherapyPlace         => null;
 
-		public MedicalPractice SelectedMedicalPractice { get; set; }
-	    public Room            SelectedRoom            { get; set; }
-	    public TherapyPlace    SelectedTherapyPlace    { get; set; }
+		public ListItemDisplayData SelectedMedicalPractice { get; set; }
+	    public ListItemDisplayData SelectedRoom            { get; set; }
+	    public ListItemDisplayData SelectedTherapyPlace    { get; set; }
 
 		public string PracticeName     { get; set; }
 		public string RoomName         { get; set; }

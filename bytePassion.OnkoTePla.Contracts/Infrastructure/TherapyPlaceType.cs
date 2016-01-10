@@ -8,7 +8,8 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
 	public class TherapyPlaceType
 	{
-        
+        public static readonly TherapyPlaceType NoType = new TherapyPlaceType("noType", TherapyPlaceIconType.None, Guid.Empty);
+
 		public TherapyPlaceType(string name, TherapyPlaceIconType iconType, Guid id)
 		{
 			Name = name;
