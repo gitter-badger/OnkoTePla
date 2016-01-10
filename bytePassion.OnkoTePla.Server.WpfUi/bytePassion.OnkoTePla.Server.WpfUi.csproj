@@ -224,7 +224,7 @@
       <Name>bytePassion.OnkoTePla.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Resources\bytePassion.OnkoTePla.Resources.csproj">
-      <Project>{1ff3c490-8680-46a5-ab65-6329863326dc}</Project>
+      <Project>{19b0e56b-428b-495a-ac4c-ffac1d990fc0}</Project>
       <Name>bytePassion.OnkoTePla.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Server.DataAndService\bytePassion.OnkoTePla.Server.DataAndService.csproj">
