@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using bytePassion.Lib.FrameworkExtensions;
@@ -10,8 +11,10 @@ using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 {
@@ -139,14 +142,23 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			SelectedMedicalPractice = null;
 		}
 
-		private void DoDeleteMedicalPractice()
+		private async void DoDeleteMedicalPractice()
 		{
-			var practiceToDelete = SelectedMedicalPracticeObject;
+			var dialog = new UserDialogBox("",
+										   $"Praxis [{SelectedMedicalPractice.Name}] wirklich löschen?",
+                                           MessageBoxButton.OKCancel);
 
-			dataCenter.RemoveMedicalPractice(practiceToDelete);
-			MedicalPractices.Remove(SelectedMedicalPractice);
+			var result = await dialog.ShowMahAppsDialog();
 
-			SelectedMedicalPractice = null;
+			if (result == MessageDialogResult.Affirmative)
+			{
+				var practiceToDelete = SelectedMedicalPracticeObject;
+
+				dataCenter.RemoveMedicalPractice(practiceToDelete);
+				MedicalPractices.Remove(SelectedMedicalPractice);
+
+				SelectedMedicalPractice = null;
+			}			
 		}
 
 		private void DoAddRoom ()
@@ -173,15 +185,24 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			SelectedRoom = null;
 		}
 
-		private void DoDeleteRoom ()
+		private async void DoDeleteRoom ()
 		{
-			var roomToDelete = SelectedRoomObject;
+			var dialog = new UserDialogBox("",
+										   $"Raum [{SelectedRoom.Name}] wirklich löschen?",
+										   MessageBoxButton.OKCancel);
 
-			var updatedPractice = SelectedMedicalPracticeObject.RemoveRoom(roomToDelete.Id);
-			UpdateMedicalPractice(updatedPractice);
-			Rooms.Remove(SelectedRoom);
+			var result = await dialog.ShowMahAppsDialog();
 
-			SelectedRoom = null;
+			if (result == MessageDialogResult.Affirmative)
+			{
+				var roomToDelete = SelectedRoomObject;
+
+				var updatedPractice = SelectedMedicalPracticeObject.RemoveRoom(roomToDelete.Id);
+				UpdateMedicalPractice(updatedPractice);
+				Rooms.Remove(SelectedRoom);
+
+				SelectedRoom = null;
+			}
 		}
 
 		private void DoAddTherapyPlace ()
@@ -208,15 +229,24 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			SelectedTherapyPlace = null;
 		}
 
-		private void DoDeleteTherapyPlace()
+		private async void DoDeleteTherapyPlace()
 		{
-			var therapyPlaceToDelete = SelectedTherapyPlace;
+			var dialog = new UserDialogBox("",
+										   $"Therapyplatz [{SelectedTherapyPlace.Name}] wirklich löschen?",
+										   MessageBoxButton.OKCancel);
 
-			var updatedRoom = SelectedRoomObject.RemoveTherapyPlace(therapyPlaceToDelete.Id);
-			UpdateRoom(updatedRoom);
-			TherapyPlaces.Remove(SelectedTherapyPlace);
+			var result = await dialog.ShowMahAppsDialog();
 
-			SelectedTherapyPlace = null;
+			if (result == MessageDialogResult.Affirmative)
+			{
+				var therapyPlaceToDelete = SelectedTherapyPlace;
+
+				var updatedRoom = SelectedRoomObject.RemoveTherapyPlace(therapyPlaceToDelete.Id);
+				UpdateRoom(updatedRoom);
+				TherapyPlaces.Remove(SelectedTherapyPlace);
+
+				SelectedTherapyPlace = null;
+			}
 		}
 		
 		#endregion
