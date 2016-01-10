@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Media;
+
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper
 {
-	internal class TherapyPlaceTypeDisplayData
+	internal class TherapyPlaceTypeDisplayData : INotifyPropertyChanged
 	{
 		public TherapyPlaceTypeDisplayData(string name, ImageSource icon, Guid id)
 		{
@@ -15,5 +18,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helpe
 		public string      Name { get; }
 		public ImageSource Icon { get; }
 		public Guid		   Id   { get; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

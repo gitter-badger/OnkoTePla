@@ -1,6 +1,10 @@
-﻿namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage.Helper
+﻿using System.ComponentModel;
+
+#pragma warning disable 0067
+
+namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage.Helper
 {
-	internal class ConnectedClientDisplayData
+	internal class ConnectedClientDisplayData : INotifyPropertyChanged
 	{
 		public ConnectedClientDisplayData(string sessionId, string connectionTime, string clientAddress)
 		{
@@ -12,5 +16,7 @@
 		public string SessionId      { get; }
 		public string ConnectionTime { get; }
 		public string ClientAddress  { get; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

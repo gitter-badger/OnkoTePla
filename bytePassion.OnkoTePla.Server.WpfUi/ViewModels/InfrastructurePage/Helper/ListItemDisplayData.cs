@@ -19,7 +19,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helpe
 			get { return name; }
 			set { PropertyChanged.ChangeAndNotify(this, ref name, value); }
 		}
-		public Guid	Id   { get; }		
+		public Guid	Id { get; }		
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}

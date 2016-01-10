@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Media;
 
+#pragma warning disable 0067
+
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper
 {
-	internal class ColorDisplayData
+	internal class ColorDisplayData : INotifyPropertyChanged
 	{
 		public ColorDisplayData(Color color)
 		{
@@ -33,5 +36,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helpe
 			return colorProperties.ToDictionary(p => p.Name,
 												p => (Color)p.GetValue(null, null));
 		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }
