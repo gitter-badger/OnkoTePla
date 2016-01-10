@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage.Helper;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 {
@@ -29,6 +31,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 		    Users = dataCenter.GetAllUsers()
 							  .ToObservableCollection();
 
+			AccessablePractices = new ObservableCollection<MedPracticeListItemData>();
+
 			ShowModificationView = false;
 	    }
 
@@ -42,7 +46,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 	    {
 			var newUser = SelectedUser.SetNewUserValues(UserName,
 														Password,
-														SelectedUser.ListOfAccessableMedicalPractices,
+														AccessablePractices.Where(listItem => listItem.IsSelected)
+																		   .Select(listItem => listItem.Id)
+																		   .ToList(),
 														IsHidden);
 			dataCenter.UpdateUser(newUser);
 
@@ -84,6 +90,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 					UserName = SelectedUser.Name;
 					Password = SelectedUser.Password;
 					IsHidden = SelectedUser.IsHidden;
+
+					AccessablePractices.Clear();
+
+					foreach (var medicalPractice in dataCenter.GetAllMedicalPractices())
+					{
+						AccessablePractices.Add(new MedPracticeListItemData(SelectedUser.ListOfAccessableMedicalPractices.Contains(medicalPractice.Id), 
+																			medicalPractice.Name,
+																			medicalPractice.Id));
+					}
 				}
 			}
 		}
@@ -111,6 +126,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 			get { return isHidden; }
 			set { PropertyChanged.ChangeAndNotify(this, ref isHidden, value); }
 		}
+
+		public ObservableCollection<MedPracticeListItemData> AccessablePractices { get; }
 
 		protected override void CleanUp() {  }
         public override event PropertyChangedEventHandler PropertyChanged;	    

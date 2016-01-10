@@ -6,6 +6,7 @@
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage"
              xmlns:config="clr-namespace:bytePassion.OnkoTePla.Contracts.Config;assembly=bytePassion.OnkoTePla.Contracts"
              xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="900">
     
@@ -214,7 +215,20 @@
 					   VerticalAlignment="Center"/>
 
 			<ItemsControl Grid.Row="4"
-						  Grid.Column="1"></ItemsControl>
+						  Grid.Column="1"
+						  Margin="5"
+						  ItemsSource="{Binding AccessablePractices}">
+							
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="{x:Type helper:MedPracticeListItemData}">
+						<CheckBox Content="{Binding Name}"
+								  IsChecked="{Binding IsSelected, 
+													  Mode=TwoWay, 
+													  UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+				
+			</ItemsControl>
 			
 			<Button Grid.Row="5"
 					Grid.Column="0"

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage.Helper;
 
 #pragma warning disable 0067
 
@@ -28,6 +29,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 		    Password = SelectedUser.Password;
 		    IsHidden = SelectedUser.IsHidden;
 
+			AccessablePractices = new ObservableCollection<MedPracticeListItemData>
+			{
+				new MedPracticeListItemData(true,  "pr1", Guid.NewGuid()),
+				new MedPracticeListItemData(false, "pr2", Guid.NewGuid()),
+				new MedPracticeListItemData(true,  "pr3", Guid.NewGuid())
+			};
 	    }
 
 	    public ICommand AddUser		   => null;
@@ -40,7 +47,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 
 		public string UserName { get; set; }
 		public string Password { get; set; }
-		public bool IsHidden  { get; set; }
+		public bool  IsHidden  { get; set; }
+
+		public ObservableCollection<MedPracticeListItemData> AccessablePractices { get; }
 
 		public void Dispose() { }
         public event PropertyChangedEventHandler PropertyChanged;	    

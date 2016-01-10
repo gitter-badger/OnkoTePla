@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage.Helper;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 {
@@ -19,5 +20,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 		string UserName { get; set; }
 		string Password { get; set; }
 		bool   IsHidden { get; set; }
+		
+		ObservableCollection<MedPracticeListItemData> AccessablePractices { get; } 
     }
-}
+} 

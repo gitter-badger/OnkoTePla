@@ -104,6 +104,7 @@
     <Compile Include="ViewModels\TherapyPlaceTypesPage\ITherapyPlaceTypesPageViewModel.cs" />
     <Compile Include="ViewModels\TherapyPlaceTypesPage\TherapyPlaceTypesPageViewModel.cs" />
     <Compile Include="ViewModels\TherapyPlaceTypesPage\TherapyPlaceTypesPageViewModelSampleData.cs" />
+    <Compile Include="ViewModels\UserPage\Helper\MedPracticeListItemData.cs" />
     <Compile Include="ViewModels\UserPage\IUserPageViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModelSampleData.cs" />
