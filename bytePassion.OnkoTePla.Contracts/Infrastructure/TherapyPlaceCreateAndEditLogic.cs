@@ -7,7 +7,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		public static TherapyPlace Create(string name)
 		{
 			return new TherapyPlace(Guid.NewGuid(),
-									Guid.Empty,
+									TherapyPlaceType.NoType.Id,
 									name);
 		}
 

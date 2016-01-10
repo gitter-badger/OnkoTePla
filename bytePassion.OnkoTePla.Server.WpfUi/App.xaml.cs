@@ -22,11 +22,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
         {
             base.OnStartup(e);
 
-			///////////////////////////////////////////////////////////////////////////////////////////////
-			////////                                                                             //////////
-			////////                          Composition Root and Setup                         //////////
-			////////                                                                             //////////
-			///////////////////////////////////////////////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////////////////////////////////////////////////
+			////////                                                                                 //////////
+			////////                            Composition Root and Setup                           //////////
+			////////                                                                                 //////////
+			///////////////////////////////////////////////////////////////////////////////////////////////////
 
 			// Config-Repository
 
@@ -50,7 +50,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             var connectionsPageViewModel       = new ConnectionsPageViewModel(dataCenter, connectionService);
             var userPageViewModel              = new UserPageViewModel(dataCenter);
             var licencePageViewModel           = new LicencePageViewModel();
-            var infrastructurePageViewModel    = new InfrastructurePageViewModel();
+            var infrastructurePageViewModel    = new InfrastructurePageViewModel(dataCenter);
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter);
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel();

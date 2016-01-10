@@ -11,8 +11,8 @@ using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
-using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Resources.UserNotificationService;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 {
@@ -89,8 +89,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			if (applicationState == ApplicationState.DisconnectedFromServer && currentlyTryingToConnect)
 			{
-				var dialog = new UserDialogBox("", $"Es kann keine Verbindung mit {ServerAddress} hergestellt werden",
-											   MessageBoxButton.OK, MessageBoxImage.Error);
+				var dialog = new UserDialogBox("", $"Es kann keine Verbindung mit {ServerAddress} hergestellt werden", MessageBoxButton.OK);
 				await dialog.ShowMahAppsDialog();				
 
 				currentlyTryingToConnect = false;
@@ -137,7 +136,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			else
 			{
 				var dialog = new UserDialogBox("", $"{ServerAddress} ist keine gültige Ip-Adresse",
-											   MessageBoxButton.OK, MessageBoxImage.Error);
+											   MessageBoxButton.OK);
 				await dialog.ShowMahAppsDialog();
 			}
 
@@ -154,7 +153,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			else
 			{
 				var dialog = new UserDialogBox("", $"{ServerAddress} ist keine gültige Ip-Adresse",
-											   MessageBoxButton.OK, MessageBoxImage.Error);
+											   MessageBoxButton.OK);
 				await dialog.ShowMahAppsDialog();
 			}
 

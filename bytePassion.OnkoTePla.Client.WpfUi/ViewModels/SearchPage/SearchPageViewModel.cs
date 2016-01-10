@@ -14,7 +14,6 @@ using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
-using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -22,6 +21,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Readmodels;
+using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using MahApps.Metro.Controls.Dialogs;
 using DeleteAppointment = bytePassion.OnkoTePla.Core.Domain.Commands.DeleteAppointment;
 
@@ -95,7 +95,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		private async void DoDeleteAppointment(Appointment appointment)
 		{
 			var dialog = new UserDialogBox("", "Wollen Sie den Termin wirklich löschen?",
-										   MessageBoxButton.OKCancel, MessageBoxImage.Question);
+										   MessageBoxButton.OKCancel);
 			var result = await dialog.ShowMahAppsDialog();
 
 			if (result == MessageDialogResult.Affirmative)

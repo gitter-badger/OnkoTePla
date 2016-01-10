@@ -5,9 +5,9 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
-using bytePassion.OnkoTePla.Client.WpfUi.UserNotificationService;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using MahApps.Metro.Controls.Dialogs;
 
 #pragma warning disable 0067
@@ -146,8 +146,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 			    {         
                     var dialog = new UserDialogBox("", 
                                                    session.GetRedoActionMessage(),
-                                                   MessageBoxButton.OKCancel, 
-                                                   MessageBoxImage.Question);
+                                                   MessageBoxButton.OKCancel);
 
                     var result = await dialog.ShowMahAppsDialog();
 
@@ -178,8 +177,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 			    {
                     var dialog = new UserDialogBox("", 
                                                    session.GetUndoActionMessage(),
-                                                   MessageBoxButton.OKCancel, 
-                                                   MessageBoxImage.Question);
+                                                   MessageBoxButton.OKCancel);
 
                     var result = await dialog.ShowMahAppsDialog();
 
