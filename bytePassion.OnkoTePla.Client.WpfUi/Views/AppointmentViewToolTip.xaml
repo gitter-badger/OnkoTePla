@@ -74,7 +74,8 @@
                        Grid.Column="3"
                        FontFamily="Segoe UI Semibold"
                        Foreground="#404148"
-                       Text="{Binding Description}"
+                       Text="{Binding Description,
+                                      UpdateSourceTrigger=PropertyChanged}"
                        TextWrapping="Wrap" />
         </Grid>
     </Border>

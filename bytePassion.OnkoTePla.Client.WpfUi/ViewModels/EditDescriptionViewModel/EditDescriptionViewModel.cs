@@ -38,8 +38,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.EditDescriptionViewModel
         private void SaveAndClose()
         {
             modificationsVar.Value.SetNewDescription(Description);
-            viewModelCommunication.SendTo(Constants.AppointmentGridViewModelCollection, new AggregateIdentifier(modificationsVar.Value.CurrentLocation.PlaceAndDate.Date,
-                                            practiseId), new SendCurrentChangesToCommandBus());
             CloseWindow();
 
         }

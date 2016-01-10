@@ -43,8 +43,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		
 		private bool showDisabledOverlay;
 		private AppointmentModifications currentAppointmentModifications;
+        private string description;
 
-		public AppointmentViewModel(Appointment appointment,
+        public AppointmentViewModel(Appointment appointment,
 									IViewModelCommunication viewModelCommunication,																
 									TherapyPlaceRowIdentifier initialLocalisation, 
                                     IGlobalState<AppointmentModifications> appointmentModificationsVariable,
@@ -113,6 +114,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 
 			BeginTime = appointment.StartTime;
 			EndTime = appointment.EndTime;
+            Description = appointment.Description;
 
 			ShowDisabledOverlay = false;
 			
@@ -201,11 +203,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		public string PatientDisplayName => $"{appointment.Patient.Name} (*{appointment.Patient.Birthday.Year})";
         public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
 		public string AppointmentDate    => appointment.Day.ToString();
-		public string Description        => appointment.Description;
+		
 		public string Room               => appointment.TherapyPlace.Name;
 
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                PropertyChanged.ChangeAndNotify(this, ref description, value);
+                    
+            }
+        }
 
-		public AppointmentModifications CurrentAppointmentModifications												// TODO: evtl noch benachrichtigung von der Variable
+        public AppointmentModifications CurrentAppointmentModifications												// TODO: evtl noch benachrichtigung von der Variable
 		{
 			get { return currentAppointmentModifications; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref currentAppointmentModifications, value); }
