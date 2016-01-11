@@ -17,11 +17,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 	    {
 			const string iconBasePath = "pack://application:,,,/bytePassion.OnkoTePla.Resources;component/Icons/TherapyPlaceType/";
 
-			MedicalPractices = new ObservableCollection<ListItemDisplayData>
+			MedicalPractices = new ObservableCollection<MedPracticeDisplayData>
 			{
-				new ListItemDisplayData("practice1", Guid.NewGuid()),
-				new ListItemDisplayData("practice1", Guid.NewGuid()),
-				new ListItemDisplayData("practice1", Guid.NewGuid())
+				new MedPracticeDisplayData("practice1", Guid.NewGuid()),
+				new MedPracticeDisplayData("practice1", Guid.NewGuid()),
+				new MedPracticeDisplayData("practice1", Guid.NewGuid())
 			};
 
 			Rooms = new ObservableCollection<RoomDisplayData>
@@ -75,7 +75,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		}
 
-	    public ObservableCollection<ListItemDisplayData>     MedicalPractices { get; }
+	    public ObservableCollection<MedPracticeDisplayData>  MedicalPractices { get; }
 	    public ObservableCollection<RoomDisplayData>         Rooms            { get; }
 	    public ObservableCollection<TherapyPlaceDisplayData> TherapyPlaces    { get; }
 
@@ -89,7 +89,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		public ICommand SaveTherapyPlaceChanges    => null;
 		public ICommand DeleteTherapyPlace         => null;
 		
-		public ListItemDisplayData     SelectedMedicalPractice { get; set; }
+		public MedPracticeDisplayData  SelectedMedicalPractice { get; set; }
 	    public RoomDisplayData         SelectedRoom            { get; set; }
 	    public TherapyPlaceDisplayData SelectedTherapyPlace    { get; set; }
 

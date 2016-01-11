@@ -4,11 +4,11 @@ using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper
 {
-	internal class ListItemDisplayData : INotifyPropertyChanged
+	internal class MedPracticeDisplayData : INotifyPropertyChanged
 	{
 		private string name;
 
-		public ListItemDisplayData (string name, Guid id)
+		public MedPracticeDisplayData (string name, Guid id)
 		{
 			this.name = name;			
 			Id = id;

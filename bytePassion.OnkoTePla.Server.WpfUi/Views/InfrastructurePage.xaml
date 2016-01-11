@@ -146,7 +146,7 @@
                     </ListBox.ItemsPanel>
 
                     <ListBox.ItemTemplate>
-						<DataTemplate DataType="{x:Type helper:ListItemDisplayData}">
+						<DataTemplate DataType="{x:Type helper:MedPracticeDisplayData}">
                             <Border Height="40"
                                     BorderBrush="Black"
                                     BorderThickness="1">

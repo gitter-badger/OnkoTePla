@@ -81,7 +81,7 @@
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\ConnectionsPage\IConnectionsPageViewModel.cs" />
-    <Compile Include="ViewModels\InfrastructurePage\Helper\ListItemDisplayData.cs" />
+    <Compile Include="ViewModels\InfrastructurePage\Helper\MedPracticeDisplayData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\RoomDisplayData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\TherapyPlaceDisplayData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\TherapyPlaceTypeDisplayData.cs" />

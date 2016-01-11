@@ -30,7 +30,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		private bool isMedPracticeSettingVisible;
 		private bool isRoomSettingVisible;
 		private bool isTherapyPlaceSettingVisible;
-		private ListItemDisplayData selectedMedicalPractice;
+		private MedPracticeDisplayData selectedMedicalPractice;
 		private RoomDisplayData selectedRoom;
 		private TherapyPlaceDisplayData selectedTherapyPlace;
 		private string practiceName;
@@ -56,7 +56,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			DeleteTherapyPlace         = new Command(DoDeleteTherapyPlace);
 
 			MedicalPractices = dataCenter.GetAllMedicalPractices()
-										 .Select(practice => new ListItemDisplayData(practice.Name, practice.Id))
+										 .Select(practice => new MedPracticeDisplayData(practice.Name, practice.Id))
 										 .ToObservableCollection();
 			
 			Rooms         = new ObservableCollection<RoomDisplayData>();
@@ -127,7 +127,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		private void DoAddMedicalPractice ()
 		{
 			var newPractice = MedicalPracticeCreateAndEditLogic.Create("noName");
-			var newPracticeListItem = new ListItemDisplayData(newPractice.Name, newPractice.Id);
+			var newPracticeListItem = new MedPracticeDisplayData(newPractice.Name, newPractice.Id);
 
 			MedicalPractices.Add(newPracticeListItem);
 			dataCenter.AddNewMedicalPractice(newPractice);
@@ -260,7 +260,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		
 		#endregion
 
-		public ObservableCollection<ListItemDisplayData>     MedicalPractices { get; }
+		public ObservableCollection<MedPracticeDisplayData>  MedicalPractices { get; }
 	    public ObservableCollection<RoomDisplayData>         Rooms            { get; }
 	    public ObservableCollection<TherapyPlaceDisplayData> TherapyPlaces    { get; }
 
@@ -282,7 +282,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		#region selected items
 
-		public ListItemDisplayData SelectedMedicalPractice
+		public MedPracticeDisplayData SelectedMedicalPractice
 		{
 			get { return selectedMedicalPractice; }
 			set
