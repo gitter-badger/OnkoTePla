@@ -146,7 +146,7 @@
                     </ListBox.ItemsPanel>
 
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type infra:MedicalPractice}">
+						<DataTemplate DataType="{x:Type helper:ListItemDisplayData}">
                             <Border Height="40"
                                     BorderBrush="Black"
                                     BorderThickness="1">
@@ -202,10 +202,12 @@
                     </ListBox.ItemsPanel>
 
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type infra:Room}">
+                        <DataTemplate DataType="{x:Type helper:RoomDisplayData}">
                             <Border Height="40"
                                     BorderBrush="Black"
-                                    BorderThickness="1">
+                                    BorderThickness="1"
+									Background="{Binding DisplayedColor, 
+														 Converter={StaticResource ColorToSolidColorBrushConverter}}">
 
                                 <TextBlock HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
@@ -258,7 +260,7 @@
                     </ListBox.ItemsPanel>
 
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type infra:TherapyPlace}">
+						<DataTemplate DataType="{x:Type helper:ListItemDisplayData}">
                             <Border Height="40"
                                     BorderBrush="Black"
                                     BorderThickness="1">

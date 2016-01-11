@@ -22,10 +22,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 				new ListItemDisplayData("practice1", Guid.NewGuid())
 			};
 
-			Rooms = new ObservableCollection<ListItemDisplayData>
+			Rooms = new ObservableCollection<RoomDisplayData>
 			{
-				new ListItemDisplayData("room1", Guid.NewGuid()),
-				new ListItemDisplayData("room2", Guid.NewGuid())
+				new RoomDisplayData("room1", Colors.Aqua,      Guid.NewGuid()),
+				new RoomDisplayData("room2", Colors.BurlyWood, Guid.NewGuid())
 			};
 
 		    TherapyPlaces = new ObservableCollection<ListItemDisplayData>
@@ -74,7 +74,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		}
 
 	    public ObservableCollection<ListItemDisplayData> MedicalPractices { get; }
-	    public ObservableCollection<ListItemDisplayData> Rooms            { get; }
+	    public ObservableCollection<RoomDisplayData>     Rooms            { get; }
 	    public ObservableCollection<ListItemDisplayData> TherapyPlaces    { get; }
 
 	    public ICommand AddMedicalPractice         => null;
@@ -86,9 +86,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		public ICommand AddTherapyPlace            => null;
 		public ICommand SaveTherapyPlaceChanges    => null;
 		public ICommand DeleteTherapyPlace         => null;
-
+		
 		public ListItemDisplayData SelectedMedicalPractice { get; set; }
-	    public ListItemDisplayData SelectedRoom            { get; set; }
+	    public RoomDisplayData     SelectedRoom            { get; set; }
 	    public ListItemDisplayData SelectedTherapyPlace    { get; set; }
 
 		public string PracticeName     { get; set; }

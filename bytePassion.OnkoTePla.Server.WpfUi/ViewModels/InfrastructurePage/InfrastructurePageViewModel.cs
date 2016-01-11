@@ -31,14 +31,14 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		private bool isRoomSettingVisible;
 		private bool isTherapyPlaceSettingVisible;
 		private ListItemDisplayData selectedMedicalPractice;
-		private ListItemDisplayData selectedRoom;
+		private RoomDisplayData selectedRoom;
 		private ListItemDisplayData selectedTherapyPlace;
 		private string practiceName;
 		private string roomName;
 		private string therapyPlaceName;
 		private ColorDisplayData roomDisplayColor;
 		private TherapyPlaceTypeDisplayData therapyPlaceType;
-
+		
 		#endregion
 
 		public InfrastructurePageViewModel(IDataCenter dataCenter)
@@ -58,8 +58,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			MedicalPractices = dataCenter.GetAllMedicalPractices()
 										 .Select(practice => new ListItemDisplayData(practice.Name, practice.Id))
 										 .ToObservableCollection();
-
-			Rooms         = new ObservableCollection<ListItemDisplayData>();
+			
+			Rooms         = new ObservableCollection<RoomDisplayData>();
 			TherapyPlaces = new ObservableCollection<ListItemDisplayData>();
 
 			SelectedMedicalPractice = null;
@@ -96,8 +96,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		private void UpdateRoom(Room updatedRoom)
 		{
-			var roomListItem = Rooms.First(listItem => listItem.Id == updatedRoom.Id);
+			var roomListItem = Rooms.First(listItem => listItem.RoomId == updatedRoom.Id);
 			roomListItem.Name = updatedRoom.Name;
+			roomListItem.DisplayedColor = updatedRoom.DisplayedColor;
 
 			SelectedRoomObject = updatedRoom;
 
@@ -164,7 +165,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		private void DoAddRoom ()
 		{
 			var newRoom = RoomCreateAndEditLogic.Create("noName");
-			var newRoomListItem = new ListItemDisplayData(newRoom.Name, newRoom.Id);
+			var newRoomListItem = new RoomDisplayData(newRoom.Name, newRoom.DisplayedColor, newRoom.Id);
 
 			Rooms.Add(newRoomListItem);
 			var updatedPractice = SelectedMedicalPracticeObject.AddRoom(newRoom);
@@ -252,7 +253,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		#endregion
 
 		public ObservableCollection<ListItemDisplayData> MedicalPractices { get; }
-	    public ObservableCollection<ListItemDisplayData> Rooms            { get; }
+	    public ObservableCollection<RoomDisplayData>     Rooms            { get; }
 	    public ObservableCollection<ListItemDisplayData> TherapyPlaces    { get; }
 
 		#region commands
@@ -288,7 +289,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 					Rooms.Clear();
 
 					SelectedMedicalPracticeObject.Rooms
-												 .Select(room => new ListItemDisplayData(room.Name, room.Id))
+												 .Select(room => new RoomDisplayData(room.Name, room.DisplayedColor, room.Id))
 												 .Do(Rooms.Add);
 					
 					PracticeName = value.Name;
@@ -306,14 +307,14 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			}
 		}
 
-		public ListItemDisplayData SelectedRoom
+		public RoomDisplayData SelectedRoom
 		{
 			get { return selectedRoom; }
 			set
 			{
 				if (value != null && value != selectedRoom)
 				{
-					SelectedRoomObject = SelectedMedicalPracticeObject.GetRoomById(value.Id);
+					SelectedRoomObject = SelectedMedicalPracticeObject.GetRoomById(value.RoomId);
 
 					IsTherapyPlaceListVisible = true;
 					IsRoomSettingVisible      = true;
@@ -454,12 +455,16 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 				case TherapyPlaceIconType.ChairType4: return ImageLoader.LoadImage(new Uri(basePath + "chair04.png"));
 				case TherapyPlaceIconType.ChairType5: return ImageLoader.LoadImage(new Uri(basePath + "chair05.png"));
 				case TherapyPlaceIconType.None:       return ImageLoader.LoadImage(new Uri(basePath + "none.png"));
-			}
 
-			throw new ArgumentException();
+				default:
+					throw new ArgumentException();
+			}			
 		}
 
-		protected override void CleanUp () { }
+		protected override void CleanUp()
+		{
+		}
+
 		public override event PropertyChangedEventHandler PropertyChanged;
-	}
+    }
 }
