@@ -9,6 +9,7 @@ using System.Windows.Media;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
@@ -160,6 +161,18 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 				dataCenter.RemoveMedicalPractice(practiceToDelete);
 				MedicalPractices.Remove(SelectedMedicalPractice);
+
+				foreach (var user in dataCenter.GetAllUsers())
+				{
+					if (user.ListOfAccessableMedicalPractices.Contains(practiceToDelete.Id))
+					{
+						var updatedUser = user.UpdateListOfAccessableMedicalPractices(
+							user.ListOfAccessableMedicalPractices.Where(medPracId => medPracId != practiceToDelete.Id)
+																 .ToList()
+						);
+						dataCenter.UpdateUser(updatedUser);
+					}
+				}
 
 				SelectedMedicalPractice = null;
 			}			
