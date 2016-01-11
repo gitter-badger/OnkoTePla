@@ -32,7 +32,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		private bool isTherapyPlaceSettingVisible;
 		private ListItemDisplayData selectedMedicalPractice;
 		private RoomDisplayData selectedRoom;
-		private ListItemDisplayData selectedTherapyPlace;
+		private TherapyPlaceDisplayData selectedTherapyPlace;
 		private string practiceName;
 		private string roomName;
 		private string therapyPlaceName;
@@ -60,7 +60,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 										 .ToObservableCollection();
 			
 			Rooms         = new ObservableCollection<RoomDisplayData>();
-			TherapyPlaces = new ObservableCollection<ListItemDisplayData>();
+			TherapyPlaces = new ObservableCollection<TherapyPlaceDisplayData>();
 
 			SelectedMedicalPractice = null;
 			SelectedRoom            = null;
@@ -108,8 +108,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		private void UpdateTherapyPlace(TherapyPlace updatedTherapyPlace)
 		{
-			var placeListItem = TherapyPlaces.First(listItem => listItem.Id == updatedTherapyPlace.Id);
+			var placeListItem = TherapyPlaces.First(listItem => listItem.PlaceId == updatedTherapyPlace.Id);
+			var placeType = dataCenter.GetTherapyPlaceType(updatedTherapyPlace.TypeId);
 			placeListItem.Name = updatedTherapyPlace.Name;
+			placeListItem.TypeIcon = GetIconForTherapyPlaceType(placeType.IconType);
+			placeListItem.TypeName = placeType.Name;
 
 			SelectedTherapyPlaceObject = updatedTherapyPlace;
 
@@ -209,7 +212,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		private void DoAddTherapyPlace ()
 		{
 			var newTherapyPlace = TherapyPlaceCreateAndEditLogic.Create("noName");
-			var newTherapyPlaceListItem = new ListItemDisplayData(newTherapyPlace.Name, newTherapyPlace.Id);
+			var placeType = dataCenter.GetTherapyPlaceType(newTherapyPlace.TypeId);
+			var newTherapyPlaceListItem = new TherapyPlaceDisplayData(newTherapyPlace.Name,
+																	  placeType.ToString(),
+																	  GetIconForTherapyPlaceType(placeType.IconType),
+																	  newTherapyPlace.Id,
+																	  SelectedRoom.DisplayedColor);
 
 			TherapyPlaces.Add(newTherapyPlaceListItem);
 			var updatedRoom = SelectedRoomObject.AddTherapyPlace(newTherapyPlace);
@@ -242,7 +250,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			{
 				var therapyPlaceToDelete = SelectedTherapyPlace;
 
-				var updatedRoom = SelectedRoomObject.RemoveTherapyPlace(therapyPlaceToDelete.Id);
+				var updatedRoom = SelectedRoomObject.RemoveTherapyPlace(therapyPlaceToDelete.PlaceId);
 				UpdateRoom(updatedRoom);
 				TherapyPlaces.Remove(SelectedTherapyPlace);
 
@@ -252,9 +260,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		
 		#endregion
 
-		public ObservableCollection<ListItemDisplayData> MedicalPractices { get; }
-	    public ObservableCollection<RoomDisplayData>     Rooms            { get; }
-	    public ObservableCollection<ListItemDisplayData> TherapyPlaces    { get; }
+		public ObservableCollection<ListItemDisplayData>     MedicalPractices { get; }
+	    public ObservableCollection<RoomDisplayData>         Rooms            { get; }
+	    public ObservableCollection<TherapyPlaceDisplayData> TherapyPlaces    { get; }
 
 		#region commands
 
@@ -319,10 +327,14 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 					IsTherapyPlaceListVisible = true;
 					IsRoomSettingVisible      = true;
 
-					TherapyPlaces.Clear();
+					TherapyPlaces.Clear();					
 
 					SelectedRoomObject.TherapyPlaces
-									  .Select(therapyPlace => new ListItemDisplayData(therapyPlace.Name, therapyPlace.Id))
+									  .Select(therapyPlace => new TherapyPlaceDisplayData(therapyPlace.Name,
+																						  dataCenter.GetTherapyPlaceType(therapyPlace.TypeId).ToString(),
+																						  GetIconForTherapyPlaceType(dataCenter.GetTherapyPlaceType(therapyPlace.TypeId).IconType),
+																						  therapyPlace.Id,
+																						  value.DisplayedColor))
 									  .Do(TherapyPlaces.Add);
 					
 					RoomName         = value.Name;					
@@ -341,14 +353,14 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			}
 		}
 
-		public ListItemDisplayData SelectedTherapyPlace
+		public TherapyPlaceDisplayData SelectedTherapyPlace
 		{
 			get { return selectedTherapyPlace; }
 			set
 			{
 				if (value != null && value != selectedTherapyPlace)
 				{
-					SelectedTherapyPlaceObject = SelectedRoomObject.TherapyPlaces.First(therapyPlace => therapyPlace.Id == value.Id);
+					SelectedTherapyPlaceObject = SelectedRoomObject.TherapyPlaces.First(therapyPlace => therapyPlace.Id == value.PlaceId);
 								
 					IsTherapyPlaceSettingVisible = true;
 

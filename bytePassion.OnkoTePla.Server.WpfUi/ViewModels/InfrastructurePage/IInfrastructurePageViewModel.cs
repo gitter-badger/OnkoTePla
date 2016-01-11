@@ -6,9 +6,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 {
 	internal interface IInfrastructurePageViewModel : IViewModel
     {
-	    ObservableCollection<ListItemDisplayData> MedicalPractices { get; }
-		ObservableCollection<RoomDisplayData>     Rooms            { get; } 
-		ObservableCollection<ListItemDisplayData> TherapyPlaces    { get; } 
+	    ObservableCollection<ListItemDisplayData>     MedicalPractices { get; }
+		ObservableCollection<RoomDisplayData>         Rooms            { get; } 
+		ObservableCollection<TherapyPlaceDisplayData> TherapyPlaces    { get; } 
 		 
 		ICommand AddMedicalPractice         { get; }
 		ICommand SaveMedicalPracticeChanges { get; }
@@ -22,9 +22,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		ICommand SaveTherapyPlaceChanges { get; }
 		ICommand DeleteTherapyPlace      { get; }
 
-		ListItemDisplayData SelectedMedicalPractice { get; set; }
-		RoomDisplayData     SelectedRoom            { get; set; }
-		ListItemDisplayData SelectedTherapyPlace    { get; set; }
+		ListItemDisplayData     SelectedMedicalPractice { get; set; }
+		RoomDisplayData         SelectedRoom            { get; set; }
+		TherapyPlaceDisplayData SelectedTherapyPlace    { get; set; }
 		
 		string PracticeName     { get; set; }
 		string RoomName         { get; set; }

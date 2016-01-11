@@ -83,6 +83,7 @@
     <Compile Include="ViewModels\ConnectionsPage\IConnectionsPageViewModel.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\ListItemDisplayData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\RoomDisplayData.cs" />
+    <Compile Include="ViewModels\InfrastructurePage\Helper\TherapyPlaceDisplayData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\TherapyPlaceTypeDisplayData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\IInfrastructurePageViewModel.cs" />
     <Compile Include="ViewModels\InfrastructurePage\InfrastructurePageViewModel.cs" />

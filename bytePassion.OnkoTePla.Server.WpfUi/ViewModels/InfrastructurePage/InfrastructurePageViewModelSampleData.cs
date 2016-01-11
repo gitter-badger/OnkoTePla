@@ -14,7 +14,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 	internal class InfrastructurePageViewModelSampleData : IInfrastructurePageViewModel
     {
 	    public InfrastructurePageViewModelSampleData()
-	    {		    
+	    {
+			const string iconBasePath = "pack://application:,,,/bytePassion.OnkoTePla.Resources;component/Icons/TherapyPlaceType/";
+
 			MedicalPractices = new ObservableCollection<ListItemDisplayData>
 			{
 				new ListItemDisplayData("practice1", Guid.NewGuid()),
@@ -28,14 +30,14 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 				new RoomDisplayData("room2", Colors.BurlyWood, Guid.NewGuid())
 			};
 
-		    TherapyPlaces = new ObservableCollection<ListItemDisplayData>
+		    TherapyPlaces = new ObservableCollection<TherapyPlaceDisplayData>
 		    {
-				new ListItemDisplayData("place1", Guid.NewGuid()),
-				new ListItemDisplayData("place2", Guid.NewGuid()),
-				new ListItemDisplayData("place3", Guid.NewGuid()),
-				new ListItemDisplayData("place4", Guid.NewGuid()),
-				new ListItemDisplayData("place5", Guid.NewGuid()),
-				new ListItemDisplayData("place6", Guid.NewGuid())
+				new TherapyPlaceDisplayData("place1", "stuhl", ImageLoader.LoadImage(new Uri(iconBasePath + "chair01.png")), Guid.NewGuid(), Colors.Aqua),
+				new TherapyPlaceDisplayData("place2", "stuhl", ImageLoader.LoadImage(new Uri(iconBasePath + "chair01.png")), Guid.NewGuid(), Colors.Aqua),
+				new TherapyPlaceDisplayData("place3", "stuhl", ImageLoader.LoadImage(new Uri(iconBasePath + "chair01.png")), Guid.NewGuid(), Colors.Aqua),
+				new TherapyPlaceDisplayData("place4", "bett",  ImageLoader.LoadImage(new Uri(iconBasePath + "bed01.png")),   Guid.NewGuid(), Colors.Aqua),
+				new TherapyPlaceDisplayData("place5", "stuhl", ImageLoader.LoadImage(new Uri(iconBasePath + "chair01.png")), Guid.NewGuid(), Colors.Aqua),
+				new TherapyPlaceDisplayData("place6", "stuhl", ImageLoader.LoadImage(new Uri(iconBasePath + "chair01.png")), Guid.NewGuid(), Colors.Aqua)
 			};
 
 			AvailableColors = new ObservableCollection<ColorDisplayData>
@@ -45,7 +47,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 				new ColorDisplayData(Colors.Fuchsia)
 			};
 
-			const string iconBasePath = "pack://application:,,,/bytePassion.OnkoTePla.Resources;component/Icons/TherapyPlaceType/";
+			
 
 			AvailableTherapyPlaceTypes = new ObservableCollection<TherapyPlaceTypeDisplayData>
 			{
@@ -73,9 +75,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		}
 
-	    public ObservableCollection<ListItemDisplayData> MedicalPractices { get; }
-	    public ObservableCollection<RoomDisplayData>     Rooms            { get; }
-	    public ObservableCollection<ListItemDisplayData> TherapyPlaces    { get; }
+	    public ObservableCollection<ListItemDisplayData>     MedicalPractices { get; }
+	    public ObservableCollection<RoomDisplayData>         Rooms            { get; }
+	    public ObservableCollection<TherapyPlaceDisplayData> TherapyPlaces    { get; }
 
 	    public ICommand AddMedicalPractice         => null;
 		public ICommand SaveMedicalPracticeChanges => null;
@@ -87,9 +89,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		public ICommand SaveTherapyPlaceChanges    => null;
 		public ICommand DeleteTherapyPlace         => null;
 		
-		public ListItemDisplayData SelectedMedicalPractice { get; set; }
-	    public RoomDisplayData     SelectedRoom            { get; set; }
-	    public ListItemDisplayData SelectedTherapyPlace    { get; set; }
+		public ListItemDisplayData     SelectedMedicalPractice { get; set; }
+	    public RoomDisplayData         SelectedRoom            { get; set; }
+	    public TherapyPlaceDisplayData SelectedTherapyPlace    { get; set; }
 
 		public string PracticeName     { get; set; }
 		public string RoomName         { get; set; }

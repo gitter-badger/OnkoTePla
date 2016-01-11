@@ -260,16 +260,42 @@
                     </ListBox.ItemsPanel>
 
                     <ListBox.ItemTemplate>
-						<DataTemplate DataType="{x:Type helper:ListItemDisplayData}">
+						<DataTemplate DataType="{x:Type helper:TherapyPlaceDisplayData}">
                             <Border Height="40"
                                     BorderBrush="Black"
                                     BorderThickness="1">
 
-                                <TextBlock HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontSize="15"
-                                           Text="{Binding Name}" />
-                            </Border>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition/>
+										<ColumnDefinition/>
+										<ColumnDefinition/>
+									</Grid.ColumnDefinitions>
+									
+									<Image Grid.Column="0"
+										   Source="{Binding TypeIcon}"
+										   Margin="5"/>
+									
+									<Border Grid.Column="1"
+											Background="{Binding RoomColor, 
+																 Converter={StaticResource ColorToSolidColorBrushConverter}}">
+										<TextBlock HorizontalAlignment="Center"
+												   VerticalAlignment="Center"
+												   FontSize="15"
+												   Text="{Binding Name}"/>
+									</Border>
+									
+									<TextBlock Grid.Column="2"
+											   HorizontalAlignment="Center"
+											   VerticalAlignment="Center"
+											   FontSize="15">
+										
+										<Run Text="["/>
+										<Run Text="{Binding TypeName}"/>
+										<Run Text="]"/>
+									</TextBlock>
+								</Grid>
+							</Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
 
