@@ -2,10 +2,12 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage.Helper;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
@@ -14,16 +16,20 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 									   IUserPageViewModel
     {
 	    private readonly IDataCenter dataCenter;
+		private readonly IGlobalStateReadOnly<MainPage> selectedPageVariable;		
+
 		private User selectedUser;
 		private bool showModificationView;
 		private string userName;
 		private string password;
 		private bool isHidden;
 
-		public UserPageViewModel(IDataCenter dataCenter)
+		public UserPageViewModel(IDataCenter dataCenter, 
+								 IGlobalStateReadOnly<MainPage> selectedPageVariable)
 	    {
-		    this.dataCenter = dataCenter;	
-			
+		    this.dataCenter = dataCenter;
+			this.selectedPageVariable = selectedPageVariable;
+
 			AddUser        = new Command(DoAddUser);	
 			SaveChanges    = new Command(DoSaveChanges);
 			DiscardChanges = new Command(DoDiscardChanges);
@@ -34,7 +40,17 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 			AccessablePractices = new ObservableCollection<MedPracticeListItemData>();
 
 			ShowModificationView = false;
+			
+			selectedPageVariable.StateChanged += OnSelectedPageChanged;
 	    }
+
+		private void OnSelectedPageChanged(MainPage mainPage)
+		{
+			if (mainPage != MainPage.User)
+			{
+				SelectedUser = null;
+			}			
+		}		
 
 		private void DoDiscardChanges()
 		{
@@ -129,7 +145,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 
 		public ObservableCollection<MedPracticeListItemData> AccessablePractices { get; }
 
-		protected override void CleanUp() {  }
+		protected override void CleanUp()
+		{
+			selectedPageVariable.StateChanged -= OnSelectedPageChanged;
+		}
         public override event PropertyChangedEventHandler PropertyChanged;	    
     }
 }

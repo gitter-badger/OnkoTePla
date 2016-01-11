@@ -1,8 +1,10 @@
 ﻿using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.XMLDataStores;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
+using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
@@ -16,7 +18,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi
 {
-	public partial class App : Application
+	public partial class App
     {
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -44,11 +46,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			var connectionService = connectionServiceBuilder.Build();
 
 
+			// ViewModel-Variables
+
+			var selectedPageVariable = new GlobalState<MainPage>(MainPage.Overview);
+
 			// ViewModels
 
             var overviewPageViewModel          = new OverviewPageViewModel();
             var connectionsPageViewModel       = new ConnectionsPageViewModel(dataCenter, connectionService);
-            var userPageViewModel              = new UserPageViewModel(dataCenter);
+            var userPageViewModel              = new UserPageViewModel(dataCenter, selectedPageVariable);
             var licencePageViewModel           = new LicencePageViewModel();
             var infrastructurePageViewModel    = new InfrastructurePageViewModel(dataCenter);
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter);
@@ -62,7 +68,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
                                                               infrastructurePageViewModel,   
 															  therapyPlaceTypesPageViewModel,                                                           
                                                               optionsPageViewModel,
-                                                              aboutPageViewModel);
+                                                              aboutPageViewModel,
+															  selectedPageVariable);
             var mainWindow = new MainWindow
                              {
                                  DataContext = mainWindowViewModel

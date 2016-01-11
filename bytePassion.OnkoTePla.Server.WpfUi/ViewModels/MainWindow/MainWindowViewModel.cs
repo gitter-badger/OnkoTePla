@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
@@ -17,7 +18,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 {
 	internal class MainWindowViewModel : ViewModel, IMainWindowViewModel
     {
-        private MainPage selectedPage;
+		private readonly IGlobalStateWriteOnly<MainPage> selectedPageVariable;
+
+		private MainPage selectedPage;
 
         public MainWindowViewModel(IOverviewPageViewModel overviewPageViewModel, 
                                    IConnectionsPageViewModel connectionsPageViewModel,
@@ -26,9 +29,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
                                    IInfrastructurePageViewModel infrastructurePageViewModel,
 								   ITherapyPlaceTypesPageViewModel therapyPlaceTypesPageViewModel,
 								   IOptionsPageViewModel optionsPageViewModel, 
-                                   IAboutPageViewModel aboutPageViewModel)
+                                   IAboutPageViewModel aboutPageViewModel,
+								   IGlobalStateWriteOnly<MainPage> selectedPageVariable)
         {
-            OverviewPageViewModel          = overviewPageViewModel;
+	        this.selectedPageVariable     = selectedPageVariable;
+
+	        OverviewPageViewModel          = overviewPageViewModel;
             ConnectionsPageViewModel       = connectionsPageViewModel;
             UserPageViewModel              = userPageViewModel;
             LicencePageViewModel           = licencePageViewModel;
@@ -37,15 +43,19 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
             AboutPageViewModel             = aboutPageViewModel;
 	        TherapyPlaceTypesPageViewModel = therapyPlaceTypesPageViewModel;
 
-	        SwitchToPage = new ParameterrizedCommand<MainPage>(page => SelectedPage = page);
+	        SwitchToPage = new ParameterrizedCommand<MainPage>(page => SelectedPage = page);			
         }
 
-        public ICommand SwitchToPage { get; }
+		public ICommand SwitchToPage { get; }
 
         public MainPage SelectedPage
         {
             get { return selectedPage; }
-            private set { PropertyChanged.ChangeAndNotify(this, ref selectedPage, value); }
+	        private set
+	        {
+		        PropertyChanged.ChangeAndNotify(this, ref selectedPage, value);
+		        selectedPageVariable.Value = value;
+	        }
         }
 
         public IOverviewPageViewModel          OverviewPageViewModel          { get; }
