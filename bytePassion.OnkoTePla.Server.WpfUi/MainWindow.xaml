@@ -63,7 +63,11 @@
                     CommandParameter="{x:Static enum:MainPage.Infrastructure}"
                     Content="Infrastruktur" />
 
-            <Button Command="{Binding SwitchToPage}"
+			<Button Command="{Binding SwitchToPage}"
+                    CommandParameter="{x:Static enum:MainPage.HoursOfOpening}"
+                    Content="Öffnungszeiten" />
+ 
+			<Button Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.TherapyPlaceTypes}"
                     Content="TherapyPlaceTypes" />
 
@@ -79,14 +83,15 @@
 
         <panels:DeckPanel Grid.Column="1" SelectedLayer="{Binding SelectedPage, Converter={StaticResource MainPageToIntConverter}}">
 
-            <views:OverviewPage DataContext="{Binding OverviewPageViewModel}" />
-            <views:ConnectionsPage DataContext="{Binding ConnectionsPageViewModel}" />
-            <views:UserPage DataContext="{Binding UserPageViewModel}" />
-            <views:LicencePage DataContext="{Binding LicencePageViewModel}" />
-            <views:InfrastructurePage DataContext="{Binding InfrastructurePageViewModel}" />
-            <views:TherapyPlaceTypesPage DataContext="{Binding TherapyPlaceTypesPageViewModel}" />
-            <views:OptionsPage DataContext="{Binding OptionsPageViewModel}" />
-            <views:AboutPage DataContext="{Binding AboutPageViewModel}" />
+            <views:OverviewPage          DataContext="{Binding OverviewPageViewModel}"/>
+            <views:ConnectionsPage       DataContext="{Binding ConnectionsPageViewModel}"/>
+            <views:UserPage              DataContext="{Binding UserPageViewModel}"/>
+            <views:LicencePage           DataContext="{Binding LicencePageViewModel}"/>
+            <views:InfrastructurePage    DataContext="{Binding InfrastructurePageViewModel}"/>
+			<views:HoursOfOpeningPage    DataContext="{Binding HoursOfOpeningPageViewModel}"/>
+            <views:TherapyPlaceTypesPage DataContext="{Binding TherapyPlaceTypesPageViewModel}"/>
+            <views:OptionsPage           DataContext="{Binding OptionsPageViewModel}"/>
+            <views:AboutPage             DataContext="{Binding AboutPageViewModel}"/>
 
         </panels:DeckPanel>
 

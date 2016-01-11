@@ -3,6 +3,7 @@ using System.Windows.Input;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
@@ -25,6 +26,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
             UserPageViewModel              = new UserPageViewModelSampleData();
             LicencePageViewModel           = new LicencePageViewModelSampleData();
             InfrastructurePageViewModel    = new InfrastructurePageViewModelSampleData();
+			HoursOfOpeningPageViewModel    = new HoursOfOpeningPageViewModelSampleData();
             OptionsPageViewModel           = new OptionsPageViewModelSampleData();
             AboutPageViewModel             = new AboutPageViewModelSampleData();
 			TherapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModelSampleData();
@@ -38,7 +40,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         public IUserPageViewModel              UserPageViewModel              { get; }
         public ILicencePageViewModel           LicencePageViewModel           { get; }
         public IInfrastructurePageViewModel    InfrastructurePageViewModel    { get; }
-	    public ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
+		public IHoursOfOpeningPageViewModel    HoursOfOpeningPageViewModel    { get; }
+		public ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
 	    public IOptionsPageViewModel           OptionsPageViewModel           { get; }
         public IAboutPageViewModel             AboutPageViewModel             { get; }
 

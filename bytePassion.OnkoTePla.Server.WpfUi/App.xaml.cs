@@ -7,6 +7,7 @@ using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow;
@@ -57,15 +58,18 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             var userPageViewModel              = new UserPageViewModel(dataCenter, selectedPageVariable);
             var licencePageViewModel           = new LicencePageViewModel();
             var infrastructurePageViewModel    = new InfrastructurePageViewModel(dataCenter);
+			var hoursOfOpeningPageViewModel    = new HoursOfOpeningPageViewModel();
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter);
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel();
+
 	        
 	        var mainWindowViewModel = new MainWindowViewModel(overviewPageViewModel,
                                                               connectionsPageViewModel,
                                                               userPageViewModel,
                                                               licencePageViewModel,
-                                                              infrastructurePageViewModel,   
+                                                              infrastructurePageViewModel, 
+															  hoursOfOpeningPageViewModel,  
 															  therapyPlaceTypesPageViewModel,                                                           
                                                               optionsPageViewModel,
                                                               aboutPageViewModel,

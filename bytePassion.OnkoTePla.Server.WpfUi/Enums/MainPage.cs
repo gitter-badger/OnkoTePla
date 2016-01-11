@@ -7,6 +7,7 @@
         User,
         Licence,
         Infrastructure,
+		HoursOfOpening,
 		TherapyPlaceTypes,
         Options,
         About

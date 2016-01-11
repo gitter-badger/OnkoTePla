@@ -81,6 +81,9 @@
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsPage\ConnectionsPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\ConnectionsPage\IConnectionsPageViewModel.cs" />
+    <Compile Include="ViewModels\HoursOfOpeningPage\HoursOfOpeningPageViewModel.cs" />
+    <Compile Include="ViewModels\HoursOfOpeningPage\HoursOfOpeningPageViewModelSampleData.cs" />
+    <Compile Include="ViewModels\HoursOfOpeningPage\IHoursOfOpeningPageViewModel.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\MedPracticeDisplayData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\RoomDisplayData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\TherapyPlaceDisplayData.cs" />
@@ -117,6 +120,9 @@
     <Compile Include="Views\ConnectionsPage.xaml.cs">
       <DependentUpon>ConnectionsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HoursOfOpeningPage.xaml.cs">
+      <DependentUpon>HoursOfOpeningPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InfrastructurePage.xaml.cs">
       <DependentUpon>InfrastructurePage.xaml</DependentUpon>
     </Compile>
@@ -152,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConnectionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HoursOfOpeningPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

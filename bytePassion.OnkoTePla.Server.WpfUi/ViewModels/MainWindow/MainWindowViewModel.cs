@@ -6,6 +6,7 @@ using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
@@ -27,6 +28,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
                                    IUserPageViewModel userPageViewModel,
                                    ILicencePageViewModel licencePageViewModel, 
                                    IInfrastructurePageViewModel infrastructurePageViewModel,
+								   IHoursOfOpeningPageViewModel hoursOfOpeningPageViewModel,
 								   ITherapyPlaceTypesPageViewModel therapyPlaceTypesPageViewModel,
 								   IOptionsPageViewModel optionsPageViewModel, 
                                    IAboutPageViewModel aboutPageViewModel,
@@ -39,6 +41,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
             UserPageViewModel              = userPageViewModel;
             LicencePageViewModel           = licencePageViewModel;
             InfrastructurePageViewModel    = infrastructurePageViewModel;
+	        HoursOfOpeningPageViewModel    = hoursOfOpeningPageViewModel;
             OptionsPageViewModel           = optionsPageViewModel;
             AboutPageViewModel             = aboutPageViewModel;
 	        TherapyPlaceTypesPageViewModel = therapyPlaceTypesPageViewModel;
@@ -63,7 +66,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         public IUserPageViewModel              UserPageViewModel              { get; }
         public ILicencePageViewModel           LicencePageViewModel           { get; }
         public IInfrastructurePageViewModel    InfrastructurePageViewModel    { get; }
-	    public ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
+		public IHoursOfOpeningPageViewModel    HoursOfOpeningPageViewModel    { get; }
+		public ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
 	    public IOptionsPageViewModel           OptionsPageViewModel           { get; }
         public IAboutPageViewModel             AboutPageViewModel             { get; }
 
