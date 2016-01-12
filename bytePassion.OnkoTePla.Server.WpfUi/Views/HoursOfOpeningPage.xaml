@@ -7,7 +7,7 @@
              xmlns:converter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
              xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900">
+             d:DesignHeight="850" d:DesignWidth="900">
 	
 	<d:DesignData.DataContext>
 		<sampleData:HoursOfOpeningPageViewModelSampleData/>
@@ -29,7 +29,30 @@
 		<Style TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}"
 			   x:Key="TextBoxStyle">
 			
-			<Setter Property="Margin" Value="5"></Setter>
+			<Setter Property="Margin" Value="30,5"/>
+			<Setter Property="FontSize" Value="15"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+			<Setter Property="FontFamily" Value="{StaticResource StandardFontFamily}"/>
+		</Style>
+
+		<Style TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}"
+			   x:Key="MulitLineTextBoxStyle">
+
+			<Setter Property="Margin" Value="5"/>
+			<Setter Property="FontSize" Value="15"/>
+			<Setter Property="HorizontalContentAlignment" Value="Right"/>
+			<Setter Property="AcceptsReturn" Value="True"/>
+			<Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+			<Setter Property="FontFamily" Value="{StaticResource StandardFontFamily}"/>
+		</Style>
+
+		<Style TargetType="CheckBox" BasedOn="{StaticResource MetroCheckBox}"
+			   x:Key="CheckBoxStyle">
+			
+			<Setter Property="Margin" Value="5"/>
+			<Setter Property="FontSize" Value="15"/>
+			<Setter Property="FontFamily" Value="{StaticResource StandardFontFamily}"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
 		</Style>
 		
 		<converter:BoolToCollapsedVisibilityConverter         x:Key="BoolToCollapsedVisibilityConverter"/>
@@ -88,100 +111,266 @@
 				</StackPanel>
 			</ScrollViewer>
 
-			<Grid Grid.Column="1"
-				  Visibility="{Binding IsHoursOfOpeningSettingVisible, 
-									   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+			<ScrollViewer Grid.Column="1"
+						  HorizontalScrollBarVisibility="Auto"
+						  VerticalScrollBarVisibility="Auto">
+
+				<Grid Visibility="{Binding IsHoursOfOpeningSettingVisible, 
+										   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
 				
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="150"/>
-					<ColumnDefinition Width="150"/>
-					<ColumnDefinition Width="150"/>
-					<ColumnDefinition Width="150"/>
-				</Grid.ColumnDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="120"/>
+						<ColumnDefinition Width="120"/>
+						<ColumnDefinition Width="120"/>
+						<ColumnDefinition Width="120"/>
+					</Grid.ColumnDefinitions>
 				
-				<Grid.RowDefinitions>
-					<RowDefinition Height="45"/>
-					<RowDefinition Height="40"/>
-					<RowDefinition Height="40"/>
-					<RowDefinition Height="40"/>
-					<RowDefinition Height="40"/>
-					<RowDefinition Height="40"/>
-					<RowDefinition Height="40"/>
-					<RowDefinition Height="40"/>
-					<RowDefinition Height="40"/>
-					<RowDefinition Height="30"/>
-					<RowDefinition Height="30"/>
-					<RowDefinition/>
-					<RowDefinition/>
-				</Grid.RowDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="45"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="30"/>
+						<RowDefinition Height="30"/>
+						<RowDefinition Height="150"/>
+						<RowDefinition Height="30"/>
+						<RowDefinition Height="30"/>
+						<RowDefinition Height="150"/>
+						<RowDefinition Height="35"/>
+					</Grid.RowDefinitions>
 				
-				<TextBlock Grid.Row="0"
-						   Grid.Column="0"
-						   Grid.ColumnSpan="3"
-						   FontSize="20"
-						   FontFamily="{StaticResource StandardFontFamily}"
-						   Text="Öffnungszeiten bearbeiten:"
-						   Margin="5"/>
+					<TextBlock Grid.Row="0"
+							   Grid.Column="0"
+							   Grid.ColumnSpan="3"
+							   FontSize="20"
+							   FontFamily="{StaticResource StandardFontFamily}"
+							   Text="Öffnungszeiten bearbeiten:"
+							   Margin="5"/>
 				
-				<TextBlock Grid.Column="1"
-						   Grid.Row="1"
-						   Style="{StaticResource SubOptionCaption}"
-						   HorizontalAlignment="Center"
-						   Text="Öffnung"/>
+					<TextBlock Grid.Column="1"
+							   Grid.Row="1"
+							   Style="{StaticResource SubOptionCaption}"
+							   HorizontalAlignment="Center"
+							   Text="Öffnung"/>
 
-				<TextBlock Grid.Column="2"
-						   Grid.Row="1"
-						   Style="{StaticResource SubOptionCaption}"
-						   HorizontalAlignment="Center"
-						   Text="Schließung"/>
-				
-				<TextBlock Grid.Column="3"
-						   Grid.Row="1"
-						   Style="{StaticResource SubOptionCaption}"
-						   HorizontalAlignment="Center"
-						   Text="Ist geöffnet"></TextBlock>
+					<TextBlock Grid.Column="2"
+							   Grid.Row="1"
+							   Style="{StaticResource SubOptionCaption}"
+							   HorizontalAlignment="Center"
+							   Text="Schließung"/>
 
-				<TextBlock Grid.Column="0"
-						   Grid.Row="2"
-						   Text="Montag:"
-						   Style="{StaticResource SubOptionCaption}"/>
+					<TextBlock Grid.Column="3"
+							   Grid.Row="1"
+							   Style="{StaticResource SubOptionCaption}"
+							   HorizontalAlignment="Center"
+							   Text="Ist geöffnet"/>
+					<TextBlock Grid.Column="0"
+							   Grid.Row="2"
+							   Text="Montag:"
+							   Style="{StaticResource SubOptionCaption}"/>
+					<TextBlock Grid.Column="0"
+							   Grid.Row="3"
+							   Text="Dienstag:"
+							   Style="{StaticResource SubOptionCaption}"/>
+					<TextBlock Grid.Column="0"
+							   Grid.Row="4"
+							   Text="Mittwoch:"
+							   Style="{StaticResource SubOptionCaption}"/>
+					<TextBlock Grid.Column="0"
+							   Grid.Row="5"
+							   Text="Donnerstag:"
+							   Style="{StaticResource SubOptionCaption}"/>
+					<TextBlock Grid.Column="0"
+							   Grid.Row="6"
+							   Text="Freitag:"
+							   Style="{StaticResource SubOptionCaption}"/>
+					<TextBlock Grid.Column="0"
+							   Grid.Row="7"
+							   Text="Samstag:"
+							   Style="{StaticResource SubOptionCaption}"/>
+					<TextBlock Grid.Column="0"
+							   Grid.Row="8"
+							   Text="Sonntag:"
+							   Style="{StaticResource SubOptionCaption}"/>
 
-				<TextBlock Grid.Column="0"
-						   Grid.Row="3"
-						   Text="Dienstag:"
-						   Style="{StaticResource SubOptionCaption}"/>
+					<TextBox Grid.Column="1"
+							 Grid.Row="2"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding OpeningMondayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="2"
+							 Grid.Row="2"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding ClosingMondayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="1"
+							 Grid.Row="3"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding OpeningTuesdayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="2"
+							 Grid.Row="3"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding ClosingTuesdayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="1"
+							 Grid.Row="4"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding OpeningWednesdayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="2"
+							 Grid.Row="4"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding ClosingWednesdayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="1"
+							 Grid.Row="5"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding OpeningThursdayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="2"
+							 Grid.Row="5"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding ClosingThursdayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="1"
+							 Grid.Row="6"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding OpeningFridayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="2"
+							 Grid.Row="6"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding ClosingFridayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="1"
+							 Grid.Row="7"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding OpeningSaturdayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="2"
+							 Grid.Row="7"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding ClosingSaturdayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="1"
+							 Grid.Row="8"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding OpeningSundayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBox Grid.Column="2"
+							 Grid.Row="8"
+							 Style="{StaticResource TextBoxStyle}"
+							 Text="{Binding ClosingSundayText, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
 
-				<TextBlock Grid.Column="0"
-						   Grid.Row="4"
-						   Text="Mittwoch:"
-						   Style="{StaticResource SubOptionCaption}"/>
+					<CheckBox Grid.Column="3"
+							  Grid.Row="2"
+							  Style="{StaticResource CheckBoxStyle}"
+							  IsChecked="{Binding IsOpenOnMonday,
+												  Mode=TwoWay,
+												  UpdateSourceTrigger=PropertyChanged}"/>
+					<CheckBox Grid.Column="3"
+							  Grid.Row="3"
+							  Style="{StaticResource CheckBoxStyle}"
+							  IsChecked="{Binding IsOpenOnTuesday,
+												  Mode=TwoWay,
+												  UpdateSourceTrigger=PropertyChanged}"/>
+					<CheckBox Grid.Column="3"
+							  Grid.Row="4"
+							  Style="{StaticResource CheckBoxStyle}"
+							  IsChecked="{Binding IsOpenOnWednesday,
+												  Mode=TwoWay,
+												  UpdateSourceTrigger=PropertyChanged}"/>
+					<CheckBox Grid.Column="3"
+							  Grid.Row="5"
+							  Style="{StaticResource CheckBoxStyle}"
+							  IsChecked="{Binding IsOpenOnThursday,
+												  Mode=TwoWay,
+												  UpdateSourceTrigger=PropertyChanged}"/>
+					<CheckBox Grid.Column="3"
+							  Grid.Row="6"
+							  Style="{StaticResource CheckBoxStyle}"
+							  IsChecked="{Binding IsOpenOnFriday,
+												  Mode=TwoWay,
+												  UpdateSourceTrigger=PropertyChanged}"/>
+					<CheckBox Grid.Column="3"
+							  Grid.Row="7"
+							  Style="{StaticResource CheckBoxStyle}"
+							  IsChecked="{Binding IsOpenOnSaturday,
+												  Mode=TwoWay,
+												  UpdateSourceTrigger=PropertyChanged}"/>
+					<CheckBox Grid.Column="3"
+							  Grid.Row="8"
+							  Style="{StaticResource CheckBoxStyle}"
+							  IsChecked="{Binding IsOpenOnSunday,
+												  Mode=TwoWay,
+												  UpdateSourceTrigger=PropertyChanged}"/>
 
-				<TextBlock Grid.Column="0"
-						   Grid.Row="5"
-						   Text="Donnerstag:"
-						   Style="{StaticResource SubOptionCaption}"/>
+					<TextBlock Grid.Column="0"
+							   Grid.Row="10"
+							   Grid.ColumnSpan="2"
+							   Style="{StaticResource SubOptionCaption}"
+							   Text="Zusätzlich geöffnete Tage:"/>
+					
+					<TextBox Grid.Column="1"
+							 Grid.Row="11"
+							 Grid.ColumnSpan="2"
+							 Style="{StaticResource MulitLineTextBoxStyle}"
+							 Text="{Binding AdditionOpenedDays, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					
+					<TextBlock Grid.Column="0"
+							   Grid.Row="13"
+							   Grid.ColumnSpan="2"
+							   Style="{StaticResource SubOptionCaption}"
+							   Text="Zusätzlich geschlossene Tage:"/>
 
-				<TextBlock Grid.Column="0"
-						   Grid.Row="6"
-						   Text="Freitag:"
-						   Style="{StaticResource SubOptionCaption}"/>
+					<TextBox Grid.Column="1"
+							 Grid.Row="14"
+							 Grid.ColumnSpan="2"
+							 Style="{StaticResource MulitLineTextBoxStyle}"
+							 Text="{Binding AdditionClosedDays, 
+											Mode=TwoWay, 
+											UpdateSourceTrigger=PropertyChanged}"/>
+					
+					<Button Grid.Column="0"
+							Grid.Row="15"
+							Grid.ColumnSpan="2"
+							Margin="5"
+							Content="Änderungen übernehmen"
+							Command="{Binding ConfirmChanges}"/>
 
-				<TextBlock Grid.Column="0"
-						   Grid.Row="7"
-						   Text="Samstag:"
-						   Style="{StaticResource SubOptionCaption}"/>
+					<Button Grid.Column="2"
+							Grid.Row="15"
+							Grid.ColumnSpan="2"
+							Margin="5"
+							Content="Änderungen verwerfen"
+							Command="{Binding RejectChanges}"/>
+					
+				</Grid>
+			</ScrollViewer>
 
-				<TextBlock Grid.Column="0"
-						   Grid.Row="8"
-						   Text="Sonntag:"
-						   Style="{StaticResource SubOptionCaption}"/>
-				
-				<TextBox Grid.Column="1"
-						 Grid.Row="2"
-						 Style="{StaticResource TextBoxStyle}"></TextBox>
-				
-			</Grid>
-			
 			<TextBlock Grid.Column="1"
 					   HorizontalAlignment="Center"
 					   VerticalAlignment="Center"
