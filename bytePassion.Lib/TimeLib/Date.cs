@@ -1,12 +1,12 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Text;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
 {
-    public class Date : IComparable<Date>
+	public class Date : IComparable<Date>
     {		
 		public static readonly Date Dummy = new Date(0,0,0);
 
@@ -132,7 +132,29 @@ namespace bytePassion.Lib.TimeLib
         ////////                               static members                                        ////////
         ////////                                                                                     ////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
+	    public static bool IsValidDateString(string s)
+	    {
+			var elements = s.Split('.');
+
+		    if (elements.Length != 3)
+			    return false;
+
+			byte day;
+			if (!byte.TryParse(elements[0], out day)) return false;
+			if (day > 31) return false;
+			
+			byte month;
+			if (!byte.TryParse(elements[1], out month)) return false;
+			if (month > 12) return false;
+
+			ushort year;
+			if (!ushort.TryParse(elements[2], out year)) return false;
+			if (year < 1800 || year > 2200) return false;
+
+		    return true;
+	    }
+
         public static Date Parse(string s)
 		{
 			var elements = s.Split('.');

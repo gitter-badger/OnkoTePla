@@ -1,6 +1,6 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
-using System;
+﻿using System;
 using System.Text;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.TimeLib
@@ -110,12 +110,68 @@ namespace bytePassion.Lib.TimeLib
 			return builder.ToString();
 		}
 
+		public string ToStringMinutesAndHoursOnly()
+		{
+			var builder = new StringBuilder();
+
+			if (Hour < 10)
+				builder.Append('0');
+
+			builder.Append(Hour);
+			builder.Append(':');
+
+			if (Minute < 10)
+				builder.Append('0');
+
+			builder.Append(Minute);
+
+			return builder.ToString();
+		}
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////                                                                                     ////////
         ////////                               static members                                        ////////
         ////////                                                                                     ////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
+		public static bool IsValidTimeString(string s)
+		{
+			var elements = s.Split(':');			
+
+			if (elements.Length == 2)
+			{
+				byte hour;
+				if (!byte.TryParse(elements[0], out hour)) return false;
+				if (hour > 23) return false;
+
+				byte minutes;
+				if (!byte.TryParse(elements[1], out minutes)) return false;
+				if (minutes > 59) return false;
+
+				return true;
+			}
+			else if (elements.Length == 3)
+			{
+				byte hour;
+				if (!byte.TryParse(elements[0], out hour)) return false;
+				if (hour > 23) return false;
+
+				byte minutes;
+				if (!byte.TryParse(elements[1], out minutes)) return false;
+				if (minutes > 59) return false;
+
+				byte seconds;
+				if (!byte.TryParse(elements[2], out seconds)) return false;
+				if (seconds > 59) return false;
+				
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
         public static Time Parse(string s)
 		{
 			var elements = s.Split(':');
