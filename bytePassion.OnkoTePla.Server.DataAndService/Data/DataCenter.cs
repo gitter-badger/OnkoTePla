@@ -31,17 +31,26 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 
 		public IEnumerable<User> GetAllUsers()
 		{
-			return readConfig.GetAllUsers();
+			lock (this)
+			{
+				return readConfig.GetAllUsers();
+			}			
 		}
 
 		public void AddNewUser(User newUser)
 		{
-			writeConfig.AddUser(newUser);
+			lock (this)
+			{
+				writeConfig.AddUser(newUser);
+			}
 		}
 
 		public void UpdateUser(User updatedUser)
 		{
-			writeConfig.UpdateUser(updatedUser);
+			lock (this)
+			{
+				writeConfig.UpdateUser(updatedUser);
+			}
 		}
 
 		#endregion
@@ -50,23 +59,35 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 
 		public IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes()
 		{
-			return readConfig.GetAllTherapyPlaceTypes()
-							 .Append(TherapyPlaceType.NoType);
+			lock (this)
+			{
+				return readConfig.GetAllTherapyPlaceTypes()
+								 .Append(TherapyPlaceType.NoType);
+			}
 		}
 
 		public void AddNewTherapyPlaceType(TherapyPlaceType newTherapyPlaceType)
 		{
-			writeConfig.AddTherapyPlaceType(newTherapyPlaceType);
+			lock (this)
+			{
+				writeConfig.AddTherapyPlaceType(newTherapyPlaceType);
+			}
 		}
 
 		public void UpdateTherapyPlaceType(TherapyPlaceType updatedTherapyPlaceType)
-		{ 
-			writeConfig.UpdateTherapyPlaceType(updatedTherapyPlaceType);
+		{
+			lock (this)
+			{
+				writeConfig.UpdateTherapyPlaceType(updatedTherapyPlaceType);
+			}
 		}
 
 		public TherapyPlaceType GetTherapyPlaceType(Guid id)
 		{
-			return readConfig.GetTherapyPlaceTypeById(id);
+			lock (this)
+			{
+				return readConfig.GetTherapyPlaceTypeById(id);
+			}
 		}
 
 		#endregion
@@ -75,28 +96,43 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 
 		public IEnumerable<MedicalPractice> GetAllMedicalPractices ()
 		{
-			return readConfig.GetAllMedicalPractices();
+			lock (this)
+			{
+				return readConfig.GetAllMedicalPractices();
+			}
 		}
 
 		public void AddNewMedicalPractice (MedicalPractice newMedicalPractice)
 		{
-			writeConfig.AddMedicalPractice(newMedicalPractice);
+			lock (this)
+			{
+				writeConfig.AddMedicalPractice(newMedicalPractice);
+			}
 		}
 
 		public void UpdateMedicalPractice (MedicalPractice updatedMedicalPractice)
 		{
-			writeConfig.RemoveMedicalPractice(updatedMedicalPractice.Id);
-			writeConfig.AddMedicalPractice(updatedMedicalPractice);
+			lock (this)
+			{
+				writeConfig.RemoveMedicalPractice(updatedMedicalPractice.Id);
+				writeConfig.AddMedicalPractice(updatedMedicalPractice);
+			}
 		}
 
 		public void RemoveMedicalPractice(MedicalPractice medicalPracticeToRemove)
 		{
-			writeConfig.RemoveMedicalPractice(medicalPracticeToRemove.Id);
+			lock (this)
+			{
+				writeConfig.RemoveMedicalPractice(medicalPracticeToRemove.Id);
+			}
 		}
 
 		public MedicalPractice GetMedicalPractice(Guid id)
 		{
-			return readConfig.GetMedicalPracticeById(id);
+			lock (this)
+			{
+				return readConfig.GetMedicalPracticeById(id);
+			}
 		}
 
 		#endregion
