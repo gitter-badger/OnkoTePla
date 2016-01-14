@@ -7,35 +7,32 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
+using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 {
 	public class ConnectionService : DisposingObject, 
 								     IConnectionService
-	{
-		private class SessionInfo
-		{
-			public ConnectionSessionId SessionId         { get; set; }
-			public Time                CreationTime      { get; set; }
-			public AddressIdentifier   ClientAddress     { get; set; }
-			public bool                IsDebugConnection { get; set; }
-		}
-
+	{		
 		public event Action<ConnectionSessionId> NewSessionStarted;
 		public event Action<ConnectionSessionId> SessionTerminated;
 		
 		private readonly NetMQContext zmqContext;
+		private readonly IDataCenter dataCenter;
 		private readonly IList<SessionInfo> currentSessions;
 
-		private AcceptConnectionBeginThread acceptConnectionBeginThread;
+		private AcceptConnectionBeginThread      acceptConnectionBeginThread;
 		private AcceptDebugConnectionBeginThread acceptDebugConnectionBeginThread;
-		private AcceptConnectionEndThread   acceptConnectionEndThread;
+		private AcceptConnectionEndThread        acceptConnectionEndThread;
+		private DataRequestThread                dataRequestThread;
+
 		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads; 
 
-		internal ConnectionService (NetMQContext zmqContext)
+		internal ConnectionService (NetMQContext zmqContext, IDataCenter dataCenter)
 		{
 			this.zmqContext = zmqContext;
+			this.dataCenter = dataCenter;
 
 			currentSessions = new List<SessionInfo>();
 			heartbeatThreads = new Dictionary<ConnectionSessionId, HeartbeatThread>();
@@ -56,6 +53,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			acceptConnectionEndThread = new AcceptConnectionEndThread(zmqContext, serverAddress);
 			acceptConnectionEndThread.ConnectionEnded += OnConnectionEnded;			
 			new Thread(acceptConnectionEndThread.Run).Start();
+
+			dataRequestThread = new DataRequestThread(dataCenter, zmqContext, serverAddress, currentSessions, null);
+			new Thread(dataRequestThread.Run).Start();
 		}		
 
 		private void OnConnectionEnded(ConnectionSessionId connectionSessionId)
@@ -71,26 +71,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 		private void OnNewDebugConnectionEstablished (AddressIdentifier clientAddress, ConnectionSessionId id)
 		{
-			currentSessions.Add(new SessionInfo
-			{
-				ClientAddress = clientAddress,
-				SessionId = id,
-				CreationTime = TimeTools.GetCurrentTimeStamp().Item2,
-				IsDebugConnection = true
-			});			
+			currentSessions.Add(new SessionInfo(id, TimeTools.GetCurrentTimeStamp().Item2, clientAddress, true));			
 
 			NewSessionStarted?.Invoke(id);
 		}
 
 		private void OnNewConnectionEstablished(AddressIdentifier clientAddress, ConnectionSessionId id)
-		{
-			currentSessions.Add(new SessionInfo
-			{
-				ClientAddress = clientAddress,
-				SessionId = id,
-				CreationTime = TimeTools.GetCurrentTimeStamp().Item2,
-				IsDebugConnection = false
-			});
+		{ 
+			currentSessions.Add(new SessionInfo(id, TimeTools.GetCurrentTimeStamp().Item2, clientAddress,false));
 
 			var clientAdd = new Address(new TcpIpProtocol(), clientAddress);
 			var heartbeatThread = new HeartbeatThread(zmqContext, clientAdd, id);
@@ -137,6 +125,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 			acceptConnectionEndThread.ConnectionEnded -= OnConnectionEnded;
 			acceptConnectionEndThread.Stop();
+
+			dataRequestThread.Stop();
 
 			ServerAddress = null;
 		}

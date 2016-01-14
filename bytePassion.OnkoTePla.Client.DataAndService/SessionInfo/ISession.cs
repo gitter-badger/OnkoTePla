@@ -23,14 +23,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		/////////                                                                                   ///////////
 		/////////                                       user                                        ///////////
 		/////////                                                                                   ///////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		event Action<IReadOnlyList<User>> UserListAvailable;
-
-		User LoggedInUser { get; }
-		IReadOnlyList<User> AvailableUsers { get; }
-
-		void TryLogin(User user, string password);
+		///////////////////////////////////////////////////////////////////////////////////////////////////////		
+		 
+		ClientUserData LoggedInUser { get; }
+		void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback);
+		
+		void TryLogin(ClientUserData user, string password);
 		void Logout();
 
 

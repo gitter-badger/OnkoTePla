@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.OnkoTePla.Contracts.Config;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
@@ -14,5 +16,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		void TryConnect     (Address serverAddress, Address clientAddress);
 		void TryDebugConnect(Address serverAddress, Address clientAddress);
 		void TryDisconnect ();
+
+		void RequestUserList (Action<IReadOnlyList<ClientUserData>> dataReceivedCallback);
 	}
 }

@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
+using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestObjects;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ;
 using NLog;
@@ -35,7 +39,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		private bool ConnectionWasTerminated { get; set; }
 
 		private HeartbeatThead heartbeatThread;
-		
+		private DataRequestThread dataRequestThread;
+		private TimeoutBlockingQueue<RequestObject> requestWorkQueue; 
+
         public void TryConnect(Address serverAddress, Address clientAddress)
         {
 	        ConnectionWasTerminated = false;
@@ -79,17 +85,22 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			runningThread.Start();
 		}
 
+		public void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback)
+		{
+			requestWorkQueue.Put(new UserListRequestObject(dataReceivedCallback));
+		}
+
 		private void ConnectionEndResponseReceived()
 		{
 			Application.Current.Dispatcher.Invoke(
 				() =>
 				{
 					ConnectionWasTerminated = true;
-
-					heartbeatThread?.Stop();
-
+					
 					ConnectionStatus = ConnectionStatus.Disconnected;
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.Disconnected);
+
+					CleanUpAfterDisconnection();
 				});
 		}
 
@@ -112,9 +123,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 						heartbeatThread = new HeartbeatThead(zmqContext, ClientAddress, CurrentSessionId);
 						heartbeatThread.ServerVanished += OnServerVanished;
-						var runningThread = new Thread(heartbeatThread.Run);
-						runningThread.Start();
+						new Thread(heartbeatThread.Run).Start();						
 
+						requestWorkQueue = new TimeoutBlockingQueue<RequestObject>(1000);
+						dataRequestThread = new DataRequestThread(zmqContext, ServerAddress, requestWorkQueue, CurrentSessionId);
+						new Thread(dataRequestThread.Run).Start();
+						
 						ConnectionStatus = ConnectionStatus.Connected;
 						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
 					}					
@@ -137,7 +151,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					}
 					else
 					{
-						CurrentSessionId = connectionSessionId;						
+						CurrentSessionId = connectionSessionId;
+
+						requestWorkQueue = new TimeoutBlockingQueue<RequestObject>(1000);
+						dataRequestThread = new DataRequestThread(zmqContext, ServerAddress, requestWorkQueue, CurrentSessionId);
+						new Thread(dataRequestThread.Run).Start();
 
 						ConnectionStatus = ConnectionStatus.Connected;
 						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
@@ -154,8 +172,20 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			{
 				ConnectionStatus = ConnectionStatus.Disconnected;
 				ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost);
+
+				CleanUpAfterDisconnection();
 			}
-		}		
+		}
+
+		private void CleanUpAfterDisconnection()
+		{
+			heartbeatThread?.Stop();
+			heartbeatThread = null;
+
+			dataRequestThread.Stop();
+			dataRequestThread = null;
+			requestWorkQueue = null;
+		}
 
 		protected override void CleanUp()
 		{
