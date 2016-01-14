@@ -26,6 +26,8 @@
 
 		public const string PatientJsonPersistenceFile      = @"..\..\..\AppData\patients.json";
 		public const string ConfigJsonPersistenceFile       = @"..\..\..\AppData\config.json";		
-		public const string EventHistoryJsonPersistenceFile = @"..\..\..\AppData\eventHistory.json";		
-	}
+		public const string EventHistoryJsonPersistenceFile = @"..\..\..\AppData\eventHistory.json";
+
+        public const string EventHistoryBasePath = @"..\..\..\AppData\EventHistory";
+    }
 }

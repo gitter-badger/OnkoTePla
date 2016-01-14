@@ -10,6 +10,7 @@ using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Core.Repositories.StreamManagement;
 using bytePassion.OnkoTePla.Resources;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
@@ -39,12 +40,16 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 			localSettingsRepository.LoadRepository();
 
 
-			// EventStore
+            // EventStore
 
-			var eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
-			var eventStore = new EventStore(eventStorePersistenceService, configReadRepository);
+            var streamManager = new StreamManagementService(configReadRepository, GlobalConstants.EventHistoryBasePath);
+            streamManager.GetInitialEventStreams();
+
+            var eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
+			var eventStore = new EventStore(eventStorePersistenceService, streamManager, configReadRepository);
 			eventStore.LoadRepository();
 
+            
 
 			// Event- and CommandBus
 

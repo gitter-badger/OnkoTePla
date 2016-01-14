@@ -5,6 +5,7 @@ using bytePassion.OnkoTePla.Core.Repositories.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using bytePassion.OnkoTePla.Core.Repositories.StreamManagement;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.EventStore
@@ -12,16 +13,17 @@ namespace bytePassion.OnkoTePla.Core.Repositories.EventStore
     public class EventStore : IEventStore
 	{
 		private readonly IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService;
+        private readonly StreamManagementService streamManager;
 
-		private IList<EventStream<AggregateIdentifier>> eventStreams;
+        private IList<EventStream<AggregateIdentifier>> eventStreams;
 		private readonly IConfigurationReadRepository config;
 
-		public EventStore (IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService, 
-						   IConfigurationReadRepository config)
+		public EventStore (IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService, StreamManagementService streamManager, IConfigurationReadRepository config)
 		{
 			eventStreams = new List<EventStream<AggregateIdentifier>>();
 			this.persistenceService = persistenceService;
-			this.config = config;
+		    this.streamManager = streamManager;
+		    this.config = config;
 		}
 
 		public EventStream<AggregateIdentifier> GetEventStreamForADay (AggregateIdentifier id)
@@ -55,6 +57,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.EventStore
 		public void PersistRepository()
 		{
 			persistenceService.Persist(eventStreams);
+            streamManager.SaveStreams(eventStreams);
 		}
 
 		public void LoadRepository()
