@@ -40,10 +40,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 			// DataAndService
 
-			var dataCenterBuilder = new DataCenterBuilder(configRepository, configRepository);
-			var connectionServiceBuilder = new ConnectionServiceBuilder();
-
+			var dataCenterBuilder = new DataCenterBuilder(configRepository, configRepository);			
 			var dataCenter = dataCenterBuilder.Build();
+		
+			var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenter);
 			var connectionService = connectionServiceBuilder.Build();
 
 

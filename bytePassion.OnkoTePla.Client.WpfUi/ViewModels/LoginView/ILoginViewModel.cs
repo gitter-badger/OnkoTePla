@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using bytePassion.OnkoTePla.Contracts.Config;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 {
@@ -10,11 +11,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		ICommand DebugConnect { get; }
 		ICommand Disconnect   { get; }
 
-		ObservableCollection<string> AvailableUsers    { get; }
-		ObservableCollection<string> ClientIpAddresses { get; } 
+		ObservableCollection<ClientUserData> AvailableUsers    { get; }
+		ObservableCollection<string>         ClientIpAddresses { get; }
 
-		string SelectedUserName { get; set; }
-
+		ClientUserData SelectedUser { get; set; }
+		
 		string Password      {      set; }
 		string ServerAddress { get; set; }
 		string ClientAddress { get; set; }

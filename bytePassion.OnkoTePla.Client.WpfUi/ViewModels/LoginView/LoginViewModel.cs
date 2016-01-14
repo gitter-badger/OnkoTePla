@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -24,7 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private readonly ISession session;
 		private readonly IDataCenter dataCenter;
 
-		private string selectedUserName;
+		private ClientUserData selectedUser;
 		private string serverAddress;
 		private string clientAddress;
 
@@ -52,17 +51,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			AutoConnectOnNextStart = dataCenter.IsAutoConnectionEnabled;
 
-			AvailableUsers = session.AvailableUsers
-									.Select(user => user.Name)
-									.ToObservableCollection();
+			AvailableUsers = new ObservableCollection<ClientUserData>();
 
 			ClientIpAddresses = IpAddressCatcher.GetAllAvailableLocalIpAddresses()
 												.Select(address => address.Identifier.ToString())
 												.ToObservableCollection();
 
 			ClientAddress = ClientIpAddresses.First();
-
-			session.UserListAvailable       += OnNewUserListAvailable;
+			
 			session.ApplicationStateChanged += OnApplicationStateChanged;
 
 			currentlyTryingToConnect = false;
@@ -100,6 +96,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			{
 				currentlyTryingToConnect = false;
 				AreConnectionSettingsVisible = false;
+
+				session.RequestUserList(userList =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						AvailableUsers.Clear();
+						userList.Do(userData => AvailableUsers.Add(userData));						
+					});					
+				});
 			}
 
 			((Command)Login).RaiseCanExecuteChanged();
@@ -109,14 +114,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		}	
 		
 		
-		private void OnNewUserListAvailable(IReadOnlyList<User> newUserList)
-		{
-			AvailableUsers.Clear();
-
-			newUserList.Select(user => user.Name)
-					   .Do(AvailableUsers.Add);
-		}
-
 		private void DoDisconnect()
 		{
 			session.TryDisconnect();
@@ -186,15 +183,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		}
 
 		private void DoLogin()
-		{
-			var selectedUser = session.AvailableUsers.First(user => user.Name == SelectedUserName);
-
+		{			
 			session.TryLogin(selectedUser, Password);
 		}
 		private bool IsLoginPossible ()
 		{
 			return session.CurrentApplicationState == ApplicationState.ConnectedButNotLoggedIn &&
-				   !string.IsNullOrWhiteSpace(SelectedUserName);
+				   SelectedUser != null;
 		}
 
 		public ICommand Login        { get; }
@@ -202,15 +197,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		public ICommand DebugConnect { get; }
 		public ICommand Disconnect   { get; }
 
-		public ObservableCollection<string> AvailableUsers    { get; }
-		public ObservableCollection<string> ClientIpAddresses { get; }
-
-		public string SelectedUserName
+		public ObservableCollection<ClientUserData> AvailableUsers    { get; }
+		public ObservableCollection<string>         ClientIpAddresses { get; }
+		
+		public ClientUserData SelectedUser
 		{
-			get { return selectedUserName; }
+			get { return selectedUser; }
 			set
 			{
-				PropertyChanged.ChangeAndNotify(this, ref selectedUserName, value);
+				PropertyChanged.ChangeAndNotify(this, ref selectedUser, value);
 				((Command)Login).RaiseCanExecuteChanged();
 			}
 		}
@@ -246,8 +241,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		}
 
 		protected override void CleanUp()
-		{
-			session.UserListAvailable       -= OnNewUserListAvailable;			
+		{			
 			session.ApplicationStateChanged -= OnApplicationStateChanged;
 		}
 		public override event PropertyChangedEventHandler PropertyChanged;

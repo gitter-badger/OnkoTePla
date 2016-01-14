@@ -1,6 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
+using bytePassion.OnkoTePla.Contracts.Config;
 
 #pragma warning disable 0067
 
@@ -10,11 +13,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
     {
 	    public LoginViewModelSampleData()
 	    {
-		    AvailableUsers = new ObservableCollection<string>
+		    AvailableUsers = new ObservableCollection<ClientUserData>
 		    {
-			    "User1",
-				"User2"
-		    };
+			    new ClientUserData("user1", Guid.NewGuid()),
+				new ClientUserData("user2", Guid.NewGuid())
+			};
 
 			ClientIpAddresses = new ObservableCollection<string>
 			{
@@ -22,7 +25,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				"192.168.128.13"
 			};
 
-		    SelectedUserName = "User2";
+		    SelectedUser = AvailableUsers.First();
 		    ServerAddress = "192.168.128.12";
 			ClientAddress = "192.168.128.13";
 
@@ -35,13 +38,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		public ICommand DebugConnect => null;
 		public ICommand Disconnect   => null;
 
-	    public ObservableCollection<string> AvailableUsers { get; }
-		public ObservableCollection<string> ClientIpAddresses { get; }
+	    public ObservableCollection<ClientUserData> AvailableUsers { get; }
+		public ObservableCollection<string>         ClientIpAddresses { get; }
 
-		public string SelectedUserName  { get; set;  }
-	    public string Password          {      set {}}
-	    public string ServerAddress     { get; set;  }
-		public string ClientAddress     { get; set;  }
+		public ClientUserData SelectedUser  { get; set;  }
+	    public string         Password      {      set {}}
+	    public string         ServerAddress { get; set;  }
+		public string         ClientAddress { get; set;  }
 
 		public bool AreConnectionSettingsVisible { get; set; }
 

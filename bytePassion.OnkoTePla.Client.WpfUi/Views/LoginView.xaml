@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:loginView="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView"             
+             xmlns:loginView="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView"
+             xmlns:config="clr-namespace:bytePassion.OnkoTePla.Contracts.Config;assembly=bytePassion.OnkoTePla.Contracts"
              d:DesignHeight="500"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -68,9 +69,17 @@
                                   Height="30"
                                   Margin="5"
                                   ItemsSource="{Binding AvailableUsers}"
-                                  SelectedItem="{Binding SelectedUserName,
+                                  SelectedItem="{Binding SelectedUser,
                                                          Mode=TwoWay,
-                                                         UpdateSourceTrigger=PropertyChanged}" />
+                                                         UpdateSourceTrigger=PropertyChanged}">
+							
+							<ComboBox.ItemTemplate>
+								<DataTemplate DataType="{x:Type config:ClientUserData}">
+									<TextBlock Text="{Binding Name}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+							
+						</ComboBox>
 
                         <Button Grid.Row="0"
                                 Grid.RowSpan="2"
