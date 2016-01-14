@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace bytePassion.Lib.ConcurrencyLib
 {
-    public class BlockingQueue<T>
+	public class BlockingQueue<T>
     {
         private readonly Queue<T> queue;
 

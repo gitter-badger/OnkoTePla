@@ -67,6 +67,7 @@
     <Compile Include="ConcurrencyLib\FixedThreadExecutor.cs" />
     <Compile Include="ConcurrencyLib\IThread.cs" />
     <Compile Include="ConcurrencyLib\IThreadTask.cs" />
+    <Compile Include="ConcurrencyLib\TimeoutBlockingQueue.cs" />
     <Compile Include="ConcurrencyLib\WorkPackage.cs" />
     <Compile Include="FrameworkExtensions\DispatcherExtension.cs" />
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
