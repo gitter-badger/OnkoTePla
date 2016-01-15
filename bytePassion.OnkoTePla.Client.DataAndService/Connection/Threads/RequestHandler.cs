@@ -11,16 +11,16 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 	internal static class RequestHandler
 	{
 		#region userListRequest
-
+		 
 		public static void HandleUserListRequest(UserListRequestObject userListRequest, 
 												 ConnectionSessionId sessionId, RequestSocket socket)
 		{
 		 	
-			var outMessage = NetworkMessageCoding.Decode(new UserListRequest(sessionId));
+			var outMessage = NetworkMessageCoding.Encode(new UserListRequest(sessionId));
 			socket.SendAString(outMessage, TimeSpan.FromSeconds(2));
 
 			var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(5));
-			var response = NetworkMessageCoding.Encode(inMessage);
+			var response = NetworkMessageCoding.Decode(inMessage);
 
 			switch (response.Type)
 			{
