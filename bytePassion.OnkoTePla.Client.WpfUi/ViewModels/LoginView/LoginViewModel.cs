@@ -28,7 +28,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private string serverAddress;
 		private string clientAddress;
 
-		private bool currentlyTryingToConnect;
+		private bool currentlyTryingToConnect;		
+
 		private bool autoConnectOnNextStart;
 		private bool areConnectionSettingsVisible;
 		private bool isUserListAvailable;
@@ -62,9 +63,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			ClientAddress = ClientIpAddresses.First();
 			
 			session.ApplicationStateChanged += OnApplicationStateChanged;
+			OnApplicationStateChanged(session.CurrentApplicationState);
 
-			currentlyTryingToConnect = false;
-			IsUserListAvailable = false;
 			AreConnectionSettingsVisible = !AutoConnectOnNextStart;
 
 			if (AutoConnectOnNextStart)
@@ -94,11 +94,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 				currentlyTryingToConnect = false;
 				AreConnectionSettingsVisible = true;
+				IsUserListAvailable = false;				
+			}
+
+			if (applicationState == ApplicationState.DisconnectedFromServer && !currentlyTryingToConnect)
+			{
+				AvailableUsers.Clear();
+				SelectedUser = null;
+				currentlyTryingToConnect = false;				
 				IsUserListAvailable = false;
 			}
 
 			if (applicationState == ApplicationState.ConnectedButNotLoggedIn)
-			{
+			{				
 				currentlyTryingToConnect = false;
 				AreConnectionSettingsVisible = false;
 
@@ -229,6 +237,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 						await dialog.ShowMahAppsDialog();
 					});
 				});
+
+			passwordBox.Password = "";
 		}
 		private bool IsLoginPossible (PasswordBox passwordBox)
 		{			

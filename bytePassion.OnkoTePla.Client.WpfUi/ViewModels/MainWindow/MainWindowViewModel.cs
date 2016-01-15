@@ -54,9 +54,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 			switch (newApplicationState)
 			{
 				case ApplicationState.LoggedIn:
-				{
-					LoginViewModel.Dispose();					
-
+				{					
 					MainViewModel = mainViewModelBuilder.Build();
 
 					IsMainViewVisible = true;
@@ -70,9 +68,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 					if (MainViewModel != null)
 					{
 						mainViewModelBuilder.DisposeViewModel(MainViewModel);
-						MainViewModel = null;
-
-						LoginViewModel = loginViewModelBuilder.Build();
+						MainViewModel = null;						
 
 						IsMainViewVisible = false;
 						IsLoginViewVisible = true;

@@ -5,6 +5,8 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:loginView="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView"
              xmlns:config="clr-namespace:bytePassion.OnkoTePla.Contracts.Config;assembly=bytePassion.OnkoTePla.Contracts"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Behaviors"
              d:DesignHeight="500"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -110,7 +112,13 @@
 									 Name="PasswordBox"
 									 VerticalContentAlignment="Center"
                                      Height="30"
-                                     Margin="5"/>
+                                     Margin="5">
+
+							<i:Interaction.Behaviors>
+								<behaviors:PasswordBoxRemovePassordOnDisabledBehavior/>
+							</i:Interaction.Behaviors>
+
+						</PasswordBox>
 
                     </Grid>
 
