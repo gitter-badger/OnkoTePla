@@ -13,6 +13,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		IEnumerable<User> GetAllUsers();
 		void AddNewUser(User newUser);
 		void UpdateUser(User updatedUser);
+		User GetUser(Guid id);
 
 		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes();
 		void AddNewTherapyPlaceType(TherapyPlaceType newTherapyPlaceType);

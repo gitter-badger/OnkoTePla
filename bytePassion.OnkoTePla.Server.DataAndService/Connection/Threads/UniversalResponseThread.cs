@@ -50,11 +50,12 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 					if (inMessage == "")
 						continue;
 
-					var request = NetworkMessageCoding.Decode((string) inMessage);
+					var request = NetworkMessageCoding.Decode(inMessage);
 
 					switch (request.Type)
 					{
 						case NetworkMessageType.GetUserListRequest: { ResponseHandler.HandleUserListRequest((UserListRequest)request, sessionRepository, socket, dataCenter); break; }
+						case NetworkMessageType.LoginRequest:       { ResponseHandler.HandleLoginRequest   ((LoginRequest)   request, sessionRepository, socket, dataCenter); break; }
 					}					
 				}
 			}

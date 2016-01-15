@@ -53,6 +53,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 			}
 		}
 
+		public User GetUser(Guid id)
+		{
+			lock (this)
+			{
+				return readConfig.GetUserById(id);
+			}
+		}
+
 		#endregion
 
 		#region therapyPlaceTypes

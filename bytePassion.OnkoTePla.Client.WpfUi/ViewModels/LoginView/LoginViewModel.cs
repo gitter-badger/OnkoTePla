@@ -218,12 +218,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			session.TryLogin(
 				selectedUser, 
 				Password,
-				async errorMessage =>
+				errorMessage =>
 				{
-					var dialog = new UserDialogBox("", 
-												   $"Login nicht möglich:\n>> {errorMessage} <<",
-												   MessageBoxButton.OK);
-					await dialog.ShowMahAppsDialog();
+					Application.Current.Dispatcher.Invoke(async () =>
+					{
+						var dialog = new UserDialogBox("",
+													   $"Login nicht möglich:\n>> {errorMessage} <<",
+													   MessageBoxButton.OK);
+						await dialog.ShowMahAppsDialog();
+					});
 				});
 		}
 		private bool IsLoginPossible ()

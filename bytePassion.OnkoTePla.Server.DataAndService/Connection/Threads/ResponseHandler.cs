@@ -38,9 +38,38 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 		#region LoginRequest
 
 		public static void HandleLoginRequest(LoginRequest request, ICurrentSessionsInfo sessionRepository,
-											  ResponseSocket socket)
+											  ResponseSocket socket, IDataCenter dataCenter)
 		{
-			
+			if (!sessionRepository.DoesSessionExist(request.SessionId))
+			{
+				var errorResponse = NetworkMessageCoding.Encode(new ErrorResponse("the session-ID is invalid"));
+				socket.SendAString(errorResponse, TimeSpan.FromSeconds(2));
+				return;
+			}
+
+			if (sessionRepository.IsUserLoggedIn(request.UserId))
+			{
+				var sessionInfo = sessionRepository.GetSessionForUser(request.UserId);
+
+				if (sessionInfo != null && sessionInfo.SessionId != request.SessionId)
+				{
+					var errorResponse = NetworkMessageCoding.Encode(new ErrorResponse("the user is already logged in"));
+					socket.SendAString(errorResponse, TimeSpan.FromSeconds(2));
+					return;
+				}
+			}
+
+			var user = dataCenter.GetUser(request.UserId);
+
+			if (user.Password != request.Password)
+			{
+				var errorResponse = NetworkMessageCoding.Encode(new ErrorResponse("the password is incorrect"));
+				socket.SendAString(errorResponse, TimeSpan.FromSeconds(2));
+				return;
+			}
+
+			var response = NetworkMessageCoding.Encode(new LoginResponse());
+			socket.SendAString(response, TimeSpan.FromSeconds(2));			
 		}
 
 		#endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
@@ -85,8 +86,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			connectionService.TryLogin(
 				() =>
 				{
-					LoggedInUser = user;
-					ApplyWorkflowEvent(WorkflowEvent.LoggedIn);
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						LoggedInUser = user;
+						ApplyWorkflowEvent(WorkflowEvent.LoggedIn);
+					});
 				},
 				user,
 				password,
