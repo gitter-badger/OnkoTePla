@@ -5,7 +5,6 @@ using System.Windows.Input;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage.Helper;
@@ -46,17 +45,17 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 			connectionService.SessionTerminated += OnSessionTerminated;
 	    }
 
-		private void OnSessionTerminated(ConnectionSessionId id)
+		private void OnSessionTerminated(SessionInfo sessionInfo)
 		{
-			var displayData = ConnectedClients.First(dd => dd.SessionId == id.ToString());
+			var displayData = ConnectedClients.First(dd => dd.SessionId == sessionInfo.SessionId.ToString());
 			ConnectedClients.Remove(displayData);
 		}
 
-		private void OnNewSessionStarted(ConnectionSessionId id)
+		private void OnNewSessionStarted(SessionInfo sessionInfo)
 		{
-			ConnectedClients.Add(new ConnectedClientDisplayData(id.ToString(),
-																connectionService.GetSessionStartTime(id).ToString(),
-																connectionService.GetAddress(id).ToString()));			
+			ConnectedClients.Add(new ConnectedClientDisplayData(sessionInfo.SessionId.ToString(),
+																sessionInfo.CreationTime.ToString(),
+																sessionInfo.ClientAddress.ToString()));			
 		}
 
 		private void UpdateAddresses()

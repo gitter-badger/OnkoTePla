@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -8,6 +7,7 @@ using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
@@ -15,33 +15,50 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 	public class ConnectionService : DisposingObject, 
 								     IConnectionService
 	{		
-		public event Action<ConnectionSessionId> NewSessionStarted;
-		public event Action<ConnectionSessionId> SessionTerminated;
-		
+		public event Action<SessionInfo> NewSessionStarted
+		{
+			add    { sessionRepository.NewSessionStarted += value; }
+			remove { sessionRepository.NewSessionStarted -= value; }
+		}
+		public event Action<SessionInfo> SessionTerminated
+		{
+			add    { sessionRepository.SessionTerminated += value; }
+			remove { sessionRepository.SessionTerminated -= value; }
+		}
+		public event Action<SessionInfo> LoggedInUserUpdated
+		{
+			add    { sessionRepository.LoggedInUserUpdated += value; }
+			remove { sessionRepository.LoggedInUserUpdated -= value; }
+		}
+		 
+		public SessionInfo GetSessionInfo (ConnectionSessionId id)
+		{
+			return sessionRepository.GetSessionInfo(id);
+		}
+
 		private readonly NetMQContext zmqContext;
 		private readonly IDataCenter dataCenter;
-		private readonly IList<SessionInfo> currentSessions;
+		private readonly ICurrentSessionsInfo sessionRepository;
+		
 
 		private AcceptConnectionBeginThread      acceptConnectionBeginThread;
 		private AcceptDebugConnectionBeginThread acceptDebugConnectionBeginThread;
 		private AcceptConnectionEndThread        acceptConnectionEndThread;
-		private UniversalResponseThread                universalResponseThread;
+		private UniversalResponseThread          universalResponseThread;
 
 		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads; 
 
-		internal ConnectionService (NetMQContext zmqContext, IDataCenter dataCenter)
+		internal ConnectionService (NetMQContext zmqContext, IDataCenter dataCenter, ICurrentSessionsInfo sessionRepository)
 		{
 			this.zmqContext = zmqContext;
 			this.dataCenter = dataCenter;
-
-			currentSessions = new List<SessionInfo>();
+			this.sessionRepository = sessionRepository;
+			
 			heartbeatThreads = new Dictionary<ConnectionSessionId, HeartbeatThread>();
 		}
-
+		
 		public void InitiateCommunication(Address serverAddress)
-		{
-			ServerAddress = serverAddress;
-
+		{			
 			acceptConnectionBeginThread = new AcceptConnectionBeginThread(zmqContext, serverAddress);
 			acceptConnectionBeginThread.NewConnectionEstablished += OnNewConnectionEstablished;
 			new Thread(acceptConnectionBeginThread.Run).Start();
@@ -54,59 +71,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			acceptConnectionEndThread.ConnectionEnded += OnConnectionEnded;			
 			new Thread(acceptConnectionEndThread.Run).Start();
 			
-			universalResponseThread = new UniversalResponseThread(dataCenter, zmqContext, serverAddress, currentSessions, null);
+			universalResponseThread = new UniversalResponseThread(dataCenter, zmqContext, serverAddress, sessionRepository);
 			new Thread(universalResponseThread.Run).Start();
-		}		
-
-		private void OnConnectionEnded(ConnectionSessionId connectionSessionId)
-		{			
-			var session = currentSessions.FirstOrDefault(s => s.SessionId == connectionSessionId);
-
-			if (session != null)                                    
-			{                                                       
-				currentSessions.Remove(session);               
-				SessionTerminated?.Invoke(connectionSessionId); 
-			}            
-		}
-
-		private void OnNewDebugConnectionEstablished (AddressIdentifier clientAddress, ConnectionSessionId id)
-		{
-			currentSessions.Add(new SessionInfo(id, TimeTools.GetCurrentTimeStamp().Item2, clientAddress, true));			
-
-			NewSessionStarted?.Invoke(id);
-		}
-
-		private void OnNewConnectionEstablished(AddressIdentifier clientAddress, ConnectionSessionId id)
-		{ 
-			currentSessions.Add(new SessionInfo(id, TimeTools.GetCurrentTimeStamp().Item2, clientAddress,false));
-
-			var clientAdd = new Address(new TcpIpProtocol(), clientAddress);
-			var heartbeatThread = new HeartbeatThread(zmqContext, clientAdd, id);
-
-			heartbeatThreads.Add(id, heartbeatThread);
-			heartbeatThread.ClientVanished += HeartbeatOnClientVanished;
-			var runnableThread = new Thread(heartbeatThread.Run);
-			runnableThread.Start();
-
-			NewSessionStarted?.Invoke(id);
-		}
-
-		private void HeartbeatOnClientVanished(ConnectionSessionId connectionSessionId)
-		{
-			var heartbeatThread = heartbeatThreads[connectionSessionId];
-			heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
-			heartbeatThreads.Remove(connectionSessionId);
-
-			var session = currentSessions.FirstOrDefault(s => s.SessionId == connectionSessionId);
-
-			if (session != null)									//
-			{														//	session will be null
-				currentSessions.Remove(session);					//  when ended by 
-				SessionTerminated?.Invoke(connectionSessionId);		//  connectionEndMessage
-			}														//
-		}
-
-		private Address ServerAddress { get; set; }
+		}				
 
 		public void StopCommunication()
 		{
@@ -126,24 +93,40 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			acceptConnectionEndThread.ConnectionEnded -= OnConnectionEnded;
 			acceptConnectionEndThread.Stop();
 
-			universalResponseThread.Stop();
-
-			ServerAddress = null;
+			universalResponseThread.Stop();			
 		}
 
-		public AddressIdentifier GetAddress(ConnectionSessionId sessionId)
+		private void OnConnectionEnded (ConnectionSessionId connectionSessionId)
 		{
-			var info = currentSessions.First(infoObj => infoObj.SessionId == sessionId);
-			return info.ClientAddress;
+			sessionRepository.RemoveSession(connectionSessionId);
 		}
-
-		public Time GetSessionStartTime(ConnectionSessionId sessionId)
+		private void OnNewDebugConnectionEstablished (AddressIdentifier clientAddressIdentifier, ConnectionSessionId id)
 		{
-			var info = currentSessions.First(infoObj => infoObj.SessionId == sessionId);
-			return info.CreationTime;
+			sessionRepository.AddSession(id, TimeTools.GetCurrentTimeStamp().Item2, clientAddressIdentifier, true);
+		}
+		private void OnNewConnectionEstablished (AddressIdentifier clientAddressIdentifier, ConnectionSessionId id)
+		{
+			sessionRepository.AddSession(id, TimeTools.GetCurrentTimeStamp().Item2, clientAddressIdentifier, false);
+
+			var clientAddress = new Address(new TcpIpProtocol(), clientAddressIdentifier);
+			var heartbeatThread = new HeartbeatThread(zmqContext, clientAddress, id);
+
+			heartbeatThreads.Add(id, heartbeatThread);
+			heartbeatThread.ClientVanished += HeartbeatOnClientVanished;
+			new Thread(heartbeatThread.Run).Start();
+		}
+		private void HeartbeatOnClientVanished (ConnectionSessionId connectionSessionId)
+		{
+			var heartbeatThread = heartbeatThreads[connectionSessionId];
+			heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
+			heartbeatThreads.Remove(connectionSessionId);
+
+			if (sessionRepository.DoesSessionExist(connectionSessionId))
+			{                                                               //	the session does not exist if it was
+				sessionRepository.RemoveSession(connectionSessionId);       //  ended corretly by connectionEndMessage
+			}
 		}
 
-	
 		protected override void CleanUp()
 		{
 			

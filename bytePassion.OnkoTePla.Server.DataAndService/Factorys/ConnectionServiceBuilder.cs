@@ -1,5 +1,6 @@
 ﻿using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
@@ -19,8 +20,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 		{
 			
 			zmqContext = NetMQContext.Create();
+			var sessionRepository = new CurrentSessionsInfo();
 
-			return new ConnectionService(zmqContext, dataCenter);
+			return new ConnectionService(zmqContext, dataCenter, sessionRepository);
 		}
 
 		public void DisposeConnectionService(IConnectionService connectionService)

@@ -69,6 +69,8 @@
     <Compile Include="Factorys\IConnectionServiceBuilder.cs" />
     <Compile Include="Factorys\IDataCenterBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionRepository\CurrentSessionsInfo.cs" />
+    <Compile Include="SessionRepository\ICurrentSessionsInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

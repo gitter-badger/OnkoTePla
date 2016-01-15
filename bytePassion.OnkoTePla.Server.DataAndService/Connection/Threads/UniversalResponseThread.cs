@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
@@ -7,6 +6,7 @@ using bytePassion.OnkoTePla.Contracts.NetworkMessages;
 using bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
@@ -16,22 +16,20 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 		private readonly IDataCenter dataCenter;
 		private readonly NetMQContext context;
 		private readonly Address serverAddress;
-		private readonly IList<SessionInfo> connectedSessions;
-		private readonly IList<Guid> loggedInUsers;
-
+		private readonly ICurrentSessionsInfo sessionRepository;
+		
 		private volatile bool stopRunning;
 		
 		
 		public UniversalResponseThread (IDataCenter dataCenter, 
 								  NetMQContext context, Address serverAddress,
-								  IList<SessionInfo> connectedSessions,
-								  IList<Guid> loggedInUsers)
+								  ICurrentSessionsInfo sessionRepository)
 		{
 			this.dataCenter = dataCenter;
 			this.context = context;
 			this.serverAddress = serverAddress;
-			this.connectedSessions = connectedSessions;
-			this.loggedInUsers = loggedInUsers;
+			this.sessionRepository = sessionRepository;
+
 
 			stopRunning = false;
 			IsRunning = false;
@@ -56,7 +54,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 					switch (request.Type)
 					{
-						case NetworkMessageType.GetUserListRequest: { ResponseHandler.HandleUserListRequest((UserListRequest)request, connectedSessions, socket, dataCenter); break; }
+						case NetworkMessageType.GetUserListRequest: { ResponseHandler.HandleUserListRequest((UserListRequest)request, sessionRepository, socket, dataCenter); break; }
 					}					
 				}
 			}

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.NetworkMessages;
 using bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
@@ -14,10 +14,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 	{
 		#region UserListRequest
 
-		public static void HandleUserListRequest(UserListRequest request, IList<SessionInfo> connectedSessions,
+		public static void HandleUserListRequest(UserListRequest request, ICurrentSessionsInfo sessionRepository,
 												 ResponseSocket socket, IDataCenter dataCenter)
 		{
-			if (connectedSessions.All(session => session.SessionId != request.SessionId))
+			if (!sessionRepository.DoesSessionExist(request.SessionId))
 			{
 				var errorResponse = NetworkMessageCoding.Encode(new ErrorResponse("the session-ID is invalid"));
 				socket.SendAString(errorResponse, TimeSpan.FromSeconds(2));
@@ -36,7 +36,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		#region LoginRequest
 
-		public static void HandleLoginRequest()
+		public static void HandleLoginRequest(LoginRequest request, ICurrentSessionsInfo sessionRepository,
+											  ResponseSocket socket)
 		{
 			
 		}
