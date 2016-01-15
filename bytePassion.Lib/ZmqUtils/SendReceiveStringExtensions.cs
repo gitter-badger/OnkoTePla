@@ -10,15 +10,17 @@ namespace bytePassion.Lib.ZmqUtils
 
 		private static readonly Encoding Encoding = new UTF8Encoding();
 
-		public static void SendAString(this NetMQSocket socket, string message, TimeSpan timeout)
-		{			
+		public static bool SendAString(this NetMQSocket socket, string message, TimeSpan timeout)
+		{			 
 			var outMsg = new Msg();
 			outMsg.InitPool(Encoding.GetByteCount(message));
 			Encoding.GetBytes(message, 0, message.Length, outMsg.Data, 0);
 			
-			socket.TrySend(ref outMsg, timeout, false);			
+			var sendSuccessful = socket.TrySend(ref outMsg, timeout, false);			
 
 			outMsg.Close();
+
+			return sendSuccessful;
 		}
 
 		public static string ReceiveAString(this NetMQSocket socket, TimeSpan timeout)
