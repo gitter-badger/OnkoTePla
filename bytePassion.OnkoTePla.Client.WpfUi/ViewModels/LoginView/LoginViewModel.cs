@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
@@ -38,8 +39,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		    this.session = session;
 			this.dataCenter = dataCenter;
 
-			Login = new Command(DoLogin,
-								IsLoginPossible);
+			Login = new ParameterrizedCommand<PasswordBox>(DoLogin,
+													       IsLoginPossible);
 
 			Connect = new Command(DoConnect,
 								  IsConnectPossible);
@@ -140,7 +141,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				);
 			}
 
-			((Command)Login).RaiseCanExecuteChanged();
+			((ParameterrizedCommand<PasswordBox>)Login).RaiseCanExecuteChanged();
 			((Command)Connect).RaiseCanExecuteChanged();
 			((Command)DebugConnect).RaiseCanExecuteChanged();
 			((Command)Disconnect).RaiseCanExecuteChanged();
@@ -213,11 +214,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			}
 		}
 		
-		private void DoLogin()
+		private void DoLogin(PasswordBox passwordBox)
 		{			
 			session.TryLogin(
 				selectedUser, 
-				Password,
+				passwordBox.Password,
 				errorMessage =>
 				{
 					Application.Current.Dispatcher.Invoke(async () =>
@@ -229,8 +230,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 					});
 				});
 		}
-		private bool IsLoginPossible ()
-		{
+		private bool IsLoginPossible (PasswordBox passwordBox)
+		{			
 			return session.CurrentApplicationState == ApplicationState.ConnectedButNotLoggedIn &&
 				   SelectedUser != null;
 		}
@@ -249,11 +250,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			set
 			{
 				PropertyChanged.ChangeAndNotify(this, ref selectedUser, value);
-				((Command)Login).RaiseCanExecuteChanged();
+				((ParameterrizedCommand<PasswordBox>)Login).RaiseCanExecuteChanged();
 			}
-		}
-
-		public string Password { private get; set; }
+		}		
 
 		public string ServerAddress
 		{

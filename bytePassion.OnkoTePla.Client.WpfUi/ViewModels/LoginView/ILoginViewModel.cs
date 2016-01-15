@@ -15,8 +15,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		ObservableCollection<string>         ClientIpAddresses { get; }
 
 		ClientUserData SelectedUser { get; set; }
-		
-		string Password      {      set; }
+				
 		string ServerAddress { get; set; }
 		string ClientAddress { get; set; }
 

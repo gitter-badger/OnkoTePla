@@ -86,7 +86,8 @@
                                 Grid.Column="3"
                                 Width="60"
                                 Height="60"
-                                Command="{Binding Login}">
+                                Command="{Binding Login}"
+								CommandParameter="{Binding ElementName=PasswordBox}">
 
                             <Viewbox Width="48" Height="48">
                                 <Canvas Width="24" Height="24">
@@ -96,7 +97,7 @@
 
                         </Button>
 
-                        <TextBlock Grid.Row="1"
+						<TextBlock Grid.Row="1"
                                    Grid.Column="0"
                                    Margin="10"
                                    HorizontalAlignment="Right"
@@ -104,13 +105,12 @@
                                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
                                    Text="Password:" />
 
-                        <TextBox Grid.Row="1"
-                                 Grid.Column="1"
-                                 Height="30"
-                                 Margin="5"
-                                 Text="{Binding Password,
-                                                Mode=OneWayToSource,
-                                                UpdateSourceTrigger=PropertyChanged}" />
+						<PasswordBox Grid.Row="1"
+                                     Grid.Column="1"
+									 Name="PasswordBox"
+									 VerticalContentAlignment="Center"
+                                     Height="30"
+                                     Margin="5"/>
 
                     </Grid>
 

@@ -42,10 +42,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 	    public ObservableCollection<ClientUserData> AvailableUsers { get; }
 		public ObservableCollection<string>         ClientIpAddresses { get; }
 
-		public ClientUserData SelectedUser  { get; set;  }
-	    public string         Password      {      set {}}
-	    public string         ServerAddress { get; set;  }
-		public string         ClientAddress { get; set;  }
+		public ClientUserData SelectedUser  { get; set; }	   
+	    public string         ServerAddress { get; set; }
+		public string         ClientAddress { get; set; }
 
 		public bool AreConnectionSettingsVisible { get; set; }
 		public bool IsUserListAvailable          { get; }
