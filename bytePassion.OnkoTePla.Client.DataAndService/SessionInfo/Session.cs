@@ -74,11 +74,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 
 		public ClientUserData LoggedInUser { get; private set; }
 
-		public void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback)
+		public void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback, 
+									Action<string> errorCallback)
 		{
-			connectionService.RequestUserList(dataReceivedCallback);
+			connectionService.RequestUserList(dataReceivedCallback, errorCallback);
 		}
-
+		
 		public void TryLogin(ClientUserData user, string password)
 		{
 			LoggedInUser = user;

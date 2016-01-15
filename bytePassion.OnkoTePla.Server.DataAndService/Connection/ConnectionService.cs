@@ -25,7 +25,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		private AcceptConnectionBeginThread      acceptConnectionBeginThread;
 		private AcceptDebugConnectionBeginThread acceptDebugConnectionBeginThread;
 		private AcceptConnectionEndThread        acceptConnectionEndThread;
-		private DataRequestThread                dataRequestThread;
+		private DataResponseThread                dataResponseThread;
 
 		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads; 
 
@@ -53,9 +53,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			acceptConnectionEndThread = new AcceptConnectionEndThread(zmqContext, serverAddress);
 			acceptConnectionEndThread.ConnectionEnded += OnConnectionEnded;			
 			new Thread(acceptConnectionEndThread.Run).Start();
-
-			dataRequestThread = new DataRequestThread(dataCenter, zmqContext, serverAddress, currentSessions, null);
-			new Thread(dataRequestThread.Run).Start();
+			
+			dataResponseThread = new DataResponseThread(dataCenter, zmqContext, serverAddress, currentSessions, null);
+			new Thread(dataResponseThread.Run).Start();
 		}		
 
 		private void OnConnectionEnded(ConnectionSessionId connectionSessionId)
@@ -126,7 +126,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			acceptConnectionEndThread.ConnectionEnded -= OnConnectionEnded;
 			acceptConnectionEndThread.Stop();
 
-			dataRequestThread.Stop();
+			dataResponseThread.Stop();
 
 			ServerAddress = null;
 		}

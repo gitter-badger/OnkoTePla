@@ -65,6 +65,7 @@
     <Compile Include="Connection\Threads\ConnectionBeginThead.cs" />
     <Compile Include="Connection\Threads\ConnectionEndThead.cs" />
     <Compile Include="Connection\Threads\HeartbeatThead.cs" />
+    <Compile Include="Connection\Threads\RequestHandler.cs" />
     <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Data\IDataCenter.cs" />
     <Compile Include="Factorys\DataCenterBuilder.cs" />

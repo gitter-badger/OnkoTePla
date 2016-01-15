@@ -85,9 +85,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			runningThread.Start();
 		}
 
-		public void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback)
+		public void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
+									Action<string> errorCallback)
 		{
-			requestWorkQueue.Put(new UserListRequestObject(dataReceivedCallback));
+			requestWorkQueue.Put(new UserListRequestObject(dataReceivedCallback, errorCallback));
 		}
 
 		private void ConnectionEndResponseReceived()

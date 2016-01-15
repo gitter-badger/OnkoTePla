@@ -7,12 +7,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestObjects
 {
 	internal class UserListRequestObject : RequestObject
 	{
-		public UserListRequestObject(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback) 
-			: base(NetworkMessageType.GetUserListRequest)
+		public UserListRequestObject(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback, 
+									 Action<string> errorCallback) 
+			: base(NetworkMessageType.GetUserListRequest, errorCallback)
 		{
-			DataReceivedCallback = dataReceivedCallback;
+			DataReceivedCallback = dataReceivedCallback;			
 		}
 
-		public Action<IReadOnlyList<ClientUserData>> DataReceivedCallback { get; }
+		public Action<IReadOnlyList<ClientUserData>> DataReceivedCallback { get; }		
 	}
 }

@@ -26,7 +26,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		///////////////////////////////////////////////////////////////////////////////////////////////////////		
 		 
 		ClientUserData LoggedInUser { get; }
-		void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback);
+		void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
+							 Action<string> errorCallback); 
 		
 		void TryLogin(ClientUserData user, string password);
 		void Logout();

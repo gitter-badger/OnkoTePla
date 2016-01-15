@@ -1,10 +1,7 @@
-using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
-using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestObjects;
 using bytePassion.OnkoTePla.Contracts.NetworkMessages;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.DataRequests;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
@@ -43,35 +40,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 
 				while (!stopRunning)
 				{
-					var workItem = workQueue.TimeoutTake();
+					var workItem = workQueue.TimeoutTake();					
 
 					if (workItem == null)
 						continue;
 
 					switch (workItem.RequestType)
 					{
-						case NetworkMessageType.GetUserListRequest:
-						{
-							var userListRequest = (UserListRequestObject) workItem;
-
-							var outMessage = NetworkMessageCoding.AsString(new UserListRequest(sessionId));
-							socket.SendAString(outMessage, TimeSpan.FromSeconds(2));
-
-							var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(5));
-							var response = NetworkMessageCoding.Parse(inMessage);
-
-							switch (response.Type)
-							{
-								case NetworkMessageType.GetUserListResponse:
-								{
-									var userListResponse = (UserListResponse) response;
-									userListRequest.DataReceivedCallback(userListResponse.AvailableUsers);
-									break;
-								}
-							}
-
-							break;
-						}
+						case NetworkMessageType.GetUserListRequest: { RequestHandler.HandleUserListRequest((UserListRequestObject)workItem, sessionId, socket); break; }
 					}
 				}									
 			}							

@@ -22,8 +22,8 @@ namespace bytePassion.Lib.ConcurrencyLib
 			queue = new Queue<T>();
 
 			takeTimeoutTimer = new Timer(TimerTick, null,
-										 TimeSpan.FromMilliseconds(takeTimeout / 2.0),
-										 TimeSpan.FromMilliseconds(takeTimeout / 2.0));
+										 TimeSpan.FromMilliseconds(takeTimeout),
+										 TimeSpan.FromMilliseconds(takeTimeout));
 			
 		}
 

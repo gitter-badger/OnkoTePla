@@ -97,14 +97,29 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				currentlyTryingToConnect = false;
 				AreConnectionSettingsVisible = false;
 
-				session.RequestUserList(userList =>
-				{
-					Application.Current.Dispatcher.Invoke(() =>
+				session.RequestUserList(
+					userList => 
 					{
-						AvailableUsers.Clear();
-						userList.Do(userData => AvailableUsers.Add(userData));						
-					});					
-				});
+						Application.Current.Dispatcher.Invoke(() =>
+						{
+							AvailableUsers.Clear();
+							userList.Do(userData => AvailableUsers.Add(userData));						
+						});					
+					},
+					errorMessage =>
+					{
+						Application.Current.Dispatcher.Invoke(async () =>
+						{
+							var dialog = new UserDialogBox("", 
+														  "Die Userliste kann nicht vom Server abgefragt werden:\n" +
+														  $">> {errorMessage} <<\n" +
+														  "Die Verbindung wird getrennt - versuchen Sie es erneut", 
+														  MessageBoxButton.OK);
+							await dialog.ShowMahAppsDialog();
+							Disconnect.Execute(null);
+						});
+					}
+				);
 			}
 
 			((Command)Login).RaiseCanExecuteChanged();
