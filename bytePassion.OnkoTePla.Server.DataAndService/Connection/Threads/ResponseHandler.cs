@@ -25,6 +25,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 			}
 
 			var userList = dataCenter.GetAllUsers()
+									 .Where(user => !user.IsHidden)
 									 .Select(user => new ClientUserData(user.ToString(), user.Id))
 									 .ToList();
 
