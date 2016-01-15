@@ -52,7 +52,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 					if (inMessage == "")
 						continue;
 
-					var request = NetworkMessageCoding.Encode(inMessage);
+					var request = NetworkMessageCoding.Decode((string) inMessage);
 
 					switch (request.Type)
 					{

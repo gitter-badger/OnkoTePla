@@ -5,12 +5,12 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages
 {
 	public static class NetworkMessageCoding
 	{
-		public static string Decode(NetworkMessageBase msg)
+		public static string Encode(NetworkMessageBase msg)
 		{
 			return msg.Type + "|" +  msg.AsString();
 		}
 		
-		public static NetworkMessageBase Encode(string messageString)
+		public static NetworkMessageBase Decode(string messageString)
 		{
 			var type = (NetworkMessageType)Enum.Parse(typeof(NetworkMessageType), GetTypeFromMsg(messageString));
 			var msg = GetMsgContent(messageString);
@@ -19,8 +19,10 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages
 			{
 				case NetworkMessageType.GetUserListRequest:  return UserListRequest.Parse(msg);
 				case NetworkMessageType.GetUserListResponse: return UserListResponse.Parse(msg);
+				case NetworkMessageType.LoginRequest:        return LoginRequest.Parse(msg);
+				case NetworkMessageType.LoginResponse:       return LoginResponse.Parse(msg);
 				case NetworkMessageType.ErrorResponse:       return ErrorResponse.Parse(msg);
-
+				
 				default:
 					throw new ArgumentException();
 			}

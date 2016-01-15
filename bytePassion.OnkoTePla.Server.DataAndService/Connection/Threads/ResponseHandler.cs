@@ -19,7 +19,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 		{
 			if (connectedSessions.All(session => session.SessionId != request.SessionId))
 			{
-				var errorResponse = NetworkMessageCoding.Decode(new ErrorResponse("the session-ID is invalid"));
+				var errorResponse = NetworkMessageCoding.Encode(new ErrorResponse("the session-ID is invalid"));
 				socket.SendAString(errorResponse, TimeSpan.FromSeconds(2));
 				return;
 			}
@@ -28,8 +28,17 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 									 .Select(user => new ClientUserData(user.ToString(), user.Id))
 									 .ToList();
 
-			var response = NetworkMessageCoding.Decode(new UserListResponse(userList));
+			var response = NetworkMessageCoding.Encode(new UserListResponse(userList));
 			socket.SendAString(response, TimeSpan.FromSeconds(2));
+		}
+
+		#endregion
+
+		#region LoginRequest
+
+		public static void HandleLoginRequest()
+		{
+			
 		}
 
 		#endregion

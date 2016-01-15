@@ -4,6 +4,8 @@
 	{
 		GetUserListRequest,		
 		GetUserListResponse,
+		LoginRequest,
+		LoginResponse,
 
 		ErrorResponse
 	}

@@ -60,7 +60,7 @@
     <Compile Include="Connection\ConnectionStatus.cs" />
     <Compile Include="Connection\RequestObjects\RequestObject.cs" />
     <Compile Include="Connection\RequestObjects\UserListRequestObject.cs" />
-    <Compile Include="Connection\Threads\DataRequestThread.cs" />
+    <Compile Include="Connection\Threads\UniversalRequestThread.cs" />
     <Compile Include="Connection\Threads\DebugConnectionBeginThead.cs" />
     <Compile Include="Connection\Threads\ConnectionBeginThead.cs" />
     <Compile Include="Connection\Threads\ConnectionEndThead.cs" />
