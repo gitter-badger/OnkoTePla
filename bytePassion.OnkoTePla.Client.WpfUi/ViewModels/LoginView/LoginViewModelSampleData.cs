@@ -31,6 +31,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			AutoConnectOnNextStart = true;
 		    AreConnectionSettingsVisible = true;
+		    IsUserListAvailable = true;
 	    }
 
 	    public ICommand Login        => null;
@@ -47,8 +48,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		public string         ClientAddress { get; set;  }
 
 		public bool AreConnectionSettingsVisible { get; set; }
-
-		public bool AutoConnectOnNextStart { get; set; }
+		public bool IsUserListAvailable          { get; }
+		public bool AutoConnectOnNextStart       { get; set; }
 
 		public void Dispose () { }
 		public event PropertyChangedEventHandler PropertyChanged;

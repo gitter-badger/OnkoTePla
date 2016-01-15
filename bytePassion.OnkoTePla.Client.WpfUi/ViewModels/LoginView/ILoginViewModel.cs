@@ -21,7 +21,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		string ClientAddress { get; set; }
 
 		bool AreConnectionSettingsVisible { get; set; }
-
-		bool AutoConnectOnNextStart { get; set; }
+		bool IsUserListAvailable          { get; }
+		bool AutoConnectOnNextStart       { get; set; }
     }
 }

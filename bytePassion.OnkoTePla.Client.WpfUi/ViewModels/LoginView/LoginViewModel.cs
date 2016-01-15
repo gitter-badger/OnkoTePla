@@ -30,6 +30,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private bool currentlyTryingToConnect;
 		private bool autoConnectOnNextStart;
 		private bool areConnectionSettingsVisible;
+		private bool isUserListAvailable;
 
 		public LoginViewModel(ISession session,
 							  IDataCenter dataCenter)
@@ -62,7 +63,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			session.ApplicationStateChanged += OnApplicationStateChanged;
 
 			currentlyTryingToConnect = false;
-
+			IsUserListAvailable = false;
 			AreConnectionSettingsVisible = !AutoConnectOnNextStart;
 
 			if (AutoConnectOnNextStart)
@@ -90,6 +91,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 				currentlyTryingToConnect = false;
 				AreConnectionSettingsVisible = true;
+				IsUserListAvailable = false;
 			}
 
 			if (applicationState == ApplicationState.ConnectedButNotLoggedIn)
@@ -100,10 +102,24 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				session.RequestUserList(
 					userList => 
 					{
-						Application.Current.Dispatcher.Invoke(() =>
+						Application.Current.Dispatcher.Invoke(async () =>
 						{
 							AvailableUsers.Clear();
-							userList.Do(userData => AvailableUsers.Add(userData));						
+							userList.Do(userData => AvailableUsers.Add(userData));
+							IsUserListAvailable = true;
+
+							if (AvailableUsers.Count > 0)
+							{
+								SelectedUser = AvailableUsers.First(); // TODO: letzt eingeloggten user wählen
+							}
+							else
+							{
+								var dialog = new UserDialogBox("",
+															   "Es sind keine verfügbaren User vorhanden\n" +														 
+															   "Die Verbindung wird getrennt!",
+															   MessageBoxButton.OK);
+								await dialog.ShowMahAppsDialog();
+							}
 						});					
 					},
 					errorMessage =>
@@ -247,6 +263,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		{
 			get { return areConnectionSettingsVisible; }
 			set { PropertyChanged.ChangeAndNotify(this, ref areConnectionSettingsVisible, value); }
+		}
+
+		public bool IsUserListAvailable
+		{
+			get { return isUserListAvailable; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref isUserListAvailable, value); }
 		}
 
 		public bool AutoConnectOnNextStart

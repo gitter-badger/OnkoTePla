@@ -40,9 +40,9 @@
 
                 <Border Grid.Row="1"
                         BorderBrush="{StaticResource SemiTransparentWhiteBrush}"
-                        BorderThickness="0,0,0,1">
+                        BorderThickness="0">
 
-                    <Grid>
+                    <Grid IsEnabled="{Binding IsUserListAvailable}">
 
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -119,7 +119,7 @@
                 <Expander Grid.Row="2"
                           Margin="0,20,0,0"
                           HorizontalContentAlignment="Stretch"
-                          Header="Verbindungsdaten"
+                          Header="Verbindungsoptionen"
                           IsExpanded="{Binding AreConnectionSettingsVisible,
 											   Mode=TwoWay,
 											   UpdateSourceTrigger=PropertyChanged}">
