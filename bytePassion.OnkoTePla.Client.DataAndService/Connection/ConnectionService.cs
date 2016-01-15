@@ -39,7 +39,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		private bool ConnectionWasTerminated { get; set; }
 
 		private HeartbeatThead heartbeatThread;
-		private DataRequestThread dataRequestThread;
+		private UniversalRequestThread universalRequestThread;
 		private TimeoutBlockingQueue<RequestObject> requestWorkQueue; 
 
         public void TryConnect(Address serverAddress, Address clientAddress)
@@ -127,8 +127,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 						new Thread(heartbeatThread.Run).Start();						
 
 						requestWorkQueue = new TimeoutBlockingQueue<RequestObject>(1000);
-						dataRequestThread = new DataRequestThread(zmqContext, ServerAddress, requestWorkQueue, CurrentSessionId);
-						new Thread(dataRequestThread.Run).Start();
+						universalRequestThread = new UniversalRequestThread(zmqContext, ServerAddress, requestWorkQueue, CurrentSessionId);
+						new Thread(universalRequestThread.Run).Start();
 						
 						ConnectionStatus = ConnectionStatus.Connected;
 						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
@@ -155,8 +155,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 						CurrentSessionId = connectionSessionId;
 
 						requestWorkQueue = new TimeoutBlockingQueue<RequestObject>(1000);
-						dataRequestThread = new DataRequestThread(zmqContext, ServerAddress, requestWorkQueue, CurrentSessionId);
-						new Thread(dataRequestThread.Run).Start();
+						universalRequestThread = new UniversalRequestThread(zmqContext, ServerAddress, requestWorkQueue, CurrentSessionId);
+						new Thread(universalRequestThread.Run).Start();
 
 						ConnectionStatus = ConnectionStatus.Connected;
 						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
@@ -183,8 +183,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			heartbeatThread?.Stop();
 			heartbeatThread = null;
 
-			dataRequestThread.Stop();
-			dataRequestThread = null;
+			universalRequestThread.Stop();
+			universalRequestThread = null;
 			requestWorkQueue = null;
 		}
 

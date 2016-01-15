@@ -1,4 +1,4 @@
-﻿namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.DataRequests
+﻿namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses
 {
 	public class ErrorResponse : NetworkMessageBase
 	{
@@ -7,7 +7,7 @@
 		{
 			ErrorMessage = errorMessage;
 		}
-
+		
 		public string ErrorMessage { get; } 
 
 		public override string AsString()

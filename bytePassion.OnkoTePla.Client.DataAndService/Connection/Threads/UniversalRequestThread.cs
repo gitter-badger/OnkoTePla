@@ -8,7 +8,7 @@ using NetMQ;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 {
-	internal class DataRequestThread : IThread
+	internal class UniversalRequestThread : IThread
 	{
 		private readonly NetMQContext context;
 		private readonly Address serverAddress;
@@ -18,7 +18,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 
 		private volatile bool stopRunning;
 		 
-		public DataRequestThread (NetMQContext context, 
+		public UniversalRequestThread (NetMQContext context, 
 								  Address serverAddress,			
 								  TimeoutBlockingQueue<RequestObject> workQueue,
 								  ConnectionSessionId sessionId)

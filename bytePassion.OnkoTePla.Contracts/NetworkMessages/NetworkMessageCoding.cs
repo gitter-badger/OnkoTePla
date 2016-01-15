@@ -1,5 +1,5 @@
 ﻿using System;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.DataRequests;
+using bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses;
 
 namespace bytePassion.OnkoTePla.Contracts.NetworkMessages
 {

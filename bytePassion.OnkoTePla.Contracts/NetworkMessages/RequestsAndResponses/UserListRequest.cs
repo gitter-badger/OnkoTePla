@@ -1,7 +1,7 @@
 ﻿using System;
 using bytePassion.OnkoTePla.Contracts.Types;
 
-namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.DataRequests
+namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses
 {
 	public class UserListRequest : NetworkMessageBase
 	{

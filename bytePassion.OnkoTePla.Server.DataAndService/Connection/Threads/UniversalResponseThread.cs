@@ -4,14 +4,14 @@ using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Contracts.NetworkMessages;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.DataRequests;
+using bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 {
-	internal class DataResponseThread : IThread
+	internal class UniversalResponseThread : IThread
 	{
 		private readonly IDataCenter dataCenter;
 		private readonly NetMQContext context;
@@ -22,7 +22,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 		private volatile bool stopRunning;
 		
 		
-		public DataResponseThread (IDataCenter dataCenter, 
+		public UniversalResponseThread (IDataCenter dataCenter, 
 								  NetMQContext context, Address serverAddress,
 								  IList<SessionInfo> connectedSessions,
 								  IList<Guid> loggedInUsers)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using bytePassion.OnkoTePla.Contracts.Config;
 
-namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.DataRequests
+namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses
 {
 	public class UserListResponse : NetworkMessageBase
 	{

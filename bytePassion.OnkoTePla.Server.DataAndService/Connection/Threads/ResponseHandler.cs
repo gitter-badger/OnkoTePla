@@ -4,7 +4,7 @@ using System.Linq;
 using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.NetworkMessages;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.DataRequests;
+using bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using NetMQ.Sockets;
 

@@ -2,7 +2,7 @@
 using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestObjects;
 using bytePassion.OnkoTePla.Contracts.NetworkMessages;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.DataRequests;
+using bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ.Sockets;
 
