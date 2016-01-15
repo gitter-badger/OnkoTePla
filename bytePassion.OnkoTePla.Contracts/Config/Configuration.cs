@@ -23,15 +23,13 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 			this.configuredUsers = configuredUsers.ToList();
 		}
 
-		#region TherapyPlaceTypes
-
-		public TherapyPlaceType GetTherapyPlaceTypeByName(string name)
-		{
-			 return configuredTherapyPlaceTypes.FirstOrDefault(therapyPlace => therapyPlace.Name == name);			
-		}
+		#region TherapyPlaceTypes		
 
 		public TherapyPlaceType GetTherapyPlaceTypeById(Guid id)
 		{
+			if (id == Guid.Empty)
+				return TherapyPlaceType.NoType;
+
 			return configuredTherapyPlaceTypes.FirstOrDefault(therapyPlace => therapyPlace.Id == id);
 		}
 
@@ -55,12 +53,7 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 
 
 		#region MedicalPractice
-
-		public MedicalPractice GetMedicalPracticeByName(string name)
-		{
-			return configuredMedicalPractices.FirstOrDefault(medicalPractice => medicalPractice.Name == name);
-		}
-
+		
 		public MedicalPractice GetMedicalPracticeById(Guid id)
 		{
 			return configuredMedicalPractices.FirstOrDefault(medicalPractice => medicalPractice.Id == id);
@@ -91,12 +84,7 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 
 
 		#region User
-
-		public User GetUserByName (string name)
-		{
-			return configuredUsers.FirstOrDefault(user => user.Name == name);
-		}
-
+		
 		public User GetUserById(Guid id)
 		{
 			return configuredUsers.FirstOrDefault(user => user.Id == id);

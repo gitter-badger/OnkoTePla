@@ -31,12 +31,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Config
 			return practice.Version;
 		}
 
-		#region Wrapper around Configuration
-
-		public MedicalPractice GetMedicalPracticeByName(string name)
-		{
-			return configuration.GetMedicalPracticeByName(name);
-		}
+		#region Wrapper around Configuration		
 
 		public MedicalPractice GetMedicalPracticeById(Guid id)
 		{
@@ -51,12 +46,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Config
 		public void RemoveMedicalPractice(Guid medicalPracticeId)
 		{
 			configuration.RemoveMedicalPractice(medicalPracticeId);
-		}
-
-		public TherapyPlaceType GetTherapyPlaceTypeByName(string name)
-		{
-			return configuration.GetTherapyPlaceTypeByName(name);
-		}
+		}		
 
 		public TherapyPlaceType GetTherapyPlaceTypeById(Guid id)
 		{
@@ -86,12 +76,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Config
 		public void UpdateTherapyPlaceType(TherapyPlaceType updatedTherapyPlaceType)
 		{
 			configuration.UpdateTherapyPlaceTupe(updatedTherapyPlaceType);
-		}
-
-		public User GetUserByName(string name)
-		{
-			return configuration.GetUserByName(name);
-		}
+		}		
 
 		public User GetUserById(Guid id)
 		{
