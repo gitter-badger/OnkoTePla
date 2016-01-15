@@ -42,12 +42,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 				{
 					var workItem = workQueue.TimeoutTake();					
 
-					if (workItem == null)
+					if (workItem == null)	// Timeout-case
 						continue;
 
 					switch (workItem.RequestType)
 					{
 						case NetworkMessageType.GetUserListRequest: { RequestHandler.HandleUserListRequest((UserListRequestObject)workItem, sessionId, socket); break; }
+						case NetworkMessageType.LoginRequest:       { RequestHandler.HandleLoginRequest   ((LoginRequestObject)   workItem, sessionId, socket); break; }
 					}
 				}									
 			}							

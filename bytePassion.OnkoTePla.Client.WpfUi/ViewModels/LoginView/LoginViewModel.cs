@@ -86,7 +86,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			if (applicationState == ApplicationState.DisconnectedFromServer && currentlyTryingToConnect)
 			{
-				var dialog = new UserDialogBox("", $"Es kann keine Verbindung mit {ServerAddress} hergestellt werden", MessageBoxButton.OK);
+				var dialog = new UserDialogBox("", 
+											   $"Es kann keine Verbindung mit {ServerAddress} hergestellt werden", 
+											   MessageBoxButton.OK);
 				await dialog.ShowMahAppsDialog();				
 
 				currentlyTryingToConnect = false;
@@ -170,7 +172,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			SetAutoConnectToSettings();
 		}
-
 		private async void DoConnect()
 		{
 			if (AddressIdentifier.IsIpAddressIdentifier(ServerAddress))
@@ -186,6 +187,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			}
 
 			SetAutoConnectToSettings();
+		}
+		private bool IsConnectPossible ()
+		{
+			if (ServerAddress == null)
+				return false;
+
+			return AddressIdentifier.IsIpAddressIdentifier(ServerAddress) &&
+				   session.CurrentApplicationState == ApplicationState.DisconnectedFromServer;
 		}
 
 		private void SetAutoConnectToSettings()
@@ -203,19 +212,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				dataCenter.AutoConnectionServerAddress = new IpV4AddressIdentifier(127, 0, 0, 1);
 			}
 		}
-
-		private bool IsConnectPossible ()
-		{
-			if (ServerAddress == null)
-				return false;
-
-			return AddressIdentifier.IsIpAddressIdentifier(ServerAddress) &&
-				   session.CurrentApplicationState == ApplicationState.DisconnectedFromServer;
-		}
-
+		
 		private void DoLogin()
 		{			
-			session.TryLogin(selectedUser, Password);
+			session.TryLogin(
+				selectedUser, 
+				Password,
+				async errorMessage =>
+				{
+					var dialog = new UserDialogBox("", 
+												   $"Login nicht möglich:\n>> {errorMessage} <<",
+												   MessageBoxButton.OK);
+					await dialog.ShowMahAppsDialog();
+				});
 		}
 		private bool IsLoginPossible ()
 		{
@@ -258,19 +267,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			get { return clientAddress; }
 			set { PropertyChanged.ChangeAndNotify(this, ref clientAddress, value); }
 		}
-
 		public bool AreConnectionSettingsVisible
 		{
 			get { return areConnectionSettingsVisible; }
 			set { PropertyChanged.ChangeAndNotify(this, ref areConnectionSettingsVisible, value); }
 		}
-
 		public bool IsUserListAvailable
 		{
 			get { return isUserListAvailable; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref isUserListAvailable, value); }
 		}
-
 		public bool AutoConnectOnNextStart
 		{
 			get { return autoConnectOnNextStart; }

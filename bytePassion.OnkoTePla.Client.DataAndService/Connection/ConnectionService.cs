@@ -14,7 +14,8 @@ using NLog;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
-	internal class ConnectionService : DisposingObject, IConnectionService
+	internal class ConnectionService : DisposingObject, 
+									   IConnectionService
 	{
 		private readonly ILogger logger;
 		private readonly NetMQContext zmqContext;
@@ -89,6 +90,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 									Action<string> errorCallback)
 		{
 			requestWorkQueue.Put(new UserListRequestObject(dataReceivedCallback, errorCallback));
+		}
+
+		public void TryLogin(Action loginSuccessfulCallback, ClientUserData user, string password, 
+							 Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new LoginRequestObject(loginSuccessfulCallback, user, password, errorCallback));
 		}
 
 		private void ConnectionEndResponseReceived()

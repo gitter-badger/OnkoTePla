@@ -19,5 +19,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		
 		void RequestUserList (Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
 							  Action<string> errorCallback);
+
+		void TryLogin (Action loginSuccessfulCallback,
+					   ClientUserData user, string password,
+					   Action<string> errorCallback); 
 	}
 }

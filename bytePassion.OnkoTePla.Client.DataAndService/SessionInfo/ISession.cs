@@ -29,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
 							 Action<string> errorCallback); 
 		
-		void TryLogin(ClientUserData user, string password);
+		void TryLogin(ClientUserData user, string password, Action<string> errorCallback);
 		void Logout();
 
 

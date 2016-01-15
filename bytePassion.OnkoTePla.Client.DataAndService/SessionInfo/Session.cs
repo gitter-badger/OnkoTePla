@@ -80,12 +80,20 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			connectionService.RequestUserList(dataReceivedCallback, errorCallback);
 		}
 		
-		public void TryLogin(ClientUserData user, string password)
+		public void TryLogin(ClientUserData user, string password, Action<string> errorCallback)
 		{
-			LoggedInUser = user;
-			ApplyWorkflowEvent(WorkflowEvent.LoggedIn);
+			connectionService.TryLogin(
+				() =>
+				{
+					LoggedInUser = user;
+					ApplyWorkflowEvent(WorkflowEvent.LoggedIn);
+				},
+				user,
+				password,
+				errorCallback	
+			);			
 		}
-
+		
 		public void Logout()
 		{
 			LoggedInUser = null;
