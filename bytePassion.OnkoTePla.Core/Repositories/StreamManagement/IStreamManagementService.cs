@@ -7,7 +7,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
     public interface IStreamManagementService
     {
         EventStream<AggregateIdentifier> GetEventStream(AggregateIdentifier identifier);
-        IList<EventStream<AggregateIdentifier>> GetInitialEventStreams(); 
+        List<EventStream<AggregateIdentifier>> GetInitialEventStreams(); 
         void SaveStreams(IList<EventStream<AggregateIdentifier>> stream);
     }
 }

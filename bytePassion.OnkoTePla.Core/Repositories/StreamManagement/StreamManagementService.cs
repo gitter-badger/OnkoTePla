@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
@@ -23,19 +24,48 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
 
         public EventStream<AggregateIdentifier> GetEventStream(AggregateIdentifier identifier)
         {
-            throw new NotImplementedException();
+            var serializer = new JsonSerializer();
+
+            if (StreamExistsForDesiredDate(identifier.Date.Year, identifier.Date.Month, identifier.MedicalPracticeId))
+            {
+                var path =
+                    $@"{basePath}\{identifier.MedicalPracticeId}\{identifier.Date.Year}\{identifier.Date.Month}.json";
+                IEnumerable<EventStream<AggregateIdentifier>> streams;
+
+                using (var file = File.OpenText(path))
+                {
+                    var streamDoubles =
+                        (List<EventStreamSerializationDouble>)
+                            serializer.Deserialize(file, typeof (List<EventStreamSerializationDouble>));
+                    streams = streamDoubles.Select(eventStreamDouble => eventStreamDouble.GetEventStream());
+                }
+                return streams.FirstOrDefault(evenstream => evenstream.Id == identifier);
+            }
+            return new EventStream<AggregateIdentifier>(identifier);
         }
 
-        public IList<EventStream<AggregateIdentifier>> GetInitialEventStreams()
+        public List<EventStream<AggregateIdentifier>> GetInitialEventStreams()
         {
+            var streams = new List<EventStream<AggregateIdentifier>>();
+
             foreach (var practice in config.GetAllMedicalPractices())
             {
                 if (!StreamExistsForPractice(practice.Id))
                 {
                     CreateInitialDirectory(practice.Id);
                 }
+                else
+                {
+                    var currentMonthDate = new Date(DateTime.Today);
+                    var prevMonthDate = new Date(DateTime.Now.AddMonths(-1));
+                    var nextMonthDate = new Date(DateTime.Now.AddMonths(1));
+
+                    streams.AddRange(GetStreamsForMonth(practice.Id, prevMonthDate.Year, prevMonthDate.Month));
+                    streams.AddRange(GetStreamsForMonth(practice.Id, currentMonthDate.Year, currentMonthDate.Month));
+                    streams.AddRange(GetStreamsForMonth(practice.Id, nextMonthDate.Year, nextMonthDate.Month));
+                }
             }
-            return null;
+            return streams;
         }
 
         public void SaveStreams(IList<EventStream<AggregateIdentifier>> streams)
@@ -66,6 +96,16 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
             }
         }
 
+        private IList<EventStream<AggregateIdentifier>> GetStreamsForMonth(Guid id, ushort year, byte month)
+        {
+            return Enumerable.Range(1, DateTime.DaysInMonth(year, month))
+                .Select(
+                    day =>
+                        GetEventStream(new AggregateIdentifier(new Date(Convert.ToByte(day), month, year), id,
+                            config.GetLatestVersionFor(id))))
+                .ToList();
+        }
+
         private void CreateInitialDirectory(Guid id)
         {
             var path = $@"{basePath}\{id}";
@@ -75,7 +115,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
 
         private bool StreamExistsForDesiredDate(ushort year, byte month, Guid practiceId)
         {
-            var path = $@"{basePath}\{practiceId}\{year}-{month}.json";
+            var path = $@"{basePath}\{practiceId}\{year}\{month}.json";
 
             return File.Exists(path);
         }
