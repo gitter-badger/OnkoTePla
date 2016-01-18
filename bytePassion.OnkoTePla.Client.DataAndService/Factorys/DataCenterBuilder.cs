@@ -43,7 +43,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
             // EventStore
 
             var streamManager = new StreamManagementService(configReadRepository, GlobalConstants.EventHistoryBasePath);
-            streamManager.GetInitialEventStreams();
 
             var eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
 			var eventStore = new EventStore(eventStorePersistenceService, streamManager, configReadRepository);
