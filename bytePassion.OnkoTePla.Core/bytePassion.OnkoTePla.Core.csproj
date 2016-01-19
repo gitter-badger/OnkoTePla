@@ -75,7 +75,9 @@
     <Compile Include="Repositories\Config\IConfigurationReadRepository.cs" />
     <Compile Include="Repositories\Config\JsonConfigurationDataStore.cs" />
     <Compile Include="Repositories\StreamManagement\IStreamManagementService.cs" />
+    <Compile Include="Repositories\StreamManagement\IStreamPersistenceService.cs" />
     <Compile Include="Repositories\StreamManagement\StreamManagementService.cs" />
+    <Compile Include="Repositories\StreamManagement\StreamPersistenceService.cs" />
     <Compile Include="Repositories\XMLDataStores\XmlConfigurationDataStore.cs" />
     <Compile Include="Repositories\EventStore\EventStream.cs" />
     <Compile Include="Domain\AggregateIdentifier.cs" />

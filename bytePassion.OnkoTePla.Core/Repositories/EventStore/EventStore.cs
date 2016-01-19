@@ -13,12 +13,12 @@ namespace bytePassion.OnkoTePla.Core.Repositories.EventStore
     public class EventStore : IEventStore
 	{
 		private readonly IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService;
-        private readonly StreamManagementService streamManager;
+        private readonly StreamPersistenceService streamManager;
 
         private IList<EventStream<AggregateIdentifier>> eventStreams;
 		private readonly IConfigurationReadRepository config;
 
-		public EventStore (IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService, StreamManagementService streamManager, IConfigurationReadRepository config)
+		public EventStore (IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService, StreamPersistenceService streamManager, IConfigurationReadRepository config)
 		{
 			eventStreams = new List<EventStream<AggregateIdentifier>>();
 			this.persistenceService = persistenceService;
@@ -63,7 +63,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.EventStore
 		public void LoadRepository()
 		{
 			eventStreams = persistenceService.Load().ToList();
-		    //eventStreams = streamManager.GetInitialEventStreams();
+		    //eventStreams = streamManager.LoadInitialEventStreams();
 		}
 	}
 }
