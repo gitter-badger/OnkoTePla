@@ -43,7 +43,16 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 			connectionService.NewSessionStarted += OnNewSessionStarted;
 			connectionService.SessionTerminated += OnSessionTerminated;
+			connectionService.LoggedInUserUpdated += OnLoggedInUserUpdated;
 	    }
+
+		private void OnLoggedInUserUpdated(SessionInfo sessionInfo)
+		{
+			var displayData = ConnectedClients.First(dd => dd.SessionId == sessionInfo.SessionId.ToString());
+			displayData.LogginInUser = sessionInfo.LoggedInUser == null 
+											? "no User logged in" 
+											: sessionInfo.LoggedInUser.Name;
+		}
 
 		private void OnSessionTerminated(SessionInfo sessionInfo)
 		{

@@ -35,11 +35,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 				new ConnectedClientDisplayData(new ConnectionSessionId(Guid.NewGuid()).ToString(),
 											   new Time(9,43,45).ToString(),
-											   "192.168.127.12"),
+											   "192.168.127.12", "user1"),
 
 				new ConnectedClientDisplayData(new ConnectionSessionId(Guid.NewGuid()).ToString(),
 											   new Time(12,53,45).ToString(),
-											   "192.168.127.13")
+											   "192.168.127.13", "user2")
 			};
 	    }
 

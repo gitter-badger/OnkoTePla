@@ -85,16 +85,17 @@
 						<DataTemplate DataType="{x:Type helper:ConnectedClientDisplayData}">
 							
 							<Border Background="Aqua"
-									Height="50">
+									Height="60">
 								
 								<Grid>
 									<Grid.RowDefinitions>
 										<RowDefinition/>
 										<RowDefinition/>
+										<RowDefinition/>
 									</Grid.RowDefinitions>
 									
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="200"/>
+										<ColumnDefinition Width="250"/>
 										<ColumnDefinition/>
 									</Grid.ColumnDefinitions>
 									
@@ -110,7 +111,7 @@
 											   Text="{Binding ClientAddress}"
 											   HorizontalAlignment="Left"
 											   VerticalAlignment="Center"
-											   Margin="80,0,0,0"/>
+											   Margin="100,0,0,0"/>
 
 									<TextBlock Grid.Row="0"
 											   Grid.Column="1"
@@ -139,7 +140,22 @@
 											   Text="{Binding SessionId}"
 											   HorizontalAlignment="Left"
 											   VerticalAlignment="Center"
-											   Margin="80,0,0,0"/>
+											   Margin="100,0,0,0"/>
+
+									<TextBlock Grid.Row="2"
+											   Grid.Column="0"
+											   Text="Logged in user: "
+											   HorizontalAlignment="Left"
+											   VerticalAlignment="Center"
+											   Margin="5,0"/>
+
+									<TextBlock Grid.Row="2"
+											   Grid.Column="0"
+											   Grid.ColumnSpan="2"
+											   Text="{Binding LogginInUser}"
+											   HorizontalAlignment="Left"
+											   VerticalAlignment="Center"
+											   Margin="100,0,0,0"/>
 
 								</Grid>
 								

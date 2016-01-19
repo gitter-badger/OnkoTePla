@@ -70,6 +70,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 			var response = NetworkMessageCoding.Encode(new LoginResponse());
 			socket.SendAString(response, TimeSpan.FromSeconds(2));			
+
+			sessionRepository.UpdateLoggedInUser(request.SessionId, user);
 		}
 
 		#endregion
