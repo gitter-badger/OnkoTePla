@@ -6,6 +6,8 @@
 		GetUserListResponse,
 		LoginRequest,
 		LoginResponse,
+		LogoutRequest,
+		LogoutResponse,
 
 		ErrorResponse
 	}

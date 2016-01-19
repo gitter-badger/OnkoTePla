@@ -14,9 +14,9 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses
 			Password = passord;
 		}
 
-		public ConnectionSessionId SessionId;
-		public Guid UserId;
-		public string Password;
+		public ConnectionSessionId SessionId { get; }
+		public Guid                UserId    { get; }
+		public string              Password  { get; }
 
 		public override string AsString()
 		{

@@ -21,7 +21,9 @@ namespace bytePassion.OnkoTePla.Contracts.NetworkMessages
 				case NetworkMessageType.GetUserListResponse: return UserListResponse.Parse(msg);
 				case NetworkMessageType.LoginRequest:        return LoginRequest.Parse(msg);
 				case NetworkMessageType.LoginResponse:       return LoginResponse.Parse(msg);
-				case NetworkMessageType.ErrorResponse:       return ErrorResponse.Parse(msg);
+				case NetworkMessageType.LogoutRequest:       return LogoutRequest.Parse(msg);
+				case NetworkMessageType.LogoutResponse:      return LogoutResponse.Parse(msg);
+				case NetworkMessageType.ErrorResponse:       return ErrorResponse.Parse(msg);				
 				
 				default:
 					throw new ArgumentException();
