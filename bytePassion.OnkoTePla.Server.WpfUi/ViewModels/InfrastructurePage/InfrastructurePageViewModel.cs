@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
@@ -14,6 +15,7 @@ using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -23,6 +25,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
                                                  IInfrastructurePageViewModel
     {
 		private readonly IDataCenter dataCenter;
+		private readonly IGlobalStateReadOnly<MainPage> selectedPageVariable;
 
 		#region property backing fields
 
@@ -42,9 +45,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		
 		#endregion
 
-		public InfrastructurePageViewModel(IDataCenter dataCenter)
+		public InfrastructurePageViewModel(IDataCenter dataCenter, 
+										  IGlobalStateReadOnly<MainPage> selectedPageVariable)
 		{
 			this.dataCenter = dataCenter;
+			this.selectedPageVariable = selectedPageVariable;
 
 			AddMedicalPractice         = new Command(DoAddMedicalPractice);
 			SaveMedicalPracticeChanges = new Command(DoSaveMedicalPracticeChanges);
@@ -72,17 +77,45 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 											 .Select(color => new ColorDisplayData(color))
 											 .ToObservableCollection();
 
-			AvailableTherapyPlaceTypes = this.dataCenter.GetAllTherapyPlaceTypes()
+			AvailableTherapyPlaceTypes = this.dataCenter.GetAllTherapyPlaceTypesPlusDummy()
 														.Select(placeType => new TherapyPlaceTypeDisplayData(placeType.Name, 
 																											 GetIconForTherapyPlaceType(placeType.IconType), 
 																											 placeType.Id))
 														.ToObservableCollection();
+
+			selectedPageVariable.StateChanged += OnSelectedPageStateChanged;
 		}
 
 		private MedicalPractice SelectedMedicalPracticeObject { get; set; }
 		private Room            SelectedRoomObject            { get; set; }
 		private TherapyPlace    SelectedTherapyPlaceObject    { get; set; }
 
+		public ObservableCollection<MedPracticeDisplayData>  MedicalPractices { get; }
+	    public ObservableCollection<RoomDisplayData>         Rooms            { get; }
+	    public ObservableCollection<TherapyPlaceDisplayData> TherapyPlaces    { get; }
+
+		public ObservableCollection<ColorDisplayData>            AvailableColors            { get; }
+		public ObservableCollection<TherapyPlaceTypeDisplayData> AvailableTherapyPlaceTypes { get; }
+
+		#region OnSelectedPageStateChanged
+
+		private void OnSelectedPageStateChanged (MainPage mainPage)
+		{
+			if (mainPage == MainPage.Infrastructure)
+			{
+				AvailableTherapyPlaceTypes.Clear();
+
+				dataCenter.GetAllTherapyPlaceTypesPlusDummy()
+						  .Select(placeType => new TherapyPlaceTypeDisplayData(placeType.Name, 
+																			   GetIconForTherapyPlaceType(placeType.IconType), 
+																			   placeType.Id))
+						  .Do(AvailableTherapyPlaceTypes.Add);
+
+				SelectedMedicalPractice = null;
+			}
+		}
+
+		#endregion
 
 		#region Update-Helper
 
@@ -271,11 +304,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			}
 		}
 		
-		#endregion
-
-		public ObservableCollection<MedPracticeDisplayData>  MedicalPractices { get; }
-	    public ObservableCollection<RoomDisplayData>         Rooms            { get; }
-	    public ObservableCollection<TherapyPlaceDisplayData> TherapyPlaces    { get; }
+		#endregion		
 
 		#region commands
 
@@ -459,9 +488,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		}
 
 		#endregion
-
-		public ObservableCollection<ColorDisplayData>            AvailableColors            { get; }
-		public ObservableCollection<TherapyPlaceTypeDisplayData> AvailableTherapyPlaceTypes { get; }
+		
 
 		private static ImageSource GetIconForTherapyPlaceType(TherapyPlaceIconType iconType)
 		{
@@ -488,6 +515,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		protected override void CleanUp()
 		{
+			selectedPageVariable.StateChanged -= OnSelectedPageStateChanged;
 		}
 
 		public override event PropertyChangedEventHandler PropertyChanged;

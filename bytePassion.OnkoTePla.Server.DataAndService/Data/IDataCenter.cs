@@ -16,6 +16,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		User GetUser(Guid id);
 
 		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes();
+		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypesPlusDummy(); 
 		void AddNewTherapyPlaceType(TherapyPlaceType newTherapyPlaceType);
 		void UpdateTherapyPlaceType(TherapyPlaceType updatedTherapyPlaceType);
 		TherapyPlaceType GetTherapyPlaceType(Guid id);

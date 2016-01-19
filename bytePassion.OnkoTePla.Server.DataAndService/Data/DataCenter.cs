@@ -69,6 +69,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
+				return readConfig.GetAllTherapyPlaceTypes();
+			}
+		}
+
+		public IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypesPlusDummy()
+		{
+			lock (this)
+			{
 				return readConfig.GetAllTherapyPlaceTypes()
 								 .Append(TherapyPlaceType.NoType);
 			}
