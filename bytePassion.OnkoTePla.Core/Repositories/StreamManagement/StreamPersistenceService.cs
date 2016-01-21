@@ -26,10 +26,10 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
         {
             var serializer = new JsonSerializer();
 
-            if (StreamExistsForDesiredDate(identifier.Date.Year, identifier.Date.Month, identifier.MedicalPracticeId))
+            if (StreamExistsForDesiredDate(identifier.Date.Year, identifier.Date.Month, identifier.Date.Day, identifier.MedicalPracticeId))
             {
                 var path =
-                    $@"{basePath}\{identifier.MedicalPracticeId}\{identifier.Date.Year}\{identifier.Date.Month}.json";
+                    $@"{basePath}\{identifier.MedicalPracticeId}\{identifier.Date.Year}\{identifier.Date.Month}\{identifier.Date.Day}.json";
                 IEnumerable<EventStream<AggregateIdentifier>> streams;
 
                 using (var file = File.OpenText(path))
@@ -41,7 +41,9 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
                 }
                 return streams.FirstOrDefault(evenstream => evenstream.Id == identifier);
             }
-            return new EventStream<AggregateIdentifier>(identifier);
+            return new EventStream<AggregateIdentifier>(new AggregateIdentifier(identifier.Date,
+                                                                                           identifier.MedicalPracticeId,
+        														                       config.GetLatestVersionFor(identifier.MedicalPracticeId)));
         }
 
         public List<EventStream<AggregateIdentifier>> LoadInitialEventStreams()
@@ -74,17 +76,17 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
             {
                 var pratciceStreams = streams.Where(st => st.Id.MedicalPracticeId == medicalPractice.Id);
 
-                var grouped = pratciceStreams.GroupBy(s => new {s.Id.Date.Month, s.Id.Date.Year});
+                var grouped = pratciceStreams.GroupBy(s => new {s.Id.Date.Month, s.Id.Date.Year, s.Id.Date.Day});
 
                 foreach (var monthGroup in grouped)
                 {
                     var serializationData =
                         monthGroup.Select(eventStream => new EventStreamSerializationDouble(eventStream));
-                    var path = $@"{basePath}\{medicalPractice.Id}\{monthGroup.Key.Year}\{monthGroup.Key.Month}.json";
+                    var path = $@"{basePath}\{medicalPractice.Id}\{monthGroup.Key.Year}\{monthGroup.Key.Month}\{monthGroup.Key.Day}.json";
 
-                    if (!StreamExistsForDesiredDate(monthGroup.Key.Year, monthGroup.Key.Month, medicalPractice.Id))
+                    if (!StreamExistsForDesiredDate(monthGroup.Key.Year, monthGroup.Key.Month, monthGroup.Key.Day, medicalPractice.Id))
                     {
-                        Directory.CreateDirectory($@"{basePath}\{medicalPractice.Id}\{monthGroup.Key.Year}");
+                        Directory.CreateDirectory($@"{basePath}\{medicalPractice.Id}\{monthGroup.Key.Year}\{monthGroup.Key.Month}");
                     }
 
                     using (var output = new StringWriter())
@@ -113,9 +115,9 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
             Directory.CreateDirectory(path);
         }
 
-        private bool StreamExistsForDesiredDate(ushort year, byte month, Guid practiceId)
+        private bool StreamExistsForDesiredDate(ushort year, byte month, byte day, Guid practiceId)
         {
-            var path = $@"{basePath}\{practiceId}\{year}\{month}.json";
+            var path = $@"{basePath}\{practiceId}\{year}\{month}\{day}.json";
 
             return File.Exists(path);
         }
