@@ -13,20 +13,21 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		private readonly NetMQContext context;
 		private readonly Address serverAddress;
 		private readonly TimeoutBlockingQueue<RequestObject> workQueue;
-		private readonly ConnectionSessionId sessionId;
+
+		private ConnectionSessionId currentSessionId;
 
 
 		private volatile bool stopRunning;
 		 
 		public UniversalRequestThread (NetMQContext context, 
 								       Address serverAddress,			
-								       TimeoutBlockingQueue<RequestObject> workQueue,
-								       ConnectionSessionId sessionId)
+								       TimeoutBlockingQueue<RequestObject> workQueue)
 		{
 			this.context = context;
 			this.serverAddress = serverAddress;
 			this.workQueue = workQueue;
-			this.sessionId = sessionId;
+
+			currentSessionId = null;
 
 			IsRunning = true;
 			stopRunning = false;
@@ -36,7 +37,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		{
 			using (var socket = context.CreateRequestSocket())
 			{
-				socket.Connect(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.DataRequest);
+				socket.Connect(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.Request);
 
 				while (!stopRunning)
 				{
@@ -47,8 +48,31 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 
 					switch (workItem.RequestType)
 					{
-						case NetworkMessageType.GetUserListRequest: { RequestHandler.HandleUserListRequest((UserListRequestObject)workItem, sessionId, socket); break; }
-						case NetworkMessageType.LoginRequest:       { RequestHandler.HandleLoginRequest   ((LoginRequestObject)   workItem, sessionId, socket); break; }
+						case NetworkMessageType.GetUserListRequest:
+						{
+							RequestHandler.HandleUserListRequest((UserListRequestObject)workItem, currentSessionId, socket);
+							break;
+						}
+						case NetworkMessageType.LoginRequest:
+						{
+							RequestHandler.HandleLoginRequest((LoginRequestObject)workItem, currentSessionId, socket);
+							break;
+						}
+						case NetworkMessageType.BeginConnectionRequest:
+						{
+							RequestHandler.HandleBeginConnectionRequest((BeginConnectionRequestObject)workItem, out currentSessionId, socket);
+							break;
+						}
+						case NetworkMessageType.BeginDebugConnectionRequest:
+						{
+							RequestHandler.HandleBeginDebugConnectionRequest((BeginDebugConnectionRequestObject)workItem, out currentSessionId, socket);
+							break;
+						}
+						case NetworkMessageType.EndConnectionRequest:
+						{
+							RequestHandler.HandleEndConnectionRequest((EndConnectionRequestObject)workItem, currentSessionId, socket);
+							break;
+						}
 					}
 				}									
 			}							

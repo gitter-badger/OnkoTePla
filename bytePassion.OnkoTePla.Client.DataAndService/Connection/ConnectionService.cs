@@ -34,32 +34,36 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		public ConnectionStatus ConnectionStatus { get; private set; }
 		public Address          ServerAddress    { get; private set; }
 		public Address			ClientAddress    { get; private set; }
-
-		private ConnectionSessionId CurrentSessionId { get; set; }
+		
 
 		private bool ConnectionWasTerminated { get; set; }
 
 		private HeartbeatThead heartbeatThread;
 		private UniversalRequestThread universalRequestThread;
 		private TimeoutBlockingQueue<RequestObject> requestWorkQueue; 
-
-        public void TryConnect(Address serverAddress, Address clientAddress)
+		 
+        public void TryConnect(Address serverAddress, Address clientAddress, 
+							   Action<string> errorCallback)
         {
-	        ConnectionWasTerminated = false;
+			ConnectionWasTerminated = false;
 
 			ServerAddress = serverAddress;
-	        ClientAddress = clientAddress;
+			ClientAddress = clientAddress;
 
 			ConnectionStatus = ConnectionStatus.TryingToConnect;
-			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);			
+			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
 
-			var threadLogic = new ConnectionBeginThead(zmqContext, serverAddress, 
-													   clientAddress, ConnectionBeginResponeReceived);
-			var runningThread = new Thread(threadLogic.Run);
-			runningThread.Start();
+			requestWorkQueue = new TimeoutBlockingQueue<RequestObject>(1000);
+			universalRequestThread = new UniversalRequestThread(zmqContext, ServerAddress, requestWorkQueue);
+			new Thread(universalRequestThread.Run).Start();
+			
+			requestWorkQueue.Put(new BeginConnectionRequestObject(ConnectionBeginResponeReceived,
+																  ClientAddress.Identifier,
+																  errorCallback));								
 		}
 
-		public void TryDebugConnect(Address serverAddress, Address clientAddress)
+		public void TryDebugConnect(Address serverAddress, Address clientAddress, 
+									Action<string> errorCallback)
 		{
 			ConnectionWasTerminated = false;
 
@@ -68,22 +72,23 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 			ConnectionStatus = ConnectionStatus.TryingToConnect;
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
-			
-			var threadLogic = new DebugConnectionBeginThead(zmqContext, serverAddress,
-														    clientAddress, DebugConnectionBeginResponeReceived);
-			var runningThread = new Thread(threadLogic.Run);
-			runningThread.Start();
+
+			requestWorkQueue = new TimeoutBlockingQueue<RequestObject>(1000);
+			universalRequestThread = new UniversalRequestThread(zmqContext, ServerAddress, requestWorkQueue);
+			new Thread(universalRequestThread.Run).Start();
+
+			requestWorkQueue.Put(new BeginDebugConnectionRequestObject(DebugConnectionBeginResponeReceived,
+																	   ClientAddress.Identifier,
+																	   errorCallback));
 		}
 
-		public void TryDisconnect ()
+		public void TryDisconnect(Action<string> errorCallback)
 		{
 			ConnectionStatus = ConnectionStatus.TryingToDisconnect;
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryDisconnect);
 
-			var threadLogic = new ConnectionEndThead(zmqContext, ServerAddress, 
-													 CurrentSessionId, ConnectionEndResponseReceived);
-			var runningThread = new Thread(threadLogic.Run);
-			runningThread.Start();
+			requestWorkQueue.Put(new EndConnectionRequestObject(ConnectionEndResponseReceived,
+																errorCallback));
 		}
 
 		public void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
@@ -126,16 +131,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 						}
 					}
 					else
-					{
-						CurrentSessionId = connectionSessionId;
-
-						heartbeatThread = new HeartbeatThead(zmqContext, ClientAddress, CurrentSessionId);
+					{						
+						heartbeatThread = new HeartbeatThead(zmqContext, ClientAddress, connectionSessionId);
 						heartbeatThread.ServerVanished += OnServerVanished;
-						new Thread(heartbeatThread.Run).Start();						
-
-						requestWorkQueue = new TimeoutBlockingQueue<RequestObject>(1000);
-						universalRequestThread = new UniversalRequestThread(zmqContext, ServerAddress, requestWorkQueue, CurrentSessionId);
-						new Thread(universalRequestThread.Run).Start();
+						new Thread(heartbeatThread.Run).Start();												
 						
 						ConnectionStatus = ConnectionStatus.Connected;
 						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
@@ -158,13 +157,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 						}
 					}
 					else
-					{
-						CurrentSessionId = connectionSessionId;
-
-						requestWorkQueue = new TimeoutBlockingQueue<RequestObject>(1000);
-						universalRequestThread = new UniversalRequestThread(zmqContext, ServerAddress, requestWorkQueue, CurrentSessionId);
-						new Thread(universalRequestThread.Run).Start();
-
+					{						
 						ConnectionStatus = ConnectionStatus.Connected;
 						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
 					}
@@ -190,7 +183,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			heartbeatThread?.Stop();
 			heartbeatThread = null;
 
-			universalRequestThread.Stop();
+			universalRequestThread?.Stop();
 			universalRequestThread = null;
 			requestWorkQueue = null;
 		}

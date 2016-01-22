@@ -74,5 +74,54 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 				loginResponse => loginRequest.LoginSuccessfulCallback()
 			);			
 		}
+
+		public static void HandleBeginConnectionRequest(BeginConnectionRequestObject beginConnectionRequest,
+														out ConnectionSessionId sessionId, RequestSocket socket)
+		{
+			ConnectionSessionId newSessionId = null;
+
+			HandleRequest<BeginConnectionRequest, BeginConnectionResponse>(
+				new BeginConnectionRequest(beginConnectionRequest.ClientAddress),
+				socket,
+				beginConnectionRequest.ErrorCallback,
+				beginConnectionResponse =>
+				{
+					newSessionId = beginConnectionResponse.SessionId;
+					beginConnectionRequest.ConnectionSuccessfulCallback(beginConnectionResponse.SessionId);
+				} 	
+			);
+
+			sessionId = newSessionId;
+		}
+
+		public static void HandleBeginDebugConnectionRequest (BeginDebugConnectionRequestObject beginDebugConnectionRequest,
+														      out ConnectionSessionId sessionId, RequestSocket socket)
+		{
+			ConnectionSessionId newSessionId = null;
+
+			HandleRequest<BeginDebugConnectionRequest, BeginDebugConnectionResponse>(
+				new BeginDebugConnectionRequest(beginDebugConnectionRequest.ClientAddress),
+				socket,
+				beginDebugConnectionRequest.ErrorCallback,
+				beginDebugConnectionResponse =>
+				{
+					newSessionId = beginDebugConnectionResponse.SessionId;
+					beginDebugConnectionRequest.ConnectionSuccessfulCallback(beginDebugConnectionResponse.SessionId);
+				}
+			);
+
+			sessionId = newSessionId;
+		}
+		 
+		public static void HandleEndConnectionRequest (EndConnectionRequestObject endConnectionRequest,
+													   ConnectionSessionId sessionId, RequestSocket socket)
+		{
+			HandleRequest<EndConnectionRequest, EndConnectionResponse>(
+				new EndConnectionRequest(sessionId),
+				socket,
+				endConnectionRequest.ErrorCallback,
+				endConnectionResponse => endConnectionRequest.ConnectionEndedCallback()
+			);
+		}
 	}
 }

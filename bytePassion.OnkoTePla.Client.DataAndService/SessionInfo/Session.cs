@@ -125,19 +125,19 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			}
 		}		
 
-		public void TryConnect (Address serverAddress, Address clientAddress)
+		public void TryConnect (Address serverAddress, Address clientAddress, Action<string> errorCallback)
 		{
-			connectionService.TryConnect(serverAddress, clientAddress);
+			connectionService.TryConnect(serverAddress, clientAddress, errorCallback);
 		}
 
-		public void TryDebugConnect(Address serverAddress, Address clientAddress)
+		public void TryDebugConnect(Address serverAddress, Address clientAddress, Action<string> errorCallback)
 		{
-			connectionService.TryDebugConnect(serverAddress, clientAddress);
+			connectionService.TryDebugConnect(serverAddress, clientAddress, errorCallback);
 		}
 
-		public void TryDisconnect ()
+		public void TryDisconnect(Action<string> errorCallback)
 		{
-			connectionService.TryDisconnect();
+			connectionService.TryDisconnect(errorCallback);
 		}
 
 

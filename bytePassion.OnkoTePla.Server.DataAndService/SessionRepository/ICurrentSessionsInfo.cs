@@ -17,8 +17,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 
 		bool DoesSessionExist(ConnectionSessionId id);
 		bool IsUserLoggedIn(Guid userId);
+		bool IsClientAddressConnected(AddressIdentifier clientAddress);
 		SessionInfo GetSessionForUser(Guid userId);
-
+		
 		void AddSession(ConnectionSessionId sessionId, Time creationTime,
 						AddressIdentifier clientAddress, bool isDebugConnection);
 

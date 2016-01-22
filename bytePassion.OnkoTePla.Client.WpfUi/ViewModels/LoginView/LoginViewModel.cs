@@ -26,9 +26,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 		private ClientUserData selectedUser;
 		private string serverAddress;
-		private string clientAddress;
-
-		private bool currentlyTryingToConnect;		
+		private string clientAddress;		
 
 		private bool autoConnectOnNextStart;
 		private bool areConnectionSettingsVisible;
@@ -80,34 +78,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			}
 	    }		
 
-		private async void OnApplicationStateChanged(ApplicationState applicationState)
-		{
-			if (applicationState == ApplicationState.TryingToConnect)
-				currentlyTryingToConnect = true;
-
-			if (applicationState == ApplicationState.DisconnectedFromServer && currentlyTryingToConnect)
-			{
-				var dialog = new UserDialogBox("", 
-											   $"Es kann keine Verbindung mit {ServerAddress} hergestellt werden", 
-											   MessageBoxButton.OK);
-				await dialog.ShowMahAppsDialog();				
-
-				currentlyTryingToConnect = false;
-				AreConnectionSettingsVisible = true;
-				IsUserListAvailable = false;				
-			}
-
-			if (applicationState == ApplicationState.DisconnectedFromServer && !currentlyTryingToConnect)
+		private void OnApplicationStateChanged(ApplicationState applicationState)
+		{			
+			if (applicationState == ApplicationState.DisconnectedFromServer)
 			{
 				AvailableUsers.Clear();
-				SelectedUser = null;
-				currentlyTryingToConnect = false;				
+				AreConnectionSettingsVisible = true;								
+				SelectedUser = null;				
 				IsUserListAvailable = false;
-			}
+			}			
 
 			if (applicationState == ApplicationState.ConnectedButNotLoggedIn)
-			{				
-				currentlyTryingToConnect = false;
+			{								
 				AreConnectionSettingsVisible = false;
 
 				session.RequestUserList(
@@ -158,7 +140,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		
 		private void DoDisconnect()
 		{
-			session.TryDisconnect();
+			session.TryDisconnect(
+			errorMessage =>
+			{
+				Application.Current.Dispatcher.Invoke(async () =>
+				{
+					var dialog = new UserDialogBox("",
+												   "Die Trennung der Verbindung konnte nicht ordnungsgemäß durchgeführt werden\n" +
+												   $">> {errorMessage} <<",
+												   MessageBoxButton.OK);
+					await dialog.ShowMahAppsDialog();					
+				});
+			});
 		}
 		private bool IsDisconnectPossible ()
 		{
@@ -170,7 +163,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			if (AddressIdentifier.IsIpAddressIdentifier(ServerAddress))
 			{
 				session.TryDebugConnect(new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ServerAddress)),
-								        new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress)));
+								        new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress)),
+										errorMessage =>
+										{
+											Application.Current.Dispatcher.Invoke(async () =>
+											{
+												var dialog = new UserDialogBox(
+													"",
+													$"Es kann keine Verbindung mit {ServerAddress} hergestellt werden",
+													MessageBoxButton.OK
+												);
+												await dialog.ShowMahAppsDialog();
+											});
+										});
 			}
 			else
 			{
@@ -186,7 +191,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			if (AddressIdentifier.IsIpAddressIdentifier(ServerAddress))
 			{
 				session.TryConnect(new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ServerAddress)),
-								   new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress)));
+								   new Address(Protocol, AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress)),
+								   errorMessage =>
+								   {
+									   Application.Current.Dispatcher.Invoke(async () =>
+									   {
+										   var dialog = new UserDialogBox(
+													"",
+													$"Es kann keine Verbindung mit {ServerAddress} hergestellt werden",
+													MessageBoxButton.OK
+												);
+										   await dialog.ShowMahAppsDialog();
+									   });
+								   });
 			}
 			else
 			{

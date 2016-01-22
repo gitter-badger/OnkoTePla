@@ -6,6 +6,8 @@
 		HeartbeatResponse,
 		BeginConnectionRequest,
 		BeginConnectionResponse,
+		BeginDebugConnectionRequest,
+		BeginDebugConnectionResponse,
 		EndConnectionRequest,
 		EndConnectionResponse,
 		GetUserListRequest,		
@@ -14,7 +16,7 @@
 		LoginResponse,
 		LogoutRequest,
 		LogoutResponse,
-
-		ErrorResponse
+		
+		ErrorResponse		
 	}
 }

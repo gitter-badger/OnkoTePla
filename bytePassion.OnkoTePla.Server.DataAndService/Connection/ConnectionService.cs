@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
@@ -39,11 +38,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		private readonly NetMQContext zmqContext;
 		private readonly IDataCenter dataCenter;
 		private readonly ICurrentSessionsInfo sessionRepository;
-		
-
-		private AcceptConnectionBeginThread      acceptConnectionBeginThread;
-		private AcceptDebugConnectionBeginThread acceptDebugConnectionBeginThread;
-		private AcceptConnectionEndThread        acceptConnectionEndThread;
+				
 		private UniversalResponseThread          universalResponseThread;
 
 		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads; 
@@ -58,20 +53,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		}
 		
 		public void InitiateCommunication(Address serverAddress)
-		{			
-			acceptConnectionBeginThread = new AcceptConnectionBeginThread(zmqContext, serverAddress);
-			acceptConnectionBeginThread.NewConnectionEstablished += OnNewConnectionEstablished;
-			new Thread(acceptConnectionBeginThread.Run).Start();
-
-			acceptDebugConnectionBeginThread = new AcceptDebugConnectionBeginThread(zmqContext, serverAddress);
-			acceptDebugConnectionBeginThread.NewDebugConnectionEstablished += OnNewDebugConnectionEstablished;
-			new Thread(acceptDebugConnectionBeginThread.Run).Start();
-
-			acceptConnectionEndThread = new AcceptConnectionEndThread(zmqContext, serverAddress);
-			acceptConnectionEndThread.ConnectionEnded += OnConnectionEnded;			
-			new Thread(acceptConnectionEndThread.Run).Start();
-			
-			universalResponseThread = new UniversalResponseThread(dataCenter, zmqContext, serverAddress, sessionRepository);
+		{									
+			universalResponseThread = new UniversalResponseThread(dataCenter, zmqContext, serverAddress, 
+																  sessionRepository, OnNewConnectionEstablished);
 			new Thread(universalResponseThread.Run).Start();
 		}				
 
@@ -82,39 +66,22 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 				heartbeatThread.Stop();
 				heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
 			}
-			heartbeatThreads.Clear();
-
-			acceptConnectionBeginThread.NewConnectionEstablished -= OnNewConnectionEstablished;
-			acceptConnectionBeginThread.Stop();
-
-			acceptDebugConnectionBeginThread.NewDebugConnectionEstablished -= OnNewDebugConnectionEstablished;
-			acceptDebugConnectionBeginThread.Stop();
-
-			acceptConnectionEndThread.ConnectionEnded -= OnConnectionEnded;
-			acceptConnectionEndThread.Stop();
+			heartbeatThreads.Clear();			
 
 			universalResponseThread.Stop();			
 		}
 
-		private void OnConnectionEnded (ConnectionSessionId connectionSessionId)
-		{
-			sessionRepository.RemoveSession(connectionSessionId);
-		}
-		private void OnNewDebugConnectionEstablished (AddressIdentifier clientAddressIdentifier, ConnectionSessionId id)
-		{
-			sessionRepository.AddSession(id, TimeTools.GetCurrentTimeStamp().Item2, clientAddressIdentifier, true);
-		}
+		
 		private void OnNewConnectionEstablished (AddressIdentifier clientAddressIdentifier, ConnectionSessionId id)
-		{
-			sessionRepository.AddSession(id, TimeTools.GetCurrentTimeStamp().Item2, clientAddressIdentifier, false);
-
+		{			
 			var clientAddress = new Address(new TcpIpProtocol(), clientAddressIdentifier);
 			var heartbeatThread = new HeartbeatThread(zmqContext, clientAddress, id);
 
 			heartbeatThreads.Add(id, heartbeatThread);
 			heartbeatThread.ClientVanished += HeartbeatOnClientVanished;
-			new Thread(heartbeatThread.Run).Start();
+			new Thread(heartbeatThread.Run).Start();			
 		}
+
 		private void HeartbeatOnClientVanished (ConnectionSessionId connectionSessionId)
 		{
 			var heartbeatThread = heartbeatThreads[connectionSessionId];

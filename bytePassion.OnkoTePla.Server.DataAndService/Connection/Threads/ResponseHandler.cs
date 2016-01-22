@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Contracts.Config;
@@ -25,11 +27,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 				socket.SendNetworkMsg(new ErrorResponse(errorMsg));
 				return false;
 			}
-
-			var sessionInfo = sessionRepository.GetSessionInfo(sessionId);
-			
+						
 			if (userId.HasValue)
 			{
+				var sessionInfo = sessionRepository.GetSessionInfo(sessionId);
+
 				if (sessionInfo.LoggedInUser.Id != userId.Value)
 				{					
 					socket.SendNetworkMsg(new ErrorResponse("the user is not logged in"));
@@ -117,6 +119,66 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 				return;
 
 			// todo handle logout
+		}
+
+		#endregion
+
+		#region BeginConnectionRequest
+
+		public static void HandleBeginConnectionRequest(BeginConnectionRequest request, 
+														ICurrentSessionsInfo sessionRepository,
+														ResponseSocket socket, 
+														Action<AddressIdentifier, ConnectionSessionId> newConnectionCallback)
+		{
+			if (sessionRepository.IsClientAddressConnected(request.ClientAddress))
+			{
+				const string errorMsg = "a connection from that address is already established";
+				socket.SendNetworkMsg(new ErrorResponse(errorMsg));
+				return;
+			}
+
+			var newSessionId = new ConnectionSessionId(Guid.NewGuid());
+			sessionRepository.AddSession(newSessionId, TimeTools.GetCurrentTimeStamp().Item2, request.ClientAddress, false);
+			newConnectionCallback(request.ClientAddress, newSessionId);
+
+			socket.SendNetworkMsg(new BeginConnectionResponse(newSessionId));
+		}
+
+		#endregion
+
+		#region BeginDebugConnectionRequest
+
+		public static void HandleBeginDebugConnectionRequest (BeginDebugConnectionRequest request, ICurrentSessionsInfo sessionRepository,
+															  ResponseSocket socket)
+		{
+			if (sessionRepository.IsClientAddressConnected(request.ClientAddress))
+			{
+				const string errorMsg = "a connection from that address is already established";
+				socket.SendNetworkMsg(new ErrorResponse(errorMsg));
+				return;
+			}
+
+			var newSessionId = new ConnectionSessionId(Guid.NewGuid());
+			sessionRepository.AddSession(newSessionId, TimeTools.GetCurrentTimeStamp().Item2, request.ClientAddress, true);			
+			
+			socket.SendNetworkMsg(new BeginDebugConnectionResponse(newSessionId));
+		}
+
+		#endregion
+
+		#region EndConnectionRequest
+
+		public static void HandleEndConnectionRequest(EndConnectionRequest request, ICurrentSessionsInfo sessionRepository,
+													  ResponseSocket socket)
+		{
+			var requestIsValid = ValidateRequest(request.SessionId, sessionRepository, socket);
+
+			if (!requestIsValid)
+				return;
+
+			sessionRepository.RemoveSession(request.SessionId);
+
+			socket.SendNetworkMsg(new EndConnectionResponse());
 		}
 
 		#endregion

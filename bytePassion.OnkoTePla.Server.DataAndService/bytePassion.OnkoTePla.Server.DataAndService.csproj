@@ -56,11 +56,8 @@
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Connection\SessionInfo.cs" />
     <Compile Include="Connection\Threads\UniversalResponseThread.cs" />
-    <Compile Include="Connection\Threads\AcceptDebugConnectionBeginThread.cs" />
-    <Compile Include="Connection\Threads\AcceptConnectionEndThread.cs" />
     <Compile Include="Connection\Threads\HeartbeatThread.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
-    <Compile Include="Connection\Threads\AcceptConnectionBeginThread.cs" />
     <Compile Include="Connection\Threads\ResponseHandler.cs" />
     <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Data\IDataCenter.cs" />
