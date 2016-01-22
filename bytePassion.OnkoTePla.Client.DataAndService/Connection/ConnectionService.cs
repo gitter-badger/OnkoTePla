@@ -192,6 +192,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 		protected override void CleanUp()
 		{
+			CleanUpAfterDisconnection();
 			zmqContext.Dispose();
 		}
 	}

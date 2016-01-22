@@ -5,5 +5,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 	public interface ISessionBuilder
 	{
 		ISession Build();
+		void DisposeSession();
 	}
 }

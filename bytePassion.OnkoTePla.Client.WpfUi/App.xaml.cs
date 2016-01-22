@@ -22,9 +22,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
 		
-
+			var sessionBuilder = new SessionBuilder();
 			
-			var session    = new SessionBuilder().Build();					
+			var session    = sessionBuilder.Build();					
 			var dataCenter = new DataCenterBuilder().Build();
 
 
@@ -47,13 +47,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			mainWindow.ShowDialog();
 
 
+
 			///////////////////////////////////////////////////////////////////////////////////////////////
 			////////                                                                             //////////
 			////////             Clean Up and store data after main Window was closed            //////////
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
+			
 
-			dataCenter.PersistEventstore();		// TODO: just for testing
+			sessionBuilder.DisposeSession();
+
+			dataCenter.PersistEventstore();					// TODO: just for testing
 			dataCenter.PersistLocalSettings();
 		}		
 	}
