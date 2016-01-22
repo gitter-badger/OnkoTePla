@@ -2,8 +2,9 @@ using System;
 using System.Windows;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
-using bytePassion.Lib.ZmqUtils;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.Heartbeat;
+using bytePassion.OnkoTePla.Communication.NetworkMessages;
+using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
+using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
@@ -42,31 +43,31 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 
 				while (!stopRunning)
 				{
-					var inMessage = socket.ReceiveAString(TimeSpan.FromMilliseconds(GlobalConstants.ClientWaitTimeForHeartbeat));
+					var request = socket.ReceiveNetworkMsg(TimeSpan.FromMilliseconds(GlobalConstants.ClientWaitTimeForHeartbeat));
 
-					if (inMessage == "")
+					if (request == null)
 					{
 						Application.Current.Dispatcher.Invoke(() => ServerVanished?.Invoke());
 						break;
 					}
-					
-					var request = Request.Parse(inMessage);
 
-					if (request.SessionId != sessionId)
+					if (request.Type == NetworkMessageType.HeartbeatRequest)
 					{
-						if (onceReturnOldId)
-							throw new Exception("inner exception");
+						var heartbeatRequest = (HeartbeatRequest) request;
 
-						onceReturnOldId = true;
+						if (heartbeatRequest.SessionId != sessionId)
+						{
+							if (onceReturnOldId)
+								throw new Exception("inner exception");
 
-						var onceResponse = new Response(request.SessionId);
-						socket.SendAString(onceResponse.AsString(), TimeSpan.FromSeconds(2));						
+							onceReturnOldId = true;							
+							socket.SendNetworkMsg(new HeartbeatResponse(heartbeatRequest.SessionId));
 
-						continue;						
+							continue;
+						}
+						
+						socket.SendNetworkMsg(new HeartbeatResponse(heartbeatRequest.SessionId));
 					}
-
-					var response = new Response(sessionId);					
-					socket.SendAString(response.AsString(), TimeSpan.FromSeconds(2));					
 				}			
 			}
 		}

@@ -94,6 +94,10 @@
       <Project>{825b03a5-fd0f-417a-adc5-d3a0aad2c36b}</Project>
       <Name>bytePassion.Lib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Communication\bytePassion.OnkoTePla.Communication.csproj">
+      <Project>{6e3acb7d-b4db-4f87-9e78-e150e94f0897}</Project>
+      <Name>bytePassion.OnkoTePla.Communication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Contracts\bytePassion.OnkoTePla.Contracts.csproj">
       <Project>{85958036-dfef-4c68-abf4-fd241eaab47f}</Project>
       <Name>bytePassion.OnkoTePla.Contracts</Name>

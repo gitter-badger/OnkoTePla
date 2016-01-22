@@ -1,4 +1,4 @@
-﻿namespace bytePassion.OnkoTePla.Contracts.NetworkMessages
+﻿namespace bytePassion.OnkoTePla.Communication.NetworkMessages
 {
 	public abstract class NetworkMessageBase
 	{

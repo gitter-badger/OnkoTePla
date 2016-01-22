@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using bytePassion.OnkoTePla.Communication.NetworkMessages;
 using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestObjects
 {

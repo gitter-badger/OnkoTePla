@@ -1,8 +1,8 @@
 ﻿using System;
-using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestObjects;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses;
+using bytePassion.OnkoTePla.Communication.NetworkMessages;
+using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
+using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ;
 using NetMQ.Sockets;
@@ -13,24 +13,27 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 	{
 		
 		private static void HandleRequest<TRequest, TResponse>(TRequest request, NetMQSocket socket, 
-										  Action<string> errorCallback,
-										  Action<TResponse> responseReceived)
+															   Action<string> errorCallback,
+															   Action<TResponse> responseReceived)
 
-			where TRequest : NetworkMessageBase
+			where TRequest  : NetworkMessageBase
 			where TResponse : NetworkMessageBase
-		{
-			var outMessage = NetworkMessageCoding.Encode(request);
-			var sendingSuccessful = socket.SendAString(outMessage, TimeSpan.FromSeconds(2));
+		{			
+			var sendingSuccessful = socket.SendNetworkMsg(request);
 
 			if (!sendingSuccessful)
+			{
 				errorCallback("failed sending");
+				return;
+			}
 
-			var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(5));
+			var response = socket.ReceiveNetworkMsg(TimeSpan.FromSeconds(5));
 
-			if (inMessage == "")
+			if (response == null)
+			{
 				errorCallback("no response received");
-
-			var response = NetworkMessageCoding.Decode(inMessage);
+				return;
+			}
 
 			var responseMsg = response as TResponse;
 			if (responseMsg != null)

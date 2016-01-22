@@ -1,8 +1,9 @@
 using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
-using bytePassion.Lib.ZmqUtils;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.EndConnection;
+using bytePassion.OnkoTePla.Communication.NetworkMessages;
+using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
+using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
@@ -38,20 +39,20 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 				while (!stopRunning)
 				{
-					var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(1));
+					var request = socket.ReceiveNetworkMsg(TimeSpan.FromSeconds(1));
 
-					if (inMessage == "")
+					if (request == null)
 						continue;
 
-					var request = Request.Parse(inMessage);
-					
-					System.Windows.Application.Current.Dispatcher.Invoke(() =>
+					if (request.Type == NetworkMessageType.EndConnectionRequest)
 					{
-						ConnectionEnded?.Invoke(request.SessionId);
-					});
-
-					var response = new Response();
-					socket.SendAString(response.AsString(), TimeSpan.FromSeconds(2));
+						System.Windows.Application.Current.Dispatcher.Invoke(() =>
+						{
+							ConnectionEnded?.Invoke(((EndConnectionRequest)request).SessionId);
+						});
+						
+						socket.SendNetworkMsg(new EndConnectionResponse());
+					}
 				}
 			}
 

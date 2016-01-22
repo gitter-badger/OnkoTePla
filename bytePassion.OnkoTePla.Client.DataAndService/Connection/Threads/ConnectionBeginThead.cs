@@ -1,8 +1,8 @@
 using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
-using bytePassion.Lib.ZmqUtils;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.BeginConnection;
+using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
+using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
@@ -34,22 +34,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 			using (var socket = context.CreateRequestSocket())
 			{
 				socket.Connect(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.BeginConnection);
-
-				
-				var outMessage = new Request(clientAddress.Identifier).AsString();
-				socket.SendAString(outMessage, TimeSpan.FromSeconds(2));
+								
+				socket.SendNetworkMsg(new BeginConnectionRequest(clientAddress.Identifier));
 					
-				var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(2));
+				var response = socket.ReceiveNetworkMsg(TimeSpan.FromSeconds(3));
 
-				if (inMessage == "")
-				{
-					responseCallback(null);
-				}
-				else
-				{
-					var response = Response.Parse(inMessage);
-					responseCallback(response.SessionId);
-				}					
+				responseCallback(((BeginConnectionResponse) response)?.SessionId);
 			}							
 		}
 

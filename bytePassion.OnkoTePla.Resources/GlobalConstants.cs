@@ -14,10 +14,11 @@
 			public const uint Heartbeat       = 6661;
 			public const uint DataRequest     = 6662;
 		}
-
-		public const int HeartbeatIntverval					=  5000;	// unit is milliseconds
-		public const int ClientWaitTimeForHeartbeat			= 10000;	//			"
-		public const int ServerWaitTimeForHeartbeatResponse =  2000;    //			"
+		 
+		public const uint StandardSendingTimeout			 =  2000;    // unit is milliseconds
+		public const uint HeartbeatIntverval				 =  5000;    //			"
+		public const uint ClientWaitTimeForHeartbeat		 = 10000;	 //			"
+		public const uint ServerWaitTimeForHeartbeatResponse =  2000;    //			"
 
 		public const string PatientPersistenceFile          = @"..\..\..\AppData\patients.xml";		
 		public const string ConfigPersistenceFile           = @"..\..\..\AppData\config.xml";

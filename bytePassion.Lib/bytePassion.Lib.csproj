@@ -233,7 +233,6 @@
     <Compile Include="WpfLib\Panels\DeckPanel.cs" />
     <Compile Include="WpfLib\SharedResourceDictionary.cs" />
     <Compile Include="ZmqUtils\IpAddressCatcher.cs" />
-    <Compile Include="ZmqUtils\SendReceiveStringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

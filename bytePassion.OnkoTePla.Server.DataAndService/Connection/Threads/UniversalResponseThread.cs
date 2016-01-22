@@ -1,9 +1,9 @@
 ﻿using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
-using bytePassion.Lib.ZmqUtils;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses;
+using bytePassion.OnkoTePla.Communication.NetworkMessages;
+using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
+using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
@@ -45,13 +45,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 				while (!stopRunning)
 				{																					
-					var inMessage = socket.ReceiveAString(TimeSpan.FromSeconds(1));
+					var request = socket.ReceiveNetworkMsg(TimeSpan.FromSeconds(1));
 
-					if (inMessage == "")
+					if (request == null)
 						continue;
-
-					var request = NetworkMessageCoding.Decode(inMessage);
-
+				
 					switch (request.Type)
 					{
 						case NetworkMessageType.GetUserListRequest: { ResponseHandler.HandleUserListRequest((UserListRequest)request, sessionRepository, socket, dataCenter); break; }

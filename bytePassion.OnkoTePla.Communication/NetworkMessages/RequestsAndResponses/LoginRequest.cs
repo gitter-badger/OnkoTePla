@@ -2,7 +2,7 @@
 using System.Linq;
 using bytePassion.OnkoTePla.Contracts.Types;
 
-namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses
+namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses
 {
 	public class LoginRequest : NetworkMessageBase
 	{

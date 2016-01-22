@@ -1,7 +1,7 @@
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestObjects;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages;
+using bytePassion.OnkoTePla.Communication.NetworkMessages;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
@@ -19,9 +19,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		private volatile bool stopRunning;
 		 
 		public UniversalRequestThread (NetMQContext context, 
-								  Address serverAddress,			
-								  TimeoutBlockingQueue<RequestObject> workQueue,
-								  ConnectionSessionId sessionId)
+								       Address serverAddress,			
+								       TimeoutBlockingQueue<RequestObject> workQueue,
+								       ConnectionSessionId sessionId)
 		{
 			this.context = context;
 			this.serverAddress = serverAddress;

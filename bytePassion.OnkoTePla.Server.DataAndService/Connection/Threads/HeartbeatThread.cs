@@ -3,8 +3,8 @@ using System.Threading;
 using System.Windows;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
-using bytePassion.Lib.ZmqUtils;
-using bytePassion.OnkoTePla.Contracts.NetworkMessages.Heartbeat;
+using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
+using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
@@ -44,18 +44,15 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 				while (!stopRunning)
 				{
-					Thread.Sleep(GlobalConstants.HeartbeatIntverval);
-					
-					var outMessage = new Request(sessionId);
-					socket.SendAString(outMessage.AsString(), TimeSpan.FromSeconds(2));
+					Thread.Sleep((int) GlobalConstants.HeartbeatIntverval);
+										
+					socket.SendNetworkMsg(new HeartbeatRequest(sessionId));
 
-					var inMessage = socket.ReceiveAString(TimeSpan.FromMilliseconds(GlobalConstants.ServerWaitTimeForHeartbeatResponse));
+					var response = socket.ReceiveNetworkMsg(TimeSpan.FromMilliseconds(GlobalConstants.ServerWaitTimeForHeartbeatResponse));
 
-					if (inMessage != "")					
-					{
-						var response = Response.Parse(inMessage);
-
-						if (response.SessionId == sessionId)												
+					if (response != null)					
+					{						
+						if (((HeartbeatResponse)response).SessionId == sessionId)												
 							continue;						
 					}
 					

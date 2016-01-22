@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace bytePassion.OnkoTePla.Contracts.NetworkMessages.RequestsAndResponses
+namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses
 {
 	public class LoginResponse : NetworkMessageBase
 	{
