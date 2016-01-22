@@ -75,6 +75,17 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 			);			
 		}
 
+		public static void HandleLogoutRequest(LogoutRequestObject logoutRequest,
+											   ConnectionSessionId sessionId, RequestSocket socket)
+		{
+			HandleRequest<LogoutRequest, LogoutResponse>(
+				new LogoutRequest(sessionId, logoutRequest.User.Id),
+				socket,
+				logoutRequest.ErrorCallback,
+				logoutResponse => logoutRequest.LogoutSuccessfulCallback() 
+			);
+		}
+
 		public static void HandleBeginConnectionRequest(BeginConnectionRequestObject beginConnectionRequest,
 														out ConnectionSessionId sessionId, RequestSocket socket)
 		{

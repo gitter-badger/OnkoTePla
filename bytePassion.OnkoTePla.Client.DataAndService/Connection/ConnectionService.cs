@@ -103,6 +103,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			requestWorkQueue.Put(new LoginRequestObject(loginSuccessfulCallback, user, password, errorCallback));
 		}
 
+		public void TryLogout(Action logoutSuccessfulCallback, ClientUserData user, Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new LogoutRequestObject(logoutSuccessfulCallback, user, errorCallback));
+		}
+
 		private void ConnectionEndResponseReceived()
 		{
 			Application.Current.Dispatcher.Invoke(
@@ -116,7 +121,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					CleanUpAfterDisconnection();
 				});
 		}
-
 		private void ConnectionBeginResponeReceived(ConnectionSessionId connectionSessionId)
 		{
 			Application.Current.Dispatcher.Invoke(
@@ -142,7 +146,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 				}				
 			);			
 		}
-
 		private void DebugConnectionBeginResponeReceived (ConnectionSessionId connectionSessionId)
 		{
 			Application.Current.Dispatcher.Invoke(
@@ -164,7 +167,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 				}
 			);
 		}
-
 		private void OnServerVanished()
 		{
 			heartbeatThread.ServerVanished -= OnServerVanished;

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
@@ -9,6 +10,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
+using bytePassion.OnkoTePla.Resources.UserNotificationService;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
@@ -48,7 +50,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
 
 		private void DoLogOut()
 	    {
-			session.Logout();
+			session.Logout(
+				errorMessage =>
+				{
+					Application.Current.Dispatcher.Invoke(async () =>
+					{
+						var dialog = new UserDialogBox("",
+													   "Logout nicht erfolgreich:\n" +
+													   $">> {errorMessage} <<",													  
+													   MessageBoxButton.OK);
+						await dialog.ShowMahAppsDialog();						
+					});
+				}	
+			);
 	    }
 
 	    private void ShowAboutDialog()

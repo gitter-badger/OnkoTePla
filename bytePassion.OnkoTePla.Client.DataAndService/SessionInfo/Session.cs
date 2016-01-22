@@ -98,10 +98,22 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			);			
 		}
 		
-		public void Logout()
+		public void Logout(Action<string> errorCallback)
 		{
-			LoggedInUser = null;
-			ApplyWorkflowEvent(WorkflowEvent.LoggedOut);
+			connectionService.TryLogout(
+				() =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						LoggedInUser = null;
+						ApplyWorkflowEvent(WorkflowEvent.LoggedOut);
+					});
+				},
+				LoggedInUser,
+				errorCallback
+			);
+
+			
 		}
 
 

@@ -61,6 +61,7 @@
     <Compile Include="Connection\RequestObjects\BeginConnectionRequestObject.cs" />
     <Compile Include="Connection\RequestObjects\BeginDebugConnectionRequestObject.cs" />
     <Compile Include="Connection\RequestObjects\EndConnectionRequestObject.cs" />
+    <Compile Include="Connection\RequestObjects\LogoutRequestObject.cs" />
     <Compile Include="Connection\RequestObjects\LoginRequestObject.cs" />
     <Compile Include="Connection\RequestObjects\RequestObject.cs" />
     <Compile Include="Connection\RequestObjects\UserListRequestObject.cs" />

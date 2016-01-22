@@ -53,7 +53,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 					if (request == null)
 						continue;
-				
+				 
 					switch (request.Type)
 					{
 						case NetworkMessageType.GetUserListRequest:
@@ -64,6 +64,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 						case NetworkMessageType.LoginRequest:
 						{
 							ResponseHandler.HandleLoginRequest((LoginRequest)request, sessionRepository, socket, dataCenter);
+							break;
+						}
+						case NetworkMessageType.LogoutRequest:
+						{
+							ResponseHandler.HandleLogoutRequest((LogoutRequest)request, sessionRepository, socket);
 							break;
 						}
 						case NetworkMessageType.BeginConnectionRequest:

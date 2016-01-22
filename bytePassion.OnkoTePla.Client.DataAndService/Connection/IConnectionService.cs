@@ -22,6 +22,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 		void TryLogin (Action loginSuccessfulCallback,
 					   ClientUserData user, string password,
+					   Action<string> errorCallback);
+		void TryLogout(Action logoutSuccessfulCallback,
+					   ClientUserData user,
 					   Action<string> errorCallback); 
 	}
 }

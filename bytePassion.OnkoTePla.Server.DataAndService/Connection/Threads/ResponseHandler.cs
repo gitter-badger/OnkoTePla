@@ -100,10 +100,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 				socket.SendNetworkMsg(new ErrorResponse(errorMsg));
 				return;
 			}
-			
-			socket.SendNetworkMsg(new LoginResponse());			
 
 			sessionRepository.UpdateLoggedInUser(request.SessionId, user);
+
+			socket.SendNetworkMsg(new LoginResponse());			
 		}
 
 		#endregion
@@ -118,7 +118,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 			if (!requestIsValid)
 				return;
 
-			// todo handle logout
+			sessionRepository.UpdateLoggedInUser(request.SessionId, null);
+
+			socket.SendNetworkMsg(new LogoutResponse());
 		}
 
 		#endregion

@@ -30,7 +30,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 							 Action<string> errorCallback); 
 		
 		void TryLogin(ClientUserData user, string password, Action<string> errorCallback);
-		void Logout();
+		void Logout(Action<string> errorCallback);
 
 
 

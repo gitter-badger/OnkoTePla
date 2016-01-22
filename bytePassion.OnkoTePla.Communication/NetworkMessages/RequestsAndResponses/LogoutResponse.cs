@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses
+﻿namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses
 {
 	public class LogoutResponse : NetworkMessageBase
 	{
@@ -11,14 +9,11 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 		
 		public override string AsString()
 		{
-			return nameof(LogoutResponse);
+			return "";
 		}
 		
 		public static LogoutResponse Parse (string s)
-		{
-			if (s != nameof(LogoutResponse))
-				throw new Exception();
-			
+		{			
 			return new LogoutResponse();
 		}
 	}

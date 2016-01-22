@@ -58,6 +58,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 							RequestHandler.HandleLoginRequest((LoginRequestObject)workItem, currentSessionId, socket);
 							break;
 						}
+						case NetworkMessageType.LogoutRequest:
+						{
+							RequestHandler.HandleLogoutRequest((LogoutRequestObject)workItem, currentSessionId, socket);
+							break;
+						}
 						case NetworkMessageType.BeginConnectionRequest:
 						{
 							RequestHandler.HandleBeginConnectionRequest((BeginConnectionRequestObject)workItem, out currentSessionId, socket);
