@@ -16,7 +16,10 @@
 		LoginResponse,
 		LogoutRequest,
 		LogoutResponse,
-		
+		GetAccessablePracticesRequest,
+		GetAccessablePracticesResponse,
+
+
 		ErrorResponse		
 	}
 }

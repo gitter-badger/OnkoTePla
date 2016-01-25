@@ -86,6 +86,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 							ResponseHandler.HandleEndConnectionRequest((EndConnectionRequest)request, sessionRepository, socket);
 							break;
 						}
+						case NetworkMessageType.GetAccessablePracticesRequest:
+						{
+							ResponseHandler.HandleGetAccessablePracticesRequest((GetAccessablePracticesRequest) request, sessionRepository, socket);
+							break;
+						}
 					}					
 				}
 			}

@@ -20,21 +20,23 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages
 
 			switch (type)
 			{
-				case NetworkMessageType.HeartbeatRequest:             return HeartbeatRequest.Parse(msg);
-				case NetworkMessageType.HeartbeatResponse:            return HeartbeatResponse.Parse(msg);
-				case NetworkMessageType.BeginConnectionRequest:       return BeginConnectionRequest.Parse(msg);
-				case NetworkMessageType.BeginConnectionResponse:      return BeginConnectionResponse.Parse(msg);
-				case NetworkMessageType.BeginDebugConnectionRequest:  return BeginDebugConnectionRequest.Parse(msg);
-				case NetworkMessageType.BeginDebugConnectionResponse: return BeginDebugConnectionResponse.Parse(msg);
-				case NetworkMessageType.EndConnectionRequest:         return EndConnectionRequest.Parse(msg);
-				case NetworkMessageType.EndConnectionResponse:        return EndConnectionResponse.Parse(msg);
-				case NetworkMessageType.GetUserListRequest:           return UserListRequest.Parse(msg);
-				case NetworkMessageType.GetUserListResponse:          return UserListResponse.Parse(msg);
-				case NetworkMessageType.LoginRequest:                 return LoginRequest.Parse(msg);
-				case NetworkMessageType.LoginResponse:                return LoginResponse.Parse(msg);
-				case NetworkMessageType.LogoutRequest:                return LogoutRequest.Parse(msg);
-				case NetworkMessageType.LogoutResponse:               return LogoutResponse.Parse(msg);
-				case NetworkMessageType.ErrorResponse:                return ErrorResponse.Parse(msg);				
+				case NetworkMessageType.HeartbeatRequest:               return HeartbeatRequest.Parse(msg);
+				case NetworkMessageType.HeartbeatResponse:              return HeartbeatResponse.Parse(msg);
+				case NetworkMessageType.BeginConnectionRequest:         return BeginConnectionRequest.Parse(msg);
+				case NetworkMessageType.BeginConnectionResponse:        return BeginConnectionResponse.Parse(msg);
+				case NetworkMessageType.BeginDebugConnectionRequest:    return BeginDebugConnectionRequest.Parse(msg);
+				case NetworkMessageType.BeginDebugConnectionResponse:   return BeginDebugConnectionResponse.Parse(msg);
+				case NetworkMessageType.EndConnectionRequest:           return EndConnectionRequest.Parse(msg);
+				case NetworkMessageType.EndConnectionResponse:          return EndConnectionResponse.Parse(msg);
+				case NetworkMessageType.GetUserListRequest:             return UserListRequest.Parse(msg);
+				case NetworkMessageType.GetUserListResponse:            return UserListResponse.Parse(msg);
+				case NetworkMessageType.LoginRequest:                   return LoginRequest.Parse(msg);
+				case NetworkMessageType.LoginResponse:                  return LoginResponse.Parse(msg);
+				case NetworkMessageType.LogoutRequest:                  return LogoutRequest.Parse(msg);
+				case NetworkMessageType.LogoutResponse:                 return LogoutResponse.Parse(msg);
+				case NetworkMessageType.ErrorResponse:                  return ErrorResponse.Parse(msg);	
+				case NetworkMessageType.GetAccessablePracticesRequest:  return GetAccessablePracticesRequest.Parse(msg);
+				case NetworkMessageType.GetAccessablePracticesResponse: return GetAccessablePracticesResponse.Parse(msg);							
 				
 				default:
 					throw new ArgumentException();

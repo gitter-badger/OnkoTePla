@@ -63,7 +63,9 @@
     <Compile Include="NetworkMessages\RequestsAndResponses\ErrorResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\LoginRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\LoginResponse.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetAccessablePracticesRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\LogoutRequest.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetAccessablePracticesResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\LogoutResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\UserListRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\UserListResponse.cs" />

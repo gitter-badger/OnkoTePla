@@ -50,7 +50,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 			return true;
 		}
 
-		#region UserListRequest
+		#region GetUserList
 
 		public static void HandleUserListRequest(UserListRequest request, ICurrentSessionsInfo sessionRepository,
 												 ResponseSocket socket, IDataCenter dataCenter)
@@ -70,7 +70,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		#endregion
 
-		#region LoginRequest
+		#region Login
 
 		public static void HandleLoginRequest(LoginRequest request, ICurrentSessionsInfo sessionRepository,
 											  ResponseSocket socket, IDataCenter dataCenter)
@@ -108,7 +108,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		#endregion
 		
-		#region LogoutRequest
+		#region Logout
 		
 		public static void HandleLogoutRequest(LogoutRequest request, ICurrentSessionsInfo sessionRepository,
 											   ResponseSocket socket)
@@ -125,7 +125,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		#endregion
 
-		#region BeginConnectionRequest
+		#region BeginConnection
 
 		public static void HandleBeginConnectionRequest(BeginConnectionRequest request, 
 														ICurrentSessionsInfo sessionRepository,
@@ -148,7 +148,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		#endregion
 
-		#region BeginDebugConnectionRequest
+		#region BeginDebugConnection
 
 		public static void HandleBeginDebugConnectionRequest (BeginDebugConnectionRequest request, ICurrentSessionsInfo sessionRepository,
 															  ResponseSocket socket)
@@ -168,7 +168,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		#endregion
 
-		#region EndConnectionRequest
+		#region EndConnection
 
 		public static void HandleEndConnectionRequest(EndConnectionRequest request, ICurrentSessionsInfo sessionRepository,
 													  ResponseSocket socket)
@@ -182,6 +182,25 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 			socket.SendNetworkMsg(new EndConnectionResponse());
 		}
+
+		#endregion
+
+		#region GetAccessablePractices
+
+		public static void HandleGetAccessablePracticesRequest(GetAccessablePracticesRequest request,
+															   ICurrentSessionsInfo sessionRespository,
+															   ResponseSocket socket)
+		{
+			var requestIsValid = ValidateRequest(request.SessionId, sessionRespository, socket, request.UserId);
+
+			if (!requestIsValid)
+				return;
+
+			socket.SendNetworkMsg(new GetAccessablePracticesResponse(
+				sessionRespository.GetSessionForUser(request.UserId).LoggedInUser.ListOfAccessableMedicalPractices)
+			);
+		}
+
 
 		#endregion
 	}
