@@ -4,12 +4,12 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
 {
     public class StreamMetaDataService : IStreamMetaDataService
     {
-        public void ReadMetaData(Guid practiceId)
+        public PracticeMetaData ReadMetaDataForPractice(Guid practiceId)
         {
             throw new NotImplementedException();
         }
 
-        public void SaveMetaData(Guid practiceId)
+        public void SaveMetaData(Guid practiceId, PracticeMetaData data)
         {
             throw new NotImplementedException();
         }
