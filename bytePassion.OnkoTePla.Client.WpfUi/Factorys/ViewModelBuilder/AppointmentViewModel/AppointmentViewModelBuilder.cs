@@ -15,14 +15,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
     internal class AppointmentViewModelBuilder : IAppointmentViewModelBuilder 
 	{
 		private readonly IViewModelCommunication viewModelCommunication;		
-		private readonly IGlobalState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable;
-		private readonly IGlobalState<Date> selectedDateVariable;		
+		private readonly ISharedState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable;
+		private readonly ISharedState<Date> selectedDateVariable;		
 		private readonly AdornerControl adornerControl;
 	    private readonly IAppointmentModificationsBuilder appointmentModificationsBuilder;
 
 	    public AppointmentViewModelBuilder(IViewModelCommunication viewModelCommunication, 										   
-										   IGlobalState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable, 
-										   IGlobalState<Date> selectedDateVariable, 
+										   ISharedState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable, 
+										   ISharedState<Date> selectedDateVariable, 
 										   AdornerControl adornerControl,
                                            IAppointmentModificationsBuilder appointmentModificationsBuilder)
 		{

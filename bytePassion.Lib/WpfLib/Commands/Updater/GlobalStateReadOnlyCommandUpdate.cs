@@ -11,13 +11,13 @@ namespace bytePassion.Lib.WpfLib.Commands.Updater
     {
         public event EventHandler UpdateOfCanExecuteChangedRequired;
 
-        private readonly IGlobalStateReadOnly<T> globalState;
+        private readonly ISharedStateReadOnly<T> sharedState;
 
-        public GlobalStateReadOnlyCommandUpdate(IGlobalStateReadOnly<T> globalState)
+        public GlobalStateReadOnlyCommandUpdate(ISharedStateReadOnly<T> sharedState)
         {
-            this.globalState = globalState;
+            this.sharedState = sharedState;
 
-            globalState.StateChanged += OnGlobalStateChanged;
+            sharedState.StateChanged += OnGlobalStateChanged;
         }
 
         private void OnGlobalStateChanged(T newValue)
@@ -27,7 +27,7 @@ namespace bytePassion.Lib.WpfLib.Commands.Updater
 
         protected override void CleanUp()
         {
-            globalState.StateChanged -= OnGlobalStateChanged;
+            sharedState.StateChanged -= OnGlobalStateChanged;
         }
     }
 }

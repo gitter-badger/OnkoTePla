@@ -19,7 +19,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 {
 	internal class MainWindowViewModel : ViewModel, IMainWindowViewModel
     {
-		private readonly IGlobalStateWriteOnly<MainPage> selectedPageVariable;
+		private readonly ISharedStateWriteOnly<MainPage> selectedPageVariable;
 
 		private MainPage selectedPage;
 
@@ -32,7 +32,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 								   ITherapyPlaceTypesPageViewModel therapyPlaceTypesPageViewModel,
 								   IOptionsPageViewModel optionsPageViewModel, 
                                    IAboutPageViewModel aboutPageViewModel,
-								   IGlobalStateWriteOnly<MainPage> selectedPageVariable)
+								   ISharedStateWriteOnly<MainPage> selectedPageVariable)
         {
 	        this.selectedPageVariable     = selectedPageVariable;
 

@@ -1,7 +1,6 @@
 namespace bytePassion.Lib.Communication.State
 {
-
-    public interface IGlobalStateWriteOnly<in T>
+	public interface ISharedStateWriteOnly<in T>
     {
         T Value { set; }
     }

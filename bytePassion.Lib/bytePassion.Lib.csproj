@@ -55,9 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\MessageBus\IRequestHandler.cs" />
-    <Compile Include="Communication\State\IGlobalState.cs" />
-    <Compile Include="Communication\State\IGlobalStateReadOnly.cs" />
-    <Compile Include="Communication\State\IGlobalStateWriteOnly.cs" />
+    <Compile Include="Communication\State\ISharedState.cs" />
+    <Compile Include="Communication\State\ISharedStateReadOnly.cs" />
+    <Compile Include="Communication\State\ISharedStateWriteOnly.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCollectionItem.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCommunication.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCommunicationDeliverer.cs" />
@@ -161,7 +161,7 @@
     <Compile Include="Types\Clonable\ClonableList.cs" />
     <Compile Include="WpfLib\Commands\Command.cs" />
     <Compile Include="WpfLib\Commands\ParameterrizedCommand.cs" />
-    <Compile Include="Communication\State\GlobalState.cs" />
+    <Compile Include="Communication\State\SharedState.cs" />
     <Compile Include="Communication\ViewModel\IViewModelCollections.cs" />
     <Compile Include="Communication\ViewModel\Messages\IViewModelMessageHandler.cs" />
     <Compile Include="Communication\ViewModel\ViewModelCollection.cs" />

@@ -21,9 +21,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 
 		private readonly IDataCenter dataCenter;		
 
-		private readonly IGlobalState<Guid?>         roomFilterVariable;
-		private readonly IGlobalStateReadOnly<Date>  selectedDateVariable;
-		private readonly IGlobalStateReadOnly<Guid>  displayedMedicalPracticeVariable;
+		private readonly ISharedState<Guid?>         roomFilterVariable;
+		private readonly ISharedStateReadOnly<Date>  selectedDateVariable;
+		private readonly ISharedStateReadOnly<Guid>  displayedMedicalPracticeVariable;
         
 		private IList<Room> currentSelectableRoomFilters;
 		private RoomSelectorData selectedRoomFilter;
@@ -31,9 +31,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 
 
 		public RoomFilterViewModel(IDataCenter dataCenter,
-								   IGlobalState<Guid?> roomFilterVariable, 
-                                   IGlobalStateReadOnly<Date> selectedDateVariable, 
-                                   IGlobalStateReadOnly<Guid> displayedMedicalPracticeVariable)
+								   ISharedState<Guid?> roomFilterVariable, 
+                                   ISharedStateReadOnly<Date> selectedDateVariable, 
+                                   ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable)
 		{
 			this.dataCenter = dataCenter;
 		    this.roomFilterVariable = roomFilterVariable;

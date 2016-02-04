@@ -70,7 +70,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 			// ViewModel-Variables
 
-			var selectedPageVariable = new GlobalState<MainPage>(MainPage.Overview);
+			var selectedPageVariable = new SharedState<MainPage>(MainPage.Overview);
 
 
 			// ViewModels

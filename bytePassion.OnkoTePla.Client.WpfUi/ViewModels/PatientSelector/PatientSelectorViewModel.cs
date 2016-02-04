@@ -13,16 +13,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 	internal class PatientSelectorViewModel : ViewModel, 
                                               IPatientSelectorViewModel
     {
-	    private readonly IGlobalState<Patient> selectedPatientGlobalVariable;
+	    private readonly ISharedState<Patient> selectedPatientSharedVariable;
         private bool listIsEmpty;
         private string searchFilter;
 
         private Patient selectedPatient;
         private bool showDeceasedPatients;
 
-        public PatientSelectorViewModel(IDataCenter dataCenter, IGlobalState<Patient> selectedPatientGlobalVariable)
+        public PatientSelectorViewModel(IDataCenter dataCenter, ISharedState<Patient> selectedPatientSharedVariable)
         {
-	        this.selectedPatientGlobalVariable = selectedPatientGlobalVariable;
+	        this.selectedPatientSharedVariable = selectedPatientSharedVariable;
 
             IReadOnlyList<Patient> allPatients = dataCenter.GetAllPatients().ToList();
 
@@ -68,7 +68,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
             get { return selectedPatient; }
             set
             {
-                selectedPatientGlobalVariable.Value = value;
+                selectedPatientSharedVariable.Value = value;
                 PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value);
             }
         }

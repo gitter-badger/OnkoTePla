@@ -4,20 +4,20 @@
 namespace bytePassion.Lib.Communication.State
 {
 
-	public class GlobalState<T> : IGlobalState<T>,
-                                  IGlobalStateReadOnly<T>,
-                                  IGlobalStateWriteOnly<T>
+	public class SharedState<T> : ISharedState<T>,
+                                  ISharedStateReadOnly<T>,
+                                  ISharedStateWriteOnly<T>
 	{
 		public event Action<T> StateChanged;
 
 		private T stateValue;
 
-	    public GlobalState(T initialValue)
+	    public SharedState(T initialValue)
 	    {
 	        stateValue = initialValue;
 	    }
 
-		public GlobalState() : this(default(T))
+		public SharedState() : this(default(T))
 		{			
 		}
 

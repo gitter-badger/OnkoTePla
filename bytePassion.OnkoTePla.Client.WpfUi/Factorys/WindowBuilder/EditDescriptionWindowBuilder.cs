@@ -15,7 +15,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
     {
         private readonly Appointment appointmentToEdit;
         private IViewModelCommunication viewModelCommunication;
-        private readonly IGlobalState<AppointmentModifications> modificationsVar;
+        private readonly ISharedState<AppointmentModifications> modificationsVar;
         private readonly Guid practiseId;
 
         public EditDescriptionWindowBuilder( Appointment appointmentToEdit)
@@ -23,7 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
             this.appointmentToEdit = appointmentToEdit;
         }
 
-        public EditDescriptionWindowBuilder(Appointment appointmentToEdit, IViewModelCommunication viewModelCommunication, IGlobalState<ViewModels.AppointmentView.Helper.AppointmentModifications> modificationsVar ,Guid practiseId) : this(appointmentToEdit)
+        public EditDescriptionWindowBuilder(Appointment appointmentToEdit, IViewModelCommunication viewModelCommunication, ISharedState<ViewModels.AppointmentView.Helper.AppointmentModifications> modificationsVar ,Guid practiseId) : this(appointmentToEdit)
         {
             this.viewModelCommunication = viewModelCommunication;
             this.modificationsVar = modificationsVar;

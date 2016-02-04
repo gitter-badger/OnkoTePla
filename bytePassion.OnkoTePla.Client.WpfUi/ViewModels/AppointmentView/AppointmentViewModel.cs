@@ -30,8 +30,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		private readonly Appointment appointment;
 		private readonly TherapyPlaceRowIdentifier initialLocalisation;
 
-		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
-	    private readonly IGlobalState<Date> selectedDateVariable;
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
+	    private readonly ISharedState<Date> selectedDateVariable;
         private readonly IWindowBuilder<EditDescription> editDescriptionWindowBuilder;
 
         private TherapyPlaceRowIdentifier currentLocation;
@@ -48,8 +48,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
         public AppointmentViewModel(Appointment appointment,
 									IViewModelCommunication viewModelCommunication,																
 									TherapyPlaceRowIdentifier initialLocalisation, 
-                                    IGlobalState<AppointmentModifications> appointmentModificationsVariable,
-                                    IGlobalState<Date> selectedDateVariable,									
+                                    ISharedState<AppointmentModifications> appointmentModificationsVariable,
+                                    ISharedState<Date> selectedDateVariable,									
                                     IAppointmentModificationsBuilder appointmentModificationsBuilder,
                                     IWindowBuilder<EditDescription> editDescriptionWindowBuilder,
                                     AdornerControl adornerControl)

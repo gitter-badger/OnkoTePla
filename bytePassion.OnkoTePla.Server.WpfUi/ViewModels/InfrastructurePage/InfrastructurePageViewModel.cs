@@ -25,7 +25,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
                                                  IInfrastructurePageViewModel
     {
 		private readonly IDataCenter dataCenter;
-		private readonly IGlobalStateReadOnly<MainPage> selectedPageVariable;
+		private readonly ISharedStateReadOnly<MainPage> selectedPageVariable;
 
 		#region property backing fields
 
@@ -45,8 +45,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		
 		#endregion
 
-		public InfrastructurePageViewModel(IDataCenter dataCenter, 
-										  IGlobalStateReadOnly<MainPage> selectedPageVariable)
+		public InfrastructurePageViewModel(IDataCenter dataCenter,
+										  ISharedStateReadOnly<MainPage> selectedPageVariable)
 		{
 			this.dataCenter = dataCenter;
 			this.selectedPageVariable = selectedPageVariable;

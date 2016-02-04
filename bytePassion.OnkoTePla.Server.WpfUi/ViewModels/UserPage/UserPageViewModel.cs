@@ -16,7 +16,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 									   IUserPageViewModel
     {
 	    private readonly IDataCenter dataCenter;
-		private readonly IGlobalStateReadOnly<MainPage> selectedPageVariable;		
+		private readonly ISharedStateReadOnly<MainPage> selectedPageVariable;		
 
 		private User selectedUser;
 		private bool showModificationView;
@@ -24,8 +24,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 		private string password;
 		private bool isHidden;
 
-		public UserPageViewModel(IDataCenter dataCenter, 
-								 IGlobalStateReadOnly<MainPage> selectedPageVariable)
+		public UserPageViewModel(IDataCenter dataCenter,
+								 ISharedStateReadOnly<MainPage> selectedPageVariable)
 	    {
 		    this.dataCenter = dataCenter;
 			this.selectedPageVariable = selectedPageVariable;

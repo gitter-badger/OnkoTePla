@@ -34,9 +34,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		private readonly IDataCenter dataCenter;
 		private readonly ISession session;		
 		private readonly IViewModelCommunication viewModelCommunication;		
-		private readonly IGlobalStateReadOnly<Size> gridSizeVariable;
-		private readonly IGlobalStateReadOnly<Guid?> roomFilterVariable;		
-	    private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable;		
+		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
+		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;		
+	    private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;		
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 
         private readonly AppointmentsOfADayReadModel readModel;
@@ -45,9 +45,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 									    IDataCenter dataCenter, 
 										ISession session,										
 										IViewModelCommunication viewModelCommunication,
-                                        IGlobalStateReadOnly<Size> gridSizeVariable,
-										IGlobalStateReadOnly<Guid?> roomFilterVariable,										
-                                        IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable,										
+                                        ISharedStateReadOnly<Size> gridSizeVariable,
+										ISharedStateReadOnly<Guid?> roomFilterVariable,										
+                                        ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,										
 										IAppointmentViewModelBuilder appointmentViewModelBuilder,
 										ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 		{

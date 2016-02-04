@@ -3,11 +3,10 @@
 
 namespace bytePassion.Lib.Communication.State
 {
-
-    public interface IGlobalStateReadOnly<out T>
+	public interface ISharedStateReadOnly<out T>
     {
         event Action<T> StateChanged;
-
+		
         T Value { get; }
     }
 }

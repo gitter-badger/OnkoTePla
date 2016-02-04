@@ -21,9 +21,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 	internal class TherapyPlaceRowViewModel : ViewModel,
 											  ITherapyPlaceRowViewModel
 	{
-		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
-		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalState<Guid> selectedMedicalPracticeIdVariable;
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
+		private readonly ISharedState<Date> selectedDateVariable;
+		private readonly ISharedState<Guid> selectedMedicalPracticeIdVariable;
 
 		private double gridWidth;
 		private bool isVisible;
@@ -37,9 +37,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 										Color roomDisplayColor,										
 										TherapyPlaceRowIdentifier identifier,
 										AdornerControl adornerControl,
-										IGlobalState<AppointmentModifications> appointmentModificationsVariable, 
-										IGlobalState<Date> selectedDateVariable, 
-										IGlobalState<Guid> selectedMedicalPracticeIdVariable)
+										ISharedState<AppointmentModifications> appointmentModificationsVariable, 
+										ISharedState<Date> selectedDateVariable, 
+										ISharedState<Guid> selectedMedicalPracticeIdVariable)
 		{
 			this.appointmentModificationsVariable = appointmentModificationsVariable;
 			this.selectedDateVariable = selectedDateVariable;

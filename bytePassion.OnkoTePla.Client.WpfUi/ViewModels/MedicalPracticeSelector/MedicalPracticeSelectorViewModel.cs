@@ -14,15 +14,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
                                                       IMedicalPracticeSelectorViewModel
 	{
 		private readonly IDataCenter                                    dataCenter;		
-		private readonly IGlobalState<Guid>                             selectedMedicalPracticeIdVariable;
-	    private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable; 
+		private readonly ISharedState<Guid>                             selectedMedicalPracticeIdVariable;
+	    private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable; 
 
 		private MedicalPractice selectedPractice;
 		private bool practiceIsSelectable;
 
 		public MedicalPracticeSelectorViewModel (IDataCenter dataCenter, 
-                                                 IGlobalState<Guid> selectedMedicalPracticeIdVariable, 
-                                                 IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable)
+                                                 ISharedState<Guid> selectedMedicalPracticeIdVariable, 
+                                                 ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable)
 		{
 		    this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;

@@ -11,11 +11,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector
     public class DateSelectorViewModel : ViewModel, 
                                          IDateSelectorViewModel
 	{		
-		private readonly IGlobalState<Date> selectedDateVariable;
+		private readonly ISharedState<Date> selectedDateVariable;
 
 		private Date selectedDate;
 
-		public DateSelectorViewModel(IGlobalState<Date> selectedDateVariable)
+		public DateSelectorViewModel(ISharedState<Date> selectedDateVariable)
 		{
 		    this.selectedDateVariable = selectedDateVariable;
 

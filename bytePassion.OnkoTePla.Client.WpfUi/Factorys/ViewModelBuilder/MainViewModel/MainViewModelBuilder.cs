@@ -69,13 +69,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
             var initialMedicalPractice = dataCenter.GetAllMedicalPractices().First();  // TODO set last usage
 
-            var gridSizeVariable                  = new GlobalState<Size>(new Size(400, 400));
-            var selectedDateVariable              = new GlobalState<Date>(initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday());     // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
-            var selectedMedicalPracticeIdVariable = new GlobalState<Guid>(initialMedicalPractice.Id);
-            var roomFilterVariable                = new GlobalState<Guid?>();
-            var appointmentModificationsVariable  = new GlobalState<AppointmentModifications>();
+            var gridSizeVariable                  = new SharedState<Size>(new Size(400, 400));
+            var selectedDateVariable              = new SharedState<Date>(initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday());     // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
+            var selectedMedicalPracticeIdVariable = new SharedState<Guid>(initialMedicalPractice.Id);
+            var roomFilterVariable                = new SharedState<Guid?>();
+            var appointmentModificationsVariable  = new SharedState<AppointmentModifications>();
 
-            var selectedPatientForAppointmentSearchVariable = new GlobalState<Patient>();
+            var selectedPatientForAppointmentSearchVariable = new SharedState<Patient>();
 
 
             // Create ViewModelCollection

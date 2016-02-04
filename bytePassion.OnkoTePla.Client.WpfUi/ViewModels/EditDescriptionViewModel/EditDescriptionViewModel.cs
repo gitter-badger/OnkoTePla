@@ -20,10 +20,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.EditDescriptionViewModel
         private string description;
         private Appointment appointment;
         private readonly IViewModelCommunication viewModelCommunication;
-        private readonly IGlobalState<AppointmentModifications> modificationsVar;
+        private readonly ISharedState<AppointmentModifications> modificationsVar;
         private readonly Guid practiseId;
 
-        public EditDescriptionViewModel(Appointment appointmentToEdit, IViewModelCommunication viewModelCommunication, IGlobalState<ViewModels.AppointmentView.Helper.AppointmentModifications> modificationsVar, Guid practiseId
+        public EditDescriptionViewModel(Appointment appointmentToEdit, IViewModelCommunication viewModelCommunication, ISharedState<ViewModels.AppointmentView.Helper.AppointmentModifications> modificationsVar, Guid practiseId
             )
         {
             appointment = appointmentToEdit;

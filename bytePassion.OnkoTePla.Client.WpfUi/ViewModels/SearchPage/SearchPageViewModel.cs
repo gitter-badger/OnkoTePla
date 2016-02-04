@@ -42,9 +42,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 		private const string NoPatientSelected = "- noch kein Patient ausgewählt -";
 		
-		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
-        private readonly IGlobalStateReadOnly<Patient> selectedPatientVariable;        
+		private readonly ISharedState<Date> selectedDateVariable;
+		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
+        private readonly ISharedStateReadOnly<Patient> selectedPatientVariable;        
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IDataCenter dataCenter;
 		private readonly ISession session;
@@ -53,9 +53,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		private string selectedPatient;
 
 		public SearchPageViewModel(IPatientSelectorViewModel patientSelectorViewModel,
-								   IGlobalStateReadOnly<Patient> selectedPatientVariable,
-								   IGlobalState<Date> selectedDateVariable,
-								   IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable,                                   
+								   ISharedStateReadOnly<Patient> selectedPatientVariable,
+								   ISharedState<Date> selectedDateVariable,
+								   ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,                                   
 								   IViewModelCommunication viewModelCommunication,
 								   IDataCenter dataCenter,
 								   ISession session)

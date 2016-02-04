@@ -49,8 +49,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 		private readonly IDataCenter dataCenter;
 		private readonly IViewModelCommunication viewModelCommunication;
 		
-		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalStateReadOnly<Size> gridSizeVariable;
+		private readonly ISharedState<Date> selectedDateVariable;
+		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
 
 		private readonly VersionManager<ModificationDataSet> versions;		
 
@@ -74,8 +74,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 										Guid medicalPracticeId, 
 										IDataCenter dataCenter, 
 										IViewModelCommunication viewModelCommunication,
-										IGlobalState<Date> selectedDateVariable, 
-										IGlobalStateReadOnly<Size> gridSizeVariable, 
+										ISharedState<Date> selectedDateVariable, 
+										ISharedStateReadOnly<Size> gridSizeVariable, 
 										bool isInitialAdjustment)
 		{
 			OriginalAppointment = originalAppointment;						

@@ -3,7 +3,7 @@
 
 namespace bytePassion.Lib.Communication.State
 {
-	public interface IGlobalState<T>
+	public interface ISharedState<T>
 	{
 		event Action<T> StateChanged;
 

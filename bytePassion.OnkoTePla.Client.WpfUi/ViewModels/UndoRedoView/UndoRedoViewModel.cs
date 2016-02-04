@@ -25,7 +25,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 		}
 
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
 	    private readonly ISession session;
 	   
 
@@ -34,7 +34,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 				
 
 		public UndoRedoViewModel(IViewModelCommunication viewModelCommunication,
-								 IGlobalState<AppointmentModifications> appointmentModificationsVariable, 
+								 ISharedState<AppointmentModifications> appointmentModificationsVariable, 
 								 ISession session)
 		{
 			this.viewModelCommunication = viewModelCommunication;

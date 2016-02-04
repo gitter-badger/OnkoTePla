@@ -17,15 +17,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPl
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IDataCenter dataCenter;
 		private readonly AdornerControl adornerControl;
-		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
-		private readonly IGlobalState<Date> selectedDateVariable;
-		private readonly IGlobalState<Guid> selectedMedicalPracticeIdVariable;
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
+		private readonly ISharedState<Date> selectedDateVariable;
+		private readonly ISharedState<Guid> selectedMedicalPracticeIdVariable;
 
 		public TherapyPlaceRowViewModelBuilder(IViewModelCommunication viewModelCommunication, 
 											   IDataCenter dataCenter, AdornerControl adornerControl, 
-											   IGlobalState<AppointmentModifications> appointmentModificationsVariable, 
-											   IGlobalState<Date> selectedDateVariable, 
-											   IGlobalState<Guid> selectedMedicalPracticeIdVariable)
+											   ISharedState<AppointmentModifications> appointmentModificationsVariable, 
+											   ISharedState<Date> selectedDateVariable, 
+											   ISharedState<Guid> selectedMedicalPracticeIdVariable)
 		{
 			this.viewModelCommunication = viewModelCommunication;
 			this.dataCenter = dataCenter;

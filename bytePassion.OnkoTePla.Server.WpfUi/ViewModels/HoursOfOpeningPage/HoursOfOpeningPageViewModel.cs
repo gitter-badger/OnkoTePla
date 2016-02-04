@@ -21,7 +21,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage
 												 IHoursOfOpeningPageViewModel
 	{
 		private readonly IDataCenter dataCenter;
-		private readonly IGlobalStateReadOnly<MainPage> selectedPageVariable;
+		private readonly ISharedStateReadOnly<MainPage> selectedPageVariable;
 
 		#region backing-field variables
 
@@ -55,7 +55,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage
 		#endregion
 
 		public HoursOfOpeningPageViewModel(IDataCenter dataCenter,
-										   IGlobalStateReadOnly<MainPage> selectedPageVariable)
+										   ISharedStateReadOnly<MainPage> selectedPageVariable)
 		{
 			this.dataCenter = dataCenter;
 			this.selectedPageVariable = selectedPageVariable;

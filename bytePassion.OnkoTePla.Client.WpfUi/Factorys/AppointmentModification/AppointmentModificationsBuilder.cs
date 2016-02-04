@@ -14,13 +14,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification
     {
         private readonly IDataCenter dataCenter;
         private readonly IViewModelCommunication viewModelCommunication;
-        private readonly IGlobalState<Date> selectedDateVariable;
-        private readonly IGlobalStateReadOnly<Size> gridSizeVariable;
+        private readonly ISharedState<Date> selectedDateVariable;
+        private readonly ISharedStateReadOnly<Size> gridSizeVariable;
 
         public AppointmentModificationsBuilder(IDataCenter dataCenter,
                                                IViewModelCommunication viewModelCommunication,
-                                               IGlobalState<Date> selectedDateVariable,
-                                               IGlobalStateReadOnly<Size> gridSizeVariable)
+                                               ISharedState<Date> selectedDateVariable,
+                                               ISharedStateReadOnly<Size> gridSizeVariable)
         {
             this.dataCenter = dataCenter;
             this.viewModelCommunication = viewModelCommunication;

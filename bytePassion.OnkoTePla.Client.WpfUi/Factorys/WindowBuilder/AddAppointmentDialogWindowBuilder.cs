@@ -16,13 +16,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 	internal class AddAppointmentDialogWindowBuilder : IWindowBuilder<AddAppointmentDialog>
 	{
 		private readonly IDataCenter dataCenter;		                
-	    private readonly IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable;       
-        private readonly IGlobalStateReadOnly<Date> selectedDateVariable;	    	   
+	    private readonly ISharedStateReadOnly<Guid> selectedMedicalPractiveVariable;       
+        private readonly ISharedStateReadOnly<Date> selectedDateVariable;	    	   
 	    private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 
 	    public AddAppointmentDialogWindowBuilder(IDataCenter dataCenter,												 
-                                                 IGlobalStateReadOnly<Guid> selectedMedicalPractiveVariable,                                                 
-                                                 IGlobalStateReadOnly<Date> selectedDateVariable, 												
+                                                 ISharedStateReadOnly<Guid> selectedMedicalPractiveVariable,                                                 
+                                                 ISharedStateReadOnly<Date> selectedDateVariable, 												
 												 IAppointmentViewModelBuilder appointmentViewModelBuilder)
 		{
 			this.dataCenter = dataCenter;			
@@ -34,7 +34,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		public AddAppointmentDialog BuildWindow()
 		{
 
-            var selectedPatientVariable = new GlobalState<Patient>();
+            var selectedPatientVariable = new SharedState<Patient>();
 		    						
 			IPatientSelectorViewModel patientSelectorViewModel = new PatientSelectorViewModel(dataCenter, selectedPatientVariable);
 

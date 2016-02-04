@@ -56,8 +56,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		public static void HandleUserListRequest(UserListRequestObject userListRequest, 
 												 ConnectionSessionId sessionId, RequestSocket socket)
 		{		 	
-			HandleRequest<UserListRequest, UserListResponse>(
-				new UserListRequest(sessionId), 
+			HandleRequest<GetUserListRequest, GetUserListResponse>(
+				new GetUserListRequest(sessionId), 
 				socket, 
 				userListRequest.ErrorCallback,
 				userListResponse => userListRequest.DataReceivedCallback(userListResponse.AvailableUsers)

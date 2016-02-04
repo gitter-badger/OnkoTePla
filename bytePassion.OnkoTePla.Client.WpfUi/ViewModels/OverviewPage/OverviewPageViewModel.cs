@@ -21,7 +21,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
     internal class OverviewPageViewModel : ViewModel, 
                                            IOverviewPageViewModel
 	{
-        private readonly IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
+        private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
 
         private bool changeConfirmationVisible;
 		private bool addAppointmentPossible;		
@@ -35,7 +35,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 									 IChangeConfirmationViewModel changeConfirmationViewModel, 									
 									 IUndoRedoViewModel undoRedoViewModel,									 
                                      IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder,
-                                     IGlobalStateReadOnly<AppointmentModifications> appointmentModificationsVariable)
+                                     ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable)
 		{
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
 		    DateDisplayViewModel = dateDisplayViewModel;

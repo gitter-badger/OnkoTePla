@@ -13,12 +13,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
     internal class ConfirmChangesMessageHandler : IViewModelMessageHandler<ConfirmChanges>
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
-	    private readonly IGlobalStateReadOnly<Guid> currentMedicalPracticeId; 
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
+	    private readonly ISharedStateReadOnly<Guid> currentMedicalPracticeId; 
         
 		public ConfirmChangesMessageHandler (IViewModelCommunication viewModelCommunication, 
-                                             IGlobalState<AppointmentModifications> appointmentModificationsVariable,
-                                             IGlobalStateReadOnly<Guid> currentMedicalPracticeId)
+                                             ISharedState<AppointmentModifications> appointmentModificationsVariable,
+                                             ISharedStateReadOnly<Guid> currentMedicalPracticeId)
 		{
 		    this.viewModelCommunication = viewModelCommunication;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;

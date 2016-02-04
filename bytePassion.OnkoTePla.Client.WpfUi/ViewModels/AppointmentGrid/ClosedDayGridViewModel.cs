@@ -21,13 +21,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		private bool isActive;
 		
 		private readonly IViewModelCommunication viewModelCommunication;		         
-		private readonly IGlobalStateReadOnly<Size> appointmentGridSizeVariable;
+		private readonly ISharedStateReadOnly<Size> appointmentGridSizeVariable;
 		
          
 		public ClosedDayGridViewModel (AggregateIdentifier identifier,
 									   IDataCenter dataCenter,										
 									   IViewModelCommunication viewModelCommunication,
-									   IGlobalStateReadOnly<Size> appointmentGridSizeVariable)
+									   ISharedStateReadOnly<Size> appointmentGridSizeVariable)
 		{			
 			this.viewModelCommunication = viewModelCommunication;
 		    this.appointmentGridSizeVariable = appointmentGridSizeVariable;

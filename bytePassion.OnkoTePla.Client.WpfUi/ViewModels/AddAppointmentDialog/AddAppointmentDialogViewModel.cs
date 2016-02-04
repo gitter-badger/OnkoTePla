@@ -32,7 +32,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 		private readonly Guid medicalPracticeId;
 	   
 	    private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
-	    private readonly IGlobalStateReadOnly<Patient> selectedPatientVariable;        
+	    private readonly ISharedStateReadOnly<Patient> selectedPatientVariable;        
         private readonly IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> allAvailableTimeSlots;
 
 		private Patient selectedPatient;
@@ -46,7 +46,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
          
 		public AddAppointmentDialogViewModel(IDataCenter dataCenter,
                                              IPatientSelectorViewModel patientSelectorViewModel,											 											 
-                                             IGlobalStateReadOnly<Patient> selectedPatientVariable,
+                                             ISharedStateReadOnly<Patient> selectedPatientVariable,
                                              Date creationDate,
                                              Guid medicalPracticeId,
 											 IAppointmentViewModelBuilder appointmentViewModelBuilder)

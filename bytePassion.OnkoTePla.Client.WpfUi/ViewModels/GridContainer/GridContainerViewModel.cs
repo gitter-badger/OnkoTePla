@@ -21,9 +21,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 	{
 		private readonly IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder;		
          
-		private readonly IGlobalStateReadOnly<Date> selectedDateVariable;
-		private readonly IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
-	    private readonly IGlobalState<Size> appointmentGridSizeVariable;
+		private readonly ISharedStateReadOnly<Date> selectedDateVariable;
+		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
+	    private readonly ISharedState<Size> appointmentGridSizeVariable;
 	   		
 
 		private readonly IDictionary<AggregateIdentifier, IAppointmentGridViewModel> cachedAppointmentGridViewModels; 
@@ -32,9 +32,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 		private AggregateIdentifier? currentDisplayedAppointmentGridIdentifier;
 		
 		public GridContainerViewModel(IViewModelCommunication viewModelCommunication,
-                                      IGlobalStateReadOnly<Date> selectedDateVariable, 
-                                      IGlobalStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
-									  IGlobalState<Size> appointmentGridSizeVariable,									  
+                                      ISharedStateReadOnly<Date> selectedDateVariable, 
+                                      ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
+									  ISharedState<Size> appointmentGridSizeVariable,									  
                                       IEnumerable<AggregateIdentifier> initialGridViewModelsToCache,									  
 									  int maximumCashedGrids, 
 									  IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder /* TODO */)

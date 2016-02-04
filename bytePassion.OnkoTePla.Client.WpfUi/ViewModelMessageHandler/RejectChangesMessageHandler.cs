@@ -14,10 +14,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 	internal class RejectChangesMessageHandler : IViewModelMessageHandler<RejectChanges>
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IGlobalState<AppointmentModifications> appointmentModificationsVariable;
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
 
 		public RejectChangesMessageHandler (IViewModelCommunication viewModelCommunication, 
-                                            IGlobalState<AppointmentModifications> appointmentModificationsVariable)
+                                            ISharedState<AppointmentModifications> appointmentModificationsVariable)
 		{
 		    this.viewModelCommunication = viewModelCommunication;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
