@@ -1,19 +1,19 @@
+using System;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
-using System;
 
 
 namespace bytePassion.Lib.WpfLib.Commands.Updater
 {
 
-    public class GlobalStateCommandUpdate<T> : DisposingObject, 
-                                               ICommandUpdater
+	public class SharedStateReadOnlyCommandUpdate<T> : DisposingObject,
+                                                       ICommandUpdater
     {
         public event EventHandler UpdateOfCanExecuteChangedRequired;
 
-        private readonly ISharedState<T> sharedState;
-        
-        public GlobalStateCommandUpdate(ISharedState<T> sharedState)
+        private readonly ISharedStateReadOnly<T> sharedState;
+
+        public SharedStateReadOnlyCommandUpdate(ISharedStateReadOnly<T> sharedState)
         {
             this.sharedState = sharedState;
 
@@ -28,6 +28,6 @@ namespace bytePassion.Lib.WpfLib.Commands.Updater
         protected override void CleanUp()
         {
             sharedState.StateChanged -= OnGlobalStateChanged;
-        }        
+        }
     }
 }

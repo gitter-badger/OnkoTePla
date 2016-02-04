@@ -177,8 +177,8 @@
     <Compile Include="TimeLib\TimeExtensions.cs" />
     <Compile Include="Utils\Converter.cs" />
     <Compile Include="FrameworkExtensions\EqualsExtension.cs" />
-    <Compile Include="WpfLib\Commands\Updater\GlobalStateCommandUpdate.cs" />
-    <Compile Include="WpfLib\Commands\Updater\GlobalStateReadOnlyCommandUpdate.cs" />
+    <Compile Include="WpfLib\Commands\Updater\SharedStateCommandUpdate.cs" />
+    <Compile Include="WpfLib\Commands\Updater\SharedStateReadOnlyCommandUpdate.cs" />
     <Compile Include="WpfLib\Commands\Updater\ICommandUpdater.cs" />
     <Compile Include="WpfLib\Commands\Updater\PropertyChangedCommandUpdater.cs" />
     <Compile Include="WpfLib\ConverterBase\GenericFiveToOneValueConverter.cs" />
