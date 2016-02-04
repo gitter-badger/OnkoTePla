@@ -44,11 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appointments\Appointment.cs" />
+    <Compile Include="Appointments\AppointmentTransferData.cs" />
     <Compile Include="Config\ClientUserData.cs" />
     <Compile Include="Config\Configuration.cs" />
     <Compile Include="Config\User.cs" />
     <Compile Include="Config\UserCreateAndUpdateLogic.cs" />
+    <Compile Include="Infrastructure\ClientMedicalPracticeDataSerializer.cs" />
     <Compile Include="Infrastructure\HoursOfOpening.cs" />
+    <Compile Include="Infrastructure\ClientMedicalPracticeData.cs" />
     <Compile Include="Infrastructure\MedicalPractice.cs" />
     <Compile Include="Infrastructure\MedicalPracticeCreateAndEditLogic.cs" />
     <Compile Include="Infrastructure\RoomCreateAndEditLogic.cs" />

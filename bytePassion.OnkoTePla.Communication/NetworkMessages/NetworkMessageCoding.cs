@@ -1,4 +1,5 @@
 ﻿using System;
+using bytePassion.OnkoTePla.Communication.NetworkMessages.Notifications;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 
 namespace bytePassion.OnkoTePla.Communication.NetworkMessages
@@ -28,15 +29,20 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages
 				case NetworkMessageType.BeginDebugConnectionResponse:   return BeginDebugConnectionResponse.Parse(msg);
 				case NetworkMessageType.EndConnectionRequest:           return EndConnectionRequest.Parse(msg);
 				case NetworkMessageType.EndConnectionResponse:          return EndConnectionResponse.Parse(msg);
-				case NetworkMessageType.GetUserListRequest:             return UserListRequest.Parse(msg);
-				case NetworkMessageType.GetUserListResponse:            return UserListResponse.Parse(msg);
+				case NetworkMessageType.GetUserListRequest:             return GetUserListRequest.Parse(msg);
+				case NetworkMessageType.GetUserListResponse:            return GetUserListResponse.Parse(msg);
 				case NetworkMessageType.LoginRequest:                   return LoginRequest.Parse(msg);
 				case NetworkMessageType.LoginResponse:                  return LoginResponse.Parse(msg);
 				case NetworkMessageType.LogoutRequest:                  return LogoutRequest.Parse(msg);
 				case NetworkMessageType.LogoutResponse:                 return LogoutResponse.Parse(msg);
 				case NetworkMessageType.ErrorResponse:                  return ErrorResponse.Parse(msg);	
 				case NetworkMessageType.GetAccessablePracticesRequest:  return GetAccessablePracticesRequest.Parse(msg);
-				case NetworkMessageType.GetAccessablePracticesResponse: return GetAccessablePracticesResponse.Parse(msg);							
+				case NetworkMessageType.GetAccessablePracticesResponse: return GetAccessablePracticesResponse.Parse(msg);
+				case NetworkMessageType.GetDataToDisplayADayRequest:    return GetDataToDisplayADayRequest.Parse(msg);
+				case NetworkMessageType.GetDataToDisplayADayResponse:   return GetDataToDisplayADayResponse.Parse(msg);
+				case NetworkMessageType.GetPatientListRequest:          return GetPatientListRequest.Parse(msg);
+				case NetworkMessageType.GetPatientListResponse:         return GetPatientListResponse.Parse(msg);
+ 				case NetworkMessageType.EventBusNotification:           return EventBusNotification.Parse(msg);											
 				
 				default:
 					throw new ArgumentException();

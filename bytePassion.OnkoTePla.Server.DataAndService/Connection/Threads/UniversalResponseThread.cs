@@ -5,6 +5,7 @@ using bytePassion.OnkoTePla.Communication.NetworkMessages;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Contracts.Types;
+using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
@@ -15,25 +16,31 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 	internal class UniversalResponseThread : IThread
 	{
 		private readonly IDataCenter dataCenter;
+		private readonly IReadModelRepository readModelRepository;
 		private readonly NetMQContext context;
 		private readonly Address serverAddress;
 		private readonly ICurrentSessionsInfo sessionRepository;
 
-		private readonly Action<AddressIdentifier, ConnectionSessionId> newConnectionCallback;		
+		private readonly Action<AddressIdentifier, ConnectionSessionId> newConnectionCallback;
+		private readonly Action<ConnectionSessionId>                    connectionEndedCallback;
 
 		private volatile bool stopRunning;		
 		
-		public UniversalResponseThread (IDataCenter dataCenter, 
+		public UniversalResponseThread (IDataCenter dataCenter,
+										IReadModelRepository readModelRepository, 
 								        NetMQContext context, 
 										Address serverAddress,
 								        ICurrentSessionsInfo sessionRepository,
-										Action<AddressIdentifier,ConnectionSessionId> newConnectionCallback)
+										Action<AddressIdentifier,ConnectionSessionId> newConnectionCallback, 
+										Action<ConnectionSessionId> connectionEndedCallback)
 		{
 			this.dataCenter = dataCenter;
+			this.readModelRepository = readModelRepository;
 			this.context = context;
 			this.serverAddress = serverAddress;
 			this.sessionRepository = sessionRepository;
-			this.newConnectionCallback = newConnectionCallback;		
+			this.newConnectionCallback = newConnectionCallback;
+			this.connectionEndedCallback = connectionEndedCallback;
 
 			stopRunning = false;
 			IsRunning = false;
@@ -58,7 +65,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 					{
 						case NetworkMessageType.GetUserListRequest:
 						{
-							ResponseHandler.HandleUserListRequest((UserListRequest)request, sessionRepository, socket, dataCenter);
+							ResponseHandler.HandleUserListRequest((GetUserListRequest)request, sessionRepository, socket, dataCenter);
 							break;
 						}
 						case NetworkMessageType.LoginRequest:
@@ -83,12 +90,27 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 						}
 						case NetworkMessageType.EndConnectionRequest:
 						{
-							ResponseHandler.HandleEndConnectionRequest((EndConnectionRequest)request, sessionRepository, socket);
+							ResponseHandler.HandleEndConnectionRequest((EndConnectionRequest)request, sessionRepository, socket, connectionEndedCallback);
 							break;
 						}
 						case NetworkMessageType.GetAccessablePracticesRequest:
 						{
 							ResponseHandler.HandleGetAccessablePracticesRequest((GetAccessablePracticesRequest) request, sessionRepository, socket);
+							break;
+						}
+						case NetworkMessageType.GetPatientListRequest:
+						{
+							ResponseHandler.HandleGetPatientListRequest((GetPatientListRequest) request, sessionRepository, socket, dataCenter);
+							break;
+						}
+						case NetworkMessageType.GetDataToDisplayADayRequest:
+						{
+							ResponseHandler.HandleGetDataToDisplayADayRequest((GetDataToDisplayADayRequest) request, sessionRepository, socket, readModelRepository);
+							break;
+						}
+						case NetworkMessageType.GetMedicalPracticeRequest:
+						{
+							ResponseHandler.HandleGetMedicalPracticeRequest((GetMedicalPracticeRequest) request, sessionRepository, socket, dataCenter);
 							break;
 						}
 					}					

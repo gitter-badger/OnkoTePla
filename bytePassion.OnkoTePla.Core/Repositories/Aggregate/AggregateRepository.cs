@@ -1,15 +1,16 @@
-﻿using bytePassion.Lib.Utils;
+﻿using System.Linq;
+using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using System.Linq;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.Aggregate
 {
-    public class AggregateRepository : IAggregateRepository
+	public class AggregateRepository : IAggregateRepository
 	{				
 		private readonly IEventStore eventStore;		
 		private readonly IEventBus eventBus;
@@ -30,7 +31,9 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Aggregate
 		public AppointmentsOfDayAggregate GetById(AggregateIdentifier aggregateId)
 		{			
 			var eventStream = eventStore.GetEventStreamForADay(aggregateId);
-			var aggregate   = new AppointmentsOfDayAggregate(eventStream.Id, patientRepository, config);
+			var medicalPractice = new ClientMedicalPracticeData(config.GetMedicalPracticeByIdAndVersion(aggregateId.MedicalPracticeId,
+																										aggregateId.PracticeVersion));
+			var aggregate   = new AppointmentsOfDayAggregate(eventStream.Id, patientRepository, medicalPractice);
 			aggregate.LoadFromEventStream(eventStream);
 
 			return aggregate;

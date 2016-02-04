@@ -59,9 +59,12 @@
     <Compile Include="Domain\AppointmentLogic\CreateAppointmentData.cs" />
     <Compile Include="Domain\AppointmentLogic\ObservableAppointmentCollection.cs" />
     <Compile Include="Domain\CommandHandler\AddAppointmentCommandHandler.cs" />
+    <Compile Include="Domain\Events\DomainEventSerialization.cs" />
     <Compile Include="Eventsystem\EventBus.cs" />
     <Compile Include="Eventsystem\ActionTag.cs" />
+    <Compile Include="Eventsystem\IClientEventBus.cs" />
     <Compile Include="Eventsystem\IEventBus.cs" />
+    <Compile Include="Eventsystem\IServerEventBus.cs" />
     <Compile Include="Exceptions\AppointmentRuleIsNotApplicableException.cs" />
     <Compile Include="Exceptions\VersionNotApplicapleException.cs" />
     <Compile Include="Domain\AppointmentLogic\INotifyAppointmentChanged.cs" />

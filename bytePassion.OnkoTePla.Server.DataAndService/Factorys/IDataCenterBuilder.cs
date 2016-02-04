@@ -5,5 +5,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 	public interface IDataCenterBuilder
 	{
 		IDataCenter Build();
+
+		void PersistConfig ();
 	}
 }

@@ -46,6 +46,11 @@ namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 
 			return result;
 		}
+
+		public void RemoveAllHandler()
+		{
+			eventHandlerLists.Clear();
+		}
 	}
 
 }

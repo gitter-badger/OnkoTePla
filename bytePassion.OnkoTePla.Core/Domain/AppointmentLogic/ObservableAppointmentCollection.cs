@@ -1,14 +1,14 @@
-﻿using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Core.Readmodels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Core.Readmodels;
 
 
 namespace bytePassion.OnkoTePla.Core.Domain.AppointmentLogic
 {
-    public class ObservableAppointmentCollection : INotifyAppointmentChanged, 
+	public class ObservableAppointmentCollection : INotifyAppointmentChanged, 
 												   INotifyCollectionChanged
 	{
 		public event EventHandler<AppointmentChangedEventArgs> AppointmentChanged;
@@ -17,9 +17,14 @@ namespace bytePassion.OnkoTePla.Core.Domain.AppointmentLogic
 		private readonly IList<Appointment> appointments;
 
 		public ObservableAppointmentCollection()
-		{
-			appointments = new List<Appointment>();
+			: this(new List<Appointment>())
+		{			
 		}
+
+	    public ObservableAppointmentCollection(IEnumerable<Appointment> initialAppointmentList)
+	    {
+		    appointments = initialAppointmentList.ToList();
+	    }
 
 		public void AddAppointment(Appointment newAppointment)
 		{

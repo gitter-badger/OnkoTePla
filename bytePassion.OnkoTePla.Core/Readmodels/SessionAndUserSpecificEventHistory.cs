@@ -1,4 +1,8 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Contracts.Config;
@@ -11,16 +15,12 @@ using bytePassion.OnkoTePla.Core.Readmodels.Helper;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Core.Readmodels
 {
-    public class SessionAndUserSpecificEventHistory : ReadModelBase,
+	public class SessionAndUserSpecificEventHistory : ReadModelBase,
 													  IUndoRedo													  
 	{
 		private class InitialDummyEvent : DomainEvent
@@ -44,8 +44,8 @@ namespace bytePassion.OnkoTePla.Core.Readmodels
 
 		private bool undoPossible;
 		private bool redoPossible;
-
-		public SessionAndUserSpecificEventHistory(IEventBus eventBus,
+		
+		public SessionAndUserSpecificEventHistory(IClientEventBus eventBus,
 												  ICommandBus commandBus,
 												  IReadModelRepository readModelRepository,
                                                   IPatientReadRepository patientRepository,

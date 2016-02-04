@@ -1,26 +1,27 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using System;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Core.Domain.Events;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Exceptions;
-using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using System;
 
 
 namespace bytePassion.OnkoTePla.Core.Domain
 {
-    public class AppointmentsOfDayAggregate : AggregateRootBase<AggregateIdentifier>
+	public class AppointmentsOfDayAggregate : AggregateRootBase<AggregateIdentifier>
 	{
-
+		private readonly ClientMedicalPracticeData medicalPractice;
 		private readonly AppointmentSet appointments;		
 
 		public AppointmentsOfDayAggregate(AggregateIdentifier id, 
 										  IPatientReadRepository patientRepository, 
-										  IConfigurationReadRepository config) 
+										  ClientMedicalPracticeData medicalPractice) 
 			: base(id, 0)
-		{			
-			appointments = new AppointmentSet(patientRepository, config);
+		{
+			this.medicalPractice = medicalPractice;
+			appointments = new AppointmentSet(patientRepository);
 		}
 
 		public void Apply (AppointmentAdded @event)
@@ -28,9 +29,7 @@ namespace bytePassion.OnkoTePla.Core.Domain
 			if (Version + 1 != @event.AggregateVersion)
 				throw new VersionNotApplicapleException("@apply AppointmentAdded");
 
-			appointments.AddAppointment(@event.AggregateId.MedicalPracticeId, 
-										@event.AggregateId.PracticeVersion, 
-										@event.CreateAppointmentData);
+			appointments.AddAppointment(@event.CreateAppointmentData, medicalPractice);
 
 			Version = @event.AggregateVersion;
 		}
@@ -40,14 +39,13 @@ namespace bytePassion.OnkoTePla.Core.Domain
 			if (Version + 1 != @event.AggregateVersion)
 				throw new VersionNotApplicapleException("@apply AppointmentReplaced");
 
-			appointments.ReplaceAppointment(@event.AggregateId.MedicalPracticeId,
-										    @event.AggregateId.PracticeVersion,
-											@event.NewDescription, 
+			appointments.ReplaceAppointment(@event.NewDescription, 
 											@event.NewDate, 
 											@event.NewStartTime, 
 											@event.NewEndTime, 
 											@event.NewTherapyPlaceId, 
-											@event.OriginalAppointmendId);
+											@event.OriginalAppointmendId,
+											medicalPractice);
 
 			Version = @event.AggregateVersion;
 		}

@@ -34,9 +34,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		}
 
 		public void Run ()
-		{
-			bool onceReturnOldId = false;
-
+		{			
 			using (var socket = context.CreateResponseSocket())
 			{
 				socket.Bind(clientAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.Heartbeat);
@@ -53,19 +51,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 
 					if (request.Type == NetworkMessageType.HeartbeatRequest)
 					{
-						var heartbeatRequest = (HeartbeatRequest) request;
-
-						if (heartbeatRequest.SessionId != sessionId)
-						{
-							if (onceReturnOldId)
-								throw new Exception("inner exception");
-
-							onceReturnOldId = true;							
-							socket.SendNetworkMsg(new HeartbeatResponse(heartbeatRequest.SessionId));
-
-							continue;
-						}
-						
+						var heartbeatRequest = (HeartbeatRequest) request;												
 						socket.SendNetworkMsg(new HeartbeatResponse(heartbeatRequest.SessionId));
 					}
 				}			

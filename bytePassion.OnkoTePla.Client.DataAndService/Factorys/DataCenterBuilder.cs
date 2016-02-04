@@ -64,8 +64,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 			// Aggregate- and Readmodel-Repositories
 
 			var aggregateRepository = new AggregateRepository(eventBus, eventStore, patientReadRepository, configReadRepository);
-			var readModelRepository = new ReadModelRepository(eventBus, eventStore, patientReadRepository, configReadRepository);
-
+			var readModelRepository = new ReadModelRepository(null, eventStore, patientReadRepository, configReadRepository);
+			
 
 			// Register CommandHandler
 

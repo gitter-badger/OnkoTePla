@@ -1,7 +1,11 @@
 ﻿using System.Windows;
 using bytePassion.Lib.Communication.State;
+using bytePassion.OnkoTePla.Communication.NetworkMessageBus;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Core.Repositories.XMLDataStores;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Core.Repositories.StreamManagement;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
@@ -31,25 +35,43 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			////////                                                                                 //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+			// Patient-Repository
+
+			var patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
+			var patientRepository = new PatientRepository(patientPersistenceService);
+			patientRepository.LoadRepository();
+
+
 			// Config-Repository
 
-			var configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
+			var configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
 			var configRepository = new ConfigurationRepository(configPersistenceService);
 			configRepository.LoadRepository();
 
 
+			var eventBus = new ClientEventBus();
+			var persistenceService = new JsonEventStreamDataStore("");
+			var streamPersistenceService = new StreamPersistenceService(configRepository, "");
+			var streamManager = new StreamManagementService(streamPersistenceService);
+			var eventStore = new EventStore(persistenceService, streamManager, configRepository);
+
 			// DataAndService
 
-			var dataCenterBuilder = new DataCenterBuilder(configRepository, configRepository);			
+			var dataCenterBuilder = new DataCenterBuilder();
 			var dataCenter = dataCenterBuilder.Build();
 		
-			var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenter);
+
+			var readModelRespository = new ReadModelRepository(eventBus, eventStore, patientRepository, configRepository);
+
+			var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenter, readModelRespository);
 			var connectionService = connectionServiceBuilder.Build();
 
 
 			// ViewModel-Variables
 
 			var selectedPageVariable = new GlobalState<MainPage>(MainPage.Overview);
+
 
 			// ViewModels
 
@@ -87,8 +109,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             ////////                                                                             //////////
             ///////////////////////////////////////////////////////////////////////////////////////////////
             
-			configRepository.PersistRepository();
-
+			dataCenterBuilder.PersistConfig();
 			connectionServiceBuilder.DisposeConnectionService(connectionService);
         }
     }

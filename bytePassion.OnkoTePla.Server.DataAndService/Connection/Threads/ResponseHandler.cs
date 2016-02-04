@@ -4,8 +4,12 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
+using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Types;
+using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ;
@@ -33,8 +37,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 				var sessionInfo = sessionRepository.GetSessionInfo(sessionId);
 
 				if (sessionInfo.LoggedInUser.Id != userId.Value)
-				{					
-					socket.SendNetworkMsg(new ErrorResponse("the user is not logged in"));
+				{
+					const string errorMsg = "the user is not logged in";
+					socket.SendNetworkMsg(new ErrorResponse(errorMsg));
 					return false;
 				}
 
@@ -52,7 +57,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		#region GetUserList
 
-		public static void HandleUserListRequest(UserListRequest request, ICurrentSessionsInfo sessionRepository,
+		public static void HandleUserListRequest(GetUserListRequest request, ICurrentSessionsInfo sessionRepository,
 												 ResponseSocket socket, IDataCenter dataCenter)
 		{
 			var isRequestValid = ValidateRequest(request.SessionId, sessionRepository, socket);
@@ -65,7 +70,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 									 .Select(user => new ClientUserData(user.ToString(), user.Id))
 									 .ToList();
 			
-			socket.SendNetworkMsg(new UserListResponse(userList));
+			socket.SendNetworkMsg(new GetUserListResponse(userList));
 		}
 
 		#endregion
@@ -126,7 +131,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 		#endregion
 
 		#region BeginConnection
-
+		
 		public static void HandleBeginConnectionRequest(BeginConnectionRequest request, 
 														ICurrentSessionsInfo sessionRepository,
 														ResponseSocket socket, 
@@ -170,8 +175,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		#region EndConnection
 
-		public static void HandleEndConnectionRequest(EndConnectionRequest request, ICurrentSessionsInfo sessionRepository,
-													  ResponseSocket socket)
+		public static void HandleEndConnectionRequest(EndConnectionRequest request, ICurrentSessionsInfo sessionRepository, 
+													  ResponseSocket socket, Action<ConnectionSessionId> connectionEndedCallback)
 		{
 			var requestIsValid = ValidateRequest(request.SessionId, sessionRepository, socket);
 
@@ -179,6 +184,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 				return;
 
 			sessionRepository.RemoveSession(request.SessionId);
+
+			connectionEndedCallback(request.SessionId);
 
 			socket.SendNetworkMsg(new EndConnectionResponse());
 		}
@@ -195,12 +202,79 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 			if (!requestIsValid)
 				return;
-
+			
 			socket.SendNetworkMsg(new GetAccessablePracticesResponse(
-				sessionRespository.GetSessionForUser(request.UserId).LoggedInUser.ListOfAccessableMedicalPractices)
+				sessionRespository.GetSessionInfo(request.SessionId).LoggedInUser.ListOfAccessableMedicalPractices)
 			);
 		}
 
+		#endregion
+
+		#region GetPatientList
+
+		public static void HandleGetPatientListRequest(GetPatientListRequest request,
+													   ICurrentSessionsInfo sessionRepository,
+													   ResponseSocket socket,
+													   IDataCenter dataCenter)
+		{
+			var requestIsValid = ValidateRequest(request.SessionId, sessionRepository, socket, request.UserId);
+
+			if (!requestIsValid)
+				return;
+
+			var patientsToDeliver = request.LoadOnlyAlivePatients 
+										? dataCenter.GetAllPatients().Where(patient => patient.Alive).ToList() 
+										: dataCenter.GetAllPatients().ToList();
+
+			socket.SendNetworkMsg(new GetPatientListResponse(patientsToDeliver));
+		}
+		
+		#endregion
+
+		#region GetDataToDisplayADay
+
+		public static void HandleGetDataToDisplayADayRequest(GetDataToDisplayADayRequest request,
+															 ICurrentSessionsInfo sessionRepository,
+															 ResponseSocket socket,
+															 IReadModelRepository readModelRepository)
+		{
+			var requestIsValid = ValidateRequest(request.SessionId, sessionRepository, socket, request.UserId, request.MedicalPracticeId);
+
+			if (!requestIsValid)
+				return;
+			
+			var appointmentSetOfADay = readModelRepository.GetAppointmentSetOfADay(new AggregateIdentifier(request.Day,
+																									       request.MedicalPracticeId), 
+																			       null);
+			socket.SendNetworkMsg(
+				new GetDataToDisplayADayResponse(request.MedicalPracticeId,
+												 appointmentSetOfADay.MedicalPracticeVersion, 
+												 appointmentSetOfADay.AggregateVersion,
+												 appointmentSetOfADay.Appointments
+																	 .Select(appointment => new AppointmentTransferData(appointment))
+																	 .ToList())
+			);
+		}
+
+		#endregion
+
+		#region GetMedicalPractice
+
+		public static void HandleGetMedicalPracticeRequest(GetMedicalPracticeRequest request,
+														   ICurrentSessionsInfo sessionRepository,
+														   ResponseSocket socket,
+														   IDataCenter dataCenter)
+		{
+			var requestIsValid = ValidateRequest(request.SessionId, sessionRepository, socket, request.UserId, request.MedicalPracticeId);
+
+			if (!requestIsValid)
+				return;
+
+			var medicalPractice = dataCenter.GetMedicalPractice(request.MedicalPracticeId, request.MedicalPraciceVersion);
+			var practiceData = new ClientMedicalPracticeData(medicalPractice);
+
+			socket.SendNetworkMsg(new GetMedicalPracticeResponse(practiceData));
+		}
 
 		#endregion
 	}

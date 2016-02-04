@@ -5,7 +5,9 @@ using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.Patients;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 {
@@ -13,12 +15,18 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 	{
 		private readonly IConfigurationReadRepository readConfig;
 		private readonly IConfigurationWriteRepository writeConfig;
+		private readonly IPatientReadRepository patientReadRepository;
+		private readonly IPatientWriteRepository patientWriteRepository;
 
 		public DataCenter(IConfigurationReadRepository readConfig,
-						  IConfigurationWriteRepository writeConfig)
+						  IConfigurationWriteRepository writeConfig,
+						  IPatientReadRepository patientReadRepository,
+						  IPatientWriteRepository patientWriteRepository)
 		{
 			this.readConfig = readConfig;
 			this.writeConfig = writeConfig;
+			this.patientReadRepository = patientReadRepository;
+			this.patientWriteRepository = patientWriteRepository;
 		}
 
 		
@@ -26,6 +34,15 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			return IpAddressCatcher.GetAllAvailableLocalIpAddresses();
 		}
+
+		#region patients
+
+		public IEnumerable<Patient> GetAllPatients()
+		{
+			return patientReadRepository.GetAllPatients();
+		}
+
+		#endregion
 
 		#region users
 
@@ -151,6 +168,15 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 			}
 		}
 
+		public MedicalPractice GetMedicalPractice(Guid id, uint version)
+		{
+			lock (this)
+			{
+				return readConfig.GetMedicalPracticeByIdAndVersion(id, version);
+			}
+		}
+
 		#endregion
+
 	}
 }

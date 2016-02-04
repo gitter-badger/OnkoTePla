@@ -13,5 +13,7 @@ namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 
 		IEnumerable<IMessageHandler<TMessage>> GetMessageHandler<TMessage> () 
 			where TMessage : TMessageBase;
+
+		void RemoveAllHandler();
 	}
 }

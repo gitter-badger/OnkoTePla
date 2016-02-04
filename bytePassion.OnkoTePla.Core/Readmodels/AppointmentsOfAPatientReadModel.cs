@@ -1,21 +1,20 @@
-﻿using bytePassion.Lib.Utils;
+﻿using System;
+using System.Collections.Generic;
+using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Core.Domain.Events;
 using bytePassion.OnkoTePla.Core.Eventsystem;
-using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using System;
-using System.Collections.Generic;
 
 
 namespace bytePassion.OnkoTePla.Core.Readmodels
 {
-    public class AppointmentsOfAPatientReadModel : ReadModelBase
-	{
-
+	public class AppointmentsOfAPatientReadModel : ReadModelBase
+	{		
 		public override event EventHandler<AppointmentChangedEventArgs> AppointmentChanged
 		{
 			add    { appointmentSet.ObservableAppointments.AppointmentChanged += value; }
@@ -23,19 +22,20 @@ namespace bytePassion.OnkoTePla.Core.Readmodels
 		}
 
 		private readonly Patient patient;				
-
 		private readonly AppointmentSet appointmentSet;
+		private readonly Func<Guid, uint, ClientMedicalPracticeData> practiceRepository;
 
 		public AppointmentsOfAPatientReadModel (Guid patientId,
-												IEventBus eventBus,
-												IConfigurationReadRepository config,
+												IClientEventBus eventBus,
+												Func<Guid, uint, ClientMedicalPracticeData> practiceRepository,
 												IPatientReadRepository patientsRepository) 
 			: base(eventBus)
-		{						
+		{
+			this.practiceRepository = practiceRepository;
 
 			patient = patientsRepository.GetPatientById(patientId);
 
-			appointmentSet = new AppointmentSet(patientsRepository, config);
+			appointmentSet = new AppointmentSet(patientsRepository);
 		}		
 
 		public void LoadFromEventStream (EventStream<Guid> eventStream)
@@ -53,23 +53,23 @@ namespace bytePassion.OnkoTePla.Core.Readmodels
 		{
 			if (domainEvent.PatientId != patient.Id) return;			
 
-			appointmentSet.AddAppointment(domainEvent.AggregateId.MedicalPracticeId,
-										  domainEvent.AggregateId.PracticeVersion,
-										  domainEvent.CreateAppointmentData);						
+			appointmentSet.AddAppointment(domainEvent.CreateAppointmentData,
+										  practiceRepository(domainEvent.AggregateId.MedicalPracticeId,
+															 domainEvent.AggregateId.PracticeVersion));						
 		}
 
 		public override void Process (AppointmentReplaced domainEvent)
 		{
 			if (domainEvent.PatientId != patient.Id) return;
 
-			appointmentSet.ReplaceAppointment(domainEvent.AggregateId.MedicalPracticeId,
-											  domainEvent.AggregateId.PracticeVersion,
-											  domainEvent.NewDescription,
+			appointmentSet.ReplaceAppointment(domainEvent.NewDescription,
 											  domainEvent.NewDate,
 											  domainEvent.NewStartTime,
 											  domainEvent.NewEndTime,
 											  domainEvent.NewTherapyPlaceId,
-											  domainEvent.OriginalAppointmendId);
+											  domainEvent.OriginalAppointmendId,
+											  practiceRepository(domainEvent.AggregateId.MedicalPracticeId,
+																 domainEvent.AggregateId.PracticeVersion));
 		}
 		 
 		public override void Process (AppointmentDeleted domainEvent)

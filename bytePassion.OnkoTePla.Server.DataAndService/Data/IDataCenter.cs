@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 {
@@ -10,6 +11,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 	{		
 		IReadOnlyList<Address> GetAllAvailableAddresses();
 
+		IEnumerable<Patient> GetAllPatients();
+			
 		IEnumerable<User> GetAllUsers();
 		void AddNewUser(User newUser);
 		void UpdateUser(User updatedUser);
@@ -26,5 +29,6 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		void UpdateMedicalPractice(MedicalPractice updatedMedicalPractice);
 		void RemoveMedicalPractice(MedicalPractice medicalPracticeToRemove);
 		MedicalPractice GetMedicalPractice(Guid id);
+		MedicalPractice GetMedicalPractice(Guid id, uint version);
 	}
 }

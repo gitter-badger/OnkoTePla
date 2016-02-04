@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Core.Eventsystem
 {
-    public interface IEventBus
+	public interface IEventBus
 	{
 		void RegisterEventHandler<TDomainEvent>(IMessageHandler<TDomainEvent> eventHandler) 
 			where TDomainEvent : DomainEvent;

@@ -18,8 +18,19 @@
 		LogoutResponse,
 		GetAccessablePracticesRequest,
 		GetAccessablePracticesResponse,
-
-
+		GetPatientListRequest,
+		GetPatientListResponse,
+		GetDataToDisplayADayRequest,
+		GetDataToDisplayADayResponse,
+		GetMedicalPracticeRequest,
+		GetMedicalPracticeResponse,
+		GetTherapyPlacesTypeListRequest,
+		GetTherapyPlacesTypeListResponse,
+		
+		EventBusNotification,
+		PatientNotification,
+		TherapyPlaceTypeNotification,		
+		
 		ErrorResponse		
 	}
 }

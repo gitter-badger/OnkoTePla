@@ -45,7 +45,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 				while (!stopRunning)
 				{
 					Thread.Sleep((int) GlobalConstants.HeartbeatIntverval);
-										
+
+					if (stopRunning)
+						break;			
+							
 					socket.SendNetworkMsg(new HeartbeatRequest(sessionId));
 
 					var response = socket.ReceiveNetworkMsg(TimeSpan.FromMilliseconds(GlobalConstants.ServerWaitTimeForHeartbeatResponse));
@@ -55,7 +58,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 						if (((HeartbeatResponse)response).SessionId == sessionId)												
 							continue;						
 					}
-					
+
+					if (stopRunning)
+						break;
+
 					Application.Current.Dispatcher.Invoke(() => ClientVanished?.Invoke(sessionId));
 					break;
 				}

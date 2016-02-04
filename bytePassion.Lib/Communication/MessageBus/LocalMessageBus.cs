@@ -4,7 +4,7 @@ using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.Lib.Communication.MessageBus
 {
-	public class LocalMessageBus<TMessageBase> : IMessageBus<TMessageBase>
+	public class LocalMessageBus<TMessageBase> : DisposingObject, IMessageBus<TMessageBase>
 	{
 		private readonly IHandlerCollection<TMessageBase> handlerCollection; 
 
@@ -29,6 +29,11 @@ namespace bytePassion.Lib.Communication.MessageBus
 		{
 			handlerCollection.GetMessageHandler<TMessage>()
 							?.Do(handler => handler.Process(message));
-        }		
+        }
+
+		protected override void CleanUp()
+		{		
+			handlerCollection.RemoveAllHandler();	
+		}
 	}
 }

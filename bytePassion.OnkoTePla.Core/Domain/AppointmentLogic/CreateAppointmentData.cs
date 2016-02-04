@@ -1,11 +1,13 @@
-﻿using bytePassion.Lib.TimeLib;
-using System;
+﻿using System;
+using bytePassion.Lib.TimeLib;
 
 
 namespace bytePassion.OnkoTePla.Core.Domain.AppointmentLogic
 {
-    public struct CreateAppointmentData
+	public struct CreateAppointmentData
 	{
+		// TODO: delete this class: it's unnessasary
+
 		public CreateAppointmentData(Guid patientId, string description, 
 									 Time startTime, Time endTime, Date day, 
 									 Guid therapyPlaceId, Guid appointmendId)

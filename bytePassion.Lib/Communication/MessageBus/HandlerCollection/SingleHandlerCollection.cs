@@ -40,6 +40,11 @@ namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 				(IMessageHandler<TCommand>)messageHandlers[typeof(TCommand)]
 			};
 		}
+
+		public void RemoveAllHandler()
+		{
+			messageHandlers.Clear();
+		}
 	}
 
 }

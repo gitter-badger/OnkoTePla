@@ -1,39 +1,51 @@
-﻿using bytePassion.Lib.Utils;
+﻿using System;
+using System.Collections.Generic;
+using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Core.Domain.Events;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Exceptions;
-using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using System;
-using System.Collections.Generic;
 
 
 namespace bytePassion.OnkoTePla.Core.Readmodels
 {
-    public class AppointmentsOfADayReadModel : ReadModelBase
-	{
-
+	public class AppointmentsOfADayReadModel : ReadModelBase
+	{		
 		public override event EventHandler<AppointmentChangedEventArgs> AppointmentChanged
 		{
 			add    { appointmentSet.ObservableAppointments.AppointmentChanged += value; }
 			remove { appointmentSet.ObservableAppointments.AppointmentChanged -= value; }
 		}
 
+		private readonly ClientMedicalPracticeData medicalPractice;
 		private readonly AppointmentSet appointmentSet;
 
-		public AppointmentsOfADayReadModel (IEventBus eventBus, 
-								           IConfigurationReadRepository config, 
-								           IPatientReadRepository patientsRepository,
-										   AggregateIdentifier identifier)
+		public AppointmentsOfADayReadModel (IClientEventBus eventBus, 
+								            ClientMedicalPracticeData medicalPractice, 
+								            IPatientReadRepository patientsRepository,
+										    AggregateIdentifier identifier)
 			: base(eventBus)
-		{			
+		{
+			this.medicalPractice = medicalPractice;
 			Identifier = identifier;
 
-			appointmentSet = new AppointmentSet(patientsRepository, config);			
+			appointmentSet = new AppointmentSet(patientsRepository);			
+		}
+
+		public AppointmentsOfADayReadModel(IClientEventBus eventBus,
+										   ClientMedicalPracticeData medicalPractice,
+										   AppointmentSet initialAppointmentSet,
+										   AggregateIdentifier identifier)
+			: base(eventBus)
+		{
+			this.medicalPractice = medicalPractice;
+			Identifier = identifier;
+			appointmentSet = initialAppointmentSet;
 		}
 
 		public uint AggregateVersion { private set; get; }
@@ -57,9 +69,7 @@ namespace bytePassion.OnkoTePla.Core.Readmodels
 			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
 				throw new VersionNotApplicapleException("@handle appointmentAdded @readmodel");
 			
-			appointmentSet.AddAppointment(domainEvent.AggregateId.MedicalPracticeId,
-										  domainEvent.AggregateId.PracticeVersion,
-										  domainEvent.CreateAppointmentData);	
+			appointmentSet.AddAppointment(domainEvent.CreateAppointmentData, medicalPractice);	
 
 			AggregateVersion = domainEvent.AggregateVersion;
 		}
@@ -71,14 +81,13 @@ namespace bytePassion.OnkoTePla.Core.Readmodels
 			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
 				throw new VersionNotApplicapleException("@handle appointmentReplaced @readmodel");
 
-			appointmentSet.ReplaceAppointment(domainEvent.AggregateId.MedicalPracticeId,
-											  domainEvent.AggregateId.PracticeVersion,
-											  domainEvent.NewDescription,
+			appointmentSet.ReplaceAppointment(domainEvent.NewDescription,
 											  domainEvent.NewDate,
 											  domainEvent.NewStartTime,
 											  domainEvent.NewEndTime,
 											  domainEvent.NewTherapyPlaceId,
-											  domainEvent.OriginalAppointmendId);
+											  domainEvent.OriginalAppointmendId,
+											  medicalPractice);
 
 			AggregateVersion = domainEvent.AggregateVersion;
 		}

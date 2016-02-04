@@ -232,6 +232,8 @@
     <Compile Include="WpfLib\Converter\InvertedBoolToCollapsedVisibilityConverter.cs" />
     <Compile Include="WpfLib\Panels\DeckPanel.cs" />
     <Compile Include="WpfLib\SharedResourceDictionary.cs" />
+    <Compile Include="WpfLib\ViewModelBase\IViewModel.cs" />
+    <Compile Include="WpfLib\ViewModelBase\ViewModel.cs" />
     <Compile Include="ZmqUtils\IpAddressCatcher.cs" />
   </ItemGroup>
   <ItemGroup>

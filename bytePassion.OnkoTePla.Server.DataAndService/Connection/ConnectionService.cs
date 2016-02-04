@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
+using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
@@ -37,25 +39,29 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 		private readonly NetMQContext zmqContext;
 		private readonly IDataCenter dataCenter;
+		private readonly IReadModelRepository readModelRepository;
 		private readonly ICurrentSessionsInfo sessionRepository;
 				
-		private UniversalResponseThread          universalResponseThread;
+		private UniversalResponseThread universalResponseThread;
 
-		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads; 
+		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads;		
 
-		internal ConnectionService (NetMQContext zmqContext, IDataCenter dataCenter, ICurrentSessionsInfo sessionRepository)
+		internal ConnectionService (NetMQContext zmqContext, IDataCenter dataCenter, 
+								    IReadModelRepository readModelRepository, ICurrentSessionsInfo sessionRepository)
 		{
 			this.zmqContext = zmqContext;
 			this.dataCenter = dataCenter;
+			this.readModelRepository = readModelRepository;
 			this.sessionRepository = sessionRepository;
 			
-			heartbeatThreads = new Dictionary<ConnectionSessionId, HeartbeatThread>();
+			heartbeatThreads = new ConcurrentDictionary<ConnectionSessionId, HeartbeatThread>();			
 		}
 		
 		public void InitiateCommunication(Address serverAddress)
 		{									
-			universalResponseThread = new UniversalResponseThread(dataCenter, zmqContext, serverAddress, 
-																  sessionRepository, OnNewConnectionEstablished);
+			universalResponseThread = new UniversalResponseThread(dataCenter, readModelRepository, zmqContext, serverAddress, 
+																  sessionRepository, OnNewConnectionEstablished,
+																  OnConnectionEnded);
 			new Thread(universalResponseThread.Run).Start();
 		}				
 
@@ -71,6 +77,16 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			universalResponseThread.Stop();			
 		}
 
+		private void OnConnectionEnded(ConnectionSessionId sessionId)
+		{
+			if (heartbeatThreads.ContainsKey(sessionId))
+			{
+				var heartbeatThread = heartbeatThreads[sessionId];
+				heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
+				heartbeatThread.Stop();				
+				heartbeatThreads.Remove(sessionId);
+			}
+		}
 		
 		private void OnNewConnectionEstablished (AddressIdentifier clientAddressIdentifier, ConnectionSessionId id)
 		{			
@@ -84,10 +100,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 		private void HeartbeatOnClientVanished (ConnectionSessionId connectionSessionId)
 		{
-			var heartbeatThread = heartbeatThreads[connectionSessionId];
-			heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
-			heartbeatThreads.Remove(connectionSessionId);
-
+			
+			if (heartbeatThreads.ContainsKey(connectionSessionId))
+			{
+				var heartbeatThread = heartbeatThreads[connectionSessionId];
+				heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
+				heartbeatThreads.Remove(connectionSessionId);
+			}
+			
 			if (sessionRepository.DoesSessionExist(connectionSessionId))
 			{                                                               //	the session does not exist if it was
 				sessionRepository.RemoveSession(connectionSessionId);       //  ended corretly by connectionEndMessage

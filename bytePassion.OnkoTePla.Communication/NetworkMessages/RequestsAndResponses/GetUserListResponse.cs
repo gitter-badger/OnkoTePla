@@ -6,9 +6,9 @@ using bytePassion.OnkoTePla.Contracts.Config;
 
 namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses
 {
-	public class UserListResponse : NetworkMessageBase
+	public class GetUserListResponse : NetworkMessageBase
 	{
-		public UserListResponse(IReadOnlyList<ClientUserData> availableUsers) 
+		public GetUserListResponse(IReadOnlyList<ClientUserData> availableUsers) 
 			: base(NetworkMessageType.GetUserListResponse)
 		{
 			AvailableUsers = availableUsers;
@@ -34,10 +34,10 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			return msgBuilder.ToString().Substring(0, msgBuilder.Length - 1);
 		}
 
-		public static UserListResponse Parse(string s)
+		public static GetUserListResponse Parse(string s)
 		{
 			if (string.IsNullOrWhiteSpace(s))
-				return new UserListResponse(new List<ClientUserData>());
+				return new GetUserListResponse(new List<ClientUserData>());
 
 			var userList = s.Split(';')
 							.Select(element => element.Trim())							
@@ -45,7 +45,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 							.Select(userInfoParts => new ClientUserData(userInfoParts[0], Guid.Parse(userInfoParts[1])))
 							.ToList();
 
-			return new UserListResponse(userList);
+			return new GetUserListResponse(userList);
 		}
 	}
 }

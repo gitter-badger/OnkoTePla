@@ -1,6 +1,8 @@
-﻿namespace bytePassion.Lib.Communication.MessageBus
+﻿using System;
+
+namespace bytePassion.Lib.Communication.MessageBus
 {
-	public interface IMessageBus<in TMessageBase>
+	public interface IMessageBus<in TMessageBase> : IDisposable
 	{
 		void RegisterMessageHandler<TMessage>(IMessageHandler<TMessage> messageHandler) 
 			where TMessage : TMessageBase;

@@ -1,22 +1,23 @@
-﻿using bytePassion.OnkoTePla.Core.Domain;
+﻿using System;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Readmodels;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using System;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.Readmodel
 {
-    public class ReadModelRepository : IReadModelRepository
+	public class ReadModelRepository : IReadModelRepository
 	{
-		private readonly IEventBus eventBus;
+		private readonly IClientEventBus eventBus;
 		private readonly IEventStore eventStore;
 		private readonly IConfigurationReadRepository config;
 		private readonly IPatientReadRepository patientsRepository;
 
-		public ReadModelRepository (IEventBus eventBus, IEventStore eventStore,
+		public ReadModelRepository (IClientEventBus eventBus, IEventStore eventStore,
  								   IPatientReadRepository patientsRepository,
 								   IConfigurationReadRepository config)
 		{
@@ -26,16 +27,22 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Readmodel
 			this.eventBus = eventBus;
 		}
 
-		public FixedAppointmentSet GetAppointmentSetOfADay (AggregateIdentifier id, uint eventStreamVersionLimit)
+		public FixedAppointmentSet GetAppointmentSetOfADay (AggregateIdentifier id, uint? eventStreamVersionLimit)
 		{
 			var eventStream = eventStore.GetEventStreamForADay(id);
-			return new FixedAppointmentSet(config, patientsRepository, eventStream, eventStreamVersionLimit);
+			var medicalPractice = new ClientMedicalPracticeData(config.GetMedicalPracticeByIdAndVersion(id.MedicalPracticeId, 
+																										id.PracticeVersion));
+			return new FixedAppointmentSet(medicalPractice, patientsRepository, 
+										   eventStream, eventStreamVersionLimit);
 		}
 
 		public AppointmentsOfADayReadModel GetAppointmentsOfADayReadModel(AggregateIdentifier id)
 		{
 			var eventStream = eventStore.GetEventStreamForADay(id);
-			var readmodel = new AppointmentsOfADayReadModel(eventBus, config, patientsRepository, eventStream.Id);
+			var medicalPractice = new ClientMedicalPracticeData(config.GetMedicalPracticeByIdAndVersion(id.MedicalPracticeId,
+																										id.PracticeVersion));
+			var readmodel = new AppointmentsOfADayReadModel(eventBus, medicalPractice, 
+															patientsRepository, eventStream.Id);
 			readmodel.LoadFromEventStream(eventStream);
 
 			return readmodel;
@@ -43,7 +50,10 @@ namespace bytePassion.OnkoTePla.Core.Repositories.Readmodel
 
 		public AppointmentsOfAPatientReadModel GetAppointmentsOfAPatientReadModel(Guid patientId)
 		{
-			var readModel = new AppointmentsOfAPatientReadModel(patientId, eventBus, config, patientsRepository);
+			Func<Guid, uint, ClientMedicalPracticeData> practiceRepository = 
+				(id, version) => new ClientMedicalPracticeData(config.GetMedicalPracticeByIdAndVersion(id,version));
+
+			var readModel = new AppointmentsOfAPatientReadModel(patientId, eventBus, practiceRepository, patientsRepository);
 			readModel.LoadFromEventStream(eventStore.GetEventStreamForAPatient(patientId));
 
 			return readModel;
