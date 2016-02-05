@@ -54,23 +54,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\ConnectionService.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\BeginConnectionRequestHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\BeginDebugConnectionRequestHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\EndConnectionRequestHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\GetAccessablePracticesRequestHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\GetAppointemntsOfADayRequestHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\GetMedicalPracticeRequestHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\GetPatientListRequestHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\GetTherapyPlaceTypeListRequestHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\GetUserListRequestHandler.cs" />
+    <Compile Include="Connection\IHeartbeatThreadCollection.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\BeginConnectionResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\BeginDebugConnectionResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\EndConnectionResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\GetAccessablePracticesResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\GetAppointemntsOfADayResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\GetMedicalPracticeResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\GetPatientListResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\GetTherapyPlaceTypeListResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\GetUserListResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\IResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\IResponseHandlerFactory.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\LoginRequestHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\LogoutRequestHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\LoginResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\LogoutResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\ResponseHandlerBase.cs" />
     <Compile Include="Connection\ResponseHandling\ResponseHandlerFactory.cs" />
     <Compile Include="Connection\SessionInfo.cs" />
-    <Compile Include="Connection\Threads\HeartbeatThreadCollection.cs" />
+    <Compile Include="Connection\HeartbeatThreadCollection.cs" />
     <Compile Include="Connection\Threads\UniversalResponseThread.cs" />
     <Compile Include="Connection\Threads\HeartbeatThread.cs" />
     <Compile Include="Connection\IConnectionService.cs" />

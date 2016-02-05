@@ -24,10 +24,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 		protected ICurrentSessionsInfo SessionRepository { get; }
 		protected ResponseSocket       Socket            { get; }
 
-
-		protected bool ValidateRequest (ConnectionSessionId sessionId,
-										Guid? userId = null,
-										Guid? accessedMedPracticeId = null)
+		
+		protected bool IsRequestValid (ConnectionSessionId sessionId,
+									   Guid? userId = null,
+									   Guid? accessedMedPracticeId = null)
 		{
 			if (!SessionRepository.DoesSessionExist(sessionId))
 			{

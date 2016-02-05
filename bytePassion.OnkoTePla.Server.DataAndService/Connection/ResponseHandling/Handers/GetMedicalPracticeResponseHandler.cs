@@ -7,13 +7,13 @@ using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers
 {
-	internal class GetMedicalPracticeRequestHandler : ResponseHandlerBase<GetMedicalPracticeRequest>
+	internal class GetMedicalPracticeResponseHandler : ResponseHandlerBase<GetMedicalPracticeRequest>
 	{
 		private readonly IDataCenter dataCenter;
 
-		public GetMedicalPracticeRequestHandler(ICurrentSessionsInfo sessionRepository, 
-												ResponseSocket socket,
-												IDataCenter dataCenter) 
+		public GetMedicalPracticeResponseHandler(ICurrentSessionsInfo sessionRepository, 
+												 ResponseSocket socket,
+												 IDataCenter dataCenter) 
 			: base(sessionRepository, socket)
 		{
 			this.dataCenter = dataCenter;
@@ -21,7 +21,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 
 		public override void Handle(GetMedicalPracticeRequest request)
 		{
-			if (!ValidateRequest(request.SessionId, request.UserId, request.MedicalPracticeId))
+			if (!IsRequestValid(request.SessionId, request.UserId, request.MedicalPracticeId))
 				return;
 
 			var medicalPractice = dataCenter.GetMedicalPractice(request.MedicalPracticeId, request.MedicalPraciceVersion);

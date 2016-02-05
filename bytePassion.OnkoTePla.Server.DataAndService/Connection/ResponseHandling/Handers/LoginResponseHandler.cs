@@ -6,13 +6,13 @@ using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers
 {
-	internal class LoginRequestHandler : ResponseHandlerBase<LoginRequest>
+	internal class LoginResponseHandler : ResponseHandlerBase<LoginRequest>
 	{
 		private readonly IDataCenter dataCenter;
 
-		public LoginRequestHandler(ICurrentSessionsInfo sessionRepository, 
-								   ResponseSocket socket, 
-								   IDataCenter dataCenter) 
+		public LoginResponseHandler(ICurrentSessionsInfo sessionRepository, 
+								    ResponseSocket socket, 
+								    IDataCenter dataCenter) 
 			: base(sessionRepository, socket)
 		{
 			this.dataCenter = dataCenter;
@@ -20,7 +20,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 
 		public override void Handle(LoginRequest request)
 		{
-			if (!ValidateRequest(request.SessionId))
+			if (!IsRequestValid(request.SessionId))
 				return;
 
 			if (SessionRepository.IsUserLoggedIn(request.UserId))

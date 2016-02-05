@@ -7,13 +7,13 @@ using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers
 {
-	internal class GetTherapyPlaceTypeListRequestHandler : ResponseHandlerBase<GetTherapyPlacesTypeListRequest>
+	internal class GetTherapyPlaceTypeListResponseHandler : ResponseHandlerBase<GetTherapyPlacesTypeListRequest>
 	{
 		private readonly IDataCenter dataCenter;
 
-		public GetTherapyPlaceTypeListRequestHandler(ICurrentSessionsInfo sessionRepository, 
-													 ResponseSocket socket,
-													 IDataCenter dataCenter) 
+		public GetTherapyPlaceTypeListResponseHandler(ICurrentSessionsInfo sessionRepository, 
+													  ResponseSocket socket,
+													  IDataCenter dataCenter) 
 			: base(sessionRepository, socket)
 		{
 			this.dataCenter = dataCenter;
@@ -21,7 +21,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 
 		public override void Handle(GetTherapyPlacesTypeListRequest request)
 		{
-			if (!ValidateRequest(request.SessionId, request.UserId))
+			if (!IsRequestValid(request.SessionId, request.UserId))
 				return;
 
 			Socket.SendNetworkMsg(new GetTherapyPlacesTypeListResponse(dataCenter.GetAllTherapyPlaceTypes().ToList()));

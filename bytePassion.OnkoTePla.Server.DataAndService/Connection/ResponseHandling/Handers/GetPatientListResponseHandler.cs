@@ -7,13 +7,13 @@ using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers
 {
-	internal class GetPatientListRequestHandler : ResponseHandlerBase<GetPatientListRequest>
+	internal class GetPatientListResponseHandler : ResponseHandlerBase<GetPatientListRequest>
 	{
 		private readonly IDataCenter dataCenter;
 
-		public GetPatientListRequestHandler(ICurrentSessionsInfo sessionRepository, 
-											ResponseSocket socket,
-											IDataCenter dataCenter) 
+		public GetPatientListResponseHandler(ICurrentSessionsInfo sessionRepository, 
+											 ResponseSocket socket,
+											 IDataCenter dataCenter) 
 			: base(sessionRepository, socket)
 		{
 			this.dataCenter = dataCenter;
@@ -21,12 +21,12 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 
 		public override void Handle(GetPatientListRequest request)
 		{
-			if (!ValidateRequest(request.SessionId, request.UserId))
+			if (!IsRequestValid(request.SessionId, request.UserId))
 				return;
 
 			var patientsToDeliver = request.LoadOnlyAlivePatients
-				? dataCenter.GetAllPatients().Where(patient => patient.Alive).ToList()
-				: dataCenter.GetAllPatients().ToList();
+										? dataCenter.GetAllPatients().Where(patient => patient.Alive).ToList()
+										: dataCenter.GetAllPatients().ToList();
 
 			Socket.SendNetworkMsg(new GetPatientListResponse(patientsToDeliver));
 		}

@@ -6,13 +6,13 @@ using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers
 {
-	internal class EndConnectionRequestHandler : ResponseHandlerBase<EndConnectionRequest>
+	internal class EndConnectionResponseHandler : ResponseHandlerBase<EndConnectionRequest>
 	{
 		private readonly HeartbeatThreadCollection heartbeatThreadCollection;
 
-		public EndConnectionRequestHandler(ICurrentSessionsInfo sessionRepository, 
-										   ResponseSocket socket,
-										   HeartbeatThreadCollection heartbeatThreadCollection) 
+		public EndConnectionResponseHandler(ICurrentSessionsInfo sessionRepository, 
+										    ResponseSocket socket,
+										    HeartbeatThreadCollection heartbeatThreadCollection) 
 			: base(sessionRepository, socket)
 		{
 			this.heartbeatThreadCollection = heartbeatThreadCollection;
@@ -20,7 +20,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 
 		public override void Handle(EndConnectionRequest request)
 		{
-			if (!ValidateRequest(request.SessionId))
+			if (!IsRequestValid(request.SessionId))
 				return;
 
 			SessionRepository.RemoveSession(request.SessionId);

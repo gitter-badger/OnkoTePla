@@ -9,13 +9,13 @@ using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers
 {
-	internal class BeginConnectionRequestHandler : ResponseHandlerBase<BeginConnectionRequest>
+	internal class BeginConnectionResponseHandler : ResponseHandlerBase<BeginConnectionRequest>
 	{
 		private readonly HeartbeatThreadCollection heartbeatThreadCollection;
-
-		public BeginConnectionRequestHandler(ICurrentSessionsInfo sessionRepository, 
-											 ResponseSocket socket,
-											 HeartbeatThreadCollection heartbeatThreadCollection) 
+		
+		public BeginConnectionResponseHandler(ICurrentSessionsInfo sessionRepository, 
+											  ResponseSocket socket,
+											  HeartbeatThreadCollection heartbeatThreadCollection) 
 			: base(sessionRepository, socket)
 		{
 			this.heartbeatThreadCollection = heartbeatThreadCollection;

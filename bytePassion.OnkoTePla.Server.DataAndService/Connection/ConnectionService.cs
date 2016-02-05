@@ -40,9 +40,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		private readonly IDataCenter dataCenter;
 		private readonly IReadModelRepository readModelRepository;
 
-		private readonly ICurrentSessionsInfo sessionRepository;
+		private readonly ICurrentSessionsInfo       sessionRepository;		
+		private          IHeartbeatThreadCollection heartbeatThreadCollection;
 
-		private HeartbeatThreadCollection heartbeatThreadCollection;
 		private UniversalResponseThread   universalResponseThread;
 				
 

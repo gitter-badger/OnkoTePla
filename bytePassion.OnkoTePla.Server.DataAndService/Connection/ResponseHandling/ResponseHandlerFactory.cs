@@ -2,7 +2,6 @@
 using bytePassion.OnkoTePla.Communication.NetworkMessages;
 using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers;
-using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ.Sockets;
@@ -14,12 +13,12 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 		private readonly IDataCenter dataCenter;
 		private readonly IReadModelRepository readModelRepository;
 		private readonly ICurrentSessionsInfo sessionRespository;
-		private readonly HeartbeatThreadCollection heartbeatThreadCollection;
+		private readonly IHeartbeatThreadCollection heartbeatThreadCollection;
 
 		public ResponseHandlerFactory(IDataCenter dataCenter, 
 									  IReadModelRepository readModelRepository, 
 									  ICurrentSessionsInfo sessionRespository,
-									  HeartbeatThreadCollection heartbeatThreadCollection)
+									  IHeartbeatThreadCollection heartbeatThreadCollection)
 		{
 			this.dataCenter = dataCenter;
 			this.readModelRepository = readModelRepository;
@@ -32,17 +31,17 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 		{
 			switch (request.Type)
 			{
-				case NetworkMessageType.GetUserListRequest:              return (IResponseHandler<TRequest>) new GetUserListRequestHandler            (sessionRespository, socket, dataCenter);
-				case NetworkMessageType.LoginRequest:                    return (IResponseHandler<TRequest>) new LoginRequestHandler                  (sessionRespository, socket, dataCenter);
-				case NetworkMessageType.LogoutRequest:                   return (IResponseHandler<TRequest>) new LogoutRequestHandler                 (sessionRespository, socket);
-				case NetworkMessageType.BeginConnectionRequest:          return (IResponseHandler<TRequest>) new BeginConnectionRequestHandler        (sessionRespository, socket, heartbeatThreadCollection);
-				case NetworkMessageType.BeginDebugConnectionRequest:     return (IResponseHandler<TRequest>) new BeginDebugConnectionRequestHandler   (sessionRespository, socket);
-				case NetworkMessageType.EndConnectionRequest:            return (IResponseHandler<TRequest>) new EndConnectionRequestHandler          (sessionRespository, socket, heartbeatThreadCollection);
-				case NetworkMessageType.GetAccessablePracticesRequest:   return (IResponseHandler<TRequest>) new GetAccessablePracticesRequestHandler (sessionRespository, socket);
-				case NetworkMessageType.GetPatientListRequest:           return (IResponseHandler<TRequest>) new GetPatientListRequestHandler         (sessionRespository, socket, dataCenter);
-				case NetworkMessageType.GetAppointmentsOfADayRequest:    return (IResponseHandler<TRequest>) new GetAppointemntsOfADayRequestHandler  (sessionRespository, socket, readModelRepository);
-				case NetworkMessageType.GetMedicalPracticeRequest:       return (IResponseHandler<TRequest>) new GetMedicalPracticeRequestHandler     (sessionRespository, socket, dataCenter);
-				case NetworkMessageType.GetTherapyPlacesTypeListRequest: return (IResponseHandler<TRequest>) new GetTherapyPlaceTypeListRequestHandler(sessionRespository, socket, dataCenter);
+				case NetworkMessageType.GetUserListRequest:              return (IResponseHandler<TRequest>) new GetUserListResponseHandler            (sessionRespository, socket, dataCenter);
+				case NetworkMessageType.LoginRequest:                    return (IResponseHandler<TRequest>) new LoginResponseHandler                  (sessionRespository, socket, dataCenter);
+				case NetworkMessageType.LogoutRequest:                   return (IResponseHandler<TRequest>) new LogoutResponseHandler                 (sessionRespository, socket);
+				case NetworkMessageType.BeginDebugConnectionRequest:     return (IResponseHandler<TRequest>) new BeginDebugConnectionResponseHandler   (sessionRespository, socket);
+				case NetworkMessageType.BeginConnectionRequest:          return (IResponseHandler<TRequest>) new BeginConnectionResponseHandler        (sessionRespository, socket, heartbeatThreadCollection);				
+				case NetworkMessageType.EndConnectionRequest:            return (IResponseHandler<TRequest>) new EndConnectionResponseHandler          (sessionRespository, socket, heartbeatThreadCollection);
+				case NetworkMessageType.GetAccessablePracticesRequest:   return (IResponseHandler<TRequest>) new GetAccessablePracticesResponseHandler (sessionRespository, socket);
+				case NetworkMessageType.GetPatientListRequest:           return (IResponseHandler<TRequest>) new GetPatientListResponseHandler         (sessionRespository, socket, dataCenter);
+				case NetworkMessageType.GetAppointmentsOfADayRequest:    return (IResponseHandler<TRequest>) new GetAppointemntsOfADayResponseHandler  (sessionRespository, socket, readModelRepository);
+				case NetworkMessageType.GetMedicalPracticeRequest:       return (IResponseHandler<TRequest>) new GetMedicalPracticeResponseHandler     (sessionRespository, socket, dataCenter);
+				case NetworkMessageType.GetTherapyPlacesTypeListRequest: return (IResponseHandler<TRequest>) new GetTherapyPlaceTypeListResponseHandler(sessionRespository, socket, dataCenter);
 
 				default:
 					throw new NotImplementedException();

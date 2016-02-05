@@ -9,13 +9,13 @@ using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers
 {
-	internal class GetAppointemntsOfADayRequestHandler : ResponseHandlerBase<GetAppointmentsOfADayRequest>
+	internal class GetAppointemntsOfADayResponseHandler : ResponseHandlerBase<GetAppointmentsOfADayRequest>
 	{
 		private readonly IReadModelRepository readModelRepository;
 
-		public GetAppointemntsOfADayRequestHandler(ICurrentSessionsInfo sessionRepository, 
-												   ResponseSocket socket,
-												   IReadModelRepository readModelRepository) 
+		public GetAppointemntsOfADayResponseHandler(ICurrentSessionsInfo sessionRepository, 
+												    ResponseSocket socket,
+												    IReadModelRepository readModelRepository) 
 			: base(sessionRepository, socket)
 		{
 			this.readModelRepository = readModelRepository;
@@ -23,19 +23,19 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 
 		public override void Handle(GetAppointmentsOfADayRequest request)
 		{
-			if (!ValidateRequest(request.SessionId, request.UserId, request.MedicalPracticeId))
+			if (!IsRequestValid(request.SessionId, request.UserId, request.MedicalPracticeId))
 				return;
 
 			var appointmentSetOfADay = readModelRepository.GetAppointmentSetOfADay(new AggregateIdentifier(request.Day,
-				request.MedicalPracticeId),
-				null);
+																										   request.MedicalPracticeId),
+																				   null);		
 			Socket.SendNetworkMsg(
 				new GetAppointmentsOfADayResponse(request.MedicalPracticeId,
 					appointmentSetOfADay.MedicalPracticeVersion,
 					appointmentSetOfADay.AggregateVersion,
 					appointmentSetOfADay.Appointments
-						.Select(appointment => new AppointmentTransferData(appointment))
-						.ToList())
+										.Select(appointment => new AppointmentTransferData(appointment))
+										.ToList())
 			);
 		}
 	}

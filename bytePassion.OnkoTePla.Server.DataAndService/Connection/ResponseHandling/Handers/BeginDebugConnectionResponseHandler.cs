@@ -8,10 +8,10 @@ using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers
 {
-	internal class BeginDebugConnectionRequestHandler : ResponseHandlerBase<BeginDebugConnectionRequest>
+	internal class BeginDebugConnectionResponseHandler : ResponseHandlerBase<BeginDebugConnectionRequest>
 	{
-		public BeginDebugConnectionRequestHandler(ICurrentSessionsInfo sessionRepository, 
-												  ResponseSocket socket) 
+		public BeginDebugConnectionResponseHandler(ICurrentSessionsInfo sessionRepository, 
+												   ResponseSocket socket) 
 			: base(sessionRepository, socket)
 		{
 		}

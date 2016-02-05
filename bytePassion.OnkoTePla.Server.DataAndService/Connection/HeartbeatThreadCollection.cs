@@ -4,12 +4,13 @@ using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
+using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
+namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 {
-	internal class HeartbeatThreadCollection : DisposingObject
+	internal class HeartbeatThreadCollection : DisposingObject, IHeartbeatThreadCollection
 	{
 		private readonly NetMQContext zmqContext;
 		private readonly ICurrentSessionsInfo sessionRepository;
