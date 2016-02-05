@@ -26,5 +26,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 		void RemoveSession(ConnectionSessionId sessionId);
 		
 		void UpdateLoggedInUser(ConnectionSessionId sessionId, User newUser);
+
+		void ClearRepository();
 	}
 }

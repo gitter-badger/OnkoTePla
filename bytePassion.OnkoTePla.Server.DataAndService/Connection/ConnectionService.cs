@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
@@ -40,83 +39,46 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		private readonly NetMQContext zmqContext;
 		private readonly IDataCenter dataCenter;
 		private readonly IReadModelRepository readModelRepository;
+
 		private readonly ICurrentSessionsInfo sessionRepository;
+
+		private HeartbeatThreadCollection heartbeatThreadCollection;
+		private UniversalResponseThread   universalResponseThread;
 				
-		private UniversalResponseThread universalResponseThread;
 
-		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads;		
-
-		internal ConnectionService (NetMQContext zmqContext, IDataCenter dataCenter, 
-								    IReadModelRepository readModelRepository, ICurrentSessionsInfo sessionRepository)
+		internal ConnectionService (NetMQContext zmqContext, 
+									IDataCenter dataCenter, 
+								    IReadModelRepository readModelRepository)
 		{
+			sessionRepository = new CurrentSessionsInfo();
+
 			this.zmqContext = zmqContext;
 			this.dataCenter = dataCenter;
-			this.readModelRepository = readModelRepository;
-			this.sessionRepository = sessionRepository;
-			
-			heartbeatThreads = new ConcurrentDictionary<ConnectionSessionId, HeartbeatThread>();			
+			this.readModelRepository = readModelRepository;						
 		}
 		
 		public void InitiateCommunication(Address serverAddress)
-		{									
-			universalResponseThread = new UniversalResponseThread(dataCenter, readModelRepository, zmqContext, serverAddress, 
-																  sessionRepository, OnNewConnectionEstablished,
-																  OnConnectionEnded);
+		{			
+			heartbeatThreadCollection = new HeartbeatThreadCollection(zmqContext, sessionRepository);
+
+			var responseHandlerFactory = new ResponseHandlerFactory(dataCenter, readModelRepository, sessionRepository, heartbeatThreadCollection);
+			universalResponseThread = new UniversalResponseThread(zmqContext, serverAddress, responseHandlerFactory);
 			new Thread(universalResponseThread.Run).Start();
 		}				
 
 		public void StopCommunication()
-		{
-			foreach (var heartbeatThread in heartbeatThreads.Values)
-			{
-				heartbeatThread.Stop();
-				heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
-			}
-			heartbeatThreads.Clear();			
+		{	
+			sessionRepository.ClearRepository();
+								
+			heartbeatThreadCollection.Dispose();
+			heartbeatThreadCollection = null;
 
-			universalResponseThread.Stop();			
-		}
-
-		private void OnConnectionEnded(ConnectionSessionId sessionId)
-		{
-			if (heartbeatThreads.ContainsKey(sessionId))
-			{
-				var heartbeatThread = heartbeatThreads[sessionId];
-				heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
-				heartbeatThread.Stop();				
-				heartbeatThreads.Remove(sessionId);
-			}
-		}
-		
-		private void OnNewConnectionEstablished (AddressIdentifier clientAddressIdentifier, ConnectionSessionId id)
-		{			
-			var clientAddress = new Address(new TcpIpProtocol(), clientAddressIdentifier);
-			var heartbeatThread = new HeartbeatThread(zmqContext, clientAddress, id);
-
-			heartbeatThreads.Add(id, heartbeatThread);
-			heartbeatThread.ClientVanished += HeartbeatOnClientVanished;
-			new Thread(heartbeatThread.Run).Start();			
-		}
-
-		private void HeartbeatOnClientVanished (ConnectionSessionId connectionSessionId)
-		{
-			
-			if (heartbeatThreads.ContainsKey(connectionSessionId))
-			{
-				var heartbeatThread = heartbeatThreads[connectionSessionId];
-				heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
-				heartbeatThreads.Remove(connectionSessionId);
-			}
-			
-			if (sessionRepository.DoesSessionExist(connectionSessionId))
-			{                                                               //	the session does not exist if it was
-				sessionRepository.RemoveSession(connectionSessionId);       //  ended corretly by connectionEndMessage
-			}
-		}
+			universalResponseThread.Stop();
+			universalResponseThread = null;
+		}				
 
 		protected override void CleanUp()
-		{
-			
+		{			
 		}
 	}
 }

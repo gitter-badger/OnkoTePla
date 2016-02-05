@@ -1,46 +1,29 @@
 ﻿using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
-using bytePassion.OnkoTePla.Communication.NetworkMessages;
-using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
-using bytePassion.OnkoTePla.Contracts.Types;
-using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Resources;
-using bytePassion.OnkoTePla.Server.DataAndService.Data;
-using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
+using bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 {
 	internal class UniversalResponseThread : IThread
-	{
-		private readonly IDataCenter dataCenter;
-		private readonly IReadModelRepository readModelRepository;
+	{		
 		private readonly NetMQContext context;
-		private readonly Address serverAddress;
-		private readonly ICurrentSessionsInfo sessionRepository;
-
-		private readonly Action<AddressIdentifier, ConnectionSessionId> newConnectionCallback;
-		private readonly Action<ConnectionSessionId>                    connectionEndedCallback;
+		private readonly Address serverAddress;		
+		private readonly IResponseHandlerFactory responseHandlerFactory;
 
 		private volatile bool stopRunning;		
 		
-		public UniversalResponseThread (IDataCenter dataCenter,
-										IReadModelRepository readModelRepository, 
-								        NetMQContext context, 
-										Address serverAddress,
-								        ICurrentSessionsInfo sessionRepository,
-										Action<AddressIdentifier,ConnectionSessionId> newConnectionCallback, 
-										Action<ConnectionSessionId> connectionEndedCallback)
+		public UniversalResponseThread (NetMQContext context, 
+										Address serverAddress,								       
+										IResponseHandlerFactory responseHandlerFactory)
 		{
-			this.dataCenter = dataCenter;
-			this.readModelRepository = readModelRepository;
+			
 			this.context = context;
-			this.serverAddress = serverAddress;
-			this.sessionRepository = sessionRepository;
-			this.newConnectionCallback = newConnectionCallback;
-			this.connectionEndedCallback = connectionEndedCallback;
+			this.serverAddress = serverAddress;			
+			this.responseHandlerFactory = responseHandlerFactory;
 
 			stopRunning = false;
 			IsRunning = false;
@@ -60,60 +43,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 					if (request == null)
 						continue;
-				 
-					switch (request.Type)
-					{
-						case NetworkMessageType.GetUserListRequest:
-						{
-							ResponseHandler.HandleUserListRequest((GetUserListRequest)request, sessionRepository, socket, dataCenter);
-							break;
-						}
-						case NetworkMessageType.LoginRequest:
-						{
-							ResponseHandler.HandleLoginRequest((LoginRequest)request, sessionRepository, socket, dataCenter);
-							break;
-						}
-						case NetworkMessageType.LogoutRequest:
-						{
-							ResponseHandler.HandleLogoutRequest((LogoutRequest)request, sessionRepository, socket);
-							break;
-						}
-						case NetworkMessageType.BeginConnectionRequest:
-						{
-							ResponseHandler.HandleBeginConnectionRequest((BeginConnectionRequest)request, sessionRepository, socket, newConnectionCallback);
-							break;
-						}
-						case NetworkMessageType.BeginDebugConnectionRequest:
-						{
-							ResponseHandler.HandleBeginDebugConnectionRequest((BeginDebugConnectionRequest)request, sessionRepository, socket);
-							break;
-						}
-						case NetworkMessageType.EndConnectionRequest:
-						{
-							ResponseHandler.HandleEndConnectionRequest((EndConnectionRequest)request, sessionRepository, socket, connectionEndedCallback);
-							break;
-						}
-						case NetworkMessageType.GetAccessablePracticesRequest:
-						{
-							ResponseHandler.HandleGetAccessablePracticesRequest((GetAccessablePracticesRequest) request, sessionRepository, socket);
-							break;
-						}
-						case NetworkMessageType.GetPatientListRequest:
-						{
-							ResponseHandler.HandleGetPatientListRequest((GetPatientListRequest) request, sessionRepository, socket, dataCenter);
-							break;
-						}
-						case NetworkMessageType.GetAppointmentsOfADayRequest:
-						{
-							ResponseHandler.HandleGetDataToDisplayADayRequest((GetAppointmentsOfADayRequest) request, sessionRepository, socket, readModelRepository);
-							break;
-						}
-						case NetworkMessageType.GetMedicalPracticeRequest:
-						{
-							ResponseHandler.HandleGetMedicalPracticeRequest((GetMedicalPracticeRequest) request, sessionRepository, socket, dataCenter);
-							break;
-						}
-					}					
+
+					var responseHandler = responseHandlerFactory.GetHandler(request, socket);
+					responseHandler.Handle(request);					
 				}
 			}
 

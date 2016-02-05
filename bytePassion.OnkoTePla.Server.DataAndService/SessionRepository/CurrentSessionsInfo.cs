@@ -114,5 +114,16 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 				});				
 			}
 		}
+
+		public void ClearRepository()
+		{
+			lock (currentSessions)
+			{
+				foreach (var sessionId in currentSessions.Keys.ToList())
+				{
+					RemoveSession(sessionId);
+				}
+			}
+		}
 	}
 }
