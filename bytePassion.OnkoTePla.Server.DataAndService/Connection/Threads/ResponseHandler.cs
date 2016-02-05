@@ -233,7 +233,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		#region GetDataToDisplayADay
 
-		public static void HandleGetDataToDisplayADayRequest(GetDataToDisplayADayRequest request,
+		public static void HandleGetDataToDisplayADayRequest(GetAppointmentsOfADayRequest request,
 															 ICurrentSessionsInfo sessionRepository,
 															 ResponseSocket socket,
 															 IReadModelRepository readModelRepository)
@@ -247,12 +247,12 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 																									       request.MedicalPracticeId), 
 																			       null);
 			socket.SendNetworkMsg(
-				new GetDataToDisplayADayResponse(request.MedicalPracticeId,
-												 appointmentSetOfADay.MedicalPracticeVersion, 
-												 appointmentSetOfADay.AggregateVersion,
-												 appointmentSetOfADay.Appointments
-																	 .Select(appointment => new AppointmentTransferData(appointment))
-																	 .ToList())
+				new GetAppointmentsOfADayResponse(request.MedicalPracticeId,
+												  appointmentSetOfADay.MedicalPracticeVersion, 
+												  appointmentSetOfADay.AggregateVersion,
+												  appointmentSetOfADay.Appointments
+												  					  .Select(appointment => new AppointmentTransferData(appointment))
+												  					  .ToList())
 			);
 		}
 
@@ -274,6 +274,23 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 			var practiceData = new ClientMedicalPracticeData(medicalPractice);
 
 			socket.SendNetworkMsg(new GetMedicalPracticeResponse(practiceData));
+		}
+
+		#endregion
+
+		#region GetTherapyPlaceTypeList
+
+		public static void HandleGetTherapyPlaceTypeListRequest(GetTherapyPlacesTypeListRequest request,
+																ICurrentSessionsInfo sessionRepository,
+																ResponseSocket socket,
+																IDataCenter dataCenter)		
+		{
+			var requestIsValid = ValidateRequest(request.SessionId, sessionRepository, socket, request.UserId);
+
+			if (!requestIsValid)
+				return;
+
+			socket.SendNetworkMsg(new GetTherapyPlacesTypeListResponse(dataCenter.GetAllTherapyPlaceTypes().ToList()));
 		}
 
 		#endregion

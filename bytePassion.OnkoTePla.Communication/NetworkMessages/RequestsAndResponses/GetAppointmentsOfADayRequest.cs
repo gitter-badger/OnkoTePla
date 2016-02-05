@@ -4,10 +4,10 @@ using bytePassion.OnkoTePla.Contracts.Types;
 
 namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses
 {
-	public class GetDataToDisplayADayRequest : NetworkMessageBase
+	public class GetAppointmentsOfADayRequest : NetworkMessageBase
 	{
-		public GetDataToDisplayADayRequest(Date day, Guid medicalPracticeId, ConnectionSessionId sessionId, Guid userId)
-			: base(NetworkMessageType.GetDataToDisplayADayRequest)
+		public GetAppointmentsOfADayRequest(Date day, Guid medicalPracticeId, ConnectionSessionId sessionId, Guid userId)
+			: base(NetworkMessageType.GetAppointmentsOfADayRequest)
 		{
 			Day = day;
 			SessionId = sessionId;
@@ -25,7 +25,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			return $"{SessionId};{UserId};{Day};{MedicalPracticeId}";
 		}
 
-		public static GetDataToDisplayADayRequest Parse (string s)
+		public static GetAppointmentsOfADayRequest Parse (string s)
 		{
 			var parts = s.Split(';');
 
@@ -34,7 +34,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			var day               = Date.Parse(parts[2]);
 			var medicalPracticeId = Guid.Parse(parts[3]);
 			
-			return new GetDataToDisplayADayRequest(day,medicalPracticeId, sessionId, userId);
+			return new GetAppointmentsOfADayRequest(day,medicalPracticeId, sessionId, userId);
 		}
 	}
 }

@@ -6,11 +6,11 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 
 namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses
 {
-	public class GetDataToDisplayADayResponse : NetworkMessageBase
+	public class GetAppointmentsOfADayResponse : NetworkMessageBase
 	{
-		public GetDataToDisplayADayResponse(Guid medicalPracticeId, uint medicalPracticeVersion, 
+		public GetAppointmentsOfADayResponse(Guid medicalPracticeId, uint medicalPracticeVersion, 
 											uint aggregateVersion, IReadOnlyList<AppointmentTransferData> appointmentCollection)
-			: base(NetworkMessageType.GetDataToDisplayADayResponse)
+			: base(NetworkMessageType.GetAppointmentsOfADayResponse)
 		{
 			MedicalPracticeId = medicalPracticeId;
 			MedicalPracticeVersion = medicalPracticeVersion;
@@ -51,7 +51,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			return sb.ToString();
 		}
 
-		public static GetDataToDisplayADayResponse Parse(string s)
+		public static GetAppointmentsOfADayResponse Parse(string s)
 		{
 			var parts = s.Split('|');
 
@@ -79,7 +79,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 																startTime, endTime, therapyPlaceId, id));
 			}
 
-			return new GetDataToDisplayADayResponse(medicalPracticeId, medicalPracticeVersion, 
+			return new GetAppointmentsOfADayResponse(medicalPracticeId, medicalPracticeVersion, 
 													aggregateVersion, appointmentList);
 		}
 	}

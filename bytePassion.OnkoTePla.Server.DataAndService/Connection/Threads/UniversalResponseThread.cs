@@ -103,9 +103,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 							ResponseHandler.HandleGetPatientListRequest((GetPatientListRequest) request, sessionRepository, socket, dataCenter);
 							break;
 						}
-						case NetworkMessageType.GetDataToDisplayADayRequest:
+						case NetworkMessageType.GetAppointmentsOfADayRequest:
 						{
-							ResponseHandler.HandleGetDataToDisplayADayRequest((GetDataToDisplayADayRequest) request, sessionRepository, socket, readModelRepository);
+							ResponseHandler.HandleGetDataToDisplayADayRequest((GetAppointmentsOfADayRequest) request, sessionRepository, socket, readModelRepository);
 							break;
 						}
 						case NetworkMessageType.GetMedicalPracticeRequest:
