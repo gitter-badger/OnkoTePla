@@ -1,6 +1,5 @@
 ﻿using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
@@ -11,9 +10,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 		private readonly PatientRepository patientRepository;
 		private readonly ConfigurationRepository configRepository;
 
-		public DataCenterBuilder()
-		{			
-			
+		public DataCenterBuilder(PatientRepository patientRepository, 
+								 ConfigurationRepository configRepository)
+		{
+			this.patientRepository = patientRepository;
+			this.configRepository = configRepository;
 		}
 
 		public IDataCenter Build()

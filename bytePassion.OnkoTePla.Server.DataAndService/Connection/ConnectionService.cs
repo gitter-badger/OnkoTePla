@@ -69,16 +69,17 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		public void StopCommunication()
 		{	
 			sessionRepository.ClearRepository();
-								
-			heartbeatThreadCollection.Dispose();
+
+			heartbeatThreadCollection?.Dispose();
 			heartbeatThreadCollection = null;
 
-			universalResponseThread.Stop();
+			universalResponseThread?.Stop();
 			universalResponseThread = null;
 		}				
 
 		protected override void CleanUp()
-		{			
+		{	
+			StopCommunication();		
 		}
 	}
 }

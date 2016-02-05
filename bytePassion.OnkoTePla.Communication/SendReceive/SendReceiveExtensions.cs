@@ -21,10 +21,18 @@ namespace bytePassion.OnkoTePla.Communication.SendReceive
 			outMsg.InitPool(Encoding.GetByteCount(encodedMessage));
 			Encoding.GetBytes(encodedMessage, 0, encodedMessage.Length, outMsg.Data, 0);
 			
-			var sendSuccessful = socket.TrySend(ref outMsg, TimeSpan.FromMilliseconds(timeoutMilliSeconds), false);			
+			bool sendSuccessful;
 
+			try
+			{
+				sendSuccessful = socket.TrySend(ref outMsg, TimeSpan.FromMilliseconds(timeoutMilliSeconds), false);
+			}
+			catch (TerminatingException)
+			{
+				sendSuccessful = false;
+			}
+			
 			outMsg.Close();
-
 			return sendSuccessful;
 		}
 
@@ -32,8 +40,16 @@ namespace bytePassion.OnkoTePla.Communication.SendReceive
 		{
 			var inMsg = new Msg();			
 			inMsg.InitEmpty();
+
+			try
+			{
+				socket.TryReceive(ref inMsg, timeout);
+			}
+			catch (TerminatingException)
+			{
+				return null;
+			}
 			
-			socket.TryReceive(ref inMsg, timeout);
 
 			var str = inMsg.Size > 0
 				? Encoding.GetString(inMsg.Data, 0, inMsg.Size)
