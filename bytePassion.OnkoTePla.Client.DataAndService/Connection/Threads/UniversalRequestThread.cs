@@ -1,8 +1,6 @@
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
-using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestObjects;
-using bytePassion.OnkoTePla.Communication.NetworkMessages;
-using bytePassion.OnkoTePla.Contracts.Types;
+using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
 
@@ -12,22 +10,18 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 	{
 		private readonly NetMQContext context;
 		private readonly Address serverAddress;
-		private readonly TimeoutBlockingQueue<RequestObject> workQueue;
-
-		private ConnectionSessionId currentSessionId;
-
+		private readonly TimeoutBlockingQueue<IRequestHandler> workQueue;
+				
 
 		private volatile bool stopRunning;
 		 
 		public UniversalRequestThread (NetMQContext context, 
 								       Address serverAddress,			
-								       TimeoutBlockingQueue<RequestObject> workQueue)
+								       TimeoutBlockingQueue<IRequestHandler> workQueue)
 		{
 			this.context = context;
 			this.serverAddress = serverAddress;
-			this.workQueue = workQueue;
-
-			currentSessionId = null;
+			this.workQueue = workQueue;			
 
 			IsRunning = true;
 			stopRunning = false;
@@ -46,39 +40,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 					if (workItem == null)	// Timeout-case
 						continue;
 
-					switch (workItem.RequestType)
-					{
-						case NetworkMessageType.GetUserListRequest:
-						{
-							RequestHandler.HandleUserListRequest((UserListRequestObject)workItem, currentSessionId, socket);
-							break;
-						}
-						case NetworkMessageType.LoginRequest:
-						{
-							RequestHandler.HandleLoginRequest((LoginRequestObject)workItem, currentSessionId, socket);
-							break;
-						}
-						case NetworkMessageType.LogoutRequest:
-						{
-							RequestHandler.HandleLogoutRequest((LogoutRequestObject)workItem, currentSessionId, socket);
-							break;
-						}
-						case NetworkMessageType.BeginConnectionRequest:
-						{
-							RequestHandler.HandleBeginConnectionRequest((BeginConnectionRequestObject)workItem, out currentSessionId, socket);
-							break;
-						}
-						case NetworkMessageType.BeginDebugConnectionRequest:
-						{
-							RequestHandler.HandleBeginDebugConnectionRequest((BeginDebugConnectionRequestObject)workItem, out currentSessionId, socket);
-							break;
-						}
-						case NetworkMessageType.EndConnectionRequest:
-						{
-							RequestHandler.HandleEndConnectionRequest((EndConnectionRequestObject)workItem, currentSessionId, socket);
-							break;
-						}
-					}
+					workItem.HandleRequest(socket);
 				}									
 			}							
 		}

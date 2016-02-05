@@ -58,16 +58,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\ConnectionStatus.cs" />
-    <Compile Include="Connection\RequestObjects\BeginConnectionRequestObject.cs" />
-    <Compile Include="Connection\RequestObjects\BeginDebugConnectionRequestObject.cs" />
-    <Compile Include="Connection\RequestObjects\EndConnectionRequestObject.cs" />
-    <Compile Include="Connection\RequestObjects\LogoutRequestObject.cs" />
-    <Compile Include="Connection\RequestObjects\LoginRequestObject.cs" />
-    <Compile Include="Connection\RequestObjects\RequestObject.cs" />
-    <Compile Include="Connection\RequestObjects\UserListRequestObject.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\BeginConnectionRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\BeginDebugConnectionRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\EndConnectionRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\LoginRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\LogoutRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\UserListRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\IRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\RequestHandlerBase.cs" />
     <Compile Include="Connection\Threads\UniversalRequestThread.cs" />
     <Compile Include="Connection\Threads\HeartbeatThead.cs" />
-    <Compile Include="Connection\Threads\RequestHandler.cs" />
     <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Data\IDataCenter.cs" />
     <Compile Include="Factorys\DataCenterBuilder.cs" />
@@ -122,6 +122,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
