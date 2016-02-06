@@ -8,7 +8,7 @@ using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Resources;
 using NetMQ;
 
-namespace bytePassion.OnkoTePla.Communication.NetworkMessageBus
+namespace bytePassion.OnkoTePla.Client.DataAndService.EventBus
 {
 	public class ClientEventBusThread : IThread
 	{

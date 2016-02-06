@@ -5,21 +5,19 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 {
 	public class GetPatientListRequest : NetworkMessageBase
 	{
-		public GetPatientListRequest(bool loadOnlyAlivePatients, ConnectionSessionId sessionId, Guid userId)
+		public GetPatientListRequest(ConnectionSessionId sessionId, Guid userId)
 			: base (NetworkMessageType.GetPatientListRequest)
-		{
-			LoadOnlyAlivePatients = loadOnlyAlivePatients;
+		{			
 			SessionId = sessionId;
 			UserId = userId;
 		}
-
-		public bool                LoadOnlyAlivePatients { get; }
+		
 		public ConnectionSessionId SessionId             { get; }
 		public Guid                UserId                { get; }
 
 		public override string AsString()
 		{
-			return $"{SessionId};{UserId};{LoadOnlyAlivePatients}";
+			return $"{SessionId};{UserId}";
 		}
 
 		public static GetPatientListRequest Parse(string s)
@@ -27,10 +25,9 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			var parts = s.Split(';');
 
 			var sessionId = new ConnectionSessionId(Guid.Parse(parts[0]));
-			var userId    = Guid.Parse(parts[1]);
-			var onlyAlive = bool.Parse(parts[2]);
+			var userId    = Guid.Parse(parts[1]);			
 
-			return new GetPatientListRequest(onlyAlive, sessionId, userId);
+			return new GetPatientListRequest(sessionId, userId);
 		}
 	}
 }

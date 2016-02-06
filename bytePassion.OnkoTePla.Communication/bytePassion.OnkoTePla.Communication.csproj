@@ -49,8 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NetworkMessageBus\ClientEventBus.cs" />
-    <Compile Include="NetworkMessageBus\ClientEventBusThread.cs" />
     <Compile Include="NetworkMessageBus\ServerEventBus.cs" />
     <Compile Include="NetworkMessageBus\ServerEventBusThread.cs" />
     <Compile Include="NetworkMessages\Notifications\EventBusNotification.cs" />

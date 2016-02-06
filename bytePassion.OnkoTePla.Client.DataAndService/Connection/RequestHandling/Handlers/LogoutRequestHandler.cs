@@ -2,7 +2,6 @@ using System;
 using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling.Handlers
@@ -10,18 +9,18 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 	internal class LogoutRequestHandler : RequestHandlerBase
 	{
 		private readonly ClientUserData user;
-		private readonly ISharedStateReadOnly<ConnectionSessionId> sessionIdVariable;
+		private readonly ISharedState<ConnectionInfo> connectionInfoVariable;
 		private readonly Action logoutSuccessfulCallback;
 		
 
 		public LogoutRequestHandler (Action logoutSuccessfulCallback, 
 								     ClientUserData user,
-									 ISharedStateReadOnly<ConnectionSessionId> sessionIdVariable,
+									 ISharedState<ConnectionInfo> connectionInfoVariable,
 									 Action<string> errorCallback) 
 			: base(errorCallback)
 		{ 
 			this.user = user;
-			this.sessionIdVariable = sessionIdVariable;
+			this.connectionInfoVariable = connectionInfoVariable;
 			this.logoutSuccessfulCallback = logoutSuccessfulCallback;
 		}
 
@@ -29,9 +28,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 		public override void HandleRequest(RequestSocket socket)
 		{
 			HandleRequestHelper<LogoutRequest, LogoutResponse>(
-				new LogoutRequest(sessionIdVariable.Value, user.Id),
-				socket,				
-				logoutResponse => logoutSuccessfulCallback()
+				new LogoutRequest(connectionInfoVariable.Value.SessionId, user.Id),
+				socket,
+				logoutResponse =>
+				{
+					connectionInfoVariable.Value = new ConnectionInfo(connectionInfoVariable.Value.SessionId, null);
+					logoutSuccessfulCallback();					
+				}
 			);
 		}
 	}

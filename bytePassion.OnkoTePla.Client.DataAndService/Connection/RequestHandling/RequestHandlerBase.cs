@@ -16,7 +16,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 		public abstract void HandleRequest(RequestSocket socket);
 		
 		protected Action<string> ErrorCallback { get; }		
-
+		
 		protected void HandleRequestHelper<TRequest, TResponse> (TRequest request, 
 																 RequestSocket socket,
 																 Action<TResponse> responseReceived)

@@ -2,14 +2,13 @@ using System;
 using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling.Handlers
 {
 	internal class LoginRequestHandler : RequestHandlerBase
 	{
-		private readonly ISharedStateReadOnly<ConnectionSessionId> sessionIdVariable;
+		private readonly ISharedState<ConnectionInfo> connectionInfoVariable;
 		private readonly ClientUserData user;
 		private readonly string password;
 		private readonly Action loginSuccessfulCallback;
@@ -17,12 +16,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 
 		public LoginRequestHandler (Action loginSuccessfulCallback, 
 								    ClientUserData user, string password, 
-									ISharedStateReadOnly<ConnectionSessionId> sessionIdVariable,
+									ISharedState<ConnectionInfo> connectionInfoVariable,
 									Action<string> errorCallback) 
 			: base(errorCallback)
 			
 		{
-			this.sessionIdVariable = sessionIdVariable;
+			this.connectionInfoVariable = connectionInfoVariable;
 			this.user = user;
 			this.password = password;
 			this.loginSuccessfulCallback = loginSuccessfulCallback;
@@ -32,9 +31,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 		public override void HandleRequest(RequestSocket socket)
 		{
 			HandleRequestHelper<LoginRequest, LoginResponse>(
-				new LoginRequest(sessionIdVariable.Value, user.Id, password),
-				socket,				
-				loginResponse => loginSuccessfulCallback()
+				new LoginRequest(connectionInfoVariable.Value.SessionId, user.Id, password),
+				socket,
+				loginResponse =>
+				{
+					connectionInfoVariable.Value = new ConnectionInfo(connectionInfoVariable.Value.SessionId, user);
+					loginSuccessfulCallback();
+				}
 			);
 		}
 	}

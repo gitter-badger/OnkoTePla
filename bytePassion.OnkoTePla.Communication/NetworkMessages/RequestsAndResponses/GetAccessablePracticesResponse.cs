@@ -13,7 +13,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			AccessableMedicalPractices = accessableMedicalPractices;
 		}
 
-		private IReadOnlyList<Guid> AccessableMedicalPractices { get; } 
+		public IReadOnlyList<Guid> AccessableMedicalPractices { get; } 
 
 		public override string AsString()
 		{

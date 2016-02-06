@@ -1,7 +1,6 @@
 using System;
 using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
-using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling.Handlers
@@ -9,23 +8,23 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 	internal class EndConnectionRequestHandler : RequestHandlerBase
 	{
 		private readonly Action connectionEndedCallback;
-		private readonly ISharedStateReadOnly<ConnectionSessionId> sessionIdVariable; 
+		private readonly ISharedStateReadOnly<ConnectionInfo> connectionInfoVariable; 
 
 
 		public EndConnectionRequestHandler (Action connectionEndedCallback,
-											ISharedStateReadOnly<ConnectionSessionId> sessionIdVariable,
+											ISharedStateReadOnly<ConnectionInfo> connectionInfoVariable,
 											Action<string> errorCallback)
 			: base(errorCallback)
 		{
 			this.connectionEndedCallback = connectionEndedCallback;
-			this.sessionIdVariable = sessionIdVariable;
+			this.connectionInfoVariable = connectionInfoVariable;
 		}
 
 		
 		public override void HandleRequest(RequestSocket socket)
 		{
 			HandleRequestHelper<EndConnectionRequest, EndConnectionResponse>(
-				new EndConnectionRequest(sessionIdVariable.Value),
+				new EndConnectionRequest(connectionInfoVariable.Value.SessionId),
 				socket,				
 				endConnectionResponse => connectionEndedCallback()
 			);

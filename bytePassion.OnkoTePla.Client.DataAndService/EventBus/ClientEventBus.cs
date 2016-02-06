@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Core.Eventsystem;
-using bytePassion.OnkoTePla.Core.Readmodels;
+using bytePassion.OnkoTePla.Client.DataAndService.Readmodels;
 
-namespace bytePassion.OnkoTePla.Communication.NetworkMessageBus
+
+namespace bytePassion.OnkoTePla.Client.DataAndService.EventBus
 {
 	public class ClientEventBus : DisposingObject, IClientEventBus
 	{

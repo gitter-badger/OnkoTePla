@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Contracts.Types;
 using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling.Handlers
 {
-	internal class UserListRequestHandler : RequestHandlerBase
+	internal class GetUserListRequestHandler : RequestHandlerBase
 	{
 		private readonly Action<IReadOnlyList<ClientUserData>> dataReceivedCallback;
-		private readonly ISharedStateReadOnly<ConnectionSessionId> sessionIdVariable;
+		private readonly ISharedStateReadOnly<ConnectionInfo> connectionInfoVariable;
 
 
-		public UserListRequestHandler (Action<IReadOnlyList<ClientUserData>> dataReceivedCallback, 
-									   ISharedStateReadOnly<ConnectionSessionId> sessionIdVariable,
-									   Action<string> errorCallback) 
+		public GetUserListRequestHandler (Action<IReadOnlyList<ClientUserData>> dataReceivedCallback, 
+									      ISharedStateReadOnly<ConnectionInfo> connectionInfoVariable,
+									      Action<string> errorCallback) 
 			: base(errorCallback)
 		{
 			this.dataReceivedCallback = dataReceivedCallback;
-			this.sessionIdVariable = sessionIdVariable;
+			this.connectionInfoVariable = connectionInfoVariable;
 		}
 
 
 		public override void HandleRequest(RequestSocket socket)
 		{
 			HandleRequestHelper<GetUserListRequest, GetUserListResponse>(
-				new GetUserListRequest(sessionIdVariable.Value),
+				new GetUserListRequest(connectionInfoVariable.Value.SessionId),
 				socket,				
 				userListResponse => dataReceivedCallback(userListResponse.AvailableUsers)
 			);

@@ -5,12 +5,17 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling.Handlers;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads;
+using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Contracts.Types;
+using bytePassion.OnkoTePla.Core.Domain;
 using NetMQ;
 using NLog;
 
@@ -24,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		private readonly ILogger logger;
 		private readonly NetMQContext zmqContext;
 
-		private readonly SharedState<ConnectionSessionId> connectionIdVariable;
+		private readonly SharedState<ConnectionInfo> connectionInfoVariable;
 
 
 		public ConnectionService(ILogger logger)
@@ -32,7 +37,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			this.logger = logger;
 			ConnectionStatus = ConnectionStatus.Disconnected;
 
-			connectionIdVariable = new SharedState<ConnectionSessionId>(null);
+			connectionInfoVariable = new SharedState<ConnectionInfo>(new ConnectionInfo(null, null));
 			zmqContext = NetMQContext.Create();
 		}
 
@@ -93,33 +98,82 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryDisconnect);
 
 			requestWorkQueue.Put(new EndConnectionRequestHandler(ConnectionEndResponseReceived,
-																 connectionIdVariable,
+																 connectionInfoVariable,
 																 errorCallback));
 		}
 
 		public void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
 									Action<string> errorCallback)
 		{
-			requestWorkQueue.Put(new UserListRequestHandler(dataReceivedCallback, 
-															connectionIdVariable, 
-															errorCallback));
+			requestWorkQueue.Put(new GetUserListRequestHandler(dataReceivedCallback,
+															   connectionInfoVariable, 
+															   errorCallback));
 		}
+
+
+		public void RequestAccessablePractices(Action<IReadOnlyList<Guid>> dataReceivedCallback, 											  
+											   Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new GetAccessablePracticesRequestHandler(dataReceivedCallback, 
+																		  connectionInfoVariable, 
+																		  errorCallback));
+		}
+
+		public void RequestPatientList(Action<IReadOnlyList<Patient>> dataReceivedCallback, 									  
+									   Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new GetPatientListRequestHandler(dataReceivedCallback, 
+																  connectionInfoVariable, 																 
+																  errorCallback));
+		}
+
+		public void RequestAppointmentsOfADay(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier> dataReceivedCallback, 
+											  Date day, Guid medicalPracticeId, 
+											  Action<string> errorCallback) 
+		{
+			requestWorkQueue.Put(new GetAppointmentsOfADayRequestHandler(dataReceivedCallback, 
+																		 connectionInfoVariable, 
+																		 day,
+																		 medicalPracticeId, 
+																		 errorCallback));
+		}
+
+		public void RequestMedicalPractice(Action<ClientMedicalPracticeData> dataReceivedCallback, 
+										   Guid medicalPracticeId, uint medicalPracticeVersion,
+										   Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new GetMedicalPracticeRequestHandler(dataReceivedCallback, 
+																	  connectionInfoVariable, 
+																	  medicalPracticeId, 
+																	  medicalPracticeVersion, 
+																	  errorCallback));
+		}
+		
+
+		public void RequestTherapyPlaceTypeList(Action<IReadOnlyList<TherapyPlaceType>> dataReceivedCallback, 
+												Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new GetTherapyPlaceListRequestHandler(dataReceivedCallback, 
+																	   connectionInfoVariable, 
+																	   errorCallback));
+		}
+
 
 		public void TryLogin(Action loginSuccessfulCallback, ClientUserData user, string password, 
 							 Action<string> errorCallback)
 		{
 			requestWorkQueue.Put(new LoginRequestHandler(loginSuccessfulCallback, 
 														 user, 
-														 password, 
-														 connectionIdVariable, 
+														 password,
+														 connectionInfoVariable, 
 														 errorCallback));
 		}
 
 		public void TryLogout(Action logoutSuccessfulCallback, ClientUserData user, Action<string> errorCallback)
 		{
 			requestWorkQueue.Put(new LogoutRequestHandler(logoutSuccessfulCallback, 
-														  user, 
-														  connectionIdVariable, 
+														  user,
+														  connectionInfoVariable, 
 														  errorCallback));
 		}
 
@@ -151,7 +205,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					}
 					else
 					{
-						connectionIdVariable.Value = connectionSessionId;
+						connectionInfoVariable.Value = new ConnectionInfo(connectionSessionId, null);
 											
 						heartbeatThread = new HeartbeatThead(zmqContext, ClientAddress, connectionSessionId);
 						heartbeatThread.ServerVanished += OnServerVanished;
@@ -178,7 +232,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					}
 					else
 					{
-						connectionIdVariable.Value = connectionSessionId;
+						connectionInfoVariable.Value =  new ConnectionInfo(connectionSessionId, null);
 
 						ConnectionStatus = ConnectionStatus.Connected;
 						ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
