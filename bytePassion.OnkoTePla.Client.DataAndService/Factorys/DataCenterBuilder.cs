@@ -43,6 +43,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
             // EventStore
 
             var streamPersistenceService = new StreamPersistenceService(configReadRepository, GlobalConstants.EventHistoryBasePath);
+            var metaDataService = new StreamMetaDataService(GlobalConstants.EventHistoryBasePath);
             var streamManager = new StreamManagementService(streamPersistenceService);
             var eventStorePersistenceService = new JsonEventStreamDataStore(GlobalConstants.EventHistoryJsonPersistenceFile);
 			var eventStore = new EventStore(eventStorePersistenceService, streamManager, configReadRepository);
@@ -78,7 +79,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 								  readModelRepository,
 								  localSettingsRepository,
 								  commandBus,
-								  eventStore);
+								  eventStore,
+                                  metaDataService);
 		}
 	}
 }

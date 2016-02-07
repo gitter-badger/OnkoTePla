@@ -10,6 +10,6 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
         public Date LastAppointmentDate { get; set; }
 
         public Dictionary<Guid, List<Date>> AppointmentsForPatient { get; set; }
-        public Dictionary<Date, bool> AppointmentExistenceIndex { get; set; } 
+        public Dictionary<Date, short> AppointmentExistenceIndex { get; set; } 
     }
 }
