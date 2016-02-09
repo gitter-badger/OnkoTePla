@@ -71,6 +71,10 @@
                     CommandParameter="{x:Static enum:MainPage.TherapyPlaceTypes}"
                     Content="TherapyPlaceTypes" />
 
+			<Button Command="{Binding SwitchToPage}"
+                    CommandParameter="{x:Static enum:MainPage.Patients}"
+                    Content="Patients" />
+			
             <Button Command="{Binding SwitchToPage}"
                     CommandParameter="{x:Static enum:MainPage.Options}"
                     Content="Einstellungen" />
@@ -90,6 +94,7 @@
             <views:InfrastructurePage    DataContext="{Binding InfrastructurePageViewModel}"/>
 			<views:HoursOfOpeningPage    DataContext="{Binding HoursOfOpeningPageViewModel}"/>
             <views:TherapyPlaceTypesPage DataContext="{Binding TherapyPlaceTypesPageViewModel}"/>
+			<views:PatientsPage          DataContext="{Binding PatientsPageViewModel}"/>
             <views:OptionsPage           DataContext="{Binding OptionsPageViewModel}"/>
             <views:AboutPage             DataContext="{Binding AboutPageViewModel}"/>
 

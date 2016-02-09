@@ -105,6 +105,9 @@
     <Compile Include="ViewModels\OverviewPage\IOverviewPageViewModel.cs" />
     <Compile Include="ViewModels\OverviewPage\OverviewPageViewModel.cs" />
     <Compile Include="ViewModels\OverviewPage\OverviewPageViewModelSampleData.cs" />
+    <Compile Include="ViewModels\PatientsPage\IPatientsPageViewModel.cs" />
+    <Compile Include="ViewModels\PatientsPage\PatientsPageViewModel.cs" />
+    <Compile Include="ViewModels\PatientsPage\PatientsPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\TherapyPlaceTypesPage\Helper\IconDisplayData.cs" />
     <Compile Include="ViewModels\TherapyPlaceTypesPage\ITherapyPlaceTypesPageViewModel.cs" />
     <Compile Include="ViewModels\TherapyPlaceTypesPage\TherapyPlaceTypesPageViewModel.cs" />
@@ -134,6 +137,9 @@
     </Compile>
     <Compile Include="Views\OverviewPage.xaml.cs">
       <DependentUpon>OverviewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PatientsPage.xaml.cs">
+      <DependentUpon>PatientsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TherapyPlaceTypesPage.xaml.cs">
       <DependentUpon>TherapyPlaceTypesPage.xaml</DependentUpon>
@@ -178,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OverviewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PatientsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -15,6 +15,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 
@@ -76,6 +77,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             var infrastructurePageViewModel    = new InfrastructurePageViewModel(dataCenter, selectedPageVariable);
 			var hoursOfOpeningPageViewModel    = new HoursOfOpeningPageViewModel(dataCenter, selectedPageVariable);
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter);
+			var patientsPageViewModel          = new PatientsPageViewModel();
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel();
 
@@ -86,7 +88,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
                                                               licencePageViewModel,
                                                               infrastructurePageViewModel, 
 															  hoursOfOpeningPageViewModel,  
-															  therapyPlaceTypesPageViewModel,                                                           
+															  therapyPlaceTypesPageViewModel,  
+															  patientsPageViewModel,                                                         
                                                               optionsPageViewModel,
                                                               aboutPageViewModel,
 															  selectedPageVariable);

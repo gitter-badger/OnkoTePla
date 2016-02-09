@@ -8,6 +8,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 
@@ -30,6 +31,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
             OptionsPageViewModel           = new OptionsPageViewModelSampleData();
             AboutPageViewModel             = new AboutPageViewModelSampleData();
 			TherapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModelSampleData();
+			PatientsPageViewModel		   = new PatientsPageViewModelSampleData();
 		}
 
         public ICommand SwitchToPage { get; } = null;
@@ -42,7 +44,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         public IInfrastructurePageViewModel    InfrastructurePageViewModel    { get; }
 		public IHoursOfOpeningPageViewModel    HoursOfOpeningPageViewModel    { get; }
 		public ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
-	    public IOptionsPageViewModel           OptionsPageViewModel           { get; }
+		public IPatientsPageViewModel          PatientsPageViewModel          { get; }
+		public IOptionsPageViewModel           OptionsPageViewModel           { get; }
         public IAboutPageViewModel             AboutPageViewModel             { get; }
 
         public void Dispose() { }

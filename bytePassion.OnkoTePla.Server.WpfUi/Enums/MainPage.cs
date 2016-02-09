@@ -9,6 +9,7 @@
         Infrastructure,
 		HoursOfOpening,
 		TherapyPlaceTypes,
+		Patients,
         Options,
         About
     }

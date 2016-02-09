@@ -11,6 +11,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 
@@ -30,11 +31,13 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
                                    IInfrastructurePageViewModel infrastructurePageViewModel,
 								   IHoursOfOpeningPageViewModel hoursOfOpeningPageViewModel,
 								   ITherapyPlaceTypesPageViewModel therapyPlaceTypesPageViewModel,
+								   IPatientsPageViewModel patientsPageViewModel,
 								   IOptionsPageViewModel optionsPageViewModel, 
                                    IAboutPageViewModel aboutPageViewModel,
 								   ISharedStateWriteOnly<MainPage> selectedPageVariable)
         {
 	        this.selectedPageVariable     = selectedPageVariable;
+	        PatientsPageViewModel = patientsPageViewModel;
 
 	        OverviewPageViewModel          = overviewPageViewModel;
             ConnectionsPageViewModel       = connectionsPageViewModel;
@@ -68,7 +71,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         public IInfrastructurePageViewModel    InfrastructurePageViewModel    { get; }
 		public IHoursOfOpeningPageViewModel    HoursOfOpeningPageViewModel    { get; }
 		public ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
-	    public IOptionsPageViewModel           OptionsPageViewModel           { get; }
+		public IPatientsPageViewModel		   PatientsPageViewModel          { get; }
+		public IOptionsPageViewModel           OptionsPageViewModel           { get; }
         public IAboutPageViewModel             AboutPageViewModel             { get; }
 
         protected override void CleanUp() { }
