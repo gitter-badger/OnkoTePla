@@ -1,6 +1,8 @@
-﻿namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage
+﻿using bytePassion.Lib.WpfLib.ViewModelBase;
+
+namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage
 {
-    internal interface IAboutPageViewModel : IViewModel
+	internal interface IAboutPageViewModel : IViewModel
     {
         
     }

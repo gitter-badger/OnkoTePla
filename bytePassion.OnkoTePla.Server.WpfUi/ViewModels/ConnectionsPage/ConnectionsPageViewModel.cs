@@ -5,6 +5,7 @@ using System.Windows.Input;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage.Helper;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage

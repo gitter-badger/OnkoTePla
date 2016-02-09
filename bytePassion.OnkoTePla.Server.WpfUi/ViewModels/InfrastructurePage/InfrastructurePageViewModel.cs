@@ -10,6 +10,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;

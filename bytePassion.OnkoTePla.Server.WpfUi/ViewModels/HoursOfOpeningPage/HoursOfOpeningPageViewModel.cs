@@ -8,6 +8,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;

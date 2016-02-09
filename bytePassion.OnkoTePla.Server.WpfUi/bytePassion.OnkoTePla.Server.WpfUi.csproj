@@ -92,7 +92,6 @@
     <Compile Include="ViewModels\InfrastructurePage\InfrastructurePageViewModel.cs" />
     <Compile Include="ViewModels\InfrastructurePage\InfrastructurePageViewModelSampleData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\ColorDisplayData.cs" />
-    <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\LicencePage\ILicencePageViewModel.cs" />
     <Compile Include="ViewModels\LicencePage\LicencePageViewModel.cs" />
     <Compile Include="ViewModels\LicencePage\LicencePageViewModelSampleData.cs" />
@@ -116,7 +115,6 @@
     <Compile Include="ViewModels\UserPage\IUserPageViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModelSampleData.cs" />
-    <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
