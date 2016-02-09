@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<localSettings>
+  <autoConnection isAutoConnectionEnabled="false" autoConnectionClientAddress="127.0.0.1" autoConnectionServerAddress="127.0.0.1" />
+</localSettings>

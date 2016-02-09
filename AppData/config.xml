@@ -5,180 +5,6 @@
     <therapyPlaceType name="bett" iconType="BedType2" id="7cfec758-993d-499a-b985-4d8c03bf9342" />
   </therapyPlaceTypes>
   <medicalPractices count="2">
-    <medicalPractice name="Neustadt" count="2" version="14" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-      <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
-        <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
-        <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
-        <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-      </room>
-      <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
-        <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-        <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
-        <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
-        <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
-        <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
-        <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
-      </room>
-      <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-        <additionalOpendDays count="0" />
-        <additionalClosedDays count="0" />
-      </hoursOfOpening>
-      <medicalPractice name="Neustadt" count="2" version="13" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-        <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
-          <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
-          <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
-          <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-        </room>
-        <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="5" name="B17" color="#FF9ACD32">
-          <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-          <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
-          <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
-          <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
-          <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
-        </room>
-        <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-          <additionalOpendDays count="0" />
-          <additionalClosedDays count="0" />
-        </hoursOfOpening>
-        <medicalPractice name="Neustadt" count="2" version="12" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-          <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
-            <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
-            <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
-            <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-          </room>
-          <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="4" name="B17" color="#FF9ACD32">
-            <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-            <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
-            <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
-            <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
-          </room>
-          <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-            <additionalOpendDays count="0" />
-            <additionalClosedDays count="0" />
-          </hoursOfOpening>
-          <medicalPractice name="Neustadt" count="2" version="11" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-            <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
-              <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
-              <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
-              <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-            </room>
-            <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="3" name="B17" color="#FF9ACD32">
-              <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-              <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
-              <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
-            </room>
-            <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-              <additionalOpendDays count="0" />
-              <additionalClosedDays count="0" />
-            </hoursOfOpening>
-            <medicalPractice name="Neustadt" count="2" version="10" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-              <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
-                <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-              </room>
-              <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="2" name="B17" color="#FF9ACD32">
-                <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
-              </room>
-              <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                <additionalOpendDays count="0" />
-                <additionalClosedDays count="0" />
-              </hoursOfOpening>
-              <medicalPractice name="Neustadt" count="2" version="9" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-                <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
-                  <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                  <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                  <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                </room>
-                <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="1" name="B17" color="#FF9ACD32">
-                  <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                </room>
-                <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                  <additionalOpendDays count="0" />
-                  <additionalClosedDays count="0" />
-                </hoursOfOpening>
-                <medicalPractice name="Neustadt" count="2" version="8" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-                  <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
-                    <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                    <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                    <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                  </room>
-                  <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="B17" color="#FF9ACD32" />
-                  <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                    <additionalOpendDays count="0" />
-                    <additionalClosedDays count="0" />
-                  </hoursOfOpening>
-                  <medicalPractice name="Neustadt" count="2" version="7" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-                    <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="2" name="B15" color="#FFFFFF00">
-                      <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                      <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                    </room>
-                    <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="B17" color="#FF9ACD32" />
-                    <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                      <additionalOpendDays count="0" />
-                      <additionalClosedDays count="0" />
-                    </hoursOfOpening>
-                    <medicalPractice name="Neustadt" count="2" version="6" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-                      <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="1" name="B15" color="#FFFFFF00">
-                        <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
-                      </room>
-                      <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="B17" color="#FF9ACD32" />
-                      <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                        <additionalOpendDays count="0" />
-                        <additionalClosedDays count="0" />
-                      </hoursOfOpening>
-                      <medicalPractice name="Neustadt" count="2" version="5" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-                        <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="0" name="B15" color="#FFFFFF00" />
-                        <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="B17" color="#FF9ACD32" />
-                        <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                          <additionalOpendDays count="0" />
-                          <additionalClosedDays count="0" />
-                        </hoursOfOpening>
-                        <medicalPractice name="Neustadt" count="2" version="4" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-                          <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="0" name="B15" color="#FFFFFF00" />
-                          <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="noName" color="#FFFFFFFF" />
-                          <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                            <additionalOpendDays count="0" />
-                            <additionalClosedDays count="0" />
-                          </hoursOfOpening>
-                          <medicalPractice name="Neustadt" count="1" version="3" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-                            <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="0" name="B15" color="#FFFFFF00" />
-                            <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                              <additionalOpendDays count="0" />
-                              <additionalClosedDays count="0" />
-                            </hoursOfOpening>
-                            <medicalPractice name="Neustadt" count="1" version="2" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-                              <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="0" name="noName" color="#FFFFFFFF" />
-                              <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                                <additionalOpendDays count="0" />
-                                <additionalClosedDays count="0" />
-                              </hoursOfOpening>
-                              <medicalPractice name="Neustadt" count="0" version="1" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
-                                <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                                  <additionalOpendDays count="0" />
-                                  <additionalClosedDays count="0" />
-                                </hoursOfOpening>
-                                <medicalPractice name="noName" count="0" version="0" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="False">
-                                  <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
-                                    <additionalOpendDays count="0" />
-                                    <additionalClosedDays count="0" />
-                                  </hoursOfOpening>
-                                </medicalPractice>
-                              </medicalPractice>
-                            </medicalPractice>
-                          </medicalPractice>
-                        </medicalPractice>
-                      </medicalPractice>
-                    </medicalPractice>
-                  </medicalPractice>
-                </medicalPractice>
-              </medicalPractice>
-            </medicalPractice>
-          </medicalPractice>
-        </medicalPractice>
-      </medicalPractice>
-    </medicalPractice>
     <medicalPractice name="Fürth" count="3" version="44" id="68a425a0-76d8-4775-acee-bb272eb272b4" hasPreviousVersions="True">
       <room id="11abb757-a065-492f-adb0-467f23c47edc" count="10" name="A12" color="#FF40E0D0">
         <therapyPlace id="c4043994-7fa4-4956-b61d-15588bda6bc7" name="1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
@@ -1055,9 +881,527 @@
         </medicalPractice>
       </medicalPractice>
     </medicalPractice>
+    <medicalPractice name="Neustadt" count="2" version="32" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+      <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+        <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+        <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+        <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+      </room>
+      <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+        <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="N4" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+        <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="N5" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+        <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="N6" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+        <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="N7" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+        <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="N8" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+        <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="N9" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+      </room>
+      <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+        <additionalOpendDays count="0" />
+        <additionalClosedDays count="0" />
+      </hoursOfOpening>
+      <medicalPractice name="Neustadt" count="2" version="31" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+        <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+          <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+          <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+          <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+        </room>
+        <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+          <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="N4" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+          <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="N5" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+          <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="N6" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+          <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="N7" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+          <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="N8" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+          <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+        </room>
+        <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+          <additionalOpendDays count="0" />
+          <additionalClosedDays count="0" />
+        </hoursOfOpening>
+        <medicalPractice name="Neustadt" count="2" version="30" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+          <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+            <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+            <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+            <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+          </room>
+          <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+            <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="N4" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+            <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="N5" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+            <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="N6" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+            <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="N7" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+            <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+            <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+          </room>
+          <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+            <additionalOpendDays count="0" />
+            <additionalClosedDays count="0" />
+          </hoursOfOpening>
+          <medicalPractice name="Neustadt" count="2" version="29" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+            <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+              <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+              <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+              <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+            </room>
+            <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+              <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="N4" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+              <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="N5" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+              <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="N6" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+              <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+              <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+              <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+            </room>
+            <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+              <additionalOpendDays count="0" />
+              <additionalClosedDays count="0" />
+            </hoursOfOpening>
+            <medicalPractice name="Neustadt" count="2" version="28" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+              <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+              </room>
+              <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="N4" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="N5" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+              </room>
+              <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                <additionalOpendDays count="0" />
+                <additionalClosedDays count="0" />
+              </hoursOfOpening>
+              <medicalPractice name="Neustadt" count="2" version="27" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                  <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                  <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                  <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                </room>
+                <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                  <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="N4" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                  <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                  <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                  <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                  <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                  <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                </room>
+                <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                  <additionalOpendDays count="0" />
+                  <additionalClosedDays count="0" />
+                </hoursOfOpening>
+                <medicalPractice name="Neustadt" count="2" version="26" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                  <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                    <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                    <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                    <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                  </room>
+                  <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                    <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                    <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                    <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                    <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                    <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                    <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                  </room>
+                  <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                    <additionalOpendDays count="0" />
+                    <additionalClosedDays count="0" />
+                  </hoursOfOpening>
+                  <medicalPractice name="Neustadt" count="2" version="25" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                    <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                      <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                      <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                      <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                    </room>
+                    <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                      <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                      <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                      <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                      <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                      <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                      <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                    </room>
+                    <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                      <additionalOpendDays count="0" />
+                      <additionalClosedDays count="0" />
+                    </hoursOfOpening>
+                    <medicalPractice name="Neustadt" count="2" version="24" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                      <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                        <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                        <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                        <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                      </room>
+                      <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                        <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                        <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                        <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                        <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                        <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                        <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                      </room>
+                      <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                        <additionalOpendDays count="0" />
+                        <additionalClosedDays count="0" />
+                      </hoursOfOpening>
+                      <medicalPractice name="Neustadt" count="2" version="23" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                        <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                          <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                          <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                          <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                        </room>
+                        <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                          <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                          <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                          <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                          <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                          <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                          <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                        </room>
+                        <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                          <additionalOpendDays count="0" />
+                          <additionalClosedDays count="0" />
+                        </hoursOfOpening>
+                        <medicalPractice name="Neustadt" count="2" version="22" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                          <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                            <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                            <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                            <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                          </room>
+                          <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                            <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                            <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                            <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                            <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                            <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                            <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                          </room>
+                          <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                            <additionalOpendDays count="0" />
+                            <additionalClosedDays count="0" />
+                          </hoursOfOpening>
+                          <medicalPractice name="Neustadt" count="2" version="21" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                            <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                              <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                              <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                              <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                            </room>
+                            <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                              <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                              <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                              <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                              <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                              <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                              <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                            </room>
+                            <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                              <additionalOpendDays count="0" />
+                              <additionalClosedDays count="0" />
+                            </hoursOfOpening>
+                            <medicalPractice name="Neustadt" count="2" version="20" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                              <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="N3" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                              </room>
+                              <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                                <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                              </room>
+                              <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                <additionalOpendDays count="0" />
+                                <additionalClosedDays count="0" />
+                              </hoursOfOpening>
+                              <medicalPractice name="Neustadt" count="2" version="19" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                  <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                  <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="N2" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                  <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                </room>
+                                <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                                  <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                  <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                  <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                  <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                  <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                  <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                </room>
+                                <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                  <additionalOpendDays count="0" />
+                                  <additionalClosedDays count="0" />
+                                </hoursOfOpening>
+                                <medicalPractice name="Neustadt" count="2" version="18" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                  <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                    <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="N1" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                    <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                    <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                  </room>
+                                  <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                                    <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                    <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                    <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                    <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                    <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                    <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                  </room>
+                                  <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                    <additionalOpendDays count="0" />
+                                    <additionalClosedDays count="0" />
+                                  </hoursOfOpening>
+                                  <medicalPractice name="Neustadt" count="2" version="17" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                    <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                      <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                      <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                      <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                    </room>
+                                    <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                                      <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                      <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                      <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                      <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                      <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                      <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                    </room>
+                                    <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                      <additionalOpendDays count="0" />
+                                      <additionalClosedDays count="0" />
+                                    </hoursOfOpening>
+                                    <medicalPractice name="Neustadt" count="2" version="16" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                      <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                        <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                        <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                        <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                      </room>
+                                      <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                                        <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                        <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                        <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                        <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                        <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                        <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                      </room>
+                                      <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                        <additionalOpendDays count="0" />
+                                        <additionalClosedDays count="0" />
+                                      </hoursOfOpening>
+                                      <medicalPractice name="Neustadt" count="2" version="15" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                        <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                          <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="a0d522c2-7545-48b6-bed6-b09566d9b889" />
+                                          <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                          <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                        </room>
+                                        <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                                          <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                          <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                          <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                          <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                          <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                          <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                        </room>
+                                        <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                          <additionalOpendDays count="0" />
+                                          <additionalClosedDays count="0" />
+                                        </hoursOfOpening>
+                                        <medicalPractice name="Neustadt" count="2" version="14" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                          <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                            <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                            <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                            <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                          </room>
+                                          <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="6" name="B17" color="#FF9ACD32">
+                                            <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                            <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                            <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                            <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                            <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                            <therapyPlace id="a6ca8181-4e8b-4f92-bc60-f83cde12871f" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                          </room>
+                                          <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                            <additionalOpendDays count="0" />
+                                            <additionalClosedDays count="0" />
+                                          </hoursOfOpening>
+                                          <medicalPractice name="Neustadt" count="2" version="13" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                            <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                              <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                              <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                              <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                            </room>
+                                            <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="5" name="B17" color="#FF9ACD32">
+                                              <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                              <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                              <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                              <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                              <therapyPlace id="43296859-2fe5-402c-a159-817153721003" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                            </room>
+                                            <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                              <additionalOpendDays count="0" />
+                                              <additionalClosedDays count="0" />
+                                            </hoursOfOpening>
+                                            <medicalPractice name="Neustadt" count="2" version="12" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                              <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                                <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                              </room>
+                                              <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="4" name="B17" color="#FF9ACD32">
+                                                <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                <therapyPlace id="b58ce78b-4119-4ff9-9fab-54e437c60312" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                              </room>
+                                              <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                <additionalOpendDays count="0" />
+                                                <additionalClosedDays count="0" />
+                                              </hoursOfOpening>
+                                              <medicalPractice name="Neustadt" count="2" version="11" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                                  <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                  <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                  <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                </room>
+                                                <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="3" name="B17" color="#FF9ACD32">
+                                                  <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                  <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                  <therapyPlace id="1b490d82-8d28-427d-98c6-ec4710d002bd" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                </room>
+                                                <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                  <additionalOpendDays count="0" />
+                                                  <additionalClosedDays count="0" />
+                                                </hoursOfOpening>
+                                                <medicalPractice name="Neustadt" count="2" version="10" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                  <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                                    <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                    <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                    <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                  </room>
+                                                  <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="2" name="B17" color="#FF9ACD32">
+                                                    <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                    <therapyPlace id="27c62714-0063-47bf-b5e3-32524d2b080a" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                  </room>
+                                                  <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                    <additionalOpendDays count="0" />
+                                                    <additionalClosedDays count="0" />
+                                                  </hoursOfOpening>
+                                                  <medicalPractice name="Neustadt" count="2" version="9" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                    <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                                      <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                      <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                      <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                    </room>
+                                                    <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="1" name="B17" color="#FF9ACD32">
+                                                      <therapyPlace id="13d19470-2e66-4498-a97a-7c8be196219e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                    </room>
+                                                    <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                      <additionalOpendDays count="0" />
+                                                      <additionalClosedDays count="0" />
+                                                    </hoursOfOpening>
+                                                    <medicalPractice name="Neustadt" count="2" version="8" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                      <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="3" name="B15" color="#FFFFFF00">
+                                                        <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                        <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                        <therapyPlace id="ce2e1af9-d6d4-4b71-8437-76481618924e" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                      </room>
+                                                      <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="B17" color="#FF9ACD32" />
+                                                      <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                        <additionalOpendDays count="0" />
+                                                        <additionalClosedDays count="0" />
+                                                      </hoursOfOpening>
+                                                      <medicalPractice name="Neustadt" count="2" version="7" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                        <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="2" name="B15" color="#FFFFFF00">
+                                                          <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                          <therapyPlace id="b5a9be9e-c231-4404-8084-e02bc9670b25" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                        </room>
+                                                        <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="B17" color="#FF9ACD32" />
+                                                        <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                          <additionalOpendDays count="0" />
+                                                          <additionalClosedDays count="0" />
+                                                        </hoursOfOpening>
+                                                        <medicalPractice name="Neustadt" count="2" version="6" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                          <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="1" name="B15" color="#FFFFFF00">
+                                                            <therapyPlace id="5bb70080-21fd-45c2-9a14-f74676df4911" name="noName" type="00000000-0000-0000-0000-000000000000" />
+                                                          </room>
+                                                          <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="B17" color="#FF9ACD32" />
+                                                          <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                            <additionalOpendDays count="0" />
+                                                            <additionalClosedDays count="0" />
+                                                          </hoursOfOpening>
+                                                          <medicalPractice name="Neustadt" count="2" version="5" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                            <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="0" name="B15" color="#FFFFFF00" />
+                                                            <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="B17" color="#FF9ACD32" />
+                                                            <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                              <additionalOpendDays count="0" />
+                                                              <additionalClosedDays count="0" />
+                                                            </hoursOfOpening>
+                                                            <medicalPractice name="Neustadt" count="2" version="4" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                              <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="0" name="B15" color="#FFFFFF00" />
+                                                              <room id="f187b6d8-6416-41cb-a0d1-9aa147b536e7" count="0" name="noName" color="#FFFFFFFF" />
+                                                              <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                                <additionalOpendDays count="0" />
+                                                                <additionalClosedDays count="0" />
+                                                              </hoursOfOpening>
+                                                              <medicalPractice name="Neustadt" count="1" version="3" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                                <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="0" name="B15" color="#FFFFFF00" />
+                                                                <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                                  <additionalOpendDays count="0" />
+                                                                  <additionalClosedDays count="0" />
+                                                                </hoursOfOpening>
+                                                                <medicalPractice name="Neustadt" count="1" version="2" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                                  <room id="9f375cc8-d4ef-484c-b31b-1ba1e7ad5115" count="0" name="noName" color="#FFFFFFFF" />
+                                                                  <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                                    <additionalOpendDays count="0" />
+                                                                    <additionalClosedDays count="0" />
+                                                                  </hoursOfOpening>
+                                                                  <medicalPractice name="Neustadt" count="0" version="1" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="True">
+                                                                    <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                                      <additionalOpendDays count="0" />
+                                                                      <additionalClosedDays count="0" />
+                                                                    </hoursOfOpening>
+                                                                    <medicalPractice name="noName" count="0" version="0" id="6f33fa6e-e949-4416-a587-c6674b05d2ac" hasPreviousVersions="False">
+                                                                      <hoursOfOpening openingTimeMonday="08:00:00" openingTimeTuesday="08:00:00" openingTimeWednesday="08:00:00" openingTimeThursday="08:00:00" openingTimeFriday="08:00:00" openingTimeSaturday="08:00:00" openingTimeSunday="08:00:00" closingTimeMonday="17:00:00" closingTimeTuesday="17:00:00" closingTimeWednesday="17:00:00" closingTimeThursday="17:00:00" closingTimeFriday="17:00:00" closingTimeSaturday="17:00:00" closingTimeSunday="17:00:00" isOpenOnMonday="True" isOpenOnTuesday="True" isOpenOnWednesday="True" isOpenOnThursday="True" isOpenOnFriday="True" isOpenOnSaturday="False" isOpenOnSunday="False">
+                                                                        <additionalOpendDays count="0" />
+                                                                        <additionalClosedDays count="0" />
+                                                                      </hoursOfOpening>
+                                                                    </medicalPractice>
+                                                                  </medicalPractice>
+                                                                </medicalPractice>
+                                                              </medicalPractice>
+                                                            </medicalPractice>
+                                                          </medicalPractice>
+                                                        </medicalPractice>
+                                                      </medicalPractice>
+                                                    </medicalPractice>
+                                                  </medicalPractice>
+                                                </medicalPractice>
+                                              </medicalPractice>
+                                            </medicalPractice>
+                                          </medicalPractice>
+                                        </medicalPractice>
+                                      </medicalPractice>
+                                    </medicalPractice>
+                                  </medicalPractice>
+                                </medicalPractice>
+                              </medicalPractice>
+                            </medicalPractice>
+                          </medicalPractice>
+                        </medicalPractice>
+                      </medicalPractice>
+                    </medicalPractice>
+                  </medicalPractice>
+                </medicalPractice>
+              </medicalPractice>
+            </medicalPractice>
+          </medicalPractice>
+        </medicalPractice>
+      </medicalPractice>
+    </medicalPractice>
   </medicalPractices>
-  <users count="2">
-    <user name="user2" password="1223345" id="8547b481-08d8-4305-97f5-3f3a4448e0be" isHidden="True" accessablePractice0="68a425a0-76d8-4775-acee-bb272eb272b4" />
-    <user name="user1" password="blubb" id="f3034a4e-831c-4b55-89f4-87f782614afc" isHidden="False" accessablePractice0="68a425a0-76d8-4775-acee-bb272eb272b4" accessablePractice1="6f33fa6e-e949-4416-a587-c6674b05d2ac" />
+  <users count="4">
+    <user name="UserAll" password="b" id="f3034a4e-831c-4b55-89f4-87f782614afc" isHidden="False" accessablePractice0="68a425a0-76d8-4775-acee-bb272eb272b4" accessablePractice1="6f33fa6e-e949-4416-a587-c6674b05d2ac" />
+    <user name="userVerborgen" password="b" id="8547b481-08d8-4305-97f5-3f3a4448e0be" isHidden="True" accessablePractice0="68a425a0-76d8-4775-acee-bb272eb272b4" accessablePractice1="6f33fa6e-e949-4416-a587-c6674b05d2ac" />
+    <user name="userFürth" password="b" id="84eabbe7-5e21-4d86-aa3c-ac63d851caf4" isHidden="False" accessablePractice0="68a425a0-76d8-4775-acee-bb272eb272b4" />
+    <user name="userNeustadt" password="b" id="fc9987ab-ecc4-4a9f-aa8e-6d2745a48b67" isHidden="False" accessablePractice0="6f33fa6e-e949-4416-a587-c6674b05d2ac" />
   </users>
 </configuration>

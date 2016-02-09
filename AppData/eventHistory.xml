@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<eventStreams>
+  <eventStream count="47" date="09.02.2016" configVersion="44" medicalPracticeId="68a425a0-76d8-4775-acee-bb272eb272b4">
+    <event aggregateVersion="0" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="d7184acb-2bcc-431b-a722-7309ed9409d4" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="c4043994-7fa4-4956-b61d-15588bda6bc7" startTime="08:00:00" endTime="09:30:00" appointmentId="99189cc8-0864-47fe-9a00-1b5e4b589579" />
+    </event>
+    <event aggregateVersion="1" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="9b6b1c5b-61ac-4f13-b249-f167e0ea542b" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="c4043994-7fa4-4956-b61d-15588bda6bc7" startTime="11:15:00" endTime="12:45:00" appointmentId="30f0234a-0331-4234-9018-a9e4ef37c8ee" />
+    </event>
+    <event aggregateVersion="2" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="a4f51c88-6fc8-4c41-8957-8e85ca6b5195" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="c4043994-7fa4-4956-b61d-15588bda6bc7" startTime="15:15:00" endTime="16:15:00" appointmentId="4229675e-7051-4b57-86ed-25d68163843c" />
+    </event>
+    <event aggregateVersion="3" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="8e037b9a-6a3c-4d3c-8405-326fb26d27e0" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="b639d8fa-f941-4943-866e-a0a7d91f6c27" startTime="08:15:00" endTime="10:45:00" appointmentId="c5db08c1-8549-44a1-b4d8-34b3b9dfeeb4" />
+    </event>
+    <event aggregateVersion="4" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="912bab13-89e5-44df-8234-adff398cc10a" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="b639d8fa-f941-4943-866e-a0a7d91f6c27" startTime="11:45:00" endTime="14:30:00" appointmentId="124497cf-dc4c-4ac2-8fb9-80e351449e92" />
+    </event>
+    <event aggregateVersion="5" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="acfc911e-5a7b-49e0-9ce2-af64ab50ac3b" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="1ef148cd-a5ad-47a8-9ae3-7823be8693e0" startTime="10:00:00" endTime="11:15:00" appointmentId="f998bbf8-69fb-4425-b30c-4181edf2252b" />
+    </event>
+    <event aggregateVersion="6" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="34647b53-f612-4720-91c7-7bf0d009da87" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="1ef148cd-a5ad-47a8-9ae3-7823be8693e0" startTime="13:30:00" endTime="16:00:00" appointmentId="05f3b85d-f931-4cb3-adc3-60c33df28786" />
+    </event>
+    <event aggregateVersion="7" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="46f22823-88f3-4212-9c81-1a8375c740d4" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="d141bd1d-45fa-4a04-b8ff-91443d9e86e7" startTime="09:45:00" endTime="11:15:00" appointmentId="be841e5f-1c7e-46c9-a8fa-a0dfa41692e5" />
+    </event>
+    <event aggregateVersion="8" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="ea736bc9-842d-4855-b6ff-7f68b023520a" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="d141bd1d-45fa-4a04-b8ff-91443d9e86e7" startTime="12:45:00" endTime="15:00:00" appointmentId="2acc5edc-caa3-4646-914f-b6aee396565a" />
+    </event>
+    <event aggregateVersion="9" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="e97aafd1-7e80-4a48-9847-f2a12972209d" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="d141bd1d-45fa-4a04-b8ff-91443d9e86e7" startTime="15:00:00" endTime="16:15:00" appointmentId="7613df4e-80c7-45da-bba9-ee8902d2cc4c" />
+    </event>
+    <event aggregateVersion="10" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="17c8e672-5ba8-4b6d-9cb0-7aa88479fac4" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="60499a9b-fce2-4d97-b3ad-3416506a73cd" startTime="09:15:00" endTime="11:45:00" appointmentId="7ac0e000-c85e-4200-a2d3-792f53364e4b" />
+    </event>
+    <event aggregateVersion="11" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="fb265f18-8590-44ab-b776-df7eb2c412d7" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="60499a9b-fce2-4d97-b3ad-3416506a73cd" startTime="13:15:00" endTime="14:45:00" appointmentId="209eb42a-7276-4781-9035-fa78615b4221" />
+    </event>
+    <event aggregateVersion="12" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="1850d32f-65eb-4523-b238-a3e3870cfac1" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="3e0de480-490b-421d-8211-d23e8fafce5b" startTime="08:30:00" endTime="10:00:00" appointmentId="d3d23cf1-efac-4f40-8bb8-d27fd189a4be" />
+    </event>
+    <event aggregateVersion="13" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="5027772d-b6ca-4bcd-be14-54962e8e17d9" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="3e0de480-490b-421d-8211-d23e8fafce5b" startTime="10:00:00" endTime="12:45:00" appointmentId="55aef51a-7036-4997-92ec-b69751b7a4d3" />
+    </event>
+    <event aggregateVersion="14" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="812c8b16-6f59-47e3-ab14-9921390f4d34" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="3e0de480-490b-421d-8211-d23e8fafce5b" startTime="13:15:00" endTime="15:45:00" appointmentId="1941d44c-7981-41b4-aa6d-4e536e951ac2" />
+    </event>
+    <event aggregateVersion="15" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="2699080e-f129-4a6b-b1d1-db04c3a526ee" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="15a30c2b-39f1-4544-9f36-9ca0e19411b8" startTime="08:00:00" endTime="10:45:00" appointmentId="ac5b6b3d-bb40-478a-b05f-7ab4dbd29931" />
+    </event>
+    <event aggregateVersion="16" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="2f4ae516-a0a9-4388-bccc-48fe1bea9e03" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="15a30c2b-39f1-4544-9f36-9ca0e19411b8" startTime="10:45:00" endTime="12:15:00" appointmentId="d97fcc64-b865-452d-901d-bd407cda9e8b" />
+    </event>
+    <event aggregateVersion="17" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="5d312549-119c-46ad-b403-6ab7c9447b03" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="15a30c2b-39f1-4544-9f36-9ca0e19411b8" startTime="14:45:00" endTime="16:45:00" appointmentId="9834cada-1a1a-43d8-a7a2-dfba1eeefe03" />
+    </event>
+    <event aggregateVersion="18" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="68b046de-d0d1-4287-88b4-5ad83935b5c5" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="17fb6965-d4e6-44e1-83d0-f96a47783074" startTime="09:00:00" endTime="10:45:00" appointmentId="a57805e0-bfaf-4858-bb61-ae5274aa2d44" />
+    </event>
+    <event aggregateVersion="19" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="8f0ddeee-1748-4862-bf07-9eaf05e6b40b" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="17fb6965-d4e6-44e1-83d0-f96a47783074" startTime="11:15:00" endTime="14:00:00" appointmentId="e64e5667-7d80-412f-b4de-6dc114bb2f8f" />
+    </event>
+    <event aggregateVersion="20" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="03960cee-537b-4184-9e42-bffe41e6adc9" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="17fb6965-d4e6-44e1-83d0-f96a47783074" startTime="15:45:00" endTime="17:00:00" appointmentId="18486577-2620-4902-803f-f89009941e44" />
+    </event>
+    <event aggregateVersion="21" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="3bd3543a-a0fc-4365-bc30-d6ae941ae6b4" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="8c7f767b-7529-4e29-814f-c72b2687d621" startTime="09:30:00" endTime="10:45:00" appointmentId="f3a15a7d-eede-465d-9dbe-5c26d07157fd" />
+    </event>
+    <event aggregateVersion="22" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="b43c0a30-999a-48c2-b530-69f946924318" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="8c7f767b-7529-4e29-814f-c72b2687d621" startTime="12:15:00" endTime="14:15:00" appointmentId="c9126632-74fa-4996-8d80-f2310ceaa3bd" />
+    </event>
+    <event aggregateVersion="23" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="1efcb6c1-c2fd-44a8-8179-455ca8a03d9e" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="8c7f767b-7529-4e29-814f-c72b2687d621" startTime="15:15:00" endTime="16:15:00" appointmentId="1abceb7e-eec6-42b6-8209-54d109f3311a" />
+    </event>
+    <event aggregateVersion="24" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="bee820cb-1051-4b43-bc2d-f0c68c958db8" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="33ac6358-6f6e-4375-b683-a5dcfdbd58be" startTime="09:15:00" endTime="10:15:00" appointmentId="8b92a538-2fe6-47b6-8178-6c0d91124560" />
+    </event>
+    <event aggregateVersion="25" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="769f4b05-b544-49c6-8974-d136a381660b" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="33ac6358-6f6e-4375-b683-a5dcfdbd58be" startTime="11:45:00" endTime="13:00:00" appointmentId="2e2e347d-a28a-4fc9-b2b3-e5194553eefd" />
+    </event>
+    <event aggregateVersion="26" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="b895624e-98aa-4159-bcdf-3375f67d1b24" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="33ac6358-6f6e-4375-b683-a5dcfdbd58be" startTime="14:45:00" endTime="16:45:00" appointmentId="8e867dc9-1428-4595-9d5e-491d3540bf89" />
+    </event>
+    <event aggregateVersion="27" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="9ea74975-a534-4206-9721-d6d476e08a2a" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="790fa478-e2e9-4a3f-b6b3-f8fd0a84e33f" startTime="08:30:00" endTime="11:15:00" appointmentId="1359a45a-ab7c-4193-95ca-1c33f410221d" />
+    </event>
+    <event aggregateVersion="28" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="06eaf581-8107-40a2-9858-92b126f01a09" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="790fa478-e2e9-4a3f-b6b3-f8fd0a84e33f" startTime="11:15:00" endTime="14:00:00" appointmentId="afe502d2-527e-43b4-a9d6-52d82095d543" />
+    </event>
+    <event aggregateVersion="29" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="c069f56b-3d6c-4755-8ed5-5e88cf4624af" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="bc02a0f2-47fd-4453-b8a6-9f5b34807194" startTime="08:45:00" endTime="11:15:00" appointmentId="592b2350-3f2d-4452-b6f9-8d6cc879a9bb" />
+    </event>
+    <event aggregateVersion="30" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="d79c4815-48a3-4caa-848d-521eb3c712c6" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="bc02a0f2-47fd-4453-b8a6-9f5b34807194" startTime="13:00:00" endTime="14:45:00" appointmentId="98b3f552-ceca-4fff-910e-671561e67a13" />
+    </event>
+    <event aggregateVersion="31" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="198bbb6b-1403-41e9-9b36-35d294a31b7f" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="bc02a0f2-47fd-4453-b8a6-9f5b34807194" startTime="15:30:00" endTime="16:30:00" appointmentId="46f1f44d-6852-4761-892d-03ce814c7c86" />
+    </event>
+    <event aggregateVersion="32" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="1606bc0e-196e-4d7a-b6ee-76097cb94fa5" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="172a48cb-6a92-4057-959e-488c37cd1d6f" startTime="09:30:00" endTime="11:45:00" appointmentId="21783e25-19ce-49d5-a2fe-35e493e90462" />
+    </event>
+    <event aggregateVersion="33" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="99cc71d9-8655-40a3-84ca-adda3e138067" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="172a48cb-6a92-4057-959e-488c37cd1d6f" startTime="11:45:00" endTime="14:00:00" appointmentId="e74f1389-bbd1-4edf-9236-5f3247e737fe" />
+    </event>
+    <event aggregateVersion="34" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="de28810e-34ed-4972-9128-14b4b8f309a6" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="172a48cb-6a92-4057-959e-488c37cd1d6f" startTime="14:45:00" endTime="16:45:00" appointmentId="b4fea583-daac-47e2-861e-3711b6dbf0a7" />
+    </event>
+    <event aggregateVersion="35" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="9ab61f19-e357-4c38-a206-fd091b7b77c5" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="ad8d25e6-2086-43d9-9442-2707657d72f8" startTime="09:00:00" endTime="11:15:00" appointmentId="01e4e169-0910-4792-9b24-a5b594756ef6" />
+    </event>
+    <event aggregateVersion="36" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="4cc3e9db-a75b-45a5-85bc-7000244c8843" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="ad8d25e6-2086-43d9-9442-2707657d72f8" startTime="12:15:00" endTime="15:00:00" appointmentId="97ff4d9d-ae2d-47bf-a73e-5b6533123874" />
+    </event>
+    <event aggregateVersion="37" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="cffc660b-6c3b-4336-b596-140f7a3cbbdf" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="bc343c77-8180-4a35-a527-bf162c250f3d" startTime="09:30:00" endTime="11:45:00" appointmentId="9149e6ab-8306-4ea6-a783-8181e1ac89c2" />
+    </event>
+    <event aggregateVersion="38" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="e9ced642-4004-4bdd-b0f8-fc043bba2690" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="bc343c77-8180-4a35-a527-bf162c250f3d" startTime="13:00:00" endTime="15:15:00" appointmentId="41f0986a-b37e-48bd-aefb-62a102f638bf" />
+    </event>
+    <event aggregateVersion="39" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="e1622cd2-c0d2-44e7-9155-de159bffb628" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="4c7a7e10-eadf-4d21-8112-26e67ee1c861" startTime="10:30:00" endTime="13:00:00" appointmentId="8023870c-1346-4a01-804a-cf54cee1fc55" />
+    </event>
+    <event aggregateVersion="40" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="28c9a093-b543-465b-aba5-8e823283a1cf" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="4c7a7e10-eadf-4d21-8112-26e67ee1c861" startTime="13:00:00" endTime="14:15:00" appointmentId="b4d56e3f-3a44-4636-86a8-9200f177bdd8" />
+    </event>
+    <event aggregateVersion="41" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="3dfede8c-2693-4723-afd9-b46044ed977b" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="4c7a7e10-eadf-4d21-8112-26e67ee1c861" startTime="15:45:00" endTime="17:00:00" appointmentId="8347c0cb-2350-4b98-b52a-bb36a10e1f01" />
+    </event>
+    <event aggregateVersion="42" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="929a1180-4b89-466f-96c3-6c9feed4d39f" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="2262e4c9-8341-48ba-91a7-4bbbddd862dc" startTime="08:30:00" endTime="09:45:00" appointmentId="2b89c146-b361-46e7-af2d-c97ba77f636f" />
+    </event>
+    <event aggregateVersion="43" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="f55b02db-e264-44a5-b058-551d9918a7ec" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="2262e4c9-8341-48ba-91a7-4bbbddd862dc" startTime="10:45:00" endTime="13:15:00" appointmentId="c876ad54-2b02-4d41-84a0-57ffcebce6d0" />
+    </event>
+    <event aggregateVersion="44" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="c4981b96-5e18-471b-9ee3-a333cd191e1f" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="02942b69-09bb-460e-ad3b-67f4be223073" startTime="08:45:00" endTime="11:30:00" appointmentId="d86e013b-74b7-4c2a-96dc-74f18b59a1ba" />
+    </event>
+    <event aggregateVersion="45" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="bab8e8ff-147b-4fdc-ba90-33ae5b04c307" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="02942b69-09bb-460e-ad3b-67f4be223073" startTime="13:45:00" endTime="15:15:00" appointmentId="3d981112-905c-4c91-baf6-e7309fc1f7ae" />
+    </event>
+    <event aggregateVersion="46" userId="f3034a4e-831c-4b55-89f4-87f782614afc" patientId="4b3d87ff-c636-4d58-8d4c-db5042a78e65" timeStampDate="09.02.2016" timeStampTime="21:12:44" actionTag="RegularAction">
+      <appointmentAddedEvent description="automated generated appointment" therapyPlaceId="02942b69-09bb-460e-ad3b-67f4be223073" startTime="15:45:00" endTime="17:00:00" appointmentId="63e7f3e8-e586-4280-b43d-404eafc2f8fb" />
+    </event>
+  </eventStream>
+</eventStreams>
