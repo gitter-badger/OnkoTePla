@@ -4,20 +4,153 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage"
+             xmlns:views="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Views"
+             xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+             xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Converter"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="800" d:DesignWidth="900">
 	
 	<d:DesignData.DataContext>
 		<sampleData:PatientsPageViewModelSampleData/>
 	</d:DesignData.DataContext>
 	
+	<UserControl.Resources>
+		<libConverter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter"/>
+		<libConverter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+		<converter:BirthdayToStringConverter x:Key="BirthdayToStringConverter"/>
+	</UserControl.Resources>
+	
 	<Grid Background="White">
 
-		<TextBlock Text="PatientsPage"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="25"
-                   FontFamily="Sigoe UI Light"/>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="50"/>
+		</Grid.RowDefinitions>
+		
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="350"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+
+		<views:PatientSelector Grid.Row="0"
+							   Grid.Column="0"
+							   Margin="5"
+							   DataContext="{Binding DataContext.PatientSelectorViewModel, 
+													 RelativeSource={RelativeSource AncestorType={x:Type views:PatientsPage}}}"/>
+		<Button Grid.Row="1"
+				Grid.Column="0"
+				Margin="10"
+				Content="Add 1000 Random Patients"
+				Command="{Binding Generate1000RandomPatients}"/>
+		
+		<TextBlock Grid.Row="0"
+				   Grid.Column="1"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   FontFamily="{StaticResource StandardFontFamily}"
+				   FontSize="25"
+				   Visibility="{Binding IsPatientSelected, 
+										Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}">
+			
+			<Run Text="Selektieren Sie einen Patienten"/>
+			<LineBreak/>
+			<Run Text="um seine/ihre Details zu sehen"></Run>
+			
+		</TextBlock>
+		
+		<Grid Grid.Row="0"
+			  Grid.Column="1"
+			  Margin="10"
+			  Visibility="{Binding IsPatientSelected, 
+								   Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
+			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="150"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			
+			<Grid.RowDefinitions>
+				<RowDefinition Height="60"/>
+				<RowDefinition Height="30"/>
+				<RowDefinition Height="30"/>
+				<RowDefinition Height="30"/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+
+			<Image Grid.Row="0"
+				   Grid.Column="0"
+                   Width="32"
+                   Height="32"
+                   Source="pack://application:,,,/bytePassion.OnkoTePla.Resources;Component/Icons/AliveDead/black-ribbon.png"
+                   Stretch="None"
+                   Visibility="{Binding IsPatientAlive,
+                                        Converter={StaticResource InvertedBoolToCollapsedVisibilityConverter}}" />
+
+			<TextBlock Grid.Row="0"
+					   Grid.Column="1"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Center"
+					   Margin="5"
+					   Text="{Binding PatientName}"
+					   FontSize="35"
+					   FontFamily="{StaticResource StandardFontFamily}"/>
+
+			<TextBlock Grid.Row="1"
+					   Grid.Column="0"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"
+					   Margin="5"
+					   Text="Geburtstag:"
+					   FontSize="15"
+					   FontFamily="{StaticResource StandardFontFamily}"/>
+
+			<TextBlock Grid.Row="2"
+					   Grid.Column="0"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"
+					   Margin="5"
+					   Text="Internal-ID:"
+					   FontSize="15"
+					   FontFamily="{StaticResource StandardFontFamily}"/>
+
+			<TextBlock Grid.Row="3"
+					   Grid.Column="0"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"
+					   Margin="5"
+					   Text="External-ID:"
+					   FontSize="15"
+					   FontFamily="{StaticResource StandardFontFamily}"/>
+
+			<TextBlock Grid.Row="1"
+					   Grid.Column="1"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Center"
+					   Margin="5"
+					   Text="{Binding PatientBirthday, 
+									  Converter={StaticResource BirthdayToStringConverter}}"
+					   FontSize="15"
+					   FontFamily="{StaticResource StandardFontFamily}"/>
+
+			<TextBlock Grid.Row="2"
+					   Grid.Column="1"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Center"
+					   Margin="5"
+					   Text="{Binding PatientInternalId}"
+					   FontSize="15"
+					   FontFamily="{StaticResource StandardFontFamily}"/>
+
+			<TextBlock Grid.Row="3"
+					   Grid.Column="1"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Center"
+					   Margin="5"
+					   Text="{Binding PatientExternalId}"
+					   FontSize="15"
+					   FontFamily="{StaticResource StandardFontFamily}"/>
+
+		</Grid>
 
 	</Grid>
 </UserControl>

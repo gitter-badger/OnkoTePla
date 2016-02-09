@@ -108,6 +108,7 @@
     <Compile Include="ViewModels\PatientSelector\IPatientSelectorViewModel.cs" />
     <Compile Include="ViewModels\PatientSelector\PatientSelectorViewModel.cs" />
     <Compile Include="ViewModels\PatientSelector\PatientSelectorViewModelSampleData.cs" />
+    <Compile Include="ViewModels\PatientsPage\Helper\PatientNameGenerator.cs" />
     <Compile Include="ViewModels\PatientsPage\IPatientsPageViewModel.cs" />
     <Compile Include="ViewModels\PatientsPage\PatientsPageViewModel.cs" />
     <Compile Include="ViewModels\PatientsPage\PatientsPageViewModelSampleData.cs" />

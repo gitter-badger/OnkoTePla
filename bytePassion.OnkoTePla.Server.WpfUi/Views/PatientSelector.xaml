@@ -67,7 +67,7 @@
 		<CheckBox Grid.Row="1"
                   Margin="0,5"
                   Content="Verstorbene Patienten einblenden"
-                  Foreground="{StaticResource SemiTransparentWhiteBrush}"
+                  Foreground="Black"
                   IsChecked="{Binding ShowDeceasedPatients,
                                       Mode=TwoWay,
                                       UpdateSourceTrigger=PropertyChanged}" />
@@ -80,7 +80,7 @@
 
 			<TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Text="Kein Patient mit diesem Namen Vorhanden" />
+                       Text="Kein Patient (mit diesem Namen) Vorhanden" />
 
 		</Border>
 		<ListBox Grid.Row="3"

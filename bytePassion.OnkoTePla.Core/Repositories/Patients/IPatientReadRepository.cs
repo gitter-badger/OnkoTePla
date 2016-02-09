@@ -1,12 +1,12 @@
-﻿using bytePassion.Lib.Types.Repository;
-using bytePassion.OnkoTePla.Contracts.Patients;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using bytePassion.Lib.Types.Repository;
+using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.Patients
 {
-    public interface IPatientReadRepository : IPersistable
+	public interface IPatientReadRepository : IPersistable
 	{
 		event Action<Patient> PatientAdded;
 		event Action<Patient> PatientModified;

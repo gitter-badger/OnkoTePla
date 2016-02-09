@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using bytePassion.Lib.Communication.State;
+using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
@@ -15,7 +16,9 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage.Helper;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 
@@ -69,6 +72,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 
 			// ViewModels
+			var patientNameGenerator = new PatientNameGenerator();
+			var selectedPatientVariable = new SharedState<Patient>(null);
+			var patientSelectorViewModel = new PatientSelectorViewModel(patientRepository, selectedPatientVariable);
 
             var overviewPageViewModel          = new OverviewPageViewModel();
             var connectionsPageViewModel       = new ConnectionsPageViewModel(dataCenter, connectionService);
@@ -77,7 +83,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             var infrastructurePageViewModel    = new InfrastructurePageViewModel(dataCenter, selectedPageVariable);
 			var hoursOfOpeningPageViewModel    = new HoursOfOpeningPageViewModel(dataCenter, selectedPageVariable);
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter);
-			var patientsPageViewModel          = new PatientsPageViewModel();
+			var patientsPageViewModel          = new PatientsPageViewModel(patientSelectorViewModel, patientRepository, selectedPatientVariable, patientNameGenerator);
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel();
 
