@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
@@ -17,6 +18,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
+using bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage.Helper;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -27,6 +29,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
     {
 		private readonly IDataCenter dataCenter;
 		private readonly ISharedStateReadOnly<MainPage> selectedPageVariable;
+		private readonly AppointmentGenerator appointmentGenerator;
 
 		#region property backing fields
 
@@ -47,20 +50,23 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		#endregion
 
 		public InfrastructurePageViewModel(IDataCenter dataCenter,
-										  ISharedStateReadOnly<MainPage> selectedPageVariable)
+										   ISharedStateReadOnly<MainPage> selectedPageVariable,
+										   AppointmentGenerator appointmentGenerator)
 		{
 			this.dataCenter = dataCenter;
 			this.selectedPageVariable = selectedPageVariable;
+			this.appointmentGenerator = appointmentGenerator;
 
-			AddMedicalPractice         = new Command(DoAddMedicalPractice);
-			SaveMedicalPracticeChanges = new Command(DoSaveMedicalPracticeChanges);
-			DeleteMedicalPractice      = new Command(DoDeleteMedicalPractice);
-			AddRoom                    = new Command(DoAddRoom);
-			SaveRoomChanges            = new Command(DoSaveRoomChanges);
-			DeleteRoom                 = new Command(DoDeleteRoom);
-			AddTherapyPlace            = new Command(DoAddTherapyPlace);
-			SaveTherapyPlaceChanges    = new Command(DoSaveTherapyPlaceChanges);
-			DeleteTherapyPlace         = new Command(DoDeleteTherapyPlace);
+			AddMedicalPractice           = new Command(DoAddMedicalPractice);
+			SaveMedicalPracticeChanges   = new Command(DoSaveMedicalPracticeChanges);
+			DeleteMedicalPractice        = new Command(DoDeleteMedicalPractice);
+			AddRoom                      = new Command(DoAddRoom);
+			SaveRoomChanges              = new Command(DoSaveRoomChanges);
+			DeleteRoom                   = new Command(DoDeleteRoom);
+			AddTherapyPlace              = new Command(DoAddTherapyPlace);
+			SaveTherapyPlaceChanges      = new Command(DoSaveTherapyPlaceChanges);
+			DeleteTherapyPlace           = new Command(DoDeleteTherapyPlace);
+			GenerateAppointmentsForToday = new Command(DoGenerateAppointments);
 
 			MedicalPractices = dataCenter.GetAllMedicalPractices()
 										 .Select(practice => new MedPracticeDisplayData(practice.Name, practice.Id))
@@ -85,7 +91,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 														.ToObservableCollection();
 
 			selectedPageVariable.StateChanged += OnSelectedPageStateChanged;
-		}
+		}		
 
 		private MedicalPractice SelectedMedicalPracticeObject { get; set; }
 		private Room            SelectedRoomObject            { get; set; }
@@ -158,6 +164,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		#endregion
 
 		#region command executing methods
+
+		private void DoGenerateAppointments ()
+		{
+			appointmentGenerator.NewAppointments(SelectedMedicalPracticeObject.Id, TimeTools.Today());
+			MessageBox.Show("appointment-generation finished");
+		}
 
 		private void DoAddMedicalPractice ()
 		{
@@ -309,9 +321,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		#region commands
 
-		public ICommand AddMedicalPractice         { get; }
-		public ICommand SaveMedicalPracticeChanges { get; }
-		public ICommand DeleteMedicalPractice      { get; }
+		public ICommand AddMedicalPractice           { get; }
+		public ICommand SaveMedicalPracticeChanges   { get; }
+		public ICommand DeleteMedicalPractice        { get; }
+		public ICommand GenerateAppointmentsForToday { get; }
 
 		public ICommand AddRoom         { get; }
 		public ICommand SaveRoomChanges { get; }

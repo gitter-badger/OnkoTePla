@@ -46,9 +46,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 				new ColorDisplayData(Colors.Blue),
 				new ColorDisplayData(Colors.Fuchsia)
 			};
-
 			
-
 			AvailableTherapyPlaceTypes = new ObservableCollection<TherapyPlaceTypeDisplayData>
 			{
 				new TherapyPlaceTypeDisplayData("none" , ImageLoader.LoadImage(new Uri(iconBasePath + "none.png" )), Guid.NewGuid()),
@@ -79,15 +77,16 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 	    public ObservableCollection<RoomDisplayData>         Rooms            { get; }
 	    public ObservableCollection<TherapyPlaceDisplayData> TherapyPlaces    { get; }
 
-	    public ICommand AddMedicalPractice         => null;
-		public ICommand SaveMedicalPracticeChanges => null;
-		public ICommand DeleteMedicalPractice      => null;
-		public ICommand AddRoom                    => null;
-		public ICommand SaveRoomChanges            => null;
-		public ICommand DeleteRoom                 => null;
-		public ICommand AddTherapyPlace            => null;
-		public ICommand SaveTherapyPlaceChanges    => null;
-		public ICommand DeleteTherapyPlace         => null;
+	    public ICommand AddMedicalPractice           => null;
+		public ICommand SaveMedicalPracticeChanges   => null;
+		public ICommand DeleteMedicalPractice        => null;
+		public ICommand GenerateAppointmentsForToday => null;
+		public ICommand AddRoom                      => null;
+		public ICommand SaveRoomChanges              => null;
+		public ICommand DeleteRoom                   => null;
+		public ICommand AddTherapyPlace              => null;
+		public ICommand SaveTherapyPlaceChanges      => null;
+		public ICommand DeleteTherapyPlace           => null;
 		
 		public MedPracticeDisplayData  SelectedMedicalPractice { get; set; }
 	    public RoomDisplayData         SelectedRoom            { get; set; }

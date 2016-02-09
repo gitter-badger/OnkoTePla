@@ -328,8 +328,8 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="50"/>
 				<RowDefinition Height="35"/>
-				<RowDefinition Height="35"/>
 				<RowDefinition Height="15"/>
+				<RowDefinition Height="35"/>
 				<RowDefinition Height="35"/>
 				<RowDefinition Height="35"/>
 				<RowDefinition Height="Auto"/>
@@ -360,7 +360,15 @@
 					 Text="{Binding PracticeName, 
 									Mode=TwoWay, 
 									UpdateSourceTrigger=PropertyChanged}"/>
-					
+
+
+			<Button Grid.Row="3"
+					Grid.Column="1"										
+					HorizontalAlignment="Stretch"
+					Content="Generate Appointments for Today"
+					Margin="5"
+					Command="{Binding GenerateAppointmentsForToday}"/>
+
 			<Button Grid.Row="4"
 					Grid.Column="1"										
 					HorizontalAlignment="Stretch"

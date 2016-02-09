@@ -108,7 +108,8 @@
     <Compile Include="ViewModels\PatientSelector\IPatientSelectorViewModel.cs" />
     <Compile Include="ViewModels\PatientSelector\PatientSelectorViewModel.cs" />
     <Compile Include="ViewModels\PatientSelector\PatientSelectorViewModelSampleData.cs" />
-    <Compile Include="ViewModels\PatientsPage\Helper\PatientNameGenerator.cs" />
+    <Compile Include="SampleDataGenerators\AppointmentGenerator.cs" />
+    <Compile Include="SampleDataGenerators\PatientNameGenerator.cs" />
     <Compile Include="ViewModels\PatientsPage\IPatientsPageViewModel.cs" />
     <Compile Include="ViewModels\PatientsPage\PatientsPageViewModel.cs" />
     <Compile Include="ViewModels\PatientsPage\PatientsPageViewModelSampleData.cs" />
@@ -241,6 +242,7 @@
   <ItemGroup>
     <Folder Include="Behaviors\" />
     <Folder Include="Computations\" />
+    <Folder Include="ViewModels\PatientsPage\Helper\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bytePassion.Lib\bytePassion.Lib.csproj">

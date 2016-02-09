@@ -8,6 +8,7 @@ using bytePassion.OnkoTePla.Core.Repositories.XMLDataStores;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
+using bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
@@ -18,7 +19,6 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage;
-using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage.Helper;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 
@@ -71,8 +71,14 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			var selectedPageVariable = new SharedState<MainPage>(MainPage.Overview);
 
 
-			// ViewModels
+			// sampleData-generators
+
 			var patientNameGenerator = new PatientNameGenerator();
+			var appointmentGenerator = new AppointmentGenerator(configRepository, patientRepository, eventStore);
+
+
+			// ViewModels
+
 			var selectedPatientVariable = new SharedState<Patient>(null);
 			var patientSelectorViewModel = new PatientSelectorViewModel(patientRepository, selectedPatientVariable);
 
@@ -80,7 +86,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             var connectionsPageViewModel       = new ConnectionsPageViewModel(dataCenter, connectionService);
             var userPageViewModel              = new UserPageViewModel(dataCenter, selectedPageVariable);
             var licencePageViewModel           = new LicencePageViewModel();
-            var infrastructurePageViewModel    = new InfrastructurePageViewModel(dataCenter, selectedPageVariable);
+            var infrastructurePageViewModel    = new InfrastructurePageViewModel(dataCenter, selectedPageVariable, appointmentGenerator);
 			var hoursOfOpeningPageViewModel    = new HoursOfOpeningPageViewModel(dataCenter, selectedPageVariable);
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter);
 			var patientsPageViewModel          = new PatientsPageViewModel(patientSelectorViewModel, patientRepository, selectedPatientVariable, patientNameGenerator);

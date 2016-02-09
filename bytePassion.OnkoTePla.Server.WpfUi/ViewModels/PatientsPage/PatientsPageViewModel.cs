@@ -8,8 +8,8 @@ using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientSelector;
-using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage.Helper;
 
 #pragma warning disable 0067
 
@@ -19,7 +19,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage
 	{
 		private readonly IPatientWriteRepository patientWriteRepository;
 		private readonly ISharedStateReadOnly<Patient> selectedPatientVariable;
-		private readonly PatientNameGenerator patientNameGenerator;
+		private readonly PatientNameGenerator patientNameGenerator;		
 
 		private bool isPatientSelected;
 		private bool isPatientAlive;
@@ -35,15 +35,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage
 		{
 			this.patientWriteRepository = patientWriteRepository;
 			this.selectedPatientVariable = selectedPatientVariable;
-			this.patientNameGenerator = patientNameGenerator;
+			this.patientNameGenerator = patientNameGenerator;			
 			PatientSelectorViewModel = patientSelectorViewModel;
 			
 			selectedPatientVariable.StateChanged += OnSelectedPatientChanged;
 			OnSelectedPatientChanged(selectedPatientVariable.Value);
 
-			Generate1000RandomPatients = new Command(DoGeneratePatients);
+			Generate1000RandomPatients = new Command(DoGeneratePatients);			
 		}
-
+		
 		private void DoGeneratePatients()
 		{
 			for (int i = 0; i < 1000; i++)
@@ -55,7 +55,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage
 												  newPatient.ExternalId);
 			}
 
-			MessageBox.Show("1000 Patents ware generated");
+			MessageBox.Show("1000 Patents were generated");
 		}
 
 		private void OnSelectedPatientChanged(Patient patient)
@@ -82,7 +82,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage
 
 		public IPatientSelectorViewModel PatientSelectorViewModel { get; }
 
-		public ICommand Generate1000RandomPatients { get; }
+		public ICommand Generate1000RandomPatients { get; }		
 
 		public bool IsPatientSelected
 		{

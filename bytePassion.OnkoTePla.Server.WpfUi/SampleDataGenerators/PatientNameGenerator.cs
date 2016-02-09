@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
-namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage.Helper
+namespace bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators
 {
 	internal class PatientNameGenerator
 	{
