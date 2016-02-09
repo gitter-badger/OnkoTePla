@@ -1,10 +1,9 @@
 ﻿using System.Windows;
 using bytePassion.Lib.Communication.State;
-using bytePassion.OnkoTePla.Client.DataAndService.EventBus;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Core.Repositories.StreamManagement;
+using bytePassion.OnkoTePla.Core.Repositories.XMLDataStores;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
@@ -37,33 +36,29 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 			// Patient-Repository
 
-			var patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
+			var patientPersistenceService = new XmlPatientDataStore(GlobalConstants.PatientPersistenceFile);
 			var patientRepository = new PatientRepository(patientPersistenceService);
 			patientRepository.LoadRepository();
 
 
 			// Config-Repository
 
-			var configPersistenceService = new JsonConfigurationDataStore(GlobalConstants.ConfigJsonPersistenceFile);
+			var configPersistenceService = new XmlConfigurationDataStore(GlobalConstants.ConfigPersistenceFile);
 			var configRepository = new ConfigurationRepository(configPersistenceService);
 			configRepository.LoadRepository();
 
-
-			var eventBus = new ClientEventBus();
-			var persistenceService = new JsonEventStreamDataStore("");
-			var streamPersistenceService = new StreamPersistenceService(configRepository, "");
-			var streamManager = new StreamManagementService(streamPersistenceService);
-			var eventStore = new EventStore(persistenceService, streamManager, configRepository);
+			
+			var persistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
+			//var streamPersistenceService = new StreamPersistenceService(configRepository, "");
+			//var streamManager = new StreamManagementService(streamPersistenceService);
+			var eventStore = new EventStore(persistenceService, /*streamManager,*/ configRepository);
 
 			// DataAndService
 
 			var dataCenterBuilder = new DataCenterBuilder(patientRepository, configRepository);
-			var dataCenter = dataCenterBuilder.Build();
-		
+			var dataCenter = dataCenterBuilder.Build();					
 
-			//var readModelRespository = new ClientReadModelRepository();
-
-	        var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenter); //r, readModelRespository);
+	        var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenter, eventStore); 
 			var connectionService = connectionServiceBuilder.Build();
 
 
