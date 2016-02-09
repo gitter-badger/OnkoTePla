@@ -1,18 +1,19 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Core.Domain.Events;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
-using System;
-using System.Collections.Generic;
-using System.Xml;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 {
-    public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
+	public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
 	{
 
 		private static XmlWriterSettings WriterSettings
@@ -152,7 +153,10 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 		public IEnumerable<EventStream<AggregateIdentifier>> Load ()
 		{
 
-			IList<EventStream<AggregateIdentifier>> eventStreams = new List<EventStream<AggregateIdentifier>>();			
+			IList<EventStream<AggregateIdentifier>> eventStreams = new List<EventStream<AggregateIdentifier>>();
+
+			if (!File.Exists(filename))
+				return eventStreams;
 
 			var reader = XmlReader.Create(filename);
 

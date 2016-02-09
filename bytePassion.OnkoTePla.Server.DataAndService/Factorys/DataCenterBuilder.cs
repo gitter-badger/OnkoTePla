@@ -23,9 +23,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 								  patientRepository, patientRepository);
 		}
 
-		public void PersistConfig()
+		public void PersistConfigRepostiory()
 		{
 			configRepository.PersistRepository();
 		}
+
+		public void PersistPatientRepository()
+		{
+			patientRepository.PersistRepository();
+		}			
 	}
 }

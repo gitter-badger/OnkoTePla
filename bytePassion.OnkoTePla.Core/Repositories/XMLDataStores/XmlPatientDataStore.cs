@@ -1,15 +1,16 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using System;
-using System.Collections.Generic;
-using System.Xml;
 
 
 namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 {
 
-    public class XmlPatientDataStore : IPersistenceService<IEnumerable<Patient>>
+	public class XmlPatientDataStore : IPersistenceService<IEnumerable<Patient>>
 	{
 
 		private readonly string filename;
@@ -77,7 +78,10 @@ namespace bytePassion.OnkoTePla.Core.Repositories.XMLDataStores
 
 		public IEnumerable<Patient> Load()
 		{
-			IList<Patient> patients = new List<Patient>();			
+			IList<Patient> patients = new List<Patient>();
+
+			if (!File.Exists(filename))
+				return patients;
 
 			var reader = XmlReader.Create(filename);
 

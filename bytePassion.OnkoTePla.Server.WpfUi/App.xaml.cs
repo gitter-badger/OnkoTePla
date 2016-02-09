@@ -103,7 +103,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             ////////                                                                             //////////
             ///////////////////////////////////////////////////////////////////////////////////////////////
             
-			dataCenterBuilder.PersistConfig();
+			dataCenterBuilder.PersistConfigRepostiory();
+			dataCenterBuilder.PersistPatientRepository();
+			eventStore.PersistRepository();
+
 			connectionServiceBuilder.DisposeConnectionService(connectionService);
         }
     }

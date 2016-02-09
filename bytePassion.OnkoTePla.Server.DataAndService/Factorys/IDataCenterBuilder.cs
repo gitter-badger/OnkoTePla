@@ -6,6 +6,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 	{
 		IDataCenter Build();
 
-		void PersistConfig ();
+		void PersistConfigRepostiory();
+		void PersistPatientRepository();
 	}
 }
