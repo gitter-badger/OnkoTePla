@@ -1,4 +1,5 @@
-﻿using bytePassion.OnkoTePla.Server.DataAndService.Connection;
+﻿using bytePassion.OnkoTePla.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using NetMQ;
 
@@ -7,23 +8,22 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 	public class ConnectionServiceBuilder : IConnectionServiceBuilder
 	{
 		private readonly IDataCenter dataCenter;
-		//private readonly IReadModelRepository readModelRepository;
+		private readonly IEventStore eventStore;
 
-		public ConnectionServiceBuilder(IDataCenter dataCenter) //IReadModelRepository readModelRepository)
+
+		public ConnectionServiceBuilder(IDataCenter dataCenter, IEventStore eventStore)
 		{
 			this.dataCenter = dataCenter;
-			//this.readModelRepository = readModelRepository;
+			this.eventStore = eventStore;			
 		}
 
 		private NetMQContext zmqContext;
 
 		public IConnectionService Build()
-		{
-			
+		{			
 			zmqContext = NetMQContext.Create();
-			//var sessionRepository = new CurrentSessionsInfo();
-
-			return new ConnectionService(zmqContext, dataCenter); //, readModelRepository);
+			
+			return new ConnectionService(zmqContext, dataCenter, eventStore); 
 		}
 		
 		public void DisposeConnectionService(IConnectionService connectionService)

@@ -3,6 +3,7 @@ using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
@@ -37,7 +38,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 		private readonly NetMQContext zmqContext;
 		private readonly IDataCenter dataCenter;
-		//private readonly IReadModelRepository readModelRepository;
+		private readonly IEventStore eventStore;
 
 		private readonly ICurrentSessionsInfo       sessionRepository;		
 		private          IHeartbeatThreadCollection heartbeatThreadCollection;
@@ -46,14 +47,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 				
 		
 		internal ConnectionService (NetMQContext zmqContext, 
-									IDataCenter dataCenter) 
-								    //IReadModelRepository readModelRepository)
+									IDataCenter dataCenter, 
+									IEventStore eventStore) 								   
 		{
 			sessionRepository = new CurrentSessionsInfo();
 
 			this.zmqContext = zmqContext;
 			this.dataCenter = dataCenter;
-			//this.readModelRepository = readModelRepository;						
+			this.eventStore = eventStore;			
 		}
 		
 		public void InitiateCommunication(Address serverAddress)
@@ -61,8 +62,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			heartbeatThreadCollection = new HeartbeatThreadCollection(zmqContext, sessionRepository);
 
 			var responseHandlerFactory = new ResponseHandlerFactory(dataCenter, 
-																	//readModelRepository,
-																	sessionRepository, heartbeatThreadCollection);
+																	eventStore,
+																	sessionRepository, 
+																	heartbeatThreadCollection);
+
 			universalResponseThread = new UniversalResponseThread(zmqContext, serverAddress, responseHandlerFactory);
 			new Thread(universalResponseThread.Run).Start();
 		}				

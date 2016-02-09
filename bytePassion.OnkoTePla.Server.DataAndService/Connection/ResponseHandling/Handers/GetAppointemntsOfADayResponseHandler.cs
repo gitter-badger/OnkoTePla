@@ -1,9 +1,8 @@
-using System.Linq;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
-using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Core.Domain;
-using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ.Sockets;
 
@@ -11,14 +10,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 {
 	internal class GetAppointemntsOfADayResponseHandler : ResponseHandlerBase<GetAppointmentsOfADayRequest>
 	{
-		private readonly IReadModelRepository readModelRepository;
+		private readonly IEventStore eventStore;		
 
 		public GetAppointemntsOfADayResponseHandler(ICurrentSessionsInfo sessionRepository, 
 												    ResponseSocket socket,
-												    IReadModelRepository readModelRepository) 
+												    IEventStore eventStore) 
 			: base(sessionRepository, socket)
 		{
-			this.readModelRepository = readModelRepository;
+			this.eventStore = eventStore;			
 		}
 
 		public override void Handle(GetAppointmentsOfADayRequest request)
@@ -26,16 +25,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 			if (!IsRequestValid(request.SessionId, request.UserId, request.MedicalPracticeId))
 				return;
 
-			var appointmentSetOfADay = readModelRepository.GetAppointmentSetOfADay(new AggregateIdentifier(request.Day,
-																										   request.MedicalPracticeId),
-																				   null);		
+			var eventStream = eventStore.GetEventStreamForADay(new AggregateIdentifier(request.Day, request.MedicalPracticeId));
+			var eventStreamAggregator = new EventStreamAggregator(eventStream, request.AggregateVersionLimit);
+			
 			Socket.SendNetworkMsg(
-				new GetAppointmentsOfADayResponse(request.MedicalPracticeId,
-					appointmentSetOfADay.MedicalPracticeVersion,
-					appointmentSetOfADay.AggregateVersion,
-					appointmentSetOfADay.Appointments
-										.Select(appointment => new AppointmentTransferData(appointment))
-										.ToList())
+				new GetAppointmentsOfADayResponse(eventStream.Id.MedicalPracticeId,
+												  eventStream.Id.PracticeVersion,
+												  eventStreamAggregator.AggregateVersion,
+												  eventStreamAggregator.AppointmentData)
 			);
 		}
 	}
