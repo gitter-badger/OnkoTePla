@@ -5,11 +5,11 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Core.Domain;
 
 
@@ -25,13 +25,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		
          
 		public ClosedDayGridViewModel (AggregateIdentifier identifier,
-									   IDataCenter dataCenter,										
+									   ClientMedicalPracticeData medicalPractice,										
 									   IViewModelCommunication viewModelCommunication,
 									   ISharedStateReadOnly<Size> appointmentGridSizeVariable)
 		{			
 			this.viewModelCommunication = viewModelCommunication;
 		    this.appointmentGridSizeVariable = appointmentGridSizeVariable;
 
+			Identifier = identifier;
 		    IsActive = false;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
@@ -40,15 +41,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			);
 			
 			appointmentGridSizeVariable.StateChanged += OnGridSizeChanged;
-
-			var readModel = dataCenter.GetAppointmentsOfADayReadModel(identifier);
-
-			Identifier = readModel.Identifier; // because now the identifier contains the correct Version
 			
-			readModel.Dispose();
-
 			TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication,
-													  dataCenter, appointmentGridSizeVariable.Value);
+													  medicalPractice, appointmentGridSizeVariable.Value);
 
 			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();
 

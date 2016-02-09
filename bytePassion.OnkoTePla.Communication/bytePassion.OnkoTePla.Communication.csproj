@@ -62,6 +62,8 @@
     <Compile Include="NetworkMessages\RequestsAndResponses\EndConnectionResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetAppointmentsOfADayRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetAppointmentsOfADayResponse.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetPracticeVersionInfoRequest.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetPracticeVersionInfoResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetTherapyPlacesTypeListRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetMedicalPracticeRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetTherapyPlacesTypeListResponse.cs" />

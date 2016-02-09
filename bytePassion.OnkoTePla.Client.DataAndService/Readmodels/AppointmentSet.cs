@@ -4,7 +4,6 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Readmodels
@@ -45,45 +44,24 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Readmodels
 		} 		
 
 		public void AddAppointment(CreateAppointmentData appointmentData, Action<string> errorCallback)
-		{			
-			if (!patientRepository.ArePatientsAvailable())
-			{
-				patientRepository.RequestPatients(
-					() =>
-					{
-						AddAppointmentFinal(patientRepository.GetPatient(appointmentData.PatientId),
-																		 medicalPractice.GetTherapyPlaceById(appointmentData.TherapyPlaceId),
-																		 appointmentData,
-																		 errorCallback);
-					},
-					errorCallback
-				);
-			}
-			else
-			{
-				AddAppointmentFinal(patientRepository.GetPatient(appointmentData.PatientId),
-									medicalPractice.GetTherapyPlaceById(appointmentData.TherapyPlaceId),
-									appointmentData,
-									errorCallback);
-			}
+		{	
+			patientRepository.RequestPatient(
+				patient =>
+				{					
+					var newAppointment = new Appointment(patient, 
+														 appointmentData.Description, 
+														 medicalPractice.GetTherapyPlaceById(appointmentData.TherapyPlaceId),
+														 appointmentData.Day, 
+														 appointmentData.StartTime, 
+														 appointmentData.EndTime,
+														 appointmentData.AppointmentId);
 
-		}		
-		
-		private void AddAppointmentFinal(Patient patient, TherapyPlace therapyPlace, 
-										 CreateAppointmentData appointmentData, Action<string> errorCallback)
-		{ 
-			if (patient == null)
-			{
-				errorCallback("loading patient failed");
-				return;
-			}
-
-			var newAppointment = new Appointment(patient, appointmentData.Description, therapyPlace,
-												 appointmentData.Day, appointmentData.StartTime, appointmentData.EndTime,
-												 appointmentData.AppointmentId);
-
-			ObservableAppointments.AddAppointment(newAppointment);
-		}
+					ObservableAppointments.AddAppointment(newAppointment);
+				},
+				appointmentData.PatientId,
+				errorCallback	
+			);								
+		}						
 
 		public void DeleteAppointment(Guid removedAppointmentId)
 		{

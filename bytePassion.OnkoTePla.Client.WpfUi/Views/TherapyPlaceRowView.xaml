@@ -59,14 +59,13 @@
 				Margin="0,0">
 
             <i:Interaction.Behaviors>
-                <behaviors:AcceptAppointmentDropBehavior Appointments="{Binding AppointmentViewModels, Mode=OneTime}"
-                                                         DataCenter="{Binding DataCenter, Mode=OneTime}"
+                <behaviors:AcceptAppointmentDropBehavior Appointments="{Binding AppointmentViewModels, Mode=OneTime}"                                                         
                                                          TherapyPlaceRowIdentifier="{Binding Identifier, Mode=OneTime}"
                                                          AppointmentModifications="{Binding AppointmentModifications}"
 														 AdornerControl="{Binding AdornerControl}"
 														 GridWidth="{Binding GridWidth}"
-														 CurrentSelectedDate="{Binding CurrentSelectedDate}"
-														 CurrentMedicalPracticeId="{Binding CurrentSelectedMedicalPracticeId}"/>
+														 TimeSlotBegin="{Binding TimeSlotBegin}"
+														 TimeSlotEnd="{Binding TimeSlotEnd}"/>
             </i:Interaction.Behaviors>
 			
 			<Border Margin="0,3"

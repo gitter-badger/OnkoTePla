@@ -5,7 +5,6 @@ using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Contracts.Config;
-using NLog;
 
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
@@ -14,17 +13,15 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 	{
 	    private readonly IConnectionService connectionService;
 	    private readonly IClientWorkflow clientWorkflow;
-		private readonly ILogger logger;
+		
 
 		private ApplicationState currentApplicationState;		    
 
-		internal Session(IConnectionService connectionService, 
-						 IClientWorkflow clientWorkflow,
-						 ILogger logger)
+		public Session(IConnectionService connectionService, 
+					   IClientWorkflow clientWorkflow)
 	    {
 		    this.connectionService = connectionService;
-		    this.clientWorkflow = clientWorkflow;
-			this.logger = logger;
+		    this.clientWorkflow = clientWorkflow;			
 
 			CurrentApplicationState = clientWorkflow.CurrentState;
 
@@ -49,7 +46,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 				if (currentApplicationState != value)
 				{
 					currentApplicationState = value;
-					logger.Debug($"CurrentApplicationState changed to: {value}");
+					//logger.Debug($"CurrentApplicationState changed to: {value}");
 					ApplicationStateChanged?.Invoke(CurrentApplicationState);
 				}
 			}		

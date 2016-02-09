@@ -27,7 +27,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 
 			var userList = dataCenter.GetAllUsers()
 									 .Where(user => !user.IsHidden)
-									 .Select(user => new ClientUserData(user.ToString(), user.Id))
+									 .Where(user => user.ListOfAccessableMedicalPractices.Count > 0)
+									 .Select(user => new ClientUserData(user.ToString(), user.Id, user.ListOfAccessableMedicalPractices))
 									 .ToList();
 			
 			Socket.SendNetworkMsg(new GetUserListResponse(userList));

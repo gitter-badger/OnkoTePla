@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.PatientRepository
 {
 	public interface IClientPatientRepository
-	{				
-		Patient GetPatient(Guid id);
-		bool ArePatientsAvailable();
-		void RequestPatients(Action patientsAvailable, Action<string> errorCallback);
+	{						
+		void RequestPatient(Action<Patient> patientAvailableCallback, Guid patientId, Action<string> errorCallback);
+		void RequestAllPatientList(Action<IReadOnlyList<Patient>> patientListAvailableCallback, Action<string> errorCallback);
 	}
 }

@@ -1,6 +1,6 @@
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
-	internal enum ConnectionEvent
+	public enum ConnectionEvent
 	{
 		StartedTryConnect,
 		ConAttemptUnsuccessful,

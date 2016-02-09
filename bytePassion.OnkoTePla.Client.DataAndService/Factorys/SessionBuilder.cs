@@ -25,11 +25,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 			var sessionLogger    = LogManager.GetLogger("sessionLogger");
 			var connectionLogger = LogManager.GetLogger("connectionLogger");
 
-			
-			connectionService = new ConnectionService(connectionLogger);
+
+			connectionService = new ConnectionService(); //connectionLogger);
 			var workFlow = new ClientWorkflow();
 
-			Instance = new Session(connectionService, workFlow, sessionLogger);
+			Instance = new Session(connectionService, workFlow);  //, sessionLogger);
 			return Instance;
 		}
 

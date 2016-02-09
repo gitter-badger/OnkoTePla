@@ -2,21 +2,25 @@
 using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
+using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel
 {
 	internal class AppointmentGridViewModelBuilder : IAppointmentGridViewModelBuilder 
-	{
-		private readonly IDataCenter dataCenter;
+	{		
 		private readonly ISession session;
+		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
+		private readonly IClientReadModelRepository readModelRepository;
+		private readonly ICommandBus commandBus;
 		private readonly IViewModelCommunication viewModelCommunication;				
 		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
 		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;		
@@ -24,8 +28,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 		private readonly ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder;
 
-		public AppointmentGridViewModelBuilder(IDataCenter dataCenter, 
-											   ISession session,
+		public AppointmentGridViewModelBuilder(ISession session,
+											   IClientMedicalPracticeRepository medicalPracticeRepository,
+											   IClientReadModelRepository readModelRepository,
+											   ICommandBus commandBus,
 											   IViewModelCommunication viewModelCommunication, 											   
 											   ISharedStateReadOnly<Size> gridSizeVariable, 
 											   ISharedStateReadOnly<Guid?> roomFilterVariable, 											  
@@ -33,44 +39,51 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 											   IAppointmentViewModelBuilder appointmentViewModelBuilder, 
 											   ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 											   
-		{
-			this.dataCenter = dataCenter;
+		{			
 			this.session = session;
+			this.medicalPracticeRepository = medicalPracticeRepository;
+			this.readModelRepository = readModelRepository;
+			this.commandBus = commandBus;
 			this.viewModelCommunication = viewModelCommunication;						
 			this.gridSizeVariable = gridSizeVariable;
 			this.roomFilterVariable = roomFilterVariable;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.therapyPlaceRowViewModelBuilder = therapyPlaceRowViewModelBuilder;
-		}
+		}		
 
-		public IAppointmentGridViewModel Build(AggregateIdentifier identifier)
+		public void RequestBuild(Action<IAppointmentGridViewModel> viewModelAvailableCallback, AggregateIdentifier identifier, Action<string> errorCallback)
 		{
-			var medicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(identifier.MedicalPracticeId, identifier.Date);
-
-			IAppointmentGridViewModel gridViewModel;
-
-			if (medicalPractice.HoursOfOpening.IsOpen(identifier.Date))
-			{
-				gridViewModel = new ViewModels.AppointmentGrid.AppointmentGridViewModel(identifier,
-																						dataCenter,
-																						session,																						
-																						viewModelCommunication,
-																						gridSizeVariable,
-																						roomFilterVariable,																						
-																						appointmentModificationsVariable,																						
-																						appointmentViewModelBuilder,
-																						therapyPlaceRowViewModelBuilder);
-			}
-			else
-			{
-				gridViewModel = new ClosedDayGridViewModel(identifier,
-														   dataCenter,
-														   viewModelCommunication,
-														   gridSizeVariable);
-			}
-            				
-			return gridViewModel;
+			medicalPracticeRepository.RequestMedicalPractice(
+				medicalPractice =>
+				{
+					if (medicalPractice.HoursOfOpening.IsOpen(identifier.Date))
+					{
+						viewModelAvailableCallback(new ViewModels.AppointmentGrid.AppointmentGridViewModel(identifier,
+																										   medicalPractice,
+																										   session,
+																										   commandBus,
+																										   readModelRepository,
+																										   viewModelCommunication,
+																										   gridSizeVariable,
+																										   roomFilterVariable,
+																										   appointmentModificationsVariable,
+																										   appointmentViewModelBuilder,
+																										   therapyPlaceRowViewModelBuilder,
+																										   errorCallback));
+					}
+					else
+					{
+						viewModelAvailableCallback(new ClosedDayGridViewModel(identifier,
+																			  medicalPractice,
+																			  viewModelCommunication,
+																			  gridSizeVariable));
+					}
+				},
+				identifier.MedicalPracticeId,
+				identifier.Date,
+				errorCallback
+			);
 		}
 	}
 }

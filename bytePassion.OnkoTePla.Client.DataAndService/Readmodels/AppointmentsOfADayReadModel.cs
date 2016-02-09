@@ -28,16 +28,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Readmodels
 											ClientMedicalPracticeData medicalPractice, 								            
 											IEnumerable<AppointmentTransferData> initialAppointmentData,
 											AggregateIdentifier identifier,
+											uint initialAggregateVersion,
 											Action<string> errorCallback)
 			: base(eventBus)
 		{
-
-			if (medicalPractice == null)
-			{
-				errorCallback("loading medical practice failed");
-				return;
-			}
-				
+			
+			AggregateVersion = initialAggregateVersion;
 			Identifier = identifier;
 			appointmentSet = new AppointmentSet(patientsRepository, initialAppointmentData, 
 												medicalPractice, errorCallback);			

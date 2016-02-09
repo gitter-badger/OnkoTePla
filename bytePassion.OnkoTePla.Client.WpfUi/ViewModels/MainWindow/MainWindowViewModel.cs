@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
@@ -16,9 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 	internal class MainWindowViewModel : ViewModel, 
                                          IMainWindowViewModel
     {
-        private readonly IMainViewModelBuilder  mainViewModelBuilder;
-        private readonly ILoginViewModelBuilder loginViewModelBuilder;
-	    private readonly ISession               session;
+        private readonly IMainViewModelBuilder  mainViewModelBuilder;      
 
 	    private IMainViewModel mainViewModel;        
         private ILoginViewModel loginViewModel;
@@ -34,9 +33,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
                                    IActionBarViewModel actionBarViewModel,
 								   ISession session)
         {
-            this.mainViewModelBuilder = mainViewModelBuilder;
-            this.loginViewModelBuilder = loginViewModelBuilder;
-	        this.session = session;
+            this.mainViewModelBuilder = mainViewModelBuilder;           
 
 	        NotificationServiceContainerViewModel = notificationServiceContainerViewModel;
             ActionBarViewModel = actionBarViewModel;
@@ -55,7 +52,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 			{
 				case ApplicationState.LoggedIn:
 				{					
-					MainViewModel = mainViewModelBuilder.Build();
+					MainViewModel = mainViewModelBuilder.Build(
+						errorMsg =>
+						{
+							Application.Current.Dispatcher.Invoke(() =>
+							{
+								MessageBox.Show("fatal error 2222");
+							});
+						}							
+					);
 
 					IsMainViewVisible = true;
 					IsLoginViewVisible = false;

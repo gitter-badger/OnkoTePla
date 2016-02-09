@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Data;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 
@@ -20,17 +19,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
         private Patient selectedPatient;
         private bool showDeceasedPatients;
 
-        public PatientSelectorViewModel(IDataCenter dataCenter, ISharedState<Patient> selectedPatientSharedVariable)
+        public PatientSelectorViewModel(IClientPatientRepository patientRepository, 
+									    ISharedState<Patient> selectedPatientSharedVariable,
+										Action<string> errorCallback)
         {
 	        this.selectedPatientSharedVariable = selectedPatientSharedVariable;
 
-            IReadOnlyList<Patient> allPatients = dataCenter.GetAllPatients().ToList();
-
-            Patients = new CollectionViewSource();
-            Patients.Filter += Filter;
-            Patients.Source = allPatients;
-
-            SearchFilter = "";
+			Patients = new CollectionViewSource();
+			Patients.Filter += Filter;
+			SearchFilter = "";
+			
+			patientRepository.RequestAllPatientList(
+				patientList => Patients.Source = patientList,
+				errorCallback	
+			);                       			            
         }
 
         public bool ShowDeceasedPatients

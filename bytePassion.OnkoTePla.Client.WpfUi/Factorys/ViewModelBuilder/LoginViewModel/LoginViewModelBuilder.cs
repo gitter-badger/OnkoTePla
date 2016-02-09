@@ -1,5 +1,4 @@
-﻿using System;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+﻿using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
 
@@ -9,23 +8,23 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginView
 	internal class LoginViewModelBuilder : ILoginViewModelBuilder
     {
 	    private readonly ISession session;
-		private readonly IDataCenter dataCenter;
+		private readonly ILocalSettingsRepository localSettingsRepository;		
 
-		public LoginViewModelBuilder(ISession session, 
-									 IDataCenter dataCenter)
+		public LoginViewModelBuilder(ISession session,
+									 ILocalSettingsRepository localSettingsRepository)
 		{
 			this.session = session;
-			this.dataCenter = dataCenter;
+			this.localSettingsRepository = localSettingsRepository;			
 		}
 		
 		public ILoginViewModel Build()
         {
-            return new ViewModels.LoginView.LoginViewModel(session, dataCenter);
+            return new ViewModels.LoginView.LoginViewModel(session, localSettingsRepository);
         }
 
         public void DisposeViewModel(ILoginViewModel viewModelToDispose)
         {
-            throw new NotImplementedException();
+            viewModelToDispose.Dispose();
         }
     }
 

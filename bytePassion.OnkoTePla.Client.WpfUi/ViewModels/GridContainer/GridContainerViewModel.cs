@@ -1,4 +1,9 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -7,20 +12,16 @@ using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 {
-    internal class GridContainerViewModel : ViewModel, 
+	internal class GridContainerViewModel : ViewModel, 
                                             IGridContainerViewModel
 	{
-		private readonly IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder;		
-         
+		private readonly IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder;
+		private readonly Action<string> errorCallback;
+
 		private readonly ISharedStateReadOnly<Date> selectedDateVariable;
 		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
 	    private readonly ISharedState<Size> appointmentGridSizeVariable;
@@ -37,7 +38,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 									  ISharedState<Size> appointmentGridSizeVariable,									  
                                       IEnumerable<AggregateIdentifier> initialGridViewModelsToCache,									  
 									  int maximumCashedGrids, 
-									  IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder /* TODO */)
+									  IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder /* TODO */,
+									  Action<string> errorCallback)
 		{
 			// TODO caching implementieren
 
@@ -47,6 +49,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 		    this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 		    this.appointmentGridSizeVariable = appointmentGridSizeVariable;		    
 			this.appointmentGridViewModelBuilder = appointmentGridViewModelBuilder;
+			this.errorCallback = errorCallback;
 
 			LoadedAppointmentGrids          = new ObservableCollection<IAppointmentGridViewModel>();
 			cachedAppointmentGridViewModels = new Dictionary<AggregateIdentifier, IAppointmentGridViewModel>();
@@ -86,10 +89,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 		{
 			if (!cachedAppointmentGridViewModels.ContainsKey(identifier))
 			{
-				var gridViewModel = appointmentGridViewModelBuilder.Build(identifier);
-
-				cachedAppointmentGridViewModels.Add(identifier, gridViewModel);
-				LoadedAppointmentGrids.Add(gridViewModel);
+				appointmentGridViewModelBuilder.RequestBuild(
+					buildedViewModel =>
+					{
+						cachedAppointmentGridViewModels.Add(identifier, buildedViewModel);
+						LoadedAppointmentGrids.Add(buildedViewModel);
+					},
+					identifier,
+					errorCallback	
+				);								
 			}
 		}
 

@@ -21,6 +21,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages
 
 			switch (type)
 			{
+				case NetworkMessageType.ErrorResponse:                    return ErrorResponse.Parse(msg);	
 				case NetworkMessageType.HeartbeatRequest:                 return HeartbeatRequest.Parse(msg);
 				case NetworkMessageType.HeartbeatResponse:                return HeartbeatResponse.Parse(msg);
 				case NetworkMessageType.BeginConnectionRequest:           return BeginConnectionRequest.Parse(msg);
@@ -34,8 +35,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages
 				case NetworkMessageType.LoginRequest:                     return LoginRequest.Parse(msg);
 				case NetworkMessageType.LoginResponse:                    return LoginResponse.Parse(msg);
 				case NetworkMessageType.LogoutRequest:                    return LogoutRequest.Parse(msg);
-				case NetworkMessageType.LogoutResponse:                   return LogoutResponse.Parse(msg);
-				case NetworkMessageType.ErrorResponse:                    return ErrorResponse.Parse(msg);	
+				case NetworkMessageType.LogoutResponse:                   return LogoutResponse.Parse(msg);				
 				case NetworkMessageType.GetAccessablePracticesRequest:    return GetAccessablePracticesRequest.Parse(msg);
 				case NetworkMessageType.GetAccessablePracticesResponse:   return GetAccessablePracticesResponse.Parse(msg);
 				case NetworkMessageType.GetAppointmentsOfADayRequest:     return GetAppointmentsOfADayRequest.Parse(msg);
@@ -46,6 +46,8 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages
 				case NetworkMessageType.GetMedicalPracticeResponse:       return GetMedicalPracticeResponse.Parse(msg);
 				case NetworkMessageType.GetTherapyPlacesTypeListRequest:  return GetTherapyPlacesTypeListRequest.Parse(msg);
 				case NetworkMessageType.GetTherapyPlacesTypeListResponse: return GetTherapyPlacesTypeListResponse.Parse(msg);
+				case NetworkMessageType.GetPracticeVersionInfoRequest:    return GetPracticeVersionInfoRequest.Parse(msg);
+				case NetworkMessageType.GetPracticeVersionInfoResponse:   return GetPracticeVersionInfoResponse.Parse(msg);
 
  				case NetworkMessageType.EventBusNotification:             return EventBusNotification.Parse(msg);											
 				

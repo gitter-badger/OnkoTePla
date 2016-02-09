@@ -1,6 +1,5 @@
 ﻿using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
-using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ.Sockets;
 
@@ -8,11 +7,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 {
 	internal class EndConnectionResponseHandler : ResponseHandlerBase<EndConnectionRequest>
 	{
-		private readonly HeartbeatThreadCollection heartbeatThreadCollection;
+		private readonly IHeartbeatThreadCollection heartbeatThreadCollection;
 
 		public EndConnectionResponseHandler(ICurrentSessionsInfo sessionRepository, 
 										    ResponseSocket socket,
-										    HeartbeatThreadCollection heartbeatThreadCollection) 
+										    IHeartbeatThreadCollection heartbeatThreadCollection) 
 			: base(sessionRepository, socket)
 		{
 			this.heartbeatThreadCollection = heartbeatThreadCollection;

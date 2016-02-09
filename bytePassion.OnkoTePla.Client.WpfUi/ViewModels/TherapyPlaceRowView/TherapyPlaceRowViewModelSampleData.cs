@@ -2,9 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
-using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
@@ -41,32 +39,23 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 
 		public string TherapyPlaceName { get; }
 		public Color  RoomColor        { get; }
-
-		public Time TimeSlotBegin { get; }
-		public Time TimeSlotEnd   { get; }
-
-		public double GridWidth { get; }
-		public bool IsVisible   { get; }
+		public Time   TimeSlotBegin    { get; }
+		public Time   TimeSlotEnd      { get; }
+		public double GridWidth        { get; }
+		public bool   IsVisible        { get; }
 
 
-		public AppointmentModifications AppointmentModifications         { get; } = null;
-		public AdornerControl           AdornerControl                   { get; } = null;
-		public Date                     CurrentSelectedDate              { get; } = Date.Dummy;
-		public Guid                     CurrentSelectedMedicalPracticeId { get; } = Guid.Empty;
+		public AppointmentModifications AppointmentModifications => null;
+		public AdornerControl           AdornerControl           => null;		
 		
-
 		public TherapyPlaceRowIdentifier Identifier { get; }
 
 		public void Process (NewSizeAvailable message) {}
 		public void Process (AddAppointmentToTherapyPlaceRow message) {}
 		public void Process (RemoveAppointmentFromTherapyPlaceRow message) {}
-		public void Process (SetVisibility message) { }
-
-		public IViewModelCommunication ViewModelCommunication { get; } = null;
-		public IDataCenter DataCenter { get; } = null;
+		public void Process (SetVisibility message) { }		
 
 		public void Dispose () { }
-
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}
 }

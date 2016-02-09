@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
@@ -19,28 +20,31 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 	{
 		private readonly RoomSelectorData allRoomFilter = new RoomSelectorData("Alle Räume", null, Colors.White);
 
-		private readonly IDataCenter dataCenter;		
 
+		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
 		private readonly ISharedState<Guid?>         roomFilterVariable;
 		private readonly ISharedStateReadOnly<Date>  selectedDateVariable;
 		private readonly ISharedStateReadOnly<Guid>  displayedMedicalPracticeVariable;
-        
+		private readonly Action<string> errorCallback;
+
 		private IList<Room> currentSelectableRoomFilters;
 		private RoomSelectorData selectedRoomFilter;
 		private ObservableCollection<RoomSelectorData> availableRoomFilters;
 
 
-		public RoomFilterViewModel(IDataCenter dataCenter,
+		public RoomFilterViewModel(IClientMedicalPracticeRepository medicalPracticeRepository,
 								   ISharedState<Guid?> roomFilterVariable, 
                                    ISharedStateReadOnly<Date> selectedDateVariable, 
-                                   ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable)
+                                   ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable,
+								   Action<string> errorCallback)
 		{
-			this.dataCenter = dataCenter;
-		    this.roomFilterVariable = roomFilterVariable;
+			this.medicalPracticeRepository = medicalPracticeRepository;
+			this.roomFilterVariable = roomFilterVariable;
 		    this.selectedDateVariable = selectedDateVariable;
 		    this.displayedMedicalPracticeVariable = displayedMedicalPracticeVariable;
+			this.errorCallback = errorCallback;
 
-		    roomFilterVariable.StateChanged += OnRoomFilterVariableChanged;
+			roomFilterVariable.StateChanged += OnRoomFilterVariableChanged;
 			displayedMedicalPracticeVariable.StateChanged += OnDisplayedPracticeVariableStateChanged;						
 			selectedDateVariable.StateChanged += OnSelectedDateVariableChanged;
 
@@ -53,11 +57,21 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 				SelectedRoomFilter = allRoomFilter;
 			else
 			{
-				var room = dataCenter.GetMedicalPracticeByIdAndDate(displayedMedicalPracticeVariable.Value, selectedDateVariable.Value)
-					                 .GetRoomById(guid.Value);
+				medicalPracticeRepository.RequestMedicalPractice(
+					medicalPractice =>
+					{
+						Application.Current.Dispatcher.Invoke(() =>
+						{
+							var room = medicalPractice.GetRoomById(guid.Value);
 
-				selectedRoomFilter = new RoomSelectorData(room.Name, room.Id, room.DisplayedColor);
-				PropertyChanged.Notify(this, nameof(SelectedRoomFilter));
+							selectedRoomFilter = new RoomSelectorData(room.Name, room.Id, room.DisplayedColor);
+							PropertyChanged.Notify(this, nameof(SelectedRoomFilter));
+						});						
+					},
+					displayedMedicalPracticeVariable.Value, 
+					selectedDateVariable.Value,
+					errorCallback
+				);								
 			}
 		}
 
@@ -73,15 +87,24 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 
 		private void SetRoomData (Date date, Guid medicalPracticeId)
 		{
-			var correctMedicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(medicalPracticeId, date);
+			medicalPracticeRepository.RequestMedicalPractice(
+				medicalPractice =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						currentSelectableRoomFilters = medicalPractice.Rooms.ToList();
 
-			currentSelectableRoomFilters = correctMedicalPractice.Rooms.ToList();
+						AvailableRoomFilters = currentSelectableRoomFilters.Select(room => new RoomSelectorData(room.Name, room.Id, room.DisplayedColor))
+																		   .Append(allRoomFilter)
+																		   .ToObservableCollection();
 
-			AvailableRoomFilters = currentSelectableRoomFilters.Select(room => new RoomSelectorData(room.Name, room.Id, room.DisplayedColor))
-															   .Append(allRoomFilter)
-															   .ToObservableCollection();
-
-			SelectedRoomFilter = AvailableRoomFilters.Last();
+						SelectedRoomFilter = AvailableRoomFilters.Last();
+					});
+				},
+				medicalPracticeId,
+				date,
+				errorCallback
+			);					
 		}
 
 

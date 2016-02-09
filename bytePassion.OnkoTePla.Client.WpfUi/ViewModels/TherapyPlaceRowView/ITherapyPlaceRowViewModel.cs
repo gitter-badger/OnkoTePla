@@ -1,4 +1,6 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Media;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
@@ -6,17 +8,12 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
-using System;
-using System.Collections.ObjectModel;
-using System.Windows.Media;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 {
-    internal interface ITherapyPlaceRowViewModel : IViewModel,
-												   IViewModelCollectionItem<TherapyPlaceRowIdentifier>,
-												   IViewModelCommunicationDeliverer,
-												   IDataCenterDeliverer,												
+	internal interface ITherapyPlaceRowViewModel : IViewModel,
+												   IViewModelCollectionItem<TherapyPlaceRowIdentifier>,												   
 												   IViewModelMessageHandler<NewSizeAvailable>,
 												   IViewModelMessageHandler<AddAppointmentToTherapyPlaceRow>,
 												   IViewModelMessageHandler<RemoveAppointmentFromTherapyPlaceRow>,
@@ -32,9 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 
 		double                   GridWidth                        { get; }
 		AppointmentModifications AppointmentModifications         { get; }
-		AdornerControl           AdornerControl                   { get; }
-		Date                     CurrentSelectedDate              { get; }
-		Guid                     CurrentSelectedMedicalPracticeId { get; }
+		AdornerControl           AdornerControl                   { get; }		
 		
 		bool IsVisible { get; }	
 	}

@@ -227,6 +227,10 @@
       <Project>{825b03a5-fd0f-417a-adc5-d3a0aad2c36b}</Project>
       <Name>bytePassion.Lib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\bytePassion.OnkoTePla.Client.DataAndService\bytePassion.OnkoTePla.Client.DataAndService.csproj">
+      <Project>{76aeeb98-2a61-49de-b8d2-a1448b302e8c}</Project>
+      <Name>bytePassion.OnkoTePla.Client.DataAndService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Communication\bytePassion.OnkoTePla.Communication.csproj">
       <Project>{6e3acb7d-b4db-4f87-9e78-e150e94f0897}</Project>
       <Name>bytePassion.OnkoTePla.Communication</Name>

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
@@ -21,46 +19,30 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 	internal class TherapyPlaceRowViewModel : ViewModel,
 											  ITherapyPlaceRowViewModel
 	{
+		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
-		private readonly ISharedState<Date> selectedDateVariable;
-		private readonly ISharedState<Guid> selectedMedicalPracticeIdVariable;
+		
 
 		private double gridWidth;
 		private bool isVisible;
-		private AppointmentModifications appointmentModifications;
-		private Date currentSelectedDate;
-		private Guid currentSelectedMedicalPracticeId;
-
-		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication, 
-									    IDataCenter dataCenter,
+		private AppointmentModifications appointmentModifications;		
+		
+		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication, 									    
 										TherapyPlace therapyPlace, 
 										Color roomDisplayColor,										
 										TherapyPlaceRowIdentifier identifier,
 										AdornerControl adornerControl,
-										ISharedState<AppointmentModifications> appointmentModificationsVariable, 
-										ISharedState<Date> selectedDateVariable, 
-										ISharedState<Guid> selectedMedicalPracticeIdVariable)
+										Time timeSlotBegin,
+										Time timeSlotEnd,
+										ISharedState<AppointmentModifications> appointmentModificationsVariable)
 		{
-			this.appointmentModificationsVariable = appointmentModificationsVariable;
-			this.selectedDateVariable = selectedDateVariable;
-			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
-
-			appointmentModificationsVariable.StateChanged += OnAppointmentModificationsChanged;
-			selectedDateVariable.StateChanged += OnSelectedDateChanged;
-			selectedMedicalPracticeIdVariable.StateChanged += OnSelectedMedicalPracticeIdChanged;
-
-			OnSelectedDateChanged(selectedDateVariable.Value);
-			OnSelectedMedicalPracticeIdChanged(selectedMedicalPracticeIdVariable.Value);
-			OnAppointmentModificationsChanged(appointmentModificationsVariable.Value);
-
-			ViewModelCommunication = viewModelCommunication;
-			DataCenter = dataCenter;
-
-			IsVisible		 = true;
-			RoomColor        = roomDisplayColor;		
-			Identifier       = identifier;			
-			TherapyPlaceName = therapyPlace.Name;
-
+			this.viewModelCommunication = viewModelCommunication;
+			this.appointmentModificationsVariable = appointmentModificationsVariable;						
+			
+			IsVisible		      = true;
+			RoomColor             = roomDisplayColor;		
+			Identifier            = identifier;			
+			TherapyPlaceName      = therapyPlace.Name;
 			AppointmentViewModels = new ObservableCollection<IAppointmentViewModel>();	
 			
 			viewModelCommunication.RegisterViewModelAtCollection<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
@@ -68,24 +50,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 				this	
 			);
 
-			var medicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(identifier.PlaceAndDate.MedicalPracticeId,
-                                                                           identifier.PlaceAndDate.Date);
+			appointmentModificationsVariable.StateChanged += OnAppointmentModificationsChanged;
 
-			TimeSlotBegin = medicalPractice.HoursOfOpening.GetOpeningTime(identifier.PlaceAndDate.Date);
-			TimeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(identifier.PlaceAndDate.Date);
+			TimeSlotBegin = timeSlotBegin;
+			TimeSlotEnd   = timeSlotEnd;
 
 			AdornerControl = adornerControl;			
 		}
-
-		private void OnSelectedMedicalPracticeIdChanged(Guid newMedicalPracticeId)
-		{
-			CurrentSelectedMedicalPracticeId = newMedicalPracticeId;
-		}
-
-		private void OnSelectedDateChanged(Date newDate)
-		{
-			CurrentSelectedDate = newDate;
-		}
+		
 
 		private void OnAppointmentModificationsChanged(AppointmentModifications newAppointmentModifications)
 		{
@@ -114,19 +86,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 		{
 			get { return appointmentModifications; }
 			private set { PropertyChanged.ChangeAndNotify(this, ref appointmentModifications, value); }
-		}
-
-		public Date CurrentSelectedDate
-		{
-			get { return currentSelectedDate; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref currentSelectedDate, value); }
-		}
-
-		public Guid CurrentSelectedMedicalPracticeId
-		{
-			get { return currentSelectedMedicalPracticeId; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref currentSelectedMedicalPracticeId, value); }
-		}
+		}		
 
 		public bool IsVisible
 		{
@@ -156,18 +116,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 
         protected override void CleanUp()
 		{
-			ViewModelCommunication.DeregisterViewModelAtCollection<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
+			viewModelCommunication.DeregisterViewModelAtCollection<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
 				Constants.TherapyPlaceRowViewModelCollection,
 				this
 			);
 
-			appointmentModificationsVariable.StateChanged  -= OnAppointmentModificationsChanged;
-			selectedDateVariable.StateChanged              -= OnSelectedDateChanged;
-			selectedMedicalPracticeIdVariable.StateChanged -= OnSelectedMedicalPracticeIdChanged;
-		}
-
-		public IViewModelCommunication ViewModelCommunication { get; }
-		public IDataCenter DataCenter { get; }
+			appointmentModificationsVariable.StateChanged -= OnAppointmentModificationsChanged;			
+		}		
 
 		public override event PropertyChangedEventHandler PropertyChanged;		
 	}

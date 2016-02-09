@@ -6,7 +6,7 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
@@ -17,10 +17,13 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
 using bytePassion.OnkoTePla.Core.Domain.Commands;
 using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Readmodels;
+using AppointmentsOfADayReadModel = bytePassion.OnkoTePla.Client.DataAndService.Readmodels.AppointmentsOfADayReadModel;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.DeleteAppointment;
 using DeleteAppointmentCommand = bytePassion.OnkoTePla.Core.Domain.Commands.DeleteAppointment;
 
@@ -31,35 +34,47 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 	{
 		private bool isActive;
 
-		private readonly IDataCenter dataCenter;
-		private readonly ISession session;		
+		private readonly ClientMedicalPracticeData medicalPractice;
+		private readonly ISession session;
+		private readonly ICommandBus commandBus;
+		private readonly IClientReadModelRepository readModelRepository;
 		private readonly IViewModelCommunication viewModelCommunication;		
 		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
 		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;		
 	    private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;		
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
-
-        private readonly AppointmentsOfADayReadModel readModel;
-
-        public AppointmentGridViewModel(AggregateIdentifier identifier, 
-									    IDataCenter dataCenter, 
-										ISession session,										
+		private readonly Action<string> errorCallback;
+		  
+		private AppointmentsOfADayReadModel readModel;
+		private ITimeGridViewModel timeGridViewModel;
+		private ObservableCollection<ITherapyPlaceRowViewModel> therapyPlaceRowViewModels;
+		 
+		public AppointmentGridViewModel(AggregateIdentifier identifier, 
+									    ClientMedicalPracticeData medicalPractice, 
+										ISession session,	
+										ICommandBus commandBus,
+										IClientReadModelRepository readModelRepository,									
 										IViewModelCommunication viewModelCommunication,
                                         ISharedStateReadOnly<Size> gridSizeVariable,
 										ISharedStateReadOnly<Guid?> roomFilterVariable,										
                                         ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,										
 										IAppointmentViewModelBuilder appointmentViewModelBuilder,
-										ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
+										ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder,
+										Action<string> errorCallback)
 		{
-			this.dataCenter = dataCenter;
-	        this.session = session;	        
+			this.medicalPractice = medicalPractice;
+			this.session = session;
+			this.commandBus = commandBus;
+			this.readModelRepository = readModelRepository;
 			this.viewModelCommunication = viewModelCommunication;
 		    this.gridSizeVariable = gridSizeVariable;
 		    this.roomFilterVariable = roomFilterVariable;
             this.appointmentModificationsVariable = appointmentModificationsVariable;			
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
+	        this.errorCallback = errorCallback;
 
-			IsActive = false;
+	        IsActive = false;
+			PracticeIsClosedAtThisDay = false;
 
 			gridSizeVariable.StateChanged += OnGridSizeChanged;			
 			roomFilterVariable.StateChanged += OnGlobalRoomFilterVariableChanged;
@@ -69,38 +84,66 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 				this					
 			);
 
-			readModel = dataCenter.GetAppointmentsOfADayReadModel(identifier);
+			Identifier = identifier;
+			
 
-			Identifier = readModel.Identifier; // because now the identifier contains the correct Version
-
-			readModel.AppointmentChanged += OnReadModelAppointmentChanged;
-
-			TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication, 
-													  dataCenter, gridSizeVariable.Value);
-
-			var medicalPractice = dataCenter.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
-			                                                                  Identifier.PracticeVersion);
-
-			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();			
-
-			foreach (var room in medicalPractice.Rooms)
-			{
-				foreach (var therapyPlace in room.TherapyPlaces)
+			readModelRepository.RequestAppointmentsOfADayReadModel(
+				newReadModel =>
 				{
-					var location = new TherapyPlaceRowIdentifier(Identifier, therapyPlace.Id);
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						readModel = newReadModel;
 
-					TherapyPlaceRowViewModels.Add(therapyPlaceRowViewModelBuilder.Build(therapyPlace, room, location));					
-				}
-			}
+						readModel.AppointmentChanged += OnReadModelAppointmentChanged;
 
-			foreach (var appointment in readModel.Appointments)
-			{
-				AddAppointment(appointment);
-			}			
+						TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication,
+																  medicalPractice, gridSizeVariable.Value);
 
-			OnGlobalRoomFilterVariableChanged(roomFilterVariable.Value);
+						TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();
 
-			PracticeIsClosedAtThisDay = false;
+
+						var requestedViewModels = 0;
+						var buildedViewModels = 0;
+
+						foreach (var room in medicalPractice.Rooms)
+						{
+							foreach (var therapyPlace in room.TherapyPlaces)
+							{
+								var location = new TherapyPlaceRowIdentifier(Identifier, therapyPlace.Id);
+								requestedViewModels++;
+
+								therapyPlaceRowViewModelBuilder.RequestBuild(
+									viewModel =>
+									{
+										TherapyPlaceRowViewModels.Add(viewModel);
+										buildedViewModels++;
+									},
+									therapyPlace,
+									room,
+									location,
+									errorCallback
+								);
+							}
+						}
+
+						if (requestedViewModels != buildedViewModels)
+							throw new NotImplementedException("kann wohl doch passieren ....");
+
+						foreach (var appointment in readModel.Appointments)
+						{
+							AddAppointment(appointment);
+						}
+
+						OnGlobalRoomFilterVariableChanged(roomFilterVariable.Value);
+					});
+				},
+				identifier,
+				errorCallback	 				 
+			);
+
+			
+
+			
 		}
 
 		private void OnGlobalRoomFilterVariableChanged(Guid? newRoomFilter)
@@ -127,7 +170,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 					);
 				});
 
-				var medicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(Identifier.MedicalPracticeId, Identifier.Date);
+				
 
 				medicalPractice.GetRoomById(newRoomFilter.Value)
 							   .TherapyPlaces
@@ -160,7 +203,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
 		private void AddAppointment(Appointment newAppointment)
 		{
-			appointmentViewModelBuilder.Build(newAppointment, Identifier);			
+			appointmentViewModelBuilder.Build(newAppointment, Identifier, errorCallback);			
 		}
 		
 		private void RemoveAppointment(Appointment appointmentToRemove)
@@ -194,10 +237,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		}
 
 		public AggregateIdentifier Identifier { get; }
-	
-		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; }
 
-		public ITimeGridViewModel TimeGridViewModel { get; }
+		public ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels
+		{
+			get { return therapyPlaceRowViewModels; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref therapyPlaceRowViewModels, value); }
+		}
+
+		public ITimeGridViewModel TimeGridViewModel
+		{
+			get { return timeGridViewModel; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref timeGridViewModel, value); }
+		}
 
 		public bool PracticeIsClosedAtThisDay { get; }
 
@@ -224,7 +275,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
 		public void Process(DeleteAppointment message)
 		{
-			dataCenter.SendCommand(new DeleteAppointmentCommand(Identifier, 
+			commandBus.SendCommand(new DeleteAppointmentCommand(Identifier, 
 																readModel.AggregateVersion, 
 																session.LoggedInUser.Id, 
 																message.PatientId,
@@ -257,36 +308,55 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
 			if (appointmentModificationsVariable.Value.OriginalAppointment.Day != Identifier.Date)
 			{
-				sourceAggregateId = new AggregateIdentifier(appointmentModificationsVariable.Value.OriginalAppointment.Day, 
+				sourceAggregateId = new AggregateIdentifier(appointmentModificationsVariable.Value.OriginalAppointment.Day,
 															Identifier.MedicalPracticeId);
 
-				var tmpReadModel = dataCenter.GetAppointmentsOfADayReadModel(sourceAggregateId);
+				readModelRepository.RequestAppointmentSetOfADay(
+					fixedAppointmentSet =>
+					{
+						sourceAggregateVersion = fixedAppointmentSet.AggregateVersion;
 
-				sourceAggregateVersion = tmpReadModel.AggregateVersion;
+						commandBus.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
+																  sourceAggregateVersion, destinationAggregateVersion,
+																  session.LoggedInUser.Id,
+																  originalAppointment.Patient.Id,
+																  ActionTag.RegularAction,
+																  appointmentModificationsVariable.Value.Description,
+																  appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date,
+																  appointmentModificationsVariable.Value.BeginTime,
+																  appointmentModificationsVariable.Value.EndTime,
+																  appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId,
+																  originalAppointment.Id,
+																  originalAppointment.Day));
+					},
+					sourceAggregateId,
+					uint.MaxValue,
+					errorCallback	
+				);												
 			}
 			else
 			{
 				sourceAggregateId = destinationAggregateId;
 				sourceAggregateVersion = destinationAggregateVersion;
-			}
 
-			dataCenter.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
+				commandBus.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
 														  sourceAggregateVersion, destinationAggregateVersion,
 														  session.LoggedInUser.Id,
-														  originalAppointment.Patient.Id, 
-														  ActionTag.RegularAction, 
+														  originalAppointment.Patient.Id,
+														  ActionTag.RegularAction,
 														  appointmentModificationsVariable.Value.Description,
 														  appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date,
 														  appointmentModificationsVariable.Value.BeginTime,
-														  appointmentModificationsVariable.Value.EndTime,															 
+														  appointmentModificationsVariable.Value.EndTime,
 														  appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId,
 														  originalAppointment.Id,
 														  originalAppointment.Day));
+			}			
 		}
 
 		public void Process (CreateNewAppointmentFromModificationsAndSendToCommandBus message)
 		{
-			dataCenter.SendCommand(new AddAppointment(appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate, 
+			commandBus.SendCommand(new AddAppointment(appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate, 
 													  readModel.AggregateVersion, 
 													  session.LoggedInUser.Id, 
 													  ActionTag.RegularAction, 

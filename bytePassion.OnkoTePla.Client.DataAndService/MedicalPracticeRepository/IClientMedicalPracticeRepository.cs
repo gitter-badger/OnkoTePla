@@ -1,13 +1,21 @@
 ﻿using System;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository
 {
 	public interface IClientMedicalPracticeRepository
-	{		
-		ClientMedicalPracticeData GetMedicalPractice(Guid id, uint version);
-		bool IsMedicalPracticeAvailable(Guid id, uint version);
+	{
+		void RequestMedicalPractice (Action<ClientMedicalPracticeData> practiceAvailableCallback,
+									Guid practiceId, Action<string> errorCallback);
+
 		void RequestMedicalPractice(Action<ClientMedicalPracticeData> practiceAvailableCallback, 
-									Guid id, uint version, Action<string> errorCallback);
+									Guid practiceId, uint version, Action<string> errorCallback);
+		
+		void RequestMedicalPractice(Action<ClientMedicalPracticeData> practiceAvailableCallback,
+									Guid practiceId, Date day, Action<string> errorCallback);
+
+		void RequestPraticeVersion(Action<uint> practiceVersionAvailableCallback, 
+								   Guid practiceId, Date day, Action<string> errorCallback);
 	}
 }

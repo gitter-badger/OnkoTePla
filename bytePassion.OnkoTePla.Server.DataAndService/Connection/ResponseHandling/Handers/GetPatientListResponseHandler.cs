@@ -24,9 +24,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 			if (!IsRequestValid(request.SessionId, request.UserId))
 				return;
 
-			var patientsToDeliver = request.LoadOnlyAlivePatients
-										? dataCenter.GetAllPatients().Where(patient => patient.Alive).ToList()
-										: dataCenter.GetAllPatients().ToList();
+			var patientsToDeliver = dataCenter.GetAllPatients().ToList();
 
 			Socket.SendNetworkMsg(new GetPatientListResponse(patientsToDeliver));
 		}

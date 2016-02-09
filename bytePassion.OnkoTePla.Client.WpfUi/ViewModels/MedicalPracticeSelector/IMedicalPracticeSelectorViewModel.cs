@@ -1,14 +1,14 @@
-﻿using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector.Helper;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 {
-    public interface IMedicalPracticeSelectorViewModel : IViewModel
+	internal interface IMedicalPracticeSelectorViewModel : IViewModel
 	{
-		MedicalPractice SelectedMedicalPractice { get; set; }
+		MedicalPracticeDisplayData SelectedMedicalPractice { get; set; }
 
-		ObservableCollection<MedicalPractice> AvailableMedicalPractices { get; } 
+		ObservableCollection<MedicalPracticeDisplayData> AvailableMedicalPractices { get; } 
 
 		bool PracticeIsSelectable { get; }
 	}

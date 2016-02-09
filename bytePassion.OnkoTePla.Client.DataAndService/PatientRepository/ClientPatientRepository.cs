@@ -1,56 +1,76 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.PatientRepository
 {
-	internal class ClientPatientRepository : IClientPatientRepository
+	public class ClientPatientRepository : IClientPatientRepository
 	{		
 		private readonly IConnectionService connectionService;
-		private readonly IDictionary<Guid, Patient> cachedPatients; 
+		private  IDictionary<Guid, Patient> cachedPatients; 
 
 		public ClientPatientRepository(IConnectionService connectionService)
 		{
-			this.connectionService = connectionService;
-			cachedPatients = new ConcurrentDictionary<Guid, Patient>();
+			this.connectionService = connectionService;			
+		}
+				
+		public void RequestPatient(Action<Patient> patientAvailableCallback, Guid patientId, Action<string> errorCallback)
+		{
+			if (cachedPatients == null)
+			{
+				connectionService.RequestPatientList(
+					patientList =>
+					{
+						cachedPatients = new Dictionary<Guid, Patient>();
+						foreach (var patient in patientList)
+						{
+							cachedPatients.Add(patient.Id, patient);
+						}
+
+						patientAvailableCallback(GetPatient(patientId, errorCallback));
+					},
+					errorCallback
+				);
+			}
+			else
+			{
+				patientAvailableCallback(GetPatient(patientId, errorCallback));
+			}
 		}
 		
-		public Patient GetPatient(Guid id)
+		public void RequestAllPatientList(Action<IReadOnlyList<Patient>> patientListAvailableCallback, Action<string> errorCallback)
 		{
-			if (ArePatientsAvailable())
-				if (cachedPatients.ContainsKey(id))
-					return cachedPatients[id];
+			if (cachedPatients == null)
+			{
+				connectionService.RequestPatientList(
+					patientList =>
+					{
+						cachedPatients = new Dictionary<Guid, Patient>();
+						foreach (var patient in patientList)
+						{
+							cachedPatients.Add(patient.Id, patient);
+						}
 
+						patientListAvailableCallback(cachedPatients.Values.ToList());
+					},
+					errorCallback
+				);
+			}
+			else
+			{
+				patientListAvailableCallback(cachedPatients.Values.ToList());
+			}
+		}
+
+		private Patient GetPatient (Guid id, Action<string> errorCallback)
+		{			
+			if (cachedPatients.ContainsKey(id))
+				return cachedPatients[id];
+
+			errorCallback("patient not found");
 			return null;
 		}
-
-		public bool ArePatientsAvailable()
-		{
-			return cachedPatients != null;
-		}
-
-		public void RequestPatients(Action patientsAvailable, Action<string> errorCallback)
-		{
-			connectionService.RequestPatientList(
-				patientList =>
-				{
-					foreach (var patient in patientList)
-					{
-						if (!IsPatientsAvailable(patient.Id))
-							cachedPatients.Add(patient.Id, patient);
-					}
-
-					patientsAvailable();
-				},
-				errorCallback
-			);
-		}
-		
-		public bool IsPatientsAvailable(Guid id)
-		{
-			return cachedPatients.ContainsKey(id);
-		}					
 	}
 }

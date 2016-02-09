@@ -11,14 +11,15 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 {
 	internal class GetAppointmentsOfADayRequestHandler : RequestHandlerBase
 	{
-		private readonly Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier> dataReceivedCallback;
+		private readonly Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier, uint> dataReceivedCallback;
 		private readonly ISharedState<ConnectionInfo> connectionInfoVariable;
 		private readonly Date day;
 		private readonly Guid medicalPracticeId;
+		private readonly uint aggregateVersionLimit;
 
-		public GetAppointmentsOfADayRequestHandler(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier> dataReceivedCallback, 
+		public GetAppointmentsOfADayRequestHandler(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier, uint> dataReceivedCallback, 
 												   ISharedState<ConnectionInfo> connectionInfoVariable,
-												   Date day, Guid medicalPracticeId,
+												   Date day, Guid medicalPracticeId, uint aggregateVersionLimit,
 												   Action<string> errorCallback) 
 			: base(errorCallback)
 		{
@@ -26,6 +27,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 			this.connectionInfoVariable = connectionInfoVariable;
 			this.day = day;
 			this.medicalPracticeId = medicalPracticeId;
+			this.aggregateVersionLimit = aggregateVersionLimit;
 		}
 
 		public override void HandleRequest(RequestSocket socket)
@@ -33,12 +35,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 			HandleRequestHelper<GetAppointmentsOfADayRequest, GetAppointmentsOfADayResponse>(
 				new GetAppointmentsOfADayRequest(day, medicalPracticeId, 
 												 connectionInfoVariable.Value.SessionId, 
-												 connectionInfoVariable.Value.LoggedInUser.Id),
+												 connectionInfoVariable.Value.LoggedInUser.Id,
+												 aggregateVersionLimit),
 				socket,
 				response => dataReceivedCallback(response.AppointmentList, 
-												 new AggregateIdentifier(day, response.MedicalPracticeId, response.MedicalPracticeVersion)) 	
+												 new AggregateIdentifier(day, response.MedicalPracticeId, response.MedicalPracticeVersion),
+												 response.AggregateVersion) 	
 				
-				);
+			);
 		}
 	}
 }

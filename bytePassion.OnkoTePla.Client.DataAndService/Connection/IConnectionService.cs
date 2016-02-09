@@ -10,7 +10,7 @@ using bytePassion.OnkoTePla.Core.Domain;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
-	internal interface IConnectionService : IDisposable
+	public interface IConnectionService : IDisposable
 	{
 		event Action<ConnectionEvent> ConnectionEventInvoked;
 		
@@ -36,13 +36,17 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		void RequestPatientList(Action<IReadOnlyList<Patient>> dataReceivedCallback, 								
 								Action<string> errorCallback);
 
-		void RequestAppointmentsOfADay(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier> dataReceivedCallback, 
-									   Date day, Guid medicalPracticeId, 
+		void RequestAppointmentsOfADay(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier, uint> dataReceivedCallback, 
+									   Date day, Guid medicalPracticeId, uint aggregateVersionLimit,
 									   Action<string> errorCallback); 
 
 		void RequestMedicalPractice(Action<ClientMedicalPracticeData> dataReceivedCallback,
 									Guid medicalPracticeId, uint medicalPracticeVersion,
 									Action<string> errorCallback);
+
+		void RequestPracticeVersionInfo(Action<uint> dataReceivedCallback, 
+										Guid medicalPracticeId, Date day,
+										Action<string> errorCallback);
 
 		void RequestTherapyPlaceTypeList(Action<IReadOnlyList<TherapyPlaceType>> dataReceivedCallback,
 										 Action<string> errorCallback);		

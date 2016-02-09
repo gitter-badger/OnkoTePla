@@ -1,8 +1,12 @@
 ﻿using System;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
+using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
+using bytePassion.OnkoTePla.Client.DataAndService.TherapyPlaceTypeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
@@ -11,29 +15,45 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
+using bytePassion.OnkoTePla.Core.CommandSystem;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 {
 	internal class MainWindowBuilder : IWindowBuilder<MainWindow>
-	{		
-		private readonly IDataCenter dataCenter;
-        private readonly IViewModelCommunication viewModelCommunication;
+	{
+		private readonly ILocalSettingsRepository localSettingsRepository;
+		private readonly IClientPatientRepository patientRepository;
+		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
+		private readonly IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository;
+		private readonly IClientReadModelRepository readModelRepository;
+		private readonly ICommandBus commandBus;
+		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISession session;			    	
         private readonly string versionNumber;
-
-        public MainWindowBuilder(IDataCenter dataCenter,
+		
+        public MainWindowBuilder(ILocalSettingsRepository localSettingsRepository,
+								 IClientPatientRepository patientRepository,
+								 IClientMedicalPracticeRepository medicalPracticeRepository,
+								 IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository,
+								 IClientReadModelRepository readModelRepository,
+								 ICommandBus commandBus,
                                  IViewModelCommunication viewModelCommunication,
 								 ISession session,								
                                  string versionNumber)
-		{			
-			this.dataCenter = dataCenter;
-		    this.viewModelCommunication = viewModelCommunication;
+		{
+	        this.localSettingsRepository = localSettingsRepository;
+	        this.patientRepository = patientRepository;
+	        this.medicalPracticeRepository = medicalPracticeRepository;
+	        this.therapyPlaceTypeRepository = therapyPlaceTypeRepository;
+	        this.readModelRepository = readModelRepository;
+	        this.commandBus = commandBus;
+	        this.viewModelCommunication = viewModelCommunication;
 	        this.session = session;	        
             this.versionNumber = versionNumber;
 		}
 
-		public MainWindow BuildWindow()
+		public MainWindow BuildWindow(Action<string> errorCallback)
 		{
             // build modules
 
@@ -41,13 +61,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
             // build viewModels
 
-            var mainViewModelBuilder = new MainViewModelBuilder(dataCenter, 
+            var mainViewModelBuilder = new MainViewModelBuilder(medicalPracticeRepository,readModelRepository,patientRepository,commandBus, localSettingsRepository, 
                                                                 viewModelCommunication,
 																session,                                                                
                                                                 adornerControl);
 
             var loginViewModelBuilder = new LoginViewModelBuilder(session, 
-																  dataCenter);
+																  localSettingsRepository);
 
             var notificationServiceContainerViewModel = new NotificationServiceContainerViewModel(viewModelCommunication);
 
@@ -58,7 +78,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		    var actionBarViewModel = new ActionBarViewModel(session,
 															connectionStatusViewModel,
                                                             viewModelCommunication,
-                                                            dialogBuilder);
+                                                            dialogBuilder,
+															errorCallback);
 
 		    var mainWindowViewModel = new MainWindowViewModel(mainViewModelBuilder,
                                                               loginViewModelBuilder,

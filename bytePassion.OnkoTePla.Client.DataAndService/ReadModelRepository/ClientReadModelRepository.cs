@@ -5,6 +5,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Connection;
 using bytePassion.OnkoTePla.Client.DataAndService.EventBus;
 using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Readmodels;
 using bytePassion.OnkoTePla.Core.Domain;
 using AppointmentsOfADayReadModel = bytePassion.OnkoTePla.Client.DataAndService.Readmodels.AppointmentsOfADayReadModel;
 
@@ -18,8 +19,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository
 		private readonly IConnectionService connectionService;
 		 
 		private readonly IDictionary<AggregateIdentifier, AppointmentsOfADayReadModel> cachedReadmodels; 
-
-		internal ClientReadModelRepository (IClientEventBus eventBus,										    
+		 
+		public ClientReadModelRepository (IClientEventBus eventBus,										    
 										    IClientPatientRepository patientsRepository,
 											IClientMedicalPracticeRepository medicalPracticeRepository,
 										    IConnectionService connectionService)
@@ -31,74 +32,96 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository
 
 			cachedReadmodels = new ConcurrentDictionary<AggregateIdentifier, AppointmentsOfADayReadModel>();
 		}
-				
-
-		public AppointmentsOfADayReadModel GetAppointmentsOfADayReadModel(AggregateIdentifier id)
-		{
-			if (cachedReadmodels.ContainsKey(id))
-				return cachedReadmodels[id];
-
-			return null;
-		}
-
-		public bool IsAppointmentsOfADayReadModelAvailable(AggregateIdentifier id)
-		{
-			return cachedReadmodels.ContainsKey(id);
-		}
+								
 
 		public void RequestAppointmentsOfADayReadModel(Action<AppointmentsOfADayReadModel> readModelAvailable, 
 													   AggregateIdentifier id, Action<string> errorCallback)
 		{
+			if (cachedReadmodels.ContainsKey(id))
+			{
+				readModelAvailable(cachedReadmodels[id]);
+				return;
+			}
+
 			connectionService.RequestAppointmentsOfADay(
-				(appointments, aggregateId) =>
-				{
-					if (IsAppointmentsOfADayReadModelAvailable(aggregateId))
-						cachedReadmodels.Remove(aggregateId);
-
-
-					AppointmentsOfADayReadModel newReadModel = null;
-
-					if (medicalPracticeRepository.IsMedicalPracticeAvailable(aggregateId.MedicalPracticeId, aggregateId.PracticeVersion))
-					{
-						newReadModel = new AppointmentsOfADayReadModel(eventBus,
-																	   patientsRepository,
-																	   medicalPracticeRepository.GetMedicalPractice(aggregateId.MedicalPracticeId, 
-																													aggregateId.PracticeVersion),
-																	   appointments,
-																	   aggregateId,
-																	   errorCallback);
-					}
-					else
-					{
-						medicalPracticeRepository.RequestMedicalPractice(
-							practice =>
-							{
-								newReadModel = new AppointmentsOfADayReadModel(eventBus,
+				(appointments, aggregateId, aggregateVersion) =>
+				{															
+					medicalPracticeRepository.RequestMedicalPractice(
+						practice =>
+						{
+							var newReadModel = new AppointmentsOfADayReadModel(eventBus,
 																			   patientsRepository,
 																			   practice,
 																			   appointments,
 																			   aggregateId,
+																			   aggregateVersion,
 																			   errorCallback);
-							},
-							aggregateId.MedicalPracticeId, 
-							aggregateId.PracticeVersion, 
-							errorCallback							
-						);
-					}
+							if (!cachedReadmodels.ContainsKey(aggregateId))							
+								cachedReadmodels.Add(aggregateId, newReadModel);
 
-					if (newReadModel == null)
-					{
-						errorCallback("loading readModel failed");
-						return;
-					}
-					
-					cachedReadmodels.Add(aggregateId, newReadModel);
-					readModelAvailable(newReadModel);
+							readModelAvailable(cachedReadmodels[id]);
+						},
+						aggregateId.MedicalPracticeId, 
+						aggregateId.PracticeVersion, 
+						errorCallback							
+					);																				
 				},
 				id.Date,
 				id.MedicalPracticeId,
+				uint.MaxValue,
 				errorCallback
 			);
-		}		
+		}
+
+		public void RequestAppointmentSetOfADay(Action<FixedAppointmentSet> appointmentSetAvailable, 
+												AggregateIdentifier id, uint aggregateVersionLimit, Action<string> errorCallback)
+		{
+			if (aggregateVersionLimit == uint.MaxValue)
+			{
+				if (cachedReadmodels.ContainsKey(id))
+				{
+					var readModel = cachedReadmodels[id];
+					appointmentSetAvailable(new FixedAppointmentSet(readModel.Identifier, 
+																	readModel.AggregateVersion, 
+																	readModel.Appointments));					
+					return;
+				}
+
+				connectionService.RequestAppointmentsOfADay(
+					(appointments, aggregateId, aggregateVersion) =>
+					{
+						medicalPracticeRepository.RequestMedicalPractice(
+							practice =>
+							{
+								var newReadModel = new AppointmentsOfADayReadModel(eventBus,
+																			   patientsRepository,
+																			   practice,
+																			   appointments,
+																			   aggregateId,
+																			   aggregateVersion,
+																			   errorCallback);
+								if (!cachedReadmodels.ContainsKey(aggregateId))
+									cachedReadmodels.Add(aggregateId, newReadModel);
+
+								appointmentSetAvailable(new FixedAppointmentSet(newReadModel.Identifier,
+																	            newReadModel.AggregateVersion,
+																	            newReadModel.Appointments));
+							},
+							aggregateId.MedicalPracticeId,
+							aggregateId.PracticeVersion,
+							errorCallback
+						);
+					},
+					id.Date,
+					id.MedicalPracticeId,
+					uint.MaxValue,
+					errorCallback
+				);
+			}
+			else
+			{
+				throw new NotImplementedException();
+			}
+		}
 	}
 }

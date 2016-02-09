@@ -5,10 +5,10 @@ using System.Windows;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid.Helper;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Core.Domain;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
@@ -36,9 +36,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 
 		private readonly IViewModelCommunication viewModelCommunication;
 
-		public TimeGridViewModel(AggregateIdentifier identifierWithCorrectMedPracVersion,
+		public TimeGridViewModel(AggregateIdentifier identifier,
 								 IViewModelCommunication viewModelCommunication,
-                                 IDataCenter dataCenter,
+                                 ClientMedicalPracticeData medicalPractice,
 								 Size initalSize)
 		{
 			this.viewModelCommunication = viewModelCommunication;
@@ -48,12 +48,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 				this
 			);
 
-			Identifier = identifierWithCorrectMedPracVersion;
-			var medicalPractice = dataCenter.GetMedicalPracticeByIdAndVersion(Identifier.MedicalPracticeId,
-																		      Identifier.PracticeVersion);
+			Identifier = identifier;			
 			
-			timeSlotStart = medicalPractice.HoursOfOpening.GetOpeningTime(identifierWithCorrectMedPracVersion.Date);
-			timeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(identifierWithCorrectMedPracVersion.Date);
+			timeSlotStart = medicalPractice.HoursOfOpening.GetOpeningTime(identifier.Date);
+			timeSlotEnd   = medicalPractice.HoursOfOpening.GetClosingTime(identifier.Date);
 
 			TimeSlotLines  = new ObservableCollection<TimeSlotLine>();
 			TimeSlotLabels = new ObservableCollection<TimeSlotLabel>();

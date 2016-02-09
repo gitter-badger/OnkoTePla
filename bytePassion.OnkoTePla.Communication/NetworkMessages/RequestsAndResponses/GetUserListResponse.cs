@@ -25,13 +25,25 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 
 			foreach (var user in AvailableUsers)
 			{
-				msgBuilder.Append(user.Name);
-				msgBuilder.Append(",");
-				msgBuilder.Append(user.Id);
-				msgBuilder.Append(";");
+				msgBuilder.Append(user.Name); msgBuilder.Append(";");
+				msgBuilder.Append(user.Id);   msgBuilder.Append(";");
+
+				foreach (var practiceId in user.ListOfAccessablePractices)
+				{
+					msgBuilder.Append(practiceId);
+					msgBuilder.Append(",");
+				}
+
+				if (user.ListOfAccessablePractices.Count > 0)
+					msgBuilder.Remove(msgBuilder.Length - 1, 1);
+
+				msgBuilder.Append("|");
 			}
 
-			return msgBuilder.ToString().Substring(0, msgBuilder.Length - 1);
+			if (AvailableUsers.Count > 0)
+				msgBuilder.Remove(msgBuilder.Length - 1, 1);
+
+			return msgBuilder.ToString();
 		}
 
 		public static GetUserListResponse Parse(string s)
@@ -39,12 +51,25 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			if (string.IsNullOrWhiteSpace(s))
 				return new GetUserListResponse(new List<ClientUserData>());
 
-			var userList = s.Split(';')
-							.Select(element => element.Trim())							
-							.Select(userInfo => userInfo.Split(',').ToList())
-							.Select(userInfoParts => new ClientUserData(userInfoParts[0], Guid.Parse(userInfoParts[1])))
-							.ToList();
+			var userList = new List<ClientUserData>();
 
+			var userData = s.Split('|')
+							.Select(element => element.Trim())							
+							.Select(userInfo => userInfo.Split(';').ToList());
+
+			foreach (var userParts in userData)
+			{
+				var userName = userParts[0];
+				var userId = Guid.Parse(userParts[1]);
+				var practiceListParts = userParts[3].Split(',')
+													.Select(Guid.Parse)
+													.ToList();
+
+				
+				userList.Add(new ClientUserData(userName, userId, practiceListParts));
+				
+			}
+						
 			return new GetUserListResponse(userList);
 		}
 	}

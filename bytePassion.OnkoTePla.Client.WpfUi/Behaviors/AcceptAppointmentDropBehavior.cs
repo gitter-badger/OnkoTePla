@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Interactivity;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
@@ -25,10 +24,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 										typeof (ObservableCollection<IAppointmentViewModel>),
 										typeof (AcceptAppointmentDropBehavior));
 
-        public static readonly DependencyProperty DataCenterProperty =
-            DependencyProperty.Register(nameof(DataCenter),
-										typeof (IDataCenter),
-										typeof (AcceptAppointmentDropBehavior));
 
         public static readonly DependencyProperty TherapyPlaceRowIdentifierProperty =
             DependencyProperty.Register(nameof(TherapyPlaceRowIdentifier),
@@ -50,27 +45,28 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
                                         typeof (double), 
                                         typeof (AcceptAppointmentDropBehavior));
 
-        public static readonly DependencyProperty CurrentSelectedDateProperty = 
-            DependencyProperty.Register(nameof(CurrentSelectedDate), 
-                                        typeof (Date), 
-                                        typeof (AcceptAppointmentDropBehavior));
 
-        public static readonly DependencyProperty CurrentMedicalPracticeIdProperty = 
-            DependencyProperty.Register(nameof(CurrentMedicalPracticeId), 
-                                        typeof (Guid), 
-                                        typeof (AcceptAppointmentDropBehavior));
+		public static readonly DependencyProperty TimeSlotBeginProperty = 
+			DependencyProperty.Register(nameof(TimeSlotBegin), 
+										typeof (Time), 
+										typeof (AcceptAppointmentDropBehavior));
 
-        public Guid CurrentMedicalPracticeId
-        {
-            get { return (Guid) GetValue(CurrentMedicalPracticeIdProperty); }
-            set { SetValue(CurrentMedicalPracticeIdProperty, value); }
-        }
+		public static readonly DependencyProperty TimeSlotEndProperty =
+			DependencyProperty.Register(nameof(TimeSlotEnd), 
+										typeof (Time), 
+										typeof (AcceptAppointmentDropBehavior));
 
-        public Date CurrentSelectedDate
-        {
-            get { return (Date) GetValue(CurrentSelectedDateProperty); }
-            set { SetValue(CurrentSelectedDateProperty, value); }
-        }
+		public Time TimeSlotEnd
+		{
+			get { return (Time) GetValue(TimeSlotEndProperty); }
+			set { SetValue(TimeSlotEndProperty, value); }
+		}
+
+		public Time TimeSlotBegin
+		{
+			get { return (Time) GetValue(TimeSlotBeginProperty); }
+			set { SetValue(TimeSlotBeginProperty, value); }
+		}
 
 	    public double GridWidth
 	    {
@@ -96,22 +92,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
             set { SetValue(TherapyPlaceRowIdentifierProperty, value); }
         }
 
-        public IDataCenter DataCenter
-        {
-            get { return (IDataCenter) GetValue(DataCenterProperty); }
-            set { SetValue(DataCenterProperty, value); }
-        }
-
         public ObservableCollection<IAppointmentViewModel> Appointments
         {
             get { return (ObservableCollection<IAppointmentViewModel>) GetValue(AppointmentsProperty); }
             set { SetValue(AppointmentsProperty, value); }
         }       
         		
-        private IList<TimeSlot> slots = null;
-        private Time openingTime;
-        private Time closingTime;        
-
+        private IList<TimeSlot> slots = null;         
         private bool dropIsPossible;              
         private Appointment currentDraggedAppointment;
 
@@ -230,11 +217,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 
         private Time GetTimeForPosition(double xPosition)
         {
-            var durationOfWholeDay = new Duration(closingTime, openingTime);
+            var durationOfWholeDay = new Duration(TimeSlotBegin, TimeSlotEnd);
 
             double relativePosition = xPosition / GridWidth;
 
-            var resultTime = openingTime +
+            var resultTime = TimeSlotBegin +
                              new Duration((uint) Math.Floor((durationOfWholeDay.Seconds*relativePosition)));
             return resultTime;
         }
@@ -254,20 +241,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
             sortedAppointments.Sort(
                 (appointment, appointment1) => appointment.BeginTime.CompareTo(appointment1.BeginTime)
 			);
-
-            var medicalPractice = DataCenter.GetMedicalPracticeByIdAndDate(CurrentMedicalPracticeId, CurrentSelectedDate);
-            openingTime = medicalPractice.HoursOfOpening.GetOpeningTime(CurrentSelectedDate);
-            closingTime = medicalPractice.HoursOfOpening.GetClosingTime(CurrentSelectedDate);
-
-            startOfSlots.Add(openingTime);
+                       
+            startOfSlots.Add(TimeSlotBegin);
 
             foreach (var appointmentViewModel in sortedAppointments)
             {
                 endOfSlots.Add(appointmentViewModel.BeginTime);
                 startOfSlots.Add(appointmentViewModel.EndTime);
             }
-
-            endOfSlots.Add(closingTime);
+			
+            endOfSlots.Add(TimeSlotEnd);
 
             slots = new List<TimeSlot>();
 

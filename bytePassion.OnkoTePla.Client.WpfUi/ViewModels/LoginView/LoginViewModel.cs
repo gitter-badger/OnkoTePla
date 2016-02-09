@@ -8,7 +8,7 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.ZmqUtils;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Contracts.Config;
@@ -22,7 +22,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private static readonly Protocol Protocol = new TcpIpProtocol();
 
 		private readonly ISession session;
-		private readonly IDataCenter dataCenter;
+		private readonly  ILocalSettingsRepository localSettingsRepository;
 
 		private ClientUserData selectedUser;
 		private string serverAddress;
@@ -33,10 +33,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private bool isUserListAvailable;
 
 		public LoginViewModel(ISession session,
-							  IDataCenter dataCenter)
+							  ILocalSettingsRepository localSettingsRepository)
 	    {
 		    this.session = session;
-			this.dataCenter = dataCenter;
+			this.localSettingsRepository = localSettingsRepository;
 
 			Login = new ParameterrizedCommand<PasswordBox>(DoLogin,
 													       IsLoginPossible);
@@ -50,7 +50,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			Disconnect = new Command(DoDisconnect,
 									 IsDisconnectPossible);
 
-			AutoConnectOnNextStart = dataCenter.IsAutoConnectionEnabled;
+			AutoConnectOnNextStart = localSettingsRepository.IsAutoConnectionEnabled;
 
 			AvailableUsers = new ObservableCollection<ClientUserData>();
 
@@ -67,12 +67,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 			if (AutoConnectOnNextStart)
 			{
-				var clientIpAddress = dataCenter.AutoConnectionClientAddress.ToString();
+				var clientIpAddress = localSettingsRepository.AutoConnectionClientAddress.ToString();
 
 				if (ClientIpAddresses.Contains(clientIpAddress))
 				{
 					ClientAddress = clientIpAddress;
-					ServerAddress = dataCenter.AutoConnectionServerAddress.ToString();
+					ServerAddress = localSettingsRepository.AutoConnectionServerAddress.ToString();
 					DebugConnect.Execute(null);
 				}
 			}
@@ -222,20 +222,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			return AddressIdentifier.IsIpAddressIdentifier(ServerAddress) &&
 				   session.CurrentApplicationState == ApplicationState.DisconnectedFromServer;
 		}
-
+		
 		private void SetAutoConnectToSettings()
 		{
 			if (AutoConnectOnNextStart)
 			{
-				dataCenter.IsAutoConnectionEnabled = true;
-				dataCenter.AutoConnectionServerAddress = AddressIdentifier.GetIpAddressIdentifierFromString(ServerAddress);
-				dataCenter.AutoConnectionClientAddress = AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress);
+				localSettingsRepository.IsAutoConnectionEnabled = true;
+				localSettingsRepository.AutoConnectionServerAddress = AddressIdentifier.GetIpAddressIdentifierFromString(ServerAddress);
+				localSettingsRepository.AutoConnectionClientAddress = AddressIdentifier.GetIpAddressIdentifierFromString(ClientAddress);
 			}
 			else
 			{
-				dataCenter.IsAutoConnectionEnabled = false;
-				dataCenter.AutoConnectionClientAddress = new IpV4AddressIdentifier(127, 0, 0, 1);
-				dataCenter.AutoConnectionServerAddress = new IpV4AddressIdentifier(127, 0, 0, 1);
+				localSettingsRepository.IsAutoConnectionEnabled = false;
+				localSettingsRepository.AutoConnectionClientAddress = new IpV4AddressIdentifier(127, 0, 0, 1);
+				localSettingsRepository.AutoConnectionServerAddress = new IpV4AddressIdentifier(127, 0, 0, 1);
 			}
 		}
 		

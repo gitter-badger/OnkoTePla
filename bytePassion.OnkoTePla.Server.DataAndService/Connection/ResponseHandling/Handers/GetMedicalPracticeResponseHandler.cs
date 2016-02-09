@@ -24,7 +24,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 			if (!IsRequestValid(request.SessionId, request.UserId, request.MedicalPracticeId))
 				return;
 
-			var medicalPractice = dataCenter.GetMedicalPractice(request.MedicalPracticeId, request.MedicalPraciceVersion);
+			var medicalPractice = request.MedicalPraciceVersion == uint.MaxValue
+										? dataCenter.GetMedicalPractice(request.MedicalPracticeId)
+										: dataCenter.GetMedicalPractice(request.MedicalPracticeId, request.MedicalPraciceVersion);
+
 			var practiceData = new ClientMedicalPracticeData(medicalPractice);
 
 			Socket.SendNetworkMsg(new GetMedicalPracticeResponse(practiceData));

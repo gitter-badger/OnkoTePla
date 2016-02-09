@@ -26,7 +26,9 @@
 		GetMedicalPracticeResponse,
 		GetTherapyPlacesTypeListRequest,
 		GetTherapyPlacesTypeListResponse,
-		
+		GetPracticeVersionInfoRequest,
+		GetPracticeVersionInfoResponse,
+
 		EventBusNotification,
 		PatientNotification,
 		TherapyPlaceTypeNotification,		

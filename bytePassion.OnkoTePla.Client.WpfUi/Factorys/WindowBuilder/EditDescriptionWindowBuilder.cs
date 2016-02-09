@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Mime;
 using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
@@ -11,7 +10,7 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 {
-    internal class EditDescriptionWindowBuilder : IWindowBuilder<EditDescription>
+	internal class EditDescriptionWindowBuilder : IWindowBuilder<EditDescription>
     {
         private readonly Appointment appointmentToEdit;
         private IViewModelCommunication viewModelCommunication;
@@ -30,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
             this.practiseId = practiseId;
         }
 
-        public EditDescription BuildWindow()
+        public EditDescription BuildWindow(Action<string> errorCallback)
         {
             var view = new EditDescription();
             view.DataContext = new EditDescriptionViewModel(appointmentToEdit, viewModelCommunication, modificationsVar, practiseId);

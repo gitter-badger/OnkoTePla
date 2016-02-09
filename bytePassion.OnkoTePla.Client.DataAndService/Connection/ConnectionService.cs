@@ -17,24 +17,21 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Core.Domain;
 using NetMQ;
-using NLog;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
-	internal class ConnectionService : DisposingObject, 
-									   IConnectionService
+	public class ConnectionService : DisposingObject, 
+									 IConnectionService
 	{
 		public event Action<ConnectionEvent> ConnectionEventInvoked;
-
-		private readonly ILogger logger;
+		
 		private readonly NetMQContext zmqContext;
-
 		private readonly SharedState<ConnectionInfo> connectionInfoVariable;
 
 
-		public ConnectionService(ILogger logger)
+		public ConnectionService()
 		{
-			this.logger = logger;
+			
 			ConnectionStatus = ConnectionStatus.Disconnected;
 
 			connectionInfoVariable = new SharedState<ConnectionInfo>(new ConnectionInfo(null, null));
@@ -127,14 +124,15 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 																  errorCallback));
 		}
 
-		public void RequestAppointmentsOfADay(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier> dataReceivedCallback, 
-											  Date day, Guid medicalPracticeId, 
+		public void RequestAppointmentsOfADay(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier, uint> dataReceivedCallback, 
+											  Date day, Guid medicalPracticeId, uint aggregateVersionLimit, 
 											  Action<string> errorCallback) 
 		{
 			requestWorkQueue.Put(new GetAppointmentsOfADayRequestHandler(dataReceivedCallback, 
 																		 connectionInfoVariable, 
 																		 day,
 																		 medicalPracticeId, 
+																		 aggregateVersionLimit,
 																		 errorCallback));
 		}
 
@@ -148,7 +146,15 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 																	  medicalPracticeVersion, 
 																	  errorCallback));
 		}
-		
+
+		public void RequestPracticeVersionInfo(Action<uint> dataReceivedCallback, Guid medicalPracticeId, Date day, Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new GetPracticeVersionInfoRequestHandler(dataReceivedCallback, 
+																		  connectionInfoVariable, 
+																		  medicalPracticeId, 
+																		  day, 
+																		  errorCallback));
+		}
 
 		public void RequestTherapyPlaceTypeList(Action<IReadOnlyList<TherapyPlaceType>> dataReceivedCallback, 
 												Action<string> errorCallback)

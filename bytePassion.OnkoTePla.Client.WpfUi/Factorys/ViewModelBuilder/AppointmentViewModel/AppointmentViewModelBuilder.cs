@@ -1,4 +1,5 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
@@ -10,9 +11,10 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Core.Domain;
 
 
+
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel
 {
-    internal class AppointmentViewModelBuilder : IAppointmentViewModelBuilder 
+	internal class AppointmentViewModelBuilder : IAppointmentViewModelBuilder 
 	{
 		private readonly IViewModelCommunication viewModelCommunication;		
 		private readonly ISharedState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable;
@@ -33,19 +35,22 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 	        this.appointmentModificationsBuilder = appointmentModificationsBuilder;
 		}
 
-		public IAppointmentViewModel Build (Appointment appointment, AggregateIdentifier location)
-		{
-			var exactLocation = new TherapyPlaceRowIdentifier(location, appointment.TherapyPlace.Id);
-            var editDescriptionWindowBuilder = new EditDescriptionWindowBuilder(appointment, viewModelCommunication, appointmentModificationsVariable, exactLocation.PlaceAndDate.MedicalPracticeId);
-
+		public IAppointmentViewModel Build (Appointment appointment, AggregateIdentifier location, Action<string> errorCallback)
+		{			
+            var editDescriptionWindowBuilder = new EditDescriptionWindowBuilder(appointment, 
+																				viewModelCommunication, 
+																				appointmentModificationsVariable,
+																				location.MedicalPracticeId);
+			
 			return new ViewModels.AppointmentView.AppointmentViewModel(appointment,
-																	   viewModelCommunication,																	  
-																	   exactLocation,
+																	   viewModelCommunication,
+																	   new TherapyPlaceRowIdentifier(location, appointment.TherapyPlace.Id),
 																	   appointmentModificationsVariable,
 																	   selectedDateVariable,
 																	   appointmentModificationsBuilder,
-                                                                       editDescriptionWindowBuilder,
-																	   adornerControl);
+																	   editDescriptionWindowBuilder,
+																	   adornerControl,
+																	   errorCallback);
 		}
 	}
 }

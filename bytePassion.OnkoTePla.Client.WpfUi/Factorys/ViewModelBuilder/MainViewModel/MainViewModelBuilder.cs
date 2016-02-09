@@ -5,7 +5,10 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
+using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
@@ -27,14 +30,14 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
 
 
@@ -42,35 +45,71 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 {
 	internal class MainViewModelBuilder : IMainViewModelBuilder
     {
-        private readonly IDataCenter dataCenter;
-        private readonly IViewModelCommunication viewModelCommunication;
+		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
+		private readonly IClientReadModelRepository readModelRepository;
+		private readonly IClientPatientRepository patientRepository;
+		private readonly ICommandBus commandBus;
+		private readonly ILocalSettingsRepository localSettingsRepository;
+		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISession session;		
         private readonly AdornerControl adornerControl;
 
 		private ConfirmChangesMessageHandler confirmChangesMessageHandler;
 		private RejectChangesMessageHandler rejectChangesMessageHandler;
-
-		public MainViewModelBuilder(IDataCenter dataCenter,
+		
+		public MainViewModelBuilder(IClientMedicalPracticeRepository medicalPracticeRepository,
+									IClientReadModelRepository readModelRepository,
+									IClientPatientRepository patientRepository,
+									ICommandBus commandBus,
+									ILocalSettingsRepository localSettingsRepository,
                                     IViewModelCommunication viewModelCommunication,
 									ISession session,                                   
                                     AdornerControl adornerControl)
         {
-            this.dataCenter = dataCenter;
-            this.viewModelCommunication = viewModelCommunication;
+			this.medicalPracticeRepository = medicalPracticeRepository;
+			this.readModelRepository = readModelRepository;
+			this.patientRepository = patientRepository;
+			this.commandBus = commandBus;
+			this.localSettingsRepository = localSettingsRepository;
+			this.viewModelCommunication = viewModelCommunication;
 	        this.session = session;	        
             this.adornerControl = adornerControl;
         }
 
 
 
-        public IMainViewModel Build()
+        public IMainViewModel Build(Action<string> errorCallback) 
         {            
             // Register Global ViewModelVariables
 
-            var initialMedicalPractice = dataCenter.GetAllMedicalPractices().First();  // TODO set last usage
+	        var firstDispayedDate = TimeTools.Today();	// TODO find last open
+
+	        var lastUsedMedicalPracticeId = localSettingsRepository.LastUsedMedicalPracticeId;
+
+	        if (lastUsedMedicalPracticeId == Guid.Empty)
+	        {
+		        lastUsedMedicalPracticeId = session.LoggedInUser.ListOfAccessablePractices.First();
+	        }
+
+	        ClientMedicalPracticeData initialMedicalPractice = null;
+
+			medicalPracticeRepository.RequestPraticeVersion(
+				practiceVersion =>
+				{
+					medicalPracticeRepository.RequestMedicalPractice(
+						practice => initialMedicalPractice = practice,
+						lastUsedMedicalPracticeId,
+						practiceVersion,
+						errorCallback	
+					);
+				},
+				lastUsedMedicalPracticeId,
+				firstDispayedDate,
+				errorCallback					
+			);           
 
             var gridSizeVariable                  = new SharedState<Size>(new Size(400, 400));
-            var selectedDateVariable              = new SharedState<Date>(initialMedicalPractice.HoursOfOpening.GetLastOpenDayFromToday());     // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
+            var selectedDateVariable              = new SharedState<Date>(firstDispayedDate);     // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
             var selectedMedicalPracticeIdVariable = new SharedState<Guid>(initialMedicalPractice.Id);
             var roomFilterVariable                = new SharedState<Guid?>();
             var appointmentModificationsVariable  = new SharedState<AppointmentModifications>();
@@ -98,7 +137,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
             // build factorys
 
-            var appointmentModificationsBuilder = new AppointmentModificationsBuilder(dataCenter,
+            var appointmentModificationsBuilder = new AppointmentModificationsBuilder(medicalPracticeRepository, 
+																					  readModelRepository,
                                                                                       viewModelCommunication,
                                                                                       selectedDateVariable,
                                                                                       gridSizeVariable);
@@ -110,22 +150,24 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                               appointmentModificationsBuilder);
 
             var therapyPlaceRowViewModelBuilder = new TherapyPlaceRowViewModelBuilder(viewModelCommunication,
-                                                                                      dataCenter,
+                                                                                      medicalPracticeRepository,
                                                                                       adornerControl,
-                                                                                      appointmentModificationsVariable,
-                                                                                      selectedDateVariable,
-                                                                                      selectedMedicalPracticeIdVariable);
+                                                                                      appointmentModificationsVariable);
 
-            var appointmentGridViewModelBuilder = new AppointmentGridViewModelBuilder(dataCenter,
-																					  session,
+            var appointmentGridViewModelBuilder = new AppointmentGridViewModelBuilder(session,
+																					  medicalPracticeRepository,
+																					  readModelRepository,
+																					  commandBus,
                                                                                       viewModelCommunication,                                                                                      
                                                                                       gridSizeVariable,
                                                                                       roomFilterVariable,
                                                                                       appointmentModificationsVariable,
                                                                                       appointmentViewModelBuilder,
                                                                                       therapyPlaceRowViewModelBuilder);
-
-            var addAppointmentDialogWindowBuilder = new AddAppointmentDialogWindowBuilder(dataCenter,
+			
+            var addAppointmentDialogWindowBuilder = new AddAppointmentDialogWindowBuilder(patientRepository,
+																						  readModelRepository,
+																						  medicalPracticeRepository,
                                                                                           selectedMedicalPracticeIdVariable,
                                                                                           selectedDateVariable,
                                                                                           appointmentViewModelBuilder);
@@ -148,14 +190,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
             var dateDisplayViewModel = new DateDisplayViewModel(selectedDateVariable);
 
-            var medicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModel(dataCenter,
+            var medicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModel(session, 
+																						medicalPracticeRepository,
                                                                                         selectedMedicalPracticeIdVariable,
-                                                                                        appointmentModificationsVariable);
-
-            var roomSelectorViewModel = new RoomFilterViewModel(dataCenter,
+                                                                                        appointmentModificationsVariable, 
+																						errorCallback);
+			
+            var roomSelectorViewModel = new RoomFilterViewModel(medicalPracticeRepository,
                                                                 roomFilterVariable,
                                                                 selectedDateVariable,
-                                                                selectedMedicalPracticeIdVariable);
+                                                                selectedMedicalPracticeIdVariable,
+																errorCallback);
 
             var dateSelectorViewModel = new DateSelectorViewModel(selectedDateVariable);
 
@@ -165,7 +210,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                     gridSizeVariable,
                                                                     new List<AggregateIdentifier>(),
                                                                     50,
-                                                                    appointmentGridViewModelBuilder);
+                                                                    appointmentGridViewModelBuilder,
+																	errorCallback);
 
 
             var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);
@@ -182,23 +228,24 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                   changeConfirmationViewModel,
                                                                   undoRedoViewModel,
                                                                   addAppointmentDialogWindowBuilder,
-                                                                  appointmentModificationsVariable);
+                                                                  appointmentModificationsVariable,
+																  errorCallback);
 
-            var patientSelectorViewModel = new PatientSelectorViewModel(dataCenter,
-                                                                        selectedPatientForAppointmentSearchVariable);
-
-            var searchPageViewModel = new SearchPageViewModel(patientSelectorViewModel,
-                                                              selectedPatientForAppointmentSearchVariable,
-                                                              selectedDateVariable,
-                                                              selectedMedicalPracticeIdVariable,                                                              
-                                                              viewModelCommunication,
-                                                              dataCenter,
-															  session);
+//            var patientSelectorViewModel = new PatientSelectorViewModel(dataCenter,
+//                                                                        selectedPatientForAppointmentSearchVariable);
+//
+//            var searchPageViewModel = new SearchPageViewModel(patientSelectorViewModel,
+//                                                              selectedPatientForAppointmentSearchVariable,
+//                                                              selectedDateVariable,
+//                                                              selectedMedicalPracticeIdVariable,                                                              
+//                                                              viewModelCommunication,
+//                                                              dataCenter,
+//															  session);
 
             var optionsPageViewModel = new OptionsPageViewModel();            
 
             var mainViewModel = new ViewModels.MainView.MainViewModel(overviewPageViewModel,
-                                                                      searchPageViewModel,
+                                                                      null, // searchPageViewModel,
                                                                       optionsPageViewModel);
 
             viewModelCommunication.RegisterViewModelMessageHandler<ShowPage>(mainViewModel);

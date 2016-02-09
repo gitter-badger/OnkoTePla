@@ -8,7 +8,8 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -45,12 +46,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 			public string Description { get; }
 			public TherapyPlaceRowIdentifier Location { get; }
 		}
-
-		private readonly IDataCenter dataCenter;
+		
 		private readonly IViewModelCommunication viewModelCommunication;
+		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
+		private readonly IClientReadModelRepository readModelRepository;
 		
 		private readonly ISharedState<Date> selectedDateVariable;
 		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
+		private readonly Action<string> errorCallback;
 
 		private readonly VersionManager<ModificationDataSet> versions;		
 
@@ -65,25 +68,28 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 		private Time currentSlotBegin;
 		private Time currentSlotEnd;
 
-		private MedicalPractice currentMedicalPracticeVersion;
+		private ClientMedicalPracticeData currentMedicalPracticeVersion;
 		private double currentGridWidth;				
 		private TherapyPlaceRowIdentifier currentLocation;
 		private string description;
 
 		public AppointmentModifications(Appointment originalAppointment,										
-										Guid medicalPracticeId, 
-										IDataCenter dataCenter, 
+										Guid medicalPracticeId,
+										IClientMedicalPracticeRepository medicalPracticeRepository,
+										IClientReadModelRepository readModelRepository,
 										IViewModelCommunication viewModelCommunication,
 										ISharedState<Date> selectedDateVariable, 
 										ISharedStateReadOnly<Size> gridSizeVariable, 
-										bool isInitialAdjustment)
+										bool isInitialAdjustment,
+										Action<string> errorCallback)
 		{
 			OriginalAppointment = originalAppointment;						
 			IsInitialAdjustment = isInitialAdjustment;
+			this.medicalPracticeRepository = medicalPracticeRepository;
 			this.selectedDateVariable = selectedDateVariable;
 			this.gridSizeVariable = gridSizeVariable;
-			
-			this.dataCenter = dataCenter;
+			this.errorCallback = errorCallback;
+			this.readModelRepository = readModelRepository;
 			this.viewModelCommunication = viewModelCommunication;
 
 			versions = new VersionManager<ModificationDataSet>(100);
@@ -97,10 +103,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 
 			var aggregateIdentifier = new AggregateIdentifier(originalAppointment.Day, medicalPracticeId);
 			InitialLocation = new TherapyPlaceRowIdentifier(aggregateIdentifier, originalAppointment.TherapyPlace.Id);
-			
-			
-			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByIdAndDate(InitialLocation.PlaceAndDate.MedicalPracticeId,
-                                                                                     InitialLocation.PlaceAndDate.Date);
+
+			medicalPracticeRepository.RequestMedicalPractice(
+				practice =>
+				{
+					Application.Current.Dispatcher.Invoke(() => currentMedicalPracticeVersion = practice);
+				},
+				InitialLocation.PlaceAndDate.MedicalPracticeId,
+				InitialLocation.PlaceAndDate.Date,
+				errorCallback
+			);													
 
 			var initialDataSet = new ModificationDataSet(originalAppointment.StartTime,
 													     originalAppointment.EndTime,
@@ -202,59 +214,74 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 		{
 			if (date != CurrentLocation.PlaceAndDate.Date)
 			{
-				var newMedicalPractice = dataCenter.GetMedicalPracticeByIdAndDate(currentMedicalPracticeVersion.Id, date);
-
-				if (newMedicalPractice.HoursOfOpening.IsOpen(date))
-				{
-					var readModel = dataCenter.GetAppointmentsOfADayReadModel(
-						new AggregateIdentifier(date, CurrentLocation.PlaceAndDate.MedicalPracticeId)
-					);
-
-					IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments =
-						new Dictionary<TherapyPlace, IList<Appointment>>();
-
-					foreach (var therapyPlace in newMedicalPractice.GetAllTherapyPlaces())
-						sortedAppointments.Add(therapyPlace, new List<Appointment>());
-
-					foreach (var appointment in readModel.Appointments)
-						if (appointment != OriginalAppointment)
-							sortedAppointments[appointment.TherapyPlace].Add(appointment);
-
-					var openingTime = newMedicalPractice.HoursOfOpening.GetOpeningTime(date);
-					var closingTime = newMedicalPractice.HoursOfOpening.GetClosingTime(date);
-
-					var appointmentDuration = new Duration(BeginTime, EndTime);
-
-					foreach (var therapyRowData in sortedAppointments)
+				medicalPracticeRepository.RequestMedicalPractice(
+					newMedicalPractice =>
 					{
-						var slots = ComputeAllSlotsWithinARow(openingTime, closingTime, therapyRowData.Value);
-						var suitableSlot = GetSlotForAppointment(slots, appointmentDuration);
-
-						if (suitableSlot != null)
+						if (newMedicalPractice.HoursOfOpening.IsOpen(date))
 						{
-							SetNewLocation(
-								new TherapyPlaceRowIdentifier(new AggregateIdentifier(date,
-																					  CurrentLocation.PlaceAndDate.MedicalPracticeId),
-															  therapyRowData.Key.Id),
-								suitableSlot.Begin,
-								suitableSlot.Begin + appointmentDuration
-							);
-							return;
+
+							readModelRepository.RequestAppointmentSetOfADay(
+								fixedAppointmentSet =>
+								{
+									IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments = new Dictionary<TherapyPlace, IList<Appointment>>();
+
+									foreach (var therapyPlace in newMedicalPractice.GetAllTherapyPlaces())
+										sortedAppointments.Add(therapyPlace, new List<Appointment>());
+
+									foreach (var appointment in fixedAppointmentSet.Appointments)
+										if (appointment != OriginalAppointment)
+											sortedAppointments[appointment.TherapyPlace].Add(appointment);
+
+									var openingTime = newMedicalPractice.HoursOfOpening.GetOpeningTime(date);
+									var closingTime = newMedicalPractice.HoursOfOpening.GetClosingTime(date);
+
+									var appointmentDuration = new Duration(BeginTime, EndTime);
+
+									foreach (var therapyRowData in sortedAppointments)
+									{
+										var slots = ComputeAllSlotsWithinARow(openingTime, closingTime, therapyRowData.Value);
+										var suitableSlot = GetSlotForAppointment(slots, appointmentDuration);
+
+										if (suitableSlot != null)
+										{
+											SetNewLocation(
+												new TherapyPlaceRowIdentifier(new AggregateIdentifier(date,
+																									  CurrentLocation.PlaceAndDate.MedicalPracticeId),
+																			  therapyRowData.Key.Id),
+												suitableSlot.Begin,
+												suitableSlot.Begin + appointmentDuration
+											);											
+											return;
+										}
+									}
+
+									viewModelCommunication.Send(
+										new ShowNotification("cannot move the OriginalAppointment to that day. No timeslot is big enough!", 5)
+									);									
+
+									selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
+								},
+								CurrentLocation.PlaceAndDate,
+								uint.MaxValue,
+								errorCallback									
+							);														
 						}
-					}
+						else
+						{
+							viewModelCommunication.Send(
+								new ShowNotification("cannot move an OriginalAppointment to a day where the practice is closed!", 5)
+							);
 
-					viewModelCommunication.Send(
-						new ShowNotification("cannot move the OriginalAppointment to that day. No timeslot is big enough!", 5)
-					);
-				}
-				else
-				{
-					viewModelCommunication.Send(
-						new ShowNotification("cannot move an OriginalAppointment to a day where the practice is closed!", 5)
-					);
-				}
+							selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
+						}
 
-				selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
+						
+
+					},
+					currentMedicalPracticeVersion.Id,
+					date,
+					errorCallback
+				);								
 			}
 		}
 
@@ -513,53 +540,64 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 
 		private void ComputeBoundariesOfCurrentTimeSlot()
 		{
-			currentMedicalPracticeVersion = dataCenter.GetMedicalPracticeByIdAndDate(CurrentLocation.PlaceAndDate.MedicalPracticeId,
-                                                                                     CurrentLocation.PlaceAndDate.Date);
+			medicalPracticeRepository.RequestMedicalPractice(
+				practice =>
+				{
+					currentMedicalPracticeVersion = practice;
 
-			currentDayOpeningTime = currentMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(CurrentLocation.PlaceAndDate.Date);
-			currentDayClosingTime = currentMedicalPracticeVersion.HoursOfOpening.GetClosingTime(CurrentLocation.PlaceAndDate.Date);			
+					currentDayOpeningTime = currentMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(CurrentLocation.PlaceAndDate.Date);
+					currentDayClosingTime = currentMedicalPracticeVersion.HoursOfOpening.GetClosingTime(CurrentLocation.PlaceAndDate.Date);
 
-			var currentReadModel = dataCenter.GetAppointmentsOfADayReadModel(CurrentLocation.PlaceAndDate);
-
-			var appointmentWithCorrectStartAndEnd = new Appointment(OriginalAppointment.Patient, 
+					readModelRepository.RequestAppointmentSetOfADay(
+						fixedAppointmentSet =>
+						{							
+							var appointmentWithCorrectStartAndEnd = new Appointment(OriginalAppointment.Patient,
 																	OriginalAppointment.Description,
 																	OriginalAppointment.TherapyPlace,
-																	OriginalAppointment.Day, 
-																	BeginTime, 
-																	EndTime, 
+																	OriginalAppointment.Day,
+																	BeginTime,
+																	EndTime,
 																	OriginalAppointment.Id);
 
-			var appointmentsWithinTheSameRow = currentReadModel.Appointments
+							var appointmentsWithinTheSameRow = fixedAppointmentSet.Appointments
 															   .Where(appointment => appointment.TherapyPlace.Id == CurrentLocation.TherapyPlaceId)
 															   .Where(appointment => appointment.Id != OriginalAppointment.Id)
 															   .Append(appointmentWithCorrectStartAndEnd)
-															   .ToList();
+															   .ToList();							
 
-			currentReadModel.Dispose();
+							appointmentsWithinTheSameRow.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));
+							var indexOfThisAppointment = appointmentsWithinTheSameRow.IndexOf(appointmentWithCorrectStartAndEnd);
 
-			appointmentsWithinTheSameRow.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));
-			var indexOfThisAppointment = appointmentsWithinTheSameRow.IndexOf(appointmentWithCorrectStartAndEnd);
-
-			if (appointmentsWithinTheSameRow.Count == 1)
-			{
-				currentSlotBegin = currentDayOpeningTime;
-				currentSlotEnd   = currentDayClosingTime;
-			}
-			else if (indexOfThisAppointment == 0)
-			{
-				currentSlotBegin = currentDayOpeningTime;
-				currentSlotEnd   = appointmentsWithinTheSameRow[indexOfThisAppointment + 1].StartTime;
-			}
-			else if (indexOfThisAppointment == appointmentsWithinTheSameRow.Count - 1)
-			{
-				currentSlotBegin = appointmentsWithinTheSameRow[indexOfThisAppointment - 1].EndTime;
-				currentSlotEnd   = currentDayClosingTime;
-			}
-			else
-			{
-				currentSlotBegin = appointmentsWithinTheSameRow[indexOfThisAppointment - 1].EndTime;
-				currentSlotEnd   = appointmentsWithinTheSameRow[indexOfThisAppointment + 1].StartTime;
-			}
+							if (appointmentsWithinTheSameRow.Count == 1)
+							{
+								currentSlotBegin = currentDayOpeningTime;
+								currentSlotEnd   = currentDayClosingTime;
+							}
+							else if (indexOfThisAppointment == 0)
+							{
+								currentSlotBegin = currentDayOpeningTime;
+								currentSlotEnd   = appointmentsWithinTheSameRow[indexOfThisAppointment + 1].StartTime;
+							}
+							else if (indexOfThisAppointment == appointmentsWithinTheSameRow.Count - 1)
+							{
+								currentSlotBegin = appointmentsWithinTheSameRow[indexOfThisAppointment - 1].EndTime;
+								currentSlotEnd   = currentDayClosingTime;
+							}
+							else
+							{
+								currentSlotBegin = appointmentsWithinTheSameRow[indexOfThisAppointment - 1].EndTime;
+								currentSlotEnd   = appointmentsWithinTheSameRow[indexOfThisAppointment + 1].StartTime;
+							}
+						},
+						CurrentLocation.PlaceAndDate,
+						uint.MaxValue,
+						errorCallback	
+					);					
+				},
+				CurrentLocation.PlaceAndDate.MedicalPracticeId,
+				CurrentLocation.PlaceAndDate.Date,
+				errorCallback
+			);			
 		}
 
         #endregion

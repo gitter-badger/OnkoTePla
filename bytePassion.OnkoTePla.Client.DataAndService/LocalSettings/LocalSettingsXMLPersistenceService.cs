@@ -1,11 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.Types.Repository;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 {
-	internal class LocalSettingsXMLPersistenceService : IPersistenceService<LocalSettingsData>
+	public class LocalSettingsXMLPersistenceService : IPersistenceService<LocalSettingsData>
 	{
 		private readonly string filename;
 
@@ -28,12 +29,15 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 			}
 		}
 
-		private const string XmlRoot = "localSettings";
-		private const string AutoConnection   = "autoConnection";
+		private const string XmlRoot        = "localSettings";
+		private const string AutoConnection = "autoConnection";
 
+		// TODO !!!! lastUsedMedicalPracice ID in eigenes element
+		
 		private const string IsAutoConnectionEnabledAttribute     = "isAutoConnectionEnabled";
 		private const string AutoConnectionClientAddressAttribute = "autoConnectionClientAddress";
 		private const string AutoConnectionServerAddressAttribute = "autoConnectionServerAddress";
+		private const string LastUsedMedicalPracticeIdAttribute   = "lastUsedMedicalPracticeId";
 
 		public void Persist(LocalSettingsData data)
 		{
@@ -55,9 +59,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 		{
 			writer.WriteStartElement(AutoConnection);
 
-			writer.WriteAttributeString(IsAutoConnectionEnabledAttribute, data.IsAutoConnectionEnabled.ToString());
+			writer.WriteAttributeString(IsAutoConnectionEnabledAttribute,     data.IsAutoConnectionEnabled.ToString());
 			writer.WriteAttributeString(AutoConnectionClientAddressAttribute, data.AutoConnectionClientAddress.ToString());
 			writer.WriteAttributeString(AutoConnectionServerAddressAttribute, data.AutoConnectionServerAddress.ToString());
+			writer.WriteAttributeString(LastUsedMedicalPracticeIdAttribute,   data.LastUsedMedicalPracticeId.ToString());
 
 			writer.WriteEndElement();
 		}
@@ -70,6 +75,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 			bool isAutoConnectionEnabled = false;
 			AddressIdentifier autoConnectionClientAddress = new IpV4AddressIdentifier(127,0,0,1);
 			AddressIdentifier autoConnectionServerAddress = new IpV4AddressIdentifier(127,0,0,1);
+			Guid lastUsedMedicalPracticeId = Guid.Empty;
 
 			var reader = XmlReader.Create(filename);
 
@@ -89,6 +95,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 							case IsAutoConnectionEnabledAttribute:     isAutoConnectionEnabled     = bool.Parse(reader.Value); break;
 							case AutoConnectionClientAddressAttribute: autoConnectionClientAddress = AddressIdentifier.GetIpAddressIdentifierFromString(reader.Value); break;
 							case AutoConnectionServerAddressAttribute: autoConnectionServerAddress = AddressIdentifier.GetIpAddressIdentifierFromString(reader.Value); break;
+							case LastUsedMedicalPracticeIdAttribute:   lastUsedMedicalPracticeId   = Guid.Parse(reader.Value); break;
 						}
 					}
 					
@@ -96,7 +103,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 			}
 			reader.Close();
 
-			return new LocalSettingsData(isAutoConnectionEnabled, autoConnectionClientAddress, autoConnectionServerAddress);
+			return new LocalSettingsData(isAutoConnectionEnabled, 
+										 autoConnectionClientAddress, 
+										 autoConnectionServerAddress,
+										 lastUsedMedicalPracticeId);
 		}
 	}
 }

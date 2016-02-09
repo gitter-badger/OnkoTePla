@@ -1,9 +1,10 @@
-﻿using bytePassion.Lib.Types.Communication;
+﻿using System;
+using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.Types.Repository;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 {
-	internal class LocalSettingsRepository : ILocalSettingsRepository
+	public class LocalSettingsRepository : ILocalSettingsRepository
 	{
 		private readonly IPersistenceService<LocalSettingsData> persistenceService;
 				
@@ -16,7 +17,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 		{
 			persistenceService.Persist(new LocalSettingsData(IsAutoConnectionEnabled, 
 															 AutoConnectionClientAddress,
-															 AutoConnectionServerAddress));
+															 AutoConnectionServerAddress, 
+															 LastUsedMedicalPracticeId));
 		}
 
 		public void LoadRepository()
@@ -26,10 +28,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.LocalSettings
 			IsAutoConnectionEnabled     = newSettings.IsAutoConnectionEnabled;
 			AutoConnectionClientAddress = newSettings.AutoConnectionClientAddress;
 			AutoConnectionServerAddress = newSettings.AutoConnectionServerAddress;
+			LastUsedMedicalPracticeId   = newSettings.LastUsedMedicalPracticeId;
 		}
 
 		public bool              IsAutoConnectionEnabled     { get; set; }
 		public AddressIdentifier AutoConnectionClientAddress { get; set; }
-		public AddressIdentifier AutoConnectionServerAddress { get; set; }		
+		public AddressIdentifier AutoConnectionServerAddress { get; set; }
+		public Guid              LastUsedMedicalPracticeId   { get; set; }
 	}
 }

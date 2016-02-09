@@ -1,6 +1,6 @@
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 {
-	internal enum ConnectionStatus
+	public enum ConnectionStatus
 	{
 		TryingToConnect,
 		TryingToDisconnect,

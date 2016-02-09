@@ -9,7 +9,8 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.Commands.Updater;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
@@ -25,18 +26,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 {
 	internal class AddAppointmentDialogViewModel : ViewModel, 
                                                    IAddAppointmentDialogViewModel
-	{
-		
-		private readonly IDataCenter dataCenter;
-		private readonly Date creationDate;
-		private readonly Guid medicalPracticeId;
+	{				
+		private readonly IClientReadModelRepository readModelRepository;
+		private readonly Date creationDate;		
 	   
 	    private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
-	    private readonly ISharedStateReadOnly<Patient> selectedPatientVariable;        
-        private readonly IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> allAvailableTimeSlots;
+		private readonly Action<string> errorCallback;
+		private readonly ISharedStateReadOnly<Patient> selectedPatientVariable;      
+		  
+        private IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> allAvailableTimeSlots;
 
 		private Patient selectedPatient;
 
+		private ClientMedicalPracticeData medicalPractice;
 		private byte durationMinutes;
 		private byte durationHours;
 		private AppointmentCreationState creationState;
@@ -44,20 +46,22 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 		
 		private Tuple<TherapyPlaceRowIdentifier, TimeSlot> firstFittingTimeSlot; 
          
-		public AddAppointmentDialogViewModel(IDataCenter dataCenter,
+		public AddAppointmentDialogViewModel(IClientMedicalPracticeRepository medicalPracticeRepository,
+											 IClientReadModelRepository readModelRepository,
                                              IPatientSelectorViewModel patientSelectorViewModel,											 											 
                                              ISharedStateReadOnly<Patient> selectedPatientVariable,
-                                             Date creationDate,
-                                             Guid medicalPracticeId,
-											 IAppointmentViewModelBuilder appointmentViewModelBuilder)
-		{			
-			this.dataCenter = dataCenter;
-			this.creationDate = creationDate;
-			this.medicalPracticeId = medicalPracticeId;
+                                             Date creationDate,   
+											 Guid medicalPracticeId,                                          
+											 IAppointmentViewModelBuilder appointmentViewModelBuilder,
+											 Action<string> errorCallback)
+		{						
+			this.readModelRepository = readModelRepository;
+			this.creationDate = creationDate;			
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
+			this.errorCallback = errorCallback;
 			this.selectedPatientVariable = selectedPatientVariable;
 
-		    allAvailableTimeSlots = GetFreeTimeSlotsForADay(creationDate);					
+			ComputeTimeSlots(medicalPracticeRepository, medicalPracticeId);
 
 			selectedPatientVariable.StateChanged += OnSelectedPatientVariableChanged;
 
@@ -96,7 +100,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 
 		private void DetermineCreationState()
 		{
-			firstFittingTimeSlot = ComputeFirstFittingSlot();
+			if (medicalPractice != null) 
+				firstFittingTimeSlot = ComputeFirstFittingSlot();
 
 			if (firstFittingTimeSlot == null)
 			{
@@ -168,8 +173,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 
 		private void CreateNewAppointment()
 		{
-			var therapyPlace = dataCenter.GetMedicalPracticeByIdAndDate(medicalPracticeId, creationDate)
-										 .GetTherapyPlaceById(firstFittingTimeSlot.Item1.TherapyPlaceId);
+			var therapyPlace = medicalPractice.GetTherapyPlaceById(firstFittingTimeSlot.Item1.TherapyPlaceId);
 
 			var duration = new Duration((uint) (DurationHours * 3600 + DurationMinutes * 60));
 
@@ -180,7 +184,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 																						    firstFittingTimeSlot.Item2.Begin,
 																						    firstFittingTimeSlot.Item2.Begin + duration,
 																						    Guid.NewGuid()),
-											                                new AggregateIdentifier(creationDate, medicalPracticeId));
+											                                new AggregateIdentifier(creationDate, medicalPractice.Id, medicalPractice.Version), 
+																			errorCallback);
 		
 			newAppointmentViewModel.SwitchToEditMode.Execute(true);
 			CloseWindow();
@@ -282,41 +287,52 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 			get { return description; }
 		}                 
 
-		private IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> GetFreeTimeSlotsForADay(Date date)
+		private void ComputeTimeSlots (IClientMedicalPracticeRepository medicalPracticeRepository, Guid medicalPracticeId)
 		{
-
-			IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> allSlots =
-				new Dictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>>();
-
-			var newMedicalPracticeVersion = dataCenter.GetMedicalPracticeByIdAndDate(medicalPracticeId, date);
-
-			if (newMedicalPracticeVersion.HoursOfOpening.IsOpen(date))
-			{
-				var readModel = dataCenter.GetAppointmentsOfADayReadModel(
-					new AggregateIdentifier(date, medicalPracticeId)
-			    );
-
-				IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments =
-					new Dictionary<TherapyPlace, IList<Appointment>>();
-
-				foreach (var therapyPlace in newMedicalPracticeVersion.GetAllTherapyPlaces())
-					sortedAppointments.Add(therapyPlace, new List<Appointment>());
-
-				readModel.Appointments.Do(appointment => sortedAppointments[appointment.TherapyPlace].Add(appointment));
-
-				var openingTime = newMedicalPracticeVersion.HoursOfOpening.GetOpeningTime(date);
-				var closingTime = newMedicalPracticeVersion.HoursOfOpening.GetClosingTime(date);
-
-				foreach (var therapyRowData in sortedAppointments)
+			medicalPracticeRepository.RequestMedicalPractice(
+				loadedPractice =>
 				{
-					var slots = ComputeSlots(openingTime, closingTime, therapyRowData.Value);
+					readModelRepository.RequestAppointmentSetOfADay(
+						fixAppointmentSet =>
+						{
+							medicalPractice = loadedPractice;
 
-					allSlots.Add(new TherapyPlaceRowIdentifier(new AggregateIdentifier(date, medicalPracticeId), therapyRowData.Key.Id),
-						         slots);
-				}
-			}
+							IDictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>> allSlots =
+								new Dictionary<TherapyPlaceRowIdentifier, IEnumerable<TimeSlot>>();
 
-			return allSlots;
+							IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments =
+								new Dictionary<TherapyPlace, IList<Appointment>>();
+
+							foreach (var therapyPlace in medicalPractice.GetAllTherapyPlaces())
+								sortedAppointments.Add(therapyPlace, new List<Appointment>());
+
+							fixAppointmentSet.Appointments.Do(appointment => sortedAppointments[appointment.TherapyPlace].Add(appointment));
+
+							var openingTime = medicalPractice.HoursOfOpening.GetOpeningTime(creationDate);
+							var closingTime = medicalPractice.HoursOfOpening.GetClosingTime(creationDate);
+
+							foreach (var therapyRowData in sortedAppointments)
+							{
+								var slots = ComputeSlots(openingTime, closingTime, therapyRowData.Value);
+
+								allSlots.Add(
+									new TherapyPlaceRowIdentifier(new AggregateIdentifier(creationDate, medicalPractice.Id), therapyRowData.Key.Id),
+									slots);
+							}
+
+							allAvailableTimeSlots = allSlots;							
+						},
+						new AggregateIdentifier(creationDate, medicalPractice.Id, medicalPractice.Version),
+						uint.MaxValue,
+						errorCallback
+					);
+				},
+				medicalPracticeId,
+				creationDate,
+				errorCallback
+			);
+
+
 		}
 
 		private static IEnumerable<TimeSlot> ComputeSlots(Time openingTime, Time closingTime, IEnumerable<Appointment> appointments)
@@ -351,6 +367,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 		{
 			var duration = new Duration((uint) (DurationHours * 3600 + DurationMinutes * 60));
 
+			if (allAvailableTimeSlots == null)
+				return null;
+
 			foreach (var timeSlotsOfARow in allAvailableTimeSlots)
 			{
 				foreach (var timeSlot in timeSlotsOfARow.Value)
@@ -358,7 +377,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 					var slotDuration = new Duration(timeSlot.Begin, timeSlot.End);
 					if (slotDuration >= duration)
 						return new Tuple<TherapyPlaceRowIdentifier, TimeSlot>(
-							new TherapyPlaceRowIdentifier(new AggregateIdentifier(creationDate, medicalPracticeId), timeSlotsOfARow.Key.TherapyPlaceId),
+							new TherapyPlaceRowIdentifier(new AggregateIdentifier(creationDate, medicalPractice.Id), timeSlotsOfARow.Key.TherapyPlaceId),
 							timeSlot 
 						);
 				}

@@ -1,10 +1,9 @@
 ﻿using System.Windows;
 using bytePassion.Lib.Communication.State;
-using bytePassion.OnkoTePla.Communication.NetworkMessageBus;
+using bytePassion.OnkoTePla.Client.DataAndService.EventBus;
 using bytePassion.OnkoTePla.Core.Repositories.Config;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Core.Repositories.Readmodel;
 using bytePassion.OnkoTePla.Core.Repositories.StreamManagement;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
@@ -62,9 +61,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			var dataCenter = dataCenterBuilder.Build();
 		
 
-			var readModelRespository = new ReadModelRepository(eventBus, eventStore, patientRepository, configRepository);
+			//var readModelRespository = new ClientReadModelRepository();
 
-			var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenter, readModelRespository);
+	        var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenter); //r, readModelRespository);
 			var connectionService = connectionServiceBuilder.Build();
 
 

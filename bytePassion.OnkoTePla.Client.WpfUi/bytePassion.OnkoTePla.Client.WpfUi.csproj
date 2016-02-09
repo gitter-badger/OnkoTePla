@@ -160,6 +160,7 @@
     <Compile Include="ViewModels\MainView\IMainViewModel.cs" />
     <Compile Include="ViewModels\MainView\MainViewModel.cs" />
     <Compile Include="ViewModels\MainView\MainViewModelSampleData.cs" />
+    <Compile Include="ViewModels\MedicalPracticeSelector\Helper\MedicalPracticeDisplayData.cs" />
     <Compile Include="ViewModels\NotificationServiceContainer\INotificationServiceContainerViewModel.cs" />
     <Compile Include="ViewModels\NotificationServiceContainer\NotificationServiceContainerViewModel.cs" />
     <Compile Include="ViewModels\NotificationServiceContainer\NotificationServiceContainerViewModelSampleData.cs" />

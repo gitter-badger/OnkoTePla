@@ -15,8 +15,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 	    {
 		    AvailableUsers = new ObservableCollection<ClientUserData>
 		    {
-			    new ClientUserData("user1", Guid.NewGuid()),
-				new ClientUserData("user2", Guid.NewGuid())
+			    new ClientUserData("user1", Guid.NewGuid(), null),
+				new ClientUserData("user2", Guid.NewGuid(), null)
 			};
 
 			ClientIpAddresses = new ObservableCollection<string>

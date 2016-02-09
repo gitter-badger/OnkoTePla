@@ -1,55 +1,72 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector.Helper;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 {
 	internal class MedicalPracticeSelectorViewModel : ViewModel, 
                                                       IMedicalPracticeSelectorViewModel
-	{
-		private readonly IDataCenter                                    dataCenter;		
+	{		
 		private readonly ISharedState<Guid>                             selectedMedicalPracticeIdVariable;
 	    private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable; 
 
-		private MedicalPractice selectedPractice;
+		private MedicalPracticeDisplayData selectedPractice;
 		private bool practiceIsSelectable;
-
-		public MedicalPracticeSelectorViewModel (IDataCenter dataCenter, 
+		
+		public MedicalPracticeSelectorViewModel (ISession session,
+												 IClientMedicalPracticeRepository medicalPracticeRepository,
                                                  ISharedState<Guid> selectedMedicalPracticeIdVariable, 
-                                                 ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable)
-		{
-		    this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
+                                                 ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
+												 Action<string> errorCallback)
+		{			
+			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
-		    this.dataCenter = dataCenter;
+		   
 
 			
 			selectedMedicalPracticeIdVariable.StateChanged += OnSelectedMedicalPracticeIdVariableChanged;
             appointmentModificationsVariable.StateChanged += OnAppointmentModificationVariableChanged;
 
-			AvailableMedicalPractices = dataCenter.GetAllMedicalPractices()
-                                                  .ToObservableCollection();
+			AvailableMedicalPractices = session.LoggedInUser
+											   .ListOfAccessablePractices
+											   .Select(practiceId => new MedicalPracticeDisplayData(practiceId, practiceId.ToString()))
+											   .ToObservableCollection();
 
-			SelectedMedicalPractice = dataCenter.GetMedicalPracticeById(selectedMedicalPracticeIdVariable.Value);
+			foreach (var medicalPracticeDisplayData in AvailableMedicalPractices)
+			{
+				medicalPracticeRepository.RequestMedicalPractice(
+					practice =>
+					{
+						medicalPracticeDisplayData.PracticeName = practice.Name;
+					},
+					medicalPracticeDisplayData.MedicalPracticeId,
+					errorCallback						
+				);
+			}
+
+			SelectedMedicalPractice = AvailableMedicalPractices.First(practice => practice.MedicalPracticeId == selectedMedicalPracticeIdVariable.Value);						
 
 			PracticeIsSelectable = true;
 		}
 
-        public ObservableCollection<MedicalPractice> AvailableMedicalPractices { get; }         		
+        public ObservableCollection<MedicalPracticeDisplayData> AvailableMedicalPractices { get; }         		
 
-		public MedicalPractice SelectedMedicalPractice
+		public MedicalPracticeDisplayData SelectedMedicalPractice
 		{
 			get { return selectedPractice; }
 			set
 			{
 				if (!Equals(selectedPractice, value))
 				{					
-					selectedMedicalPracticeIdVariable.Value = value.Id;
+					selectedMedicalPracticeIdVariable.Value = value.MedicalPracticeId;
 				}
 
 				PropertyChanged.ChangeAndNotify(this, ref selectedPractice, value);
@@ -69,8 +86,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 
         private void OnSelectedMedicalPracticeIdVariableChanged(Guid medicalPracticeId)
         {
-            selectedPractice = dataCenter.GetMedicalPracticeById(medicalPracticeId);
-            PropertyChanged.Notify(this, nameof(SelectedMedicalPractice));
+            selectedPractice = AvailableMedicalPractices.First(practice => practice.MedicalPracticeId == medicalPracticeId);
+			PropertyChanged.Notify(this, nameof(SelectedMedicalPractice));
         }
 
         protected override void CleanUp()

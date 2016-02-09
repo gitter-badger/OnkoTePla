@@ -66,6 +66,7 @@
     <Compile Include="Connection\RequestHandling\Handlers\GetAppointmentsOfADayRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetMedicalPracticeRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetPatientListRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\GetPracticeVersionInfoRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetTherapyPlaceListRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\LoginRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\LogoutRequestHandler.cs" />
@@ -89,6 +90,9 @@
     <Compile Include="LocalSettings\LocalSettingsXMLPersistenceService.cs" />
     <Compile Include="MedicalPracticeRepository\ClientMedicalPracticeRepository.cs" />
     <Compile Include="MedicalPracticeRepository\IClientMedicalPracticeRepository.cs" />
+    <Compile Include="Readmodels\FixedAppointmentSet.cs" />
+    <Compile Include="TherapyPlaceTypeRepository\ClientTherapyPlaceTypeRepository.cs" />
+    <Compile Include="TherapyPlaceTypeRepository\IClientTherapyPlaceTypeRepository.cs" />
     <Compile Include="PatientRepository\ClientPatientRepository.cs" />
     <Compile Include="PatientRepository\IClientPatientRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

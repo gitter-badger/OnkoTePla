@@ -1,23 +1,22 @@
-﻿using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector.Helper;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 {
-    public class MedicalPracticeSelectorViewModelSampleData : IMedicalPracticeSelectorViewModel
+	internal class MedicalPracticeSelectorViewModelSampleData : IMedicalPracticeSelectorViewModel
 	{
 		public MedicalPracticeSelectorViewModelSampleData()
 		{
-			var med1 = new MedicalPractice(new List<Room>(), "examplePractice 1", 2, new Guid(), null, null);
-			var med2 = new MedicalPractice(new List<Room>(), "examplePractice 2", 2, new Guid(), null, null);
+			var med1 = new MedicalPracticeDisplayData(Guid.Empty, "examplePractice 1");
+			var med2 = new MedicalPracticeDisplayData(Guid.Empty, "examplePractice 1");
 
 			SelectedMedicalPractice = med1;
-
-			AvailableMedicalPractices = new ObservableCollection<MedicalPractice>
+			
+			AvailableMedicalPractices = new ObservableCollection<MedicalPracticeDisplayData>
 			{
 				med1,
 				med2
@@ -26,8 +25,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 			PracticeIsSelectable = true;
 		}
 
-		public MedicalPractice SelectedMedicalPractice { get; set; }
-		public ObservableCollection<MedicalPractice> AvailableMedicalPractices { get; }
+		public MedicalPracticeDisplayData SelectedMedicalPractice { get; set; }
+		public ObservableCollection<MedicalPracticeDisplayData> AvailableMedicalPractices { get; }
 		public bool PracticeIsSelectable { get; }
 		
 	    public void Dispose() {	}

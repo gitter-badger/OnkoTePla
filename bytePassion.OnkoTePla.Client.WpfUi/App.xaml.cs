@@ -3,8 +3,18 @@ using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.DataAndService.Factorys;
+using bytePassion.OnkoTePla.Client.DataAndService.Connection;
+using bytePassion.OnkoTePla.Client.DataAndService.EventBus;
+using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
+using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
+using bytePassion.OnkoTePla.Client.DataAndService.TherapyPlaceTypeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
+using bytePassion.OnkoTePla.Core.CommandSystem;
+using bytePassion.OnkoTePla.Resources;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi
@@ -21,16 +31,41 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			////////                          Composition Root and Setup                         //////////
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
-		
-			var sessionBuilder = new SessionBuilder();
+
+			//var sessionBuilder = new SessionBuilder();
+
+
+			//var sessionLogger    = LogManager.GetLogger("sessionLogger");
+			//var connectionLogger = LogManager.GetLogger("connectionLogger");
+
+
+			var connectionService = new ConnectionService();
+
+			var workFlow = new ClientWorkflow();
+
+			var session = new Session(connectionService, workFlow);
+
+			var eventBus = new ClientEventBus();
+
+			var commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
+			var commandMessageBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
+			var commandBus = new CommandBus(commandMessageBus);
+
+			var persistenceService = new LocalSettingsXMLPersistenceService(GlobalConstants.LocalSettingsPersistenceFile);
+			var localSettingsRepository = new LocalSettingsRepository(persistenceService);
 			
-			var session    = sessionBuilder.Build();					
-			var dataCenter = new DataCenterBuilder().Build();
+			var clientMedicalPracticeRepository  = new ClientMedicalPracticeRepository(connectionService);
+			var clientPatientRepository          = new ClientPatientRepository(connectionService);
+			var clienttherapyPlaceTypeRepository = new ClientTherapyPlaceTypeRepository(connectionService);
+			var clientReadmodelRepository        = new ClientReadModelRepository(eventBus, clientPatientRepository,clientMedicalPracticeRepository, connectionService);
+
+			//var session    = sessionBuilder.Build();					
+			//var dataCenter = new DataCenterBuilder().Build();
 
 
-            // initiate ViewModelCommunication			
+			// initiate ViewModelCommunication			
 
-            IHandlerCollection<ViewModelMessage> handlerCollection = new MultiHandlerCollection<ViewModelMessage>();
+			var handlerCollection = new MultiHandlerCollection<ViewModelMessage>();
             IMessageBus<ViewModelMessage> viewModelMessageBus = new LocalMessageBus<ViewModelMessage>(handlerCollection);
             IViewModelCollections viewModelCollections = new ViewModelCollections();
 
@@ -38,12 +73,21 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
                                                                                         viewModelCollections);			
           
 
-            var mainWindowBuilder = new MainWindowBuilder(dataCenter, 
+            var mainWindowBuilder = new MainWindowBuilder(localSettingsRepository,clientPatientRepository,clientMedicalPracticeRepository,clienttherapyPlaceTypeRepository,clientReadmodelRepository,commandBus, 
                                                           viewModelCommunication,
 														  session,														   														 
                                                           "0.1.0.0");               // TODO: get real versionNumber       
 
-			var mainWindow = mainWindowBuilder.BuildWindow();
+			var mainWindow = mainWindowBuilder.BuildWindow(
+				errorMsg =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						MessageBox.Show("fatal Error >>>>");
+					});
+				}					
+			);
+
 			mainWindow.ShowDialog();
 
 
@@ -55,10 +99,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			///////////////////////////////////////////////////////////////////////////////////////////////
 			
 
-			sessionBuilder.DisposeSession();
+			//sessionBuilder.DisposeSession();
 
-			dataCenter.PersistEventstore();					// TODO: just for testing
-			dataCenter.PersistLocalSettings();
+			//dataCenter.PersistEventstore();					// TODO: just for testing
+			//dataCenter.PersistLocalSettings();
 		}		
 	}
 }

@@ -31,10 +31,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		private readonly TherapyPlaceRowIdentifier initialLocalisation;
 
 		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
-	    private readonly ISharedState<Date> selectedDateVariable;
-        private readonly IWindowBuilder<EditDescription> editDescriptionWindowBuilder;
+	    private readonly ISharedState<Date> selectedDateVariable;		
 
-        private TherapyPlaceRowIdentifier currentLocation;
+		private TherapyPlaceRowIdentifier currentLocation;
 		private OperatingMode operatingMode;
 		
 		private Time   beginTime;
@@ -52,14 +51,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
                                     ISharedState<Date> selectedDateVariable,									
                                     IAppointmentModificationsBuilder appointmentModificationsBuilder,
                                     IWindowBuilder<EditDescription> editDescriptionWindowBuilder,
-                                    AdornerControl adornerControl)
+                                    AdornerControl adornerControl,
+									Action<string> errorCallback)
 		{ 						
 			this.appointment = appointment; 
 			this.initialLocalisation = initialLocalisation;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
-		    this.selectedDateVariable = selectedDateVariable;
-		    this.editDescriptionWindowBuilder = editDescriptionWindowBuilder;
-		    ViewModelCommunication = viewModelCommunication;
+		    this.selectedDateVariable = selectedDateVariable;	        
+	        ViewModelCommunication = viewModelCommunication;
 			AdornerControl = adornerControl;					
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentViewModel, Guid>(
@@ -73,8 +72,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 					{
 					    CurrentAppointmentModifications = appointmentModificationsBuilder.Build(appointment,
 					                                                                            initialLocalisation.PlaceAndDate.MedicalPracticeId,
-					                                                                            isInitalAdjusting); 
-
+					                                                                            isInitalAdjusting,
+																								errorCallback); 
+						
 						CurrentAppointmentModifications.PropertyChanged += OnAppointmentModificationsPropertyChanged;
 						appointmentModificationsVariable.Value = CurrentAppointmentModifications;
 						OperatingMode = OperatingMode.Edit;
@@ -106,7 +106,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
             {
                 viewModelCommunication.Send(new ShowDisabledOverlay());
 
-                var dialog = editDescriptionWindowBuilder.BuildWindow();
+                var dialog = editDescriptionWindowBuilder.BuildWindow(errorCallback);
                 dialog.ShowDialog();
 
                 viewModelCommunication.Send(new HideDisabledOverlay());

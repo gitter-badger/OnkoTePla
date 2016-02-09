@@ -1,11 +1,12 @@
-﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
+﻿using System;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Core.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel
 {
-    internal interface IAppointmentGridViewModelBuilder
+	internal interface IAppointmentGridViewModelBuilder
 	{
-		IAppointmentGridViewModel Build(AggregateIdentifier identifier);
+		void RequestBuild(Action<IAppointmentGridViewModel> viewModelAvailableCallback, AggregateIdentifier identifier, Action<string> errorCallback);
 	}
 }
