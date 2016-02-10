@@ -60,6 +60,7 @@
     <Compile Include="Connection\ResponseHandling\Handers\EndConnectionResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetAccessablePracticesResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetAppointemntsOfADayResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\GetPracticeVersionInfoResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetMedicalPracticeResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetPatientListResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetTherapyPlaceTypeListResponseHandler.cs" />

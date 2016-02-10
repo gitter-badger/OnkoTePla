@@ -25,7 +25,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 		 
 		public override string AsString()
 		{
-			return $"{SessionId};{UserId};{Day};{MedicalPracticeId}";
+			return $"{SessionId};{UserId};{Day};{MedicalPracticeId};{AggregateVersionLimit}";
 		}
 
 		public static GetAppointmentsOfADayRequest Parse (string s)

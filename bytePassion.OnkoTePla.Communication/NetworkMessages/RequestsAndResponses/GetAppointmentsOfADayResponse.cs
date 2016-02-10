@@ -59,26 +59,29 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			var medicalPracticeVersion = uint.Parse(parts[1]);
 			var aggregateVersion       = uint.Parse(parts[2]);
 			var appointmentListData    =            parts[3];
-			
-			var appointmentListParts = appointmentListData.Split(';');
+						
 			var appointmentList = new List<AppointmentTransferData>();
 
-			foreach (var appointmentData in appointmentListParts)
+			if (!string.IsNullOrWhiteSpace(appointmentListData))
 			{
-				var appointmentParts = appointmentData.Split(',');
+				var appointmentListParts = appointmentListData.Split(';');
 
-				var patientId      = Guid.Parse(appointmentParts[0]);
-				var description    =            appointmentParts[1];
-				var day            = Date.Parse(appointmentParts[2]);
-				var startTime      = Time.Parse(appointmentParts[3]);
-				var endTime        = Time.Parse(appointmentParts[4]);
-				var therapyPlaceId = Guid.Parse(appointmentParts[5]);
-				var id             = Guid.Parse(appointmentParts[6]);
+				foreach (var appointmentData in appointmentListParts)
+				{
+					var appointmentParts = appointmentData.Split(',');
 
-				appointmentList.Add(new AppointmentTransferData(patientId, description, day, 
-																startTime, endTime, therapyPlaceId, id));
+					var patientId      = Guid.Parse(appointmentParts[0]);
+					var description    =            appointmentParts[1];
+					var day            = Date.Parse(appointmentParts[2]);
+					var startTime      = Time.Parse(appointmentParts[3]);
+					var endTime        = Time.Parse(appointmentParts[4]);
+					var therapyPlaceId = Guid.Parse(appointmentParts[5]);
+					var id             = Guid.Parse(appointmentParts[6]);
+
+					appointmentList.Add(new AppointmentTransferData(patientId, description, day,
+																	startTime, endTime, therapyPlaceId, id));
+				}
 			}
-
 			return new GetAppointmentsOfADayResponse(medicalPracticeId, medicalPracticeVersion, 
 													aggregateVersion, appointmentList);
 		}

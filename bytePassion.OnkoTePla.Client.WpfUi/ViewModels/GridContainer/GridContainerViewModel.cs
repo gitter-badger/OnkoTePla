@@ -7,6 +7,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
@@ -22,6 +23,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 		private readonly IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder;
 		private readonly Action<string> errorCallback;
 
+		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
 		private readonly ISharedStateReadOnly<Date> selectedDateVariable;
 		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
 	    private readonly ISharedState<Size> appointmentGridSizeVariable;
@@ -33,6 +35,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 		private AggregateIdentifier? currentDisplayedAppointmentGridIdentifier;
 		
 		public GridContainerViewModel(IViewModelCommunication viewModelCommunication,
+									  IClientMedicalPracticeRepository medicalPracticeRepository,
                                       ISharedStateReadOnly<Date> selectedDateVariable, 
                                       ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
 									  ISharedState<Size> appointmentGridSizeVariable,									  
@@ -45,7 +48,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 
 			
 			ViewModelCommunication = viewModelCommunication;
-		    this.selectedDateVariable = selectedDateVariable;
+			this.medicalPracticeRepository = medicalPracticeRepository;
+			this.selectedDateVariable = selectedDateVariable;
 		    this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 		    this.appointmentGridSizeVariable = appointmentGridSizeVariable;		    
 			this.appointmentGridViewModelBuilder = appointmentGridViewModelBuilder;
@@ -63,8 +67,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 
 			selectedDateVariable.StateChanged              += OnSelectedDateStateChanged;
 			selectedMedicalPracticeIdVariable.StateChanged += OnDisplayedPracticeStateChanged;
-
-			ShowGridViewModel(new AggregateIdentifier(selectedDateVariable.Value, selectedMedicalPracticeIdVariable.Value));			
+			
+			medicalPracticeRepository.RequestPraticeVersion(
+				practiceVersion =>
+				{
+					var newIdentifier = new AggregateIdentifier(selectedDateVariable.Value, selectedMedicalPracticeIdVariable.Value, practiceVersion);
+					TryToShowGridViewModel(newIdentifier);
+				},
+				selectedMedicalPracticeIdVariable.Value,
+				selectedDateVariable.Value,
+				errorCallback
+			);
 		}		
 
 		public ObservableCollection<IAppointmentGridViewModel> LoadedAppointmentGrids { get; }
@@ -92,8 +105,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 				appointmentGridViewModelBuilder.RequestBuild(
 					buildedViewModel =>
 					{
-						cachedAppointmentGridViewModels.Add(identifier, buildedViewModel);
-						LoadedAppointmentGrids.Add(buildedViewModel);
+						Application.Current.Dispatcher.Invoke(() =>
+						{
+							cachedAppointmentGridViewModels.Add(identifier, buildedViewModel);
+							LoadedAppointmentGrids.Add(buildedViewModel);
+
+							if (identifier.Date == selectedDateVariable.Value &&
+								identifier.MedicalPracticeId == selectedMedicalPracticeIdVariable.Value)
+							{
+								DisplayCachedViewModel(identifier);
+							}
+						});						
 					},
 					identifier,
 					errorCallback	
@@ -131,14 +153,30 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 
 		private void OnDisplayedPracticeStateChanged(Guid medicalPracticeId)
 		{
-			var newIdentifier = new AggregateIdentifier(selectedDateVariable.Value, medicalPracticeId);
-			ShowGridViewModel(newIdentifier);
+			medicalPracticeRepository.RequestPraticeVersion(
+				practiceVersion =>
+				{
+					var newIdentifier = new AggregateIdentifier(selectedDateVariable.Value, medicalPracticeId, practiceVersion);
+					TryToShowGridViewModel(newIdentifier);
+				},
+				medicalPracticeId,
+				selectedDateVariable.Value,
+				errorCallback	
+			);			
 		}
 
 		private void OnSelectedDateStateChanged (Date date)
-		{			
-			var newIdentifier = new AggregateIdentifier(date, selectedMedicalPracticeIdVariable.Value);
-			ShowGridViewModel(newIdentifier);			
+		{
+			medicalPracticeRepository.RequestPraticeVersion(
+				practiceVersion =>
+				{
+					var newIdentifier = new AggregateIdentifier(date, selectedMedicalPracticeIdVariable.Value, practiceVersion);
+					TryToShowGridViewModel(newIdentifier);
+				},
+				selectedMedicalPracticeIdVariable.Value,
+				date,
+				errorCallback
+			);		
 		}
 
 		private void ActivateGridViewModel(AggregateIdentifier identifier)
@@ -157,16 +195,22 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 				identifier,
 				new Deactivate()
 			);
-		}
+		}		
 
-		private void ShowGridViewModel(AggregateIdentifier identifier)
+		private void TryToShowGridViewModel(AggregateIdentifier identifier)
 		{			
 			if (currentDisplayedAppointmentGridIdentifier.HasValue)
 				DeactivateGridViewModel(currentDisplayedAppointmentGridIdentifier.Value);
 
 			if (!GridViewModelIsCached(identifier))
 				AddGridViewModel(identifier);
+			else			
+				DisplayCachedViewModel(identifier);
+						
+		}
 
+		private void DisplayCachedViewModel(AggregateIdentifier identifier)
+		{
 			CurrentDisplayedAppointmentGridIndex      = GetGridIndex(identifier);
 			currentDisplayedAppointmentGridIdentifier = identifier;
 

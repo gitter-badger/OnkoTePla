@@ -61,7 +61,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			{
 				var userName = userParts[0];
 				var userId = Guid.Parse(userParts[1]);
-				var practiceListParts = userParts[3].Split(',')
+				var practiceListParts = userParts[2].Split(',')
 													.Select(Guid.Parse)
 													.ToList();
 

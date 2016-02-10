@@ -181,7 +181,7 @@
 							<Button Width="100"
                                     Height="25"
                                     Margin="0,0,10,0"
-                                    Command="{Binding Connect}"
+                                    Command="{Binding DebugConnect}"
                                     Content="Debug Connect" />
 
 							<Button Width="100"

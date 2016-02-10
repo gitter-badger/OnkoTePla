@@ -1,6 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling;
@@ -44,8 +45,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 					if (request == null)
 						continue;
 
-					var responseHandler = responseHandlerFactory.GetHandler(request, socket);
-					responseHandler.Handle(request);					
+					var blubb = Converter.ChangeTo(request, request.GetType());
+
+					var responseHandler = responseHandlerFactory.GetHandler(blubb, socket);
+					responseHandler.Handle(blubb);					
 				}
 			}
 

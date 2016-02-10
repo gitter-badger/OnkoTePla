@@ -2,9 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:infrastructure="clr-namespace:bytePassion.OnkoTePla.Contracts.Infrastructure;assembly=bytePassion.OnkoTePla.Contracts"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
              xmlns:medicalPracticeSelector="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector"
+             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="300">
 	
@@ -19,8 +19,8 @@
 									 UpdateSourceTrigger=PropertyChanged}">
         
 		<ComboBox.ItemTemplate>
-			<DataTemplate DataType="infrastructure:MedicalPractice">
-				<TextBlock Text="{Binding Name}"/>
+			<DataTemplate DataType="helper:MedicalPracticeDisplayData">
+				<TextBlock Text="{Binding PracticeName}"/>
 			</DataTemplate>
 		</ComboBox.ItemTemplate>
 		

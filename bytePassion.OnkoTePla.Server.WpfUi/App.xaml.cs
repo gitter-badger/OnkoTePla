@@ -61,7 +61,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 			// DataAndService
 
-			var dataCenterBuilder = new DataCenterBuilder(patientRepository, configRepository);
+			var dataCenterBuilder = new DataCenterBuilder(patientRepository, configRepository, eventStore);
 			var dataCenter = dataCenterBuilder.Build();					
 
 	        var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenter, eventStore); 

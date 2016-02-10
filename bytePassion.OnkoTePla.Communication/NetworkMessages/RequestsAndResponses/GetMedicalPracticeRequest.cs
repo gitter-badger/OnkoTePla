@@ -7,7 +7,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 	{
 		public GetMedicalPracticeRequest (ConnectionSessionId sessionId, Guid userId, 
 										  Guid medicalPracticeId, uint medicalPraciceVersion)
-			: base (NetworkMessageType.GetPatientListRequest)
+			: base (NetworkMessageType.GetMedicalPracticeRequest)
 		{			
 			SessionId = sessionId;
 			UserId = userId;

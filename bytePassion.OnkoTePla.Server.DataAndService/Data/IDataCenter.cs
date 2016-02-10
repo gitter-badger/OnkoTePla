@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
@@ -30,5 +31,6 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		void RemoveMedicalPractice(MedicalPractice medicalPracticeToRemove);
 		MedicalPractice GetMedicalPractice(Guid id);
 		MedicalPractice GetMedicalPractice(Guid id, uint version);
+		uint GetMedicalPracticeVersion(Guid id, Date date); 
 	}
 }

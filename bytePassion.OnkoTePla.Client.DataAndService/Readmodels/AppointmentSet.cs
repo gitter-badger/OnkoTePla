@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
 using bytePassion.OnkoTePla.Contracts.Appointments;
@@ -47,16 +48,19 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Readmodels
 		{	
 			patientRepository.RequestPatient(
 				patient =>
-				{					
-					var newAppointment = new Appointment(patient, 
-														 appointmentData.Description, 
-														 medicalPractice.GetTherapyPlaceById(appointmentData.TherapyPlaceId),
-														 appointmentData.Day, 
-														 appointmentData.StartTime, 
-														 appointmentData.EndTime,
-														 appointmentData.AppointmentId);
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						var newAppointment = new Appointment(patient,
+															 appointmentData.Description,
+															 medicalPractice.GetTherapyPlaceById(appointmentData.TherapyPlaceId),
+															 appointmentData.Day,
+															 appointmentData.StartTime,
+															 appointmentData.EndTime,
+															 appointmentData.AppointmentId);
 
-					ObservableAppointments.AddAppointment(newAppointment);
+						ObservableAppointments.AddAppointment(newAppointment);
+					});								
 				},
 				appointmentData.PatientId,
 				errorCallback	

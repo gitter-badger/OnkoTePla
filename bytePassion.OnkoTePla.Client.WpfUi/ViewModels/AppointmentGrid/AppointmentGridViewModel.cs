@@ -85,7 +85,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			);
 
 			Identifier = identifier;
-			
+
+			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();
 
 			readModelRepository.RequestAppointmentsOfADayReadModel(
 				newReadModel =>
@@ -98,9 +99,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
 						TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication,
 																  medicalPractice, gridSizeVariable.Value);
-
-						TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();
-
+						
 
 						var requestedViewModels = 0;
 						var buildedViewModels = 0;
@@ -117,6 +116,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 									{
 										TherapyPlaceRowViewModels.Add(viewModel);
 										buildedViewModels++;
+
+										viewModelCommunication.SendTo(
+											Constants.TherapyPlaceRowViewModelCollection,
+											location,
+											new NewSizeAvailable(gridSizeVariable.Value)
+										);
 									},
 									therapyPlace,
 									room,

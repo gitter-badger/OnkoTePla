@@ -35,8 +35,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository
 					errorCallback
 				);
 			}
-			
-			practiceAvailableCallback(medicalPractice);
+			else
+			{
+				practiceAvailableCallback(medicalPractice);
+			} 						
 		}
 
 		public void RequestMedicalPractice(Action<ClientMedicalPracticeData> practiceAvailableCallback, 
@@ -59,14 +61,64 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository
 			);
 		}
 
-		public void RequestMedicalPractice(Action<ClientMedicalPracticeData> practiceAvailableCallback, Guid practiceId, Date day, Action<string> errorCallback)
+		public void RequestMedicalPractice(Action<ClientMedicalPracticeData> practiceAvailableCallback, 
+										   Guid practiceId, Date day, Action<string> errorCallback)
 		{
-			RequestPraticeVersion(
-				practiceVersion => RequestMedicalPractice(practiceAvailableCallback, practiceId, day, errorCallback),
-				practiceId,
-				day,
-				errorCallback	
-			);
+
+			if (!cachedPracticeVersionInfo.ContainsKey(practiceId))
+				cachedPracticeVersionInfo.Add(practiceId, new Dictionary<Date, uint>());
+
+			var subDictionary = cachedPracticeVersionInfo[practiceId];
+
+			if (subDictionary.ContainsKey(day))
+			{				
+				if (cachedMedicalPractices.Any(practice => practice.Id == practiceId && practice.Version == subDictionary[day]))
+				{
+					practiceAvailableCallback(cachedMedicalPractices.First(practice => practice.Id == practiceId && practice.Version == subDictionary[day]));
+					return;
+				}
+
+				connectionService.RequestMedicalPractice(
+					medicalPractice =>
+					{
+						cachedMedicalPractices.Add(medicalPractice);
+						practiceAvailableCallback(medicalPractice);
+					},
+					practiceId, subDictionary[day],
+					errorCallback
+				);
+			}
+			else
+			{
+				connectionService.RequestPracticeVersionInfo(
+					practiceVersion =>
+					{
+						if (!subDictionary.ContainsKey(day))
+							subDictionary.Add(day, practiceVersion);
+
+						if (cachedMedicalPractices.Any(practice => practice.Id == practiceId && practice.Version == practiceVersion))
+						{
+							practiceAvailableCallback(cachedMedicalPractices.First(practice => practice.Id == practiceId && practice.Version == practiceVersion));
+							return;
+						}
+
+						connectionService.RequestMedicalPractice(
+							medicalPractice =>
+							{
+								cachedMedicalPractices.Add(medicalPractice);
+								practiceAvailableCallback(medicalPractice);
+							},
+							practiceId, practiceVersion,
+							errorCallback
+						);
+					},
+					practiceId,
+					day,
+					errorCallback
+				);
+			}
+
+
 		}
 
 		public void RequestPraticeVersion(Action<uint> practiceVersionAvailableCallback, 

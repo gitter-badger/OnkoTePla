@@ -35,7 +35,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Domain;
@@ -90,27 +89,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 	        {
 		        lastUsedMedicalPracticeId = session.LoggedInUser.ListOfAccessablePractices.First();
 	        }
-
-	        ClientMedicalPracticeData initialMedicalPractice = null;
-
-			medicalPracticeRepository.RequestPraticeVersion(
-				practiceVersion =>
-				{
-					medicalPracticeRepository.RequestMedicalPractice(
-						practice => initialMedicalPractice = practice,
-						lastUsedMedicalPracticeId,
-						practiceVersion,
-						errorCallback	
-					);
-				},
-				lastUsedMedicalPracticeId,
-				firstDispayedDate,
-				errorCallback					
-			);           
-
+	       			    
             var gridSizeVariable                  = new SharedState<Size>(new Size(400, 400));
-            var selectedDateVariable              = new SharedState<Date>(firstDispayedDate);     // TODO kann gefährlich sein ,wenn der letzte tag zu einer anderen config gehört
-            var selectedMedicalPracticeIdVariable = new SharedState<Guid>(initialMedicalPractice.Id);
+            var selectedDateVariable              = new SharedState<Date>(firstDispayedDate);    
+            var selectedMedicalPracticeIdVariable = new SharedState<Guid>(lastUsedMedicalPracticeId);
             var roomFilterVariable                = new SharedState<Guid?>();
             var appointmentModificationsVariable  = new SharedState<AppointmentModifications>();
 
@@ -205,6 +187,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             var dateSelectorViewModel = new DateSelectorViewModel(selectedDateVariable);
 
             var gridContainerViewModel = new GridContainerViewModel(viewModelCommunication,
+																	medicalPracticeRepository,
                                                                     selectedDateVariable,
                                                                     selectedMedicalPracticeIdVariable,
                                                                     gridSizeVariable,

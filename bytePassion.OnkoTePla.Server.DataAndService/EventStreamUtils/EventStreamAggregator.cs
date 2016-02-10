@@ -18,7 +18,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 
 			foreach (var domainEvent in eventStreamOfADay.Events)
 			{
-				if (AggregateVersion + 1 != domainEvent.AggregateVersion)
+				if (AggregateVersion != domainEvent.AggregateVersion)
 					throw new VersionNotApplicapleException();
 
 				if (domainEvent.AggregateVersion > eventStreamLimit)
@@ -62,7 +62,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 															addedEvent.CreateAppointmentData.EndTime,
 															addedEvent.CreateAppointmentData.TherapyPlaceId,
 															addedEvent.CreateAppointmentData.AppointmentId));
-			AggregateVersion = addedEvent.AggregateVersion;
+			AggregateVersion = addedEvent.AggregateVersion + 1;
 		}
 		
 		private void HandleReplacedEvent(AppointmentReplaced replacedEvent, ICollection<AppointmentTransferData> appointmentList)
@@ -77,14 +77,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 															replacedEvent.NewEndTime,
 															replacedEvent.NewTherapyPlaceId,
 															originalAppointment.Id));
-			AggregateVersion = replacedEvent.AggregateVersion;
+			AggregateVersion = replacedEvent.AggregateVersion + 1;
 		}
 
 		private void HandleDeletedEvent(AppointmentDeleted deletedEvent, ICollection<AppointmentTransferData> appointmentList)
 		{
 			var appointmentToDelete = appointmentList.First(appointment => appointment.Id == deletedEvent.RemovedAppointmentId);
 			appointmentList.Remove(appointmentToDelete);
-			AggregateVersion = deletedEvent.AggregateVersion;
+			AggregateVersion = deletedEvent.AggregateVersion + 1;
 		}
 	}
 }

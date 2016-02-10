@@ -1,4 +1,5 @@
 ﻿using bytePassion.OnkoTePla.Core.Repositories.Config;
+using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Core.Repositories.Patients;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 
@@ -9,18 +10,22 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 		
 		private readonly PatientRepository patientRepository;
 		private readonly ConfigurationRepository configRepository;
+		private readonly IEventStore eventStore;
 
 		public DataCenterBuilder(PatientRepository patientRepository, 
-								 ConfigurationRepository configRepository)
+								 ConfigurationRepository configRepository,
+								 IEventStore eventStore)
 		{
 			this.patientRepository = patientRepository;
 			this.configRepository = configRepository;
+			this.eventStore = eventStore;
 		}
 
 		public IDataCenter Build()
 		{
 			return new DataCenter(configRepository, configRepository,
-								  patientRepository, patientRepository);
+								  patientRepository, patientRepository,
+								  eventStore);
 		}
 
 		public void PersistConfigRepostiory()

@@ -288,6 +288,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 			{
 				PropertyChanged.ChangeAndNotify(this, ref serverAddress, value);
 				((Command)Connect).RaiseCanExecuteChanged();
+				((Command)DebugConnect).RaiseCanExecuteChanged();
 			}
 		}
 
