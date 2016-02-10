@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Core.Domain.Events;
+using bytePassion.OnkoTePla.Core.Eventsystem;
 using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using Newtonsoft.Json;
 
@@ -14,6 +18,7 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
 
         public StreamMetaDataService(string baseDir)
         {
+            metaDataFiles = new Dictionary<Guid, PracticeMetaData>();
             this.baseDir = baseDir;
         }
 
@@ -52,36 +57,82 @@ namespace bytePassion.OnkoTePla.Core.Repositories.StreamManagement
             }
         }
 
-        public void UpdateMetaDataForPractice(IEnumerable<EventStream<AggregateIdentifier>> streams)
+        public void UpdateMetaDataForPractice(DomainEvent @event)
         {
-            UpdateFirstAppointmentDate(streams);
-            UpdateLastAppointmentDate(streams);
-            UpdateAppointmentsExistenceIndex(streams);
+            UpdateFirstAndLastAppointmentDate(@event);
+            UpdateAppointmentsExistenceIndex(@event);
         }
 
-        public void UpdateMetaDataForPatient(IEnumerable<EventStream<AggregateIdentifier>> streams, Guid patientId)
+
+        public void UpdateMetaDataForPatient(DomainEvent @event)
         {
-            UpdateAppointmentsForPatient(streams, patientId);
+            var id = @event.AggregateId.MedicalPracticeId;
+            var targetDate = @event.AggregateId.Date;
+            var patientId = @event.PatientId;
+
+
+            if (@event.GetType() == typeof (AppointmentAdded))
+            {
+                if (!metaDataFiles[id].AppointmentsForPatient[patientId].Contains(targetDate))
+                {
+                    metaDataFiles[id].AppointmentsForPatient[patientId].Add(targetDate);
+                }
+            }
+            else if (@event.GetType() == typeof(AppointmentDeleted))
+            {
+                if (metaDataFiles[id].AppointmentsForPatient[patientId].Contains(targetDate))
+                {
+                    metaDataFiles[id].AppointmentsForPatient[patientId].Remove(targetDate);
+                }
+            }
+
         }
 
-        private void UpdateAppointmentsExistenceIndex(IEnumerable<EventStream<AggregateIdentifier>> streams)
+        private void UpdateAppointmentsExistenceIndex(DomainEvent @event)
         {
-            throw new NotImplementedException();
+            var id = @event.AggregateId.MedicalPracticeId;
+            var targetDate = @event.AggregateId.Date;
+
+            if (@event.GetType() == typeof (AppointmentAdded))
+            {
+                if (!metaDataFiles[id].AppointmentExistenceIndex.ContainsKey(targetDate))
+                {
+                    metaDataFiles[id].AppointmentExistenceIndex.Add(targetDate, 1);
+                }
+                else
+                {
+                    metaDataFiles[id].AppointmentExistenceIndex[targetDate] += 1;
+                }
+            }
+            else if (@event.GetType() == typeof (AppointmentDeleted))
+            {
+                if (!metaDataFiles[id].AppointmentExistenceIndex.ContainsKey(targetDate))
+                {
+                    metaDataFiles[id].AppointmentExistenceIndex.Add(targetDate, 0);
+                }
+                else
+                {
+                    metaDataFiles[id].AppointmentExistenceIndex[targetDate] -= 1;
+                }
+            }
         }
 
-        private void UpdateLastAppointmentDate(IEnumerable<EventStream<AggregateIdentifier>> streams)
+        private void UpdateFirstAndLastAppointmentDate(DomainEvent @event)
         {
-            throw new NotImplementedException();
-        }
-
-        private void UpdateFirstAppointmentDate(IEnumerable<EventStream<AggregateIdentifier>> streams)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void UpdateAppointmentsForPatient(IEnumerable<EventStream<AggregateIdentifier>> streams, Guid patientId)
-        {
-            throw new NotImplementedException();
+            if (metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate == null ||
+                (metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate >
+                 @event.AggregateId.Date))
+            {
+                metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate =
+                    @event.AggregateId.Date;
+            }
+            else if (metaDataFiles[@event.AggregateId.MedicalPracticeId].LastAppointmentDate == null ||
+                     (metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate <
+                      @event.AggregateId.Date))
+            {
+                metaDataFiles[@event.AggregateId.MedicalPracticeId].LastAppointmentDate =
+                    @event.AggregateId.Date;
+            }
         }
 
         public PracticeMetaData GetMetaDataForPractice(Guid practiceId)
