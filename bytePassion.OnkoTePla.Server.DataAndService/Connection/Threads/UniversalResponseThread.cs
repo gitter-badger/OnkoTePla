@@ -45,10 +45,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 					if (request == null)
 						continue;
 
-					var blubb = Converter.ChangeTo(request, request.GetType());
-
-					var responseHandler = responseHandlerFactory.GetHandler(blubb, socket);
-					responseHandler.Handle(blubb);					
+					var typedRequest = Converter.ChangeTo(request, request.GetType());		// TODO: ist noch unschön
+					
+					var responseHandler = responseHandlerFactory.GetHandler(typedRequest, socket);
+					responseHandler.Handle(typedRequest);					
 				}
 			}
 
