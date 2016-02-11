@@ -29,9 +29,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 		void RequestUserList (Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
 							  Action<string> errorCallback);
-
-		void RequestAccessablePractices(Action<IReadOnlyList<Guid>> dataReceivedCallback,
-										Action<string> errorCallback);
 		
 		void RequestPatientList(Action<IReadOnlyList<Patient>> dataReceivedCallback, 								
 								Action<string> errorCallback);

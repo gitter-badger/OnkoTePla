@@ -58,7 +58,6 @@
     <Compile Include="Connection\ResponseHandling\Handers\BeginConnectionResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\BeginDebugConnectionResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\EndConnectionResponseHandler.cs" />
-    <Compile Include="Connection\ResponseHandling\Handers\GetAccessablePracticesResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetAppointemntsOfAPatientResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetAppointemntsOfADayResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetPracticeVersionInfoResponseHandler.cs" />

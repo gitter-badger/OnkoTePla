@@ -107,15 +107,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 															   errorCallback));
 		}
 
-
-		public void RequestAccessablePractices(Action<IReadOnlyList<Guid>> dataReceivedCallback, 											  
-											   Action<string> errorCallback)
-		{
-			requestWorkQueue.Put(new GetAccessablePracticesRequestHandler(dataReceivedCallback, 
-																		  connectionInfoVariable, 
-																		  errorCallback));
-		}
-
 		public void RequestPatientList(Action<IReadOnlyList<Patient>> dataReceivedCallback, 									  
 									   Action<string> errorCallback)
 		{

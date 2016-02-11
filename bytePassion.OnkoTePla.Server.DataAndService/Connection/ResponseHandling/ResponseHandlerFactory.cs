@@ -30,14 +30,13 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 			where TRequest : NetworkMessageBase
 		{
 			switch (request.Type)
-			{
+			{				
+				case NetworkMessageType.LogoutRequest:                    return (IResponseHandler<TRequest>) new LogoutResponseHandler                    (sessionRespository, socket );
+				case NetworkMessageType.BeginDebugConnectionRequest:      return (IResponseHandler<TRequest>) new BeginDebugConnectionResponseHandler      (sessionRespository, socket );				
 				case NetworkMessageType.GetAppointmentsOfADayRequest:     return (IResponseHandler<TRequest>) new GetAppointemntsOfADayResponseHandler     (sessionRespository, socket, eventStore);
 				case NetworkMessageType.GetAppointmentsOfAPatientRequest: return (IResponseHandler<TRequest>) new GetAppointemntsOfAPatientResponseHandler (sessionRespository, socket, eventStore);
-				case NetworkMessageType.LogoutRequest:                    return (IResponseHandler<TRequest>) new LogoutResponseHandler                    (sessionRespository, socket);
-				case NetworkMessageType.BeginDebugConnectionRequest:      return (IResponseHandler<TRequest>) new BeginDebugConnectionResponseHandler      (sessionRespository, socket);
 				case NetworkMessageType.BeginConnectionRequest:           return (IResponseHandler<TRequest>) new BeginConnectionResponseHandler           (sessionRespository, socket, heartbeatThreadCollection);				
-				case NetworkMessageType.EndConnectionRequest:             return (IResponseHandler<TRequest>) new EndConnectionResponseHandler             (sessionRespository, socket, heartbeatThreadCollection);
-				case NetworkMessageType.GetAccessablePracticesRequest:    return (IResponseHandler<TRequest>) new GetAccessablePracticesResponseHandler    (sessionRespository, socket);
+				case NetworkMessageType.EndConnectionRequest:             return (IResponseHandler<TRequest>) new EndConnectionResponseHandler             (sessionRespository, socket, heartbeatThreadCollection);				
 				case NetworkMessageType.GetPatientListRequest:            return (IResponseHandler<TRequest>) new GetPatientListResponseHandler            (sessionRespository, socket, dataCenter);				
 				case NetworkMessageType.GetMedicalPracticeRequest:        return (IResponseHandler<TRequest>) new GetMedicalPracticeResponseHandler        (sessionRespository, socket, dataCenter);
 				case NetworkMessageType.GetTherapyPlacesTypeListRequest:  return (IResponseHandler<TRequest>) new GetTherapyPlaceTypeListResponseHandler   (sessionRespository, socket, dataCenter);

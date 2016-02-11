@@ -37,9 +37,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages
 				case NetworkMessageType.LoginRequest:                      return LoginRequest.Parse(msg);
 				case NetworkMessageType.LoginResponse:                     return LoginResponse.Parse(msg);
 				case NetworkMessageType.LogoutRequest:                     return LogoutRequest.Parse(msg);
-				case NetworkMessageType.LogoutResponse:                    return LogoutResponse.Parse(msg);				
-				case NetworkMessageType.GetAccessablePracticesRequest:     return GetAccessablePracticesRequest.Parse(msg);
-				case NetworkMessageType.GetAccessablePracticesResponse:    return GetAccessablePracticesResponse.Parse(msg);
+				case NetworkMessageType.LogoutResponse:                    return LogoutResponse.Parse(msg);								
 				case NetworkMessageType.GetAppointmentsOfADayRequest:      return GetAppointmentsOfADayRequest.Parse(msg);
 				case NetworkMessageType.GetAppointmentsOfADayResponse:     return GetAppointmentsOfADayResponse.Parse(msg);
 				case NetworkMessageType.GetAppointmentsOfAPatientRequest:  return GetAppointmentsOfAPatientRequest.Parse(msg);
