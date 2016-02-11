@@ -13,8 +13,10 @@ using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Readmodels
 {
-	public class AppointmentsOfADayReadModel : ReadModelBase
-	{		
+	public class AppointmentsOfADayReadModel : DayReadModelBase
+	{
+		private readonly Action<string> errorCallback;
+
 		public override event EventHandler<AppointmentChangedEventArgs> AppointmentChanged
 		{
 			add    { appointmentSet.ObservableAppointments.AppointmentChanged += value; }
@@ -32,7 +34,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Readmodels
 											Action<string> errorCallback)
 			: base(eventBus)
 		{
-			
+			this.errorCallback = errorCallback;
+
 			AggregateVersion = initialAggregateVersion;
 			Identifier = identifier;
 			appointmentSet = new AppointmentSet(patientsRepository, initialAppointmentData, 
@@ -53,7 +56,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Readmodels
 			get { return appointmentSet.AppointmentList; }
 		}
 
-		public override void Process(AppointmentAdded domainEvent, Action<string> errorCallback)
+		public override void Process(AppointmentAdded domainEvent)
 		{
 			if (domainEvent.AggregateId != Identifier) return;
 

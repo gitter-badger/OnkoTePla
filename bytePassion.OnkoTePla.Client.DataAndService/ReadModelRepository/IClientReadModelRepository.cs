@@ -1,4 +1,5 @@
 ﻿using System;
+using bytePassion.OnkoTePla.Client.DataAndService.Readmodels;
 using bytePassion.OnkoTePla.Core.Domain;
 using AppointmentsOfADayReadModel = bytePassion.OnkoTePla.Client.DataAndService.Readmodels.AppointmentsOfADayReadModel;
 using FixedAppointmentSet = bytePassion.OnkoTePla.Client.DataAndService.Readmodels.FixedAppointmentSet;
@@ -12,5 +13,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository
 
 		void RequestAppointmentSetOfADay(Action<FixedAppointmentSet> appointmentSetAvailable, 
 										 AggregateIdentifier id, uint aggregateVersionLimit, Action<string> errorCallback);
+
+		void RequestAppointmentsOfAPatientReadModel(Action<AppointmentsOfAPatientReadModel> readModelAvailable, 
+													Guid patientId, Action<string> errorCallback);
 	}
 }

@@ -30,7 +30,9 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
@@ -214,21 +216,24 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                   appointmentModificationsVariable,
 																  errorCallback);
 
-//            var patientSelectorViewModel = new PatientSelectorViewModel(dataCenter,
-//                                                                        selectedPatientForAppointmentSearchVariable);
-//
-//            var searchPageViewModel = new SearchPageViewModel(patientSelectorViewModel,
-//                                                              selectedPatientForAppointmentSearchVariable,
-//                                                              selectedDateVariable,
-//                                                              selectedMedicalPracticeIdVariable,                                                              
-//                                                              viewModelCommunication,
-//                                                              dataCenter,
-//															  session);
+            var patientSelectorViewModel = new PatientSelectorViewModel(patientRepository,
+                                                                        selectedPatientForAppointmentSearchVariable,
+																		errorCallback);
+
+            var searchPageViewModel = new SearchPageViewModel(patientSelectorViewModel,
+                                                              selectedPatientForAppointmentSearchVariable,
+                                                              selectedDateVariable,
+                                                              selectedMedicalPracticeIdVariable,                                                              
+                                                              viewModelCommunication,
+															  commandBus,
+                                                              readModelRepository,
+															  session,
+															  errorCallback);
 
             var optionsPageViewModel = new OptionsPageViewModel();            
 
             var mainViewModel = new ViewModels.MainView.MainViewModel(overviewPageViewModel,
-                                                                      null, // searchPageViewModel,
+                                                                      searchPageViewModel,
                                                                       optionsPageViewModel);
 
             viewModelCommunication.RegisterViewModelMessageHandler<ShowPage>(mainViewModel);

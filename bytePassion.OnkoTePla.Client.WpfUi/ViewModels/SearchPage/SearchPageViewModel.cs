@@ -10,7 +10,8 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.DataAndService.Data;
+using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Readmodels;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
@@ -18,21 +19,19 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.Domain;
-using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Core.Readmodels;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using MahApps.Metro.Controls.Dialogs;
-using DeleteAppointment = bytePassion.OnkoTePla.Core.Domain.Commands.DeleteAppointment;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 {
 	internal class SearchPageViewModel : ViewModel, 
                                          ISearchPageViewModel
     {
-		private class AppointmentSorter : IComparer<Appointment>
+		private class AppointmentSorter : IComparer<AppointmentTransferData>
 		{
-			public int Compare (Appointment a1, Appointment a2)
+			public int Compare (AppointmentTransferData a1, AppointmentTransferData a2)
 			{
 				return a1.Day == a2.Day
 					? a1.StartTime.CompareTo(a2.StartTime)
@@ -46,8 +45,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
         private readonly ISharedStateReadOnly<Patient> selectedPatientVariable;        
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly IDataCenter dataCenter;
+		private readonly ICommandBus commandBus;
+		private readonly IClientReadModelRepository readModelRepository;
+
 		private readonly ISession session;
+		private readonly Action<string> errorCallBack;
 
 		private AppointmentsOfAPatientReadModel currentReadModel;
 		private string selectedPatient;
@@ -57,13 +59,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 								   ISharedState<Date> selectedDateVariable,
 								   ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,                                   
 								   IViewModelCommunication viewModelCommunication,
-								   IDataCenter dataCenter,
-								   ISession session)
+								   ICommandBus commandBus,
+								   IClientReadModelRepository readModelRepository,
+								   ISession session,
+								   Action<string> errorCallBack)
 		{
 		    this.selectedPatientVariable = selectedPatientVariable;		    
 			this.viewModelCommunication = viewModelCommunication;
-			this.dataCenter = dataCenter;
+			this.commandBus = commandBus;
+			this.readModelRepository = readModelRepository;
+
 			this.session = session;
+			this.errorCallBack = errorCallBack;
 			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 			this.selectedDateVariable = selectedDateVariable;
 
@@ -76,7 +83,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 						
 			SelectedPatient = NoPatientSelected;
 
-			DisplayedAppointments = new ObservableCollection<Appointment>();
+			DisplayedAppointments = new ObservableCollection<AppointmentTransferData>();
 		}
 
 		private void DoModifyAppointment(Appointment appointment)
@@ -100,15 +107,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 			if (result == MessageDialogResult.Affirmative)
 			{
-				var currentMedicalPracticeId = selectedMedicalPracticeIdVariable.Value;
-				var readModel = dataCenter.GetAppointmentsOfADayReadModel(new AggregateIdentifier(appointment.Day, currentMedicalPracticeId));
-
-				dataCenter.SendCommand(new DeleteAppointment(readModel.Identifier,
-															 readModel.AggregateVersion,
-															 session.LoggedInUser.Id,
-															 appointment.Patient.Id,
-															 ActionTag.RegularAction,
-															 appointment.Id));
+//				var currentMedicalPracticeId = selectedMedicalPracticeIdVariable.Value;
+//				var readModel = dataCenter.GetAppointmentsOfADayReadModel(new AggregateIdentifier(appointment.Day, currentMedicalPracticeId));
+//
+//				dataCenter.SendCommand(new DeleteAppointment(readModel.Identifier,
+//															 readModel.AggregateVersion,
+//															 session.LoggedInUser.Id,
+//															 appointment.Patient.Id,
+//															 ActionTag.RegularAction,
+//															 appointment.Id));
 			}
 		}
 
@@ -122,12 +129,22 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 			if (patient != null)
 			{
-				currentReadModel = dataCenter.GetAppointmentsOfAPatientReadModel(patient.Id);
-				currentReadModel.Appointments.Do(DisplayedAppointments.Add);
-				currentReadModel.AppointmentChanged += OnCurrentReadModelAppointmentsChanged;
+				readModelRepository.RequestAppointmentsOfAPatientReadModel(
+					patientReadModel =>
+					{
+						Application.Current.Dispatcher.Invoke(() =>
+						{
+							currentReadModel = patientReadModel;						
+							currentReadModel.Appointments.Do(DisplayedAppointments.Add);
+							currentReadModel.AppointmentChanged += OnCurrentReadModelAppointmentsChanged;
 
-				DisplayedAppointments.Sort(new AppointmentSorter());
-				SelectedPatient = patient.Name;
+							DisplayedAppointments.Sort(new AppointmentSorter());
+							SelectedPatient = patient.Name;
+						});
+					},
+					patient.Id,
+					errorCallBack						
+				);				
 			}
 			else
 			{
@@ -135,7 +152,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 			}
 		}
 
-		private void OnCurrentReadModelAppointmentsChanged(object sender, AppointmentChangedEventArgs appointmentChangedEventArgs)
+		private void OnCurrentReadModelAppointmentsChanged(object sender, RawAppointmentChangedEventArgs appointmentChangedEventArgs)
 		{
 			switch (appointmentChangedEventArgs.ChangeAction)
 			{
@@ -174,7 +191,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 			private set { PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value); }
 		}
 
-		public ObservableCollection<Appointment> DisplayedAppointments { get; }
+		public ObservableCollection<AppointmentTransferData> DisplayedAppointments { get; }
 		
 	    protected override void CleanUp()
 	    {

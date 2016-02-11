@@ -19,9 +19,9 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 		 
 		public override string AsString()
 		{
-			return $"{SessionId};{UserId};{PatientId}";
+			return $"{PatientId};{SessionId};{UserId}";
 		}
-
+		
 		public static GetAppointmentsOfAPatientRequest Parse (string s)
 		{
 			var parts = s.Split(';');

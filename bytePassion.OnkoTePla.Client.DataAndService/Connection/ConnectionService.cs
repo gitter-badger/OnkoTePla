@@ -136,6 +136,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 																		 errorCallback));
 		}
 
+		public void RequestAppointmentsOfAPatient(Action<IReadOnlyList<AppointmentTransferData>> dataReceivedCallaback, Guid patientId, Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new GetAppointmentsOfAPatientRequestHandler(dataReceivedCallaback, 
+																			 connectionInfoVariable,
+																			 patientId, 
+																			 errorCallback));
+		}
+
 		public void RequestMedicalPractice(Action<ClientMedicalPracticeData> dataReceivedCallback, 
 										   Guid medicalPracticeId, uint medicalPracticeVersion,
 										   Action<string> errorCallback)

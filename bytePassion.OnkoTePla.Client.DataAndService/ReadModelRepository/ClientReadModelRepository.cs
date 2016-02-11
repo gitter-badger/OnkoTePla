@@ -18,7 +18,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
 		private readonly IConnectionService connectionService;
 		 
-		private readonly IDictionary<AggregateIdentifier, AppointmentsOfADayReadModel> cachedReadmodels; 
+		private readonly IDictionary<AggregateIdentifier, AppointmentsOfADayReadModel>     cachedDayReadmodels;
+		private readonly IDictionary<Guid,                AppointmentsOfAPatientReadModel> cachedPatientReadmodel; 
 		 
 		public ClientReadModelRepository (IClientEventBus eventBus,										    
 										    IClientPatientRepository patientsRepository,
@@ -30,16 +31,17 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository
 			this.medicalPracticeRepository = medicalPracticeRepository;
 			this.connectionService = connectionService;
 
-			cachedReadmodels = new ConcurrentDictionary<AggregateIdentifier, AppointmentsOfADayReadModel>();
+			cachedDayReadmodels    = new ConcurrentDictionary<AggregateIdentifier, AppointmentsOfADayReadModel>();
+			cachedPatientReadmodel = new ConcurrentDictionary<Guid,                AppointmentsOfAPatientReadModel>();
 		}
 								
 
 		public void RequestAppointmentsOfADayReadModel(Action<AppointmentsOfADayReadModel> readModelAvailable, 
 													   AggregateIdentifier id, Action<string> errorCallback)
 		{
-			if (cachedReadmodels.ContainsKey(id))
+			if (cachedDayReadmodels.ContainsKey(id))
 			{
-				readModelAvailable(cachedReadmodels[id]);
+				readModelAvailable(cachedDayReadmodels[id]);
 				return;
 			}
 
@@ -56,10 +58,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository
 																			   aggregateId,
 																			   aggregateVersion,
 																			   errorCallback);
-							if (!cachedReadmodels.ContainsKey(aggregateId))							
-								cachedReadmodels.Add(aggregateId, newReadModel);
+							if (!cachedDayReadmodels.ContainsKey(aggregateId))							
+								cachedDayReadmodels.Add(aggregateId, newReadModel);
 
-							readModelAvailable(cachedReadmodels[id]);
+							readModelAvailable(cachedDayReadmodels[id]);
 						},
 						aggregateId.MedicalPracticeId, 
 						aggregateId.PracticeVersion, 
@@ -78,9 +80,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository
 		{
 			if (aggregateVersionLimit == uint.MaxValue)
 			{
-				if (cachedReadmodels.ContainsKey(id))
+				if (cachedDayReadmodels.ContainsKey(id))
 				{
-					var readModel = cachedReadmodels[id];
+					var readModel = cachedDayReadmodels[id];
 					appointmentSetAvailable(new FixedAppointmentSet(readModel.Identifier, 
 																	readModel.AggregateVersion, 
 																	readModel.Appointments));					
@@ -94,14 +96,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository
 							practice =>
 							{
 								var newReadModel = new AppointmentsOfADayReadModel(eventBus,
-																			   patientsRepository,
-																			   practice,
-																			   appointments,
-																			   aggregateId,
-																			   aggregateVersion,
-																			   errorCallback);
-								if (!cachedReadmodels.ContainsKey(aggregateId))
-									cachedReadmodels.Add(aggregateId, newReadModel);
+																				   patientsRepository,
+																				   practice,
+																				   appointments,
+																				   aggregateId,
+																				   aggregateVersion,
+																				   errorCallback);
+								if (!cachedDayReadmodels.ContainsKey(aggregateId))
+									cachedDayReadmodels.Add(aggregateId, newReadModel);
 
 								appointmentSetAvailable(new FixedAppointmentSet(newReadModel.Identifier,
 																	            newReadModel.AggregateVersion,
@@ -122,6 +124,33 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository
 			{
 				throw new NotImplementedException();
 			}
+		}
+
+		public void RequestAppointmentsOfAPatientReadModel(Action<AppointmentsOfAPatientReadModel> readModelAvailable, Guid patientId, Action<string> errorCallback)
+		{
+			if (cachedPatientReadmodel.ContainsKey(patientId))
+			{
+				var readModel = cachedPatientReadmodel[patientId];
+				readModelAvailable(readModel);
+				return;
+			}
+
+			connectionService.RequestAppointmentsOfAPatient(
+				apointments =>
+				{
+					var newReadModel = new AppointmentsOfAPatientReadModel(patientId, 
+																		  eventBus, 
+																		  apointments,
+																		  patientsRepository);
+
+					if (!cachedPatientReadmodel.ContainsKey(patientId))
+						cachedPatientReadmodel.Add(patientId, newReadModel);
+					
+					readModelAvailable(cachedPatientReadmodel[patientId]);
+				},
+				patientId,
+				errorCallback	
+			);
 		}
 	}
 }

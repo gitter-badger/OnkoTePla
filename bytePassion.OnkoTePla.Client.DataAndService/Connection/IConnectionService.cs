@@ -39,7 +39,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		void RequestAppointmentsOfADay(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier, uint> dataReceivedCallback, 
 									   Date day, Guid medicalPracticeId, uint aggregateVersionLimit,
 									   Action<string> errorCallback); 
-
+	
+		void RequestAppointmentsOfAPatient(Action<IReadOnlyList<AppointmentTransferData>> dataReceivedCallaback,
+										   Guid patientId,
+										   Action<string> errorCallback);
+		
 		void RequestMedicalPractice(Action<ClientMedicalPracticeData> dataReceivedCallback,
 									Guid medicalPracticeId, uint medicalPracticeVersion,
 									Action<string> errorCallback);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Data;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
@@ -30,7 +31,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 			SearchFilter = "";
 			
 			patientRepository.RequestAllPatientList(
-				patientList => Patients.Source = patientList,
+				patientList =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						Patients.Source = patientList;
+						UpdateForNewInput();
+					});					
+				},
 				errorCallback	
 			);                       			            
         }
@@ -59,10 +67,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 
 	    private void UpdateForNewInput()
 	    {
-			SelectedPatient = null;
-			Patients.View.Refresh();
-			CheckList();
-		}
+		    if (Patients.View != null)
+		    {
+			    SelectedPatient = null;
+			    Patients.View.Refresh();
+			    CheckList();
+		    }
+	    }
 
 
         public Patient SelectedPatient
