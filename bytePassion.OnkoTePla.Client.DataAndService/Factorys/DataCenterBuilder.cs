@@ -1,11 +1,9 @@
-﻿using bytePassion.OnkoTePla.Client.DataAndService.Data;
-
-namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
-{
-	public class DataCenterBuilder : IDataCenterBuilder
-	{
-		public IDataCenter Build()
-		{
+﻿//namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
+//{
+//	public class DataCenterBuilder : IDataCenterBuilder
+//	{
+//		public IDataCenter Build()
+//		{
 //			// Patient-Repository
 //
 //			var patientPersistenceService = new JSonPatientDataStore(GlobalConstants.PatientJsonPersistenceFile);
@@ -66,8 +64,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Factorys
 //								  localSettingsRepository,
 //								  commandBus,
 //								  eventStore);
-
-			return null;
-		}
-	}
-}
+//
+//			return null;
+//		}
+//	}
+//}
