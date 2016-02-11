@@ -22,6 +22,8 @@
 		GetPatientListResponse,
 		GetAppointmentsOfADayRequest,
 		GetAppointmentsOfADayResponse,
+		GetAppointmentsOfAPatientRequest,
+		GetAppointmentsOfAPatientResponse,
 		GetMedicalPracticeRequest,
 		GetMedicalPracticeResponse,
 		GetTherapyPlacesTypeListRequest,

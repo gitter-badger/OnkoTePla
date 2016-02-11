@@ -60,7 +60,9 @@
     <Compile Include="NetworkMessages\RequestsAndResponses\BeginConnectionResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\EndConnectionRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\EndConnectionResponse.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetAppointmentsOfAPatientRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetAppointmentsOfADayRequest.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetAppointmentsOfAPatientResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetAppointmentsOfADayResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetPracticeVersionInfoRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetPracticeVersionInfoResponse.cs" />
