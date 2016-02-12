@@ -32,9 +32,12 @@
 		GetPracticeVersionInfoResponse,
 
 		EventBusNotification,
-		PatientNotification,
-		TherapyPlaceTypeNotification,		
+		PatientAddedNotification,
+		PatientUpdatedNotification,		
+		TherapyPlaceTypeAddedNotification,
+		TherapyPlaceTypeUpdatedNotification,
+
+		ErrorResponse,
 		
-		ErrorResponse		
 	}
 }

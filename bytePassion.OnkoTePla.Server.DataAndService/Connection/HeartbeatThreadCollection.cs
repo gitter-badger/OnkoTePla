@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
+using System.Windows;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
@@ -46,17 +47,20 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 		private void HeartbeatOnClientVanished (ConnectionSessionId connectionSessionId)
 		{
-			if (heartbeatThreads.ContainsKey(connectionSessionId))
+			Application.Current.Dispatcher.Invoke(() =>
 			{
-				var heartbeatThread = heartbeatThreads[connectionSessionId];
-				heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
-				heartbeatThreads.Remove(connectionSessionId);
-			}
+				if (heartbeatThreads.ContainsKey(connectionSessionId))
+				{
+					var heartbeatThread = heartbeatThreads[connectionSessionId];
+					heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
+					heartbeatThreads.Remove(connectionSessionId);
+				}
 
-			if (sessionRepository.DoesSessionExist(connectionSessionId))
-			{                                                               //	the session does not exist if it was
-				sessionRepository.RemoveSession(connectionSessionId);       //  ended corretly by connectionEndMessage
-			}
+				if (sessionRepository.DoesSessionExist(connectionSessionId))
+				{                                                               //	the session does not exist if it was
+					sessionRepository.RemoveSession(connectionSessionId);       //  ended corretly by connectionEndMessage
+				}
+			});			
 		}
 
 		protected override void CleanUp()

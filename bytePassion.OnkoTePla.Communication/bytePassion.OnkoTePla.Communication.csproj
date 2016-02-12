@@ -50,8 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NetworkMessages\Notifications\EventBusNotification.cs" />
-    <Compile Include="NetworkMessages\Notifications\PatientNotification.cs" />
-    <Compile Include="NetworkMessages\Notifications\TherapyPlaceTypeNotification.cs" />
+    <Compile Include="NetworkMessages\Notifications\PatientAddedNotification.cs" />
+    <Compile Include="NetworkMessages\Notifications\PatientUpdatedNotification.cs" />
+    <Compile Include="NetworkMessages\Notifications\TherapyPlaceTypeAddedNotification.cs" />
+    <Compile Include="NetworkMessages\Notifications\TherapyPlaceTypeUpdatedNotification.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\BeginDebugConnectionRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\BeginConnectionRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\BeginDebugConnectionResponse.cs" />

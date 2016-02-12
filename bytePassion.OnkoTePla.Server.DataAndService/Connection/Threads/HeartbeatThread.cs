@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Windows;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
@@ -62,7 +61,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 					if (stopRunning)
 						break;
 
-					Application.Current.Dispatcher.Invoke(() => ClientVanished?.Invoke(sessionId));
+					ClientVanished?.Invoke(sessionId);
 					break;
 				}
 			}

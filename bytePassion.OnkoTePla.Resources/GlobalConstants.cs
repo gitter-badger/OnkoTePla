@@ -4,9 +4,9 @@
     {		
 		public static class TcpIpPort
 		{						 
-			public const uint Heartbeat = 6656;
-			public const uint Request   = 6657;
-			public const uint EventBus  = 6658;
+			public const uint Heartbeat    = 6656;
+			public const uint Request      = 6657;
+			public const uint Notification = 6658;
 
 			public const uint Free2     = 6659;
 			public const uint Free3     = 6660;
