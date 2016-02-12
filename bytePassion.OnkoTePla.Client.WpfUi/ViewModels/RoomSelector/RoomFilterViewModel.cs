@@ -8,7 +8,7 @@ using System.Windows.Media;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 

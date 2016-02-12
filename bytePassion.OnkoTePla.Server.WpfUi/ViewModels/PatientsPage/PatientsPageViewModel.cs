@@ -7,11 +7,10 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
 using bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientSelector;
 
-#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage
 {

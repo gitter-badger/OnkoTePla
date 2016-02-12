@@ -1,17 +1,17 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
-using bytePassion.OnkoTePla.Core.Domain;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {
-    internal class AppointmentGridViewModelSampleData : IAppointmentGridViewModel
+	internal class AppointmentGridViewModelSampleData : IAppointmentGridViewModel
 	{
 		public AppointmentGridViewModelSampleData()
 		{			

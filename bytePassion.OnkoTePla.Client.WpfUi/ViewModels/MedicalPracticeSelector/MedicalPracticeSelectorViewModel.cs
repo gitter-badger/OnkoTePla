@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector.Helper;

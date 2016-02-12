@@ -1,7 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;

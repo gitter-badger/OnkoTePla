@@ -1,7 +1,7 @@
 ﻿using System;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel

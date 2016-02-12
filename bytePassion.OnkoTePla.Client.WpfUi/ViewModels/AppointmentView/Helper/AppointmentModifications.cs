@@ -8,13 +8,13 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Core.Domain;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper

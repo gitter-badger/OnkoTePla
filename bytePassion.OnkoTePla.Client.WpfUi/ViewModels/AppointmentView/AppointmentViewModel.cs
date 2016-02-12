@@ -16,7 +16,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.Views;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using MahApps.Metro.Controls.Dialogs;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.DeleteAppointment;

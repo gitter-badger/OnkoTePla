@@ -4,7 +4,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientSelector
 {

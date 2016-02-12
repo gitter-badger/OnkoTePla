@@ -1,6 +1,6 @@
 ﻿using System;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
-using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel

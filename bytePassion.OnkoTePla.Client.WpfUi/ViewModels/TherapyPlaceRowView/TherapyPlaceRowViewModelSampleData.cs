@@ -8,7 +8,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
-using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 #pragma warning disable 0067
 

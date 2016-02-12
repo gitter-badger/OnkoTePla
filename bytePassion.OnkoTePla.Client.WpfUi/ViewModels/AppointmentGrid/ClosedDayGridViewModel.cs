@@ -9,8 +9,8 @@ using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
+using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Core.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid

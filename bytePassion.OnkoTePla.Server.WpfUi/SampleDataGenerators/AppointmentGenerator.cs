@@ -4,14 +4,13 @@ using System.Linq;
 using System.Windows;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain.Events;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.Domain;
-using bytePassion.OnkoTePla.Core.Domain.AppointmentLogic;
-using bytePassion.OnkoTePla.Core.Domain.Events;
-using bytePassion.OnkoTePla.Core.Eventsystem;
-using bytePassion.OnkoTePla.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Core.Repositories.EventStore;
-using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators
@@ -77,7 +76,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators
 
 					eventList.Add(newEvent);
 					
-					currrentTime += new Duration(newEvent.CreateAppointmentData.StartTime, newEvent.CreateAppointmentData.EndTime);
+					currrentTime += new Duration(newEvent.StartTime, newEvent.EndTime);
 					currrentTime += RandomTimeInterval(0);
 				}
 			}
@@ -97,14 +96,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators
 										user.Id, 
 										TimeTools.GetCurrentTimeStamp(), 
 										ActionTag.RegularAction,
-										new CreateAppointmentData(patients[rand.Next(0, patients.Count-1)].Id,
-																  "automated generated appointment",
-																  startTime,
-																  startTime + GetAppointmentDuration(startTime, closingTime),
-																  identifier.Date,
-																  therapyPlaceId,
-																  Guid.NewGuid())
-										);			
+										patients[rand.Next(0, patients.Count-1)].Id,
+										"automated generated appointment",
+										startTime,
+										startTime + GetAppointmentDuration(startTime, closingTime),																  
+										therapyPlaceId,
+										Guid.NewGuid());			
 		}
 
 		private Duration RandomTimeInterval (int minimum)

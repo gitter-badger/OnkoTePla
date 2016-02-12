@@ -5,12 +5,12 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.Domain;
-using bytePassion.OnkoTePla.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Core.Repositories.EventStore;
-using bytePassion.OnkoTePla.Core.Repositories.Patients;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 {

@@ -1,4 +1,4 @@
-﻿using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
+﻿using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
 

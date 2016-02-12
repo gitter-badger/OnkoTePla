@@ -7,12 +7,12 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
-using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer

@@ -1,11 +1,11 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Core.Domain;
-using System;
+﻿using System;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper
 {
-    public class TherapyPlaceRowIdentifier
+	public class TherapyPlaceRowIdentifier
 	{
 		public TherapyPlaceRowIdentifier(AggregateIdentifier placeAndDate, 
 									     Guid therapyPlaceId)

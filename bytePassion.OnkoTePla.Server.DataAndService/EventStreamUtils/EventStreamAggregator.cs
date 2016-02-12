@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Core.Domain;
-using bytePassion.OnkoTePla.Core.Domain.Events;
-using bytePassion.OnkoTePla.Core.Exceptions;
-using bytePassion.OnkoTePla.Core.Repositories.EventStore;
+using bytePassion.OnkoTePla.Contracts.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain.Events;
+using bytePassion.OnkoTePla.Contracts.Domain.Exceptions;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 {
@@ -89,17 +88,17 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 		}
 		
 		public IReadOnlyList<AppointmentTransferData> AppointmentData { get; } 
-		public uint AggregateVersion { get; private set; }
+		public uint AggregateVersion { get; }
 
 		private void HandleAddedEvent(AppointmentAdded addedEvent, ICollection<AppointmentTransferData> appointmentList)
 		{
 			appointmentList.Add(new AppointmentTransferData(addedEvent.PatientId,
-															addedEvent.CreateAppointmentData.Description,
+															addedEvent.Description,
 															addedEvent.AggregateId.Date,
-															addedEvent.CreateAppointmentData.StartTime,
-															addedEvent.CreateAppointmentData.EndTime,
-															addedEvent.CreateAppointmentData.TherapyPlaceId,
-															addedEvent.CreateAppointmentData.AppointmentId));
+															addedEvent.StartTime,
+															addedEvent.EndTime,
+															addedEvent.TherapyPlaceId,
+															addedEvent.AppointmentId));
 			
 		}
 		

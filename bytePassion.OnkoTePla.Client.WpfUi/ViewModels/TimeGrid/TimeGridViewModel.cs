@@ -8,8 +8,8 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid.Helper;
+using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Core.Domain;
 using Duration = bytePassion.Lib.TimeLib.Duration;
 
 #pragma warning disable 0067

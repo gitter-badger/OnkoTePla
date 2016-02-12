@@ -2,15 +2,15 @@
 using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Core.CommandSystem;
-using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel

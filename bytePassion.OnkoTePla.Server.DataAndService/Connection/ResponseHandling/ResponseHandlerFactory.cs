@@ -1,8 +1,8 @@
 ﻿using System;
 using bytePassion.OnkoTePla.Communication.NetworkMessages;
-using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling.Handers;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ.Sockets;
 

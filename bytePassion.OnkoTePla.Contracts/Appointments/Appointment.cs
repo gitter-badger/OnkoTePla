@@ -17,8 +17,7 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 		{
 			Guard.ArgumentNotNull(patient);
 			Guard.ArgumentNotNull(description);
-			Guard.ArgumentNotNull(therapyPlace);
-			Guard.ArgumentNotNull(patient);
+			Guard.ArgumentNotNull(therapyPlace);			
 
 			Patient      = patient;
 			TherapyPlace = therapyPlace;			

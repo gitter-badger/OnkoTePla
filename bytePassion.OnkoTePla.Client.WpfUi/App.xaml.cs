@@ -4,16 +4,16 @@ using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
-using bytePassion.OnkoTePla.Client.DataAndService.EventBus;
-using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.TherapyPlaceTypeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
-using bytePassion.OnkoTePla.Client.DataAndService.TherapyPlaceTypeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
-using bytePassion.OnkoTePla.Core.CommandSystem;
 using bytePassion.OnkoTePla.Resources;
 
 

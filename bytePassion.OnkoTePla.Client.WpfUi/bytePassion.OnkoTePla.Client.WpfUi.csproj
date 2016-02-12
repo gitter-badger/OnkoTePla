@@ -454,10 +454,6 @@
       <Project>{76aeeb98-2a61-49de-b8d2-a1448b302e8c}</Project>
       <Name>bytePassion.OnkoTePla.Client.DataAndService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\bytePassion.OnkoTePla.Core\bytePassion.OnkoTePla.Core.csproj">
-      <Project>{D6DEC4C7-D919-4528-AE91-510317A1D0FC}</Project>
-      <Name>bytePassion.OnkoTePla.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\bytePassion.OnkoTePla.Contracts\bytePassion.OnkoTePla.Contracts.csproj">
       <Project>{85958036-DFEF-4C68-ABF4-FD241EAAB47F}</Project>
       <Name>bytePassion.OnkoTePla.Contracts</Name>

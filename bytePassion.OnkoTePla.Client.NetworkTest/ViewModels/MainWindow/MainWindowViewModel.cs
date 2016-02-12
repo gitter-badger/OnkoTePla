@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
-using System.Windows.Media;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Core.Domain;
-using bytePassion.OnkoTePla.Core.Domain.Events;
-using bytePassion.OnkoTePla.Core.Eventsystem;
+using bytePassion.OnkoTePla.Contracts.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain.Events;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 
 
 namespace bytePassion.OnkoTePla.Client.NetworkTest.ViewModels.MainWindow

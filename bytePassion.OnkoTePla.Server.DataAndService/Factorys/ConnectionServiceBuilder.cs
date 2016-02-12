@@ -1,6 +1,6 @@
-﻿using bytePassion.OnkoTePla.Core.Repositories.EventStore;
-using bytePassion.OnkoTePla.Server.DataAndService.Connection;
+﻿using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys

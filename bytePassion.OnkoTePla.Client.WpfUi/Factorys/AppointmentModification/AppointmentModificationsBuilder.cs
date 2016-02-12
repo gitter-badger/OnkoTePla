@@ -3,8 +3,8 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 

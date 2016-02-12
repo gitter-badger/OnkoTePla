@@ -4,7 +4,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain;
 using NetMQ.Sockets;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling.Handlers

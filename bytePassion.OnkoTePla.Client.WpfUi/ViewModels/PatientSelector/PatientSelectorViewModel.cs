@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 

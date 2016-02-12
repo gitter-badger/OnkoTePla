@@ -3,10 +3,10 @@ using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
-using bytePassion.OnkoTePla.Core.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ;
 

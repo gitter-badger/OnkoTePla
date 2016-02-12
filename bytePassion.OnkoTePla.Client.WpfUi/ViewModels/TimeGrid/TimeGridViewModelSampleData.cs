@@ -1,14 +1,14 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using System;
+using System.Collections.ObjectModel;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid.Helper;
-using bytePassion.OnkoTePla.Core.Domain;
-using System;
-using System.Collections.ObjectModel;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 {
-    public class TimeGridViewModelSampleData : ITimeGridViewModel
+	public class TimeGridViewModelSampleData : ITimeGridViewModel
 	{
 		public TimeGridViewModelSampleData()
 		{

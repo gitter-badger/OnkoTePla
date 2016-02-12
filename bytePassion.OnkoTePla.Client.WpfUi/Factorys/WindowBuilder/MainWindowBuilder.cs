@@ -1,12 +1,13 @@
 ﻿using System;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Utils;
-using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.TherapyPlaceTypeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
-using bytePassion.OnkoTePla.Client.DataAndService.TherapyPlaceTypeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel;
@@ -15,7 +16,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ConnectionStatusView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
-using bytePassion.OnkoTePla.Core.CommandSystem;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder

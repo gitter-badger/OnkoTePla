@@ -49,6 +49,16 @@
     <Compile Include="Config\Configuration.cs" />
     <Compile Include="Config\User.cs" />
     <Compile Include="Config\UserCreateAndUpdateLogic.cs" />
+    <Compile Include="Domain\AggregateIdentifier.cs" />
+    <Compile Include="Domain\Events\Base\ActionTag.cs" />
+    <Compile Include="Domain\Events\Base\DomainEvent.cs" />
+    <Compile Include="Domain\EventStream.cs" />
+    <Compile Include="Domain\Events\AppointmentAdded.cs" />
+    <Compile Include="Domain\Events\AppointmentDeleted.cs" />
+    <Compile Include="Domain\Events\AppointmentReplaced.cs" />
+    <Compile Include="Domain\Events\DomainEventSerialization.cs" />
+    <Compile Include="Domain\Exceptions\AppointmentRuleIsNotApplicableException.cs" />
+    <Compile Include="Domain\Exceptions\VersionNotApplicapleException.cs" />
     <Compile Include="Infrastructure\ClientMedicalPracticeDataSerializer.cs" />
     <Compile Include="Infrastructure\HoursOfOpening.cs" />
     <Compile Include="Infrastructure\ClientMedicalPracticeData.cs" />
@@ -74,6 +84,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,7 +1,7 @@
-﻿using bytePassion.OnkoTePla.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Core.Repositories.EventStore;
-using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Server.DataAndService.Data;
+﻿using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 {

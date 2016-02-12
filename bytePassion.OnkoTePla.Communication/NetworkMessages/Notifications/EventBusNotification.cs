@@ -1,5 +1,5 @@
-﻿using bytePassion.OnkoTePla.Core.Domain.Events;
-using bytePassion.OnkoTePla.Core.Eventsystem;
+﻿using bytePassion.OnkoTePla.Contracts.Domain.Events;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 
 namespace bytePassion.OnkoTePla.Communication.NetworkMessages.Notifications
 {

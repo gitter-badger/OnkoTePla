@@ -1,16 +1,16 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Core.Domain;
-using System;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 {
-    internal class ConfirmChangesMessageHandler : IViewModelMessageHandler<ConfirmChanges>
+	internal class ConfirmChangesMessageHandler : IViewModelMessageHandler<ConfirmChanges>
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;

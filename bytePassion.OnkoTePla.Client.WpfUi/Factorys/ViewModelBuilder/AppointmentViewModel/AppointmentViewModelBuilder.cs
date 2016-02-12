@@ -8,7 +8,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Core.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 

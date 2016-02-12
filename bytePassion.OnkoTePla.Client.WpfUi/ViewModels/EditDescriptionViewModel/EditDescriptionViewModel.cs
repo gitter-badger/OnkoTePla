@@ -6,16 +6,12 @@ using System.Windows.Input;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.WpfUi.Global;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
-using bytePassion.OnkoTePla.Core.Domain;
-using bytePassion.OnkoTePla.Core.Domain.Commands;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.EditDescriptionViewModel
 {
-    class EditDescriptionViewModel : IViewModel
+	class EditDescriptionViewModel : IViewModel
     {
         private string description;
         private Appointment appointment;

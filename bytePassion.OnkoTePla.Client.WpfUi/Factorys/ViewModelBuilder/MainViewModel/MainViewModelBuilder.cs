@@ -5,10 +5,11 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.LocalSettings;
-using bytePassion.OnkoTePla.Client.DataAndService.MedicalPracticeRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.PatientRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
@@ -37,9 +38,8 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
+using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.CommandSystem;
-using bytePassion.OnkoTePla.Core.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewModel

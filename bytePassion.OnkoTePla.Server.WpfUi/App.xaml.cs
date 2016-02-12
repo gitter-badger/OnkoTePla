@@ -1,12 +1,12 @@
 ﻿using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Core.Repositories.Config;
-using bytePassion.OnkoTePla.Core.Repositories.EventStore;
-using bytePassion.OnkoTePla.Core.Repositories.Patients;
-using bytePassion.OnkoTePla.Core.Repositories.XMLDataStores;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;

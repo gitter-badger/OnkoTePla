@@ -6,7 +6,10 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Client.DataAndService.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Notification;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
@@ -17,15 +20,12 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Contracts.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
-using bytePassion.OnkoTePla.Core.CommandSystem;
-using bytePassion.OnkoTePla.Core.Domain;
-using bytePassion.OnkoTePla.Core.Domain.Commands;
-using bytePassion.OnkoTePla.Core.Eventsystem;
-using bytePassion.OnkoTePla.Core.Readmodels;
-using AppointmentsOfADayReadModel = bytePassion.OnkoTePla.Client.DataAndService.Readmodels.AppointmentsOfADayReadModel;
+using AppointmentsOfADayReadModel = bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.AppointmentsOfADayReadModel;
 using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.DeleteAppointment;
-using DeleteAppointmentCommand = bytePassion.OnkoTePla.Core.Domain.Commands.DeleteAppointment;
+using DeleteAppointmentCommand = bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands.DeleteAppointment;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {

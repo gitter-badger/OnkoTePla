@@ -12,10 +12,10 @@ using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling.Han
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Contracts.Types;
-using bytePassion.OnkoTePla.Core.Domain;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
