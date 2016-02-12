@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses
@@ -45,7 +44,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 			foreach (var typeParts in typeListParts)
 			{
 				var name     = typeParts[0];
-				var iconType = (TherapyPlaceIconType) Enum.Parse(typeof (TherapyPlaceIconType), typeParts[1]);
+				var iconType = (TherapyPlaceTypeIcon) Enum.Parse(typeof (TherapyPlaceTypeIcon), typeParts[1]);
 				var id       = Guid.Parse(typeParts[2]);
 
 				therapyPlaceTypeList.Add(new TherapyPlaceType(name, iconType, id));

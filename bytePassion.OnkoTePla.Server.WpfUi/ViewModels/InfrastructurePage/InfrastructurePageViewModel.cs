@@ -13,7 +13,6 @@ using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
@@ -504,23 +503,23 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		#endregion
 		
 
-		private static ImageSource GetIconForTherapyPlaceType(TherapyPlaceIconType iconType)
+		private static ImageSource GetIconForTherapyPlaceType(TherapyPlaceTypeIcon iconType)
 		{
 			const string basePath = "pack://application:,,,/bytePassion.OnkoTePla.Resources;component/Icons/TherapyPlaceType/";
 
 			switch (iconType)
 			{
-				case TherapyPlaceIconType.BedType1:   return ImageLoader.LoadImage(new Uri(basePath + "bed01.png"));
-				case TherapyPlaceIconType.BedType2:   return ImageLoader.LoadImage(new Uri(basePath + "bed02.png"));
-				case TherapyPlaceIconType.BedType3:   return ImageLoader.LoadImage(new Uri(basePath + "bed03.png"));
-				case TherapyPlaceIconType.BedType4:   return ImageLoader.LoadImage(new Uri(basePath + "bed04.png"));
-				case TherapyPlaceIconType.BedType5:   return ImageLoader.LoadImage(new Uri(basePath + "bed05.png"));
-				case TherapyPlaceIconType.ChairType1: return ImageLoader.LoadImage(new Uri(basePath + "chair01.png"));
-				case TherapyPlaceIconType.ChairType2: return ImageLoader.LoadImage(new Uri(basePath + "chair02.png"));
-				case TherapyPlaceIconType.ChairType3: return ImageLoader.LoadImage(new Uri(basePath + "chair03.png"));
-				case TherapyPlaceIconType.ChairType4: return ImageLoader.LoadImage(new Uri(basePath + "chair04.png"));
-				case TherapyPlaceIconType.ChairType5: return ImageLoader.LoadImage(new Uri(basePath + "chair05.png"));
-				case TherapyPlaceIconType.None:       return ImageLoader.LoadImage(new Uri(basePath + "none.png"));
+				case TherapyPlaceTypeIcon.BedType1:   return ImageLoader.LoadImage(new Uri(basePath + "bed01.png"));
+				case TherapyPlaceTypeIcon.BedType2:   return ImageLoader.LoadImage(new Uri(basePath + "bed02.png"));
+				case TherapyPlaceTypeIcon.BedType3:   return ImageLoader.LoadImage(new Uri(basePath + "bed03.png"));
+				case TherapyPlaceTypeIcon.BedType4:   return ImageLoader.LoadImage(new Uri(basePath + "bed04.png"));
+				case TherapyPlaceTypeIcon.BedType5:   return ImageLoader.LoadImage(new Uri(basePath + "bed05.png"));
+				case TherapyPlaceTypeIcon.ChairType1: return ImageLoader.LoadImage(new Uri(basePath + "chair01.png"));
+				case TherapyPlaceTypeIcon.ChairType2: return ImageLoader.LoadImage(new Uri(basePath + "chair02.png"));
+				case TherapyPlaceTypeIcon.ChairType3: return ImageLoader.LoadImage(new Uri(basePath + "chair03.png"));
+				case TherapyPlaceTypeIcon.ChairType4: return ImageLoader.LoadImage(new Uri(basePath + "chair04.png"));
+				case TherapyPlaceTypeIcon.ChairType5: return ImageLoader.LoadImage(new Uri(basePath + "chair05.png"));
+				case TherapyPlaceTypeIcon.None:       return ImageLoader.LoadImage(new Uri(basePath + "none.png"));
 
 				default:
 					throw new ArgumentException();

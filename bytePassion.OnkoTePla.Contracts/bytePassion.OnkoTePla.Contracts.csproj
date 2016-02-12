@@ -71,7 +71,7 @@
     <Compile Include="Infrastructure\Room.cs" />
     <Compile Include="Infrastructure\TherapyPlace.cs" />
     <Compile Include="Infrastructure\TherapyPlaceType.cs" />
-    <Compile Include="Enums\TherapyPlaceIconType.cs" />
+    <Compile Include="Infrastructure\TherapyPlaceTypeIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\ConnectionSessionId.cs" />
   </ItemGroup>

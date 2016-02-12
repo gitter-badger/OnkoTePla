@@ -1,7 +1,7 @@
 ﻿
-namespace bytePassion.OnkoTePla.Contracts.Enums
+namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
-	public enum TherapyPlaceIconType
+	public enum TherapyPlaceTypeIcon
 	{		
 		ChairType1,
 		ChairType2,

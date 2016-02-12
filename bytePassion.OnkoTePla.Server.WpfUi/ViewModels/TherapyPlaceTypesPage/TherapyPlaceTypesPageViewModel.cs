@@ -7,7 +7,6 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
-using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage.Helper;
@@ -41,17 +40,17 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 
 			AllIcons = new ObservableCollection<IconDisplayData>
 			{
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed01.png")),   TherapyPlaceIconType.BedType1,   "Bed1"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed02.png")),   TherapyPlaceIconType.BedType2,   "Bed2"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed03.png")),   TherapyPlaceIconType.BedType3,   "Bed3"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed04.png")),   TherapyPlaceIconType.BedType4,   "Bed4"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed05.png")),   TherapyPlaceIconType.BedType5,   "Bed5"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair01.png")), TherapyPlaceIconType.ChairType1, "Chair1"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair02.png")), TherapyPlaceIconType.ChairType2, "Chair2"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair03.png")), TherapyPlaceIconType.ChairType3, "Chair3"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair04.png")), TherapyPlaceIconType.ChairType4, "Chair4"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair05.png")), TherapyPlaceIconType.ChairType5, "Chair5"),
-				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "none.png")),    TherapyPlaceIconType.None,       "None"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed01.png")),   TherapyPlaceTypeIcon.BedType1,   "Bed1"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed02.png")),   TherapyPlaceTypeIcon.BedType2,   "Bed2"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed03.png")),   TherapyPlaceTypeIcon.BedType3,   "Bed3"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed04.png")),   TherapyPlaceTypeIcon.BedType4,   "Bed4"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "bed05.png")),   TherapyPlaceTypeIcon.BedType5,   "Bed5"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair01.png")), TherapyPlaceTypeIcon.ChairType1, "Chair1"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair02.png")), TherapyPlaceTypeIcon.ChairType2, "Chair2"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair03.png")), TherapyPlaceTypeIcon.ChairType3, "Chair3"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair04.png")), TherapyPlaceTypeIcon.ChairType4, "Chair4"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair05.png")), TherapyPlaceTypeIcon.ChairType5, "Chair5"),
+				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "none.png")),    TherapyPlaceTypeIcon.None,       "None"),
 			};
 		}
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JsonSerializationDoubles
@@ -18,7 +17,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JsonSerializa
 		}
 
 		public string               Name     { get; set; }
-		public TherapyPlaceIconType IconType { get; set; }
+		public TherapyPlaceTypeIcon IconType { get; set; }
 		public Guid                 Id       { get; set; }
 
 		public TherapyPlaceType GetTherapyPlaceType()

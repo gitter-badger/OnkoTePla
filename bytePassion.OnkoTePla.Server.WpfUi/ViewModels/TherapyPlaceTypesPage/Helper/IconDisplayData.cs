@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Media;
-using bytePassion.OnkoTePla.Contracts.Enums;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 #pragma warning disable 0067
 
@@ -8,7 +8,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage.He
 {
 	internal class IconDisplayData : INotifyPropertyChanged
 	{
-		public IconDisplayData(ImageSource iconImage, TherapyPlaceIconType iconType, string iconName)
+		public IconDisplayData(ImageSource iconImage, TherapyPlaceTypeIcon iconType, string iconName)
 		{
 			IconImage = iconImage;
 			IconType = iconType;
@@ -16,7 +16,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage.He
 		}
 
 		public ImageSource          IconImage { get; }
-		public TherapyPlaceIconType IconType  { get; }
+		public TherapyPlaceTypeIcon IconType  { get; }
 		public string               IconName  { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;

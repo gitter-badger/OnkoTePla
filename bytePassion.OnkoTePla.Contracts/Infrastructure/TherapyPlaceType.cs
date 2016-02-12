@@ -1,6 +1,5 @@
 ﻿using System;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.OnkoTePla.Contracts.Enums;
 using static bytePassion.Lib.FrameworkExtensions.EqualsExtension;
 
 
@@ -8,9 +7,9 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 {
 	public class TherapyPlaceType
 	{
-        public static readonly TherapyPlaceType NoType = new TherapyPlaceType("noType", TherapyPlaceIconType.None, Guid.Empty);
+        public static readonly TherapyPlaceType NoType = new TherapyPlaceType("noType", TherapyPlaceTypeIcon.None, Guid.Empty);
 
-		public TherapyPlaceType(string name, TherapyPlaceIconType iconType, Guid id)
+		public TherapyPlaceType(string name, TherapyPlaceTypeIcon iconType, Guid id)
 		{
 			Name = name;
 			IconType = iconType;
@@ -18,7 +17,7 @@ namespace bytePassion.OnkoTePla.Contracts.Infrastructure
 		}
 
 		public string               Name     { get; }
-	    public TherapyPlaceIconType IconType { get; }
+	    public TherapyPlaceTypeIcon IconType { get; }
 	    public Guid                 Id       { get; }
 	    
 

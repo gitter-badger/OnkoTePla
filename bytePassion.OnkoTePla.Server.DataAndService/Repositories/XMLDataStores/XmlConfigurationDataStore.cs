@@ -7,7 +7,6 @@ using System.Xml;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Config;
-using bytePassion.OnkoTePla.Contracts.Enums;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
@@ -670,7 +669,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
 				i++;
 
 				var name     = String.Empty;
-				var iconType = TherapyPlaceIconType.BedType1;
+				var iconType = TherapyPlaceTypeIcon.BedType1;
 				var id = new Guid();
 
 				if (reader.HasAttributes)
@@ -678,7 +677,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
 					while (reader.MoveToNextAttribute())
 					{
 						if (reader.Name == NameAttribute)     name     = reader.Value;
-						if (reader.Name == IconTypeAttribute) iconType = (TherapyPlaceIconType)Enum.Parse(typeof(TherapyPlaceIconType),reader.Value);
+						if (reader.Name == IconTypeAttribute) iconType = (TherapyPlaceTypeIcon)Enum.Parse(typeof(TherapyPlaceTypeIcon),reader.Value);
 						if (reader.Name == IdAttribute)       id       = Guid.Parse(reader.Value);
 					}
 				}
