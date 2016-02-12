@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
@@ -11,7 +12,6 @@ using bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandling;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.ThreadCollections;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
-using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ;
 
@@ -42,8 +42,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		}
 
 		private readonly NetMQContext zmqContext;
-		private readonly IDataCenter dataCenter;
-		private readonly IEventStore eventStore;
+		private          IDataCenter dataCenter;		
 
 		private readonly ICurrentSessionsInfo          sessionRepository;		
 		private          IHeartbeatThreadCollection    heartbeatThreadCollection;
@@ -53,16 +52,21 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 				
 		
 		internal ConnectionService (NetMQContext zmqContext, 
-									IDataCenter dataCenter, 
-									IEventStore eventStore) 								   
+									DataCenterContainer dataCenterContainer) 								   
 		{
 			sessionRepository = new CurrentSessionsInfo();
 
 			this.zmqContext = zmqContext;
-			this.dataCenter = dataCenter;
-			this.eventStore = eventStore;			
+			
+			dataCenterContainer.DataCenterAvailable += OnDataCenterAvailable;			
 		}
-		
+
+		private void OnDataCenterAvailable(DataCenterContainer dataCenterContainer, IDataCenter data)
+		{
+			dataCenter = data;
+			dataCenterContainer.DataCenterAvailable -= OnDataCenterAvailable;
+		}
+
 		public void InitiateCommunication(Address serverAddress)
 		{			
 			heartbeatThreadCollection = new HeartbeatThreadCollection(zmqContext);
@@ -70,15 +74,17 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 			notificationThreadCollection = new NotificationThreadCollection(zmqContext);
 
-			var responseHandlerFactory = new ResponseHandlerFactory(dataCenter, 
-																	eventStore,
+			var responseHandlerFactory = new ResponseHandlerFactory(dataCenter, 																	
 																	sessionRepository, 
-																	NewConnectionEstablished, 
+																	NewConnectionEstablished,
+																	NewDebugConnectionEstablishedCallback,  
 																	ConnectionEnded);
 
 			universalResponseThread = new UniversalResponseThread(zmqContext, serverAddress, responseHandlerFactory);
 			new Thread(universalResponseThread.Run).Start();
 		}
+
+		
 
 		private void OnClientVanished(ConnectionSessionId connectionSessionId)
 		{
@@ -96,12 +102,20 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			notificationThreadCollection.StopThread(connectionSessionId);
 		}
 
-		private void NewConnectionEstablished(AddressIdentifier clientAddress, ConnectionSessionId connectionSessionId)
+		private void NewConnectionEstablished(AddressIdentifier clientAddress, ConnectionSessionId newSessionId)
 		{
-			heartbeatThreadCollection.AddThread(clientAddress, connectionSessionId);
-			notificationThreadCollection.AddThread(clientAddress, connectionSessionId);
-		}
+			sessionRepository.AddSession(newSessionId, TimeTools.GetCurrentTimeStamp().Item2, clientAddress, false);
 
+			heartbeatThreadCollection.AddThread(clientAddress, newSessionId);
+			notificationThreadCollection.AddThread(clientAddress, newSessionId);
+		}
+		
+		private void NewDebugConnectionEstablishedCallback (AddressIdentifier clientAddress, ConnectionSessionId newSessionId)
+		{
+			sessionRepository.AddSession(newSessionId, TimeTools.GetCurrentTimeStamp().Item2, clientAddress, true);
+
+			notificationThreadCollection.AddThread(clientAddress, newSessionId);
+		}
 
 		public void StopCommunication()
 		{	

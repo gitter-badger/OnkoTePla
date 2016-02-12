@@ -23,20 +23,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Base
 				
 		private void RegisterAtEventBus ()
 		{
-			eventBus.RegisterReadModel(this);
-
-			//eventBus.RegisterEventHandler<AppointmentAdded>(this);
-			//eventBus.RegisterEventHandler<AppointmentReplaced>(this);
-			//eventBus.RegisterEventHandler<AppointmentDeleted>(this);
+			eventBus.RegisterReadModel(this);			
 		}
 
 		private void DeregisterAtEventBus ()
 		{
-			eventBus.DeregisterReadModel(this);
-
-			//eventBus.DeregisterEventHander<AppointmentAdded>(this);
-			//eventBus.DeregisterEventHander<AppointmentReplaced>(this);
-			//eventBus.DeregisterEventHander<AppointmentDeleted>(this);
+			eventBus.DeregisterReadModel(this);			
 		}
 
         protected override void CleanUp()

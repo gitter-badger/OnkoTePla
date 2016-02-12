@@ -13,8 +13,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 	internal class PatientSelectorViewModel : ViewModel, 
                                               IPatientSelectorViewModel
     {
-	    private readonly ISharedState<Patient> selectedPatientSharedVariable;
-        private bool listIsEmpty;
+		private readonly IClientPatientRepository patientRepository;
+		private readonly ISharedState<Patient> selectedPatientSharedVariable;
+		private readonly Action<string> errorCallback;
+		private bool listIsEmpty;
         private string searchFilter;
 
         private Patient selectedPatient;
@@ -24,12 +26,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 									    ISharedState<Patient> selectedPatientSharedVariable,
 										Action<string> errorCallback)
         {
+	        this.patientRepository = patientRepository;
 	        this.selectedPatientSharedVariable = selectedPatientSharedVariable;
+	        this.errorCallback = errorCallback;
 
-			Patients = new CollectionViewSource();
+	        Patients = new CollectionViewSource();
 			Patients.Filter += Filter;
 			SearchFilter = "";
 			
+			patientRepository.NewPatientAvailable += PatientRepositoryChanged;
+	        patientRepository.UpdatedPatientAvailable += PatientRepositoryChanged;
+
 			patientRepository.RequestAllPatientList(
 				patientList =>
 				{
@@ -43,7 +50,22 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
 			);                       			            
         }
 
-        public bool ShowDeceasedPatients
+		private void PatientRepositoryChanged(Patient patient)
+		{
+			patientRepository.RequestAllPatientList(
+				patientList =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						Patients.Source = patientList;
+						UpdateForNewInput();
+					});
+				},
+				errorCallback
+			);
+		}
+
+		public bool ShowDeceasedPatients
         {
             get { return showDeceasedPatients; }
             set
@@ -127,7 +149,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector
         protected override void CleanUp()
         {
             Patients.Filter -= Filter;
-        }
+
+			patientRepository.NewPatientAvailable     -= PatientRepositoryChanged;
+			patientRepository.UpdatedPatientAvailable -= PatientRepositoryChanged;
+		}
         public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

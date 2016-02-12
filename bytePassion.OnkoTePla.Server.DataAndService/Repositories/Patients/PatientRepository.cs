@@ -4,20 +4,25 @@ using System.Linq;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Patients;
+using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients
 {
 	public class PatientRepository : IPatientReadRepository, IPatientWriteRepository
 	{
+		private readonly IPersistenceService<IEnumerable<Patient>> persistenceService;
+		private readonly IConnectionService connectionService;
+
 		public event Action<Patient> PatientAdded;
 		public event Action<Patient> PatientModified;
 
 		private IDictionary<Guid, Patient> patients;
-		private readonly IPersistenceService<IEnumerable<Patient>> persistenceService; 
+		
 
-		public PatientRepository(IPersistenceService<IEnumerable<Patient>> persistenceService)
+		public PatientRepository(IPersistenceService<IEnumerable<Patient>> persistenceService, IConnectionService connectionService)
 		{
 			this.persistenceService = persistenceService;
+			this.connectionService = connectionService;
 			patients = new Dictionary<Guid, Patient>();
 		}
 
@@ -38,6 +43,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients
 			patients.Add(newPatientId, newPatient);
 
 			PatientAdded?.Invoke(newPatient);
+			connectionService.SendPatientAddedNotification(newPatient);
 		}
 
 		private void ModifyPatientAndRaiseEvent(Guid patientId, Func<Patient, Patient> modification)
@@ -51,6 +57,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients
 			patients[patientId] = newPatientData;
 
 			PatientModified?.Invoke(newPatientData);
+			connectionService.SendPatientUpdatedNotification(newPatientData);
 		}
 
 		public void SetNewName(Guid patientId, string newName)

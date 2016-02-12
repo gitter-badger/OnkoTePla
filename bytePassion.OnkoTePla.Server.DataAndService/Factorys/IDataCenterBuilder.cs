@@ -8,5 +8,6 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 
 		void PersistConfigRepostiory();
 		void PersistPatientRepository();
+		void PersistEventStore();
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
@@ -31,8 +30,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 			}
 
 			var newSessionId = new ConnectionSessionId(Guid.NewGuid());
-			SessionRepository.AddSession(newSessionId, TimeTools.GetCurrentTimeStamp().Item2, request.ClientAddress, false);
-			
+						
 			newConnectionEstablishedCallback(request.ClientAddress, newSessionId);			
 
 			Socket.SendNetworkMsg(new BeginConnectionResponse(newSessionId));

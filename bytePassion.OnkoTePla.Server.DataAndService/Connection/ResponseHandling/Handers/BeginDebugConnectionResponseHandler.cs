@@ -1,5 +1,5 @@
 ﻿using System;
-using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Contracts.Types;
@@ -10,10 +10,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 {
 	internal class BeginDebugConnectionResponseHandler : ResponseHandlerBase<BeginDebugConnectionRequest>
 	{
+		private readonly Action<AddressIdentifier, ConnectionSessionId> newDebugConnectionEstablishedCallback;
+
 		public BeginDebugConnectionResponseHandler(ICurrentSessionsInfo sessionRepository, 
-												   ResponseSocket socket) 
+												   ResponseSocket socket, 
+												   Action<AddressIdentifier, ConnectionSessionId> newDebugConnectionEstablishedCallback) 
 			: base(sessionRepository, socket)
 		{
+			this.newDebugConnectionEstablishedCallback = newDebugConnectionEstablishedCallback;
 		}
 
 		public override void Handle(BeginDebugConnectionRequest request)
@@ -26,7 +30,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 			}
 
 			var newSessionId = new ConnectionSessionId(Guid.NewGuid());
-			SessionRepository.AddSession(newSessionId, TimeTools.GetCurrentTimeStamp().Item2, request.ClientAddress, true);
+
+			newDebugConnectionEstablishedCallback(request.ClientAddress, newSessionId);
 
 			Socket.SendNetworkMsg(new BeginDebugConnectionResponse(newSessionId));
 		}

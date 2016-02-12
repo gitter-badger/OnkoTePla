@@ -2,6 +2,7 @@
 using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Resources;
+using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
@@ -26,7 +27,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage;
 namespace bytePassion.OnkoTePla.Server.WpfUi
 {
 	public partial class App
-    {
+    {		
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -37,11 +38,17 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			////////                                                                                 //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////////
 
+			var dataCenterContainer = new DataCenterContainer();
+
+			// ConnectionService
+
+			var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenterContainer);
+			var connectionService = connectionServiceBuilder.Build();
 
 			// Patient-Repository
 
 			var patientPersistenceService = new XmlPatientDataStore(GlobalConstants.PatientPersistenceFile);
-			var patientRepository = new PatientRepository(patientPersistenceService);
+			var patientRepository = new PatientRepository(patientPersistenceService, connectionService);
 			patientRepository.LoadRepository();
 
 
@@ -52,6 +59,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			configRepository.LoadRepository();
 
 			
+			// Event-Store
+
 			var persistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
 			//var streamPersistenceService = new StreamPersistenceService(configRepository, "");
 			//var streamManager = new StreamManagementService(streamPersistenceService);
@@ -62,11 +71,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			// DataAndService
 
 			var dataCenterBuilder = new DataCenterBuilder(patientRepository, configRepository, eventStore);
-			var dataCenter = dataCenterBuilder.Build();					
+			var dataCenter = dataCenterBuilder.Build();
 
-	        var connectionServiceBuilder = new ConnectionServiceBuilder(dataCenter, eventStore); 
-			var connectionService = connectionServiceBuilder.Build();
-
+	        dataCenterContainer.DataCenter = dataCenter;
 
 			// ViewModel-Variables
 
@@ -122,7 +129,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             
 			dataCenterBuilder.PersistConfigRepostiory();
 			dataCenterBuilder.PersistPatientRepository();
-			eventStore.PersistRepository();
+			dataCenterBuilder.PersistEventStore();
 
 			connectionServiceBuilder.DisposeConnectionService(connectionService);
         }

@@ -5,6 +5,7 @@ using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
@@ -13,7 +14,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 	public interface IConnectionService : IDisposable
 	{
 		event Action<ConnectionEvent> ConnectionEventInvoked;
-		
+
+		event Action<DomainEvent> NewDomainEventAvailable;
+		event Action<Patient> NewPatientAvailable;
+		event Action<Patient> UpdatedPatientAvailable;
+		event Action<TherapyPlaceType> NewTherapyPlaceTypeAvailable;
+		event Action<TherapyPlaceType> UpdatedTherapyPlaceTypeAvailable;
+
 		Address          ServerAddress    { get; }
 		Address          ClientAddress    { get; }
 		ConnectionStatus ConnectionStatus { get; }

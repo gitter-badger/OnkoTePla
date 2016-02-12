@@ -90,6 +90,7 @@
     <Compile Include="Connection\Threads\HeartbeatThread.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
     <Compile Include="Data\DataCenter.cs" />
+    <Compile Include="Data\DataCenterContainer.cs" />
     <Compile Include="Data\IDataCenter.cs" />
     <Compile Include="EventBus\IServerEventBus.cs" />
     <Compile Include="EventBus\ServerEventBus.cs" />

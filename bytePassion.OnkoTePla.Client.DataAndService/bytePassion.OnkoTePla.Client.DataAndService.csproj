@@ -73,6 +73,7 @@
     <Compile Include="Connection\RequestHandling\Handlers\GetUserListRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\IRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\RequestHandlerBase.cs" />
+    <Compile Include="Connection\Threads\NotificationThread.cs" />
     <Compile Include="Connection\Threads\UniversalRequestThread.cs" />
     <Compile Include="Connection\Threads\HeartbeatThead.cs" />
     <Compile Include="Domain\AppointmentLogic\INotifyAppointmentChanged.cs" />

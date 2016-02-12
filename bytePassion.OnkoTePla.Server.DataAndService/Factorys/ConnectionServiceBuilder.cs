@@ -1,20 +1,16 @@
 ﻿using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
-using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
 using NetMQ;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 {
 	public class ConnectionServiceBuilder : IConnectionServiceBuilder
 	{
-		private readonly IDataCenter dataCenter;
-		private readonly IEventStore eventStore;
+		private readonly DataCenterContainer dataCenterContainer;				
 
-
-		public ConnectionServiceBuilder(IDataCenter dataCenter, IEventStore eventStore)
+		public ConnectionServiceBuilder(DataCenterContainer dataCenterContainer)
 		{
-			this.dataCenter = dataCenter;
-			this.eventStore = eventStore;			
+			this.dataCenterContainer = dataCenterContainer;			
 		}
 
 		private NetMQContext zmqContext;
@@ -23,7 +19,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 		{			
 			zmqContext = NetMQContext.Create();
 			
-			return new ConnectionService(zmqContext, dataCenter, eventStore); 
+			return new ConnectionService(zmqContext, dataCenterContainer); 
 		}
 		
 		public void DisposeConnectionService(IConnectionService connectionService)

@@ -6,6 +6,7 @@ using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.ZmqUtils;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
@@ -202,6 +203,25 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 			}
 
 			return innerCache[date];
+		}
+
+		#endregion
+
+		#region eventstore
+
+		public void AddEventsToEventStream(AggregateIdentifier id, IEnumerable<DomainEvent> eventStream)
+		{
+			eventStore.AddEventsToEventStream(id, eventStream);
+		}
+
+		public EventStream<Guid> GetEventStreamForAPatient(Guid patientId)
+		{
+			return eventStore.GetEventStreamForAPatient(patientId);
+		}
+
+		public EventStream<AggregateIdentifier> GetEventStreamForADay(AggregateIdentifier id)
+		{
+			return eventStore.GetEventStreamForADay(id);
 		}
 
 		#endregion

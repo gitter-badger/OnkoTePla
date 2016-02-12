@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
@@ -31,6 +33,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		void RemoveMedicalPractice(MedicalPractice medicalPracticeToRemove);
 		MedicalPractice GetMedicalPractice(Guid id);
 		MedicalPractice GetMedicalPractice(Guid id, uint version);
-		uint GetMedicalPracticeVersion(Guid id, Date date); 
+		uint GetMedicalPracticeVersion(Guid id, Date date);
+
+		void AddEventsToEventStream (AggregateIdentifier id, IEnumerable<DomainEvent> eventStream);
+		EventStream<Guid> GetEventStreamForAPatient (Guid patientId);
+		EventStream<AggregateIdentifier> GetEventStreamForADay (AggregateIdentifier id);
 	}
 }
