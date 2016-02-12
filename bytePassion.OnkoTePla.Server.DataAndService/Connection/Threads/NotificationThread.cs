@@ -13,7 +13,6 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 {
 	internal class NotificationThread : IThread
 	{
-
 		private readonly NetMQContext context;
 		private readonly Address clientAddress;
 		private readonly ConnectionSessionId sessionId;
@@ -94,6 +93,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 				}
 			}
 
+			notificationQueue.Dispose();	// It's easier to do this here than in the ThreadCollection
 			IsRunning = false;
 		}
 

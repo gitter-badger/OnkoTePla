@@ -1,5 +1,7 @@
-﻿using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
+﻿using System;
+using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
+using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ.Sockets;
 
@@ -7,14 +9,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 {
 	internal class EndConnectionResponseHandler : ResponseHandlerBase<EndConnectionRequest>
 	{
-		private readonly IHeartbeatThreadCollection heartbeatThreadCollection;
+		private readonly Action<ConnectionSessionId> connectionEndedCallback;		
 
 		public EndConnectionResponseHandler(ICurrentSessionsInfo sessionRepository, 
-										    ResponseSocket socket,
-										    IHeartbeatThreadCollection heartbeatThreadCollection) 
+										    ResponseSocket socket,										    
+											Action<ConnectionSessionId> connectionEndedCallback) 
 			: base(sessionRepository, socket)
 		{
-			this.heartbeatThreadCollection = heartbeatThreadCollection;
+			this.connectionEndedCallback = connectionEndedCallback;			
 		}
 
 		public override void Handle(EndConnectionRequest request)
@@ -23,7 +25,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 				return;
 
 			SessionRepository.RemoveSession(request.SessionId);
-			heartbeatThreadCollection.StopThread(request.SessionId);
+
+			connectionEndedCallback(request.SessionId);		
 
 			Socket.SendNetworkMsg(new EndConnectionResponse());
 		}

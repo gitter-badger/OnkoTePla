@@ -1,5 +1,6 @@
 ﻿using System;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
 using bytePassion.OnkoTePla.Contracts.Types;
@@ -10,14 +11,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 {
 	internal class BeginConnectionResponseHandler : ResponseHandlerBase<BeginConnectionRequest>
 	{
-		private readonly IHeartbeatThreadCollection heartbeatThreadCollection;
-		
+		private readonly Action<AddressIdentifier, ConnectionSessionId> newConnectionEstablishedCallback;		
+
 		public BeginConnectionResponseHandler(ICurrentSessionsInfo sessionRepository, 
 											  ResponseSocket socket,
-											  IHeartbeatThreadCollection heartbeatThreadCollection) 
+											  Action<AddressIdentifier, ConnectionSessionId> newConnectionEstablishedCallback) 
 			: base(sessionRepository, socket)
 		{
-			this.heartbeatThreadCollection = heartbeatThreadCollection;
+			this.newConnectionEstablishedCallback = newConnectionEstablishedCallback;			
 		}
 
 		public override void Handle(BeginConnectionRequest request)
@@ -32,7 +33,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 			var newSessionId = new ConnectionSessionId(Guid.NewGuid());
 			SessionRepository.AddSession(newSessionId, TimeTools.GetCurrentTimeStamp().Item2, request.ClientAddress, false);
 			
-			heartbeatThreadCollection.AddThread(request.ClientAddress, newSessionId);
+			newConnectionEstablishedCallback(request.ClientAddress, newSessionId);			
 
 			Socket.SendNetworkMsg(new BeginConnectionResponse(newSessionId));
 		}

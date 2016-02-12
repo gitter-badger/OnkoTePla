@@ -58,13 +58,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\ConnectionService.cs" />
-    <Compile Include="Connection\IHeartbeatThreadCollection.cs" />
+    <Compile Include="Connection\ThreadCollections\IHeartbeatThreadCollection.cs" />
+    <Compile Include="Connection\ThreadCollections\INotificationThreadCollection.cs" />
     <Compile Include="Connection\NotificationObjects\EventNotificationObject.cs" />
     <Compile Include="Connection\NotificationObjects\NotificationObject.cs" />
     <Compile Include="Connection\NotificationObjects\PatientAddedNotificationObject.cs" />
     <Compile Include="Connection\NotificationObjects\PatientUpdatedNotificationObject.cs" />
     <Compile Include="Connection\NotificationObjects\TherpyPlaceTypeAddedNotificationObject.cs" />
     <Compile Include="Connection\NotificationObjects\TherpyPlaceTypeUpdatedNotificationObject.cs" />
+    <Compile Include="Connection\ThreadCollections\NotificationThreadCollection.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\BeginConnectionResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\BeginDebugConnectionResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\EndConnectionResponseHandler.cs" />
@@ -82,7 +84,7 @@
     <Compile Include="Connection\ResponseHandling\ResponseHandlerBase.cs" />
     <Compile Include="Connection\ResponseHandling\ResponseHandlerFactory.cs" />
     <Compile Include="Connection\SessionInfo.cs" />
-    <Compile Include="Connection\HeartbeatThreadCollection.cs" />
+    <Compile Include="Connection\ThreadCollections\HeartbeatThreadCollection.cs" />
     <Compile Include="Connection\Threads\NotificationThread.cs" />
     <Compile Include="Connection\Threads\UniversalResponseThread.cs" />
     <Compile Include="Connection\Threads\HeartbeatThread.cs" />

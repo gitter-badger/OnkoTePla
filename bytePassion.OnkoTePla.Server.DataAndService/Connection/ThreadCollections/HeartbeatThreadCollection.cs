@@ -1,28 +1,27 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
-using System.Windows;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads;
-using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
+namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ThreadCollections
 {
 	internal class HeartbeatThreadCollection : DisposingObject, IHeartbeatThreadCollection
 	{
-		private readonly NetMQContext zmqContext;
-		private readonly ICurrentSessionsInfo sessionRepository;
+		public event Action<ConnectionSessionId> ClientVanished;
+
+		private readonly NetMQContext zmqContext;		
 		private readonly IDictionary<ConnectionSessionId, HeartbeatThread> heartbeatThreads;
 
-		public HeartbeatThreadCollection(NetMQContext zmqContext, ICurrentSessionsInfo sessionRepository)
+		public HeartbeatThreadCollection(NetMQContext zmqContext)
 		{
-			this.zmqContext = zmqContext;
-			this.sessionRepository = sessionRepository;
+			this.zmqContext = zmqContext;			
 			heartbeatThreads = new ConcurrentDictionary<ConnectionSessionId, HeartbeatThread>();
-		}
+		}		
 
 		public void StopThread(ConnectionSessionId sessionId)
 		{
@@ -46,21 +45,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		}
 
 		private void HeartbeatOnClientVanished (ConnectionSessionId connectionSessionId)
-		{
-			Application.Current.Dispatcher.Invoke(() =>
-			{
-				if (heartbeatThreads.ContainsKey(connectionSessionId))
-				{
-					var heartbeatThread = heartbeatThreads[connectionSessionId];
-					heartbeatThread.ClientVanished -= HeartbeatOnClientVanished;
-					heartbeatThreads.Remove(connectionSessionId);
-				}
-
-				if (sessionRepository.DoesSessionExist(connectionSessionId))
-				{                                                               //	the session does not exist if it was
-					sessionRepository.RemoveSession(connectionSessionId);       //  ended corretly by connectionEndMessage
-				}
-			});			
+		{							
+			ClientVanished?.Invoke(connectionSessionId);					
 		}
 
 		protected override void CleanUp()

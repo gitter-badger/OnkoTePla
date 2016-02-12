@@ -1,5 +1,8 @@
 ﻿using System;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
+using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Contracts.Types;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
@@ -10,10 +13,18 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		event Action<SessionInfo> SessionTerminated;
 		event Action<SessionInfo> LoggedInUserUpdated;
 		
+
 		SessionInfo GetSessionInfo(ConnectionSessionId id);
 
 
 		void InitiateCommunication (Address serverAddress);
 		void StopCommunication ();
+
+
+		void SendEventNotification(DomainEvent domainEvent);
+		void SendPatientAddedNotification(Patient newPatient);
+		void SendPatientUpdatedNotification(Patient updatedPatient);
+		void SendTherapyPlaceTypeAddedNotification(TherapyPlaceType newTherapyPlaceType);
+		void SendTherapyPlaceTypeUpdatedNotification(TherapyPlaceType updatedTherapyPlaceType);
 	}
 }
