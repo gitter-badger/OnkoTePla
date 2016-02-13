@@ -101,6 +101,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 		{
 			persistenceService.Persist(eventStreams);
             //streamManager.SaveStreams(eventStreams);
+            metaDataService.PersistMetaData();
 		}
 
 		public void LoadRepository()

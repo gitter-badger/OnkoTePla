@@ -1,21 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Domain.Events;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using Newtonsoft.Json;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamManagement
 {
-	public class StreamMetaDataService : IStreamMetaDataService
+    public class StreamMetaDataService : IStreamMetaDataService
     {
         private readonly string baseDir;
-        private Dictionary<Guid, PracticeMetaData> metaDataFiles;
+        private readonly Dictionary<Guid, PracticeMetaData> metaDataFiles;
+        private readonly List<Guid> loadedPractices = new List<Guid>();
 
         public StreamMetaDataService(string baseDir)
         {
             metaDataFiles = new Dictionary<Guid, PracticeMetaData>();
             this.baseDir = baseDir;
+        }
+
+        public void PersistMetaData()
+        {
+            foreach (var metaDataFile in metaDataFiles)
+            {
+                SaveMetaData(metaDataFile.Key, metaDataFile.Value);
+            }
+        }
+
+        public void UpdateMetaData(DomainEvent @event)
+        {
+            var id = @event.AggregateId.MedicalPracticeId;
+
+            if (!loadedPractices.Contains(id))
+            {
+                GetMetaDataForPractice(id);
+                loadedPractices.Add(id);
+            }
+
+            UpdateMetaDataForPractice(@event);
+            UpdateMetaDataForPatient(@event);
+        }
+
+        public PracticeMetaData GetMetaDataForPractice(Guid practiceId)
+        {
+            if (!metaDataFiles.ContainsKey(practiceId))
+            {
+                metaDataFiles.Add(practiceId, ReadMetaDataForPractice(practiceId));
+            }
+
+            return metaDataFiles[practiceId];
         }
 
         private PracticeMetaData ReadMetaDataForPractice(Guid practiceId)
@@ -31,6 +65,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamManagem
                 }
             }
 
+            Directory.CreateDirectory($@"{baseDir}\{practiceId}");
+            File.Create(path);
+
             return new PracticeMetaData();
         }
 
@@ -45,43 +82,37 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamManagem
             }
         }
 
-        public void PersistMetaData()
-        {
-            foreach (var metaDataFile in metaDataFiles)
-            {
-                SaveMetaData(metaDataFile.Key, metaDataFile.Value);
-            }
-        }
-
-        public void UpdateMetaDataForPractice(DomainEvent @event)
+        private void UpdateMetaDataForPractice(DomainEvent @event)
         {
             UpdateFirstAndLastAppointmentDate(@event);
             UpdateAppointmentsExistenceIndex(@event);
         }
 
 
-        public void UpdateMetaDataForPatient(DomainEvent @event)
+        private void UpdateMetaDataForPatient(DomainEvent @event)
         {
             var id = @event.AggregateId.MedicalPracticeId;
             var targetDate = @event.AggregateId.Date;
             var patientId = @event.PatientId;
+            var patientDictionary = metaDataFiles[id].AppointmentsForPatient;
 
+            if (!patientDictionary.ContainsKey(patientId))
+                patientDictionary.Add(patientId, new List<Date>());
 
             if (@event.GetType() == typeof (AppointmentAdded))
             {
-                if (!metaDataFiles[id].AppointmentsForPatient[patientId].Contains(targetDate))
+                if (!patientDictionary[patientId].Contains(targetDate))
                 {
-                    metaDataFiles[id].AppointmentsForPatient[patientId].Add(targetDate);
+                    patientDictionary[patientId].Add(targetDate);
                 }
             }
-            else if (@event.GetType() == typeof(AppointmentDeleted))
+            else if (@event.GetType() == typeof (AppointmentDeleted))
             {
-                if (metaDataFiles[id].AppointmentsForPatient[patientId].Contains(targetDate))
+                if (patientDictionary[patientId].Contains(targetDate))
                 {
-                    metaDataFiles[id].AppointmentsForPatient[patientId].Remove(targetDate);
+                    patientDictionary[patientId].Remove(targetDate);
                 }
             }
-
         }
 
         private void UpdateAppointmentsExistenceIndex(DomainEvent @event)
@@ -115,30 +146,31 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamManagem
 
         private void UpdateFirstAndLastAppointmentDate(DomainEvent @event)
         {
-            if (metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate == null ||
-                (metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate >
-                 @event.AggregateId.Date))
+            var firstDate = metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate;
+            var lastDate = metaDataFiles[@event.AggregateId.MedicalPracticeId].LastAppointmentDate;
+
+            if (ReferenceEquals(null, firstDate))
             {
                 metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate =
                     @event.AggregateId.Date;
             }
-            else if (metaDataFiles[@event.AggregateId.MedicalPracticeId].LastAppointmentDate == null ||
-                     (metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate <
-                      @event.AggregateId.Date))
+            else if (metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate >
+                     @event.AggregateId.Date)
+            {
+                metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate =
+                    @event.AggregateId.Date;
+            }
+            if (ReferenceEquals(null, lastDate))
+            {
+                metaDataFiles[@event.AggregateId.MedicalPracticeId].LastAppointmentDate =
+                    @event.AggregateId.Date;
+            } 
+            else if (metaDataFiles[@event.AggregateId.MedicalPracticeId].FirstAppointmentDate <
+                     @event.AggregateId.Date)
             {
                 metaDataFiles[@event.AggregateId.MedicalPracticeId].LastAppointmentDate =
                     @event.AggregateId.Date;
             }
-        }
-
-        public PracticeMetaData GetMetaDataForPractice(Guid practiceId)
-        {
-            if (!metaDataFiles.ContainsKey(practiceId))
-            {
-                metaDataFiles.Add(practiceId, ReadMetaDataForPractice(practiceId));
-            }
-
-            return metaDataFiles[practiceId];
         }
 
         private string GetMetaDataPathForPractice(Guid practiceId)

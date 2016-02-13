@@ -166,7 +166,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		private void DoGenerateAppointments ()
 		{
-			appointmentGenerator.NewAppointments(SelectedMedicalPracticeObject.Id, TimeTools.Today());
+			appointmentGenerator.NewAppointments(SelectedMedicalPracticeObject.Id, new Date(12,2,2016));
 			MessageBox.Show("appointment-generation finished");
 		}
 
