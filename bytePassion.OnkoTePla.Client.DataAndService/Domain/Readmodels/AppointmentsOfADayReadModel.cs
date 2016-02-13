@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Base;
@@ -44,13 +43,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 		}		
 
 		public uint AggregateVersion { private set; get; }
-		public AggregateIdentifier Identifier { get; }
-
-		public void LoadFromEventStream (EventStream<AggregateIdentifier> eventStream)
-		{			
-			foreach (var domainEvent in eventStream.Events)			
-				(this as dynamic).Process(Converter.ChangeTo(domainEvent, domainEvent.GetType()));			
-		}
+		public AggregateIdentifier Identifier { get; }		
 
 		public IEnumerable<Appointment> Appointments
 		{
@@ -61,7 +54,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 		{
 			if (domainEvent.AggregateId != Identifier) return;
 
-			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
+			if (AggregateVersion != domainEvent.AggregateVersion)
 				throw new VersionNotApplicapleException("@handle appointmentAdded @readmodel");
 			
 			appointmentSet.AddAppointment(domainEvent.PatientId, 
@@ -73,14 +66,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 										  domainEvent.AppointmentId, 
 										  errorCallback);	
 
-			AggregateVersion = domainEvent.AggregateVersion;
+			AggregateVersion = domainEvent.AggregateVersion + 1;
 		}
 
 		public override void Process (AppointmentReplaced domainEvent)
 		{
 			if (domainEvent.AggregateId != Identifier) return;
 
-			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
+			if (AggregateVersion != domainEvent.AggregateVersion)
 				throw new VersionNotApplicapleException("@handle appointmentReplaced @readmodel");
 
 			appointmentSet.ReplaceAppointment(domainEvent.NewDescription,
@@ -90,19 +83,19 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 											  domainEvent.NewTherapyPlaceId,
 											  domainEvent.OriginalAppointmendId);
 
-			AggregateVersion = domainEvent.AggregateVersion;
+			AggregateVersion = domainEvent.AggregateVersion + 1;
 		}
 		 
 		public override void Process (AppointmentDeleted domainEvent)
 		{
 			if (domainEvent.AggregateId != Identifier) return;
 
-			if (AggregateVersion + 1 != domainEvent.AggregateVersion)
+			if (AggregateVersion != domainEvent.AggregateVersion)
 				throw new VersionNotApplicapleException("@handle appointmentDeleted @readmodel");
 
 			appointmentSet.DeleteAppointment(domainEvent.RemovedAppointmentId);
 
-			AggregateVersion = domainEvent.AggregateVersion;
+			AggregateVersion = domainEvent.AggregateVersion + 1;
 		}		
 	}
 }

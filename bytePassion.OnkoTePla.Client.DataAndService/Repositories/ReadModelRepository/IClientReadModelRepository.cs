@@ -14,6 +14,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 		void RequestAppointmentSetOfADay(Action<FixedAppointmentSet> appointmentSetAvailable, 
 										 AggregateIdentifier id, uint aggregateVersionLimit, Action<string> errorCallback);
 
+		void RequestLastestReadModelVersion(Action<uint> readModelVersionAvailable,
+											AggregateIdentifier id, Action<string> errorCallback);
+		
 		void RequestAppointmentsOfAPatientReadModel(Action<AppointmentsOfAPatientReadModel> readModelAvailable, 
 													Guid patientId, Action<string> errorCallback);
 	}

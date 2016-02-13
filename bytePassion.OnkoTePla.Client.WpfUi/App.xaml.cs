@@ -4,6 +4,7 @@ using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
@@ -35,7 +36,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			var connectionService = new ConnectionService();
 			var workFlow          = new ClientWorkflow();			
 			var session           = new Session(connectionService, workFlow);
-			var eventBus          = new ClientEventBus();
+			var eventBus          = new ClientEventBus(connectionService);
 
 			var commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
 			var commandMessageBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
@@ -49,6 +50,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			var clienttherapyPlaceTypeRepository = new ClientTherapyPlaceTypeRepository(connectionService);
 			var clientReadmodelRepository        = new ClientReadModelRepository(eventBus, clientPatientRepository,clientMedicalPracticeRepository, connectionService);
 			
+			// CommandHandler
+
+			var     addAppointmentCommandHandler = new     AddAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
+			var  deleteAppointmentCommandHandler = new  DeleteAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
+			var replaceAppointmentCommandHandler = new ReplaceAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
+
+			commandBus.RegisterCommandHandler(    addAppointmentCommandHandler);
+			commandBus.RegisterCommandHandler( deleteAppointmentCommandHandler);
+			commandBus.RegisterCommandHandler(replaceAppointmentCommandHandler);
+
 
 			// initiate ViewModelCommunication			
 
@@ -68,7 +79,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			var mainWindow = mainWindowBuilder.BuildWindow(
 				errorMsg =>
 				{
-					Application.Current.Dispatcher.Invoke(() =>
+					Current.Dispatcher.Invoke(() =>
 					{
 						MessageBox.Show("fatal Error >>>>");
 					});
@@ -86,6 +97,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			///////////////////////////////////////////////////////////////////////////////////////////////
 
 			connectionService.Dispose();
-		}	
+		}
+
+		private void CommandHandlerErrorHandler(string errorMessage)
+		{
+			MessageBox.Show($"CommandHandler failed: {errorMessage}");
+		}
 	}
 }

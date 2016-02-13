@@ -71,6 +71,7 @@
     <Compile Include="Connection\RequestHandling\Handlers\LoginRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\LogoutRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetUserListRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\TryToAddNewEventsRequestHander.cs" />
     <Compile Include="Connection\RequestHandling\IRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\RequestHandlerBase.cs" />
     <Compile Include="Connection\Threads\NotificationThread.cs" />
