@@ -106,7 +106,7 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 			var patientId        = Guid.Parse(eventParts[5]);
 			var aggregateVersion = uint.Parse(eventParts[6]);
 			var userId           = Guid.Parse(eventParts[7]);
-			var timeStampDate    = Date.Parse(eventParts[7]);
+			var timeStampDate    = Date.Parse(eventParts[8]);
 			var timeStampTime    = Time.Parse(eventParts[9]);
 
 			var timeStamp = new Tuple<Date, Time>(timeStampDate, timeStampTime);
@@ -121,7 +121,7 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 		{
 			var sb = new StringBuilder();
 
-			sb.Append(nameof(AppointmentDeleted));                  sb.Append("|");
+			sb.Append(nameof(AppointmentReplaced));                 sb.Append("|");
 
 			sb.Append(replacedEvent.AggregateId.Date);              sb.Append("|");
 			sb.Append(replacedEvent.AggregateId.MedicalPracticeId); sb.Append("|");

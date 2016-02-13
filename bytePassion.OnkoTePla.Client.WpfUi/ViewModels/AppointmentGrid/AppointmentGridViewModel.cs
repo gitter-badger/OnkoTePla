@@ -322,17 +322,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 						sourceAggregateVersion = fixedAppointmentSet.AggregateVersion;
 
 						commandBus.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
-																  sourceAggregateVersion, destinationAggregateVersion,
-																  session.LoggedInUser.Id,
-																  originalAppointment.Patient.Id,
-																  ActionTag.RegularAction,
-																  appointmentModificationsVariable.Value.Description,
-																  appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date,
-																  appointmentModificationsVariable.Value.BeginTime,
-																  appointmentModificationsVariable.Value.EndTime,
-																  appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId,
-																  originalAppointment.Id,
-																  originalAppointment.Day));
+																      sourceAggregateVersion, destinationAggregateVersion,
+																      session.LoggedInUser.Id,
+																      originalAppointment.Patient.Id,
+																      ActionTag.RegularAction,
+																      appointmentModificationsVariable.Value.Description,
+																      appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date,
+																      appointmentModificationsVariable.Value.BeginTime,
+																      appointmentModificationsVariable.Value.EndTime,
+																      appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId,
+																      originalAppointment.Id,
+																      originalAppointment.Day));
 					},
 					sourceAggregateId,
 					uint.MaxValue,
@@ -345,17 +345,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 				sourceAggregateVersion = destinationAggregateVersion;
 
 				commandBus.SendCommand(new ReplaceAppointment(sourceAggregateId, destinationAggregateId,
-														  sourceAggregateVersion, destinationAggregateVersion,
-														  session.LoggedInUser.Id,
-														  originalAppointment.Patient.Id,
-														  ActionTag.RegularAction,
-														  appointmentModificationsVariable.Value.Description,
-														  appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date,
-														  appointmentModificationsVariable.Value.BeginTime,
-														  appointmentModificationsVariable.Value.EndTime,
-														  appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId,
-														  originalAppointment.Id,
-														  originalAppointment.Day));
+														      sourceAggregateVersion, destinationAggregateVersion,
+														      session.LoggedInUser.Id,
+														      originalAppointment.Patient.Id,
+														      ActionTag.RegularAction,
+														      appointmentModificationsVariable.Value.Description,
+														      appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate.Date,
+														      appointmentModificationsVariable.Value.BeginTime,
+														      appointmentModificationsVariable.Value.EndTime,
+														      appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId,
+														      originalAppointment.Id,
+														      originalAppointment.Day));
 			}			
 		}
 

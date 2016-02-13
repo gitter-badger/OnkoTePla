@@ -117,6 +117,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 																 errorCallback));
 		}
 
+		public void TryAddEvents(Action<bool> resultCallback, IReadOnlyList<DomainEvent> newEvents, Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new TryToAddNewEventsRequestHander(resultCallback,		
+																	connectionInfoVariable, 
+																	newEvents, 
+																	errorCallback));
+		}
+
 		public void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
 									Action<string> errorCallback)
 		{

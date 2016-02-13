@@ -1,29 +1,58 @@
-﻿using bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands;
+﻿using System;
+using System.Collections.Generic;
+using bytePassion.Lib.TimeLib;
+using bytePassion.OnkoTePla.Client.DataAndService.Connection;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
+using bytePassion.OnkoTePla.Contracts.Domain.Events;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandHandler
 {
 	public class DeleteAppointmentCommandHandler : IDomainCommandHandler<DeleteAppointment>
 	{
+		private readonly IConnectionService connectionService;
+		private readonly ISession session;
+		private readonly Action<string> errorCallback;
 
-		//private readonly IAggregateRepository repository;
 
-		public DeleteAppointmentCommandHandler()// IAggregateRepository repository)
+		public DeleteAppointmentCommandHandler(IConnectionService connectionService,
+											   ISession session,
+											   Action<string> errorCallback)
 		{
-			//this.repository = repository;
+			this.connectionService = connectionService;
+			this.session = session;
+			this.errorCallback = errorCallback;
 		}
 
 		public void Process(DeleteAppointment command)
 		{
-//			var aggregate = repository.GetById(command.AggregateId);
-//
-//			aggregate.DeleteAppointment(command.UserId, 
-//										command.AggregateVersion, 
-//										command.PatientId, 
-//										command.ActionTag, 
-//										command.AppointmentToRemoveId);
-//
-//			repository.Save(aggregate);
+			if (session.LoggedInUser == null)
+			{
+				errorCallback("commands can only be processed when a user is logged in");
+				return;
+			}
+
+			var deletedEvent = new AppointmentDeleted(command.AggregateId, 
+													  command.AggregateVersion, 
+													  session.LoggedInUser.Id, 
+													  command.PatientId, 
+													  TimeTools.GetCurrentTimeStamp(), 
+													  command.ActionTag,
+													  command.AppointmentToRemoveId);
+
+			connectionService.TryAddEvents(
+				addingWasSuccesscful =>
+				{
+					if (!addingWasSuccesscful)
+					{
+						errorCallback("adding events failed");
+					}
+				},
+				new List<DomainEvent> { deletedEvent },
+				errorCallback
+			);			
 		}		
 	}
 }

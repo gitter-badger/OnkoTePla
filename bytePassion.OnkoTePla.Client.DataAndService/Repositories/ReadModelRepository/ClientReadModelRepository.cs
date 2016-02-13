@@ -126,6 +126,44 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 			}
 		}
 
+		public void RequestLastestReadModelVersion(Action<uint> readModelVersionAvailable, AggregateIdentifier id, Action<string> errorCallback)
+		{
+			if (cachedDayReadmodels.ContainsKey(id))
+			{
+				readModelVersionAvailable(cachedDayReadmodels[id].AggregateVersion);
+				return;
+			}
+
+			connectionService.RequestAppointmentsOfADay(
+				(appointments, aggregateId, aggregateVersion) =>
+				{
+					medicalPracticeRepository.RequestMedicalPractice(
+						practice =>
+						{
+							var newReadModel = new AppointmentsOfADayReadModel(eventBus,
+																			   patientsRepository,
+																			   practice,
+																			   appointments,
+																			   aggregateId,
+																			   aggregateVersion,
+																			   errorCallback);
+							if (!cachedDayReadmodels.ContainsKey(aggregateId))
+								cachedDayReadmodels.Add(aggregateId, newReadModel);
+
+							readModelVersionAvailable(cachedDayReadmodels[id].AggregateVersion);
+						},
+						aggregateId.MedicalPracticeId,
+						aggregateId.PracticeVersion,
+						errorCallback
+					);
+				},
+				id.Date,
+				id.MedicalPracticeId,
+				uint.MaxValue,
+				errorCallback
+			);
+		}
+
 		public void RequestAppointmentsOfAPatientReadModel(Action<AppointmentsOfAPatientReadModel> readModelAvailable, Guid patientId, Action<string> errorCallback)
 		{
 			if (cachedPatientReadmodel.ContainsKey(patientId))

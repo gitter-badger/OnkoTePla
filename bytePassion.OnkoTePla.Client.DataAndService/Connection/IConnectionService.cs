@@ -33,7 +33,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		void TryLogin (Action loginSuccessfulCallback,  ClientUserData user, string password, Action<string> errorCallback);
 		void TryLogout(Action logoutSuccessfulCallback, ClientUserData user,                  Action<string> errorCallback);
 
-
+		void TryAddEvents(Action<bool> resultCallback, IReadOnlyList<DomainEvent> newEvents, Action<string> errorCallback);
+		
 		void RequestUserList (Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
 							  Action<string> errorCallback);
 		

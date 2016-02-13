@@ -69,7 +69,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 
 			CloseDialog = new Command(CloseWindow);
 
-			CreateAppointment = new Command(CreateNewAppointment,
+			CreateAppointment = new Command(DoCreateAppointment,
 											() => CreationState != AppointmentCreationState.NoPatientSelected && 
 												  CreationState != AppointmentCreationState.NoSpaceAvailable,
 											new PropertyChangedCommandUpdater(this, nameof(CreationState)));
@@ -171,7 +171,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 				throw new Exception("inner error");
 		}
 
-		private void CreateNewAppointment()
+		private void DoCreateAppointment()
 		{
 			var therapyPlace = medicalPractice.GetTherapyPlaceById(firstFittingTimeSlot.Item1.TherapyPlaceId);
 

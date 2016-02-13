@@ -69,7 +69,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 			{
 				var eventStream = GetEventStreamForADay(domainEvent.AggregateId);
 
-				if (eventStream.Events.Last().AggregateVersion + 1 != domainEvent.AggregateVersion)
+				var evenstreamAggregateVersion = eventStream.Events.Any() 
+													? eventStream.Events.Last().AggregateVersion + 1
+													: 0;
+
+				if (evenstreamAggregateVersion != domainEvent.AggregateVersion)
 				{
 					errorOccured = true;
 					break;
@@ -82,7 +86,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 				connectionService.SendEventNotification(domainEvent);
 			}
 
-			return errorOccured;
+			return !errorOccured;
 		}
 
 		public EventStream<Guid> GetEventStreamForAPatient(Guid patientId)
