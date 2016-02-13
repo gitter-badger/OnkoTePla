@@ -36,8 +36,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 
 		public void Run()
 		{
-			IsRunning = true;
-
+			IsRunning = true;			
 			using (var socket = context.CreatePushSocket())
 			{
 				socket.Connect(clientAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.Notification);
@@ -93,13 +92,13 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 				}
 			}
 
-			notificationQueue.Dispose();	// It's easier to do this here than in the ThreadCollection
+			notificationQueue.Dispose();    // It's easier to do this here than in the ThreadCollection			
 			IsRunning = false;
 		}
 
 		public void Stop()
-		{
-			stopRunning = false;
+		{			
+			stopRunning = true;
 		}
 
 		public bool IsRunning { get; private set; }
