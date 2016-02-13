@@ -7,6 +7,7 @@ using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamManagement;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators;
@@ -62,9 +63,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			// Event-Store
 
 			var persistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
-			//var streamPersistenceService = new StreamPersistenceService(configRepository, "");
-			//var streamManager = new StreamManagementService(streamPersistenceService);
-			var eventStore = new EventStore(persistenceService, /*streamManager,*/ configRepository, connectionService);
+			var streamPersistenceService = new StreamPersistenceService(configRepository, "");
+			var streamManager = new StreamManagementService(streamPersistenceService);
+            var metaDataService = new StreamMetaDataService(GlobalConstants.EventHistoryBasePath);
+			var eventStore = new EventStore(persistenceService, streamManager, metaDataService, configRepository, connectionService);
 			eventStore.LoadRepository();
 
 
