@@ -82,10 +82,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		{			
 			if (applicationState == ApplicationState.DisconnectedFromServer)
 			{
-				AvailableUsers.Clear();
-				AreConnectionSettingsVisible = true;								
-				SelectedUser = null;				
-				IsUserListAvailable = false;
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+					AvailableUsers.Clear();
+					AreConnectionSettingsVisible = true;
+					SelectedUser = null;
+					IsUserListAvailable = false;
+				});				
 			}			
 
 			if (applicationState == ApplicationState.ConnectedButNotLoggedIn)
@@ -131,10 +134,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				);
 			}
 
-			((ParameterrizedCommand<PasswordBox>)Login).RaiseCanExecuteChanged();
-			((Command)Connect).RaiseCanExecuteChanged();
-			((Command)DebugConnect).RaiseCanExecuteChanged();
-			((Command)Disconnect).RaiseCanExecuteChanged();
+
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				((ParameterrizedCommand<PasswordBox>) Login).RaiseCanExecuteChanged();
+				((Command) Connect).RaiseCanExecuteChanged();
+				((Command) DebugConnect).RaiseCanExecuteChanged();
+				((Command) Disconnect).RaiseCanExecuteChanged();
+			});
 		}	
 		
 		
