@@ -22,8 +22,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 
 	public partial class App
 	{
-		private Session session;
-
 		protected override void OnStartup (StartupEventArgs e)
 		{
 			base.OnStartup(e);
@@ -33,14 +31,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			////////                          Composition Root and Setup                         //////////
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
-			
-			//var sessionLogger    = LogManager.GetLogger("sessionLogger");
-			//var connectionLogger = LogManager.GetLogger("connectionLogger");
-
-
+						
 			var connectionService = new ConnectionService();
 			var workFlow          = new ClientWorkflow();			
-			session = new Session(connectionService, workFlow);
+			var session           = new Session(connectionService, workFlow);
 			var eventBus          = new ClientEventBus();
 
 			var commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
@@ -92,28 +86,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			///////////////////////////////////////////////////////////////////////////////////////////////
 
 			connectionService.Dispose();
-
-//			if (session.CurrentApplicationState == ApplicationState.LoggedIn)
-//			{
-//				session.Logout(() =>
-//				{
-//					session.TryDisconnect(error => { });
-//					connectionService.Dispose();
-//				}, 
-//				error =>
-//				{
-//					connectionService.Dispose();
-//				});
-//			}
-//			else
-//			{
-//				if (session.CurrentApplicationState == ApplicationState.ConnectedButNotLoggedIn)
-//				{
-//					session.TryDisconnect(error => { });
-//				}
-//
-//				connectionService.Dispose();
-//			}
 		}	
 	}
 }
