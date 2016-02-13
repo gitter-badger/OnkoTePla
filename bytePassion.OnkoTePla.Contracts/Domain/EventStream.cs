@@ -16,13 +16,13 @@ namespace bytePassion.OnkoTePla.Contracts.Domain
 
 
 		public TIdentifier              Id     { get; }
-		public IEnumerable<DomainEvent> Events { get { return events.ToList(); }}
+		public IEnumerable<DomainEvent> Events { get { return events.ToList(); }}		
 
-		public void AddEvents(IEnumerable<DomainEvent> newEvents)
+		public void AddEvent(DomainEvent newEvent)
 		{
-			events.AddRange(newEvents);
+			events.Add(newEvent);
 		}
-
+		
 		public int EventCount
 		{
 			get { return events.Count; }			

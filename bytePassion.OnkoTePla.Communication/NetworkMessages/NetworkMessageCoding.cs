@@ -50,6 +50,8 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages
 				case NetworkMessageType.GetTherapyPlacesTypeListResponse:    return GetTherapyPlacesTypeListResponse.Parse(msg);
 				case NetworkMessageType.GetPracticeVersionInfoRequest:       return GetPracticeVersionInfoRequest.Parse(msg);
 				case NetworkMessageType.GetPracticeVersionInfoResponse:      return GetPracticeVersionInfoResponse.Parse(msg);
+				case NetworkMessageType.TryToAddNewEventsRequest:			 return TryToAddNewEventsRequest.Parse(msg);
+				case NetworkMessageType.TryToAddNewEventsResponse:			 return TryToAddNewEventsResponse.Parse(msg);
 																		   
  				case NetworkMessageType.EventBusNotification:                return EventBusNotification.Parse(msg);
 				case NetworkMessageType.PatientAddedNotification:            return PatientAddedNotification.Parse(msg);

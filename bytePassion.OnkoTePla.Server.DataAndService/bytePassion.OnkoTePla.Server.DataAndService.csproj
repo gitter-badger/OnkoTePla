@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\ConnectionService.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\TryToAddNewEventResponseHandler.cs" />
     <Compile Include="Connection\ThreadCollections\IHeartbeatThreadCollection.cs" />
     <Compile Include="Connection\ThreadCollections\INotificationThreadCollection.cs" />
     <Compile Include="Connection\NotificationObjects\EventNotificationObject.cs" />
@@ -92,9 +93,6 @@
     <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Data\DataCenterContainer.cs" />
     <Compile Include="Data\IDataCenter.cs" />
-    <Compile Include="EventBus\IServerEventBus.cs" />
-    <Compile Include="EventBus\ServerEventBus.cs" />
-    <Compile Include="EventBus\ServerEventBusThread.cs" />
     <Compile Include="EventStreamUtils\EventStreamAggregator.cs" />
     <Compile Include="Factorys\ConnectionServiceBuilder.cs" />
     <Compile Include="Factorys\DataCenterBuilder.cs" />

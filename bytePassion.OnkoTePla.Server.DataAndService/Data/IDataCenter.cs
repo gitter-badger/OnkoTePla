@@ -34,8 +34,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		MedicalPractice GetMedicalPractice(Guid id);
 		MedicalPractice GetMedicalPractice(Guid id, uint version);
 		uint GetMedicalPracticeVersion(Guid id, Date date);
-
-		void AddEventsToEventStream (AggregateIdentifier id, IEnumerable<DomainEvent> eventStream);
+		
+		bool AddEvents (IEnumerable<DomainEvent> newEvents);
 		EventStream<Guid> GetEventStreamForAPatient (Guid patientId);
 		EventStream<AggregateIdentifier> GetEventStreamForADay (AggregateIdentifier id);
 	}

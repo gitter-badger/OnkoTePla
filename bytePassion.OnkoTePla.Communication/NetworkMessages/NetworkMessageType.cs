@@ -30,7 +30,9 @@
 		GetTherapyPlacesTypeListResponse,
 		GetPracticeVersionInfoRequest,
 		GetPracticeVersionInfoResponse,
-
+		TryToAddNewEventsRequest,
+		TryToAddNewEventsResponse,
+		
 		EventBusNotification,
 		PatientAddedNotification,
 		PatientUpdatedNotification,		

@@ -4,6 +4,7 @@ using System.Linq;
 using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
+using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
@@ -15,13 +16,18 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 
         private IList<EventStream<AggregateIdentifier>> eventStreams;
 		private readonly IConfigurationReadRepository config;
+		private readonly IConnectionService connectionService;
 
-		public EventStore (IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService /*, StreamManagementService streamManager*/, IConfigurationReadRepository config)
+		public EventStore (IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService 
+						   /*, StreamManagementService streamManager*/, 
+						  IConfigurationReadRepository config, 
+						  IConnectionService connectionService)
 		{
 			eventStreams = new List<EventStream<AggregateIdentifier>>();
 			this.persistenceService = persistenceService;
 		  //  this.streamManager = streamManager;
 		    this.config = config;
+			this.connectionService = connectionService;
 		}
 
 		public EventStream<AggregateIdentifier> GetEventStreamForADay (AggregateIdentifier id)
@@ -51,10 +57,26 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 //
 //            return eventStream;
 //        }
+       
+		public bool AddEvents(IEnumerable<DomainEvent> newEvents)
+		{
+			var errorOccured = false;
 
-        public void AddEventsToEventStream(AggregateIdentifier id, IEnumerable<DomainEvent> eventStream)
-		{						
-			GetEventStreamForADay(id).AddEvents(eventStream);
+			foreach (var domainEvent in newEvents)
+			{
+				var eventStream = GetEventStreamForADay(domainEvent.AggregateId);
+
+				if (eventStream.Events.Last().AggregateVersion + 1 != domainEvent.AggregateVersion)
+				{
+					errorOccured = true;
+					break;
+				}
+
+				eventStream.AddEvent(domainEvent);
+				connectionService.SendEventNotification(domainEvent);
+			}
+
+			return errorOccured;
 		}
 
 		public EventStream<Guid> GetEventStreamForAPatient(Guid patientId)

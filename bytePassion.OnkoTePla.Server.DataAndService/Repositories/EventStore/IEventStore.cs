@@ -8,7 +8,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 {
 	public interface IEventStore : IPersistable
 	{						
-		void AddEventsToEventStream (AggregateIdentifier id, IEnumerable<DomainEvent> eventStream);
+		bool AddEvents (IEnumerable<DomainEvent> newEvents);
 
 		EventStream<Guid>                GetEventStreamForAPatient(Guid patientId);
 		EventStream<AggregateIdentifier> GetEventStreamForADay     (AggregateIdentifier id);

@@ -209,22 +209,30 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 
 		#region eventstore
 
-		public void AddEventsToEventStream(AggregateIdentifier id, IEnumerable<DomainEvent> eventStream)
+		public bool AddEvents (IEnumerable<DomainEvent> newEvents)
 		{
-			eventStore.AddEventsToEventStream(id, eventStream);
-		}
+			lock (eventStore)
+			{
+				return eventStore.AddEvents(newEvents);
+			}
+		}		
 
 		public EventStream<Guid> GetEventStreamForAPatient(Guid patientId)
 		{
-			return eventStore.GetEventStreamForAPatient(patientId);
+			lock (eventStore)
+			{
+				return eventStore.GetEventStreamForAPatient(patientId);
+			}
 		}
 
 		public EventStream<AggregateIdentifier> GetEventStreamForADay(AggregateIdentifier id)
 		{
-			return eventStore.GetEventStreamForADay(id);
+			lock (eventStore)
+			{
+				return eventStore.GetEventStreamForADay(id);
+			}
 		}
 
 		#endregion
-
 	}
 }

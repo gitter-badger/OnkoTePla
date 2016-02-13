@@ -47,6 +47,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 				case NetworkMessageType.GetUserListRequest:               return (IResponseHandler<TRequest>) new GetUserListResponseHandler               (sessionRespository, socket, dataCenter);
 				case NetworkMessageType.GetPracticeVersionInfoRequest:    return (IResponseHandler<TRequest>) new GetPracticeVersionInfoResponseHandler    (sessionRespository, socket, dataCenter);
 				case NetworkMessageType.LoginRequest:                     return (IResponseHandler<TRequest>) new LoginResponseHandler                     (sessionRespository, socket, dataCenter);
+				case NetworkMessageType.TryToAddNewEventsRequest:         return (IResponseHandler<TRequest>) new TryToAddNewEventResponseHandler          (sessionRespository, socket, dataCenter);
 
 				default:
 					throw new NotImplementedException();

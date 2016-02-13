@@ -81,7 +81,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators
 				}
 			}
 
-			eventStore.AddEventsToEventStream(identifier, eventList);
+			eventStore.AddEvents(eventList);
 		}
 
 		private AppointmentAdded CreateAppointmentData (IReadOnlyList<Patient> patients, 
