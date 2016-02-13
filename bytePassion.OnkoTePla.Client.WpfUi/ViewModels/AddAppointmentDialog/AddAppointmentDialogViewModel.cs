@@ -320,9 +320,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 									slots);
 							}
 
-							allAvailableTimeSlots = allSlots;							
+							allAvailableTimeSlots = allSlots;
 						},
-						new AggregateIdentifier(creationDate, medicalPractice.Id, medicalPractice.Version),
+						new AggregateIdentifier(creationDate, loadedPractice.Id, loadedPractice.Version),
 						uint.MaxValue,
 						errorCallback
 					);
@@ -331,9 +331,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 				creationDate,
 				errorCallback
 			);
-
-
-		}
+		}		
 
 		private static IEnumerable<TimeSlot> ComputeSlots(Time openingTime, Time closingTime, IEnumerable<Appointment> appointments)
 		{
