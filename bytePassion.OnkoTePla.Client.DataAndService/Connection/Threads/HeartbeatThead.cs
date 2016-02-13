@@ -34,32 +34,39 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		}
 
 		public void Run ()
-		{			
+		{		
 			using (var socket = context.CreateResponseSocket())
 			{
 				socket.Bind(clientAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.Heartbeat);
 
+				var timoutCounter = 0;
+
 				while (!stopRunning)
 				{
-					var request = socket.ReceiveNetworkMsg(TimeSpan.FromMilliseconds(GlobalConstants.ClientWaitTimeForHeartbeat));
-
+					var request = socket.ReceiveNetworkMsg(TimeSpan.FromSeconds(1));
+					
 					if (request == null)
 					{
-						Application.Current.Dispatcher.Invoke(() => ServerVanished?.Invoke());
-						break;
-					}
+						timoutCounter++;
 
-					if (request.Type == NetworkMessageType.HeartbeatRequest)
+						if (timoutCounter == 10)
+						{							
+							Application.Current?.Dispatcher.Invoke(() => ServerVanished?.Invoke());
+							break;
+						}
+					}
+					else if (request.Type == NetworkMessageType.HeartbeatRequest)
 					{
+						timoutCounter = 0;
 						var heartbeatRequest = (HeartbeatRequest) request;												
 						socket.SendNetworkMsg(new HeartbeatResponse(heartbeatRequest.SessionId));
 					}
 				}			
-			}
+			}			
 		}
 
 		public void Stop ()
-		{
+		{			
 			stopRunning = true;
 		}
 

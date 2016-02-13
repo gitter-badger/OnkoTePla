@@ -55,6 +55,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
 		private void DoLogOut()
 	    {
 			session.Logout(
+				() => { },
 				errorMessage =>
 				{
 					Application.Current.Dispatcher.Invoke(async () =>

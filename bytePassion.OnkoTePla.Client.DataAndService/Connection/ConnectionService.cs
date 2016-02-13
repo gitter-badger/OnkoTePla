@@ -274,7 +274,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		}
 		private void OnServerVanished()
 		{
-			heartbeatThread.ServerVanished -= OnServerVanished;
+			if (heartbeatThread != null)
+				heartbeatThread.ServerVanished -= OnServerVanished;
 
 			notificationThread.NewDomainEventAvailable -= OnNewDomainEventAvailable;
 			notificationThread.NewPatientAvailable -= OnNewPatientAvailable;
@@ -301,6 +302,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		{
 			heartbeatThread?.Stop();
 			heartbeatThread = null;
+
+			notificationThread?.Stop();
+			notificationThread = null;
 
 			universalRequestThread?.Stop();
 			universalRequestThread = null;

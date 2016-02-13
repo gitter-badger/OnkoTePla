@@ -22,6 +22,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 
 	public partial class App
 	{
+		private Session session;
+
 		protected override void OnStartup (StartupEventArgs e)
 		{
 			base.OnStartup(e);
@@ -31,21 +33,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			////////                          Composition Root and Setup                         //////////
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
-
-			//var sessionBuilder = new SessionBuilder();
-
-
+			
 			//var sessionLogger    = LogManager.GetLogger("sessionLogger");
 			//var connectionLogger = LogManager.GetLogger("connectionLogger");
 
 
 			var connectionService = new ConnectionService();
-
-			var workFlow = new ClientWorkflow();
-
-			var session = new Session(connectionService, workFlow);
-
-			var eventBus = new ClientEventBus();
+			var workFlow          = new ClientWorkflow();			
+			session = new Session(connectionService, workFlow);
+			var eventBus          = new ClientEventBus();
 
 			var commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
 			var commandMessageBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
@@ -58,10 +54,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			var clientPatientRepository          = new ClientPatientRepository(connectionService);
 			var clienttherapyPlaceTypeRepository = new ClientTherapyPlaceTypeRepository(connectionService);
 			var clientReadmodelRepository        = new ClientReadModelRepository(eventBus, clientPatientRepository,clientMedicalPracticeRepository, connectionService);
-
-			//var session    = sessionBuilder.Build();					
-			//var dataCenter = new DataCenterBuilder().Build();
-
+			
 
 			// initiate ViewModelCommunication			
 
@@ -97,12 +90,30 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			////////             Clean Up and store data after main Window was closed            //////////
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
-			
 
-			//sessionBuilder.DisposeSession();
+			connectionService.Dispose();
 
-			//dataCenter.PersistEventstore();					// TODO: just for testing
-			//dataCenter.PersistLocalSettings();
-		}		
+//			if (session.CurrentApplicationState == ApplicationState.LoggedIn)
+//			{
+//				session.Logout(() =>
+//				{
+//					session.TryDisconnect(error => { });
+//					connectionService.Dispose();
+//				}, 
+//				error =>
+//				{
+//					connectionService.Dispose();
+//				});
+//			}
+//			else
+//			{
+//				if (session.CurrentApplicationState == ApplicationState.ConnectedButNotLoggedIn)
+//				{
+//					session.TryDisconnect(error => { });
+//				}
+//
+//				connectionService.Dispose();
+//			}
+		}	
 	}
 }
