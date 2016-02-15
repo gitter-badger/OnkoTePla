@@ -9,5 +9,6 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamManagem
 	    void UpdateMetaData(DomainEvent @event);
 
         PracticeMetaData GetMetaDataForPractice(Guid practiceId);
+	    void Initialize();
     }
 }
