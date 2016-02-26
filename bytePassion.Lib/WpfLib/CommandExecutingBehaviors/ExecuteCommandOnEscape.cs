@@ -11,14 +11,12 @@ namespace bytePassion.Lib.WpfLib.CommandExecutingBehaviors
 	    public static readonly DependencyProperty CommandProperty = 
 			DependencyProperty.Register(nameof(Command), 
 										typeof (ICommand),
-										typeof(ExecuteCommandOnEscape), 
-										new PropertyMetadata(default(ICommand)));
+										typeof(ExecuteCommandOnEscape));
 
 	    public static readonly DependencyProperty CommandParameterProperty = 
 			DependencyProperty.Register(nameof(CommandParameter), 
 										typeof (object),
-										typeof(ExecuteCommandOnEscape), 
-										new PropertyMetadata(default(object)));
+										typeof(ExecuteCommandOnEscape));
 
 	    public object CommandParameter
 	    {

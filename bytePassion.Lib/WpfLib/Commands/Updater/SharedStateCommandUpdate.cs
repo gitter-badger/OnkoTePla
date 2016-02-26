@@ -5,9 +5,7 @@ using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.Lib.WpfLib.Commands.Updater
 {
-
-	public class SharedStateCommandUpdate<T> : DisposingObject, 
-                                               ICommandUpdater
+	public class SharedStateCommandUpdate<T> : DisposingObject, ICommandUpdater
     {
         public event EventHandler UpdateOfCanExecuteChangedRequired;
 

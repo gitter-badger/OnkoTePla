@@ -29,13 +29,10 @@ namespace bytePassion.Lib.WpfLib
 
 		// Using a DependencyProperty as the backing store for ColumnsSource.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty ColumnsSourceProperty =
-			DependencyProperty.RegisterAttached(
-				"ColumnsSource",
-				typeof (object),
-				typeof (GridViewColumns),
-				new UIPropertyMetadata(
-					null,
-					ColumnsSourceChanged));
+			DependencyProperty.RegisterAttached("ColumnsSource",
+												typeof (object),
+												typeof (GridViewColumns),
+												new UIPropertyMetadata(null,ColumnsSourceChanged));
 
 
 		[AttachedPropertyBrowsableForType(typeof (GridView))]
@@ -51,8 +48,10 @@ namespace bytePassion.Lib.WpfLib
 
 		// Using a DependencyProperty as the backing store for HeaderTextMember.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty HeaderTextMemberProperty =
-			DependencyProperty.RegisterAttached("HeaderTextMember", typeof (string), typeof (GridViewColumns),
-				new UIPropertyMetadata(null));
+			DependencyProperty.RegisterAttached("HeaderTextMember", 
+												typeof (string), 
+												typeof (GridViewColumns),
+												new UIPropertyMetadata(null));
 
 
 		[AttachedPropertyBrowsableForType(typeof (GridView))]
@@ -68,8 +67,10 @@ namespace bytePassion.Lib.WpfLib
 
 		// Using a DependencyProperty as the backing store for DisplayMember.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty DisplayMemberMemberProperty =
-			DependencyProperty.RegisterAttached("DisplayMemberMember", typeof (string), typeof (GridViewColumns),
-				new UIPropertyMetadata(null));
+			DependencyProperty.RegisterAttached("DisplayMemberMember", 
+												typeof (string), 
+												typeof (GridViewColumns),
+												new UIPropertyMetadata(null));
 
 
 		private static void ColumnsSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
@@ -216,13 +217,8 @@ namespace bytePassion.Lib.WpfLib
 
 		private static object GetPropertyValue(object obj, string propertyName)
 		{
-			if (obj != null)
-			{
-				var prop = obj.GetType().GetProperty(propertyName);
-				if (prop != null)
-					return prop.GetValue(obj, null);
-			}
-			return null;
+			var prop = obj?.GetType().GetProperty(propertyName);
+			return prop?.GetValue(obj, null);
 		}
 	}
 }

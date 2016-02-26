@@ -5,8 +5,7 @@ using static bytePassion.Lib.GeometryLib.Utils.GeometryLibUtils;
 
 namespace bytePassion.Lib.GeometryLib
 {
-
-    public class Plane
+	public class Plane
     {
         public Plane(Vec3 normal, double distance)
         {
@@ -32,5 +31,4 @@ namespace bytePassion.Lib.GeometryLib
         public static bool operator ==(Plane p1, Plane p2) => EqualsExtension.EqualsForEqualityOperator(p1, p2);
         public static bool operator !=(Plane p1, Plane p2) => !(p1 == p2);
     }
-
 }

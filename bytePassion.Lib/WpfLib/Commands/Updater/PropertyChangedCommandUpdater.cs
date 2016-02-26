@@ -1,15 +1,13 @@
-using bytePassion.Lib.FrameworkExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.WpfLib.Commands.Updater
 {
-
-    public class PropertyChangedCommandUpdater : DisposingObject,
-                                                 ICommandUpdater
+	public class PropertyChangedCommandUpdater : DisposingObject, ICommandUpdater
 	{
 		public event EventHandler UpdateOfCanExecuteChangedRequired;
 

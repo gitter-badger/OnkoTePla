@@ -5,19 +5,17 @@ using System.Windows.Interactivity;
 
 namespace bytePassion.Lib.WpfLib.CommandExecutingBehaviors
 {
-    public class ExecuteCommandOnMouseUp : Behavior<FrameworkElement>
+	public class ExecuteCommandOnMouseUp : Behavior<FrameworkElement>
     {
 		public static readonly DependencyProperty CommandProperty = 
-			DependencyProperty.Register("Command",
+			DependencyProperty.Register(nameof(Command),
 									   typeof(ICommand),
-									   typeof(ExecuteCommandOnMouseUp),
-									   new PropertyMetadata(default(ICommand)));
+									   typeof(ExecuteCommandOnMouseUp));
 
 		public static readonly DependencyProperty CommandParameterProperty = 
-			DependencyProperty.Register("CommandParameter",
+			DependencyProperty.Register(nameof(CommandParameter),
 										typeof(object),
-										typeof(ExecuteCommandOnMouseUp),
-										new PropertyMetadata(default(object)));
+										typeof(ExecuteCommandOnMouseUp));
 
 		public object CommandParameter
 		{

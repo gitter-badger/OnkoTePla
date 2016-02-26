@@ -33,7 +33,7 @@ namespace bytePassion.Lib.Communication.MessageBus
 
 		protected override void CleanUp()
 		{		
-			handlerCollection.RemoveAllHandler();	
+			handlerCollection.Dispose();
 		}
 	}
 }

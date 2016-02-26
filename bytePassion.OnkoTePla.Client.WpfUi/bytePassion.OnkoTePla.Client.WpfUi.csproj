@@ -147,6 +147,8 @@
     <Compile Include="ViewModels\ConnectionStatusView\ConnectionStatusViewModelSampleData.cs" />
     <Compile Include="ViewModels\ConnectionStatusView\IConnectionStatusViewModel.cs" />
     <Compile Include="ViewModels\EditDescriptionViewModel\EditDescriptionViewModel.cs" />
+    <Compile Include="ViewModels\EditDescriptionViewModel\EditDescriptionViewModelSampleData.cs" />
+    <Compile Include="ViewModels\EditDescriptionViewModel\IEditDescriptionViewModel.cs" />
     <Compile Include="ViewModels\IDataCenterDeliverer.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModelSampleData.cs" />

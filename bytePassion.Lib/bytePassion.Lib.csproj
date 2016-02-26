@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>bytePassion.Lib</RootNamespace>
     <AssemblyName>bytePassion.Lib</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\binaries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,20 +25,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\binaries\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AsyncIO, Version=0.1.18.0, Culture=neutral, PublicKeyToken=44a94435bd6f33f8, processorArchitecture=MSIL">
-      <HintPath>..\packages\AsyncIO.0.1.18.0\lib\net40\AsyncIO.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NetMQ, Version=3.3.2.2, Culture=neutral, PublicKeyToken=a6decef4ddc58b3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetMQ.3.3.2.2\lib\net40\NetMQ.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -154,6 +146,7 @@
     <Compile Include="WpfLib\Behaviors\MoveHorizontalBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\ObjectDragBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\ObjectDropBehavior.cs" />
+    <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnDoubleClickBehavior.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnClickBehavior.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandOnEscape.cs" />
     <Compile Include="WpfLib\CommandExecutingBehaviors\ExecuteCommandWhenToggleButtonGetsCheckedBehavior.cs" />
@@ -162,10 +155,10 @@
     <Compile Include="WpfLib\Commands\Command.cs" />
     <Compile Include="WpfLib\Commands\ParameterrizedCommand.cs" />
     <Compile Include="Communication\State\SharedState.cs" />
-    <Compile Include="Communication\ViewModel\IViewModelCollections.cs" />
+    <Compile Include="Communication\ViewModel\IViewModelCollectionList.cs" />
     <Compile Include="Communication\ViewModel\Messages\IViewModelMessageHandler.cs" />
     <Compile Include="Communication\ViewModel\ViewModelCollection.cs" />
-    <Compile Include="Communication\ViewModel\ViewModelCollections.cs" />
+    <Compile Include="Communication\ViewModel\ViewModelCollectionList.cs" />
     <Compile Include="Communication\ViewModel\ViewModelCommunication.cs" />
     <Compile Include="FrameworkExtensions\LinqExtension.cs" />
     <Compile Include="Communication\MessageBus\HandlerCollection\SingleHandlerCollection.cs" />
@@ -181,14 +174,17 @@
     <Compile Include="WpfLib\Commands\Updater\SharedStateReadOnlyCommandUpdate.cs" />
     <Compile Include="WpfLib\Commands\Updater\ICommandUpdater.cs" />
     <Compile Include="WpfLib\Commands\Updater\PropertyChangedCommandUpdater.cs" />
+    <Compile Include="WpfLib\Computations\GetHeightFromSize.cs" />
+    <Compile Include="WpfLib\Computations\GetWidthFromSize.cs" />
     <Compile Include="WpfLib\ConverterBase\GenericFiveToOneValueConverter.cs" />
     <Compile Include="WpfLib\ConverterBase\GenericFourToOneValueConverter.cs" />
     <Compile Include="WpfLib\Converter\BoolToHiddenVisibilityConverter.cs" />
     <Compile Include="WpfLib\Converter\BoolToNullableBoolConverter.cs" />
-    <Compile Include="WpfLib\Converter\InvertBoolConverter.cs" />
     <Compile Include="WpfLib\Converter\InvertedAngleToDoubleConverter.cs" />
     <Compile Include="WpfLib\Converter\SemanticDoubleTypeToDoubleConverter.cs" />
+    <Compile Include="WpfLib\Converter\XCoordAndOffsetToDoubleConverter.cs" />
     <Compile Include="WpfLib\Converter\XCoordToDoubleConverter.cs" />
+    <Compile Include="WpfLib\Converter\YCoordAndOffsetToDoubleConverter.cs" />
     <Compile Include="WpfLib\Converter\YCoordToDoubleConverter.cs" />
     <Compile Include="WpfLib\Dialogs\Input\InputBox.cs" />
     <Compile Include="WpfLib\Dialogs\Input\InputBoxWindow\Helper\InputBoxResult.cs" />
@@ -238,7 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="WpfLib\Dialogs\Input\InputBoxWindow\InputBoxWindow.xaml">

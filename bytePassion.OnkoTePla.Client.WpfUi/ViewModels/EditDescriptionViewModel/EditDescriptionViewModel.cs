@@ -4,33 +4,27 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.Communication.State;
-using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.EditDescriptionViewModel
 {
-	class EditDescriptionViewModel : IViewModel
-    {
-        private string description;
-        private Appointment appointment;
-        private readonly IViewModelCommunication viewModelCommunication;
-        private readonly ISharedState<AppointmentModifications> modificationsVar;
-        private readonly Guid practiseId;
+	internal class EditDescriptionViewModel : ViewModel, IEditDescriptionViewModel
+	{
+        private string description;		
+        private readonly ISharedState<AppointmentModifications> modificationsVar;        
 
-        public EditDescriptionViewModel(Appointment appointmentToEdit, IViewModelCommunication viewModelCommunication, ISharedState<ViewModels.AppointmentView.Helper.AppointmentModifications> modificationsVar, Guid practiseId
-            )
-        {
-            appointment = appointmentToEdit;
-            this.viewModelCommunication = viewModelCommunication;
-            this.modificationsVar = modificationsVar;
-            this.practiseId = practiseId;
-            description = appointment.Description;
+        public EditDescriptionViewModel(Appointment appointmentToEdit, 										
+										ISharedState<AppointmentModifications> modificationsVar)
+        {	        
+            this.modificationsVar = modificationsVar;            
+            Description = appointmentToEdit.Description;
             Cancel = new Command(CloseWindow);
             Accept = new Command(SaveAndClose);
         }
-
+		
         private void SaveAndClose()
         {
             modificationsVar.Value.SetNewDescription(Description);
@@ -38,25 +32,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.EditDescriptionViewModel
 
         }
 
-        public ICommand Cancel { get; set; }
-        public ICommand Accept { get; set; }
+        public ICommand Cancel { get; }
+        public ICommand Accept { get; }
 
         public string Description
         {
-            get
-            {
-                return description;
-            }
-            set
-            {
-                if (description != value)
-                {
-                    description = value;
-                }
-            }
+            get { return description; }
+            set { PropertyChanged.ChangeAndNotify(this, ref description, value); }
         }
 
-        private void CloseWindow()
+        private static void CloseWindow()
         {
             var windows = Application.Current.Windows
                                              .OfType<Views.EditDescription>()
@@ -68,11 +53,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.EditDescriptionViewModel
                 throw new Exception("inner error");
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void Dispose()
-        {
-            
-        }
-    }
+		protected override void CleanUp() {}		
+		public override event PropertyChangedEventHandler PropertyChanged;
+	}
 }

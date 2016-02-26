@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace bytePassion.Lib.FrameworkExtensions
 {
-    public static class LinqExtension
+	public static class LinqExtension
     {
 	    public static void Do<TSource>(this IEnumerable<TSource> items, Action<TSource> action)
 	    {

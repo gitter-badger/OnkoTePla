@@ -4,15 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
-//using System.Windows.Markup;
-
-//[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation",
-//"WPFTutorial.Utils")]
-
 
 namespace bytePassion.Lib.WpfLib
 {
-
 	/// <summary>
 	/// The shared resource dictionary is a specialized resource dictionary
 	/// that loads it content only once. If a second instance with the same source

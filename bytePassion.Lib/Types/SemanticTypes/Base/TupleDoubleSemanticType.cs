@@ -1,11 +1,11 @@
-﻿using bytePassion.Lib.GeometryLib.Utils;
-using System;
+﻿using System;
+using bytePassion.Lib.GeometryLib.Utils;
 
 
 namespace bytePassion.Lib.Types.SemanticTypes.Base
 {
 
-    public abstract class TupleDoubleSemanticType<T1, T2> : SemanticType<T1, T2> 
+	public abstract class TupleDoubleSemanticType<T1, T2> : SemanticType<T1, T2> 
         where T1 : SemanticType<double> 
         where T2 : SemanticType<double>
     {
@@ -23,8 +23,8 @@ namespace bytePassion.Lib.Types.SemanticTypes.Base
             }
         }
 
-        protected override string StringRepresentation1 => $"{GeometryLibUtils.DoubleFormat(Value1.Value)}";
-        protected override string StringRepresentation2 => $"{GeometryLibUtils.DoubleFormat(Value2.Value)}";
+        protected override string StringRepresentation1 => GeometryLibUtils.DoubleFormat(Value1.Value);
+        protected override string StringRepresentation2 => GeometryLibUtils.DoubleFormat(Value2.Value);
     }
 
 }

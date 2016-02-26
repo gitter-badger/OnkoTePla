@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 {
-	public interface IHandlerCollection<in TMessageBase>
+	public interface IHandlerCollection<in TMessageBase> : IDisposable
 	{
 		void Add <TMessage> (IMessageHandler<TMessage> newMessageHandler) 
 			where TMessage : TMessageBase;

@@ -10,14 +10,12 @@ namespace bytePassion.Lib.WpfLib.Behaviors
 		public static readonly DependencyProperty HorizontalMovementDeltaProperty 
 			= DependencyProperty.Register(nameof(HorizontalMovementDelta), 
 										  typeof (double), 
-										  typeof (MoveHorizontalBehavior), 
-										  new PropertyMetadata(default(double)));
+										  typeof (MoveHorizontalBehavior));
 
 		public static readonly DependencyProperty ExecuteOnMovementEndProperty 
 			= DependencyProperty.Register(nameof(ExecuteOnMovementEnd), 
 										  typeof (ICommand), 
-										  typeof (MoveHorizontalBehavior), 
-										  new PropertyMetadata(default(ICommand)));
+										  typeof (MoveHorizontalBehavior));
 
 		public ICommand ExecuteOnMovementEnd
 		{

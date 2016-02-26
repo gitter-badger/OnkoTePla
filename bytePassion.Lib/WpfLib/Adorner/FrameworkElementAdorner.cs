@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Windows;
 using System.Windows.Media;
 
 
 namespace bytePassion.Lib.WpfLib.Adorner
 {
-	
+
 	public class FrameworkElementAdorner : System.Windows.Documents.Adorner
 	{
 		
@@ -43,8 +42,8 @@ namespace bytePassion.Lib.WpfLib.Adorner
 			adornedElement.SizeChanged += (sender, args) => InvalidateMeasure();			
 		}
 				
-		public double PositionX { get; set; } = Double.NaN;
-		public double PositionY { get; set; } = Double.NaN;
+		public double PositionX { get; set; } = double.NaN;
+		public double PositionY { get; set; } = double.NaN;
 
 		protected override Size MeasureOverride (Size constraint)
 		{
@@ -54,14 +53,14 @@ namespace bytePassion.Lib.WpfLib.Adorner
 
 		protected override Size ArrangeOverride (Size finalSize)
 		{
-			double x = PositionX;
-			double y = PositionY;
+			var x = PositionX;
+			var y = PositionY;
 
-			if (Double.IsNaN(x)) x = DetermineX();			
-			if (Double.IsNaN(y)) y = DetermineY();
+			if (double.IsNaN(x)) x = DetermineX();			
+			if (double.IsNaN(y)) y = DetermineY();
 
-			double adornerWidth = DetermineWidth();
-			double adornerHeight = DetermineHeight();
+			var adornerWidth = DetermineWidth();
+			var adornerHeight = DetermineHeight();
 
 			adorner.Arrange(new Rect(x, y, adornerWidth, adornerHeight));
 
@@ -83,22 +82,22 @@ namespace bytePassion.Lib.WpfLib.Adorner
 				{
 					if (horizontalAdornerPlacement == AdornerPlacement.Outside)
 					{
-						double adornedWidth = AdornedElement.ActualWidth;
+						var adornedWidth = AdornedElement.ActualWidth;
 						return adornedWidth + offsetX;
 					}
 					else
 					{
-						double adornerWidth = adorner.DesiredSize.Width;
-						double adornedWidth = AdornedElement.ActualWidth;
-						double x = adornedWidth - adornerWidth;
+						var adornerWidth = adorner.DesiredSize.Width;
+						var adornedWidth = AdornedElement.ActualWidth;
+						var x = adornedWidth - adornerWidth;
 						return x + offsetX;
 					}
 				}
 				case HorizontalAlignment.Center:
 				{
-					double adornerWidth = adorner.DesiredSize.Width;
-					double adornedWidth = AdornedElement.ActualWidth;
-					double x = (adornedWidth / 2) - (adornerWidth / 2);
+					var adornerWidth = adorner.DesiredSize.Width;
+					var adornedWidth = AdornedElement.ActualWidth;
+					var x = (adornedWidth / 2) - (adornerWidth / 2);
 					return x + offsetX;
 				}
 				case HorizontalAlignment.Stretch:
@@ -125,22 +124,22 @@ namespace bytePassion.Lib.WpfLib.Adorner
 				{
 					if (verticalAdornerPlacement == AdornerPlacement.Outside)
 					{
-						double adornedHeight = AdornedElement.ActualHeight;
+						var adornedHeight = AdornedElement.ActualHeight;
 						return adornedHeight + offsetY;
 					}
 					else
 					{
-						double adornerHeight = adorner.DesiredSize.Height;
-						double adornedHeight = AdornedElement.ActualHeight;
-						double x = adornedHeight - adornerHeight;
+						var adornerHeight = adorner.DesiredSize.Height;
+						var adornedHeight = AdornedElement.ActualHeight;
+						var x = adornedHeight - adornerHeight;
 						return x + offsetY;
 					}
 				}
 				case VerticalAlignment.Center:
 				{
-					double adornerHeight = adorner.DesiredSize.Height;
-					double adornedHeight = AdornedElement.ActualHeight;
-					double x = (adornedHeight / 2) - (adornerHeight / 2);
+					var adornerHeight = adorner.DesiredSize.Height;
+					var adornedHeight = AdornedElement.ActualHeight;
+					var x = (adornedHeight / 2) - (adornerHeight / 2);
 					return x + offsetY;
 				}
 				case VerticalAlignment.Stretch:
@@ -153,7 +152,7 @@ namespace bytePassion.Lib.WpfLib.Adorner
 		
 		private double DetermineWidth ()
 		{
-			if (!Double.IsNaN(PositionX))			
+			if (!double.IsNaN(PositionX))			
 				return adorner.DesiredSize.Width;
 			
 			switch (adorner.HorizontalAlignment)
@@ -169,7 +168,7 @@ namespace bytePassion.Lib.WpfLib.Adorner
 		
 		private double DetermineHeight ()
 		{
-			if (!Double.IsNaN(PositionY))			
+			if (!double.IsNaN(PositionY))			
 				return adorner.DesiredSize.Height;
 			
 			switch (adorner.VerticalAlignment)
@@ -183,8 +182,8 @@ namespace bytePassion.Lib.WpfLib.Adorner
 		}
 
 		
-		protected override Int32 VisualChildrenCount => 1;
-		protected override Visual GetVisualChild (Int32 index) => adorner;
+		protected override int VisualChildrenCount => 1;
+		protected override Visual GetVisualChild (int index) => adorner;
 
 		public new FrameworkElement AdornedElement => (FrameworkElement)base.AdornedElement;
 

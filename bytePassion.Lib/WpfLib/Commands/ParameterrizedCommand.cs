@@ -1,14 +1,13 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.WpfLib.Commands.Updater;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.WpfLib.Commands.Updater;
 
 
 namespace bytePassion.Lib.WpfLib.Commands
 {
-
-    public class ParameterrizedCommand<T> : DisposingObject, ICommand
+	public class ParameterrizedCommand<T> : DisposingObject, ICommand
     {
         private readonly Predicate<T> canExecute;
         private readonly Action<T> execute;
@@ -82,7 +81,6 @@ namespace bytePassion.Lib.WpfLib.Commands
                 }
             }
         }
-
     }
 }
 

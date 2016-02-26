@@ -1,11 +1,11 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
-using System;
+﻿using System;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.Types.SemanticTypes.Base
 {
 
-    public abstract class SemanticType<T>
+	public abstract class SemanticType<T>
     {
         protected SemanticType(T value, string unit = "")
         {
@@ -21,7 +21,7 @@ namespace bytePassion.Lib.Types.SemanticTypes.Base
         
         public override bool   Equals(object obj) => this.Equals(obj, (st1, st2) => EqualsFunc(st1, st2));
         public override int    GetHashCode()      => Value.GetHashCode();
-        public override string ToString()         => String.IsNullOrEmpty(Unit) ? StringRepresentation : StringRepresentation + " " + Unit;
+        public override string ToString()         => string.IsNullOrEmpty(Unit) ? StringRepresentation : StringRepresentation + " " + Unit;
         
         public static bool operator ==(SemanticType<T> st1, SemanticType<T> st2) => EqualsExtension.EqualsForEqualityOperator(st1, st2);
         public static bool operator !=(SemanticType<T> st1, SemanticType<T> st2) => !(st1 == st2);

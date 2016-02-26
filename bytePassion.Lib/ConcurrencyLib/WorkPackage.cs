@@ -3,10 +3,8 @@
 
 namespace bytePassion.Lib.ConcurrencyLib
 {
-
-    public class WorkPackage<T>
+	public class WorkPackage<T>
     {
-
         private readonly Queue<T> queue;
 
         private volatile bool abortWork;

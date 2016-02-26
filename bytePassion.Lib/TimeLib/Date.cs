@@ -6,15 +6,10 @@ using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.Lib.TimeLib
 {
-	public class Date : IComparable<Date>
+	public struct Date : IComparable<Date>
     {		
 		public static readonly Date Dummy = new Date(0,0,0);
-
-	    public Date() 
-            : this(0,0,0)
-	    {		    
-	    }
-
+	    
 		public Date(DateTime dateTime) 
             : this((byte)dateTime.Day, (byte)dateTime.Month, (ushort)dateTime.Year)
 		{						
@@ -39,10 +34,10 @@ namespace bytePassion.Lib.TimeLib
 			return Year.GetHashCode() ^ Month.GetHashCode() ^ Day.GetHashCode();
 		}
 
-		public static bool operator == (Date d1, Date d2) { return d1.Equals(d2); }
-		public static bool operator != (Date d1, Date d2) { return !(d1 == d2);   }
+		public static bool operator == (Date d1, Date d2) => d1.Equals(d2);
+		public static bool operator != (Date d1, Date d2) => !(d1 == d2);
 
-	    public static bool operator <(Date d1, Date d2)
+		public static bool operator < (Date d1, Date d2)
 	    {
 		    if (d1.Year < d2.Year) return true;
 			if (d1.Year > d2.Year) return false;
@@ -162,9 +157,9 @@ namespace bytePassion.Lib.TimeLib
 			if (elements.Length != 3)
 				throw new FormatException("expected Format: dd.mm.yyyy");
 
-			var day   = Byte.Parse(elements[0]);
-			var month = Byte.Parse(elements[1]);
-			var year  = UInt16.Parse(elements[2]);
+			var day   = byte.Parse(elements[0]);
+			var month = byte.Parse(elements[1]);
+			var year  = ushort.Parse(elements[2]);
 
 			return new Date(day, month, year);
 		}

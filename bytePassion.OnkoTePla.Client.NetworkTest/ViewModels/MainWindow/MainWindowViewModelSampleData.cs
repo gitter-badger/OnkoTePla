@@ -1,10 +1,11 @@
 using System.ComponentModel;
 using System.Windows.Input;
 
+#pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.NetworkTest.ViewModels.MainWindow
 {
-    internal class MainWindowViewModelSampleData : IMainWindowViewModel
+	internal class MainWindowViewModelSampleData : IMainWindowViewModel
     {
         public MainWindowViewModelSampleData()
         {

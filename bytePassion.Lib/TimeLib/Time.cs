@@ -9,6 +9,7 @@ namespace bytePassion.Lib.TimeLib
     {
 		public static readonly Time Dummy = new Time(0,0);
 
+		private const uint SecondsOfADay = 86400;
        
 		public Time(Time time) 
 			: this(time.Hour, time.Minute, time.Second)
@@ -66,8 +67,8 @@ namespace bytePassion.Lib.TimeLib
 	    public static bool operator <=(Time t1, Time t2) => t1 < t2 || t1 == t2;
 	    public static bool operator >=(Time t1, Time t2) => t1 > t2 || t1 == t2;
 
-	    public static Time operator +(Time t, Duration d) => new Time(t.SecondsFromDayBegin + d.Seconds);
-	    public static Time operator -(Time t, Duration d) => new Time(t.SecondsFromDayBegin - d.Seconds);
+	    public static Time operator +(Time t, Duration d) => new Time((t.SecondsFromDayBegin + d.Seconds) % SecondsOfADay);
+	    public static Time operator -(Time t, Duration d) => new Time((t.SecondsFromDayBegin - d.Seconds) % SecondsOfADay);
 
 	    public int CompareTo (Time other)
 		{

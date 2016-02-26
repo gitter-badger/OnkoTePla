@@ -21,7 +21,7 @@ namespace bytePassion.Lib.TimeLib
 
 		public Duration (Time t1, Time t2)
 		{
-			Seconds = ((uint)(System.Math.Abs((int)t1.SecondsFromDayBegin-(int)t2.SecondsFromDayBegin)));
+			Seconds = ((uint)(Math.Abs((int)t1.SecondsFromDayBegin-(int)t2.SecondsFromDayBegin)));
 		}
 
 		public uint Seconds { get; }
@@ -30,8 +30,7 @@ namespace bytePassion.Lib.TimeLib
 		public override int    GetHashCode ()      => Seconds.GetHashCode();
 		public override string ToString ()         => Seconds.ToString();
 
-
-		public static bool operator ==(Duration d1, Duration d2) => EqualsExtension.EqualsForEqualityOperator(d1,d2);
+		public static bool operator ==(Duration d1, Duration d2) => d1.Equals(d2);
 		public static bool operator !=(Duration d1, Duration d2) => !(d1 == d2);
 		public static bool operator < (Duration d1, Duration d2) => d1.Seconds < d2.Seconds;
 		public static bool operator > (Duration d1, Duration d2) => d1.Seconds > d2.Seconds;
@@ -58,7 +57,7 @@ namespace bytePassion.Lib.TimeLib
 			if (d<0)
 				throw new InvalidOperationException("Duration cannot be negative");
 
-			return new Duration((uint) System.Math.Floor(a.Seconds * d));
+			return new Duration((uint) Math.Floor(a.Seconds * d));
 		}
 	}
 }

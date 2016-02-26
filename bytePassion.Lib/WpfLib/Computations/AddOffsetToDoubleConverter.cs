@@ -1,6 +1,5 @@
-﻿using bytePassion.Lib.WpfLib.ConverterBase;
-using System;
-using System.Globalization;
+﻿using System.Globalization;
+using bytePassion.Lib.WpfLib.ConverterBase;
 
 
 namespace bytePassion.Lib.WpfLib.Computations
@@ -9,7 +8,7 @@ namespace bytePassion.Lib.WpfLib.Computations
 	{
 		protected override double Convert(double value, string parameter, CultureInfo culture)
 		{
-			return value + Double.Parse(parameter);
+			return value + double.Parse(parameter);
 		}		
 	}
 }

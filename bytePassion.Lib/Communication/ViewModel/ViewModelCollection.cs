@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace bytePassion.Lib.Communication.ViewModel
 {
-
 	public class ViewModelCollection <TIdent> 
 	{		
 		private readonly IList<IViewModelCollectionItem<TIdent>> viewModels;

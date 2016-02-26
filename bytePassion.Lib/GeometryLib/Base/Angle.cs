@@ -1,13 +1,13 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
+﻿using System;
+using System.Globalization;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.Types.SemanticTypes;
-using System;
-using System.Globalization;
 
 
 namespace bytePassion.Lib.GeometryLib.Base
 {
-    public struct Angle
+	public struct Angle
 	{
 		// TODO get culture from framework
 		private static readonly IFormatProvider Numberformat = CultureInfo.CreateSpecificCulture("en-US");
@@ -32,23 +32,23 @@ namespace bytePassion.Lib.GeometryLib.Base
 		private Angle (double angle)
 		{			
 			Value = angle%360.0;
-
-			valueAsRad = Double.NaN;
-			sin = Double.NaN;
-			cos = Double.NaN;
-			tan = Double.NaN;
+			
+			valueAsRad = double.NaN;
+			sin = double.NaN;
+			cos = double.NaN;
+			tan = double.NaN;
 		}
 
         public double Value { get; }
 
-		public double ValueAsRad => valueAsRad = Double.IsNaN(valueAsRad) ? (Math.PI/180.0)*Value : valueAsRad;
+		public double ValueAsRad => valueAsRad = double.IsNaN(valueAsRad) ? (Math.PI/180.0)*Value : valueAsRad;
 
 		public Angle PosValue => Value >= 0 ? this : new Angle(360 + Value);
 		public Angle Inverted => new Angle(-Value);
 
-		public double Sin => sin = Double.IsNaN(sin) ? Math.Sin(ValueAsRad) : sin;
-		public double Cos => cos = Double.IsNaN(cos) ? Math.Cos(ValueAsRad) : cos;
-		public double Tan => tan = Double.IsNaN(cos) ? Math.Tan(ValueAsRad) : tan;
+		public double Sin => sin = double.IsNaN(sin) ? Math.Sin(ValueAsRad) : sin;
+		public double Cos => cos = double.IsNaN(cos) ? Math.Cos(ValueAsRad) : cos;
+		public double Tan => tan = double.IsNaN(cos) ? Math.Tan(ValueAsRad) : tan;
 
         public override bool   Equals (object obj) => this.Equals(obj, (a1, a2) => GeometryLibUtils.DoubleEquals(a1.PosValue.Value, a2.PosValue.Value));
 		public override int    GetHashCode ()      => Value.GetHashCode();
@@ -85,7 +85,7 @@ namespace bytePassion.Lib.GeometryLib.Base
 			if (parts.Length != 2)
 				throw new ArgumentException(s + " cannot be converted to an Angle");
 
-			var number = Double.Parse(parts[0].Trim(), Numberformat);
+			var number = double.Parse(parts[0].Trim(), Numberformat);
 
             if (parts[1].Trim() == "deg") return new Angle(new Degree(number));
             if (parts[1].Trim() == "rad") return new Angle(new Radians(number));

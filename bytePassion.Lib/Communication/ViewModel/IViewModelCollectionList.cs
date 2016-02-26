@@ -1,9 +1,7 @@
 namespace bytePassion.Lib.Communication.ViewModel
 {
-
-	public interface IViewModelCollections
+	public interface IViewModelCollectionList
 	{
-
 		void CreateViewModelCollection<TViewModel, TIdent>(string identifier)
 			where TViewModel : IViewModelCollectionItem<TIdent>;
 

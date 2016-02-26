@@ -1,12 +1,12 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
+﻿using System;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.Types.SemanticTypes;
-using System;
 
 
 namespace bytePassion.Lib.GeometryLib.Base
 {
-    public class CartesianCoordinate
+	public class CartesianCoordinate
     {
         public static readonly CartesianCoordinate Origin = new CartesianCoordinate(0, 0, 0);
 
@@ -58,11 +58,10 @@ namespace bytePassion.Lib.GeometryLib.Base
         {
             var radius = Math.Sqrt(c.X * c.X + c.Y * c.Y + c.Z * c.Z);
 
-            var theta = new Angle(new Radians((2 * Math.PI) - ((Math.Atan2(c.Z, c.X) + 2 * Math.PI) % (2 * Math.PI))));
+            var theta = new Angle(new Radians(2 * Math.PI - (Math.Atan2(c.Z, c.X) + 2 * Math.PI) % (2 * Math.PI)));
             var phi = new Angle(new Radians(Math.Asin(c.Y / radius)));
 
             return new PolarCoordinate(radius, theta, phi);
         }        
     }
-
 }

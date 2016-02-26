@@ -3,12 +3,11 @@ using System.Collections.Generic;
 
 namespace bytePassion.Lib.Communication.ViewModel
 {
-
-	public class ViewModelCollections : IViewModelCollections
+	public class ViewModelCollectionList : IViewModelCollectionList
 	{
 		private readonly IDictionary<string, object> viewModelCollections;
 
-		public ViewModelCollections()
+		public ViewModelCollectionList()
 		{
 			viewModelCollections = new Dictionary<string, object>();
 		}		
@@ -40,5 +39,4 @@ namespace bytePassion.Lib.Communication.ViewModel
 		}
 
 	}
-
 }

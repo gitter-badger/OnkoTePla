@@ -10,16 +10,14 @@ namespace bytePassion.Lib.WpfLib.CommandExecutingBehaviors
 	{
 
 		public static readonly DependencyProperty CommandProperty 
-			= DependencyProperty.Register("Command",
+			= DependencyProperty.Register(nameof(Command),
 										  typeof(ICommand),
-										  typeof(ExecuteCommandWhenToggleButtonGetsCheckedBehavior),
-										  new PropertyMetadata(null));
+										  typeof(ExecuteCommandWhenToggleButtonGetsCheckedBehavior));
 
 		public static readonly DependencyProperty CommandParameterProperty 
-			= DependencyProperty.Register("CommandParameter",
+			= DependencyProperty.Register(nameof(CommandParameter),
 										  typeof(object),
-										  typeof(ExecuteCommandWhenToggleButtonGetsCheckedBehavior),
-										  new PropertyMetadata(null));
+										  typeof(ExecuteCommandWhenToggleButtonGetsCheckedBehavior));
 
 		public object CommandParameter
 		{
@@ -50,8 +48,6 @@ namespace bytePassion.Lib.WpfLib.CommandExecutingBehaviors
 			if (Command != null)
 				if (Command.CanExecute(CommandParameter))
 					Command.Execute(CommandParameter);
-		}
-
-		
+		}		
 	}
 }

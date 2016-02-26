@@ -4,16 +4,14 @@ using System.Windows.Controls;
 
 namespace bytePassion.Lib.WpfLib.Panels
 {
-
 	public class DeckPanel : Panel
-    {
-		
+    {		
 	    public static readonly DependencyProperty SelectedLayerProperty = 
-			DependencyProperty.Register("SelectedLayer", 
-										typeof (int), 
-										typeof (DeckPanel),
+			DependencyProperty.Register(nameof(SelectedLayer), 
+										typeof(int), 
+										typeof(DeckPanel),
 										new FrameworkPropertyMetadata(0,FrameworkPropertyMetadataOptions.AffectsMeasure));
-
+		
 		public int SelectedLayer
 	    {
 		    get { return (int) GetValue(SelectedLayerProperty); }
@@ -44,7 +42,7 @@ namespace bytePassion.Lib.WpfLib.Panels
 			int i = 0;
 			foreach (var child in Children)
 			{
-				SetZIndex((UIElement) child, (ReferenceEquals(child, visibleChild)) ? Children.Count+2 : i++);
+				SetZIndex((UIElement) child, ReferenceEquals(child, visibleChild) ? Children.Count+2 : i++);
 			}
 
 			return finalSize;

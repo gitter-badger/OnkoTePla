@@ -6,9 +6,8 @@ using bytePassion.Lib.Types.SemanticTypes;
 namespace bytePassion.Lib.GeometryLib.Base
 {
 
-    public sealed class PolarCoordinate
+	public sealed class PolarCoordinate
     {
-
         public static readonly PolarCoordinate Origin = new PolarCoordinate(0.0, Angle.Zero, Angle.Zero);
 
         public PolarCoordinate(double radius, Angle theta, Angle phi)
@@ -68,18 +67,18 @@ namespace bytePassion.Lib.GeometryLib.Base
 
         public static implicit operator CartesianCoordinate(PolarCoordinate p)
         {
-            double x = p.Radius * p.Phi.Cos * p.Theta.Cos;
-            double y = p.Radius * p.Phi.Sin;
-            double z = p.Radius * p.Phi.Cos * -p.Theta.Sin;
+            var x = p.Radius * p.Phi.Cos * p.Theta.Cos;
+            var y = p.Radius * p.Phi.Sin;
+            var z = p.Radius * p.Phi.Cos * -p.Theta.Sin;
 
             return new CartesianCoordinate(x, y, z);
         }
 
         public static explicit operator Vec3(PolarCoordinate p)
         {
-            double x = p.Radius * p.Phi.Cos * p.Theta.Cos;
-            double y = p.Radius * p.Phi.Sin;
-            double z = p.Radius * p.Phi.Cos * -p.Theta.Sin;
+            var x = p.Radius * p.Phi.Cos * p.Theta.Cos;
+            var y = p.Radius * p.Phi.Sin;
+            var z = p.Radius * p.Phi.Cos * -p.Theta.Sin;
 
             return new Vec3(x, y, z);
         }

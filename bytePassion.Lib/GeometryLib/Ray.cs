@@ -4,8 +4,7 @@ using bytePassion.Lib.GeometryLib.Base;
 
 namespace bytePassion.Lib.GeometryLib
 {
-
-    public sealed class Ray
+	public sealed class Ray
     {
         public Ray(CartesianCoordinate c1, CartesianCoordinate c2) 
             : this(c1, c2 - c1)

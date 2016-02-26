@@ -5,7 +5,7 @@ using bytePassion.Lib.Types.SemanticTypes;
 namespace bytePassion.Lib.GeometryLib.Base
 {
 
-    public sealed class Orientation
+	public sealed class Orientation
     {
 
         public static readonly Orientation DefaultOrientation = new Orientation(new Vec3(1, 0, 0),
@@ -109,7 +109,7 @@ namespace bytePassion.Lib.GeometryLib.Base
         }
 
         public override bool   Equals(object obj) => this.Equals(obj, (o1, o2) => o1.X == o2.X && o1.Y == o2.Y && o1.Z == o2.Z);
-        public override string ToString()         => "Orientation(" + X + "|" + Y + "|" + Z + ")";
+        public override string ToString()         => $"Orientation({X}|{Y}|{Z})";
         public override int    GetHashCode()      => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
 
         public static bool operator ==(Orientation o1, Orientation o2) => EqualsExtension.EqualsForEqualityOperator(o1, o2);

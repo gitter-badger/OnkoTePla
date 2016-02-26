@@ -5,9 +5,7 @@ using bytePassion.Lib.FrameworkExtensions;
 
 namespace bytePassion.Lib.WpfLib.Commands.Updater
 {
-
-	public class SharedStateReadOnlyCommandUpdate<T> : DisposingObject,
-                                                       ICommandUpdater
+	public class SharedStateReadOnlyCommandUpdate<T> : DisposingObject, ICommandUpdater
     {
         public event EventHandler UpdateOfCanExecuteChangedRequired;
 
@@ -24,7 +22,7 @@ namespace bytePassion.Lib.WpfLib.Commands.Updater
         {
             UpdateOfCanExecuteChangedRequired?.Invoke(this, new EventArgs());
         }
-
+		
         protected override void CleanUp()
         {
             sharedState.StateChanged -= OnGlobalStateChanged;

@@ -9,10 +9,9 @@ namespace bytePassion.Lib.WpfLib.Behaviors
 	{
 		
 		public static readonly DependencyProperty ReportedSizeProperty = 
-			DependencyProperty.Register("ReportedSize", 
+			DependencyProperty.Register(nameof(ReportedSize), 
 										typeof (Size), 
-										typeof (SizeReportingBehavior), 
-										new PropertyMetadata(default(Size)));
+										typeof (SizeReportingBehavior));
 
 		public Size ReportedSize
 		{

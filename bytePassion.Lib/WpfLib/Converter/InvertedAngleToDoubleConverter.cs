@@ -1,13 +1,12 @@
+using System.Globalization;
 using bytePassion.Lib.GeometryLib.Base;
 using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.Lib.WpfLib.ConverterBase;
-using System.Globalization;
 
 
 namespace bytePassion.Lib.WpfLib.Converter
 {
-
-    public class InvertedAngleToDoubleConverter : GenericValueConverter<Angle, double>
+	public class InvertedAngleToDoubleConverter : GenericValueConverter<Angle, double>
     {
         protected override double Convert(Angle angle, CultureInfo culture)
         {

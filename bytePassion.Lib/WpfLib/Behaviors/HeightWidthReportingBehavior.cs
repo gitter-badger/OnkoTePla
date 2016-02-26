@@ -8,16 +8,14 @@ namespace bytePassion.Lib.WpfLib.Behaviors
 	{
 
 		public static readonly DependencyProperty CurrentHeightProperty = 
-			DependencyProperty.Register("CurrentHeight", 
+			DependencyProperty.Register(nameof(CurrentHeight), 
 										typeof (double), 
-										typeof (HeightWidthReportingBehavior), 
-										new PropertyMetadata(default(double)));
+										typeof (HeightWidthReportingBehavior));
 
 		public static readonly DependencyProperty CurrentWidthProperty = 
-			DependencyProperty.Register("CurrentWidth", 
+			DependencyProperty.Register(nameof(CurrentWidth), 
 										typeof (double), 
-										typeof (HeightWidthReportingBehavior), 
-										new PropertyMetadata(default(double)));
+										typeof (HeightWidthReportingBehavior));
 
 		public double CurrentHeight
 		{

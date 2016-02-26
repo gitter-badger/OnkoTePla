@@ -1,11 +1,11 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
+﻿using System;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.SemanticTypes;
-using System;
 using static bytePassion.Lib.GeometryLib.Utils.GeometryLibUtils;
 
 namespace bytePassion.Lib.GeometryLib.Base
 {
-    public struct Vec2
+	public struct Vec2
 	{        
 		public static readonly Vec2 Zero = new Vec2(new XCoord(0.0), new YCoord(0.0));
 

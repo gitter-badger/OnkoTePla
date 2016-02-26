@@ -3,7 +3,7 @@
 
 namespace bytePassion.Lib.ConcurrencyLib
 {
-    public class BlockingExchanger<T>
+	public class BlockingExchanger<T>
     {
         private T giveOver;
         private bool itemGiven;

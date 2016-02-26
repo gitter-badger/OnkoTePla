@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 {
 
-	public class SingleHandlerCollection<TMessageBase> : IHandlerCollection<TMessageBase>
+	public class SingleHandlerCollection<TMessageBase> : DisposingObject, 
+													     IHandlerCollection<TMessageBase>
 	{
 		private readonly IDictionary<Type, object> messageHandlers;
 
@@ -44,6 +46,11 @@ namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 		public void RemoveAllHandler()
 		{
 			messageHandlers.Clear();
+		}
+
+		protected override void CleanUp()
+		{
+			RemoveAllHandler();
 		}
 	}
 

@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 {
 
-	public class MultiHandlerCollection<TMessageBase> : IHandlerCollection<TMessageBase>
+	public class MultiHandlerCollection<TMessageBase> : DisposingObject, IHandlerCollection<TMessageBase>
 	{			
 		private readonly IDictionary<Type, IList> eventHandlerLists;
 		
@@ -50,6 +51,11 @@ namespace bytePassion.Lib.Communication.MessageBus.HandlerCollection
 		public void RemoveAllHandler()
 		{
 			eventHandlerLists.Clear();
+		}
+
+		protected override void CleanUp()
+		{
+			RemoveAllHandler();
 		}
 	}
 

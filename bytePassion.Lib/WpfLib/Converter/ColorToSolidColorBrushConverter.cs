@@ -1,6 +1,6 @@
-﻿using bytePassion.Lib.WpfLib.ConverterBase;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Media;
+using bytePassion.Lib.WpfLib.ConverterBase;
 
 
 namespace bytePassion.Lib.WpfLib.Converter

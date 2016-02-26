@@ -5,20 +5,18 @@ using System.Windows.Interactivity;
 
 namespace bytePassion.Lib.WpfLib.CommandExecutingBehaviors
 {
-    public class ExecuteCommandOnEnter : Behavior<FrameworkElement>
+	public class ExecuteCommandOnEnter : Behavior<FrameworkElement>
     {
 
 	    public static readonly DependencyProperty CommandProperty = 
-			DependencyProperty.Register("Command", 
+			DependencyProperty.Register(nameof(Command), 
 										typeof (ICommand), 
-										typeof (ExecuteCommandOnEnter), 
-										new PropertyMetadata(default(ICommand)));
+										typeof (ExecuteCommandOnEnter));
 
 	    public static readonly DependencyProperty CommandParameterProperty = 
-			DependencyProperty.Register("CommandParameter", 
+			DependencyProperty.Register(nameof(CommandParameter), 
 										typeof (object), 
-										typeof (ExecuteCommandOnEnter), 
-										new PropertyMetadata(default(object)));
+										typeof (ExecuteCommandOnEnter));
 
 	    public object CommandParameter
 	    {

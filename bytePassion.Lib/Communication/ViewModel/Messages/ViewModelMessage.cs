@@ -1,6 +1,6 @@
 ﻿namespace bytePassion.Lib.Communication.ViewModel.Messages
 {
-	public class ViewModelMessage
+	public abstract class ViewModelMessage
 	{
 	}
 }

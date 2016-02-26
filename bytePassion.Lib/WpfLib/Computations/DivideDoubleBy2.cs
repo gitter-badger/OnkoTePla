@@ -1,10 +1,10 @@
-﻿using bytePassion.Lib.WpfLib.ConverterBase;
-using System.Globalization;
+﻿using System.Globalization;
+using bytePassion.Lib.WpfLib.ConverterBase;
 
 
 namespace bytePassion.Lib.WpfLib.Computations
 {
-    public class DivideDoubleBy2 : GenericValueConverter<double, double>
+	public class DivideDoubleBy2 : GenericValueConverter<double, double>
     {
 	    protected override double Convert(double value, CultureInfo culture)
 	    {

@@ -65,7 +65,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 
 			var handlerCollection = new MultiHandlerCollection<ViewModelMessage>();
             IMessageBus<ViewModelMessage> viewModelMessageBus = new LocalMessageBus<ViewModelMessage>(handlerCollection);
-            IViewModelCollections viewModelCollections = new ViewModelCollections();
+            IViewModelCollectionList viewModelCollections = new ViewModelCollectionList();
 
             IViewModelCommunication viewModelCommunication = new ViewModelCommunication(viewModelMessageBus,
                                                                                         viewModelCollections);			

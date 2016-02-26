@@ -5,7 +5,7 @@ using System.Threading;
 namespace bytePassion.Lib.ConcurrencyLib
 {
 
-    public class FixedThreadExecutor<T> where T : IThreadTask
+	public class FixedThreadExecutor<T> where T : IThreadTask
     {
 
         private class ThreadKiller : IThreadTask
@@ -82,11 +82,9 @@ namespace bytePassion.Lib.ConcurrencyLib
 
                 if (task is ThreadKiller)
                     return;
-                else
-                {
-                    task.DoWork();
-                    doneWork.Put(task);
-                }
+                
+                task.DoWork();
+                doneWork.Put(task);                
             }
         }
     }

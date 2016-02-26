@@ -1,13 +1,13 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.WpfLib.Commands.Updater;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.WpfLib.Commands.Updater;
 
 
 namespace bytePassion.Lib.WpfLib.Commands
 {
-    public class Command : DisposingObject, ICommand
+	public class Command : DisposingObject, ICommand
     {
         public event EventHandler CanExecuteChanged;
 

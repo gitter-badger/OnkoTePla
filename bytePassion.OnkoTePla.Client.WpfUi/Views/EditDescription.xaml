@@ -4,30 +4,44 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.EditDescriptionViewModel"
                       Title="Beschreibung editieren"
                       Width="500"
                       Height="300"
                       WindowStartupLocation="CenterOwner"
                       mc:Ignorable="d">
+	
+	<d:DesignData.DataContext>
+		<sampleData:EditDescriptionViewModelSampleData/>
+	</d:DesignData.DataContext>
+	
     <Grid Margin="20">
+		
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+		
         <TextBox Grid.Row="0"
                  VerticalAlignment="Stretch"
-                 Text="{Binding Description}" />
+                 Text="{Binding Description, 
+								Mode=TwoWay, 
+								UpdateSourceTrigger=PropertyChanged}"/>
+		
         <StackPanel Grid.Row="2"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
+			
             <Button Width="80"
                     Margin="10,0"
                     Command="{Binding Accept}"
                     Content="ok" />
+			
             <Button Width="80"
                     Command="{Binding Cancel}"
                     Content="cancel" />
+			
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

@@ -3,8 +3,7 @@ using bytePassion.Lib.Communication.ViewModel.Messages;
 
 namespace bytePassion.Lib.Communication.ViewModel
 {
-
-    public interface IViewModelCommunication
+	public interface IViewModelCommunication
     {
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////

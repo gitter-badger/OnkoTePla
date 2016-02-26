@@ -4,7 +4,7 @@ using bytePassion.Lib.Types.SemanticTypes;
 
 namespace bytePassion.Lib.GeometryLib.Base
 {
-    public class AngleInterval
+	public class AngleInterval
     {
 	    public AngleInterval(Angle from, Angle to)
 	    {

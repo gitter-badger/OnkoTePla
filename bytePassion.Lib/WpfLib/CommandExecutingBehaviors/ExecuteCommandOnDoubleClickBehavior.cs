@@ -5,19 +5,19 @@ using System.Windows.Interactivity;
 
 namespace bytePassion.Lib.WpfLib.CommandExecutingBehaviors
 {
-	public class ExecuteCommandOnClickBehavior : Behavior<FrameworkElement>
+	public class ExecuteCommandOnDoubleClickBehavior : Behavior<FrameworkElement>
 	{
 
 		public static readonly DependencyProperty CommandProperty 
 			= DependencyProperty.Register(nameof(Command), 
 										  typeof (ICommand), 
-										  typeof (ExecuteCommandOnClickBehavior));
-		
+										  typeof (ExecuteCommandOnDoubleClickBehavior));
+
 		public static readonly DependencyProperty CommandParameterProperty 
 			= DependencyProperty.Register(nameof(CommandParameter), 
 										  typeof (object), 
-										  typeof (ExecuteCommandOnClickBehavior));
-
+										  typeof (ExecuteCommandOnDoubleClickBehavior));
+		
 		public object CommandParameter
 		{
 			get { return GetValue(CommandParameterProperty); }
@@ -36,7 +36,7 @@ namespace bytePassion.Lib.WpfLib.CommandExecutingBehaviors
 
 			AssociatedObject.MouseLeftButtonDown += OnMouseDown;
 			AssociatedObject.MouseLeave          += OnMouseLeave;
-			AssociatedObject.MouseLeftButtonUp   += AssociatedObjectOnMouseLeftButtonUp;
+			AssociatedObject.MouseLeftButtonUp   += AssociatedObjectOnMouseLeftButtonUp;			
 		}
 
 		protected override void OnDetaching()
@@ -49,15 +49,16 @@ namespace bytePassion.Lib.WpfLib.CommandExecutingBehaviors
 		}
 
 		private bool possibleExecution = false;
+		private int clickCount = 0;
 
 		private void AssociatedObjectOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
-			if (possibleExecution)
+			if (possibleExecution && clickCount > 0 && clickCount % 2 == 0)
 			{
 				possibleExecution = false;
 
-				if (Command != null)
-					if (Command.CanExecute(CommandParameter))
+				if (Command != null) 
+					if(Command.CanExecute(CommandParameter))
 						Command.Execute(CommandParameter);
 			}
 		}
@@ -69,6 +70,7 @@ namespace bytePassion.Lib.WpfLib.CommandExecutingBehaviors
 
 		private void OnMouseDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
+			clickCount = mouseButtonEventArgs.ClickCount;
 			possibleExecution = true;
 		}		
 	}

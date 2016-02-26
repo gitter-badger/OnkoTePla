@@ -6,6 +6,7 @@
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage"
              xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
              xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage.Helper"
+             xmlns:libComputations="clr-namespace:bytePassion.Lib.WpfLib.Computations;assembly=bytePassion.Lib"
 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="700">
@@ -16,7 +17,7 @@
 
 	<UserControl.Resources>
 		<libConverter:BoolToNullableBoolConverter x:Key="BoolToNullableBoolConverter"/>
-		<libConverter:InvertBoolConverter x:Key="BoolInverter"/>
+		<libComputations:BoolInverter x:Key="BoolInverter"/>
 	</UserControl.Resources>
 
 	<Grid Background="White">

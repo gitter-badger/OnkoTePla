@@ -12,6 +12,7 @@ namespace bytePassion.Lib.FrameworkExtensions
         {
             if (!element.IsVisible)
                 return false;
+
             var container = FindVisualParent<ScrollViewer>(element);            
 			Guard.ArgumentNotNull(container);
 

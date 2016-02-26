@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace bytePassion.Lib.FrameworkExtensions
 {
-    public static class ObservableCollectionExtensions
+	public static class ObservableCollectionExtensions
     {
         public static void Sort<T>(this ObservableCollection<T> observableList) where T : IComparable<T>, IEquatable<T>
         {
