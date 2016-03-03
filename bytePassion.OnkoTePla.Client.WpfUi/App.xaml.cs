@@ -8,6 +8,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandHandler;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserActionFactory;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
@@ -60,9 +61,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 
 			var commandService = new CommandService(session, clientReadmodelRepository, commandBus);
 
+
+			var userActionBuilder = new UserActionBuilder(commandService);
+
 			// CommandHandler
 
-			var     addAppointmentCommandHandler = new     AddAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
+			var     addAppointmentCommandHandler = new     AddAppointmentCommandHandler(connectionService, session, clientPatientRepository, userActionBuilder, CommandHandlerErrorHandler);
 			var  deleteAppointmentCommandHandler = new  DeleteAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
 			var replaceAppointmentCommandHandler = new ReplaceAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
 

@@ -104,6 +104,8 @@
     <Compile Include="Domain\Readmodels\Notification\AppointmentChangedEventArgs.cs" />
     <Compile Include="Domain\Readmodels\Notification\ChangeAction.cs" />
     <Compile Include="Domain\Readmodels\Notification\RawAppointmentChangedEventArgs.cs" />
+    <Compile Include="Domain\UndoRedo\UserActionFactory\IUserActionBuilder.cs" />
+    <Compile Include="Domain\UndoRedo\UserActionFactory\UserActionBuilder.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\AddedAction.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\DeletedAction.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\DividedReplacedAction.cs" />

@@ -151,7 +151,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 					if (result == MessageDialogResult.Affirmative)
 					{
-						session.Redo();
+						session.Redo(errorMsg => viewModelCommunication.Send(new ShowNotification($"redo nicht möglich: {errorMsg}",5)));
 					}
 					
 					break;
@@ -183,7 +183,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 					if (result == MessageDialogResult.Affirmative)
 					{
-						session.Undo();
+						session.Undo(errorMsg => viewModelCommunication.Send(new ShowNotification($"undo nicht möglich: {errorMsg}", 5)));
 					}
 					break;
 				}

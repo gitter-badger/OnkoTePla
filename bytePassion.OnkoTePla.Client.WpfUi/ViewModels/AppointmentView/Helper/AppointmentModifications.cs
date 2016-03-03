@@ -283,10 +283,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 							);
 
 							selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
-						}
-
-						
-
+						}						
 					},
 					currentMedicalPracticeVersion.Id,
 					date,

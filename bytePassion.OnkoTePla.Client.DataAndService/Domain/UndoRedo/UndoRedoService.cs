@@ -8,8 +8,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 	{
 		private class InitialListNode : IUserAction
 		{
-			public void Undo() {}
-			public void Redo() {}
+			public void Undo(Action<string> errorCallback) {}
+			public void Redo(Action<string> errorCallback) {}
 			public string GetUndoMsg() => null;			
 			public string GetRedoMsg() => null;
 		}
@@ -62,21 +62,21 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 			}
 		}
 
-		public void Undo()
+		public void Undo(Action<string> errorCallback)
 		{
 			if (!UndoPossible)
-				throw new InvalidOperationException("undo impossible");
+				errorCallback("undo impossible");
 
-			currentActionPointer.Value.Undo();
+			currentActionPointer.Value.Undo(errorCallback);			// TODO: restart History on error
 			currentActionPointer = currentActionPointer.Previous;
 		}
 
-		public void Redo ()
+		public void Redo (Action<string> errorCallback)
 		{
 			if (!RedoPossible)
-				throw new InvalidOperationException("redo impossible");
+				errorCallback("redo impossible");
 
-			currentActionPointer.Next.Value.Redo();
+			currentActionPointer.Next.Value.Redo(errorCallback);    // TODO: restart History on error
 			currentActionPointer = currentActionPointer.Next;
 		}
 

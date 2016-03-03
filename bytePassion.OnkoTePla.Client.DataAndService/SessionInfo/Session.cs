@@ -181,9 +181,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		public bool UndoPossible () => undoRedoService != null && undoRedoService.UndoPossible;
 		public bool RedoPossible () => undoRedoService != null && undoRedoService.RedoPossible;
 
-		public void Undo () { undoRedoService?.Undo(); }
-		public void Redo () { undoRedoService?.Redo(); }
-
+		public void Undo (Action<string> errorCallback) { undoRedoService?.Undo(errorCallback); }
+		public void Redo (Action<string> errorCallback) { undoRedoService?.Redo(errorCallback); }
+		
 		public string GetCurrentUndoActionMsg()
 		{
 			if (undoRedoService == null)

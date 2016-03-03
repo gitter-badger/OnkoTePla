@@ -7,8 +7,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 {
 	public interface ICommandService
 	{
-		void TryAddNewAppointment(AggregateIdentifier location, Guid patientId, string description,
-								  Time startTime, Time endTime, Guid therapyPlaceId, ActionTag actionTag,
+		void TryAddNewAppointment(AggregateIdentifier location, Guid patientId, string description, Time startTime, 
+								  Time endTime, Guid therapyPlaceId, Guid appointmentId, ActionTag actionTag,
 								  Action<string> errorCallback);
 
 		
@@ -17,8 +17,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 								   Time newEndTime, Guid newTherapyplaceId, Guid originalAppointmentId, 
 								   Date originalDate, ActionTag actionTag,
 								   Action<string> errorCallback);
-
+		
 		void TryDeleteAppointment(AggregateIdentifier location, Guid appointmentId, Guid patientId, 
-								  ActionTag actionTag, Action<string> errorMsg);
+								  ActionTag actionTag, Action<string> errorCallback);
 	}
 }

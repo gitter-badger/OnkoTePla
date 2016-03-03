@@ -9,11 +9,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 		event Action<bool> RedoPossibleChanged;
 
 		bool UndoPossible { get; }
-		void Undo();
+		void Undo(Action<string> errorCallback);
 		string GetCurrentUndoActionMsg();
-
+		
 		bool RedoPossible { get; }
-		void Redo();
+		void Redo(Action<string> errorCallback);
 		string GetCurrentRedoActionMsg();
 		
 		void ReportUserAction (IUserAction newUserAction);

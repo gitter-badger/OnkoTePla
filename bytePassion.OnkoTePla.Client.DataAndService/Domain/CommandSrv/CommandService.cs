@@ -29,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 		public void TryAddNewAppointment(AggregateIdentifier aggregateId,
 										 Guid patientId, string description,
 										 Time startTime, Time endTime,
-										 Guid therapyPlaceId,
+										 Guid therapyPlaceId, Guid appointmentId,
 										 ActionTag actionTag,
 										 Action<string> errorCallback)
 		{
@@ -54,8 +54,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																	  description, 
 																	  startTime, 
 																	  endTime, 
-																	  therapyPlaceId, 
-																	  Guid.NewGuid()));
+																	  therapyPlaceId,
+																	  appointmentId));
 
 
 

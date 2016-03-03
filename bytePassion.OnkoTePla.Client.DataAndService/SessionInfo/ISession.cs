@@ -57,11 +57,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		event Action<bool> RedoPossibleChanged;
 
 		bool UndoPossible();
-		void Undo();
+		void Undo(Action<string> errorCallback);
 		string GetCurrentUndoActionMsg();		
 		
 		bool RedoPossible();
-		void Redo();
+		void Redo(Action<string> errorCallback);
 		string GetCurrentRedoActionMsg ();
 
 		void ReportUserAction(IUserAction newUserAction);

@@ -1,4 +1,5 @@
-﻿using bytePassion.Lib.Communication.State;
+﻿using System;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
@@ -43,6 +44,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 													currentAppointmentModification.BeginTime,
 													currentAppointmentModification.EndTime,
 													currentAppointmentModification.CurrentLocation.TherapyPlaceId,
+													Guid.NewGuid(),
 													ActionTag.RegularAction,
 													errorMsg =>
 													{
@@ -79,7 +81,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 													 errorMsg =>
 													 {
 														 viewModelCommunication.Send(new ShowNotification($"veränderung des Termins nicht möglich: {errorMsg}", 5));
-														 // TODO: termin in ansicht zurücksetzen
+														 
+														 viewModelCommunication.SendTo(
+															Constants.AppointmentViewModelCollection,
+															originalAppointment.Id,
+															new RestoreOriginalValues()	 
+														 );
 													 });
 
 			}
