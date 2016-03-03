@@ -40,10 +40,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		public void Dispose() {}
 
 		public void Process(Activate message) {}
-		public void Process(Deactivate message) {}
-		public void Process(DeleteAppointment message) {}
-		public void Process(SendCurrentChangesToCommandBus message) { }
-		public void Process (CreateNewAppointmentFromModificationsAndSendToCommandBus message) { }
+		public void Process(Deactivate message) {}		
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}

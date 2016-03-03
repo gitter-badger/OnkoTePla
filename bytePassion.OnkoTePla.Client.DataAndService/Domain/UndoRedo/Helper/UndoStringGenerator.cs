@@ -3,7 +3,7 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
-namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Helper
+namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.Helper
 {
 	public static class UndoStringGenerator
     {

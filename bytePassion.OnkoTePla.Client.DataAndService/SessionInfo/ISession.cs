@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserActions;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Contracts.Config;
 
@@ -57,10 +58,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 
 		bool UndoPossible();
 		void Undo();
-		string GetUndoActionMessage();		
-
+		string GetCurrentUndoActionMsg();		
+		
 		bool RedoPossible();
-		void Redo(); 
-		string GetRedoActionMessage();		
+		void Redo();
+		string GetCurrentRedoActionMsg ();
+
+		void ReportUserAction(IUserAction newUserAction);
 	}
 }

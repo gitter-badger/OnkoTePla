@@ -219,50 +219,60 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 					{
 						if (newMedicalPractice.HoursOfOpening.IsOpen(date))
 						{
-
 							readModelRepository.RequestAppointmentSetOfADay(
 								fixedAppointmentSet =>
 								{
-									IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments = new Dictionary<TherapyPlace, IList<Appointment>>();
-
-									foreach (var therapyPlace in newMedicalPractice.GetAllTherapyPlaces())
-										sortedAppointments.Add(therapyPlace, new List<Appointment>());
-
-									foreach (var appointment in fixedAppointmentSet.Appointments)
-										if (appointment != OriginalAppointment)
-											sortedAppointments[appointment.TherapyPlace].Add(appointment);
-
-									var openingTime = newMedicalPractice.HoursOfOpening.GetOpeningTime(date);
-									var closingTime = newMedicalPractice.HoursOfOpening.GetClosingTime(date);
-
-									var appointmentDuration = new Duration(BeginTime, EndTime);
-
-									foreach (var therapyRowData in sortedAppointments)
-									{
-										var slots = ComputeAllSlotsWithinARow(openingTime, closingTime, therapyRowData.Value);
-										var suitableSlot = GetSlotForAppointment(slots, appointmentDuration);
-
-										if (suitableSlot != null)
-										{
-											SetNewLocation(
-												new TherapyPlaceRowIdentifier(new AggregateIdentifier(date,
-																									  CurrentLocation.PlaceAndDate.MedicalPracticeId),
-																			  therapyRowData.Key.Id),
-												suitableSlot.Begin,
-												suitableSlot.Begin + appointmentDuration
-											);											
-											return;
-										}
-									}
-
 									viewModelCommunication.Send(
-										new ShowNotification("cannot move the OriginalAppointment to that day. No timeslot is big enough!", 5)
-									);									
+										new AsureDayIsLoaded(
+											fixedAppointmentSet.Identifier,
+											() =>
+											{
+												IDictionary<TherapyPlace, IList<Appointment>> sortedAppointments = new Dictionary<TherapyPlace, IList<Appointment>>();
 
-									selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
+												foreach (var therapyPlace in newMedicalPractice.GetAllTherapyPlaces())
+													sortedAppointments.Add(therapyPlace, new List<Appointment>());
+
+												foreach (var appointment in fixedAppointmentSet.Appointments)
+													if (appointment != OriginalAppointment)
+														sortedAppointments[appointment.TherapyPlace].Add(appointment);
+
+												var openingTime = newMedicalPractice.HoursOfOpening.GetOpeningTime(date);
+												var closingTime = newMedicalPractice.HoursOfOpening.GetClosingTime(date);
+
+												var appointmentDuration = new Duration(BeginTime, EndTime);
+
+												foreach (var therapyRowData in sortedAppointments)
+												{
+													var slots = ComputeAllSlotsWithinARow(openingTime, closingTime, therapyRowData.Value);
+													var suitableSlot = GetSlotForAppointment(slots, appointmentDuration);
+
+													if (suitableSlot != null)
+													{
+														Application.Current.Dispatcher.Invoke(() =>
+														{
+															SetNewLocation(
+															new TherapyPlaceRowIdentifier(new AggregateIdentifier(date,
+																												  CurrentLocation.PlaceAndDate.MedicalPracticeId),
+																						  therapyRowData.Key.Id),
+															suitableSlot.Begin,
+															suitableSlot.Begin + appointmentDuration
+														);
+														});
+														
+														return;
+													}
+												}
+
+												viewModelCommunication.Send(
+													new ShowNotification("cannot move the OriginalAppointment to that day. No timeslot is big enough!", 5)
+												);
+
+												selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
+											}
+										)
+									);									
 								},
-								CurrentLocation.PlaceAndDate,
-								uint.MaxValue,
+								new AggregateIdentifier(date, currentMedicalPracticeVersion.Id),								
 								errorCallback									
 							);														
 						}
@@ -589,8 +599,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 								currentSlotEnd   = appointmentsWithinTheSameRow[indexOfThisAppointment + 1].StartTime;
 							}
 						},
-						CurrentLocation.PlaceAndDate,
-						uint.MaxValue,
+						CurrentLocation.PlaceAndDate,						
 						errorCallback	
 					);					
 				},

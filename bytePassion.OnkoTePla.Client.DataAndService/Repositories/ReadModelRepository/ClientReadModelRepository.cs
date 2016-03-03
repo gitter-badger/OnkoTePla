@@ -69,61 +69,53 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 					);																				
 				},
 				id.Date,
-				id.MedicalPracticeId,
-				uint.MaxValue,
+				id.MedicalPracticeId,				
 				errorCallback
 			);
 		}
 
 		public void RequestAppointmentSetOfADay(Action<FixedAppointmentSet> appointmentSetAvailable, 
-												AggregateIdentifier id, uint aggregateVersionLimit, Action<string> errorCallback)
+												AggregateIdentifier id, Action<string> errorCallback)
 		{
-			if (aggregateVersionLimit == uint.MaxValue)
+			
+			if (cachedDayReadmodels.ContainsKey(id))
 			{
-				if (cachedDayReadmodels.ContainsKey(id))
+				var readModel = cachedDayReadmodels[id];
+				appointmentSetAvailable(new FixedAppointmentSet(readModel.Identifier, 
+																readModel.AggregateVersion, 
+																readModel.Appointments));					
+				return;
+			}
+
+			connectionService.RequestAppointmentsOfADay(
+				(appointments, aggregateId, aggregateVersion) =>
 				{
-					var readModel = cachedDayReadmodels[id];
-					appointmentSetAvailable(new FixedAppointmentSet(readModel.Identifier, 
-																	readModel.AggregateVersion, 
-																	readModel.Appointments));					
-					return;
-				}
+					medicalPracticeRepository.RequestMedicalPractice(
+						practice =>
+						{
+							var newReadModel = new AppointmentsOfADayReadModel(eventBus,
+																				patientsRepository,
+																				practice,
+																				appointments,
+																				aggregateId,
+																				aggregateVersion,
+																				errorCallback);
+							if (!cachedDayReadmodels.ContainsKey(aggregateId))
+								cachedDayReadmodels.Add(aggregateId, newReadModel);
 
-				connectionService.RequestAppointmentsOfADay(
-					(appointments, aggregateId, aggregateVersion) =>
-					{
-						medicalPracticeRepository.RequestMedicalPractice(
-							practice =>
-							{
-								var newReadModel = new AppointmentsOfADayReadModel(eventBus,
-																				   patientsRepository,
-																				   practice,
-																				   appointments,
-																				   aggregateId,
-																				   aggregateVersion,
-																				   errorCallback);
-								if (!cachedDayReadmodels.ContainsKey(aggregateId))
-									cachedDayReadmodels.Add(aggregateId, newReadModel);
-
-								appointmentSetAvailable(new FixedAppointmentSet(newReadModel.Identifier,
-																	            newReadModel.AggregateVersion,
-																	            newReadModel.Appointments));
-							},
-							aggregateId.MedicalPracticeId,
-							aggregateId.PracticeVersion,
-							errorCallback
-						);
-					},
-					id.Date,
-					id.MedicalPracticeId,
-					uint.MaxValue,
-					errorCallback
-				);
-			}
-			else
-			{
-				throw new NotImplementedException();
-			}
+							appointmentSetAvailable(new FixedAppointmentSet(newReadModel.Identifier,
+																	        newReadModel.AggregateVersion,
+																	        newReadModel.Appointments));
+						},
+						aggregateId.MedicalPracticeId,
+						aggregateId.PracticeVersion,
+						errorCallback
+					);
+				},
+				id.Date,
+				id.MedicalPracticeId,				
+				errorCallback
+			);			
 		}
 
 		public void RequestLastestReadModelVersion(Action<uint> readModelVersionAvailable, AggregateIdentifier id, Action<string> errorCallback)
@@ -158,8 +150,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 					);
 				},
 				id.Date,
-				id.MedicalPracticeId,
-				uint.MaxValue,
+				id.MedicalPracticeId,				
 				errorCallback
 			);
 		}

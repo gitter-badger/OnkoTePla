@@ -322,8 +322,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 
 							allAvailableTimeSlots = allSlots;
 						},
-						new AggregateIdentifier(creationDate, loadedPractice.Id, loadedPractice.Version),
-						uint.MaxValue,
+						new AggregateIdentifier(creationDate, loadedPractice.Id, loadedPractice.Version),						
 						errorCallback
 					);
 				},

@@ -5,7 +5,7 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
-using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
@@ -48,8 +48,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
     {
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
 		private readonly IClientReadModelRepository readModelRepository;
-		private readonly IClientPatientRepository patientRepository;
-		private readonly ICommandBus commandBus;
+		private readonly IClientPatientRepository patientRepository;		
+		private readonly ICommandService commandService;
 		private readonly ILocalSettingsRepository localSettingsRepository;
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISession session;		
@@ -60,8 +60,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 		
 		public MainViewModelBuilder(IClientMedicalPracticeRepository medicalPracticeRepository,
 									IClientReadModelRepository readModelRepository,
-									IClientPatientRepository patientRepository,
-									ICommandBus commandBus,
+									IClientPatientRepository patientRepository,									
+									ICommandService commandService,
 									ILocalSettingsRepository localSettingsRepository,
                                     IViewModelCommunication viewModelCommunication,
 									ISession session,                                   
@@ -69,8 +69,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
         {
 			this.medicalPracticeRepository = medicalPracticeRepository;
 			this.readModelRepository = readModelRepository;
-			this.patientRepository = patientRepository;
-			this.commandBus = commandBus;
+			this.patientRepository = patientRepository;			
+			this.commandService = commandService;
 			this.localSettingsRepository = localSettingsRepository;
 			this.viewModelCommunication = viewModelCommunication;
 	        this.session = session;	        
@@ -128,6 +128,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                                       gridSizeVariable);
 
             var appointmentViewModelBuilder = new AppointmentViewModelBuilder(viewModelCommunication,
+																			  commandService,
                                                                               appointmentModificationsVariable,
                                                                               selectedDateVariable,
                                                                               adornerControl,
@@ -138,14 +139,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                                       adornerControl,
                                                                                       appointmentModificationsVariable);
 
-            var appointmentGridViewModelBuilder = new AppointmentGridViewModelBuilder(session,
-																					  medicalPracticeRepository,
+            var appointmentGridViewModelBuilder = new AppointmentGridViewModelBuilder(medicalPracticeRepository,
 																					  readModelRepository,
-																					  commandBus,
-                                                                                      viewModelCommunication,                                                                                      
+                                                                                      viewModelCommunication,
                                                                                       gridSizeVariable,
                                                                                       roomFilterVariable,
-                                                                                      appointmentModificationsVariable,
                                                                                       appointmentViewModelBuilder,
                                                                                       therapyPlaceRowViewModelBuilder);
 			
@@ -159,8 +157,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             // build stand-alone viewModelMessageHandler
 
 	        confirmChangesMessageHandler = new ConfirmChangesMessageHandler(viewModelCommunication,
-																		    appointmentModificationsVariable,
-																		    selectedMedicalPracticeIdVariable);
+																			commandService,
+																		    appointmentModificationsVariable);
 
 	        rejectChangesMessageHandler = new RejectChangesMessageHandler(viewModelCommunication,
 																		  appointmentModificationsVariable);
@@ -223,11 +221,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             var searchPageViewModel = new SearchPageViewModel(patientSelectorViewModel,
                                                               selectedPatientForAppointmentSearchVariable,
                                                               selectedDateVariable,
-                                                              selectedMedicalPracticeIdVariable,                                                              
+                                                              selectedMedicalPracticeIdVariable,
                                                               viewModelCommunication,
-															  commandBus,
-                                                              readModelRepository,
-															  session,
+															  commandService,
+                                                              readModelRepository,															 
 															  errorCallback);
 
             var optionsPageViewModel = new OptionsPageViewModel();            
@@ -236,6 +233,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                       searchPageViewModel,
                                                                       optionsPageViewModel);
 
+			viewModelCommunication.RegisterViewModelMessageHandler<AsureDayIsLoaded>(gridContainerViewModel);
             viewModelCommunication.RegisterViewModelMessageHandler<ShowPage>(mainViewModel);
 			viewModelCommunication.RegisterViewModelMessageHandler(confirmChangesMessageHandler);
 			viewModelCommunication.RegisterViewModelMessageHandler(rejectChangesMessageHandler);
@@ -249,11 +247,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 			viewModelCommunication.RemoveViewModelCollection(Constants.AppointmentGridViewModelCollection);
 			viewModelCommunication.RemoveViewModelCollection(Constants.TimeGridViewModelCollection);
 			viewModelCommunication.RemoveViewModelCollection(Constants.AppointmentViewModelCollection);
-	
-			viewModelCommunication.DeregisterViewModelMessageHandler<ShowPage>(viewModelToDispose);
-			viewModelCommunication.DeregisterViewModelMessageHandler(confirmChangesMessageHandler);
-			viewModelCommunication.DeregisterViewModelMessageHandler(rejectChangesMessageHandler);
-
+			
 			var optionsPageViewModel             = viewModelToDispose.OptionsPageViewModel;
 	        var searchPageViewModel              = viewModelToDispose.SearchPageViewModel;
 	        var overviewPageViewModel            = viewModelToDispose.OverviewPageViewModel;
@@ -266,7 +260,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 	        var changeConfirmationViewModel      = overviewPageViewModel.ChangeConfirmationViewModel;
 	        var undoRedoViewModel                = overviewPageViewModel.UndoRedoViewModel;
 
-	        optionsPageViewModel.Dispose();
+			viewModelCommunication.DeregisterViewModelMessageHandler<AsureDayIsLoaded>(gridContainerViewModel);
+			viewModelCommunication.DeregisterViewModelMessageHandler<ShowPage>(viewModelToDispose);
+			viewModelCommunication.DeregisterViewModelMessageHandler(confirmChangesMessageHandler);
+			viewModelCommunication.DeregisterViewModelMessageHandler(rejectChangesMessageHandler);
+
+			optionsPageViewModel.Dispose();
 			searchPageViewModel.Dispose();
 			overviewPageViewModel.Dispose();
 			patientSelectorViewModel.Dispose();

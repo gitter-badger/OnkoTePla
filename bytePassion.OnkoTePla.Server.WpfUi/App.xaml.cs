@@ -64,9 +64,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 			var persistenceService = new XmlEventStreamDataStore(GlobalConstants.EventHistoryPersistenceFile);
 			var streamPersistenceService = new StreamPersistenceService(configRepository, "");
-			var streamManager = new StreamManagementService(streamPersistenceService);
-            var metaDataService = new StreamMetaDataService(GlobalConstants.EventHistoryBasePath);
-			var eventStore = new EventStore(persistenceService, streamManager, metaDataService, configRepository, connectionService);
+			//var streamManager = new StreamManagementService(streamPersistenceService);
+            //var metaDataService = new StreamMetaDataService(GlobalConstants.EventHistoryBasePath);
+			var eventStore = new EventStore(persistenceService, /*streamManager, metaDataService,*/ configRepository, connectionService);
 			eventStore.LoadRepository();
 
 

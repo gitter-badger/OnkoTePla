@@ -12,10 +12,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 	internal interface IAppointmentGridViewModel : IViewModel,												 
 												   IViewModelCollectionItem<AggregateIdentifier>,
 												   IViewModelMessageHandler<Activate>,
-												   IViewModelMessageHandler<Deactivate>,
-												   IViewModelMessageHandler<DeleteAppointment>, 
-												   IViewModelMessageHandler<SendCurrentChangesToCommandBus>,
-												   IViewModelMessageHandler<CreateNewAppointmentFromModificationsAndSendToCommandBus>
+												   IViewModelMessageHandler<Deactivate>												 											  
 	{						
 		ObservableCollection<ITherapyPlaceRowViewModel> TherapyPlaceRowViewModels { get; } 	
 		

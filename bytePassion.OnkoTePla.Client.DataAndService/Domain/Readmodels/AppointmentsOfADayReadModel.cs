@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Base;
@@ -23,8 +24,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 			remove { appointmentSet.ObservableAppointments.AppointmentChanged -= value; }
 		}
 		
-		private readonly AppointmentSet appointmentSet;
-
+		private readonly AppointmentSet appointmentSet;		
+		
 		public AppointmentsOfADayReadModel (IClientEventBus eventBus,
 										    IClientPatientRepository patientsRepository,
 											ClientMedicalPracticeData medicalPractice, 								            
@@ -38,7 +39,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 
 			AggregateVersion = initialAggregateVersion;
 			Identifier = identifier;
-			appointmentSet = new AppointmentSet(patientsRepository, initialAppointmentData, 
+
+			var initialAppointmentList = initialAppointmentData.ToList();
+			
+			appointmentSet = new AppointmentSet(patientsRepository, initialAppointmentList, 
 												medicalPractice, errorCallback);			
 		}		
 

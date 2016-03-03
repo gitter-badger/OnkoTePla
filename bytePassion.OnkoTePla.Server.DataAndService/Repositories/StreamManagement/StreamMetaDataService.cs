@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Domain.Events;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamManagement
 {
-    public class StreamMetaDataService : IStreamMetaDataService
+	public class StreamMetaDataService : IStreamMetaDataService
     {
         private readonly string baseDir;
         private readonly Dictionary<Guid, PracticeMetaData> metaDataFiles;

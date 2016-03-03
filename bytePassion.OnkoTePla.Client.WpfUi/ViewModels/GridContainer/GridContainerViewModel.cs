@@ -22,7 +22,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 	{
 		private readonly IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder;
 		private readonly Action<string> errorCallback;
-
+		
+		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
 		private readonly ISharedStateReadOnly<Date> selectedDateVariable;
 		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
@@ -40,14 +41,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
                                       ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
 									  ISharedState<Size> appointmentGridSizeVariable,									  
                                       IEnumerable<AggregateIdentifier> initialGridViewModelsToCache,									  
-									  int maximumCashedGrids, 
-									  IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder /* TODO */,
+									  int maximumCashedGrids, /* TODO */
+									  IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder,
 									  Action<string> errorCallback)
 		{
 			// TODO caching implementieren
 
-			
-			ViewModelCommunication = viewModelCommunication;
+			this.viewModelCommunication = viewModelCommunication;
 			this.medicalPracticeRepository = medicalPracticeRepository;
 			this.selectedDateVariable = selectedDateVariable;
 		    this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
@@ -80,8 +80,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 			);
 		}		
 
-		public ObservableCollection<IAppointmentGridViewModel> LoadedAppointmentGrids { get; }
-		public IViewModelCommunication ViewModelCommunication { get; }
+		public ObservableCollection<IAppointmentGridViewModel> LoadedAppointmentGrids { get; }		
 
 		public int CurrentDisplayedAppointmentGridIndex
 		{
@@ -181,7 +180,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 
 		private void ActivateGridViewModel(AggregateIdentifier identifier)
 		{
-			ViewModelCommunication.SendTo(
+			viewModelCommunication.SendTo(
 				Constants.AppointmentGridViewModelCollection,
 				identifier,
 				new Activate()
@@ -190,7 +189,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 
 		private void DeactivateGridViewModel (AggregateIdentifier identifier)
 		{
-			ViewModelCommunication.SendTo(
+			viewModelCommunication.SendTo(
 				Constants.AppointmentGridViewModelCollection,
 				identifier,
 				new Deactivate()
@@ -215,13 +214,40 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 			currentDisplayedAppointmentGridIdentifier = identifier;
 
 			ActivateGridViewModel(identifier);
-		}					
+		}
 
-	    protected override void CleanUp()
+		public void Process (AsureDayIsLoaded message)
+		{
+			var identifier = message.AggregateIdentifier;
+
+			if (!GridViewModelIsCached(identifier))
+			{
+				appointmentGridViewModelBuilder.RequestBuild(
+					buildedViewModel =>
+					{
+						Application.Current.Dispatcher.Invoke(() =>
+						{
+							cachedAppointmentGridViewModels.Add(identifier, buildedViewModel);
+							LoadedAppointmentGrids.Add(buildedViewModel);
+							
+							message.DayIsLoadedCallback();
+						});
+					},
+					identifier,
+					errorCallback
+				);
+			}
+			else
+			{
+				message.DayIsLoadedCallback();
+			}
+		}
+
+		protected override void CleanUp()
 	    {
 	        selectedDateVariable.StateChanged              -= OnSelectedDateStateChanged;
 			selectedMedicalPracticeIdVariable.StateChanged -= OnDisplayedPracticeStateChanged;
 	    }
-        public override event PropertyChangedEventHandler PropertyChanged;
-    }
+        public override event PropertyChangedEventHandler PropertyChanged;		
+	}
 }

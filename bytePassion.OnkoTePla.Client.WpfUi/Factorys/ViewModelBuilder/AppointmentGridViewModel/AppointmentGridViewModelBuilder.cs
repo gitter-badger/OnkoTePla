@@ -2,52 +2,40 @@
 using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel
 {
 	internal class AppointmentGridViewModelBuilder : IAppointmentGridViewModelBuilder 
-	{		
-		private readonly ISession session;
+	{				
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
-		private readonly IClientReadModelRepository readModelRepository;
-		private readonly ICommandBus commandBus;
+		private readonly IClientReadModelRepository readModelRepository;		
 		private readonly IViewModelCommunication viewModelCommunication;				
 		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
-		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;		
-		private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;		
+		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;				
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 		private readonly ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder;
 
-		public AppointmentGridViewModelBuilder(ISession session,
-											   IClientMedicalPracticeRepository medicalPracticeRepository,
+		public AppointmentGridViewModelBuilder(IClientMedicalPracticeRepository medicalPracticeRepository,
 											   IClientReadModelRepository readModelRepository,
-											   ICommandBus commandBus,
-											   IViewModelCommunication viewModelCommunication, 											   
+											   IViewModelCommunication viewModelCommunication,
 											   ISharedStateReadOnly<Size> gridSizeVariable, 
-											   ISharedStateReadOnly<Guid?> roomFilterVariable, 											  
-											   ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable, 											  
+											   ISharedStateReadOnly<Guid?> roomFilterVariable,
 											   IAppointmentViewModelBuilder appointmentViewModelBuilder, 
 											   ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 											   
-		{			
-			this.session = session;
+		{						
 			this.medicalPracticeRepository = medicalPracticeRepository;
-			this.readModelRepository = readModelRepository;
-			this.commandBus = commandBus;
+			this.readModelRepository = readModelRepository;			
 			this.viewModelCommunication = viewModelCommunication;						
 			this.gridSizeVariable = gridSizeVariable;
-			this.roomFilterVariable = roomFilterVariable;
-			this.appointmentModificationsVariable = appointmentModificationsVariable;
+			this.roomFilterVariable = roomFilterVariable;			
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.therapyPlaceRowViewModelBuilder = therapyPlaceRowViewModelBuilder;
 		}		
@@ -61,13 +49,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 					{
 						viewModelAvailableCallback(new ViewModels.AppointmentGrid.AppointmentGridViewModel(identifier,
 																										   medicalPractice,
-																										   session,
-																										   commandBus,
 																										   readModelRepository,
 																										   viewModelCommunication,
 																										   gridSizeVariable,
 																										   roomFilterVariable,
-																										   appointmentModificationsVariable,
 																										   appointmentViewModelBuilder,
 																										   therapyPlaceRowViewModelBuilder,
 																										   errorCallback));

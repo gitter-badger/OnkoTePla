@@ -12,7 +12,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 												AggregateIdentifier id, Action<string> errorCallback);
 
 		void RequestAppointmentSetOfADay(Action<FixedAppointmentSet> appointmentSetAvailable, 
-										 AggregateIdentifier id, uint aggregateVersionLimit, Action<string> errorCallback);
+										 AggregateIdentifier id, Action<string> errorCallback);
 
 		void RequestLastestReadModelVersion(Action<uint> readModelVersionAvailable,
 											AggregateIdentifier id, Action<string> errorCallback);

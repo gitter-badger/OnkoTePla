@@ -13,22 +13,22 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 	public class EventStore : IEventStore
 	{
 		private readonly IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService;
-        private readonly StreamManagementService streamManager;
-        private readonly IStreamMetaDataService metaDataService;
+       // private readonly StreamManagementService streamManager;
+       // private readonly IStreamMetaDataService metaDataService;
         private IList<EventStream<AggregateIdentifier>> eventStreams;
 		private readonly IConfigurationReadRepository config;
 		private readonly IConnectionService connectionService;
 
-		public EventStore (IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService 
-						  , StreamManagementService streamManager,
-                          IStreamMetaDataService metaDataService, 
+		public EventStore (IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService ,
+					//	  StreamManagementService streamManager,
+                       //   IStreamMetaDataService metaDataService, 
 						  IConfigurationReadRepository config, 
 						  IConnectionService connectionService)
 		{
 			eventStreams = new List<EventStream<AggregateIdentifier>>();
 			this.persistenceService = persistenceService;
-		    this.metaDataService = metaDataService;
-            this.streamManager = streamManager;
+		   // this.metaDataService = metaDataService;
+           // this.streamManager = streamManager;
             this.config = config;
 			this.connectionService = connectionService;
 		}
@@ -80,7 +80,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 				}
 
                 // trigger MetaDataUpdate
-                metaDataService.UpdateMetaData(domainEvent);
+                //metaDataService.UpdateMetaData(domainEvent);
 
 				eventStream.AddEvent(domainEvent);
 				connectionService.SendEventNotification(domainEvent);
@@ -101,13 +101,13 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 		{
 			persistenceService.Persist(eventStreams);
             //streamManager.SaveStreams(eventStreams);
-            metaDataService.PersistMetaData();
+           // metaDataService.PersistMetaData();
 		}
 
 		public void LoadRepository()
 		{
 			eventStreams = persistenceService.Load().ToList();
-		    metaDataService.Initialize();
+		    //metaDataService.Initialize();
 		    //eventStreams = streamManager.LoadInitialEventStreams();
 		}
 	}

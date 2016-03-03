@@ -9,7 +9,7 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 	public class GetAppointmentsOfADayResponse : NetworkMessageBase
 	{
 		public GetAppointmentsOfADayResponse(Guid medicalPracticeId, uint medicalPracticeVersion, 
-											uint aggregateVersion, IReadOnlyList<AppointmentTransferData> appointmentCollection)
+											 uint aggregateVersion, IReadOnlyList<AppointmentTransferData> appointmentCollection)
 			: base(NetworkMessageType.GetAppointmentsOfADayResponse)
 		{
 			MedicalPracticeId = medicalPracticeId;

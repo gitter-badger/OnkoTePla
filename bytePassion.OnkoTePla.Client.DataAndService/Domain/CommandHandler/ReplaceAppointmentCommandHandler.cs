@@ -83,6 +83,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandHandler
 					{
 						errorCallback("adding events failed");
 					}
+					else
+					{
+						if (command.ActionTag == ActionTag.RegularAction)
+						{
+							// TODO
+							//session.ReportUserAction();
+						}
+					}
 				},
 				eventList,
 				errorCallback

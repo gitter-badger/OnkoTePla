@@ -135,11 +135,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			universalResponseThread = null;
 		}
 
-		public void SendEventNotification                  (DomainEvent      domainEvent)             { notificationThreadCollection.SendNotification(new EventNotificationObject                 (domainEvent));             }
-		public void SendPatientAddedNotification           (Patient          newPatient)              { notificationThreadCollection.SendNotification(new PatientAddedNotificationObject          (newPatient));              }
-		public void SendPatientUpdatedNotification         (Patient          updatedPatient)          { notificationThreadCollection.SendNotification(new PatientUpdatedNotificationObject        (updatedPatient));          }
-		public void SendTherapyPlaceTypeAddedNotification  (TherapyPlaceType newTherapyPlaceType)     { notificationThreadCollection.SendNotification(new TherpyPlaceTypeAddedNotificationObject  (newTherapyPlaceType));     }
-		public void SendTherapyPlaceTypeUpdatedNotification(TherapyPlaceType updatedTherapyPlaceType) { notificationThreadCollection.SendNotification(new TherpyPlaceTypeUpdatedNotificationObject(updatedTherapyPlaceType)); }
+		public void SendEventNotification                  (DomainEvent      domainEvent)             { notificationThreadCollection?.SendNotification(new EventNotificationObject                 (domainEvent));             }
+		public void SendPatientAddedNotification           (Patient          newPatient)              { notificationThreadCollection?.SendNotification(new PatientAddedNotificationObject          (newPatient));              }
+		public void SendPatientUpdatedNotification         (Patient          updatedPatient)          { notificationThreadCollection?.SendNotification(new PatientUpdatedNotificationObject        (updatedPatient));          }
+		public void SendTherapyPlaceTypeAddedNotification  (TherapyPlaceType newTherapyPlaceType)     { notificationThreadCollection?.SendNotification(new TherpyPlaceTypeAddedNotificationObject  (newTherapyPlaceType));     }
+		public void SendTherapyPlaceTypeUpdatedNotification(TherapyPlaceType updatedTherapyPlaceType) { notificationThreadCollection?.SendNotification(new TherpyPlaceTypeUpdatedNotificationObject(updatedTherapyPlaceType)); }
 
 		protected override void CleanUp()
 		{	

@@ -30,7 +30,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 			AggregateVersion = aggregateVersion;
 			Identifier = identifier;
 
-
 			var appointmentSet = new AppointmentSet(patientsRepository, initialAppointmentData,
 													medicalPractice, errorCallback);
 			Appointments = appointmentSet.AppointmentList;

@@ -8,6 +8,7 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
@@ -19,7 +20,6 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using MahApps.Metro.Controls.Dialogs;
-using DeleteAppointment = bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages.DeleteAppointment;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
@@ -27,7 +27,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 	internal class AppointmentViewModel : ViewModel, 
 										  IAppointmentViewModel										
 	{		
-		private readonly Appointment appointment;
+		private readonly Appointment appointment;		
 		private readonly TherapyPlaceRowIdentifier initialLocalisation;
 
 		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
@@ -36,15 +36,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		private TherapyPlaceRowIdentifier currentLocation;
 		private OperatingMode operatingMode;
 		
-		private Time   beginTime;
-		private Time   endTime;
-
+		private Time beginTime;
+		private Time endTime;
 		
 		private bool showDisabledOverlay;
 		private AppointmentModifications currentAppointmentModifications;
         private string description;
 
         public AppointmentViewModel(Appointment appointment,
+									ICommandService commandService,
 									IViewModelCommunication viewModelCommunication,																
 									TherapyPlaceRowIdentifier initialLocalisation, 
                                     ISharedState<AppointmentModifications> appointmentModificationsVariable,
@@ -54,8 +54,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
                                     AdornerControl adornerControl,
 									Action<string> errorCallback)
 		{ 						
-			this.appointment = appointment; 
-			this.initialLocalisation = initialLocalisation;
+			this.appointment = appointment;	        
+	        this.initialLocalisation = initialLocalisation;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
 		    this.selectedDateVariable = selectedDateVariable;	        
 	        ViewModelCommunication = viewModelCommunication;
@@ -66,7 +66,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				this	
 			);
 
-			SwitchToEditMode = new ParameterrizedCommand<bool>(isInitalAdjusting =>
+			SwitchToEditMode = new ParameterrizedCommand<bool>(
+				isInitalAdjusting =>
 				{
 					if (appointmentModificationsVariable.Value == null)
 					{
@@ -83,7 +84,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				}
 			);
 
-			DeleteAppointment = new Command(async() =>
+			DeleteAppointment = new Command(
+				async() =>
 				{
 					var dialog = new UserDialogBox("", "Wollen Sie den Termin wirklich löschen?", 
 												   MessageBoxButton.OKCancel);
@@ -93,24 +95,29 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				    {
 						appointmentModificationsVariable.Value = null;
 
-						viewModelCommunication.SendTo(
-							Constants.AppointmentGridViewModelCollection,
-							initialLocalisation.PlaceAndDate,
-							new DeleteAppointment(appointment.Id, appointment.Patient.Id, ActionTag.RegularAction)
-						);
+						commandService.TryDeleteAppointment(currentLocation.PlaceAndDate, 
+															Identifier, 
+															appointment.Patient.Id, 
+															ActionTag.RegularAction,
+															errorMsg =>
+															{
+																viewModelCommunication.Send(new ShowNotification($"löschen des Termins fehlgeschlagen: {errorMsg}", 5));	
+															});
 					}					
 				}
 			);	
 
-            EditDescription = new Command( () =>
-            {
-                viewModelCommunication.Send(new ShowDisabledOverlay());
+            EditDescription = new Command( 
+				() =>
+				{
+				    viewModelCommunication.Send(new ShowDisabledOverlay());
 
-                var dialog = editDescriptionWindowBuilder.BuildWindow(errorCallback);
-                dialog.ShowDialog();
+				    var dialog = editDescriptionWindowBuilder.BuildWindow(errorCallback);
+				    dialog.ShowDialog();
 
-                viewModelCommunication.Send(new HideDisabledOverlay());
-            });
+				    viewModelCommunication.Send(new HideDisabledOverlay());
+				}
+			);
 
 			BeginTime = appointment.StartTime;
 			EndTime = appointment.EndTime;

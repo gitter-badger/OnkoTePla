@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using bytePassion.Lib.Communication.State;
@@ -87,22 +86,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		public void Process (Deactivate message)
 		{
 			IsActive = false;
-		}
-        
-		public void Process(DeleteAppointment message)
-		{
-			throw new Exception("internal error");
-		}
-		
-		public void Process(SendCurrentChangesToCommandBus message)
-		{
-			throw new Exception("internal error");
-		}		
-
-		public void Process(CreateNewAppointmentFromModificationsAndSendToCommandBus message)
-		{
-			throw new Exception("internal error");
-		}
+		}        			
 
         protected override void CleanUp()
         {

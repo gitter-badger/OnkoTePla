@@ -45,7 +45,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 			AppointmentData = appointmentList;
 		}
 
-		public EventStreamAggregator(EventStream<AggregateIdentifier> eventStreamOfADay, uint eventStreamLimit)
+		public EventStreamAggregator(EventStream<AggregateIdentifier> eventStreamOfADay)
 		{
 			AggregateVersion = 0;
 			var appointmentList = new List<AppointmentTransferData>(eventStreamOfADay.EventCount / 2);
@@ -53,10 +53,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 			foreach (var domainEvent in eventStreamOfADay.Events)
 			{
 				if (AggregateVersion != domainEvent.AggregateVersion)
-					throw new VersionNotApplicapleException();
-
-				if (domainEvent.AggregateVersion > eventStreamLimit)
-					break;
+					throw new VersionNotApplicapleException();				
 
 				var appointmentAddedEvent = domainEvent as AppointmentAdded;
 				if (appointmentAddedEvent != null) {
@@ -90,7 +87,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 		public IReadOnlyList<AppointmentTransferData> AppointmentData { get; } 
 		public uint AggregateVersion { get; }
 
-		private void HandleAddedEvent(AppointmentAdded addedEvent, ICollection<AppointmentTransferData> appointmentList)
+		private static void HandleAddedEvent(AppointmentAdded addedEvent, ICollection<AppointmentTransferData> appointmentList)
 		{
 			appointmentList.Add(new AppointmentTransferData(addedEvent.PatientId,
 															addedEvent.Description,
@@ -102,7 +99,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 			
 		}
 		
-		private void HandleReplacedEvent(AppointmentReplaced replacedEvent, ICollection<AppointmentTransferData> appointmentList)
+		private static void HandleReplacedEvent(AppointmentReplaced replacedEvent, ICollection<AppointmentTransferData> appointmentList)
 		{
 			var originalAppointment = appointmentList.First(appointment => appointment.Id == replacedEvent.OriginalAppointmendId);
 
@@ -116,7 +113,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 															originalAppointment.Id));			
 		}
 
-		private void HandleDeletedEvent(AppointmentDeleted deletedEvent, ICollection<AppointmentTransferData> appointmentList)
+		private static void HandleDeletedEvent(AppointmentDeleted deletedEvent, ICollection<AppointmentTransferData> appointmentList)
 		{
 			var appointmentToDelete = appointmentList.First(appointment => appointment.Id == deletedEvent.RemovedAppointmentId);
 			appointmentList.Remove(appointmentToDelete);			

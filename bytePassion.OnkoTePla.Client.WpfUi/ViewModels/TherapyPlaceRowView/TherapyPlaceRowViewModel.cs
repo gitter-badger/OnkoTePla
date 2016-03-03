@@ -51,6 +51,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 			);
 
 			appointmentModificationsVariable.StateChanged += OnAppointmentModificationsChanged;
+			OnAppointmentModificationsChanged(appointmentModificationsVariable.Value);
 
 			TimeSlotBegin = timeSlotBegin;
 			TimeSlotEnd   = timeSlotEnd;

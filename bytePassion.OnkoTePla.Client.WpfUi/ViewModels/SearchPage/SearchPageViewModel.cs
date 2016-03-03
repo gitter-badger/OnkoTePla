@@ -10,16 +10,17 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
-using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Notification;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
-using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Contracts.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using MahApps.Metro.Controls.Dialogs;
@@ -45,10 +46,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
         private readonly ISharedStateReadOnly<Patient> selectedPatientVariable;        
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly ICommandBus commandBus;
+		private readonly ICommandService commandService;		
 		private readonly IClientReadModelRepository readModelRepository;
-
-		private readonly ISession session;
+		
 		private readonly Action<string> errorCallBack;
 
 		private AppointmentsOfAPatientReadModel currentReadModel;
@@ -59,17 +59,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 								   ISharedState<Date> selectedDateVariable,
 								   ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,                                   
 								   IViewModelCommunication viewModelCommunication,
-								   ICommandBus commandBus,
-								   IClientReadModelRepository readModelRepository,
-								   ISession session,
+								   ICommandService commandService,
+								   IClientReadModelRepository readModelRepository,								   
 								   Action<string> errorCallBack)
 		{
 		    this.selectedPatientVariable = selectedPatientVariable;		    
 			this.viewModelCommunication = viewModelCommunication;
-			this.commandBus = commandBus;
+			this.commandService = commandService;			
 			this.readModelRepository = readModelRepository;
-
-			this.session = session;
+			
 			this.errorCallBack = errorCallBack;
 			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
 			this.selectedDateVariable = selectedDateVariable;
@@ -107,15 +105,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 			if (result == MessageDialogResult.Affirmative)
 			{
-//				var currentMedicalPracticeId = selectedMedicalPracticeIdVariable.Value;
-//				var readModel = dataCenter.GetAppointmentsOfADayReadModel(new AggregateIdentifier(appointment.Day, currentMedicalPracticeId));
-//
-//				dataCenter.SendCommand(new DeleteAppointment(readModel.Identifier,
-//															 readModel.AggregateVersion,
-//															 session.LoggedInUser.Id,
-//															 appointment.Patient.Id,
-//															 ActionTag.RegularAction,
-//															 appointment.Id));
+				commandService.TryDeleteAppointment(new AggregateIdentifier(appointment.Day, 
+																		    selectedMedicalPracticeIdVariable.Value), 
+																			appointment.Id, 
+																			appointment.Patient.Id, 
+																			ActionTag.RegularAction,
+																			errorMsg =>
+																			{
+																				viewModelCommunication.Send(new ShowNotification($"Termin kann nicht gelöscht werden: {errorMsg}", 5));
+																			});
 			}
 		}
 

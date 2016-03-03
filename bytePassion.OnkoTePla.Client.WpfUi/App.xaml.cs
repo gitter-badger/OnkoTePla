@@ -5,6 +5,7 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandHandler;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
@@ -33,14 +34,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
 						
-			var connectionService = new ConnectionService();
-			var workFlow          = new ClientWorkflow();			
-			var session           = new Session(connectionService, workFlow);
+			var connectionService = new ConnectionService();			
 			var eventBus          = new ClientEventBus(connectionService);
 
 			var commandHandlerCollection = new SingleHandlerCollection<DomainCommand>();
 			var commandMessageBus = new LocalMessageBus<DomainCommand>(commandHandlerCollection);
-			var commandBus = new CommandBus(commandMessageBus);
+			var commandBus = new CommandBus(commandMessageBus);			
 
 			var persistenceService = new LocalSettingsXMLPersistenceService(GlobalConstants.LocalSettingsPersistenceFile);
 			var localSettingsRepository = new LocalSettingsRepository(persistenceService);
@@ -49,7 +48,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			var clientPatientRepository          = new ClientPatientRepository(connectionService);
 			var clienttherapyPlaceTypeRepository = new ClientTherapyPlaceTypeRepository(connectionService);
 			var clientReadmodelRepository        = new ClientReadModelRepository(eventBus, clientPatientRepository,clientMedicalPracticeRepository, connectionService);
-			
+
+//			var sessionAndUserSpecificEventHistoryBuilder = new SessionAndUserSpecificEventHistoryBuilder(
+//				eventBus, commandBus, clientReadmodelRepository, clientPatientRepository, clientMedicalPracticeRepository, 
+//				errorMsg => { Current.Dispatcher.Invoke(() => { MessageBox.Show("fatal Error @ sessionAndUserSpecificEventHistory"); });
+//				}    
+//			);
+
+			var workFlow = new ClientWorkflow();
+			var session  = new Session(connectionService, workFlow);
+
+			var commandService = new CommandService(session, clientReadmodelRepository, commandBus);
+
 			// CommandHandler
 
 			var     addAppointmentCommandHandler = new     AddAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
@@ -71,7 +81,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
                                                                                         viewModelCollections);			
           
 
-            var mainWindowBuilder = new MainWindowBuilder(localSettingsRepository,clientPatientRepository,clientMedicalPracticeRepository,clienttherapyPlaceTypeRepository,clientReadmodelRepository,commandBus, 
+            var mainWindowBuilder = new MainWindowBuilder(localSettingsRepository,
+														  clientPatientRepository,
+														  clientMedicalPracticeRepository,														  
+														  clientReadmodelRepository,														  
+														  commandService,
                                                           viewModelCommunication,
 														  session,														   														 
                                                           "0.1.0.0");               // TODO: get real versionNumber       

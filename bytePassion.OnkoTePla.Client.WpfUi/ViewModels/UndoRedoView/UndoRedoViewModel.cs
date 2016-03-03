@@ -21,13 +21,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 		{
 			EditsAvailable,
 			StartOfEditMode,
-			ViewMode
+			ViewMode		
 		}
 
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
-	    private readonly ISession session;
-	   
+	    private readonly ISession session;		
+
 
 		private AppointmentModifications currentAppointmentModifications;
 		private ButtonMode currentButtonMode;
@@ -39,9 +39,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 		{
 			this.viewModelCommunication = viewModelCommunication;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;
-			this.session = session;
-			
-			
+			this.session = session;			
+
 			currentButtonMode = ButtonMode.ViewMode;
 			currentAppointmentModifications = null;
 
@@ -71,7 +70,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 			{
 				case ButtonMode.EditsAvailable:  
 				case ButtonMode.StartOfEditMode: return currentAppointmentModifications.RedoPossible;
-				case ButtonMode.ViewMode:		 return session.RedoPossible();
+				case ButtonMode.ViewMode:		 return session.RedoPossible();				
 			}
 
 			return false;
@@ -83,7 +82,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 			{
 				case ButtonMode.EditsAvailable:  
 				case ButtonMode.StartOfEditMode: return true;
-				case ButtonMode.ViewMode:		 return session.UndoPossible();
+				case ButtonMode.ViewMode:		 return session.UndoPossible();				
 			}
 
 			return false;
@@ -143,18 +142,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
                     break;
 			    }
 				case ButtonMode.ViewMode:
-			    {         
-                    var dialog = new UserDialogBox("", 
-                                                   session.GetRedoActionMessage(),
-                                                   MessageBoxButton.OKCancel);
+				{					
+					var dialog = new UserDialogBox("",
+												   session.GetCurrentRedoActionMsg(),
+												   MessageBoxButton.OKCancel);
 
-                    var result = await dialog.ShowMahAppsDialog();
+					var result = await dialog.ShowMahAppsDialog();
 
-                    if (result == MessageDialogResult.Affirmative)
-                    {
-                        session.Redo(); 
-                    }                                                                                                            
-                    break;
+					if (result == MessageDialogResult.Affirmative)
+					{
+						session.Redo();
+					}
+					
+					break;
 			    }
 			}
 		}
@@ -175,18 +175,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 			    }
 				case ButtonMode.ViewMode:
 			    {
-                    var dialog = new UserDialogBox("", 
-                                                   session.GetUndoActionMessage(),
-                                                   MessageBoxButton.OKCancel);
+					var dialog = new UserDialogBox("",
+												   session.GetCurrentUndoActionMsg(),
+												   MessageBoxButton.OKCancel);
 
-                    var result = await dialog.ShowMahAppsDialog();
+					var result = await dialog.ShowMahAppsDialog();
 
-                    if (result == MessageDialogResult.Affirmative)
-                    {
-                        session.Undo();
-                    }                        
-                    break;
-			    }
+					if (result == MessageDialogResult.Affirmative)
+					{
+						session.Undo();
+					}
+					break;
+				}
 			}
 		}
 

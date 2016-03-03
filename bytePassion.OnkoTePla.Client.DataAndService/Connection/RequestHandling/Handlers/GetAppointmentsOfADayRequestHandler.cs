@@ -14,20 +14,18 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 		private readonly Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier, uint> dataReceivedCallback;
 		private readonly ISharedState<ConnectionInfo> connectionInfoVariable;
 		private readonly Date day;
-		private readonly Guid medicalPracticeId;
-		private readonly uint aggregateVersionLimit;
+		private readonly Guid medicalPracticeId;		
 
 		public GetAppointmentsOfADayRequestHandler(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier, uint> dataReceivedCallback, 
 												   ISharedState<ConnectionInfo> connectionInfoVariable,
-												   Date day, Guid medicalPracticeId, uint aggregateVersionLimit,
+												   Date day, Guid medicalPracticeId, 
 												   Action<string> errorCallback) 
 			: base(errorCallback)
 		{
 			this.dataReceivedCallback = dataReceivedCallback;
 			this.connectionInfoVariable = connectionInfoVariable;
 			this.day = day;
-			this.medicalPracticeId = medicalPracticeId;
-			this.aggregateVersionLimit = aggregateVersionLimit;
+			this.medicalPracticeId = medicalPracticeId;			
 		}
 
 		public override void HandleRequest(RequestSocket socket)
@@ -35,8 +33,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 			HandleRequestHelper<GetAppointmentsOfADayRequest, GetAppointmentsOfADayResponse>(
 				new GetAppointmentsOfADayRequest(day, medicalPracticeId, 
 												 connectionInfoVariable.Value.SessionId, 
-												 connectionInfoVariable.Value.LoggedInUser.Id,
-												 aggregateVersionLimit),
+												 connectionInfoVariable.Value.LoggedInUser.Id),
 				socket,
 				response => dataReceivedCallback(response.AppointmentList, 
 												 new AggregateIdentifier(day, response.MedicalPracticeId, response.MedicalPracticeVersion),

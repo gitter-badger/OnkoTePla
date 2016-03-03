@@ -63,11 +63,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 
 			if (isInitial)
 			{
-				viewModelCommunication.SendTo(           //
+				viewModelCommunication.SendTo(                     //
 					Constants.AppointmentViewModelCollection,      // do nothing but
-					originalAppointmentId,				 // deleting the temporarly
-					new Dispose()                        // created Appointment
-				);                                       //
+					originalAppointmentId,                         // deleting the temporarly
+					new Dispose()                                  // created Appointment
+				);                                                 //
 			}
 			else
 			{

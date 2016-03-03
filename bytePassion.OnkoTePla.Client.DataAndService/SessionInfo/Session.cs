@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Windows;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserActions;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Contracts.Config;
 
@@ -12,7 +14,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 	public class Session : ISession
 	{
 	    private readonly IConnectionService connectionService;
-	    private readonly IClientWorkflow clientWorkflow;
+	    private readonly IClientWorkflow clientWorkflow;		
 		
 
 		private ApplicationState currentApplicationState;		    
@@ -87,6 +89,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 					{
 						LoggedInUser = user;
 						ApplyWorkflowEvent(WorkflowEvent.LoggedIn);
+
+						undoRedoService = new UndoRedoService(50);
+						undoRedoService.RedoPossibleChanged += OnUndoRedoServiceRedoPossibleChanged;
+						undoRedoService.UndoPossibleChanged += OnUndoRedoServiceUndoPossibleChanged;						
 					});
 				},
 				user,
@@ -94,7 +100,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 				errorCallback	
 			);			
 		}
+
 		
+
 		public void Logout(Action logoutSuccessful, Action<string> errorCallback)
 		{
 			connectionService.TryLogout(
@@ -102,6 +110,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 				{
 					Application.Current?.Dispatcher.Invoke(() =>
 					{
+						undoRedoService.RedoPossibleChanged -= OnUndoRedoServiceRedoPossibleChanged;
+						undoRedoService.UndoPossibleChanged -= OnUndoRedoServiceUndoPossibleChanged;
+						undoRedoService = null;
+						
 						LoggedInUser = null;
 						ApplyWorkflowEvent(WorkflowEvent.LoggedOut);
 
@@ -157,38 +169,40 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		/////////                                    undo / redo                                    ///////////
 		/////////                                                                                   ///////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
-
+		 		
+		private IUndoRedoService undoRedoService;
 
 		public event Action<bool> UndoPossibleChanged;
 		public event Action<bool> RedoPossibleChanged;
 
-		public bool UndoPossible ()
-		{
-			return false;
-		}
-
-		public void Undo ()
-		{			
-		}
-
-		public string GetUndoActionMessage ()
-		{
-			return "";
-		}
-
-		public bool RedoPossible ()
-		{
-			return false;
-		}
-
-		public void Redo ()
-		{			
-		}
-
-		public string GetRedoActionMessage ()
-		{
-			return "";
-		}
+		private void OnUndoRedoServiceUndoPossibleChanged (bool b) { UndoPossibleChanged?.Invoke(b); }		
+		private void OnUndoRedoServiceRedoPossibleChanged (bool b) { RedoPossibleChanged?.Invoke(b); }
 		
+		public bool UndoPossible () => undoRedoService != null && undoRedoService.UndoPossible;
+		public bool RedoPossible () => undoRedoService != null && undoRedoService.RedoPossible;
+
+		public void Undo () { undoRedoService?.Undo(); }
+		public void Redo () { undoRedoService?.Redo(); }
+
+		public string GetCurrentUndoActionMsg()
+		{
+			if (undoRedoService == null)
+				throw new InvalidOperationException("the undoRedoService is not initiated");
+
+			return undoRedoService.GetCurrentUndoActionMsg();
+		}				
+
+		public string GetCurrentRedoActionMsg()
+		{
+			if (undoRedoService == null)
+				throw new InvalidOperationException("the undoRedoService is not initiated");
+
+			return undoRedoService.GetCurrentRedoActionMsg();
+		}
+	
+		public void ReportUserAction(IUserAction newUserAction)
+		{
+			undoRedoService.ReportUserAction(newUserAction);
+		}
 	}
 }

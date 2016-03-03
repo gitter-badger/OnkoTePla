@@ -38,18 +38,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 		public ConnectionService()
 		{
-			
-			ConnectionStatus = ConnectionStatus.Disconnected;
-
 			connectionInfoVariable = new SharedState<ConnectionInfo>(new ConnectionInfo(null, null));
 			zmqContext = NetMQContext.Create();
 		}
-
-		public ConnectionStatus ConnectionStatus { get; private set; }
-		public Address          ServerAddress    { get; private set; }
-		public Address			ClientAddress    { get; private set; }
 		
-
+		private Address ServerAddress { get; set; }
+		private Address	ClientAddress { get; set; }
+		 
 		private bool ConnectionWasTerminated { get; set; }
 
 		private HeartbeatThead heartbeatThread;
@@ -64,8 +59,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 			ServerAddress = serverAddress;
 			ClientAddress = clientAddress;
-
-			ConnectionStatus = ConnectionStatus.TryingToConnect;
+			
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
 			
 			requestWorkQueue = new TimeoutBlockingQueue<IRequestHandler>(1000);
@@ -75,8 +69,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			requestWorkQueue.Put(new BeginConnectionRequestHandler(ConnectionBeginResponeReceived,
 																   ClientAddress.Identifier,
 																   errorMsg =>
-																   {
-																   		ConnectionStatus = ConnectionStatus.Disconnected;
+																   {																   		
 																   		ConnectionEventInvoked?.Invoke(ConnectionEvent.ConAttemptUnsuccessful);
 																   		errorCallback(errorMsg);
 																   }));								
@@ -89,8 +82,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 			ServerAddress = serverAddress;
 			ClientAddress = clientAddress;
-
-			ConnectionStatus = ConnectionStatus.TryingToConnect;
+			
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
 
 			requestWorkQueue = new TimeoutBlockingQueue<IRequestHandler>(1000);
@@ -100,16 +92,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			requestWorkQueue.Put(new BeginDebugConnectionRequestHandler(DebugConnectionBeginResponeReceived,
 																	    ClientAddress.Identifier,
 																		errorMsg =>
-																		{
-																			 ConnectionStatus = ConnectionStatus.Disconnected;
+																		{																			 
 																			 ConnectionEventInvoked?.Invoke(ConnectionEvent.ConAttemptUnsuccessful);
 																			 errorCallback(errorMsg);
 																		}));
 		}
 
 		public void TryDisconnect(Action<string> errorCallback)
-		{
-			ConnectionStatus = ConnectionStatus.TryingToDisconnect;
+		{			
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryDisconnect);
 
 			requestWorkQueue.Put(new EndConnectionRequestHandler(ConnectionEndResponseReceived,
@@ -140,16 +130,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 																  connectionInfoVariable, 																 
 																  errorCallback));
 		}
-
+		
 		public void RequestAppointmentsOfADay(Action<IReadOnlyList<AppointmentTransferData>, AggregateIdentifier, uint> dataReceivedCallback, 
-											  Date day, Guid medicalPracticeId, uint aggregateVersionLimit, 
-											  Action<string> errorCallback) 
+											  Date day, Guid medicalPracticeId, Action<string> errorCallback) 
 		{
 			requestWorkQueue.Put(new GetAppointmentsOfADayRequestHandler(dataReceivedCallback, 
 																		 connectionInfoVariable, 
 																		 day,
-																		 medicalPracticeId, 
-																		 aggregateVersionLimit,
+																		 medicalPracticeId, 																		
 																		 errorCallback));
 		}
 
@@ -213,11 +201,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			Application.Current.Dispatcher.Invoke(
 				() =>
 				{
-					ConnectionWasTerminated = true;
-					
-					ConnectionStatus = ConnectionStatus.Disconnected;
+					ConnectionWasTerminated = true;										
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.Disconnected);
-
 					CleanUpAfterDisconnection();
 				});
 		}
@@ -233,17 +218,16 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					new Thread(heartbeatThread.Run).Start();
 
 					notificationThread = new NotificationThread(zmqContext, ClientAddress, connectionSessionId);
-					notificationThread.NewDomainEventAvailable += OnNewDomainEventAvailable;
-					notificationThread.NewPatientAvailable += OnNewPatientAvailable;
-					notificationThread.UpdatedPatientAvailable += OnUpdatedPatientAvailable;
-					notificationThread.NewTherapyPlaceTypeAvailable += OnNewTherapyPlaceTypeAvailable;
+
+					notificationThread.NewDomainEventAvailable          += OnNewDomainEventAvailable;
+					notificationThread.NewPatientAvailable              += OnNewPatientAvailable;
+					notificationThread.UpdatedPatientAvailable          += OnUpdatedPatientAvailable;
+					notificationThread.NewTherapyPlaceTypeAvailable     += OnNewTherapyPlaceTypeAvailable;
 					notificationThread.UpdatedTherapyPlaceTypeAvailable += OnUpdatedTherapyPlaceTypeAvailable;
+
 					new Thread(notificationThread.Run).Start();
-
-
-					ConnectionStatus = ConnectionStatus.Connected;
+					
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
-
 				}
 			);			
 		}		
@@ -256,34 +240,32 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 
 					notificationThread = new NotificationThread(zmqContext, ClientAddress, connectionSessionId);
-					notificationThread.NewDomainEventAvailable += OnNewDomainEventAvailable;
-					notificationThread.NewPatientAvailable += OnNewPatientAvailable;
-					notificationThread.UpdatedPatientAvailable += OnUpdatedPatientAvailable;
-					notificationThread.NewTherapyPlaceTypeAvailable += OnNewTherapyPlaceTypeAvailable;
+
+					notificationThread.NewDomainEventAvailable          += OnNewDomainEventAvailable;
+					notificationThread.NewPatientAvailable              += OnNewPatientAvailable;
+					notificationThread.UpdatedPatientAvailable          += OnUpdatedPatientAvailable;
+					notificationThread.NewTherapyPlaceTypeAvailable     += OnNewTherapyPlaceTypeAvailable;
 					notificationThread.UpdatedTherapyPlaceTypeAvailable += OnUpdatedTherapyPlaceTypeAvailable;
+
 					new Thread(notificationThread.Run).Start();
-
-
-					ConnectionStatus = ConnectionStatus.Connected;
+					
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
-
 				}
-				);
+			);
 		}
 		private void OnServerVanished()
 		{
 			if (heartbeatThread != null)
 				heartbeatThread.ServerVanished -= OnServerVanished;
 
-			notificationThread.NewDomainEventAvailable -= OnNewDomainEventAvailable;
-			notificationThread.NewPatientAvailable -= OnNewPatientAvailable;
-			notificationThread.UpdatedPatientAvailable -= OnUpdatedPatientAvailable;
-			notificationThread.NewTherapyPlaceTypeAvailable -= OnNewTherapyPlaceTypeAvailable;
+			notificationThread.NewDomainEventAvailable          -= OnNewDomainEventAvailable;
+			notificationThread.NewPatientAvailable              -= OnNewPatientAvailable;
+			notificationThread.UpdatedPatientAvailable          -= OnUpdatedPatientAvailable;
+			notificationThread.NewTherapyPlaceTypeAvailable     -= OnNewTherapyPlaceTypeAvailable;
 			notificationThread.UpdatedTherapyPlaceTypeAvailable -= OnUpdatedTherapyPlaceTypeAvailable;
 
 			if (!ConnectionWasTerminated)
-			{
-				ConnectionStatus = ConnectionStatus.Disconnected;
+			{				
 				ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost);
 
 				CleanUpAfterDisconnection();

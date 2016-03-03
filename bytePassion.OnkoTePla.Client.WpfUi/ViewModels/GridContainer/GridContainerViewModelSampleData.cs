@@ -1,14 +1,14 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.Types.SemanticTypes;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using bytePassion.Lib.Types.SemanticTypes;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 {
-    internal class GridContainerViewModelSampleData : IGridContainerViewModel 
+	internal class GridContainerViewModelSampleData : IGridContainerViewModel 
 	{
 		public GridContainerViewModelSampleData()
 		{
@@ -24,9 +24,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 
 		public Size ReportedGridSize { set { } }
 
-		public IViewModelCommunication ViewModelCommunication { get; } = null;
-		
-	    public void Dispose() {	}
+		public void Process (AsureDayIsLoaded message) { }
+
+		public void Dispose() {	}
         public event PropertyChangedEventHandler PropertyChanged;
-    }
+		
+	}
 }

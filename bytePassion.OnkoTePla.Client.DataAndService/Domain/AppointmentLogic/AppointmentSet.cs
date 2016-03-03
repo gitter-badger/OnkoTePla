@@ -93,5 +93,5 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic
 
 			ObservableAppointments.ReplaceAppointment(updatedAppointment);
 		}
-	}	
+	}
 }

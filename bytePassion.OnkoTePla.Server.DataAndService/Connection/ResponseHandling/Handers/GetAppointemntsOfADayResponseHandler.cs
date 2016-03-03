@@ -26,7 +26,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 				return;
 
 			var eventStream = dataCenter.GetEventStreamForADay(new AggregateIdentifier(request.Day, request.MedicalPracticeId));
-			var eventStreamAggregator = new EventStreamAggregator(eventStream, request.AggregateVersionLimit);
+			var eventStreamAggregator = new EventStreamAggregator(eventStream);
 			
 			Socket.SendNetworkMsg(
 				new GetAppointmentsOfADayResponse(eventStream.Id.MedicalPracticeId,
