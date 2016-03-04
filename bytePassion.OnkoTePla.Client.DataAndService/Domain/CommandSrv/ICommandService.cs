@@ -13,9 +13,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 
 		
 		void TryReplaceAppointment(AggregateIdentifier sourceLocation, AggregateIdentifier destinationLocation,
-								   Guid patientId, string newDescription, Date newDate, Time newBeginTime,
-								   Time newEndTime, Guid newTherapyplaceId, Guid originalAppointmentId, 
-								   Date originalDate, ActionTag actionTag,
+								   Guid patientId,
+								   string originalDescription, string newDescription,
+								   Date   originalDate,          Date newDate,
+								   Time   originalStartTime,     Time newStartTime,
+								   Time   originalEndTime,       Time newEndTime,
+								   Guid   originalTherapyPlaceId,Guid newTherapyPlaceId,
+								   Guid   originalAppointmendId,
+								   ActionTag actionTag,
 								   Action<string> errorCallback);
 		
 		void TryDeleteAppointment(AggregateIdentifier location, Guid patientId,

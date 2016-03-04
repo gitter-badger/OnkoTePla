@@ -13,10 +13,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands
 								   uint sourceAggregateVersion, 
 								   uint destinationAggregateVersion,
 								   Guid userId, Guid patientId, ActionTag actionTag,
-								   string newDescription, Date newDate, 
-								   Time newStartTime, Time newEndTime, 
-								   Guid newTherapyPlaceId, 
-								   Guid originalAppointmendId, Date originalDate)
+
+								   string originalDescription, string newDescription,
+								   Date   originalDate,          Date newDate,
+								   Time   originalStartTime,     Time newStartTime,
+								   Time   originalEndTime,       Time newEndTime,
+								   Guid   originalTherapyPlaceId,Guid newTherapyPlaceId, 
+								   Guid   originalAppointmendId)
+
 			: base(userId, patientId, actionTag)
 		{
 			SourceAggregateId = sourceAggregateId;
@@ -30,6 +34,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands
 			NewTherapyPlaceId = newTherapyPlaceId;
 			OriginalAppointmendId = originalAppointmendId;
 			OriginalDate = originalDate;
+			OriginalDescription = originalDescription;
+			OriginalStartTime = originalStartTime;
+			OriginalEndTime = originalEndTime;
+			OriginalTherapyPlaceId = originalTherapyPlaceId;
 		}
 
 		public AggregateIdentifier SourceAggregateId      { get; }
@@ -38,13 +46,18 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands
 		public uint SourceAggregateVersion      { get; }
 		public uint DestinationAggregateVersion { get; }
 
-		public string NewDescription        { get; }
-		public Date   NewDate               { get; }
-		public Time   NewStartTime          { get; }
-		public Time   NewEndTime            { get; }
-		public Guid   NewTherapyPlaceId     { get; }
-		public Guid   OriginalAppointmendId { get; }
-		public Date   OriginalDate          { get; }
-		
+		public string OriginalDescription    { get; }
+		public Date   OriginalDate           { get; }
+		public Time   OriginalStartTime      { get; }
+		public Time   OriginalEndTime        { get; }
+		public Guid   OriginalTherapyPlaceId { get; }
+		public Guid   OriginalAppointmendId  { get; }
+
+		public string NewDescription         { get; }		
+		public Date   NewDate                { get; }		
+		public Time   NewStartTime           { get; }		
+		public Time   NewEndTime             { get; }		
+		public Guid   NewTherapyPlaceId      { get; }
+						
 	}
 }

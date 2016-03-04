@@ -80,25 +80,46 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 
 
 		public void TryReplaceAppointment(AggregateIdentifier sourceLocation, AggregateIdentifier destinationLocation, 
-										  Guid patientId, string newDescription, Date newDate, Time newBeginTime, 
-										  Time newEndTime, Guid newTherapyplaceId, Guid originalAppointmentId, 
-										  Date originalDate, ActionTag actionTag, 
+										  Guid patientId, 
+										  string originalDescription, string newDescription,
+										  Date   originalDate,          Date newDate,
+										  Time   originalStartTime,     Time newStartTime,
+										  Time   originalEndTime,       Time newEndTime,
+										  Guid   originalTherapyPlaceId,Guid newTherapyPlaceId,
+										  Guid   originalAppointmendId,
+										  ActionTag actionTag, 
 										  Action<string> errorCallback)
 		{
 			if (sourceLocation == destinationLocation)
-				TryReplaceAppointmentWithinDay(sourceLocation, patientId, newDescription, newDate,newBeginTime, newEndTime, 
-											   newTherapyplaceId, originalAppointmentId, actionTag, errorCallback);
+				TryReplaceAppointmentWithinDay(sourceLocation, patientId, 
+											   originalDescription, newDescription,
+											   originalDate,
+											   originalStartTime, newStartTime,
+											   originalEndTime, newEndTime,
+											   originalTherapyPlaceId, newTherapyPlaceId,
+											   originalAppointmendId,
+											   actionTag, errorCallback);
 			else
 			{
-				TryReplaceAppointmentBetweenDays(sourceLocation, destinationLocation, patientId, newDescription, newDate, 
-												 newBeginTime, newEndTime, newTherapyplaceId, originalAppointmentId, 
-												 originalDate, actionTag, errorCallback);
+				TryReplaceAppointmentBetweenDays(sourceLocation, destinationLocation, patientId,
+												 originalDescription, newDescription,
+											     originalDate, newDate,
+											     originalStartTime, newStartTime,
+											     originalEndTime, newEndTime,
+											     originalTherapyPlaceId, newTherapyPlaceId,
+											     originalAppointmendId,
+												 actionTag, errorCallback);
 			}			
 		}		
 
-		private void TryReplaceAppointmentWithinDay(AggregateIdentifier location, Guid patientId, string newDescription, 
-													Date newDate, Time newBeginTime, Time newEndTime, Guid newTherapyplaceId, 
-													Guid originalAppointmentId, ActionTag actionTag,
+		private void TryReplaceAppointmentWithinDay(AggregateIdentifier location, Guid patientId,
+													string originalDescription,  string newDescription,
+													Date   date,
+													Time   originalStartTime,      Time newStartTime,
+													Time   originalEndTime,        Time newEndTime,
+													Guid   originalTherapyPlaceId, Guid newTherapyPlaceId,
+													Guid   originalAppointmendId,
+													ActionTag actionTag,
 													Action<string> errorCallback)
 		{
 			RequestLock(
@@ -107,8 +128,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 					readModelRepository.RequestAppointmentSetOfADay(
 						appointmentSet =>
 						{
-							if (!ReplacementIsPossible(location, location, newDate, newBeginTime, newEndTime, newTherapyplaceId, 
-													   originalAppointmentId, newDate, appointmentSet, appointmentSet))
+							if (!ReplacementIsPossible(location, location, date, newStartTime, newEndTime, newTherapyPlaceId,
+													   originalAppointmendId, date, appointmentSet, appointmentSet))
 							{
 								errorCallback("termin kann aufgrund von konflikten nicht verschoben werden");
 								ReleaseAllLocks();
@@ -122,13 +143,17 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																		  session.LoggedInUser.Id, 
 																		  patientId, 
 																		  actionTag, 
+																		  originalDescription,
 																		  newDescription, 
-																		  newDate, 
-																		  newBeginTime, 
-																		  newEndTime, 
-																		  newTherapyplaceId, 
-																		  originalAppointmentId, 
-																		  newDate));
+																		  date, 
+																		  date,
+																		  originalStartTime,
+																		  newStartTime,
+																		  originalEndTime,
+																		  newEndTime,
+																		  originalTherapyPlaceId,
+																		  newTherapyPlaceId,
+																		  originalAppointmendId));
 
 							ReleaseAllLocks();
 						},
@@ -142,9 +167,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 		}
 
 		private void TryReplaceAppointmentBetweenDays(AggregateIdentifier sourceLocation, AggregateIdentifier destinationLocation,
-													  Guid patientId, string newDescription, Date newDate, Time newBeginTime,
-													  Time newEndTime, Guid newTherapyplaceId, Guid originalAppointmentId,
-													  Date originalDate, ActionTag actionTag,
+													  Guid patientId,
+													  string originalDescription, string newDescription,
+													  Date originalDate, Date newDate,
+													  Time originalStartTime, Time newStartTime,
+													  Time originalEndTime, Time newEndTime,
+													  Guid originalTherapyPlaceId, Guid newTherapyPlaceId,
+													  Guid originalAppointmendId,
+													  ActionTag actionTag,
 													  Action<string> errorCallback)
 		{
 			RequestLock(
@@ -161,8 +191,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 										destinationAppointmentSet =>
 										{
 
-											if (!ReplacementIsPossible(sourceLocation, destinationLocation, newDate, newBeginTime, newEndTime, 
-												newTherapyplaceId, originalAppointmentId, newDate, sourceAppointmentSet, destinationAppointmentSet))
+											if (!ReplacementIsPossible(sourceLocation, destinationLocation, newDate, newStartTime, newEndTime, newTherapyPlaceId,
+																	   originalAppointmendId, originalDate, sourceAppointmentSet, destinationAppointmentSet))
 											{
 												errorCallback("termin kann aufgrund von konflikten nicht verschoben werden");
 												ReleaseAllLocks();
@@ -176,13 +206,17 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																						  session.LoggedInUser.Id,
 																						  patientId,
 																						  actionTag,
+																						  originalDescription,
 																						  newDescription,
+																						  originalDate,
 																						  newDate,
-																						  newBeginTime,
+																						  originalStartTime,
+																						  newStartTime,
+																						  originalEndTime,
 																						  newEndTime,
-																						  newTherapyplaceId,
-																						  originalAppointmentId,
-																						  originalDate));
+																						  originalTherapyPlaceId,
+																						  newTherapyPlaceId,
+																						  originalAppointmendId));
 
 											ReleaseAllLocks();
 

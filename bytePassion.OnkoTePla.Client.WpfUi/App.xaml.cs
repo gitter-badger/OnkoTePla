@@ -61,9 +61,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 
 			// CommandHandler
 
-			var     addAppointmentCommandHandler = new     AddAppointmentCommandHandler(connectionService, session, clientPatientRepository, userActionBuilder, CommandHandlerErrorHandler);
-			var  deleteAppointmentCommandHandler = new  DeleteAppointmentCommandHandler(connectionService, session, clientPatientRepository, userActionBuilder, CommandHandlerErrorHandler);
-			var replaceAppointmentCommandHandler = new ReplaceAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
+			var     addAppointmentCommandHandler = new     AddAppointmentCommandHandler(connectionService, session, clientPatientRepository,                                  userActionBuilder, CommandHandlerErrorHandler);
+			var  deleteAppointmentCommandHandler = new  DeleteAppointmentCommandHandler(connectionService, session, clientPatientRepository,                                  userActionBuilder, CommandHandlerErrorHandler);
+			var replaceAppointmentCommandHandler = new ReplaceAppointmentCommandHandler(connectionService, session, clientPatientRepository, clientMedicalPracticeRepository, userActionBuilder, CommandHandlerErrorHandler);
 
 			commandBus.RegisterCommandHandler(    addAppointmentCommandHandler);
 			commandBus.RegisterCommandHandler( deleteAppointmentCommandHandler);

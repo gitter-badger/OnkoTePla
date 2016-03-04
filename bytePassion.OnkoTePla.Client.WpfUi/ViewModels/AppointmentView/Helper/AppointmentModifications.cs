@@ -278,10 +278,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 						}
 						else
 						{
-							viewModelCommunication.Send(
-								new ShowNotification("cannot move an OriginalAppointment to a day where the practice is closed!", 5)
-							);
-
+							Application.Current.Dispatcher.Invoke(() =>
+							{
+								viewModelCommunication.Send(
+									new ShowNotification("cannot move an OriginalAppointment to a day where the practice is closed!", 5)
+								);
+							});
+								
 							selectedDateVariable.Value = CurrentLocation.PlaceAndDate.Date;
 						}						
 					},
