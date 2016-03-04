@@ -10,6 +10,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
+using Size = bytePassion.Lib.Types.SemanticTypes.Size;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
@@ -26,6 +27,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
         private bool isLoginViewVisible;
         private bool isDisabledOverlayVisible;
 
+		private Size lastGridSize;
 
         public MainWindowViewModel(IMainViewModelBuilder mainViewModelBuilder, 
                                    ILoginViewModelBuilder loginViewModelBuilder,
@@ -59,7 +61,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 							{
 								MessageBox.Show("fatal error 2222");
 							});
-						}							
+						}, 
+						lastGridSize							
 					);
 
 					IsMainViewVisible = true;
@@ -72,6 +75,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 				{
 					if (MainViewModel != null)
 					{
+						lastGridSize = mainViewModelBuilder.GetCurrentGridSize();
+
 						mainViewModelBuilder.DisposeViewModel(MainViewModel);
 						MainViewModel = null;						
 

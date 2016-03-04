@@ -57,7 +57,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
 		private ConfirmChangesMessageHandler confirmChangesMessageHandler;
 		private RejectChangesMessageHandler rejectChangesMessageHandler;
-		
+
+		private SharedState<Size> gridSizeVariable; 
+
 		public MainViewModelBuilder(IClientMedicalPracticeRepository medicalPracticeRepository,
 									IClientReadModelRepository readModelRepository,
 									IClientPatientRepository patientRepository,									
@@ -79,7 +81,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
 
 
-        public IMainViewModel Build(Action<string> errorCallback) 
+        public IMainViewModel Build(Action<string> errorCallback, Size initialSize = null) 
         {            
             // Register Global ViewModelVariables
 
@@ -92,7 +94,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 		        lastUsedMedicalPracticeId = session.LoggedInUser.ListOfAccessablePractices.First();
 	        }
 	       			    
-            var gridSizeVariable                  = new SharedState<Size>(new Size(new Width(400), new Height(400)));
+                gridSizeVariable                  = new SharedState<Size>(initialSize ?? new Size(new Width(400), new Height(400)));
             var selectedDateVariable              = new SharedState<Date>(firstDispayedDate);    
             var selectedMedicalPracticeIdVariable = new SharedState<Guid>(lastUsedMedicalPracticeId);
             var roomFilterVariable                = new SharedState<Guid?>();
@@ -276,6 +278,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 			changeConfirmationViewModel.Dispose();
 			undoRedoViewModel.Dispose();
 
+		}
+
+		public Size GetCurrentGridSize()
+		{
+			return gridSizeVariable?.Value;
 		}
     }
 }
