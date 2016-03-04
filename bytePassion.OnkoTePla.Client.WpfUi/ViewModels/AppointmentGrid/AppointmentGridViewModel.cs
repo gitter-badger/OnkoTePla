@@ -19,6 +19,7 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using AppointmentsOfADayReadModel = bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.AppointmentsOfADayReadModel;
+using Size = bytePassion.Lib.Types.SemanticTypes.Size;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 {

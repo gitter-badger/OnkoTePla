@@ -13,6 +13,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Contracts.Domain;
+using Size = bytePassion.Lib.Types.SemanticTypes.Size;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
@@ -88,7 +89,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 			private set { PropertyChanged.ChangeAndNotify(this, ref currentDisplayedAppointmentGridIndex, value); }
 		}
 
-		public Lib.Types.SemanticTypes.Size ReportedGridSize
+		public Size ReportedGridSize
 		{
 			set
 			{

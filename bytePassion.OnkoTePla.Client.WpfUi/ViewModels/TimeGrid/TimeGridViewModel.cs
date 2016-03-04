@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid.Helper;
@@ -169,7 +169,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 			}
 		}
 
-		private static GridViewDivisionState GetDevisionForWidth (double width)
+		private static GridViewDivisionState GetDevisionForWidth (Width width)
 		{ 
 			if (width < Constants.ThresholdGridWidthHoursToTwoHours)         return GridViewDivisionState.TwoHours;
 			if (width < Constants.ThresholdGridWidthHalfHoursToHours)        return GridViewDivisionState.Hours;

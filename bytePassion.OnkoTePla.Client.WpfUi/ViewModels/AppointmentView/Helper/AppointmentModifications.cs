@@ -7,6 +7,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
@@ -16,6 +17,7 @@ using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using Duration = bytePassion.Lib.TimeLib.Duration;
+using Size = bytePassion.Lib.Types.SemanticTypes.Size;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 {
@@ -69,7 +71,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 		private Time currentSlotEnd;
 
 		private ClientMedicalPracticeData currentMedicalPracticeVersion;
-		private double currentGridWidth;				
+		private Width currentGridWidth;				
 		private TherapyPlaceRowIdentifier currentLocation;
 		private string description;
 
@@ -333,9 +335,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 			var appointmentDuration = new Duration(newBeginTime, newEndTime);
 			var finalEndTime = GetTimeToSnap(finalBeginTime + appointmentDuration);
 
-			if (newLocation != CurrentLocation ||
+			if (newLocation    != CurrentLocation ||
 			    finalBeginTime != lastSetBeginTime ||
-			    finalEndTime != lastSetEndTime)
+			    finalEndTime   != lastSetEndTime)
 			{
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               finalEndTime,

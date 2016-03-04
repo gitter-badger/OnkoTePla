@@ -5,6 +5,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
@@ -20,7 +21,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 											  ITherapyPlaceRowViewModel
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
-		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
+		private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
 		
 
 		private double gridWidth;
@@ -34,7 +35,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 										AdornerControl adornerControl,
 										Time timeSlotBegin,
 										Time timeSlotEnd,
-										ISharedState<AppointmentModifications> appointmentModificationsVariable)
+										ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
+										Width initialGridWidth)
 		{
 			this.viewModelCommunication = viewModelCommunication;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;						
@@ -56,7 +58,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 			TimeSlotBegin = timeSlotBegin;
 			TimeSlotEnd   = timeSlotEnd;
 
-			AdornerControl = adornerControl;			
+			AdornerControl = adornerControl;
+
+			GridWidth = initialGridWidth;
 		}
 		
 

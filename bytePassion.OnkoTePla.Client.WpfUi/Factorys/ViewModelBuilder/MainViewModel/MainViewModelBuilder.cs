@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
@@ -92,7 +92,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 		        lastUsedMedicalPracticeId = session.LoggedInUser.ListOfAccessablePractices.First();
 	        }
 	       			    
-            var gridSizeVariable                  = new SharedState<Size>(new Size(400, 400));
+            var gridSizeVariable                  = new SharedState<Size>(new Size(new Width(400), new Height(400)));
             var selectedDateVariable              = new SharedState<Date>(firstDispayedDate);    
             var selectedMedicalPracticeIdVariable = new SharedState<Guid>(lastUsedMedicalPracticeId);
             var roomFilterVariable                = new SharedState<Guid?>();
@@ -137,7 +137,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             var therapyPlaceRowViewModelBuilder = new TherapyPlaceRowViewModelBuilder(viewModelCommunication,
                                                                                       medicalPracticeRepository,
                                                                                       adornerControl,
-                                                                                      appointmentModificationsVariable);
+                                                                                      appointmentModificationsVariable,
+																					  gridSizeVariable);
 
             var appointmentGridViewModelBuilder = new AppointmentGridViewModelBuilder(medicalPracticeRepository,
 																					  readModelRepository,

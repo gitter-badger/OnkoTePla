@@ -1,6 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
@@ -16,18 +17,21 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPl
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
 		private readonly AdornerControl adornerControl;
-		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;		
+		private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
+		private readonly ISharedStateReadOnly<Size> appointmentGridSizeVariable;
 
 		public TherapyPlaceRowViewModelBuilder(IViewModelCommunication viewModelCommunication,
 											   IClientMedicalPracticeRepository medicalPracticeRepository, 
 											   AdornerControl adornerControl, 
-											   ISharedState<AppointmentModifications> appointmentModificationsVariable)
+											   ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
+											   ISharedStateReadOnly<Size> appointmentGridSizeVariable)
 		{
 			this.viewModelCommunication = viewModelCommunication;
 			this.medicalPracticeRepository = medicalPracticeRepository;
 
 			this.adornerControl = adornerControl;
-			this.appointmentModificationsVariable = appointmentModificationsVariable;		
+			this.appointmentModificationsVariable = appointmentModificationsVariable;
+			this.appointmentGridSizeVariable = appointmentGridSizeVariable;
 		}		
 		
 		public void RequestBuild(Action<ITherapyPlaceRowViewModel> viewModelAvailable, 
@@ -47,7 +51,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPl
 																					adornerControl,
 																					hoursOfOpeing.GetOpeningTime(location.PlaceAndDate.Date),
 																					hoursOfOpeing.GetClosingTime(location.PlaceAndDate.Date),
-																					appointmentModificationsVariable)
+																					appointmentModificationsVariable,
+																					appointmentGridSizeVariable.Value.Width)
 					);					
 				},
 				location.PlaceAndDate.MedicalPracticeId,
