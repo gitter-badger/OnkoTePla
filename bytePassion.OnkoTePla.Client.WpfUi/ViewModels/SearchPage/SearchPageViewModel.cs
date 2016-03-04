@@ -106,14 +106,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 			if (result == MessageDialogResult.Affirmative)
 			{
 				commandService.TryDeleteAppointment(new AggregateIdentifier(appointment.Day, 
-																		    selectedMedicalPracticeIdVariable.Value), 
-																			appointment.Id, 
-																			appointment.Patient.Id, 
-																			ActionTag.RegularAction,
-																			errorMsg =>
-																			{
-																				viewModelCommunication.Send(new ShowNotification($"Termin kann nicht gelöscht werden: {errorMsg}", 5));
-																			});
+																		    selectedMedicalPracticeIdVariable.Value),
+																			appointment.Patient.Id,
+													appointment.Id,
+													appointment.Description,
+													appointment.StartTime,
+													appointment.EndTime,
+													appointment.TherapyPlace.Id,
+													ActionTag.RegularAction,
+													errorMsg =>
+													{
+														viewModelCommunication.Send(new ShowNotification($"Termin kann nicht gelöscht werden: {errorMsg}", 5));
+													});
 			}
 		}
 

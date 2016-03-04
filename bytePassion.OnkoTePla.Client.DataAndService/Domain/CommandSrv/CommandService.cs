@@ -217,8 +217,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 			return true;
 		}
 
-		public void TryDeleteAppointment (AggregateIdentifier location, Guid appointmentId, Guid patientId,
-										 ActionTag actionTag, Action<string> errorCallback)
+
+		public void TryDeleteAppointment (AggregateIdentifier location, Guid patientId, Guid removedAppointmentId,
+										  string removedAppointmentDescription, Time removedAppointmentStartTime, Time removedAppointmentEndTime,
+										  Guid removedAppointmentTherapyPlaceId, ActionTag actionTag, Action<string> errorCallback)
 		{
 			RequestLock(
 				() =>
@@ -226,19 +228,23 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 					readModelRepository.RequestAppointmentSetOfADay(
 						appointmentSet =>
 						{
-							if (!DeletionPossible(appointmentId, appointmentSet))
+							if (!DeletionPossible(removedAppointmentId, appointmentSet))
 							{
 								errorCallback("termin kann nicht gelöscht werden, da nicht vorhanden");
 								ReleaseAllLocks();
 								return;
 							}
-							
-							commandBus.SendCommand(new DeleteAppointment(location, 
-																		 appointmentSet.AggregateVersion, 
-																		 session.LoggedInUser.Id, 
+
+							commandBus.SendCommand(new DeleteAppointment(location,
+																		 appointmentSet.AggregateVersion,
+																		 session.LoggedInUser.Id,
 																		 patientId,
 																		 actionTag,
-							                                             appointmentId));
+																		 removedAppointmentId,
+																		 removedAppointmentDescription,
+																		 removedAppointmentStartTime,
+																		 removedAppointmentEndTime,
+																		 removedAppointmentTherapyPlaceId));
 							ReleaseAllLocks();
 						},
 						location,
@@ -249,6 +255,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 				location.Date
 			);
 		}
+		
 
 		private static bool DeletionPossible(Guid appointmentId, FixedAppointmentSet appointmentSet)
 		{

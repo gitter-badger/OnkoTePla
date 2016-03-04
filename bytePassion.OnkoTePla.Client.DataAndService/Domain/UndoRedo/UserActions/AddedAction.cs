@@ -25,8 +25,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserAction
 		public void Undo(Action<string> errorCallback)
 		{
 			commandService.TryDeleteAppointment(addAppointmentCommand.AggregateId,
+												patient.Id,
 												addAppointmentCommand.AppointmentId,
-												addAppointmentCommand.PatientId,
+												addAppointmentCommand.Description,
+												addAppointmentCommand.StartTime,
+												addAppointmentCommand.EndTime,
+												addAppointmentCommand.TherapyPlaceId,
 												ActionTag.UndoAction, 
 												errorCallback);
 		}

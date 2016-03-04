@@ -95,9 +95,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				    {
 						appointmentModificationsVariable.Value = null;
 
-						commandService.TryDeleteAppointment(currentLocation.PlaceAndDate, 
-															Identifier, 
-															appointment.Patient.Id, 
+						commandService.TryDeleteAppointment(currentLocation.PlaceAndDate, 															
+															appointment.Patient.Id,
+															appointment.Id,
+															appointment.Description,
+															appointment.StartTime,
+															appointment.EndTime,
+															appointment.TherapyPlace.Id, 
 															ActionTag.RegularAction,
 															errorMsg =>
 															{

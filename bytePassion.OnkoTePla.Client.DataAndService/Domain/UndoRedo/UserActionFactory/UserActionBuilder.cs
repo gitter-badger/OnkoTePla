@@ -18,5 +18,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserAction
 		{
 			return new AddedAction(commandService, command, patient);
 		}
+
+		public DeletedAction BuildDeletedAction(DeleteAppointment command, Patient patient)
+		{
+			return new DeletedAction(commandService, command, patient);
+		}
 	}
 }

@@ -1,31 +1,67 @@
 using System;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
+using bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.Helper;
+using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
+using bytePassion.OnkoTePla.Contracts.Patients;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserActions
 {
 	public class DeletedAction : IUserAction
 	{
-		public DeletedAction ()			
+		private readonly ICommandService commandService;
+		private readonly DeleteAppointment deleteAppointmentCommand;
+		private readonly Patient patient;
+
+		public DeletedAction (ICommandService commandService,
+							  DeleteAppointment deleteAppointmentCommand,
+							  Patient patient)
 		{
+			this.commandService = commandService;
+			this.deleteAppointmentCommand = deleteAppointmentCommand;
+			this.patient = patient;
 		}
-		
+
 		public void Undo(Action<string> errorCallback)
 		{
-			throw new NotImplementedException();
+			commandService.TryAddNewAppointment(deleteAppointmentCommand.AggregateId,
+												deleteAppointmentCommand.PatientId,
+												deleteAppointmentCommand.RemovedAppointmentDescription,
+												deleteAppointmentCommand.RemovedAppointmentStartTime,
+												deleteAppointmentCommand.RemovedAppointmentEndTime,
+												deleteAppointmentCommand.RemovedAppointmentTherapyPlaceId,
+												deleteAppointmentCommand.RemovedAppointmentId,
+												ActionTag.UndoAction,
+												errorCallback);
 		}
 
 		public void Redo(Action<string> errorCallback)
 		{
-			throw new NotImplementedException();
+			commandService.TryDeleteAppointment(deleteAppointmentCommand.AggregateId,
+												deleteAppointmentCommand.PatientId,
+												deleteAppointmentCommand.RemovedAppointmentId,
+												deleteAppointmentCommand.RemovedAppointmentDescription,
+												deleteAppointmentCommand.RemovedAppointmentStartTime,
+												deleteAppointmentCommand.RemovedAppointmentEndTime,
+												deleteAppointmentCommand.RemovedAppointmentTherapyPlaceId,												
+												ActionTag.RedoAction,
+												errorCallback);
 		}
-
+		
 		public string GetUndoMsg ()
 		{
-			throw new System.NotImplementedException();
+			return UndoStringGenerator.ForDeletedEvent(patient, 
+													   deleteAppointmentCommand.AggregateId.Date,
+													   deleteAppointmentCommand.RemovedAppointmentStartTime,
+													   deleteAppointmentCommand.RemovedAppointmentEndTime);
 		}
 
 		public string GetRedoMsg ()
 		{
-			throw new System.NotImplementedException();
+			return RedoStringGenerator.ForDeletedEvent(patient,
+													   deleteAppointmentCommand.AggregateId.Date,
+													   deleteAppointmentCommand.RemovedAppointmentStartTime,
+													   deleteAppointmentCommand.RemovedAppointmentEndTime);
 		}
 	}
 }

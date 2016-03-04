@@ -18,7 +18,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 								   Date originalDate, ActionTag actionTag,
 								   Action<string> errorCallback);
 		
-		void TryDeleteAppointment(AggregateIdentifier location, Guid appointmentId, Guid patientId, 
+		void TryDeleteAppointment(AggregateIdentifier location, Guid patientId,
+								  Guid removedAppointmentId, string removedAppointmentDescription,
+								  Time removedAppointmentStartTime, Time removedAppointmentEndTime,
+								  Guid removedAppointmentTherapyPlaceId,
 								  ActionTag actionTag, Action<string> errorCallback);
 	}
 }

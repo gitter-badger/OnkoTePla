@@ -50,11 +50,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			var clienttherapyPlaceTypeRepository = new ClientTherapyPlaceTypeRepository(connectionService);
 			var clientReadmodelRepository        = new ClientReadModelRepository(eventBus, clientPatientRepository,clientMedicalPracticeRepository, connectionService);
 
-//			var sessionAndUserSpecificEventHistoryBuilder = new SessionAndUserSpecificEventHistoryBuilder(
-//				eventBus, commandBus, clientReadmodelRepository, clientPatientRepository, clientMedicalPracticeRepository, 
-//				errorMsg => { Current.Dispatcher.Invoke(() => { MessageBox.Show("fatal Error @ sessionAndUserSpecificEventHistory"); });
-//				}    
-//			);
 
 			var workFlow = new ClientWorkflow();
 			var session  = new Session(connectionService, workFlow);
@@ -67,7 +62,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			// CommandHandler
 
 			var     addAppointmentCommandHandler = new     AddAppointmentCommandHandler(connectionService, session, clientPatientRepository, userActionBuilder, CommandHandlerErrorHandler);
-			var  deleteAppointmentCommandHandler = new  DeleteAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
+			var  deleteAppointmentCommandHandler = new  DeleteAppointmentCommandHandler(connectionService, session, clientPatientRepository, userActionBuilder, CommandHandlerErrorHandler);
 			var replaceAppointmentCommandHandler = new ReplaceAppointmentCommandHandler(connectionService, session, CommandHandlerErrorHandler);
 
 			commandBus.RegisterCommandHandler(    addAppointmentCommandHandler);

@@ -6,6 +6,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserAction
 {
 	public interface IUserActionBuilder
 	{
-		AddedAction BuildAddedAction(AddAppointment command, Patient patient);		
+		AddedAction   BuildAddedAction  (AddAppointment    command, Patient patient);
+		DeletedAction BuildDeletedAction(DeleteAppointment command, Patient patient);
 	}
 }
