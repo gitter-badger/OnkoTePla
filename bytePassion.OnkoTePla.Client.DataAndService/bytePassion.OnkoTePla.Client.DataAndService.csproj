@@ -109,7 +109,6 @@
     <Compile Include="Domain\UndoRedo\UserActions\AddedAction.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\DeletedAction.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\ReplacedAction.cs" />
-    <Compile Include="_depricated\SessionAndUserSpecificEventHistory.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\IUserAction.cs" />
     <Compile Include="Repositories\LocalSettings\ILocalSettingsRepository.cs" />
     <Compile Include="Repositories\LocalSettings\LocalSettingsData.cs" />
