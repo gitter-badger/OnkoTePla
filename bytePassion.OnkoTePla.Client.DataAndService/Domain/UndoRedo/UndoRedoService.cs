@@ -69,6 +69,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 
 			currentActionPointer.Value.Undo(errorCallback);			// TODO: restart History on error
 			currentActionPointer = currentActionPointer.Previous;
+
+			CheckIfUndoAndRedoIsPossible();
 		}
 
 		public void Redo (Action<string> errorCallback)
@@ -78,6 +80,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 
 			currentActionPointer.Next.Value.Redo(errorCallback);    // TODO: restart History on error
 			currentActionPointer = currentActionPointer.Next;
+
+			CheckIfUndoAndRedoIsPossible();
 		}
 
 		public string GetCurrentUndoActionMsg()
@@ -93,7 +97,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 			if (!RedoPossible)
 				throw new InvalidOperationException("redo impossible");
 
-			return currentActionPointer.Value.GetRedoMsg();
+			return currentActionPointer.Next.Value.GetRedoMsg();
 		}
 		
 		public void ReportUserAction(IUserAction newUserAction)
