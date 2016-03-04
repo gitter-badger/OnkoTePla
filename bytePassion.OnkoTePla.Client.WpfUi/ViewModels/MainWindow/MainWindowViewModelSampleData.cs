@@ -4,6 +4,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
 using System.ComponentModel;
+using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 
 #pragma warning disable 0067
 
@@ -28,6 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
         public bool IsMainViewVisible { get; }
         public bool IsLoginViewVisible { get; }
         public bool IsDisabledOverlayVisible { get; }
+        public ISession Session { get; }
 
         public ILoginViewModel LoginViewModel { get; }
         public IActionBarViewModel ActionBarViewModel { get; }

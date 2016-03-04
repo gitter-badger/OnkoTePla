@@ -35,7 +35,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
                                    IActionBarViewModel actionBarViewModel,
 								   ISession session)
         {
-            this.mainViewModelBuilder = mainViewModelBuilder;           
+            this.mainViewModelBuilder = mainViewModelBuilder;
+            this.Session = session;        
 
 	        NotificationServiceContainerViewModel = notificationServiceContainerViewModel;
             ActionBarViewModel = actionBarViewModel;
@@ -48,7 +49,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
             IsLoginViewVisible = true;
         }
 
-		private void OnApplicationStateChanged(ApplicationState newApplicationState)
+	    public ISession Session { get; private set; }
+
+	    private void OnApplicationStateChanged(ApplicationState newApplicationState)
 		{
 			switch (newApplicationState)
 			{
