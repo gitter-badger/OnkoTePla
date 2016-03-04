@@ -108,7 +108,6 @@
     <Compile Include="Domain\UndoRedo\UserActionFactory\UserActionBuilder.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\AddedAction.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\DeletedAction.cs" />
-    <Compile Include="Domain\UndoRedo\UserActions\DividedReplacedAction.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\ReplacedAction.cs" />
     <Compile Include="_depricated\SessionAndUserSpecificEventHistory.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\IUserAction.cs" />
