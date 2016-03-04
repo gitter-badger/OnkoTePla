@@ -98,11 +98,15 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 																		}));
 		}
 
-		public void TryDisconnect(Action<string> errorCallback)
+		public void TryDisconnect(Action dissconnectionSuccessful, Action<string> errorCallback)
 		{			
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryDisconnect);
 
-			requestWorkQueue.Put(new EndConnectionRequestHandler(ConnectionEndResponseReceived,
+			requestWorkQueue.Put(new EndConnectionRequestHandler(() =>
+																 {
+																	ConnectionEndResponseReceived();
+																	dissconnectionSuccessful?.Invoke();
+																 },														
 																 connectionInfoVariable,
 																 errorCallback));
 		}

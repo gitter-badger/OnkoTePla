@@ -158,9 +158,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			connectionService.TryDebugConnect(serverAddress, clientAddress, errorCallback);
 		}
 
-		public void TryDisconnect(Action<string> errorCallback)
+		public void TryDisconnect(Action dissconnectionSuccessful, Action<string> errorCallback)
 		{
-			connectionService.TryDisconnect(errorCallback);
+			connectionService.TryDisconnect(dissconnectionSuccessful, errorCallback);
 		}
 
 

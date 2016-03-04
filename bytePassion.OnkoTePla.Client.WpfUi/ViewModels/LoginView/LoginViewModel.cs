@@ -148,17 +148,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		private void DoDisconnect()
 		{
 			session.TryDisconnect(
-			errorMessage =>
-			{
-				Application.Current.Dispatcher.Invoke(async () =>
+				null,
+				errorMessage =>
 				{
-					var dialog = new UserDialogBox("",
-												   "Die Trennung der Verbindung konnte nicht ordnungsgemäß durchgeführt werden\n" +
-												   $">> {errorMessage} <<",
-												   MessageBoxButton.OK);
-					await dialog.ShowMahAppsDialog();					
-				});
-			});
+					Application.Current.Dispatcher.Invoke(async () =>
+					{
+						var dialog = new UserDialogBox("",
+													   "Die Trennung der Verbindung konnte nicht ordnungsgemäß durchgeführt werden\n" +
+													   $">> {errorMessage} <<",
+													   MessageBoxButton.OK);
+						await dialog.ShowMahAppsDialog();					
+					});
+				}
+			);
 		}
 		private bool IsDisconnectPossible ()
 		{
