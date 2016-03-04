@@ -121,7 +121,6 @@
     <Compile Include="ViewModelMessages\ShowDisabledOverlay.cs" />
     <Compile Include="ViewModelMessages\ShowPage.cs" />
     <Compile Include="ViewModelMessages\SwitchToEditMode.cs" />
-    <Compile Include="ViewModelMessages\AsureDayIsLoaded.cs" />
     <Compile Include="ViewModelMessages\ShowNotification.cs" />
     <Compile Include="ViewModels\AboutDialog\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\AboutDialog\AboutDialogViewModelSampleData.cs" />

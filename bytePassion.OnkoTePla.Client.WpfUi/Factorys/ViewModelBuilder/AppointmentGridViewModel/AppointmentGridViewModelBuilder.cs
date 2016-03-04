@@ -38,7 +38,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 			this.roomFilterVariable = roomFilterVariable;			
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.therapyPlaceRowViewModelBuilder = therapyPlaceRowViewModelBuilder;
-		}		
+		}
+
 
 		public void RequestBuild(Action<IAppointmentGridViewModel> viewModelAvailableCallback, AggregateIdentifier identifier, Action<string> errorCallback)
 		{
@@ -47,15 +48,26 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 				{
 					if (medicalPractice.HoursOfOpening.IsOpen(identifier.Date))
 					{
-						viewModelAvailableCallback(new ViewModels.AppointmentGrid.AppointmentGridViewModel(identifier,
-																										   medicalPractice,
-																										   readModelRepository,
-																										   viewModelCommunication,
-																										   gridSizeVariable,
-																										   roomFilterVariable,
-																										   appointmentViewModelBuilder,
-																										   therapyPlaceRowViewModelBuilder,
-																										   errorCallback));
+						therapyPlaceRowViewModelBuilder.RequestBuild(therapyPlaceRowViewModels =>
+						{
+							readModelRepository.RequestAppointmentsOfADayReadModel(readModel =>
+							{
+								viewModelAvailableCallback(new ViewModels.AppointmentGrid.AppointmentGridViewModel(identifier,
+																											       medicalPractice,
+																											       viewModelCommunication,
+																											       gridSizeVariable,
+																											       roomFilterVariable,
+																											       appointmentViewModelBuilder,
+																												   readModel,
+																												   therapyPlaceRowViewModels,
+																											       errorCallback));
+							},
+							identifier,
+							errorCallback);							
+						},
+						identifier,
+						medicalPractice.Rooms,
+						errorCallback);						
 					}
 					else
 					{

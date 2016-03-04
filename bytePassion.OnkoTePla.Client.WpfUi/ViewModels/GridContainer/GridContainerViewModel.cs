@@ -215,34 +215,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 			currentDisplayedAppointmentGridIdentifier = identifier;
 
 			ActivateGridViewModel(identifier);
-		}
-
-		public void Process (AsureDayIsLoaded message)
-		{
-			var identifier = message.AggregateIdentifier;
-
-			if (!GridViewModelIsCached(identifier))
-			{
-				appointmentGridViewModelBuilder.RequestBuild(
-					buildedViewModel =>
-					{
-						Application.Current.Dispatcher.Invoke(() =>
-						{
-							cachedAppointmentGridViewModels.Add(identifier, buildedViewModel);
-							LoadedAppointmentGrids.Add(buildedViewModel);
-							
-							message.DayIsLoadedCallback();
-						});
-					},
-					identifier,
-					errorCallback
-				);
-			}
-			else
-			{
-				message.DayIsLoadedCallback();
-			}
-		}
+		}		
 
 		protected override void CleanUp()
 	    {

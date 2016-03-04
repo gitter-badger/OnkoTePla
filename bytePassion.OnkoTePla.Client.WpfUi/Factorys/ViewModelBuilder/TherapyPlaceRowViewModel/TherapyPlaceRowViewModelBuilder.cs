@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Types.SemanticTypes;
@@ -7,6 +8,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
+using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 
@@ -34,30 +36,42 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPl
 			this.appointmentGridSizeVariable = appointmentGridSizeVariable;
 		}		
 		
-		public void RequestBuild(Action<ITherapyPlaceRowViewModel> viewModelAvailable, 
-								 TherapyPlace therapyPlace, Room room, TherapyPlaceRowIdentifier location,
+		public void RequestBuild(Action<IEnumerable<ITherapyPlaceRowViewModel>> viewModelsAvailable, 
+								 AggregateIdentifier identifier, IEnumerable<Room> rooms, 
 								 Action<string> errorCallback)
 		{
 			medicalPracticeRepository.RequestMedicalPractice(
 				practice =>
 				{
-					var hoursOfOpeing = practice.HoursOfOpening;
 
-					viewModelAvailable(
-						new ViewModels.TherapyPlaceRowView.TherapyPlaceRowViewModel(viewModelCommunication,
-																					therapyPlace,
-																					room.DisplayedColor,
-																					location,
-																					adornerControl,
-																					hoursOfOpeing.GetOpeningTime(location.PlaceAndDate.Date),
-																					hoursOfOpeing.GetClosingTime(location.PlaceAndDate.Date),
-																					appointmentModificationsVariable,
-																					appointmentGridSizeVariable.Value.Width)
-					);					
+					var viewModels = new List<ITherapyPlaceRowViewModel>();
+
+					foreach (var room in rooms)
+					{
+						foreach (var therapyPlace in room.TherapyPlaces)
+						{
+							var location = new TherapyPlaceRowIdentifier(identifier, therapyPlace.Id);
+
+							var hoursOfOpeing = practice.HoursOfOpening;
+
+							var newViewModel = new ViewModels.TherapyPlaceRowView.TherapyPlaceRowViewModel(viewModelCommunication,
+																										   therapyPlace,
+																										   room.DisplayedColor,
+																										   location,
+																										   adornerControl,
+																										   hoursOfOpeing.GetOpeningTime(location.PlaceAndDate.Date),
+																										   hoursOfOpeing.GetClosingTime(location.PlaceAndDate.Date),
+																										   appointmentModificationsVariable,
+																										   appointmentGridSizeVariable.Value.Width);
+							viewModels.Add(newViewModel);
+						}
+					}
+
+					viewModelsAvailable(viewModels);
 				},
-				location.PlaceAndDate.MedicalPracticeId,
-				location.PlaceAndDate.PracticeVersion,
-				errorCallback					
+				identifier.MedicalPracticeId,
+				identifier.PracticeVersion,
+				errorCallback	
 			);
 		}
 	}

@@ -233,8 +233,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             var mainViewModel = new ViewModels.MainView.MainViewModel(overviewPageViewModel,
                                                                       searchPageViewModel,
                                                                       optionsPageViewModel);
-
-			viewModelCommunication.RegisterViewModelMessageHandler<AsureDayIsLoaded>(gridContainerViewModel);
+			
             viewModelCommunication.RegisterViewModelMessageHandler<ShowPage>(mainViewModel);
 			viewModelCommunication.RegisterViewModelMessageHandler(confirmChangesMessageHandler);
 			viewModelCommunication.RegisterViewModelMessageHandler(rejectChangesMessageHandler);
@@ -260,8 +259,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 	        var gridContainerViewModel           = overviewPageViewModel.GridContainerViewModel;
 	        var changeConfirmationViewModel      = overviewPageViewModel.ChangeConfirmationViewModel;
 	        var undoRedoViewModel                = overviewPageViewModel.UndoRedoViewModel;
-
-			viewModelCommunication.DeregisterViewModelMessageHandler<AsureDayIsLoaded>(gridContainerViewModel);
+			
 			viewModelCommunication.DeregisterViewModelMessageHandler<ShowPage>(viewModelToDispose);
 			viewModelCommunication.DeregisterViewModelMessageHandler(confirmChangesMessageHandler);
 			viewModelCommunication.DeregisterViewModelMessageHandler(rejectChangesMessageHandler);

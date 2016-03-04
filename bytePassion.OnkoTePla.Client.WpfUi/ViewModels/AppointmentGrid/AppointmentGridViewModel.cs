@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
@@ -35,18 +35,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 		private readonly Action<string> errorCallback;
 		  
-		private AppointmentsOfADayReadModel readModel;
+		private readonly AppointmentsOfADayReadModel readModel;
 		private ITimeGridViewModel timeGridViewModel;
 		private ObservableCollection<ITherapyPlaceRowViewModel> therapyPlaceRowViewModels;
 		 
 		public AppointmentGridViewModel(AggregateIdentifier identifier, 
-									    ClientMedicalPracticeData medicalPractice, 										
-										IClientReadModelRepository readModelRepository,									
+									    ClientMedicalPracticeData medicalPractice, 																				
 										IViewModelCommunication viewModelCommunication,
                                         ISharedStateReadOnly<Size> gridSizeVariable,
 										ISharedStateReadOnly<Guid?> roomFilterVariable,
-										IAppointmentViewModelBuilder appointmentViewModelBuilder,
-										ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder,
+										IAppointmentViewModelBuilder appointmentViewModelBuilder,										
+										AppointmentsOfADayReadModel readModel,
+										IEnumerable<ITherapyPlaceRowViewModel> therapyPlaceRowViewModels,
 										Action<string> errorCallback)
 		{
 			this.medicalPractice = medicalPractice;			
@@ -54,12 +54,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		    this.gridSizeVariable = gridSizeVariable;
 		    this.roomFilterVariable = roomFilterVariable;            		
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
-	        this.errorCallback = errorCallback;
+			this.readModel = readModel;
+			this.errorCallback = errorCallback;
 
 	        IsActive = false;
 			PracticeIsClosedAtThisDay = false;
 
-			gridSizeVariable.StateChanged += OnGridSizeChanged;			
+			gridSizeVariable.StateChanged   += OnGridSizeChanged;			
 			roomFilterVariable.StateChanged += OnGlobalRoomFilterVariableChanged;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
@@ -69,65 +70,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 
 			Identifier = identifier;
 
-			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>();
+			readModel.AppointmentChanged += OnReadModelAppointmentChanged;
 
-			readModelRepository.RequestAppointmentsOfADayReadModel(
-				newReadModel =>
-				{
-					Application.Current.Dispatcher.Invoke(() =>
-					{
-						readModel = newReadModel;
+			TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication,
+													  medicalPractice, gridSizeVariable.Value);
 
-						readModel.AppointmentChanged += OnReadModelAppointmentChanged;
+			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>(therapyPlaceRowViewModels);
 
-						TimeGridViewModel = new TimeGridViewModel(Identifier, viewModelCommunication,
-																  medicalPractice, gridSizeVariable.Value);
-						
 
-						var requestedViewModels = 0;
-						var buildedViewModels = 0;
+			foreach (var appointment in readModel.Appointments)
+			{
+				AddAppointment(appointment);
+			}
 
-						foreach (var room in medicalPractice.Rooms)
-						{
-							foreach (var therapyPlace in room.TherapyPlaces)
-							{
-								var location = new TherapyPlaceRowIdentifier(Identifier, therapyPlace.Id);
-								requestedViewModels++;
-
-								therapyPlaceRowViewModelBuilder.RequestBuild(
-									viewModel =>
-									{
-										TherapyPlaceRowViewModels.Add(viewModel);
-										buildedViewModels++;
-
-										viewModelCommunication.SendTo(
-											Constants.TherapyPlaceRowViewModelCollection,
-											location,
-											new NewSizeAvailable(gridSizeVariable.Value)
-										);
-									},
-									therapyPlace,
-									room,
-									location,
-									errorCallback
-								);
-							}
-						}
-
-						if (requestedViewModels != buildedViewModels)
-							throw new NotImplementedException("kann wohl doch passieren ....");
-
-						foreach (var appointment in readModel.Appointments)
-						{
-							AddAppointment(appointment);
-						}
-
-						OnGlobalRoomFilterVariableChanged(roomFilterVariable.Value);
-					});
-				},
-				identifier,
-				errorCallback	 				 
-			);						
+			OnGlobalRoomFilterVariableChanged(roomFilterVariable.Value);
 		}
 
 		private void OnGlobalRoomFilterVariableChanged(Guid? newRoomFilter)
