@@ -11,5 +11,6 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings
 		AddressIdentifier AutoConnectionServerAddress { get; set; }
 
 		Guid LastUsedMedicalPracticeId { get; set; }
+		Guid LastLoggedInUserId        { get; set; }
 	}
 }

@@ -89,7 +89,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 					SelectedUser = null;
 					IsUserListAvailable = false;
 				});				
-			}			
+			}							
 
 			if (applicationState == ApplicationState.ConnectedButNotLoggedIn)
 			{								
@@ -106,7 +106,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 
 							if (AvailableUsers.Count > 0)
 							{
-								SelectedUser = AvailableUsers.First(); // TODO: letzt eingeloggten user wählen
+								SelectedUser = AvailableUsers.Any(user => user.Id == localSettingsRepository.LastLoggedInUserId)
+													? AvailableUsers.First(user => user.Id == localSettingsRepository.LastLoggedInUserId)
+													: AvailableUsers.First();
 							}
 							else
 							{
@@ -249,7 +251,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 		}
 		
 		private void DoLogin(PasswordBox passwordBox)
-		{			
+		{
+			localSettingsRepository.LastLoggedInUserId = selectedUser.Id;
+
 			session.TryLogin(
 				selectedUser, 
 				passwordBox.Password,
