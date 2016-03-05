@@ -44,6 +44,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 
 			var persistenceService = new LocalSettingsXMLPersistenceService(GlobalConstants.LocalSettingsPersistenceFile);
 			var localSettingsRepository = new LocalSettingsRepository(persistenceService);
+			localSettingsRepository.LoadRepository();
 			
 			var clientMedicalPracticeRepository  = new ClientMedicalPracticeRepository(connectionService);
 			var clientPatientRepository          = new ClientPatientRepository(connectionService);
@@ -108,6 +109,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			////////             Clean Up and store data after main Window was closed            //////////
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////
+
+			localSettingsRepository.PersistRepository();
 
 			connectionService.Dispose();
 		}
