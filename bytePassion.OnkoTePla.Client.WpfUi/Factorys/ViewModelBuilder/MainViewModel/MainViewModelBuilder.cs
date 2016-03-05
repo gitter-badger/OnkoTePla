@@ -186,6 +186,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                 roomFilterVariable,
                                                                 selectedDateVariable,
                                                                 selectedMedicalPracticeIdVariable,
+																appointmentModificationsVariable,
 																errorCallback);
 
             var dateSelectorViewModel = new DateSelectorViewModel(selectedDateVariable);

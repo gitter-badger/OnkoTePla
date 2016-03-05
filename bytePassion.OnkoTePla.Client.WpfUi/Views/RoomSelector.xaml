@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
              xmlns:roomSelector="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector"
+             xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper"
              d:DesignHeight="150"
              d:DesignWidth="300"
              mc:Ignorable="d">
@@ -66,6 +67,7 @@
                     BorderThickness="0,0,0,1">
                 <TextBlock Foreground="{StaticResource SemiTransparentWhiteBrush}" Text="Raum" />
             </Border>
+			
             <ListBox Background="Transparent"
                      ItemContainerStyle="{StaticResource ListBoxWithNoSelection}"
                      ItemsSource="{Binding AvailableRoomFilters}"

@@ -9,6 +9,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
@@ -25,23 +26,27 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 		private readonly ISharedState<Guid?>         roomFilterVariable;
 		private readonly ISharedStateReadOnly<Date>  selectedDateVariable;
 		private readonly ISharedStateReadOnly<Guid>  displayedMedicalPracticeVariable;
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
 		private readonly Action<string> errorCallback;
 
 		private IList<Room> currentSelectableRoomFilters;
 		private RoomSelectorData selectedRoomFilter;
 		private ObservableCollection<RoomSelectorData> availableRoomFilters;
 
+		private ClientMedicalPracticeData currentMedicalPractice;
 
 		public RoomFilterViewModel(IClientMedicalPracticeRepository medicalPracticeRepository,
 								   ISharedState<Guid?> roomFilterVariable, 
                                    ISharedStateReadOnly<Date> selectedDateVariable, 
                                    ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable,
+								   ISharedState<AppointmentModifications> appointmentModificationsVariable,
 								   Action<string> errorCallback)
 		{
 			this.medicalPracticeRepository = medicalPracticeRepository;
 			this.roomFilterVariable = roomFilterVariable;
 		    this.selectedDateVariable = selectedDateVariable;
 		    this.displayedMedicalPracticeVariable = displayedMedicalPracticeVariable;
+			this.appointmentModificationsVariable = appointmentModificationsVariable;
 			this.errorCallback = errorCallback;
 
 			roomFilterVariable.StateChanged += OnRoomFilterVariableChanged;
@@ -90,8 +95,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 			medicalPracticeRepository.RequestMedicalPractice(
 				medicalPractice =>
 				{
+					if (medicalPractice.Version == currentMedicalPractice?.Version)
+						return;
+
 					Application.Current.Dispatcher.Invoke(() =>
 					{
+						currentMedicalPractice = medicalPractice;
 						currentSelectableRoomFilters = medicalPractice.Rooms.ToList();
 
 						AvailableRoomFilters = currentSelectableRoomFilters.Select(room => new RoomSelectorData(room.Name, room.Id, room.DisplayedColor))
@@ -123,6 +132,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 
 				if (value != selectedRoomFilter)
 				{
+					if (appointmentModificationsVariable.Value != null)
+					{
+						if (value.RoomId != null)
+							if (!currentMedicalPractice.GetRoomById(value.RoomId.Value)
+													   .TherapyPlaces
+													   .Select(therapyPlace => therapyPlace.Id)
+													   .Contains(appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId))
+							{
+								// TODO: reset view here....															
+								return;
+							}
+					}
+
 					roomFilterVariable.Value = value.RoomId;
 				}
 
