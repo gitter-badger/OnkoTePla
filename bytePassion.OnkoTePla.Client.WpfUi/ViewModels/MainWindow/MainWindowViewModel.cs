@@ -1,6 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
@@ -18,9 +22,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 	internal class MainWindowViewModel : ViewModel, 
                                          IMainWindowViewModel
     {
-        private readonly IMainViewModelBuilder  mainViewModelBuilder;      
+        private readonly IMainViewModelBuilder  mainViewModelBuilder;
+		private readonly ISession session;
 
-	    private IMainViewModel mainViewModel;        
+		private IMainViewModel mainViewModel;        
         private ILoginViewModel loginViewModel;
 
         private bool isMainViewVisible;
@@ -36,7 +41,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 								   ISession session)
         {
             this.mainViewModelBuilder = mainViewModelBuilder;
-            this.Session = session;        
+	        this.session = session;
 
 	        NotificationServiceContainerViewModel = notificationServiceContainerViewModel;
             ActionBarViewModel = actionBarViewModel;
@@ -47,11 +52,72 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 
             IsMainViewVisible = false;
             IsLoginViewVisible = true;
+
+	        CheckWindowClosing = true;
+			CloseWindow = new Command(DoCloseWindow);
         }
 
-	    public ISession Session { get; private set; }
+		private void DoCloseWindow()
+		{
+			switch (session.CurrentApplicationState)
+			{
+				case ApplicationState.LoggedIn:
+				{
+					session.Logout(() =>
+						{
+							session.TryDisconnect(() =>
+								{
+									Application.Current.Dispatcher.Invoke(() =>
+									{
+										CheckWindowClosing = false;
+										KillWindow();
+									});
+								},
+								_ => KillWindow()
+							);
+						},
+						_ => KillWindow()
+					);
+					break;
+				}
 
-	    private void OnApplicationStateChanged(ApplicationState newApplicationState)
+				case ApplicationState.ConnectedButNotLoggedIn:
+				{
+					session.TryDisconnect(() =>
+						{
+							Application.Current.Dispatcher.Invoke(() =>
+							{
+								CheckWindowClosing = false;
+								KillWindow();
+							});
+						},
+						_ => KillWindow()
+					);
+					break;
+				}
+
+				default:
+				{
+					CheckWindowClosing = false;
+					KillWindow();
+					break;
+				}
+			}
+		}
+
+		private static void KillWindow()
+		{
+			var windows = Application.Current.Windows
+											 .OfType<WpfUi.MainWindow>()
+											 .ToList();
+
+			if (windows.Count == 1)
+				windows[0].Close();
+			else
+				throw new Exception("inner error");
+		}
+
+		private void OnApplicationStateChanged(ApplicationState newApplicationState)
 		{
 			switch (newApplicationState)
 			{
@@ -117,7 +183,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
             private set { PropertyChanged.ChangeAndNotify(this, ref isDisabledOverlayVisible, value); }
         }
 
-        public ILoginViewModel LoginViewModel
+		public bool CheckWindowClosing { get; private set; }
+
+		public ICommand CloseWindow { get; }
+
+		public ILoginViewModel LoginViewModel
         {
             get { return loginViewModel; }
             private set { PropertyChanged.ChangeAndNotify(this, ref loginViewModel, value); }

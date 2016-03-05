@@ -13,14 +13,16 @@
                       xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Views"
                       Title="OnkoTePla"
                       MinWidth="700"
-                      MinHeight="500"
+                      MinHeight="500"	
+					  Closing="MainWindow_OnClosing"
                       GlowBrush="{StaticResource AccentColorBrush}"
                       d:DesignHeight="500"
                       d:DesignWidth="800"
                       mc:Ignorable="d">
-    <i:Interaction.Behaviors>
-        <behaviors:WindowClosingBehavior />
-    </i:Interaction.Behaviors>
+<!--    <i:Interaction.Behaviors>-->
+<!--        <behaviors:WindowClosingBehavior />-->
+<!--    </i:Interaction.Behaviors>-->
+	
     <d:UserControl.DataContext>
         <sampleData:MainWindowViewModelSampleData />
     </d:UserControl.DataContext>

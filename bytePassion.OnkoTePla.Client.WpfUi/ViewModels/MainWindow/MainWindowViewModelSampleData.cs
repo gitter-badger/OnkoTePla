@@ -1,16 +1,16 @@
-﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+﻿using System.ComponentModel;
+using System.Windows.Input;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer;
-using System.ComponentModel;
-using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 {
-    internal class MainWindowViewModelSampleData : IMainWindowViewModel
+	internal class MainWindowViewModelSampleData : IMainWindowViewModel
 	{
 		public MainWindowViewModelSampleData()
 		{
@@ -19,6 +19,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 		    IsMainViewVisible = true;
 		    IsLoginViewVisible = true;
 		    IsDisabledOverlayVisible = false;
+
+			CheckWindowClosing = false;
 
             LoginViewModel = new LoginViewModelSampleData();
             ActionBarViewModel = new ActionBarViewModelSampleData();
@@ -29,7 +31,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
         public bool IsMainViewVisible { get; }
         public bool IsLoginViewVisible { get; }
         public bool IsDisabledOverlayVisible { get; }
-        public ISession Session { get; }
+
+	    public bool CheckWindowClosing { get; }
+	    public ICommand CloseWindow => null;	    
 
         public ILoginViewModel LoginViewModel { get; }
         public IActionBarViewModel ActionBarViewModel { get; }

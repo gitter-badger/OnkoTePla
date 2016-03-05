@@ -1,5 +1,5 @@
-﻿using bytePassion.Lib.Communication.ViewModel.Messages;
-using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
+﻿using System.Windows.Input;
+using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView;
@@ -9,7 +9,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 {
-    internal interface IMainWindowViewModel : IViewModel, 
+	internal interface IMainWindowViewModel : IViewModel, 
                                               IViewModelMessageHandler<ShowDisabledOverlay>,
                                               IViewModelMessageHandler<HideDisabledOverlay>
     {
@@ -19,8 +19,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
         bool IsLoginViewVisible { get; }
 
         bool IsDisabledOverlayVisible { get; }
-        ISession Session { get; }
-
+       
+		bool CheckWindowClosing { get; }
+		ICommand CloseWindow { get; }
 
         ILoginViewModel LoginViewModel { get; }
         IActionBarViewModel ActionBarViewModel { get; }
