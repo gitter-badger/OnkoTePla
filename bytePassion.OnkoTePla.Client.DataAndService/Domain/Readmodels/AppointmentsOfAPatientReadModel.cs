@@ -57,7 +57,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 										  domainEvent.EndTime, 
 										  domainEvent.AggregateId.Date, 
 										  domainEvent.TherapyPlaceId, 
-										  domainEvent.AppointmentId);						
+										  domainEvent.AppointmentId,
+										  domainEvent.AggregateId.MedicalPracticeId);						
 		}
 
 		public override void Process (AppointmentReplaced domainEvent)

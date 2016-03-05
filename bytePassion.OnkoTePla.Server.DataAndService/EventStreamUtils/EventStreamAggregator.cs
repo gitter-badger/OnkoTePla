@@ -95,7 +95,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 															addedEvent.StartTime,
 															addedEvent.EndTime,
 															addedEvent.TherapyPlaceId,
-															addedEvent.AppointmentId));
+															addedEvent.AppointmentId,
+															addedEvent.AggregateId.MedicalPracticeId));
 			
 		}
 		
@@ -110,7 +111,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils
 															replacedEvent.NewStartTime,
 															replacedEvent.NewEndTime,
 															replacedEvent.NewTherapyPlaceId,
-															originalAppointment.Id));			
+															originalAppointment.Id,
+															originalAppointment.MedicalPracticeId));			
 		}
 
 		private static void HandleDeletedEvent(AppointmentDeleted deletedEvent, ICollection<AppointmentTransferData> appointmentList)

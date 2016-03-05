@@ -13,6 +13,7 @@ using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Notification;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
@@ -42,13 +43,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 		private const string NoPatientSelected = "- noch kein Patient ausgewählt -";
 		
-		private readonly ISharedState<Date> selectedDateVariable;
-		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
+		private readonly ISharedState<Date> selectedDateVariable;		
         private readonly ISharedStateReadOnly<Patient> selectedPatientVariable;        
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ICommandService commandService;		
 		private readonly IClientReadModelRepository readModelRepository;
-		
+		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
+
 		private readonly Action<string> errorCallBack;
 
 		private AppointmentsOfAPatientReadModel currentReadModel;
@@ -56,48 +57,52 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 		public SearchPageViewModel(IPatientSelectorViewModel patientSelectorViewModel,
 								   ISharedStateReadOnly<Patient> selectedPatientVariable,
-								   ISharedState<Date> selectedDateVariable,
-								   ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,                                   
+								   ISharedState<Date> selectedDateVariable,								                                     
 								   IViewModelCommunication viewModelCommunication,
 								   ICommandService commandService,
-								   IClientReadModelRepository readModelRepository,								   
+								   IClientReadModelRepository readModelRepository,	
+								   IClientMedicalPracticeRepository medicalPracticeRepository,							   
 								   Action<string> errorCallBack)
 		{
 		    this.selectedPatientVariable = selectedPatientVariable;		    
 			this.viewModelCommunication = viewModelCommunication;
 			this.commandService = commandService;			
 			this.readModelRepository = readModelRepository;
-			
-			this.errorCallBack = errorCallBack;
-			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
+			this.medicalPracticeRepository = medicalPracticeRepository;
+			this.errorCallBack = errorCallBack;			
 			this.selectedDateVariable = selectedDateVariable;
 
 			selectedPatientVariable.StateChanged += OnSelectedPatientVariableChanged;
 
 			PatientSelectorViewModel = patientSelectorViewModel;
 
-			DeleteAppointment = new ParameterrizedCommand<Appointment>(DoDeleteAppointment);
-			ModifyAppointment = new ParameterrizedCommand<Appointment>(DoModifyAppointment);
+			DeleteAppointment = new ParameterrizedCommand<AppointmentTransferData>(DoDeleteAppointment);
+			ModifyAppointment = new ParameterrizedCommand<AppointmentTransferData>(DoModifyAppointment);
 						
 			SelectedPatient = NoPatientSelected;
 
 			DisplayedAppointments = new ObservableCollection<AppointmentTransferData>();
 		}
 
-		private void DoModifyAppointment(Appointment appointment)
-		{			
-			selectedDateVariable.Value = appointment.Day;
+		private void DoModifyAppointment(AppointmentTransferData appointment)
+		{						
+			viewModelCommunication.Send(new AsureDayIsLoaded(appointment.MedicalPracticeId, 
+															 appointment.Day, 
+															 () =>
+															 {
+																 selectedDateVariable.Value = appointment.Day;
 
-			viewModelCommunication.SendTo(
-				Constants.AppointmentViewModelCollection,
-				appointment.Id,
-				new SwitchToEditMode()	
-			);
-
+																 viewModelCommunication.SendTo(
+																	Constants.AppointmentViewModelCollection,
+																	appointment.Id,
+																	new SwitchToEditMode()	
+																 );															  
+															 }));
+			
 			viewModelCommunication.Send(new ShowPage(MainPage.Overview));
 		}
 
-		private async void DoDeleteAppointment(Appointment appointment)
+		private async void DoDeleteAppointment(AppointmentTransferData appointment)
 		{
 			var dialog = new UserDialogBox("", "Wollen Sie den Termin wirklich löschen?",
 										   MessageBoxButton.OKCancel);
@@ -105,19 +110,28 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 			if (result == MessageDialogResult.Affirmative)
 			{
-				commandService.TryDeleteAppointment(new AggregateIdentifier(appointment.Day, 
-																		    selectedMedicalPracticeIdVariable.Value),
-																			appointment.Patient.Id,
-													appointment.Id,
-													appointment.Description,
-													appointment.StartTime,
-													appointment.EndTime,
-													appointment.TherapyPlace.Id,
-													ActionTag.RegularAction,
-													errorMsg =>
-													{
-														viewModelCommunication.Send(new ShowNotification($"Termin kann nicht gelöscht werden: {errorMsg}", 5));
-													});
+				medicalPracticeRepository.RequestPraticeVersion(
+					practiceVersion =>
+					{
+						commandService.TryDeleteAppointment(new AggregateIdentifier(appointment.Day,
+																					appointment.MedicalPracticeId,
+																					practiceVersion),
+															appointment.PatientId,
+															appointment.Id,
+															appointment.Description,
+															appointment.StartTime,
+															appointment.EndTime,
+															appointment.TherapyPlaceId,
+															ActionTag.RegularAction,
+															errorMsg =>
+															{
+																viewModelCommunication.Send(new ShowNotification($"Termin kann nicht gelöscht werden: {errorMsg}", 5));
+															});
+					},
+					appointment.MedicalPracticeId,
+					appointment.Day,
+					errorCallBack
+				);				
 			}
 		}
 

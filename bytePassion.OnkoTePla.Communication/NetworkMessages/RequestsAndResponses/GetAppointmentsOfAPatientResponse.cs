@@ -22,13 +22,14 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 
 			foreach (var appointmentTransferData in AppointmentList)
 			{
-				sb.Append(appointmentTransferData.PatientId);      sb.Append(",");
-				sb.Append(appointmentTransferData.Description);    sb.Append(",");
-				sb.Append(appointmentTransferData.Day);            sb.Append(",");
-				sb.Append(appointmentTransferData.StartTime);      sb.Append(",");
-				sb.Append(appointmentTransferData.EndTime);        sb.Append(",");
-				sb.Append(appointmentTransferData.TherapyPlaceId); sb.Append(",");
-				sb.Append(appointmentTransferData.Id);
+				sb.Append(appointmentTransferData.PatientId);         sb.Append(",");
+				sb.Append(appointmentTransferData.Description);       sb.Append(",");
+				sb.Append(appointmentTransferData.Day);               sb.Append(",");
+				sb.Append(appointmentTransferData.StartTime);         sb.Append(",");
+				sb.Append(appointmentTransferData.EndTime);           sb.Append(",");
+				sb.Append(appointmentTransferData.TherapyPlaceId);    sb.Append(",");
+				sb.Append(appointmentTransferData.Id);			      sb.Append(",");
+				sb.Append(appointmentTransferData.MedicalPracticeId);
 
 				sb.Append(";");
 			}
@@ -58,9 +59,11 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndRespons
 					var endTime        = Time.Parse(appointmentParts[4]);
 					var therapyPlaceId = Guid.Parse(appointmentParts[5]);
 					var id             = Guid.Parse(appointmentParts[6]);
+					var medPracticeId  = Guid.Parse(appointmentParts[7]);
 
 					appointmentList.Add(new AppointmentTransferData(patientId, description, day,
-																	startTime, endTime, therapyPlaceId, id));
+																	startTime, endTime, therapyPlaceId, 
+																	id, medPracticeId));
 				}
 			}
 

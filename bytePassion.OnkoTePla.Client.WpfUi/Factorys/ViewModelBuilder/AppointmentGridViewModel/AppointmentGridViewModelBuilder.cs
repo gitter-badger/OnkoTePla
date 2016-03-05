@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
-using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Contracts.Domain;
+using Size = bytePassion.Lib.Types.SemanticTypes.Size;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentGridViewModel
@@ -51,27 +52,39 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 				{
 					if (medicalPractice.HoursOfOpening.IsOpen(identifier.Date))
 					{
-						therapyPlaceRowViewModelBuilder.RequestBuild(therapyPlaceRowViewModels =>
-						{
-							readModelRepository.RequestAppointmentsOfADayReadModel(readModel =>
+						therapyPlaceRowViewModelBuilder.RequestBuild(
+							therapyPlaceRowViewModels =>
 							{
-								viewModelAvailableCallback(new ViewModels.AppointmentGrid.AppointmentGridViewModel(identifier,
-																											       medicalPractice,
-																											       viewModelCommunication,
-																											       gridSizeVariable,
-																											       roomFilterVariable,
-																												   displayedMedicalPracticeVariable,
-																												   appointmentViewModelBuilder,
-																												   readModel,
-																												   therapyPlaceRowViewModels,
-																											       errorCallback));
+								readModelRepository.RequestAppointmentsOfADayReadModel(
+									readModel =>
+									{
+										Application.Current.Dispatcher.Invoke(() =>
+										{
+											foreach (var appointment in readModel.Appointments)
+											{
+												appointmentViewModelBuilder.Build(appointment, identifier, errorCallback);
+											}
+
+											viewModelAvailableCallback(new ViewModels.AppointmentGrid.AppointmentGridViewModel(identifier,
+																															   medicalPractice,
+																															   viewModelCommunication,
+																															   gridSizeVariable,
+																															   roomFilterVariable,
+																															   displayedMedicalPracticeVariable,
+																															   appointmentViewModelBuilder,
+																															   readModel,
+																															   therapyPlaceRowViewModels,
+																															   errorCallback));
+										});										
+									},
+									identifier,
+									errorCallback
+								);							
 							},
 							identifier,
-							errorCallback);							
-						},
-						identifier,
-						medicalPractice.Rooms,
-						errorCallback);						
+							medicalPractice.Rooms,
+							errorCallback
+						);						
 					}
 					else
 					{

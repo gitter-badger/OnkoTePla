@@ -107,14 +107,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainWindow
 
 		private static void KillWindow()
 		{
-			var windows = Application.Current.Windows
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				var windows = Application.Current.Windows
 											 .OfType<WpfUi.MainWindow>()
 											 .ToList();
 
-			if (windows.Count == 1)
-				windows[0].Close();
-			else
-				throw new Exception("inner error");
+				if (windows.Count == 1)
+					windows[0].Close();
+				else
+					throw new Exception("inner error");
+			});			
 		}
 
 		private void OnApplicationStateChanged(ApplicationState newApplicationState)

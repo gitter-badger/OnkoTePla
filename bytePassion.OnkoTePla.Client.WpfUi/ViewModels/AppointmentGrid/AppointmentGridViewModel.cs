@@ -58,6 +58,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			this.readModel = readModel;
 			this.errorCallback = errorCallback;
 
+			// Initial appointment-Creation is done at the AppointmentGridBuilder
+
 	        IsActive = false;
 			PracticeIsClosedAtThisDay = false;
 
@@ -77,12 +79,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 													  medicalPractice, gridSizeVariable.Value);
 
 			TherapyPlaceRowViewModels = new ObservableCollection<ITherapyPlaceRowViewModel>(therapyPlaceRowViewModels);
-
-
-			foreach (var appointment in readModel.Appointments)
-			{
-				AddAppointment(appointment);
-			}
+			
 
 			OnGlobalRoomFilterVariableChanged(roomFilterVariable.Value);
 		}

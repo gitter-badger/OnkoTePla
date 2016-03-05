@@ -24,6 +24,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 											new Time(10,30), 
 											new Time(12,45),
 											Guid.Empty,
+											Guid.Empty,
 											Guid.Empty),
 				new AppointmentTransferData(Guid.Empty,
 											"testApp2",								
@@ -31,12 +32,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 											new Time(10,30),
 											new Time(12,45),
 											Guid.Empty,
+											Guid.Empty,
 											Guid.Empty),
 				new AppointmentTransferData(Guid.Empty,
 											"testApp3",								
 											new Date(23,10,2015),
 											new Time(10,30),
 											new Time(12,45),
+											Guid.Empty,
 											Guid.Empty,
 											Guid.Empty)
 			};

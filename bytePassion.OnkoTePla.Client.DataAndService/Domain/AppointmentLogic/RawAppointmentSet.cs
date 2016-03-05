@@ -21,7 +21,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic
 
 		public void AddAppointment (Guid patientId, string description,
 									Time startTime, Time endTime, Date day, 
-									Guid therapyPlaceId, Guid appointmentId)
+									Guid therapyPlaceId, Guid appointmentId,
+									Guid medicalPracticeId)
 		{
 			var newAppointment = new AppointmentTransferData(patientId,
 															 description,							
@@ -29,8 +30,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic
 															 startTime,
 															 endTime,
 															 therapyPlaceId,
-															 appointmentId);
-
+															 appointmentId,
+															 medicalPracticeId);
+			
 			ObservableAppointments.AddAppointment(newAppointment);				
 		}
 
@@ -53,7 +55,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic
 																 newStartTime,
 																 newEndTime,
 																 newTherapyPlaceId,
-																 originalAppointmendId);
+																 originalAppointmendId,
+																 appointmentToBeUpdated.MedicalPracticeId);
 
 			ObservableAppointments.ReplaceAppointment(updatedAppointment);
 		}

@@ -26,8 +26,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
     {
 		private readonly ISharedStateWriteOnly<MainPage> selectedPageVariable;
 
-		private MainPage selectedPage;
-		private bool checkClosing;
+		private MainPage selectedPage;		
 
 		public MainWindowViewModel(IOverviewPageViewModel overviewPageViewModel, 
                                    IConnectionsPageViewModel connectionsPageViewModel,

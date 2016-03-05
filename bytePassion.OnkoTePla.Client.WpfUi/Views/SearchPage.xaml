@@ -99,9 +99,9 @@
                                                FontWeight="Bold"
                                                Foreground="#666666"
                                                Text="{Binding Day}" />
-                                    <TextBlock Grid.Column="1" Text="{Binding Description}" />
+									<TextBlock Grid.Column="1" Text="{Binding Description}" />
 
-                                    <Button Grid.Column="2"
+									<Button Grid.Column="2"
                                             Margin="3,0"
                                             Command="{Binding DataContext.ModifyAppointment,
                                                               RelativeSource={RelativeSource AncestorType={x:Type views:SearchPage}}}"

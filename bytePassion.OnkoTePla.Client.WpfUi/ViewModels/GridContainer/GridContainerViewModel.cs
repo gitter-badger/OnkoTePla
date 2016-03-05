@@ -102,14 +102,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 		{
 			if (!cachedAppointmentGridViewModels.ContainsKey(identifier))
 			{
+				cachedAppointmentGridViewModels.Add(identifier, null);
+
 				appointmentGridViewModelBuilder.RequestBuild(
 					buildedViewModel =>
 					{
 						Application.Current.Dispatcher.Invoke(() =>
-						{
-							cachedAppointmentGridViewModels.Add(identifier, buildedViewModel);
-							LoadedAppointmentGrids.Add(buildedViewModel);
-
+						{							
+							cachedAppointmentGridViewModels[identifier] = buildedViewModel;
+							LoadedAppointmentGrids.Add(buildedViewModel);							
+								
 							if (identifier.Date == selectedDateVariable.Value &&
 								identifier.MedicalPracticeId == selectedMedicalPracticeIdVariable.Value)
 							{
@@ -215,7 +217,44 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 			currentDisplayedAppointmentGridIdentifier = identifier;
 
 			ActivateGridViewModel(identifier);
-		}		
+		}
+
+		public void Process (AsureDayIsLoaded message)
+		{			
+			if (!cachedAppointmentGridViewModels.ContainsKey(new AggregateIdentifier(message.Day, message.MedicalPracticeId)))
+			{
+				cachedAppointmentGridViewModels.Add(new AggregateIdentifier(message.Day, message.MedicalPracticeId), null);
+
+				medicalPracticeRepository.RequestPraticeVersion(
+					practiceVersion =>
+					{
+						Application.Current.Dispatcher.Invoke(() =>
+						{
+							var identifier = new AggregateIdentifier(message.Day, message.MedicalPracticeId, practiceVersion);
+
+							appointmentGridViewModelBuilder.RequestBuild(
+								buildedViewModel =>
+								{									
+									cachedAppointmentGridViewModels[identifier] = buildedViewModel;
+									LoadedAppointmentGrids.Add(buildedViewModel);
+																			
+									message.DayIsLoaded?.Invoke();
+								},
+								identifier,
+								errorCallback
+							);
+						});
+					},
+					message.MedicalPracticeId,
+					message.Day,
+					errorCallback
+				);										
+			}
+			else
+			{
+				message.DayIsLoaded?.Invoke();
+			}
+		}
 
 		protected override void CleanUp()
 	    {

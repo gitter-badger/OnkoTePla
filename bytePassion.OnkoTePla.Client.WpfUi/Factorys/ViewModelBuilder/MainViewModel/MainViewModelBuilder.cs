@@ -225,11 +225,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
             var searchPageViewModel = new SearchPageViewModel(patientSelectorViewModel,
                                                               selectedPatientForAppointmentSearchVariable,
-                                                              selectedDateVariable,
-                                                              selectedMedicalPracticeIdVariable,
+                                                              selectedDateVariable,                                                              
                                                               viewModelCommunication,
 															  commandService,
-                                                              readModelRepository,															 
+                                                              readModelRepository,	
+															  medicalPracticeRepository,														 
 															  errorCallback);
 
             var optionsPageViewModel = new OptionsPageViewModel();            
@@ -238,6 +238,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                       searchPageViewModel,
                                                                       optionsPageViewModel);
 			
+			viewModelCommunication.RegisterViewModelMessageHandler<AsureDayIsLoaded>(gridContainerViewModel);
             viewModelCommunication.RegisterViewModelMessageHandler<ShowPage>(mainViewModel);
 			viewModelCommunication.RegisterViewModelMessageHandler(confirmChangesMessageHandler);
 			viewModelCommunication.RegisterViewModelMessageHandler(rejectChangesMessageHandler);
@@ -263,7 +264,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 	        var gridContainerViewModel           = overviewPageViewModel.GridContainerViewModel;
 	        var changeConfirmationViewModel      = overviewPageViewModel.ChangeConfirmationViewModel;
 	        var undoRedoViewModel                = overviewPageViewModel.UndoRedoViewModel;
-			
+
+			viewModelCommunication.DeregisterViewModelMessageHandler<AsureDayIsLoaded>(gridContainerViewModel);
 			viewModelCommunication.DeregisterViewModelMessageHandler<ShowPage>(viewModelToDispose);
 			viewModelCommunication.DeregisterViewModelMessageHandler(confirmChangesMessageHandler);
 			viewModelCommunication.DeregisterViewModelMessageHandler(rejectChangesMessageHandler);
