@@ -18,12 +18,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 	internal interface IMainWindowViewModel : IViewModel
     {
         ICommand SwitchToPage { get; }
-        MainPage SelectedPage { get; }       
-		
-		ICommand CloseApplication { get; } 
-		bool     CheckClosing     { get; }
+        MainPage SelectedPage { get; }
 
-        IOverviewPageViewModel          OverviewPageViewModel          { get; }
+		bool CheckWindowClosing { get; }
+		ICommand CloseWindow { get; }
+
+		IOverviewPageViewModel          OverviewPageViewModel          { get; }
         IConnectionsPageViewModel       ConnectionsPageViewModel       { get; }
         IUserPageViewModel              UserPageViewModel              { get; }
         ILicencePageViewModel           LicencePageViewModel           { get; }

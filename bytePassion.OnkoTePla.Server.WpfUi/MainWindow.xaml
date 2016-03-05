@@ -3,20 +3,19 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 					  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-					  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-					  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+					  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"					
                       xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Converter"                      
                       xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Enums"                      
                       xmlns:panels="clr-namespace:bytePassion.Lib.WpfLib.Panels;assembly=bytePassion.Lib"
                       xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow"
-                      xmlns:views="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Views"                      
-                      xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Behaviors"
+                      xmlns:views="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Views"                                          
                       Title="MainWindow"
                       Width="1300"
                       Height="900"
 					  MinWidth="900"
 					  MinHeight="700"
                       WindowStartupLocation="CenterScreen"
+					  Closing="MainWindow_OnClosing"
                       mc:Ignorable="d">
 
     <d:DesignData.DataContext>
@@ -26,11 +25,6 @@
     <Window.Resources>
         <converter:MainPageToIntConverter x:Key="MainPageToIntConverter" />
     </Window.Resources>
-
-	<i:Interaction.Behaviors>
-		<behaviors:ClosingBehavior CloseWindowCommand="{Binding CloseApplication}"
-								   CheckClosing="{Binding CheckClosing}"/>
-	</i:Interaction.Behaviors>
 	
     <Grid>
 
@@ -50,45 +44,16 @@
 
             </StackPanel.Resources>
 
-            <Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.Overview}"
-                    Content="Übersicht" />
-
-            <Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.Connections}"
-                    Content="Verbindungen" />
-
-            <Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.User}"
-                    Content="Benutzer" />
-
-            <Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.Licence}"
-                    Content="Lizenz" />
-
-            <Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.Infrastructure}"
-                    Content="Infrastruktur" />
-
-			<Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.HoursOfOpening}"
-                    Content="Öffnungszeiten" />
- 
-			<Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.TherapyPlaceTypes}"
-                    Content="TherapyPlaceTypes" />
-
-			<Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.Patients}"
-                    Content="Patients" />
-			
-            <Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.Options}"
-                    Content="Einstellungen" />
-
-            <Button Command="{Binding SwitchToPage}"
-                    CommandParameter="{x:Static enum:MainPage.About}"
-                    Content="Über ..." />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Overview}"          Content="Übersicht" />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Connections}"       Content="Verbindungen" />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.User}"              Content="Benutzer" />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Licence}"           Content="Lizenz" />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Infrastructure}"    Content="Infrastruktur" />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.HoursOfOpening}"    Content="Öffnungszeiten" />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.TherapyPlaceTypes}" Content="TherapyPlaceTypes" />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Patients}"          Content="Patients" />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Options}"           Content="Einstellungen" />
+			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.About}"             Content="Über ..." />
 
         </StackPanel>
 

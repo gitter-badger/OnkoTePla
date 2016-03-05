@@ -21,7 +21,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         public MainWindowViewModelSampleData()
         {
             SelectedPage = MainPage.Overview;
-	        CheckClosing = true;
+	        CheckWindowClosing = true;
 
             OverviewPageViewModel          = new OverviewPageViewModelSampleData();
             ConnectionsPageViewModel       = new ConnectionsPageViewModelSampleData();
@@ -38,9 +38,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         public ICommand SwitchToPage => null;
         public MainPage SelectedPage { get; }
 
-		public ICommand CloseApplication => null;
-		public bool CheckClosing { get; }
-
+		public bool CheckWindowClosing { get; }
+		public ICommand CloseWindow => null;
+		
 		public IOverviewPageViewModel          OverviewPageViewModel          { get; }
         public IConnectionsPageViewModel       ConnectionsPageViewModel       { get; }
         public IUserPageViewModel              UserPageViewModel              { get; }

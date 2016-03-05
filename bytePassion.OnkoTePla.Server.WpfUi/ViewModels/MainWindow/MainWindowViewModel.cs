@@ -55,25 +55,31 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 	        TherapyPlaceTypesPageViewModel = therapyPlaceTypesPageViewModel;
 
 	        SwitchToPage = new ParameterrizedCommand<MainPage>(page => SelectedPage = page);
-			CloseApplication = new Command(DoCloseApplication);
+			CloseWindow = new Command(DoCloseApplication);
 
-			CheckClosing = true;
+			CheckWindowClosing = true;
         }
 
 		private void DoCloseApplication()
 		{
-			ConnectionsPageViewModel.IsConnectionActive = false;
-			CheckClosing = false;
+			CheckWindowClosing = false;
 
-			Application.Current.Dispatcher.DelayInvoke(CloseWindow, TimeSpan.FromSeconds(3));
+			if (ConnectionsPageViewModel.IsConnectionActive)
+			{
+				ConnectionsPageViewModel.IsConnectionActive = false;				
+				Application.Current.Dispatcher.DelayInvoke(KillWindow, TimeSpan.FromSeconds(3));
+			}
+			else
+			{				
+				KillWindow();
+			}
 		}
 
-		private static void CloseWindow()
+		private static void KillWindow()
 		{
 			var windows = Application.Current.Windows
 											 .OfType<WpfUi.MainWindow>()
 											 .ToList();
-
 			if (windows.Count == 1)
 				windows[0].Close();
 			else
@@ -92,13 +98,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 	        }
         }
 
-		public ICommand CloseApplication { get; }
-
-		public bool CheckClosing
-		{
-			get { return checkClosing; }
-			private set { PropertyChanged.ChangeAndNotify(this, ref checkClosing, value); }
-		}
+		public bool CheckWindowClosing { get; private set; }
+		public ICommand CloseWindow { get; }
+	
 
 		public IOverviewPageViewModel          OverviewPageViewModel          { get; }
         public IConnectionsPageViewModel       ConnectionsPageViewModel       { get; }
