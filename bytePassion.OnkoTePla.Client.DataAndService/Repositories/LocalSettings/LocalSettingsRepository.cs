@@ -18,7 +18,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings
 			persistenceService.Persist(new LocalSettingsData(IsAutoConnectionEnabled, 
 															 AutoConnectionClientAddress,
 															 AutoConnectionServerAddress, 
-															 LastUsedMedicalPracticeId));
+															 LastUsedMedicalPracticeId,
+															 LastLoggedInUserId));
 		}
 
 		public void LoadRepository()
@@ -29,11 +30,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings
 			AutoConnectionClientAddress = newSettings.AutoConnectionClientAddress;
 			AutoConnectionServerAddress = newSettings.AutoConnectionServerAddress;
 			LastUsedMedicalPracticeId   = newSettings.LastUsedMedicalPracticeId;
+			LastLoggedInUserId		    = newSettings.LastLoggedInUserId;
 		}
 
 		public bool              IsAutoConnectionEnabled     { get; set; }
 		public AddressIdentifier AutoConnectionClientAddress { get; set; }
 		public AddressIdentifier AutoConnectionServerAddress { get; set; }
 		public Guid              LastUsedMedicalPracticeId   { get; set; }
+		public Guid				 LastLoggedInUserId			 { get; set; }
 	}
 }
