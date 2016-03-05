@@ -40,6 +40,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		{
 			connectionInfoVariable = new SharedState<ConnectionInfo>(new ConnectionInfo(null, null));
 			zmqContext = NetMQContext.Create();
+			
 		}
 		
 		private Address ServerAddress { get; set; }
@@ -50,9 +51,90 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		private HeartbeatThead heartbeatThread;
 		private NotificationThread notificationThread;
 		private UniversalRequestThread universalRequestThread;
-		private TimeoutBlockingQueue<IRequestHandler> requestWorkQueue; 
-		 
-        public void TryConnect(Address serverAddress, Address clientAddress, 
+		private TimeoutBlockingQueue<IRequestHandler> requestWorkQueue;
+
+
+		#region start and stop threads
+
+		private void RunHeartbeatThread(ConnectionSessionId connectionSessionId)
+		{
+			heartbeatThread = new HeartbeatThead(zmqContext, ClientAddress, connectionSessionId);
+			heartbeatThread.ServerVanished += OnServerVanished;
+			new Thread(heartbeatThread.Run).Start();
+		}
+
+		private void StopHeartbeatThread()
+		{
+			if (heartbeatThread != null)
+			{
+				heartbeatThread.ServerVanished -= OnServerVanished;
+
+				heartbeatThread.Stop();
+				heartbeatThread = null;
+			}
+		}
+		
+		private void RunNotificationThread(ConnectionSessionId connectionSessionId)
+		{
+			notificationThread = new NotificationThread(zmqContext, ClientAddress, connectionSessionId);
+
+			notificationThread.NewDomainEventAvailable          += OnNewDomainEventAvailable;
+			notificationThread.NewPatientAvailable              += OnNewPatientAvailable;
+			notificationThread.UpdatedPatientAvailable          += OnUpdatedPatientAvailable;
+			notificationThread.NewTherapyPlaceTypeAvailable     += OnNewTherapyPlaceTypeAvailable;
+			notificationThread.UpdatedTherapyPlaceTypeAvailable += OnUpdatedTherapyPlaceTypeAvailable;
+
+			new Thread(notificationThread.Run).Start();
+		}
+
+		private void StopNotificationThread()
+		{
+			if (notificationThread != null)
+			{
+				notificationThread.NewDomainEventAvailable          -= OnNewDomainEventAvailable;
+				notificationThread.NewPatientAvailable              -= OnNewPatientAvailable;
+				notificationThread.UpdatedPatientAvailable          -= OnUpdatedPatientAvailable;
+				notificationThread.NewTherapyPlaceTypeAvailable     -= OnNewTherapyPlaceTypeAvailable;
+				notificationThread.UpdatedTherapyPlaceTypeAvailable -= OnUpdatedTherapyPlaceTypeAvailable;
+
+				notificationThread.Stop();
+				notificationThread = null;
+			}			
+		}
+
+		private void RunUserveralRequestThread()
+		{
+			requestWorkQueue = new TimeoutBlockingQueue<IRequestHandler>(1000);
+			universalRequestThread = new UniversalRequestThread(zmqContext, ServerAddress, requestWorkQueue);
+			new Thread(universalRequestThread.Run).Start();
+		}
+
+		private void StopUniversalRequestThread()
+		{
+			if (universalRequestThread != null)
+			{
+				universalRequestThread.Stop();
+
+				universalRequestThread = null;
+				requestWorkQueue = null;
+			}
+		}
+
+		#endregion
+
+		#region notification forwarding
+
+		private void OnUpdatedTherapyPlaceTypeAvailable (TherapyPlaceType therapyPlaceType) { UpdatedTherapyPlaceTypeAvailable?.Invoke(therapyPlaceType); }
+		private void OnNewTherapyPlaceTypeAvailable     (TherapyPlaceType therapyPlaceType) { NewTherapyPlaceTypeAvailable?.Invoke(therapyPlaceType);     }
+		private void OnUpdatedPatientAvailable          (Patient patient)                   { UpdatedPatientAvailable?.Invoke(patient);                   }
+		private void OnNewPatientAvailable              (Patient patient)                   { NewPatientAvailable?.Invoke(patient);                       }
+		private void OnNewDomainEventAvailable          (DomainEvent domainEvent)           { NewDomainEventAvailable?.Invoke(domainEvent);               }
+
+		#endregion
+
+		#region requests
+
+		public void TryConnect(Address serverAddress, Address clientAddress, 
 							   Action<string> errorCallback)
         {
 			ConnectionWasTerminated = false;
@@ -62,16 +144,15 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
 			
-			requestWorkQueue = new TimeoutBlockingQueue<IRequestHandler>(1000);
-			universalRequestThread = new UniversalRequestThread(zmqContext, ServerAddress, requestWorkQueue);
-			new Thread(universalRequestThread.Run).Start();
+			RunUserveralRequestThread();
 			
 			requestWorkQueue.Put(new BeginConnectionRequestHandler(ConnectionBeginResponeReceived,
 																   ClientAddress.Identifier,
 																   errorMsg =>
 																   {																   		
-																   		ConnectionEventInvoked?.Invoke(ConnectionEvent.ConAttemptUnsuccessful);
-																   		errorCallback(errorMsg);
+																   	   ConnectionEventInvoked?.Invoke(ConnectionEvent.ConAttemptUnsuccessful);
+																	   CleanUpAfterDisconnection();
+																	   errorCallback(errorMsg);
 																   }));								
 		}
 
@@ -85,15 +166,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			
 			ConnectionEventInvoked?.Invoke(ConnectionEvent.StartedTryConnect);
 
-			requestWorkQueue = new TimeoutBlockingQueue<IRequestHandler>(1000);
-			universalRequestThread = new UniversalRequestThread(zmqContext, ServerAddress, requestWorkQueue);
-			new Thread(universalRequestThread.Run).Start();
+			RunUserveralRequestThread();
 
 			requestWorkQueue.Put(new BeginDebugConnectionRequestHandler(DebugConnectionBeginResponeReceived,
 																	    ClientAddress.Identifier,
 																		errorMsg =>
 																		{																			 
 																			 ConnectionEventInvoked?.Invoke(ConnectionEvent.ConAttemptUnsuccessful);
+																			 CleanUpAfterDisconnection();
 																			 errorCallback(errorMsg);
 																		}));
 		}
@@ -200,6 +280,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 														  errorCallback));
 		}
 
+		#endregion
+
 		private void ConnectionEndResponseReceived()
 		{
 			Application.Current.Dispatcher.Invoke(
@@ -217,19 +299,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 				{
 					connectionInfoVariable.Value = new ConnectionInfo(connectionSessionId, null);
 
-					heartbeatThread = new HeartbeatThead(zmqContext, ClientAddress, connectionSessionId);
-					heartbeatThread.ServerVanished += OnServerVanished;
-					new Thread(heartbeatThread.Run).Start();
-
-					notificationThread = new NotificationThread(zmqContext, ClientAddress, connectionSessionId);
-
-					notificationThread.NewDomainEventAvailable          += OnNewDomainEventAvailable;
-					notificationThread.NewPatientAvailable              += OnNewPatientAvailable;
-					notificationThread.UpdatedPatientAvailable          += OnUpdatedPatientAvailable;
-					notificationThread.NewTherapyPlaceTypeAvailable     += OnNewTherapyPlaceTypeAvailable;
-					notificationThread.UpdatedTherapyPlaceTypeAvailable += OnUpdatedTherapyPlaceTypeAvailable;
-
-					new Thread(notificationThread.Run).Start();
+					RunHeartbeatThread(connectionSessionId);
+					RunNotificationThread(connectionSessionId);
 					
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
 				}
@@ -242,57 +313,27 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 				{
 					connectionInfoVariable.Value = new ConnectionInfo(connectionSessionId, null);
 
-
-					notificationThread = new NotificationThread(zmqContext, ClientAddress, connectionSessionId);
-
-					notificationThread.NewDomainEventAvailable          += OnNewDomainEventAvailable;
-					notificationThread.NewPatientAvailable              += OnNewPatientAvailable;
-					notificationThread.UpdatedPatientAvailable          += OnUpdatedPatientAvailable;
-					notificationThread.NewTherapyPlaceTypeAvailable     += OnNewTherapyPlaceTypeAvailable;
-					notificationThread.UpdatedTherapyPlaceTypeAvailable += OnUpdatedTherapyPlaceTypeAvailable;
-
-					new Thread(notificationThread.Run).Start();
+					RunNotificationThread(connectionSessionId);
 					
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
 				}
 			);
 		}
 		private void OnServerVanished()
-		{
-			if (heartbeatThread != null)
-				heartbeatThread.ServerVanished -= OnServerVanished;
-
-			notificationThread.NewDomainEventAvailable          -= OnNewDomainEventAvailable;
-			notificationThread.NewPatientAvailable              -= OnNewPatientAvailable;
-			notificationThread.UpdatedPatientAvailable          -= OnUpdatedPatientAvailable;
-			notificationThread.NewTherapyPlaceTypeAvailable     -= OnNewTherapyPlaceTypeAvailable;
-			notificationThread.UpdatedTherapyPlaceTypeAvailable -= OnUpdatedTherapyPlaceTypeAvailable;
+		{							
+			CleanUpAfterDisconnection();
 
 			if (!ConnectionWasTerminated)
 			{				
-				ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost);
-
-				CleanUpAfterDisconnection();
+				ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost);				
 			}
 		}
-
-		private void OnUpdatedTherapyPlaceTypeAvailable (TherapyPlaceType therapyPlaceType) { UpdatedTherapyPlaceTypeAvailable?.Invoke(therapyPlaceType); }
-		private void OnNewTherapyPlaceTypeAvailable     (TherapyPlaceType therapyPlaceType) { NewTherapyPlaceTypeAvailable?.Invoke(therapyPlaceType);     }
-		private void OnUpdatedPatientAvailable          (Patient patient)                   { UpdatedPatientAvailable?.Invoke(patient);                   }
-		private void OnNewPatientAvailable              (Patient patient)                   { NewPatientAvailable?.Invoke(patient);                       }
-		private void OnNewDomainEventAvailable          (DomainEvent domainEvent)           { NewDomainEventAvailable?.Invoke(domainEvent);               }
-
+		
 		private void CleanUpAfterDisconnection()
-		{
-			heartbeatThread?.Stop();
-			heartbeatThread = null;
-
-			notificationThread?.Stop();
-			notificationThread = null;
-
-			universalRequestThread?.Stop();
-			universalRequestThread = null;
-			requestWorkQueue = null;
+		{						
+			StopHeartbeatThread();
+			StopNotificationThread();
+			StopUniversalRequestThread();
 		}
 
 		protected override void CleanUp()

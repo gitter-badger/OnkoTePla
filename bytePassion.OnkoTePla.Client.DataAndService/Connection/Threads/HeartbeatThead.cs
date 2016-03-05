@@ -34,9 +34,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		}
 
 		public void Run ()
-		{		
+		{
 			using (var socket = context.CreateResponseSocket())
 			{
+				socket.Options.Linger = TimeSpan.Zero;
+				
 				socket.Bind(clientAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.Heartbeat);
 
 				var timoutCounter = 0;
@@ -62,7 +64,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 						socket.SendNetworkMsg(new HeartbeatResponse(heartbeatRequest.SessionId));
 					}
 				}			
-			}			
+			}
 		}
 
 		public void Stop ()

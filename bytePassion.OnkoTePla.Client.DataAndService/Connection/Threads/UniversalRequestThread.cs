@@ -1,3 +1,4 @@
+using System;
 using bytePassion.Lib.ConcurrencyLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling;
@@ -31,6 +32,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		{
 			using (var socket = context.CreateRequestSocket())
 			{
+				socket.Options.Linger = TimeSpan.Zero;
+
 				socket.Connect(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.Request);
 
 				while (!stopRunning)
@@ -42,7 +45,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 
 					workItem.HandleRequest(socket);
 				}									
-			}							
+			}			
 		}
 
 		public void Stop()

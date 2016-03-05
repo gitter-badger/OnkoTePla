@@ -43,6 +43,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		{
 			using (var socket = context.CreatePullSocket())
 			{
+				socket.Options.Linger = TimeSpan.Zero;
+
 				socket.Bind(clientAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.Notification);
 				
 				while (!stopRunning)
@@ -104,7 +106,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 							throw new ArgumentException();
 					}
 				}
-			}
+			}			
 		}
 
 		public void Stop ()

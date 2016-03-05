@@ -35,7 +35,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.Threads
 			IsRunning = true;
 
 			using (var socket = context.CreateResponseSocket())
-			{				
+			{
+				socket.Options.Linger = TimeSpan.Zero;
+
 				socket.Bind(serverAddress.ZmqAddress + ":" + GlobalConstants.TcpIpPort.Request);
 
 				while (!stopRunning)
