@@ -18,7 +18,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 		private readonly IClientReadModelRepository readModelRepository;		
 		private readonly IViewModelCommunication viewModelCommunication;				
 		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
-		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;				
+		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;
+		private readonly ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable;
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 		private readonly ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder;
 
@@ -27,6 +28,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 											   IViewModelCommunication viewModelCommunication,
 											   ISharedStateReadOnly<Size> gridSizeVariable, 
 											   ISharedStateReadOnly<Guid?> roomFilterVariable,
+											   ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable,
 											   IAppointmentViewModelBuilder appointmentViewModelBuilder, 
 											   ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 											   
@@ -35,7 +37,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 			this.readModelRepository = readModelRepository;			
 			this.viewModelCommunication = viewModelCommunication;						
 			this.gridSizeVariable = gridSizeVariable;
-			this.roomFilterVariable = roomFilterVariable;			
+			this.roomFilterVariable = roomFilterVariable;
+			this.displayedMedicalPracticeVariable = displayedMedicalPracticeVariable;
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.therapyPlaceRowViewModelBuilder = therapyPlaceRowViewModelBuilder;
 		}
@@ -57,7 +60,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 																											       viewModelCommunication,
 																											       gridSizeVariable,
 																											       roomFilterVariable,
-																											       appointmentViewModelBuilder,
+																												   displayedMedicalPracticeVariable,
+																												   appointmentViewModelBuilder,
 																												   readModel,
 																												   therapyPlaceRowViewModels,
 																											       errorCallback));

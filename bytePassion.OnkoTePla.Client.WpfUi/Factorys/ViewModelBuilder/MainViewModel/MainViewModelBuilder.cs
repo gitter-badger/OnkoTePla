@@ -147,7 +147,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                                       viewModelCommunication,
                                                                                       gridSizeVariable,
                                                                                       roomFilterVariable,
-                                                                                      appointmentViewModelBuilder,
+																					  selectedMedicalPracticeIdVariable,
+																					  appointmentViewModelBuilder,
                                                                                       therapyPlaceRowViewModelBuilder);
 			
             var addAppointmentDialogWindowBuilder = new AddAppointmentDialogWindowBuilder(patientRepository,

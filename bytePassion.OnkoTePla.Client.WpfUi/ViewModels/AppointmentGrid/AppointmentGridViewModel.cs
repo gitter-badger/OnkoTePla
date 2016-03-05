@@ -7,9 +7,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Notification;
-using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
-using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
@@ -31,7 +29,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		private readonly ClientMedicalPracticeData medicalPractice;		
 		private readonly IViewModelCommunication viewModelCommunication;		
 		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
-		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;			    
+		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;
+		private readonly ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable;
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 		private readonly Action<string> errorCallback;
 		  
@@ -44,6 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 										IViewModelCommunication viewModelCommunication,
                                         ISharedStateReadOnly<Size> gridSizeVariable,
 										ISharedStateReadOnly<Guid?> roomFilterVariable,
+										ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable,
 										IAppointmentViewModelBuilder appointmentViewModelBuilder,										
 										AppointmentsOfADayReadModel readModel,
 										IEnumerable<ITherapyPlaceRowViewModel> therapyPlaceRowViewModels,
@@ -52,7 +52,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			this.medicalPractice = medicalPractice;			
 			this.viewModelCommunication = viewModelCommunication;
 		    this.gridSizeVariable = gridSizeVariable;
-		    this.roomFilterVariable = roomFilterVariable;            		
+		    this.roomFilterVariable = roomFilterVariable;
+			this.displayedMedicalPracticeVariable = displayedMedicalPracticeVariable;
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.readModel = readModel;
 			this.errorCallback = errorCallback;
@@ -87,40 +88,46 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		}
 
 		private void OnGlobalRoomFilterVariableChanged(Guid? newRoomFilter)
-		{			
-			if (newRoomFilter == null)
+		{
+			if (IsActive)
 			{
-				TherapyPlaceRowViewModels.Do(viewModel =>
+				if (displayedMedicalPracticeVariable.Value == medicalPractice.Id)
 				{
-					viewModelCommunication.SendTo(
-						Constants.TherapyPlaceRowViewModelCollection,
-						viewModel.Identifier,
-						new SetVisibility(true) 	
-					);                             
-				});
-			}
-			else
-			{
-				TherapyPlaceRowViewModels.Do(viewModel =>
-				{
-					viewModelCommunication.SendTo(
-						Constants.TherapyPlaceRowViewModelCollection,
-						viewModel.Identifier,
-						new SetVisibility(false)
-					);
-				});
-				
-				medicalPractice.GetRoomById(newRoomFilter.Value)
-							   .TherapyPlaces
-							   .Select(therapyPlace => therapyPlace.Id)
-							   .Do(id =>
-							       {
-									   viewModelCommunication.SendTo(
-											Constants.TherapyPlaceRowViewModelCollection,
-											new TherapyPlaceRowIdentifier(Identifier, id), 
-											new SetVisibility(true)
-									   );
-								   });								
+					if (newRoomFilter == null)
+					{
+						TherapyPlaceRowViewModels.Do(viewModel =>
+						{
+							viewModelCommunication.SendTo(
+								Constants.TherapyPlaceRowViewModelCollection,
+								viewModel.Identifier,
+								new SetVisibility(true)
+								);
+						});
+					}
+					else
+					{
+						TherapyPlaceRowViewModels.Do(viewModel =>
+						{
+							viewModelCommunication.SendTo(
+								Constants.TherapyPlaceRowViewModelCollection,
+								viewModel.Identifier,
+								new SetVisibility(false)
+								);
+						});
+
+						medicalPractice.GetRoomById(newRoomFilter.Value)
+									   .TherapyPlaces
+									   .Select(therapyPlace => therapyPlace.Id)								   
+									   .Do(id =>
+										   {
+								   				viewModelCommunication.SendTo(
+								   					Constants.TherapyPlaceRowViewModelCollection,
+								   					new TherapyPlaceRowIdentifier(Identifier, id),
+								   					new SetVisibility(true)
+								   				);
+										   });
+					}
+				}
 			}
 		}
 
@@ -204,6 +211,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		{
 			IsActive = true;
 			OnGridSizeChanged(gridSizeVariable.Value);
+			OnGlobalRoomFilterVariableChanged(roomFilterVariable.Value);
 		}
 
 		public void Process(Deactivate message)
