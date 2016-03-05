@@ -45,6 +45,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 			connectionService.NewSessionStarted += OnNewSessionStarted;
 			connectionService.SessionTerminated += OnSessionTerminated;
 			connectionService.LoggedInUserUpdated += OnLoggedInUserUpdated;
+
+			IsConnectionActive = true; // TODO: just for testing
 	    }
 
 		private void OnLoggedInUserUpdated(SessionInfo sessionInfo)
