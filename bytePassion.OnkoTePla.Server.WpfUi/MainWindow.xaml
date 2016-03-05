@@ -2,13 +2,15 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Converter"
-                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Enums"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+					  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:converter="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Converter"                      
+                      xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Enums"                      
                       xmlns:panels="clr-namespace:bytePassion.Lib.WpfLib.Panels;assembly=bytePassion.Lib"
                       xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow"
-                      xmlns:views="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Views"
+                      xmlns:views="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Views"                      
+                      xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Behaviors"
                       Title="MainWindow"
                       Width="1300"
                       Height="900"
@@ -25,6 +27,11 @@
         <converter:MainPageToIntConverter x:Key="MainPageToIntConverter" />
     </Window.Resources>
 
+	<i:Interaction.Behaviors>
+		<behaviors:ClosingBehavior CloseWindowCommand="{Binding CloseApplication}"
+								   CheckClosing="{Binding CheckClosing}"/>
+	</i:Interaction.Behaviors>
+	
     <Grid>
 
         <Grid.ColumnDefinitions>

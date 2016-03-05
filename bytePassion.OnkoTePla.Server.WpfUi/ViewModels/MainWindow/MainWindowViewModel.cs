@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
@@ -24,8 +27,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 		private readonly ISharedStateWriteOnly<MainPage> selectedPageVariable;
 
 		private MainPage selectedPage;
+		private bool checkClosing;
 
-        public MainWindowViewModel(IOverviewPageViewModel overviewPageViewModel, 
+		public MainWindowViewModel(IOverviewPageViewModel overviewPageViewModel, 
                                    IConnectionsPageViewModel connectionsPageViewModel,
                                    IUserPageViewModel userPageViewModel,
                                    ILicencePageViewModel licencePageViewModel, 
@@ -50,8 +54,31 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
             AboutPageViewModel             = aboutPageViewModel;
 	        TherapyPlaceTypesPageViewModel = therapyPlaceTypesPageViewModel;
 
-	        SwitchToPage = new ParameterrizedCommand<MainPage>(page => SelectedPage = page);			
+	        SwitchToPage = new ParameterrizedCommand<MainPage>(page => SelectedPage = page);
+			CloseApplication = new Command(DoCloseApplication);
+
+			CheckClosing = true;
         }
+
+		private void DoCloseApplication()
+		{
+			ConnectionsPageViewModel.IsConnectionActive = false;
+			CheckClosing = false;
+
+			Application.Current.Dispatcher.DelayInvoke(CloseWindow, TimeSpan.FromSeconds(3));
+		}
+
+		private static void CloseWindow()
+		{
+			var windows = Application.Current.Windows
+											 .OfType<WpfUi.MainWindow>()
+											 .ToList();
+
+			if (windows.Count == 1)
+				windows[0].Close();
+			else
+				throw new Exception("inner error");
+		}
 
 		public ICommand SwitchToPage { get; }
 
@@ -65,7 +92,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 	        }
         }
 
-        public IOverviewPageViewModel          OverviewPageViewModel          { get; }
+		public ICommand CloseApplication { get; }
+
+		public bool CheckClosing
+		{
+			get { return checkClosing; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref checkClosing, value); }
+		}
+
+		public IOverviewPageViewModel          OverviewPageViewModel          { get; }
         public IConnectionsPageViewModel       ConnectionsPageViewModel       { get; }
         public IUserPageViewModel              UserPageViewModel              { get; }
         public ILicencePageViewModel           LicencePageViewModel           { get; }
