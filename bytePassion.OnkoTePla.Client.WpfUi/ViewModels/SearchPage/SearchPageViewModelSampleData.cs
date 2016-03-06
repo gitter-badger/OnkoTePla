@@ -46,6 +46,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 			SelectedPatient = "John Doe";
 			ShowPreviousAppointments = true;
+			NoAppointmentsAvailable = true;
 		}
 
 		public ICommand DeleteAppointment { get; } = null;
@@ -55,6 +56,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 		public bool ShowPreviousAppointments { get; set; }
 
+		public bool NoAppointmentsAvailable { get; }
 		public string SelectedPatient { get; }
 
 		public ObservableCollection<AppointmentTransferData> DisplayedAppointments { get; }

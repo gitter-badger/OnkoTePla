@@ -54,6 +54,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 		private AppointmentsOfAPatientReadModel currentReadModel;
 		private string selectedPatient;
+		private bool showPreviousAppointments;
+		private bool noAppointmentsAvailable;
 
 		public SearchPageViewModel(IPatientSelectorViewModel patientSelectorViewModel,
 								   ISharedStateReadOnly<Patient> selectedPatientVariable,
@@ -71,6 +73,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 			this.medicalPracticeRepository = medicalPracticeRepository;
 			this.errorCallBack = errorCallBack;			
 			this.selectedDateVariable = selectedDateVariable;
+
+			NoAppointmentsAvailable = false;
 
 			selectedPatientVariable.StateChanged += OnSelectedPatientVariableChanged;
 
@@ -143,6 +147,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 				DisplayedAppointments.Clear();
 			}
 
+			ShowPreviousAppointments = false;
+
 			if (patient != null)
 			{
 				readModelRepository.RequestAppointmentsOfAPatientReadModel(
@@ -151,7 +157,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 						Application.Current.Dispatcher.Invoke(() =>
 						{
 							currentReadModel = patientReadModel;						
-							currentReadModel.Appointments.Do(DisplayedAppointments.Add);
+							currentReadModel.Appointments.Where(appointment => appointment.Day >= TimeTools.Today())
+														 .Do(DisplayedAppointments.Add);
+
+							CheckDisplayedAppointmentCount();
+
 							currentReadModel.AppointmentChanged += OnCurrentReadModelAppointmentsChanged;
 
 							DisplayedAppointments.Sort(new AppointmentSorter());
@@ -194,12 +204,52 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 			
 		}
 
+		private void CheckDisplayedAppointmentCount()
+		{
+			if (DisplayedAppointments != null)
+			{
+				NoAppointmentsAvailable = DisplayedAppointments.Count == 0;
+			}
+		}
+		
 		public ICommand DeleteAppointment { get; }
 		public ICommand ModifyAppointment { get; }		
 
 		public IPatientSelectorViewModel PatientSelectorViewModel { get; }
 
-		public bool ShowPreviousAppointments { get; set; }
+		public bool ShowPreviousAppointments
+		{
+			get { return showPreviousAppointments; }
+			set
+			{
+				if (showPreviousAppointments == value)
+					return;
+
+				if (value)
+				{
+					currentReadModel.Appointments.Where(appointment => !DisplayedAppointments.Contains(appointment))
+												 .Do(appointment => DisplayedAppointments.Add(appointment));
+
+					DisplayedAppointments.Sort(new AppointmentSorter());					
+				}
+				else
+				{
+					DisplayedAppointments.Where(appointment => appointment.Day < TimeTools.Today())
+										 .ToList()
+										 .Do(appointment => DisplayedAppointments.Remove(appointment));
+				}
+
+				CheckDisplayedAppointmentCount();
+
+				PropertyChanged.ChangeAndNotify(this, ref showPreviousAppointments, value);
+			}
+		}
+
+		public bool NoAppointmentsAvailable
+		{
+			get { return noAppointmentsAvailable; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref noAppointmentsAvailable, value); }
+		}
 
 		public string SelectedPatient
 		{

@@ -14,7 +14,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		IPatientSelectorViewModel PatientSelectorViewModel { get; }
 
 		bool ShowPreviousAppointments { get; set; }
-
+		bool NoAppointmentsAvailable { get; }
 		string SelectedPatient { get; }
 		
 		ObservableCollection<AppointmentTransferData> DisplayedAppointments { get; }
