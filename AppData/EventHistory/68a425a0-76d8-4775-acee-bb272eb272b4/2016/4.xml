@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<eventStreams>
+  <eventStream count="4" date="06.04.2016" configVersion="44" MedicalPracticeId="68a425a0-76d8-4775-acee-bb272eb272b4">
+    <event aggregateVersion="0" userId="f0d6a641-8865-425a-ac69-9de281c218b9" patientId="f6aefaf6-390a-4d09-956d-26151bda6598" timeStampDate="06.03.2016" timeStampTime="16:02:57" actionTag="RegularAction">
+      <appointmentAddedEvent description="6" therapyPlaceId="c4043994-7fa4-4956-b61d-15588bda6bc7" startTime="08:00:00" endTime="10:00:00" appointmentId="969c7111-cb9a-41e9-a3c2-1977f94a45a4" />
+    </event>
+    <event aggregateVersion="1" userId="f0d6a641-8865-425a-ac69-9de281c218b9" patientId="a472d107-3976-4d13-bf11-a21ee18ebf94" timeStampDate="06.03.2016" timeStampTime="16:03:06" actionTag="RegularAction">
+      <appointmentAddedEvent description="7" therapyPlaceId="17fb6965-d4e6-44e1-83d0-f96a47783074" startTime="09:15:00" endTime="11:15:00" appointmentId="06613671-ab92-4151-aa17-2a0c07989038" />
+    </event>
+    <event aggregateVersion="2" userId="f0d6a641-8865-425a-ac69-9de281c218b9" patientId="9025a711-fc84-4cca-b52c-cbdb38c9a6bd" timeStampDate="06.03.2016" timeStampTime="16:03:16" actionTag="RegularAction">
+      <appointmentAddedEvent description="8" therapyPlaceId="60499a9b-fce2-4d97-b3ad-3416506a73cd" startTime="11:15:00" endTime="13:15:00" appointmentId="d93f8905-e8c8-4b4d-b962-1b3399705ccf" />
+    </event>
+    <event aggregateVersion="3" userId="f0d6a641-8865-425a-ac69-9de281c218b9" patientId="e25a82c0-8080-4dd6-a6f6-a574e586a4da" timeStampDate="06.03.2016" timeStampTime="16:03:32" actionTag="RegularAction">
+      <appointmentAddedEvent description="9" therapyPlaceId="bc343c77-8180-4a35-a527-bf162c250f3d" startTime="10:45:00" endTime="12:45:00" appointmentId="9b993618-4dfa-4477-9fc0-f7a60c493a5e" />
+    </event>
+  </eventStream>
+</eventStreams>

@@ -1000,4 +1000,6 @@
   <patient name="Daniel Nelson" birthday="12.07.1942" livingStatus="True" id="d1e02581-2d6d-496c-92be-24afac3caad2" externalId="noExternalID" />
   <patient name="Teresa Harris" birthday="23.11.1989" livingStatus="True" id="c2234e65-918d-40a4-ac75-6dfe69d1897f" externalId="noExternalID" />
   <patient name="George Sanders" birthday="04.11.1957" livingStatus="True" id="67ab98a4-0233-4a60-a11e-ba2f7b37d6ca" externalId="noExternalID" />
+  <patient name="Theresa Williams" birthday="15.12.1982" livingStatus="True" id="6ea27f63-889c-4530-a9aa-d84b731f88e0" externalId="noExternalID" />
+  <patient name="Pamela Powell" birthday="25.09.1943" livingStatus="True" id="52de7921-43df-4960-83f8-1ac6bf08e501" externalId="noExternalID" />
 </patients>

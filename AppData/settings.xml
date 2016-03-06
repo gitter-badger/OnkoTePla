@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <localSettings>
-  <autoConnection isAutoConnectionEnabled="false" autoConnectionClientAddress="127.0.0.1" autoConnectionServerAddress="127.0.0.1" />
+  <autoConnection isAutoConnectionEnabled="True" autoConnectionClientAddress="192.168.56.1" autoConnectionServerAddress="192.168.56.1" />
+  <lastSession lastUsedMedicalPracticeId="00000000-0000-0000-0000-000000000000" lastLoggedInUser="f0d6a641-8865-425a-ac69-9de281c218b9" />
 </localSettings>

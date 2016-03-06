@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<metaDataFiles>
+  <metaData firstAppointmentDate="22.03.2016" lastAppointmentDate="06.04.2016" medicalPracticeId="68a425a0-76d8-4775-acee-bb272eb272b4">
+    <appointmentsForPatient count="5">
+      <patientInfo patientId="a472d107-3976-4d13-bf11-a21ee18ebf94" count="3">
+        <patientDate date="22.03.2016" />
+        <patientDate date="23.03.2016" />
+        <patientDate date="06.04.2016" />
+      </patientInfo>
+      <patientInfo patientId="e25a82c0-8080-4dd6-a6f6-a574e586a4da" count="2">
+        <patientDate date="22.03.2016" />
+        <patientDate date="06.04.2016" />
+      </patientInfo>
+      <patientInfo patientId="9025a711-fc84-4cca-b52c-cbdb38c9a6bd" count="2">
+        <patientDate date="22.03.2016" />
+        <patientDate date="06.04.2016" />
+      </patientInfo>
+      <patientInfo patientId="154190d8-8788-47cd-a83e-54129a934776" count="1">
+        <patientDate date="23.03.2016" />
+      </patientInfo>
+      <patientInfo patientId="f6aefaf6-390a-4d09-956d-26151bda6598" count="1">
+        <patientDate date="06.04.2016" />
+      </patientInfo>
+    </appointmentsForPatient>
+    <appointmentExistingIndex count="3">
+      <existanceInfo date="22.03.2016" count="3" />
+      <existanceInfo date="23.03.2016" count="2" />
+      <existanceInfo date="06.04.2016" count="4" />
+    </appointmentExistingIndex>
+  </metaData>
+</metaDataFiles>
