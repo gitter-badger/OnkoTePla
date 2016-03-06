@@ -123,16 +123,18 @@
     <Compile Include="Repositories\JsonSerializationDoubles\TherapyPlaceTypeSerializationDouble.cs" />
     <Compile Include="Repositories\JsonSerializationDoubles\TimeSerializationDouble.cs" />
     <Compile Include="Repositories\JsonSerializationDoubles\UserSerializationDouble.cs" />
-    <Compile Include="Repositories\StreamManagement\IStreamManagementService.cs" />
-    <Compile Include="Repositories\StreamManagement\IStreamMetaDataService.cs" />
-    <Compile Include="Repositories\StreamManagement\IStreamPersistenceService.cs" />
-    <Compile Include="Repositories\StreamManagement\PracticeMetaData.cs" />
-    <Compile Include="Repositories\StreamManagement\StreamManagementService.cs" />
-    <Compile Include="Repositories\StreamManagement\StreamMetaDataService.cs" />
-    <Compile Include="Repositories\StreamManagement\StreamPersistenceService.cs" />
+    <Compile Include="Repositories\StreamMetaData\IPracticeMetaData.cs" />
+    <Compile Include="Repositories\StreamMetaData\IStreamMetaDataService.cs" />
+    <Compile Include="Repositories\StreamPersistance\IStreamPersistenceService.cs" />
+    <Compile Include="Repositories\StreamMetaData\PracticeMetaData.cs" />
+    <Compile Include="Repositories\StreamMetaData\StreamMetaDataService.cs" />
+    <Compile Include="Repositories\StreamPersistance\StreamPersistenceService.cs" />
+    <Compile Include="Repositories\XMLDataStores\IXmlEventStreamPersistanceService.cs" />
     <Compile Include="Repositories\XMLDataStores\XmlConfigurationDataStore.cs" />
+    <Compile Include="Repositories\XMLDataStores\XmlEventStreamPersistanceService.cs" />
     <Compile Include="Repositories\XMLDataStores\XmlEventStreamDataStore.cs" />
     <Compile Include="Repositories\XMLDataStores\XmlPatientDataStore.cs" />
+    <Compile Include="Repositories\XMLDataStores\XmlPracticeMetaDataPersistanceService.cs" />
     <Compile Include="SessionRepository\CurrentSessionsInfo.cs" />
     <Compile Include="SessionRepository\ICurrentSessionsInfo.cs" />
   </ItemGroup>

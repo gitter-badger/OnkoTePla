@@ -20,14 +20,10 @@
 		public const uint ServerWaitTimeForHeartbeatResponse =  2000;    //			"
 
 		public const string PatientPersistenceFile          = @"..\..\..\AppData\patients.xml";		
-		public const string ConfigPersistenceFile           = @"..\..\..\AppData\config.xml";
-		public const string EventHistoryPersistenceFile     = @"..\..\..\AppData\eventHistory.xml";
+		public const string ConfigPersistenceFile           = @"..\..\..\AppData\config.xml";		
 		public const string LocalSettingsPersistenceFile    = @"..\..\..\AppData\settings.xml";
-
-		//public const string PatientJsonPersistenceFile      = @"..\..\..\AppData\patients.json";
-		//public const string ConfigJsonPersistenceFile       = @"..\..\..\AppData\config.json";		
-		//public const string EventHistoryJsonPersistenceFile = @"..\..\..\AppData\eventHistory.json";
-
-        public const string EventHistoryBasePath = @"..\..\..\AppData\EventHistory";
+		public const string MetaDataPersistanceFile         = @"..\..\..\AppData\metaData.xml";
+		
+		public const string EventHistoryBasePath            = @"..\..\..\AppData\EventHistory";		
     }
 }

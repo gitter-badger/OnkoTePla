@@ -46,7 +46,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 								return;
 							}
 							
-							commandBus.SendCommand(new AddAppointment(aggregateId, 
+							commandBus.SendCommand(new AddAppointment(appointmentSet.Identifier, 
 																	  appointmentSet.AggregateVersion, 
 																	  session.LoggedInUser.Id, 
 																	  actionTag, 
@@ -269,7 +269,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 								return;
 							}
 
-							commandBus.SendCommand(new DeleteAppointment(location,
+							commandBus.SendCommand(new DeleteAppointment(appointmentSet.Identifier,
 																		 appointmentSet.AggregateVersion,
 																		 session.LoggedInUser.Id,
 																		 patientId,

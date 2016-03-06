@@ -11,6 +11,6 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 		bool AddEvents (IEnumerable<DomainEvent> newEvents);
 
 		EventStream<Guid>                GetEventStreamForAPatient(Guid patientId);
-		EventStream<AggregateIdentifier> GetEventStreamForADay     (AggregateIdentifier id);
+		EventStream<AggregateIdentifier> GetEventStreamForADay    (AggregateIdentifier id);
 	}
 }

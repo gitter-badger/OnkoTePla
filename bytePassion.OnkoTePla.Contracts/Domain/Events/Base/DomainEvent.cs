@@ -3,14 +3,14 @@ using bytePassion.Lib.TimeLib;
 
 namespace bytePassion.OnkoTePla.Contracts.Domain.Events.Base
 {
-	public class DomainEvent
+	public abstract class DomainEvent
 	{
-		public DomainEvent (AggregateIdentifier aggregateId, 
-							uint aggregateVersion, 
-							Guid userId, 
-							Guid patientId, 
-							Tuple<Date, Time> timeStamp,
-							ActionTag actionTag)
+		protected DomainEvent (AggregateIdentifier aggregateId, 
+							   uint aggregateVersion, 
+							   Guid userId, 
+							   Guid patientId, 
+							   Tuple<Date, Time> timeStamp,
+							   ActionTag actionTag)
 		{
 			AggregateId = aggregateId;
 			AggregateVersion = aggregateVersion;

@@ -1,66 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection;
-using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
-using bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamManagement;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamMetaData;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamPersistance;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 {
 	public class EventStore : IEventStore
 	{
-		private readonly IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService;
-       // private readonly StreamManagementService streamManager;
-       // private readonly IStreamMetaDataService metaDataService;
-        private IList<EventStream<AggregateIdentifier>> eventStreams;
-		private readonly IConfigurationReadRepository config;
+		private readonly IStreamPersistenceService streamPersistenceService;
+		private readonly IStreamMetaDataService metaDataService;
 		private readonly IConnectionService connectionService;
 
-		public EventStore (IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>> persistenceService ,
-					//	  StreamManagementService streamManager,
-                       //   IStreamMetaDataService metaDataService, 
-						  IConfigurationReadRepository config, 
+
+		public EventStore(IStreamPersistenceService streamPersistenceService, 
+						  IStreamMetaDataService metaDataService, 
 						  IConnectionService connectionService)
 		{
-			eventStreams = new List<EventStream<AggregateIdentifier>>();
-			this.persistenceService = persistenceService;
-		   // this.metaDataService = metaDataService;
-           // this.streamManager = streamManager;
-            this.config = config;
+			this.streamPersistenceService = streamPersistenceService;
+			this.metaDataService = metaDataService;
 			this.connectionService = connectionService;
 		}
 
+
 		public EventStream<AggregateIdentifier> GetEventStreamForADay (AggregateIdentifier id)
 		{
-			var eventStream = eventStreams.FirstOrDefault(evenstream => evenstream.Id == id);
-
-			if (eventStream == null)
-			{
-				eventStream = new EventStream<AggregateIdentifier>(new AggregateIdentifier(id.Date, 
-																	                       id.MedicalPracticeId,
-																	                       config.GetLatestVersionFor(id.MedicalPracticeId)));
-				eventStreams.Add(eventStream);
-			}
-
-			return eventStream;
+			return streamPersistenceService.GetEventStream(id);			
 		}
 
-//        public EventStream<AggregateIdentifier> GetEventStreamForADay(AggregateIdentifier id)
-//        {
-//            var eventStream = eventStreams.FirstOrDefault(evenstream => evenstream.Id == id);
-//
-//            if (eventStream == null)
-//            {
-//                eventStream = streamManager.GetEventStream(id);
-//            	eventStreams.Add(eventStream);
-//            }
-//
-//            return eventStream;
-//        }
-       
+		public EventStream<Guid> GetEventStreamForAPatient (Guid patientId)
+		{
+			var eventStreams = metaDataService.GetDaysForPatient(patientId)
+											  .Select(GetEventStreamForADay);
+
+			var eventsForPatient = eventStreams.SelectMany(stream => stream.Events)
+											   .Where(@event => @event.PatientId == patientId);
+
+			return new EventStream<Guid>(patientId, eventsForPatient);
+		}
+
 		public bool AddEvents(IEnumerable<DomainEvent> newEvents)
 		{
 			var errorOccured = false;
@@ -78,9 +59,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 					errorOccured = true;
 					break;
 				}
-
-                // trigger MetaDataUpdate
-                //metaDataService.UpdateMetaData(domainEvent);
+                
+                metaDataService.UpdateMetaData(domainEvent);
 
 				eventStream.AddEvent(domainEvent);
 				connectionService.SendEventNotification(domainEvent);
@@ -88,27 +68,17 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 
 			return !errorOccured;
 		}
-
-		public EventStream<Guid> GetEventStreamForAPatient(Guid patientId)
-		{
-			var eventsForPatient = eventStreams.SelectMany(stream => stream.Events)
-				                               .Where(@event => @event.PatientId == patientId);
-
-			return new EventStream<Guid>(patientId, eventsForPatient);
-		}
-
+		
 		public void PersistRepository()
 		{
-			persistenceService.Persist(eventStreams);
-            //streamManager.SaveStreams(eventStreams);
-           // metaDataService.PersistMetaData();
+			streamPersistenceService.PersistStreams();
+			metaDataService.PersistRepository();			            
 		}
 
 		public void LoadRepository()
 		{
-			eventStreams = persistenceService.Load().ToList();
-		    //metaDataService.Initialize();
-		    //eventStreams = streamManager.LoadInitialEventStreams();
+			streamPersistenceService.FillCacheInitially();
+			metaDataService.LoadRepository();	
 		}
 	}
 }

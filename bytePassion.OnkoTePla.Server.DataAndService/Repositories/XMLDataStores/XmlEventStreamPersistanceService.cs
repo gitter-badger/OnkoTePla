@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using bytePassion.Lib.TimeLib;
-using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Domain.Events;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
 {
-	public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
+	public class XmlEventStreamPersistanceService : IXmlEventStreamPersistanceService
 	{
 
 		private static XmlWriterSettings WriterSettings
@@ -51,15 +50,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
 		private const string TimeStampTimeAttribute         = "timeStampTime";
 		private const string TimeStampDateAttribute         = "timeStampDate";
 		private const string ActionTagAttribute             = "actionTag";
+		
 
-		private readonly string filename;
-
-		public XmlEventStreamDataStore(string filename)
-		{
-			this.filename = filename;			
-		}
-
-		public void Persist (IEnumerable<EventStream<AggregateIdentifier>> eventStreams)
+		public void Persist (IEnumerable<EventStream<AggregateIdentifier>> eventStreams, string filename)
 		{
 			var writer = XmlWriter.Create(filename, WriterSettings);
 
@@ -81,6 +74,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
 		private static void WriteEventStream (XmlWriter writer, EventStream<AggregateIdentifier> eventStream)
 		{
 			writer.WriteStartElement(EventStream);
+
 			writer.WriteAttributeString(CountAttribute, eventStream.EventCount.ToString());
 			writer.WriteAttributeString(DateAttribute, eventStream.Id.Date.ToString());
 			writer.WriteAttributeString(ConfigVersionAttribute, eventStream.Id.PracticeVersion.ToString());
@@ -103,10 +97,18 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
 			writer.WriteAttributeString(TimeStampDateAttribute,    @event.TimeStamp.Item1.ToString());
 			writer.WriteAttributeString(TimeStampTimeAttribute,    @event.TimeStamp.Item2.ToString());
 			writer.WriteAttributeString(ActionTagAttribute,        @event.ActionTag.ToString());
+
+			var addedEvent = @event as AppointmentAdded;
+			if (addedEvent != null)			
+				WriteEvent(writer, addedEvent);				
 			
-			if (@event is AppointmentAdded)    WriteEvent(writer, (AppointmentAdded)   @event);
-			if (@event is AppointmentReplaced) WriteEvent(writer, (AppointmentReplaced)@event);
-			if (@event is AppointmentDeleted)  WriteEvent(writer, (AppointmentDeleted) @event);
+			var replacedEvent = @event as AppointmentReplaced;
+			if (replacedEvent != null)
+				WriteEvent(writer, replacedEvent);
+
+			var deletedEvent = @event as AppointmentDeleted;
+			if (deletedEvent != null)
+				WriteEvent(writer, deletedEvent);
 					
 			writer.WriteEndElement();
 		}
@@ -147,7 +149,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
 			writer.WriteEndElement();
 		}
 
-		public IEnumerable<EventStream<AggregateIdentifier>> Load ()
+		public IEnumerable<EventStream<AggregateIdentifier>> Load (string filename)
 		{
 
 			IList<EventStream<AggregateIdentifier>> eventStreams = new List<EventStream<AggregateIdentifier>>();
