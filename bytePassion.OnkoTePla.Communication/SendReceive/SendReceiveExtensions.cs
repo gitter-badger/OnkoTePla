@@ -27,7 +27,7 @@ namespace bytePassion.OnkoTePla.Communication.SendReceive
 			{
 				sendSuccessful = socket.TrySend(ref outMsg, TimeSpan.FromMilliseconds(timeoutMilliSeconds), false);
 			}
-			catch (TerminatingException)
+			catch (Exception)
 			{
 				sendSuccessful = false;
 			}
@@ -45,7 +45,7 @@ namespace bytePassion.OnkoTePla.Communication.SendReceive
 			{
 				socket.TryReceive(ref inMsg, timeout);
 			}
-			catch (TerminatingException)
+			catch (Exception)
 			{
 				return null;
 			}
