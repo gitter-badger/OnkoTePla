@@ -45,23 +45,27 @@
                 BorderBrush="DarkGray"
                 BorderThickness="0,1,1,1">
 
-			<Grid>
+			<StackPanel Orientation="Horizontal">
 
+				<Image Source="{Binding PlaceTypeIcon}"
+					   VerticalAlignment="Center"
+					   Width="40"
+					   Height="25"
+					   Margin="20,0,0,0"/>
+				
 				<TextBlock HorizontalAlignment="Left"
                            VerticalAlignment="Center"
-						   Margin="40,0"
+						   Margin="4,0"
                            FontFamily="Segoe UI Semibold"
                            FontSize="18"
                            Text="{Binding TherapyPlaceName,
 									      Mode=OneTime}" />
 
-				<Image Source="{Binding PlaceTypeIcon}"
-					   HorizontalAlignment="Right"
-					   Margin="40,3"/>
+				
 
-			</Grid>
-			           
-        </Border>
+			</StackPanel>
+
+		</Border>
 
         <Border Grid.Column="1"
                 AllowDrop="True"
