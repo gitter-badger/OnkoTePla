@@ -9,5 +9,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 		ObservableCollection<RoomSelectorData> AvailableRoomFilters { get; }
 
 		RoomSelectorData SelectedRoomFilter { get; set; }
+
+
 	}
 }
