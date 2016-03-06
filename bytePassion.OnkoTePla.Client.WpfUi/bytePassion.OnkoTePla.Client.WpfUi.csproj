@@ -74,6 +74,7 @@
     </ApplicationDefinition>
     <Compile Include="Adorner\AdornerControl.cs" />
     <Compile Include="Behaviors\PasswordBoxRemovePassordOnDisabledBehavior.cs" />
+    <Compile Include="Behaviors\ResetRoomSelectionBehavior.cs" />
     <Compile Include="Computations\ConnectionStatusToBackgroundBrush.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Behaviors\AcceptAppointmentDropBehavior.cs" />

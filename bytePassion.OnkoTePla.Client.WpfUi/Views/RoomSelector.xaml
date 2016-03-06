@@ -6,6 +6,8 @@
              xmlns:converter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
              xmlns:roomSelector="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector"
              xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector.Helper"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Behaviors"
              d:DesignHeight="150"
              d:DesignWidth="300"
              mc:Ignorable="d">
@@ -75,6 +77,11 @@
                                             Mode=TwoWay,
                                             UpdateSourceTrigger=PropertyChanged}"
                      SelectionMode="Single">
+                <i:Interaction.Behaviors>
+                    <behaviors:ResetRoomSelectionBehavior>
+                        
+                    </behaviors:ResetRoomSelectionBehavior>
+                </i:Interaction.Behaviors>
                 <ListBox.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
