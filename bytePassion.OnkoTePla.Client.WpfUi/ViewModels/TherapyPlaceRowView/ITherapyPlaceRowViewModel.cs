@@ -21,8 +21,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 	{		
 		ObservableCollection<IAppointmentViewModel> AppointmentViewModels { get; }				
 		
-		string TherapyPlaceName { get; }
-		Color  RoomColor        { get; }	
+		string      TherapyPlaceName { get; }
+		Color       RoomColor        { get; }
+		ImageSource PlaceTypeIcon    { get; }	
 		
 		Time TimeSlotBegin { get; }		
 		Time TimeSlotEnd   { get; }	

@@ -4,6 +4,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.TherapyPlaceTypeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
@@ -18,18 +19,21 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPl
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
+		private readonly IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository;
 		private readonly AdornerControl adornerControl;
 		private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
 		private readonly ISharedStateReadOnly<Size> appointmentGridSizeVariable;
 
 		public TherapyPlaceRowViewModelBuilder(IViewModelCommunication viewModelCommunication,
 											   IClientMedicalPracticeRepository medicalPracticeRepository, 
+											   IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository,
 											   AdornerControl adornerControl, 
 											   ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
 											   ISharedStateReadOnly<Size> appointmentGridSizeVariable)
 		{
 			this.viewModelCommunication = viewModelCommunication;
 			this.medicalPracticeRepository = medicalPracticeRepository;
+			this.therapyPlaceTypeRepository = therapyPlaceTypeRepository;
 
 			this.adornerControl = adornerControl;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;
@@ -43,7 +47,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPl
 			medicalPracticeRepository.RequestMedicalPractice(
 				practice =>
 				{
-
 					var viewModels = new List<ITherapyPlaceRowViewModel>();
 
 					foreach (var room in rooms)
@@ -55,6 +58,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPl
 							var hoursOfOpeing = practice.HoursOfOpening;
 
 							var newViewModel = new ViewModels.TherapyPlaceRowView.TherapyPlaceRowViewModel(viewModelCommunication,
+																										   therapyPlaceTypeRepository,
 																										   therapyPlace,
 																										   room.DisplayedColor,
 																										   location,
@@ -62,7 +66,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPl
 																										   hoursOfOpeing.GetOpeningTime(location.PlaceAndDate.Date),
 																										   hoursOfOpeing.GetClosingTime(location.PlaceAndDate.Date),
 																										   appointmentModificationsVariable,
-																										   appointmentGridSizeVariable.Value.Width);
+																										   appointmentGridSizeVariable.Value.Width,
+																										   errorCallback);
 							viewModels.Add(newViewModel);
 						}
 					}

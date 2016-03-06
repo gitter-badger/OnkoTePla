@@ -6,6 +6,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.TherapyPlaceTypeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.LoginViewModel;
@@ -24,7 +25,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		private readonly ILocalSettingsRepository localSettingsRepository;
 		private readonly IClientPatientRepository patientRepository;
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;		
-		private readonly IClientReadModelRepository readModelRepository;		
+		private readonly IClientReadModelRepository readModelRepository;
+		private readonly IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository;
 		private readonly ICommandService commandService;
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISession session;			    	
@@ -33,7 +35,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
         public MainWindowBuilder(ILocalSettingsRepository localSettingsRepository,
 								 IClientPatientRepository patientRepository,
 								 IClientMedicalPracticeRepository medicalPracticeRepository,								 
-								 IClientReadModelRepository readModelRepository,								 
+								 IClientReadModelRepository readModelRepository,	
+								 IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository,							 
 								 ICommandService commandService,
                                  IViewModelCommunication viewModelCommunication,
 								 ISession session,								
@@ -42,7 +45,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 	        this.localSettingsRepository = localSettingsRepository;
 	        this.patientRepository = patientRepository;
 	        this.medicalPracticeRepository = medicalPracticeRepository;	        
-	        this.readModelRepository = readModelRepository;	        
+	        this.readModelRepository = readModelRepository;
+	        this.therapyPlaceTypeRepository = therapyPlaceTypeRepository;
 	        this.commandService = commandService;
 	        this.viewModelCommunication = viewModelCommunication;
 	        this.session = session;	        
@@ -59,7 +63,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
             var mainViewModelBuilder = new MainViewModelBuilder(medicalPracticeRepository,
 																readModelRepository,
-																patientRepository,																
+																patientRepository,
+																therapyPlaceTypeRepository,																
 																commandService, 
 																localSettingsRepository, 
                                                                 viewModelCommunication,

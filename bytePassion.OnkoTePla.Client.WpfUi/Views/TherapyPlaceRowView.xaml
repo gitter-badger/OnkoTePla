@@ -45,12 +45,22 @@
                 BorderBrush="DarkGray"
                 BorderThickness="0,1,1,1">
 
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontFamily="Segoe UI Semibold"
-                       FontSize="18"
-                       Text="{Binding TherapyPlaceName,
-									  Mode=OneTime}" />
+			<Grid>
+
+				<TextBlock HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+						   Margin="40,0"
+                           FontFamily="Segoe UI Semibold"
+                           FontSize="18"
+                           Text="{Binding TherapyPlaceName,
+									      Mode=OneTime}" />
+
+				<Image Source="{Binding PlaceTypeIcon}"
+					   HorizontalAlignment="Right"
+					   Margin="40,3"/>
+
+			</Grid>
+			           
         </Border>
 
         <Border Grid.Column="1"

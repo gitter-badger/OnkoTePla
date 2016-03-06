@@ -1,11 +1,15 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Media;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.SemanticTypes;
+using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.TherapyPlaceTypeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
@@ -21,14 +25,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 											  ITherapyPlaceRowViewModel
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
+		private readonly IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository;
 		private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
 		
 
 		private double gridWidth;
 		private bool isVisible;
-		private AppointmentModifications appointmentModifications;		
-		
-		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication, 									    
+		private AppointmentModifications appointmentModifications;
+		private ImageSource placeTypeIcon;
+
+		public TherapyPlaceRowViewModel(IViewModelCommunication viewModelCommunication,
+										IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository, 									    
 										TherapyPlace therapyPlace, 
 										Color roomDisplayColor,										
 										TherapyPlaceRowIdentifier identifier,
@@ -36,9 +43,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 										Time timeSlotBegin,
 										Time timeSlotEnd,
 										ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
-										Width initialGridWidth)
+										Width initialGridWidth,
+										Action<string> errorCallback)
 		{
 			this.viewModelCommunication = viewModelCommunication;
+			this.therapyPlaceTypeRepository = therapyPlaceTypeRepository;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;						
 			
 			IsVisible		      = true;
@@ -61,6 +70,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 			AdornerControl = adornerControl;
 
 			GridWidth = initialGridWidth;
+
+			therapyPlaceTypeRepository.RequestTherapyPlaceTypes(
+				placeType =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						PlaceTypeIcon = GetIconForTherapyPlaceType(placeType.IconType);
+					});					
+				},
+				therapyPlace.TypeId,
+				errorCallback
+			);
 		}
 		
 
@@ -73,8 +94,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 
 		public ObservableCollection<IAppointmentViewModel> AppointmentViewModels { get; }		
 		
-		public Color  RoomColor        { get; }		
-		public string TherapyPlaceName { get; }
+		public Color       RoomColor        { get; }		
+		public string      TherapyPlaceName { get; }
+
+		public ImageSource PlaceTypeIcon
+		{
+			get { return placeTypeIcon; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref placeTypeIcon, value); }
+		}
 
 		public Time TimeSlotBegin { get; }
 		public Time TimeSlotEnd   { get; }
@@ -117,6 +144,29 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 		public void Process (SetVisibility message)
 		{
 			IsVisible = message.Visible;
+		}
+
+		private static ImageSource GetIconForTherapyPlaceType(TherapyPlaceTypeIcon iconType)
+		{
+			const string basePath = "pack://application:,,,/bytePassion.OnkoTePla.Resources;component/Icons/TherapyPlaceType/";
+
+			switch (iconType)
+			{
+				case TherapyPlaceTypeIcon.BedType1:   return ImageLoader.LoadImage(new Uri(basePath + "bed01.png"));
+				case TherapyPlaceTypeIcon.BedType2:   return ImageLoader.LoadImage(new Uri(basePath + "bed02.png"));
+				case TherapyPlaceTypeIcon.BedType3:   return ImageLoader.LoadImage(new Uri(basePath + "bed03.png"));
+				case TherapyPlaceTypeIcon.BedType4:   return ImageLoader.LoadImage(new Uri(basePath + "bed04.png"));
+				case TherapyPlaceTypeIcon.BedType5:   return ImageLoader.LoadImage(new Uri(basePath + "bed05.png"));
+				case TherapyPlaceTypeIcon.ChairType1: return ImageLoader.LoadImage(new Uri(basePath + "chair01.png"));
+				case TherapyPlaceTypeIcon.ChairType2: return ImageLoader.LoadImage(new Uri(basePath + "chair02.png"));
+				case TherapyPlaceTypeIcon.ChairType3: return ImageLoader.LoadImage(new Uri(basePath + "chair03.png"));
+				case TherapyPlaceTypeIcon.ChairType4: return ImageLoader.LoadImage(new Uri(basePath + "chair04.png"));
+				case TherapyPlaceTypeIcon.ChairType5: return ImageLoader.LoadImage(new Uri(basePath + "chair05.png"));
+				case TherapyPlaceTypeIcon.None:       return ImageLoader.LoadImage(new Uri(basePath + "none.png"));
+
+				default:
+					throw new ArgumentException();
+			}			
 		}
 
         protected override void CleanUp()

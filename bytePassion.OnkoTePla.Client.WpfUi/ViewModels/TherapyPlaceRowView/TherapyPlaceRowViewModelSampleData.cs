@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
 using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
@@ -16,10 +17,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 {
 	internal class TherapyPlaceRowViewModelSampleData : ITherapyPlaceRowViewModel
 	{
+		private const string BasePath = "pack://application:,,,/bytePassion.OnkoTePla.Resources;component/Icons/TherapyPlaceType/";
+
 		public TherapyPlaceRowViewModelSampleData()
 		{
 			TherapyPlaceName = "place 1";
-			RoomColor = Colors.LightBlue;						
+			RoomColor = Colors.LightBlue;
+			PlaceTypeIcon = ImageLoader.LoadImage(new Uri(BasePath + "bed01.png"));
 
 			AppointmentViewModels = new ObservableCollection<IAppointmentViewModel>
 			{
@@ -37,12 +41,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 		
 		public ObservableCollection<IAppointmentViewModel> AppointmentViewModels { get; }			
 
-		public string TherapyPlaceName { get; }
-		public Color  RoomColor        { get; }
-		public Time   TimeSlotBegin    { get; }
-		public Time   TimeSlotEnd      { get; }
-		public double GridWidth        { get; }
-		public bool   IsVisible        { get; }
+		public string      TherapyPlaceName { get; }
+		public Color       RoomColor        { get; }
+		public ImageSource PlaceTypeIcon    { get; }
+		public Time        TimeSlotBegin    { get; }
+		public Time        TimeSlotEnd      { get; }
+		public double      GridWidth        { get; }
+		public bool        IsVisible        { get; }
 
 
 		public AppointmentModifications AppointmentModifications => null;
