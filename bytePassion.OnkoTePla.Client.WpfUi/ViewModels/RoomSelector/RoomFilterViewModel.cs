@@ -95,7 +95,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 			medicalPracticeRepository.RequestMedicalPractice(
 				medicalPractice =>
 				{
-					if (medicalPractice.Version == currentMedicalPractice?.Version)
+					if (medicalPractice.Id == currentMedicalPractice?.Id &&
+						medicalPractice.Version == currentMedicalPractice?.Version)
 						return;
 
 					Application.Current.Dispatcher.Invoke(() =>
@@ -128,7 +129,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 			get { return selectedRoomFilter; }
 			set
 			{
-				if (value == null) return; // TODO: weiß nicht genau warum das hier nötig ist ......
+				if (value == null) return; 
 
 				if (value != selectedRoomFilter)
 				{

@@ -98,7 +98,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 								Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 								viewModel.Identifier,
 								new SetVisibility(true)
-								);
+							);
 						});
 					}
 					else
@@ -109,7 +109,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 								Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 								viewModel.Identifier,
 								new SetVisibility(false)
-								);
+							);
 						});
 
 						medicalPractice.GetRoomById(newRoomFilter.Value)
