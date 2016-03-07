@@ -3,8 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class ConfirmChanges : ViewModelMessage
+	internal class ConfirmChanges : ViewModelMessage
     {
-
     }
 }

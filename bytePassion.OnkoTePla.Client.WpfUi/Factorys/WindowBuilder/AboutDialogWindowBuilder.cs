@@ -28,7 +28,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
         }
 
         public void DisposeWindow(AboutDialog buildedWindow)
-        {            
-        }
+        {
+			throw new NotImplementedException();
+		}
     }
 }

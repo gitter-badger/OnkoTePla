@@ -32,7 +32,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
         }
 
         public void DisposeWindow(EditDescription buildedWindow)
-        {            
-        }
+        {
+			throw new NotImplementedException();
+		}
     }
 }

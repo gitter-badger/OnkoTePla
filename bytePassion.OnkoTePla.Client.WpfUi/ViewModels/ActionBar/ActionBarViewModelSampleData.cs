@@ -15,11 +15,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
 	        NavigationAndLogoutButtonVisibility = true;
         }
 
-        public ICommand ShowOverview { get; } = null;
-        public ICommand ShowSearch   { get; } = null;
-        public ICommand ShowOptions  { get; } = null;
-        public ICommand Logout       { get; } = null;
-        public ICommand ShowAbout    { get; } = null;
+        public ICommand ShowOverview => null;
+        public ICommand ShowSearch   => null;
+        public ICommand ShowOptions  => null;
+        public ICommand Logout       => null;
+        public ICommand ShowAbout    => null;
 
 	    public bool NavigationAndLogoutButtonVisibility { get; }
 

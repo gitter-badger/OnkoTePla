@@ -1,21 +1,20 @@
-﻿using bytePassion.Lib.WpfLib.Adorner;
+﻿using System.Windows;
+using System.Windows.Documents;
+using bytePassion.Lib.WpfLib.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentViewDragAdorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Views;
-using System.Windows;
-using System.Windows.Documents;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Adorner
 {
-    public class AdornerControl 
-	{		
-		
+	internal class AdornerControl 
+	{				
 		private UIElementAdorner appointmentAdorner;
 		private IAppointmentViewDragAdornerViewModel adornerViewModel;
 
 		private double currentAdornerWidth;
 
-		public void CreateAdorner(string content, double width)
+		internal void CreateAdorner(string content, double width)
 		{
 			if (appointmentAdorner == null && ReferenceElement != null)
 			{
@@ -35,24 +34,24 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Adorner
 			}
 		}
 
-	    public UIElement ReferenceElement { get; set; }
-	
-		public void NewMousePositionForAdorner (Point newMousePosition)
+		internal UIElement ReferenceElement { get; set; }
+
+		internal void NewMousePositionForAdorner (Point newMousePosition)
 		{
 			appointmentAdorner.UpdatePosition(newMousePosition.X-(currentAdornerWidth / 2), newMousePosition.Y - 15);
 		}
 
-		public void ShowAdornerLikeDropIsPossible ()
+		internal void ShowAdornerLikeDropIsPossible ()
 		{
 			adornerViewModel.DropPossible = true;
 		}
 
-		public void ShowAdornerLikeDropIsNotPossible ()
+		internal void ShowAdornerLikeDropIsNotPossible ()
 		{
 			adornerViewModel.DropPossible = false;
 		}
 
-		public void DisposeAdorner ()
+		internal void DisposeAdorner ()
 		{
 			appointmentAdorner?.Destroy();
 			appointmentAdorner = null;

@@ -44,7 +44,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
             var selectedPatientVariable = new SharedState<Patient>();
 		    						
-			IPatientSelectorViewModel patientSelectorViewModel = new PatientSelectorViewModel(patientRepository, selectedPatientVariable, errorCallback);
+			IPatientSelectorViewModel patientSelectorViewModel = new PatientSelectorViewModel(patientRepository, 
+																							  selectedPatientVariable, 
+																							  errorCallback);
 
 			return new AddAppointmentDialog
 			       {

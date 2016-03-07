@@ -57,7 +57,7 @@
 											  Converter={StaticResource BoolToCollapsedVisibilityConverter}, 
 											  RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}" />
 
-        <views:NotificationServiceContainer Width="{x:Static global:Constants.NotificationServiceWidth}"
+        <views:NotificationServiceContainer Width="{x:Static global:Constants+Layout.NotificationServiceWidth}"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Top"
                                             DataContext="{Binding NotificationServiceContainerViewModel}" />

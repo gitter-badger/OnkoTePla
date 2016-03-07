@@ -1,18 +1,17 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
+﻿using System.Windows;
+using System.Windows.Input;
+using System.Windows.Interactivity;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Interactivity;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
-    internal class MoveWholeAppointmentBehavior : Behavior<FrameworkElement>
+	internal class MoveWholeAppointmentBehavior : Behavior<FrameworkElement>
 	{
-
         public static readonly DependencyProperty AppointmentModificationsProperty =
             DependencyProperty.Register(nameof(AppointmentModifications),
                                         typeof(AppointmentModifications),
@@ -48,7 +47,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 
         protected override void OnAttached ()
 		{
-			base.OnAttached();
 			AssociatedObject.PreviewMouseLeftButtonDown += OnAssociatedObjectMouseLeftButtonDown;
 			AssociatedObject.MouseLeftButtonUp          += OnAssociatedObjectMouseLeftButtonUp;
 			AssociatedObject.MouseMove                  += OnAssociatedObjectMouseMove;
@@ -62,7 +60,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 
 		protected override void OnDetaching ()
 		{
-			base.OnDetaching();
 			AssociatedObject.PreviewMouseLeftButtonDown -= OnAssociatedObjectMouseLeftButtonDown;
 			AssociatedObject.MouseLeftButtonUp          -= OnAssociatedObjectMouseLeftButtonUp;
 			AssociatedObject.MouseMove                  -= OnAssociatedObjectMouseMove;
@@ -78,7 +75,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 				EndDrag();				
 
 				ViewModelCommunication.SendTo(
-					Constants.AppointmentViewModelCollection,
+					Constants.ViewModelCollections.AppointmentViewModelCollection,
                     AppointmentModifications.OriginalAppointment.Id, 
 					new ShowDisabledOverlay()
 				);				
@@ -94,14 +91,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
                 AdornerControl.DisposeAdorner();
 
 				ViewModelCommunication.SendTo(
-					Constants.AppointmentViewModelCollection,
+					Constants.ViewModelCollections.AppointmentViewModelCollection,
                     AppointmentModifications.OriginalAppointment.Id,
 					new HideDisabledOverlay()
 				);
 			}
 		}
 
-		private void OnQueryContinueDrag (object sender, QueryContinueDragEventArgs e)
+		private static void OnQueryContinueDrag (object sender, QueryContinueDragEventArgs e)
 		{
 			if (e.EscapePressed)
 			{
@@ -110,7 +107,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 			}			
 		}		
 
-		private void OnGiveFeedback(object sender, GiveFeedbackEventArgs giveFeedbackEventArgs)
+		private static void OnGiveFeedback(object sender, GiveFeedbackEventArgs giveFeedbackEventArgs)
 		{
 			Mouse.SetCursor(Cursors.None);
 			giveFeedbackEventArgs.UseDefaultCursors = false;
@@ -146,15 +143,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 		}
 
 		private void InitDrag (Point startinPoint)
-		{
-						
+		{						
 			if (AppointmentModifications != null)
 			{
-
 				mouseIsDown = true;
-				referencePoint = startinPoint;
-
-				//AssociatedObject.CaptureMouse();
+				referencePoint = startinPoint;				
 			}
 		}
 
@@ -162,7 +155,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 		{
             AppointmentModifications.FixTimeShiftDelta();
 			mouseIsDown = false;
-		    //Mouse.Capture(null);
 		}
 	}
 }

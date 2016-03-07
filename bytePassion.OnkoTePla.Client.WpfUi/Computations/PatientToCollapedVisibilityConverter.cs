@@ -1,12 +1,12 @@
-﻿using bytePassion.Lib.WpfLib.ConverterBase;
-using bytePassion.OnkoTePla.Contracts.Patients;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
+using bytePassion.Lib.WpfLib.ConverterBase;
+using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Computations
 {
-    public class PatientToCollapedVisibilityConverter : GenericParameterizedValueConverter<Patient, Visibility, bool>
+	internal class PatientToCollapedVisibilityConverter : GenericParameterizedValueConverter<Patient, Visibility, bool>
 	{
 		protected override Visibility Convert(Patient value, bool invert, CultureInfo culture)
 		{

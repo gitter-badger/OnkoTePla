@@ -16,9 +16,7 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
 	internal class AcceptAppointmentDropBehavior : Behavior<FrameworkElement>
-    {
-        
-
+    {        
         public static readonly DependencyProperty AppointmentsProperty =
             DependencyProperty.Register(nameof(Appointments),
 										typeof (ObservableCollection<IAppointmentViewModel>),
@@ -98,13 +96,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
             set { SetValue(AppointmentsProperty, value); }
         }       
         		
-        private IList<TimeSlot> slots = null;         
+        private IList<TimeSlot> slots;         
         private bool dropIsPossible;              
         private Appointment currentDraggedAppointment;
 
 	    protected override void OnAttached()
-        {
-            base.OnAttached();
+        {           
             AssociatedObject.DragEnter += OnDragEnter;
             AssociatedObject.DragLeave += OnDragLeave;
             AssociatedObject.DragOver  += OnDragOver;
@@ -112,8 +109,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
         }
 
         protected override void OnDetaching()
-        {
-            base.OnDetaching();
+        {           
             AssociatedObject.DragEnter -= OnDragEnter;
             AssociatedObject.DragLeave -= OnDragLeave;
             AssociatedObject.DragOver  -= OnDragOver;

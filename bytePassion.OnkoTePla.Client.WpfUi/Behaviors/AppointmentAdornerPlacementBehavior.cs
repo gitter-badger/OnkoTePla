@@ -1,17 +1,17 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
+using bytePassion.Lib.FrameworkExtensions;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
-    public class AppointmentAdornerPlacementBehavior : Behavior<StackPanel>
+	internal class AppointmentAdornerPlacementBehavior : Behavior<StackPanel>
     {
-        public static readonly DependencyProperty ReferenceElementProperty = DependencyProperty.Register(
-            "ReferenceElement", typeof (UIElement), typeof (AppointmentAdornerPlacementBehavior), new PropertyMetadata(default(UIElement)));
-
-        private int zindex;
+        public static readonly DependencyProperty ReferenceElementProperty = 
+			DependencyProperty.Register(nameof(ReferenceElement), 
+										typeof (UIElement), 
+										typeof (AppointmentAdornerPlacementBehavior));        
 
         public UIElement ReferenceElement
         {
@@ -21,8 +21,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 
         protected override void OnAttached()
         {
-            AssociatedObject.IsVisibleChanged += OnLayoutUpdate;
-            zindex = Canvas.GetZIndex(AssociatedObject);
+            AssociatedObject.IsVisibleChanged += OnLayoutUpdate;           
         }
 
         protected override void OnDetaching()
@@ -32,14 +31,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 
         private void OnLayoutUpdate(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            if (!ReferenceElement.IsUserVisible())
-            {
-                AssociatedObject.Margin = new Thickness(0, 30, 0, -25);
-            }
-            else
-            {
-                AssociatedObject.Margin = new Thickness(0, -25,0, 30); 
-            }
+	        AssociatedObject.Margin = ReferenceElement.IsUserVisible() 
+											? new Thickness(0, -25, 0,  30)
+											: new Thickness(0,  30, 0, -25);
         }
     }
 }

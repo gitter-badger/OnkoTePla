@@ -1,14 +1,13 @@
-﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 {
-    internal class MoveBeginTimeBehavior : Behavior<FrameworkElement>
+	internal class MoveBeginTimeBehavior : Behavior<FrameworkElement>
 	{
-
 	    public static readonly DependencyProperty AppointmentModificationsProperty = 
             DependencyProperty.Register(nameof(AppointmentModifications), 
                                         typeof (AppointmentModifications), 
@@ -22,7 +21,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 
 		protected override void OnAttached()
 		{
-			base.OnAttached();
 			AssociatedObject.PreviewMouseLeftButtonDown += OnAssociatedObjectMouseLeftButtonDown;
 			AssociatedObject.MouseLeftButtonUp          += OnAssociatedObjectMouseLeftButtonUp;
 			AssociatedObject.MouseMove                  += OnAssociatedObjectMouseMove;
@@ -33,7 +31,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 
 		protected override void OnDetaching ()
 		{
-			base.OnDetaching();
 			AssociatedObject.PreviewMouseLeftButtonDown -= OnAssociatedObjectMouseLeftButtonDown;
 			AssociatedObject.MouseLeftButtonUp          -= OnAssociatedObjectMouseLeftButtonUp;
 			AssociatedObject.MouseMove                  -= OnAssociatedObjectMouseMove;

@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 {
-    public class AddAppointmentDialogViewModelSampleData : IAddAppointmentDialogViewModel
+    internal class AddAppointmentDialogViewModelSampleData : IAddAppointmentDialogViewModel
 	{
 		public AddAppointmentDialogViewModelSampleData()
 		{

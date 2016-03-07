@@ -62,7 +62,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 			AdornerControl = adornerControl;					
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentViewModel, Guid>(
-				Constants.AppointmentViewModelCollection,
+				Constants.ViewModelCollections.AppointmentViewModelCollection,
 				this	
 			);
 
@@ -175,7 +175,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 			if (!isInitialLocation)
 			{
 				ViewModelCommunication.SendTo(
-					Constants.TherapyPlaceRowViewModelCollection,
+					Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 					currentLocation,
 					new RemoveAppointmentFromTherapyPlaceRow(this)
 				);
@@ -184,7 +184,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 			currentLocation = therapyPlaceRowIdentifier;
 
 			ViewModelCommunication.SendTo(
-				Constants.TherapyPlaceRowViewModelCollection,
+				Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 				therapyPlaceRowIdentifier,
 				new AddAppointmentToTherapyPlaceRow(this)	
 			);				
@@ -286,12 +286,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		protected override void CleanUp()
 		{
 			ViewModelCommunication.DeregisterViewModelAtCollection<AppointmentViewModel, Guid>(
-				Constants.AppointmentViewModelCollection,
+				Constants.ViewModelCollections.AppointmentViewModelCollection,
 				this
 			);
 
 			ViewModelCommunication.SendTo(
-				Constants.TherapyPlaceRowViewModelCollection,
+				Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 				currentLocation,
 				new RemoveAppointmentFromTherapyPlaceRow(this)
 			);

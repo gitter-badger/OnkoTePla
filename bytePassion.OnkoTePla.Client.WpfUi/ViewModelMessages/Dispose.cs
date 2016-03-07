@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class Dispose : ViewModelMessage
+	internal class Dispose : ViewModelMessage
 	{
 	}
 }

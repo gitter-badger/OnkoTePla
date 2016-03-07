@@ -1,12 +1,12 @@
-﻿using bytePassion.Lib.TimeLib;
-using bytePassion.Lib.WpfLib.ConverterBase;
-using System;
+﻿using System;
 using System.Globalization;
+using bytePassion.Lib.TimeLib;
+using bytePassion.Lib.WpfLib.ConverterBase;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 {
-    public class DateToDateTimeConverter : GenericValueConverter<Date, DateTime>
+	internal class DateToDateTimeConverter : GenericValueConverter<Date, DateTime>
 	{
 		protected override DateTime Convert(Date value, CultureInfo culture)
 		{

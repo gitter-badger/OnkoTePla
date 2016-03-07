@@ -8,7 +8,7 @@ using bytePassion.OnkoTePla.Contracts.Domain;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 {
-	public class TimeGridViewModelSampleData : ITimeGridViewModel
+	internal class TimeGridViewModelSampleData : ITimeGridViewModel
 	{
 		public TimeGridViewModelSampleData()
 		{

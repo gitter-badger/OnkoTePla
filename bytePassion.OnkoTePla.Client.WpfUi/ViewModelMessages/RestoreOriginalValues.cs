@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class RestoreOriginalValues : ViewModelMessage
+	internal class RestoreOriginalValues : ViewModelMessage
 	{		
 	}
 }

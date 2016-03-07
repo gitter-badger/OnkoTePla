@@ -1,13 +1,13 @@
+using System;
+using System.Windows.Input;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using System;
-using System.Windows.Input;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 {
-    public interface IAddAppointmentDialogViewModel : IDisposable, 
+	internal interface IAddAppointmentDialogViewModel : IDisposable, 
 													  IViewModel
 	{
 		IPatientSelectorViewModel PatientSelectorViewModel { get; }

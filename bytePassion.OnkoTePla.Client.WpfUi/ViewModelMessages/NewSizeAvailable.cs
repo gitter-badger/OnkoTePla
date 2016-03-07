@@ -4,7 +4,7 @@ using bytePassion.Lib.Types.SemanticTypes;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-	public class NewSizeAvailable : ViewModelMessage
+	internal class NewSizeAvailable : ViewModelMessage
 	{
 		public NewSizeAvailable(Size newSize)
 		{

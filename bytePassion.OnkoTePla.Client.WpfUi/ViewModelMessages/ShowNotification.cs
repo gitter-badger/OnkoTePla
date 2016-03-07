@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class ShowNotification : ViewModelMessage
+	internal class ShowNotification : ViewModelMessage
 	{
 		public ShowNotification(string notificationMessage,
 								int secondsToShow)

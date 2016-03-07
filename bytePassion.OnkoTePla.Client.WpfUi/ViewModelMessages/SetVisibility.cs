@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class SetVisibility : ViewModelMessage
+	internal class SetVisibility : ViewModelMessage
 	{
 		public SetVisibility(bool visible)
 		{

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer
 {
 
-    public class NotificationServiceContainerViewModelSampleData : INotificationServiceContainerViewModel
+	internal class NotificationServiceContainerViewModelSampleData : INotificationServiceContainerViewModel
 	{
 		public NotificationServiceContainerViewModelSampleData()
 		{

@@ -21,11 +21,11 @@
 
 	<Grid Background="White">
 		<Grid.RowDefinitions>
-            <RowDefinition Height="{x:Static global:Constants.AppointmentGridTopRowSizw}"/>
+            <RowDefinition Height="{x:Static global:Constants+Layout.AppointmentGridTopRowSize}"/>
 			<RowDefinition/>
 		</Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{x:Static global:Constants.AppointmentGridLeftColumsSize}"/>
+            <ColumnDefinition Width="{x:Static global:Constants+Layout.AppointmentGridLeftColumsSize}"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 

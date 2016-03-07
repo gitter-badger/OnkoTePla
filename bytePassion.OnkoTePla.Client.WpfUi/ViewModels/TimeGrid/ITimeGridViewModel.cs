@@ -10,7 +10,7 @@ using bytePassion.OnkoTePla.Contracts.Domain;
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid
 {
 
-	public interface ITimeGridViewModel : IViewModelCollectionItem<AggregateIdentifier>,
+	internal interface ITimeGridViewModel : IViewModelCollectionItem<AggregateIdentifier>,
 										  IDisposable,
 										  IViewModelMessageHandler<NewSizeAvailable>,
 										  IViewModelMessageHandler<Dispose>

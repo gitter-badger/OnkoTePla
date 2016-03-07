@@ -184,7 +184,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 		private void ActivateGridViewModel(AggregateIdentifier identifier)
 		{
 			viewModelCommunication.SendTo(
-				Constants.AppointmentGridViewModelCollection,
+				Constants.ViewModelCollections.AppointmentGridViewModelCollection,
 				identifier,
 				new Activate()
 			);
@@ -193,7 +193,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 		private void DeactivateGridViewModel (AggregateIdentifier identifier)
 		{
 			viewModelCommunication.SendTo(
-				Constants.AppointmentGridViewModelCollection,
+				Constants.ViewModelCollections.AppointmentGridViewModelCollection,
 				identifier,
 				new Deactivate()
 			);

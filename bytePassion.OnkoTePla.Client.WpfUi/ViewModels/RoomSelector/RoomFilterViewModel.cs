@@ -128,15 +128,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 			get { return selectedRoomFilter; }
 			set
 			{
-			if (value == null) return; // TODO: weiß nicht genau warum das hier nötig ist ......
+				if (value == null) return; // TODO: weiß nicht genau warum das hier nötig ist ......
 
 				if (value != selectedRoomFilter)
 				{
 					roomFilterVariable.Value = value.RoomId;
                     PropertyChanged.ChangeAndNotify(this, ref selectedRoomFilter, value);
-                }
-
-				
+                }				
 			}
 		}
 
@@ -147,10 +145,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
                 return true;
             }
 
-	        return data.RoomId != null && currentMedicalPractice.GetRoomById(data.RoomId.Value)
-	            .TherapyPlaces
-	            .Select(therapyPlace => therapyPlace.Id)
-	            .Contains(appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId);
+	        return data.RoomId != null && 
+				   currentMedicalPractice.GetRoomById(data.RoomId.Value)
+										 .TherapyPlaces
+										 .Select(therapyPlace => therapyPlace.Id)
+										 .Contains(appointmentModificationsVariable.Value.CurrentLocation.TherapyPlaceId);
 	    }
 
 

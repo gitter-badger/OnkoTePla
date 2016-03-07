@@ -8,15 +8,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Behaviors
 	{
 		protected override void OnAttached()
 		{
-			base.OnAttached();
-
 			AssociatedObject.IsEnabledChanged += OnIsEnabledChanged;
 		}
 				
 		protected override void OnDetaching()
 		{
-			base.OnDetaching();
-
 			AssociatedObject.IsEnabledChanged -= OnIsEnabledChanged;
 		}
 

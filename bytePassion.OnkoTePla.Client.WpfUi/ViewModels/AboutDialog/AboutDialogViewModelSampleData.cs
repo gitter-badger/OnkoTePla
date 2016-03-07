@@ -5,14 +5,14 @@ using System.Windows.Input;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AboutDialog
 {
-    internal class AboutDialogViewModelSampleData : IAboutDialogViewModel
+	internal class AboutDialogViewModelSampleData : IAboutDialogViewModel
     {
         public AboutDialogViewModelSampleData()
         {
             VersionNumber = "0.1.0.345";
         }
 
-        public ICommand CloseDialog { get; } = null;
+        public ICommand CloseDialog => null;
         public string VersionNumber { get; }
 
         public void Dispose() { }

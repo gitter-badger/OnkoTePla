@@ -82,15 +82,12 @@
     <Compile Include="Behaviors\MoveEndTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveBeginTimeBehavior.cs" />
     <Compile Include="Behaviors\MoveWholeAppointmentBehavior.cs" />
-    <Compile Include="Behaviors\PatientViewTextBoxBehavior.cs" />
-    <Compile Include="Behaviors\ToggleButtonAsRadioButtonBehavior.cs" />
     <Compile Include="Computations\ComputeAppointmentLeft.cs" />
     <Compile Include="Computations\ComputeAppointmentPixelWidth.cs" />
     <Compile Include="Computations\ControlAdornerVisibility.cs" />
     <Compile Include="Converter\CreationStateToSolidColorBrushConverter.cs" />
     <Compile Include="Converter\DateToDateTimeConverter.cs" />
     <Compile Include="Computations\PatientToCollapedVisibilityConverter.cs" />
-    <Compile Include="Converter\OperatingModeToBackgroundBrush.cs" />
     <Compile Include="Converter\OperatingModeToVisibilityConverter.cs" />
     <Compile Include="Enums\ConnectionStatus.cs" />
     <Compile Include="Enums\MainPage.cs" />

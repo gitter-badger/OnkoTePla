@@ -110,19 +110,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             // Create ViewModelCollection
 
             viewModelCommunication.CreateViewModelCollection<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
-                Constants.TherapyPlaceRowViewModelCollection
+                Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection
             );
 
             viewModelCommunication.CreateViewModelCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-                Constants.AppointmentGridViewModelCollection
+                Constants.ViewModelCollections.AppointmentGridViewModelCollection
             );
 
             viewModelCommunication.CreateViewModelCollection<ITimeGridViewModel, AggregateIdentifier>(
-                Constants.TimeGridViewModelCollection
+                Constants.ViewModelCollections.TimeGridViewModelCollection
             );
 
             viewModelCommunication.CreateViewModelCollection<IAppointmentViewModel, Guid>(
-                Constants.AppointmentViewModelCollection
+                Constants.ViewModelCollections.AppointmentViewModelCollection
             );            
 
             // build factorys
@@ -253,10 +253,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
         public void DisposeViewModel(IMainViewModel viewModelToDispose)
         {
-			viewModelCommunication.RemoveViewModelCollection(Constants.TherapyPlaceRowViewModelCollection);
-			viewModelCommunication.RemoveViewModelCollection(Constants.AppointmentGridViewModelCollection);
-			viewModelCommunication.RemoveViewModelCollection(Constants.TimeGridViewModelCollection);
-			viewModelCommunication.RemoveViewModelCollection(Constants.AppointmentViewModelCollection);
+			viewModelCommunication.RemoveViewModelCollection(Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection);
+			viewModelCommunication.RemoveViewModelCollection(Constants.ViewModelCollections.AppointmentGridViewModelCollection);
+			viewModelCommunication.RemoveViewModelCollection(Constants.ViewModelCollections.TimeGridViewModelCollection);
+			viewModelCommunication.RemoveViewModelCollection(Constants.ViewModelCollections.AppointmentViewModelCollection);
 			
 			var optionsPageViewModel             = viewModelToDispose.OptionsPageViewModel;
 	        var searchPageViewModel              = viewModelToDispose.SearchPageViewModel;
@@ -286,7 +286,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 			gridContainerViewModel.Dispose();
 			changeConfirmationViewModel.Dispose();
 			undoRedoViewModel.Dispose();
-
 		}
 
 		public Size GetCurrentGridSize()

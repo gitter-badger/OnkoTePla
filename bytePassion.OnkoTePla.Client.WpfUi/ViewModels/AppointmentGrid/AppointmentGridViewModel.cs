@@ -67,7 +67,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			roomFilterVariable.StateChanged += OnGlobalRoomFilterVariableChanged;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-				Constants.AppointmentGridViewModelCollection,
+				Constants.ViewModelCollections.AppointmentGridViewModelCollection,
 				this					
 			);
 
@@ -95,7 +95,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 						TherapyPlaceRowViewModels.Do(viewModel =>
 						{
 							viewModelCommunication.SendTo(
-								Constants.TherapyPlaceRowViewModelCollection,
+								Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 								viewModel.Identifier,
 								new SetVisibility(true)
 								);
@@ -106,7 +106,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 						TherapyPlaceRowViewModels.Do(viewModel =>
 						{
 							viewModelCommunication.SendTo(
-								Constants.TherapyPlaceRowViewModelCollection,
+								Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 								viewModel.Identifier,
 								new SetVisibility(false)
 								);
@@ -118,7 +118,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 									   .Do(id =>
 										   {
 								   				viewModelCommunication.SendTo(
-								   					Constants.TherapyPlaceRowViewModelCollection,
+								   					Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 								   					new TherapyPlaceRowIdentifier(Identifier, id),
 								   					new SetVisibility(true)
 								   				);
@@ -151,7 +151,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		private void RemoveAppointment(Appointment appointmentToRemove)
 		{
 			viewModelCommunication.SendTo( 
-				Constants.AppointmentViewModelCollection, 
+				Constants.ViewModelCollections.AppointmentViewModelCollection, 
 				appointmentToRemove.Id, 
 				new Dispose()
 			);
@@ -162,7 +162,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			if (IsActive)
 			{
 				viewModelCommunication.SendTo(
-					Constants.TimeGridViewModelCollection,
+					Constants.ViewModelCollections.TimeGridViewModelCollection,
 					Identifier,
 					new NewSizeAvailable(newGridSize)	
 				);
@@ -170,7 +170,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 				foreach (var therapyPlaceRowIdentifier in TherapyPlaceRowViewModels.Select(viewModel => viewModel.Identifier))
 				{ 
 					viewModelCommunication.SendTo(
-						Constants.TherapyPlaceRowViewModelCollection,
+						Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 						therapyPlaceRowIdentifier,
 						new NewSizeAvailable(newGridSize)
 					);
@@ -223,12 +223,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
             readModel.AppointmentChanged -= OnReadModelAppointmentChanged;
 
             viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-                Constants.AppointmentGridViewModelCollection,
+                Constants.ViewModelCollections.AppointmentGridViewModelCollection,
                 this
             );
 
             viewModelCommunication.SendTo(
-                Constants.TimeGridViewModelCollection,
+                Constants.ViewModelCollections.TimeGridViewModelCollection,
                 Identifier,
                 new Dispose()
             );

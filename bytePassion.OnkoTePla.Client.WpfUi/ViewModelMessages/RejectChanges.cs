@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class RejectChanges : ViewModelMessage
+	internal class RejectChanges : ViewModelMessage
 	{
 	}
 }

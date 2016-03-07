@@ -35,7 +35,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		    IsActive = false;
 
 			viewModelCommunication.RegisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-				Constants.AppointmentGridViewModelCollection,
+				Constants.ViewModelCollections.AppointmentGridViewModelCollection,
 				this
 			);
 			
@@ -55,7 +55,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			if (IsActive)
 			{
 				viewModelCommunication.SendTo(
-					Constants.TimeGridViewModelCollection,
+					Constants.ViewModelCollections.TimeGridViewModelCollection,
 					Identifier,
 					new NewSizeAvailable(newGridSize)
 				);			
@@ -93,12 +93,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
             appointmentGridSizeVariable.StateChanged -= OnGridSizeChanged;
 
             viewModelCommunication.DeregisterViewModelAtCollection<IAppointmentGridViewModel, AggregateIdentifier>(
-                Constants.AppointmentGridViewModelCollection,
+                Constants.ViewModelCollections.AppointmentGridViewModelCollection,
                 this
             );
 
             viewModelCommunication.SendTo(
-                Constants.TimeGridViewModelCollection,
+                Constants.ViewModelCollections.TimeGridViewModelCollection,
                 Identifier,
                 new Dispose()
             );

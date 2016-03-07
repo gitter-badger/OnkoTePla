@@ -109,10 +109,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 			}
 			else if (SelectedPatient != Patient.Dummy)
 			{
-				if (string.IsNullOrWhiteSpace(Description))
-					CreationState = AppointmentCreationState.PatientSelected;
-				else
-					CreationState = AppointmentCreationState.PatientAndDespriptionAvailable;
+				CreationState = string.IsNullOrWhiteSpace(Description) 
+									? AppointmentCreationState.PatientSelected 
+									: AppointmentCreationState.PatientAndDespriptionAvailable;
 			}
 			else
 				CreationState = AppointmentCreationState.NoPatientSelected;
@@ -362,25 +361,21 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 
 		private Tuple<TherapyPlaceRowIdentifier, TimeSlot> ComputeFirstFittingSlot ()
 		{
-			var duration = new Duration((uint) (DurationHours * 3600 + DurationMinutes * 60));
-
 			if (allAvailableTimeSlots == null)
 				return null;
 
-			foreach (var timeSlotsOfARow in allAvailableTimeSlots)
-			{
-				foreach (var timeSlot in timeSlotsOfARow.Value)
-				{
-					var slotDuration = new Duration(timeSlot.Begin, timeSlot.End);
-					if (slotDuration >= duration)
-						return new Tuple<TherapyPlaceRowIdentifier, TimeSlot>(
-							new TherapyPlaceRowIdentifier(new AggregateIdentifier(creationDate, medicalPractice.Id), timeSlotsOfARow.Key.TherapyPlaceId),
-							timeSlot 
-						);
-				}
-			}
+			var duration = new Duration((uint) (DurationHours * 3600 + DurationMinutes * 60));
 
-			return null;
+			return (from timeSlotsOfARow in allAvailableTimeSlots
+					from timeSlot in timeSlotsOfARow.Value
+
+					let slotDuration = new Duration(timeSlot.Begin, timeSlot.End)
+					where slotDuration >= duration
+
+					select new Tuple<TherapyPlaceRowIdentifier, TimeSlot>(new TherapyPlaceRowIdentifier(new AggregateIdentifier(creationDate, medicalPractice.Id), 
+																										timeSlotsOfARow.Key.TherapyPlaceId), 
+																		  timeSlot)
+					).FirstOrDefault();
 		}
 
         protected override void CleanUp()

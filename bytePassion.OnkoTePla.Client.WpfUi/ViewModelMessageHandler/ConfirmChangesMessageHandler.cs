@@ -33,7 +33,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 			if (currentAppointmentModification.IsInitialAdjustment)
 			{
 				viewModelCommunication.SendTo(
-					Constants.AppointmentViewModelCollection,
+					Constants.ViewModelCollections.AppointmentViewModelCollection,
 					currentAppointmentModification.OriginalAppointment.Id,
 					new Dispose()						
 				);
@@ -87,7 +87,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 														 viewModelCommunication.Send(new ShowNotification($"veränderung des Termins nicht möglich: {errorMsg}", 5));
 														 
 														 viewModelCommunication.SendTo(
-															Constants.AppointmentViewModelCollection,
+															Constants.ViewModelCollections.AppointmentViewModelCollection,
 															originalAppointment.Id,
 															new RestoreOriginalValues()	 
 														 );

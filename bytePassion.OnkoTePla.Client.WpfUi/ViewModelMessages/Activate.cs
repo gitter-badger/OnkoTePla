@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class Activate : ViewModelMessage
+	internal class Activate : ViewModelMessage
 	{
 	}
 }

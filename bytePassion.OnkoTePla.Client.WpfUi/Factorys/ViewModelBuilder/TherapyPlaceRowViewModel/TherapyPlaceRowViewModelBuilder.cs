@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Types.SemanticTypes;
@@ -47,32 +48,28 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPl
 			medicalPracticeRepository.RequestMedicalPractice(
 				practice =>
 				{
-					var viewModels = new List<ITherapyPlaceRowViewModel>();
+					viewModelsAvailable(
+						(
+							from room in rooms
+							from therapyPlace in room.TherapyPlaces
 
-					foreach (var room in rooms)
-					{
-						foreach (var therapyPlace in room.TherapyPlaces)
-						{
-							var location = new TherapyPlaceRowIdentifier(identifier, therapyPlace.Id);
+							let location = new TherapyPlaceRowIdentifier(identifier, therapyPlace.Id)
+							let hoursOfOpeing = practice.HoursOfOpening
 
-							var hoursOfOpeing = practice.HoursOfOpening;
-
-							var newViewModel = new ViewModels.TherapyPlaceRowView.TherapyPlaceRowViewModel(viewModelCommunication,
-																										   therapyPlaceTypeRepository,
-																										   therapyPlace,
-																										   room.DisplayedColor,
-																										   location,
-																										   adornerControl,
-																										   hoursOfOpeing.GetOpeningTime(location.PlaceAndDate.Date),
-																										   hoursOfOpeing.GetClosingTime(location.PlaceAndDate.Date),
-																										   appointmentModificationsVariable,
-																										   appointmentGridSizeVariable.Value.Width,
-																										   errorCallback);
-							viewModels.Add(newViewModel);
-						}
-					}
-
-					viewModelsAvailable(viewModels);
+							select new ViewModels.TherapyPlaceRowView.TherapyPlaceRowViewModel(
+								viewModelCommunication,
+								therapyPlaceTypeRepository,
+								therapyPlace,
+								room.DisplayedColor,
+								location,
+								adornerControl,
+								hoursOfOpeing.GetOpeningTime(location.PlaceAndDate.Date),
+								hoursOfOpeing.GetClosingTime(location.PlaceAndDate.Date),
+								appointmentModificationsVariable,
+								appointmentGridSizeVariable.Value.Width,
+								errorCallback)
+						).ToList()
+					);
 				},
 				identifier.MedicalPracticeId,
 				identifier.PracticeVersion,

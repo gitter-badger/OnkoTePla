@@ -1,10 +1,10 @@
-﻿using bytePassion.Lib.Communication.ViewModel.Messages;
-using System;
+﻿using System;
+using bytePassion.Lib.Communication.ViewModel.Messages;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class HideNotification : ViewModelMessage
+	internal class HideNotification : ViewModelMessage
 	{
 		public HideNotification(Guid notificationId)
 		{

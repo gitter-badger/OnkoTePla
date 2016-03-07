@@ -25,7 +25,7 @@
     <Grid Height="36"
 		  Background="Transparent">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{x:Static global:Constants.AppointmentGridLeftColumsSize}" />
+			<ColumnDefinition Width="{x:Static global:Constants+Layout.AppointmentGridLeftColumsSize}" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 

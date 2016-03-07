@@ -97,7 +97,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 																 selectedDateVariable.Value = appointment.Day;
 
 																 viewModelCommunication.SendTo(
-																	Constants.AppointmentViewModelCollection,
+																	Constants.ViewModelCollections.AppointmentViewModelCollection,
 																	appointment.Id,
 																	new SwitchToEditMode()	
 																 );															  

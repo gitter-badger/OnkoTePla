@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class SwitchToEditMode : ViewModelMessage
+	internal class SwitchToEditMode : ViewModelMessage
 	{
 	}
 }

@@ -4,7 +4,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    internal class RemoveAppointmentFromTherapyPlaceRow : ViewModelMessage
+	internal class RemoveAppointmentFromTherapyPlaceRow : ViewModelMessage
 	{
 		public RemoveAppointmentFromTherapyPlaceRow (AppointmentViewModel appointmentViewModelToAdd)
 		{

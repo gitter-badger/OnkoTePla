@@ -3,8 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class ShowDisabledOverlay : ViewModelMessage
+	internal class ShowDisabledOverlay : ViewModelMessage
 	{
 	}
-
 }

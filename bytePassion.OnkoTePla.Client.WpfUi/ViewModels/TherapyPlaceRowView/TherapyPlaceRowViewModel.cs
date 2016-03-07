@@ -57,7 +57,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 			AppointmentViewModels = new ObservableCollection<IAppointmentViewModel>();	
 			
 			viewModelCommunication.RegisterViewModelAtCollection<ITherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
-				Constants.TherapyPlaceRowViewModelCollection,
+				Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 				this	
 			);
 
@@ -172,7 +172,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
         protected override void CleanUp()
 		{
 			viewModelCommunication.DeregisterViewModelAtCollection<TherapyPlaceRowViewModel, TherapyPlaceRowIdentifier>(
-				Constants.TherapyPlaceRowViewModelCollection,
+				Constants.ViewModelCollections.TherapyPlaceRowViewModelCollection,
 				this
 			);
 

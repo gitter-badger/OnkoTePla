@@ -1,11 +1,11 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using System.Globalization;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.ConverterBase;
-using System.Globalization;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Computations
 {
-    public class ComputeAppointmentPixelLeft : GenericFourToOneValueConverter<Time, double, Time, Time, double>
+	internal class ComputeAppointmentPixelLeft : GenericFourToOneValueConverter<Time, double, Time, Time, double>
 	{
 		protected override double Convert(Time staringTime, double gridWidth, Time timeSlotStart, Time timeSlotEnd, CultureInfo culture)
 		{

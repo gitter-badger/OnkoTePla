@@ -5,7 +5,7 @@ using bytePassion.Lib.TimeLib;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-	public class AsureDayIsLoaded : ViewModelMessage
+	internal class AsureDayIsLoaded : ViewModelMessage
 	{
 	    public AsureDayIsLoaded(Guid medicalPracticeId, Date day, Action dayIsLoaded)
 	    {

@@ -4,7 +4,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages
 {
-    public class ShowPage : ViewModelMessage
+	internal class ShowPage : ViewModelMessage
 	{		
 		public ShowPage(MainPage page)
 		{

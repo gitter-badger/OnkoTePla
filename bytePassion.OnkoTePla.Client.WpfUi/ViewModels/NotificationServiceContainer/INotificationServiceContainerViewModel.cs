@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.NotificationServiceContainer
 {
 
-    public interface INotificationServiceContainerViewModel : IViewModel,
+	internal interface INotificationServiceContainerViewModel : IViewModel,
 															  IViewModelMessageHandler<ShowNotification>,
 															  IViewModelMessageHandler<HideNotification>
 	{

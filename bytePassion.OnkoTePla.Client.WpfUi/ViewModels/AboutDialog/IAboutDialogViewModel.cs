@@ -3,7 +3,7 @@
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AboutDialog
 {
-    internal interface IAboutDialogViewModel : IViewModel
+	internal interface IAboutDialogViewModel : IViewModel
     {
         ICommand CloseDialog { get; } 
         string VersionNumber { get; }

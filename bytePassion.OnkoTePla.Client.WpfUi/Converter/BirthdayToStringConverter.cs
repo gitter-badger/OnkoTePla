@@ -1,11 +1,11 @@
-﻿using bytePassion.Lib.TimeLib;
+﻿using System.Globalization;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.ConverterBase;
-using System.Globalization;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 {
-    internal class BirthdayToStringConverter : GenericValueConverter<Date, string>
+	internal class BirthdayToStringConverter : GenericValueConverter<Date, string>
 	{
 		protected override string Convert(Date date, CultureInfo culture)
 		{
