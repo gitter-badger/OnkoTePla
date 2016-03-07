@@ -13,7 +13,10 @@
 			public const uint Free4     = 6661;
 			public const uint Free5     = 6662;
 		}
-		
+
+		public static readonly char[] ForbiddenCharacters = {'|',';',',',':','.','#',
+															 '(','[','{','}',']',')' };
+
 		public const uint StandardSendingTimeout			 =  2000;    // unit is milliseconds
 		public const uint HeartbeatIntverval				 =  5000;    //			"
 		public const uint ClientWaitTimeForHeartbeat		 = 10000;	 //			"
