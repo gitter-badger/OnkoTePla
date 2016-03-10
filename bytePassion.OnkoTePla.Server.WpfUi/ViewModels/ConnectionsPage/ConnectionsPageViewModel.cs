@@ -52,7 +52,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 			connectionService.SessionTerminated += OnSessionTerminated;
 			connectionService.LoggedInUserUpdated += OnLoggedInUserUpdated;
 
-			IsConnectionActive = true; // TODO: just for testing
+			CheckIfActicationIsPossible();
+
+			if (IsActivationPossible)
+				IsConnectionActive = true; // TODO: just for testing
 	    }
 
 		private void OnLoggedInUserUpdated(SessionInfo sessionInfo)
@@ -158,7 +161,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 		private void CheckIfActicationIsPossible()
 		{
 			IsActivationPossible = !connectionActivationLocked && 
-								   !string.IsNullOrWhiteSpace(SelectedIpAddress);
+								   !string.IsNullOrWhiteSpace(SelectedIpAddress) &&
+								   dataCenter.GetAllUsers().Count(user => !user.IsHidden) > 0 &&
+								   dataCenter.GetAllMedicalPractices().Any() &&
+								   dataCenter.GetAllTherapyPlaceTypes().Any();								  
 		}
 
 		protected override void CleanUp () { }
