@@ -165,6 +165,7 @@
     <Compile Include="ViewModels\NotificationView\INotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModelSampleData.cs" />
+    <Compile Include="ViewModels\SearchPage\Helper\DisplayAppointmentData.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />
     <Compile Include="ViewModelMessages\Deactivate.cs" />
     <Compile Include="ViewModelMessages\Activate.cs" />

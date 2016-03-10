@@ -19,6 +19,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.Enums;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
@@ -31,12 +32,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 	internal class SearchPageViewModel : ViewModel, 
                                          ISearchPageViewModel
     {
-		private class AppointmentSorter : IComparer<AppointmentTransferData>
+		private class AppointmentSorter : IComparer<DisplayAppointmentData>
 		{
-			public int Compare (AppointmentTransferData a1, AppointmentTransferData a2)
+			public int Compare (DisplayAppointmentData a1, DisplayAppointmentData a2)
 			{
 				return a1.Day == a2.Day
-					? a1.StartTime.CompareTo(a2.StartTime)
+					? a1.AppointmentRawData.StartTime.CompareTo(a2.AppointmentRawData.StartTime)
 					: a1.Day.CompareTo(a2.Day);
 			}
 		}
@@ -80,17 +81,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 			PatientSelectorViewModel = patientSelectorViewModel;
 
-			DeleteAppointment = new ParameterrizedCommand<AppointmentTransferData>(DoDeleteAppointment);
-			ModifyAppointment = new ParameterrizedCommand<AppointmentTransferData>(DoModifyAppointment);
+			DeleteAppointment = new ParameterrizedCommand<DisplayAppointmentData>(DoDeleteAppointment);
+			ModifyAppointment = new ParameterrizedCommand<DisplayAppointmentData>(DoModifyAppointment);
 						
 			SelectedPatient = NoPatientSelected;
 
-			DisplayedAppointments = new ObservableCollection<AppointmentTransferData>();
+			DisplayedAppointments = new ObservableCollection<DisplayAppointmentData>();
 		}
 
-		private void DoModifyAppointment(AppointmentTransferData appointment)
+		private void DoModifyAppointment(DisplayAppointmentData appointment)
 		{						
-			viewModelCommunication.Send(new AsureDayIsLoaded(appointment.MedicalPracticeId, 
+			viewModelCommunication.Send(new AsureDayIsLoaded(appointment.AppointmentRawData.MedicalPracticeId, 
 															 appointment.Day, 
 															 () =>
 															 {
@@ -98,7 +99,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 																 viewModelCommunication.SendTo(
 																	Constants.ViewModelCollections.AppointmentViewModelCollection,
-																	appointment.Id,
+																	appointment.AppointmentRawData.Id,
 																	new SwitchToEditMode()	
 																 );															  
 															 }));
@@ -106,7 +107,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 			viewModelCommunication.Send(new ShowPage(MainPage.Overview));
 		}
 
-		private async void DoDeleteAppointment(AppointmentTransferData appointment)
+		private async void DoDeleteAppointment(DisplayAppointmentData appointment)
 		{
 			var dialog = new UserDialogBox("", "Wollen Sie den Termin wirklich löschen?",
 										   MessageBoxButton.OKCancel);
@@ -118,21 +119,21 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 					practiceVersion =>
 					{
 						commandService.TryDeleteAppointment(new AggregateIdentifier(appointment.Day,
-																					appointment.MedicalPracticeId,
+																					appointment.AppointmentRawData.MedicalPracticeId,
 																					practiceVersion),
-															appointment.PatientId,
-															appointment.Id,
+															appointment.AppointmentRawData.PatientId,
+															appointment.AppointmentRawData.Id,
 															appointment.Description,
-															appointment.StartTime,
-															appointment.EndTime,
-															appointment.TherapyPlaceId,
+															appointment.AppointmentRawData.StartTime,
+															appointment.AppointmentRawData.EndTime,
+															appointment.AppointmentRawData.TherapyPlaceId,
 															ActionTag.RegularAction,
 															errorMsg =>
 															{
 																viewModelCommunication.Send(new ShowNotification($"Termin kann nicht gelöscht werden: {errorMsg}", 5));
 															});
 					},
-					appointment.MedicalPracticeId,
+					appointment.AppointmentRawData.MedicalPracticeId,
 					appointment.Day,
 					errorCallBack
 				);				
@@ -151,22 +152,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 			if (patient != null)
 			{
+				SelectedPatient = patient.Name;
+
 				readModelRepository.RequestAppointmentsOfAPatientReadModel(
 					patientReadModel =>
-					{
-						Application.Current.Dispatcher.Invoke(() =>
-						{
-							currentReadModel = patientReadModel;						
-							currentReadModel.Appointments.Where(appointment => appointment.Day >= TimeTools.Today())
-														 .Do(DisplayedAppointments.Add);
+					{						
+						currentReadModel = patientReadModel;						
+						currentReadModel.Appointments.Where(appointment => appointment.Day >= TimeTools.Today())
+													 .Do(AddAppointment);
 
-							CheckDisplayedAppointmentCount();
-
-							currentReadModel.AppointmentChanged += OnCurrentReadModelAppointmentsChanged;
-
-							DisplayedAppointments.Sort(new AppointmentSorter());
-							SelectedPatient = patient.Name;
-						});
+						currentReadModel.AppointmentChanged += OnCurrentReadModelAppointmentsChanged;
 					},
 					patient.Id,
 					errorCallBack						
@@ -178,30 +173,55 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 			}
 		}
 
+		private void AddAppointment(AppointmentTransferData newAppointmentData)
+		{
+			medicalPracticeRepository.RequestMedicalPractice(
+				practice =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						DisplayedAppointments.Add(new DisplayAppointmentData(newAppointmentData, practice.Name));
+						DisplayedAppointments.Sort(new AppointmentSorter());
+
+						CheckDisplayedAppointmentCount();												
+					});
+				},
+				newAppointmentData.MedicalPracticeId,
+				newAppointmentData.Day,
+				errorCallBack
+			);
+		}
+
 		private void OnCurrentReadModelAppointmentsChanged(object sender, RawAppointmentChangedEventArgs appointmentChangedEventArgs)
 		{
+			if (!ShowPreviousAppointments && 
+				appointmentChangedEventArgs.Appointment.Day < TimeTools.Today())
+			{
+				return;
+			}
+
 			switch (appointmentChangedEventArgs.ChangeAction)
 			{
 				case ChangeAction.Added:
-				{
-					DisplayedAppointments.Add(appointmentChangedEventArgs.Appointment);
+				{	
+					AddAppointment(appointmentChangedEventArgs.Appointment);
 					break;
 				}
 				case ChangeAction.Deleted:
 				{
-					DisplayedAppointments.Remove(appointmentChangedEventArgs.Appointment);
+					var appointmentToRemove = DisplayedAppointments.First(app => app.AppointmentRawData.Id == appointmentChangedEventArgs.Appointment.Id);
+					DisplayedAppointments.Remove(appointmentToRemove);
+					DisplayedAppointments.Sort(new AppointmentSorter());
 					break;
 				}
 				case ChangeAction.Modified:
 				{
-					var oldAppointment = DisplayedAppointments.First(appointment => appointment.Id == appointmentChangedEventArgs.Appointment.Id);
+					var oldAppointment = DisplayedAppointments.First(appointment => appointment.AppointmentRawData.Id == appointmentChangedEventArgs.Appointment.Id);
 					DisplayedAppointments.Remove(oldAppointment);
-					DisplayedAppointments.Add(appointmentChangedEventArgs.Appointment);
+					AddAppointment(appointmentChangedEventArgs.Appointment);
 					break;
 				}
-			}
-			DisplayedAppointments.Sort(new AppointmentSorter());
-			
+			}						
 		}
 
 		private void CheckDisplayedAppointmentCount()
@@ -227,10 +247,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 
 				if (value)
 				{
-					currentReadModel.Appointments.Where(appointment => !DisplayedAppointments.Contains(appointment))
-												 .Do(appointment => DisplayedAppointments.Add(appointment));
+					currentReadModel.Appointments.Where(appointment => DisplayedAppointments.All(app => app.AppointmentRawData.Id != appointment.Id))
+												 .Do(AddAppointment);
 
-					DisplayedAppointments.Sort(new AppointmentSorter());					
+					DisplayedAppointments.Sort(new AppointmentSorter());
 				}
 				else
 				{
@@ -257,7 +277,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 			private set { PropertyChanged.ChangeAndNotify(this, ref selectedPatient, value); }
 		}
 
-		public ObservableCollection<AppointmentTransferData> DisplayedAppointments { get; }
+		public ObservableCollection<DisplayAppointmentData> DisplayedAppointments { get; }
 		
 	    protected override void CleanUp()
 	    {

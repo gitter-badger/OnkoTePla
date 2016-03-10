@@ -4,44 +4,32 @@ using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 {
-	public class SearchPageViewModelSampleData : ISearchPageViewModel
+	internal class SearchPageViewModelSampleData : ISearchPageViewModel
 	{
 		public SearchPageViewModelSampleData()
 		{
 			PatientSelectorViewModel = new PatientSelectorViewModelSampleData();
 
-			DisplayedAppointments = new ObservableCollection<AppointmentTransferData>
+			DisplayedAppointments = new ObservableCollection<DisplayAppointmentData>
 			{
-				new AppointmentTransferData(Guid.Empty, 
-											"testApp", 								
-											new Date(21,10,2015), 
-											new Time(10,30), 
-											new Time(12,45),
-											Guid.Empty,
-											Guid.Empty,
-											Guid.Empty),
-				new AppointmentTransferData(Guid.Empty,
-											"testApp2",								
-											new Date(22,10,2015),
-											new Time(10,30),
-											new Time(12,45),
-											Guid.Empty,
-											Guid.Empty,
-											Guid.Empty),
-				new AppointmentTransferData(Guid.Empty,
-											"testApp3",								
-											new Date(23,10,2015),
-											new Time(10,30),
-											new Time(12,45),
-											Guid.Empty,
-											Guid.Empty,
-											Guid.Empty)
+				new DisplayAppointmentData(new AppointmentTransferData(Guid.Empty, "testApp1", new Date(21,10,2015), 
+																	   new Time(10,30), new Time(12,45), Guid.Empty,
+																	   Guid.Empty, Guid.Empty), "Fürth"),
+
+				new DisplayAppointmentData(new AppointmentTransferData(Guid.Empty, "testApp2", new Date(22,10,2015),
+																	   new Time(11,30), new Time(13,45), Guid.Empty,
+																	   Guid.Empty, Guid.Empty), "Fürth"),
+
+				new DisplayAppointmentData(new AppointmentTransferData(Guid.Empty, "testApp3", new Date(23,10,2015),
+																	   new Time(12,30), new Time(14,45), Guid.Empty,
+																	   Guid.Empty, Guid.Empty), "Fürth")
 			};
 
 			SelectedPatient = "John Doe";
@@ -59,7 +47,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		public bool NoAppointmentsAvailable { get; }
 		public string SelectedPatient { get; }
 
-		public ObservableCollection<AppointmentTransferData> DisplayedAppointments { get; }
+		public ObservableCollection<DisplayAppointmentData> DisplayedAppointments { get; }
 		
 		public void Dispose() { }
 		public event PropertyChangedEventHandler PropertyChanged;

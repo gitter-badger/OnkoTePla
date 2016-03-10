@@ -1,12 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
-using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage.Helper;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 {
-	public interface ISearchPageViewModel : IViewModel
+	internal interface ISearchPageViewModel : IViewModel
 	{
 		ICommand DeleteAppointment { get; }
 		ICommand ModifyAppointment { get; }		
@@ -17,6 +17,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		bool NoAppointmentsAvailable { get; }
 		string SelectedPatient { get; }
 		
-		ObservableCollection<AppointmentTransferData> DisplayedAppointments { get; }
+		ObservableCollection<DisplayAppointmentData> DisplayedAppointments { get; }
 	}
 }
