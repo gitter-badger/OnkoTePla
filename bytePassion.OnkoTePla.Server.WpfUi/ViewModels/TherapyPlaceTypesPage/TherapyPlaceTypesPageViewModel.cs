@@ -8,6 +8,7 @@ using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage.Helper;
 
@@ -62,6 +63,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 
 		private void DoSaveChanges ()
 		{
+			if (!NameChecker.CheckName(Name))
+			{
+				NameChecker.ShowCharacterError(Name);
+				return;
+			}
+
 			var newTherapyPlaceType = SelectedTherapyPlaceType.SetNewName(Name)
 															  .SetNewIcon(IconType.IconType);
 			dataCenter.UpdateTherapyPlaceType(newTherapyPlaceType);

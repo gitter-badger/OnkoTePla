@@ -14,6 +14,7 @@ using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
+using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Resources.UserNotificationService;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
@@ -101,7 +102,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 	    public ObservableCollection<TherapyPlaceDisplayData> TherapyPlaces    { get; }
 
 		public ObservableCollection<ColorDisplayData>            AvailableColors            { get; }
-		public ObservableCollection<TherapyPlaceTypeDisplayData> AvailableTherapyPlaceTypes { get; }
+		public ObservableCollection<TherapyPlaceTypeDisplayData> AvailableTherapyPlaceTypes { get; }		
 
 		#region OnSelectedPageStateChanged
 
@@ -183,6 +184,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		private void DoSaveMedicalPracticeChanges ()
 		{
+			if (!NameChecker.CheckName(PracticeName))
+			{
+				NameChecker.ShowCharacterError(PracticeName);
+				return;
+			}
+
 			if (PracticeName != SelectedMedicalPractice.Name)
 			{
 				var updatedPractice = SelectedMedicalPracticeObject.SetNewName(PracticeName);
@@ -237,6 +244,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		private void DoSaveRoomChanges ()
 		{
+			if (!NameChecker.CheckName(RoomName))
+			{
+				NameChecker.ShowCharacterError(RoomName);
+				return;
+			}
+
 			if (RoomName != SelectedRoomObject.Name || RoomDisplayColor.Color != SelectedRoomObject.DisplayedColor)
 			{
 				var updatedRoom = SelectedRoomObject.SetNewName(RoomName)
@@ -286,6 +299,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 
 		private void DoSaveTherapyPlaceChanges ()
 		{
+			if (!NameChecker.CheckName(TherapyPlaceName))
+			{
+				NameChecker.ShowCharacterError(TherapyPlaceName);
+				return;
+			}
+
 			if (TherapyPlaceName != SelectedTherapyPlaceObject.Name || TherapyPlaceType.Id != SelectedTherapyPlaceObject.TypeId)
 			{
 				var updatedTherapyPlace = SelectedTherapyPlaceObject.SetNewName(TherapyPlaceName)

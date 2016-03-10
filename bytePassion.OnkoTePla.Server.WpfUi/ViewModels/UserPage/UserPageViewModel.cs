@@ -7,6 +7,7 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage.Helper;
@@ -61,6 +62,18 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 
 		private void DoSaveChanges()
 	    {
+			if (!NameChecker.CheckName(UserName))
+			{
+				NameChecker.ShowCharacterError(UserName);
+				return;
+			}
+
+			if (!NameChecker.CheckName(Password))
+			{
+				NameChecker.ShowCharacterError(Password);
+				return;
+			}
+			
 			var newUser = SelectedUser.SetNewUserValues(UserName,
 														Password,
 														AccessablePractices.Where(listItem => listItem.IsSelected)

@@ -66,6 +66,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LanguageRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="NameChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserNotificationService\UserDialogBox.cs" />
   </ItemGroup>
