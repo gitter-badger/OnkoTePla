@@ -1,16 +1,16 @@
-﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView;
+﻿using System.Windows.Input;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
-using System.Windows.Input;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 {
-    internal interface IOverviewPageViewModel : IViewModel
+	internal interface IOverviewPageViewModel : IViewModel
 	{
 		IDateDisplayViewModel             DateDisplayViewModel             { get; }
 		IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }
@@ -23,8 +23,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		ICommand ShowAddAppointmentDialog { get; }
 
 		bool ChangeConfirmationVisible { get; }
-		bool AddAppointmentPossible { get; }
-
-		
+		bool AddAppointmentPossible    { get; }		
 	}
 }

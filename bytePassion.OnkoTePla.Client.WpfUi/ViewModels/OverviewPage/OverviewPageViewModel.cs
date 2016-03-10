@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView;
@@ -23,7 +26,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
                                            IOverviewPageViewModel
 	{
         private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
-	    private readonly Action<string> errorCallback;
+		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
+		private readonly ISharedStateReadOnly<Date> selectedDayVariable;
+		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
+		private readonly Action<string> errorCallback;
 
 	    private bool changeConfirmationVisible;
 		private bool addAppointmentPossible;		
@@ -38,9 +44,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 									 IUndoRedoViewModel undoRedoViewModel,									 
                                      IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder,
                                      ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
+									 ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
+									 ISharedStateReadOnly<Date> selectedDayVariable,
+									 IClientMedicalPracticeRepository medicalPracticeRepository,
 									 Action<string> errorCallback)
 		{
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
+			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
+			this.selectedDayVariable = selectedDayVariable;
+			this.medicalPracticeRepository = medicalPracticeRepository;
 			this.errorCallback = errorCallback;
 			DateDisplayViewModel = dateDisplayViewModel;
 			MedicalPracticeSelectorViewModel = medicalPracticeSelectorViewModel;
@@ -54,7 +66,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 			AddAppointmentPossible = true;			
 
 			
-            appointmentModificationsVariable.StateChanged += OnCurrentModifiedAppointmentVariableChanged;			
+            appointmentModificationsVariable.StateChanged  += OnCurrentModifiedAppointmentVariableChanged;
+			selectedMedicalPracticeIdVariable.StateChanged += OnSelectedMedicalPracticeIdVariableChanged;
+			selectedDayVariable.StateChanged               += OnSelectedDayVariablChanged;			
 
 			ShowAddAppointmentDialog = new Command(() =>
 			{
@@ -67,10 +81,45 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
             });
 		}
 
-		private void OnCurrentModifiedAppointmentVariableChanged(AppointmentModifications appointment)
+		private void OnSelectedDayVariablChanged(Date date)
 		{
-			ChangeConfirmationVisible = appointment != null;
-			AddAppointmentPossible = appointment == null;
+			UpdateAddAppointmentPossible();
+		}
+
+		private void OnSelectedMedicalPracticeIdVariableChanged(Guid guid)
+		{
+			UpdateAddAppointmentPossible();
+		}
+
+		private void OnCurrentModifiedAppointmentVariableChanged(AppointmentModifications appointmentModifications)
+		{
+			ChangeConfirmationVisible = appointmentModifications != null;
+
+			UpdateAddAppointmentPossible();
+		}
+
+		private void UpdateAddAppointmentPossible()
+		{
+			if (appointmentModificationsVariable.Value != null)
+			{
+				AddAppointmentPossible = false;
+				return;
+			}
+
+			var day = selectedDayVariable.Value;
+
+			medicalPracticeRepository.RequestMedicalPractice(
+				practice =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						AddAppointmentPossible = practice.HoursOfOpening.IsOpen(day);
+					});					
+				},
+				selectedMedicalPracticeIdVariable.Value,
+				day,
+				errorCallback	
+			);
 		}
 
 		public IDateDisplayViewModel             DateDisplayViewModel             { get; }
@@ -97,8 +146,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		
         protected override void CleanUp()
         {
-            appointmentModificationsVariable.StateChanged -= OnCurrentModifiedAppointmentVariableChanged;
-        }
+            appointmentModificationsVariable.StateChanged  -= OnCurrentModifiedAppointmentVariableChanged;
+			selectedMedicalPracticeIdVariable.StateChanged -= OnSelectedMedicalPracticeIdVariableChanged;
+			selectedDayVariable.StateChanged               -= OnSelectedDayVariablChanged;
+		}
         public override event PropertyChangedEventHandler PropertyChanged;
     }
 }

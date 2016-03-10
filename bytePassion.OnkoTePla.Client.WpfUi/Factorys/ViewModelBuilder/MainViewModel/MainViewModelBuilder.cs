@@ -222,6 +222,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                   undoRedoViewModel,
                                                                   addAppointmentDialogWindowBuilder,
                                                                   appointmentModificationsVariable,
+																  selectedMedicalPracticeIdVariable,
+																  selectedDateVariable,
+																  medicalPracticeRepository,
 																  errorCallback);
 
             var patientSelectorViewModel = new PatientSelectorViewModel(patientRepository,
