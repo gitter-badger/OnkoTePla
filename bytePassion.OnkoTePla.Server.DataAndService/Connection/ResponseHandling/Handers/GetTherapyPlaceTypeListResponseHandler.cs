@@ -24,7 +24,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 			if (!IsRequestValid(request.SessionId, request.UserId))
 				return;
 
-			Socket.SendNetworkMsg(new GetTherapyPlacesTypeListResponse(dataCenter.GetAllTherapyPlaceTypes().ToList()));
+			Socket.SendNetworkMsg(new GetTherapyPlacesTypeListResponse(dataCenter.GetAllTherapyPlaceTypesPlusDummy().ToList()));
 		}
 	}
 }

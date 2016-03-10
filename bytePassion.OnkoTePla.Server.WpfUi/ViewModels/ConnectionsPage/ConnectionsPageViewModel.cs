@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Threading;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage.Helper;
 
 
@@ -22,6 +24,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 	    private readonly IDataCenter dataCenter;
 		private readonly IConnectionService connectionService;
+		private readonly ISharedStateReadOnly<MainPage> selectedPageVariable;
 
 		private string selectedIpAddress;
 	    private string activeConnection;
@@ -31,12 +34,17 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 		private bool connectionActivationLocked;
 		private DispatcherTimer lockedTimer;
 
-		public ConnectionsPageViewModel(IDataCenter dataCenter, IConnectionService connectionService)
+		public ConnectionsPageViewModel(IDataCenter dataCenter, 
+										IConnectionService connectionService,
+										ISharedStateReadOnly<MainPage> selectedPageVariable)
 	    {
 		    this.dataCenter = dataCenter;
 		    this.connectionService = connectionService;
+			this.selectedPageVariable = selectedPageVariable;
 
-		    UpdateAvailableAddresses = new Command(UpdateAddresses);
+			selectedPageVariable.StateChanged += SelectedPageVariableOnStateChanged;
+
+			UpdateAvailableAddresses = new Command(UpdateAddresses);
 
 			AvailableIpAddresses = new ObservableCollection<string>();
 			ConnectedClients = new ObservableCollection<ConnectedClientDisplayData>();
@@ -57,6 +65,14 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 			if (IsActivationPossible)
 				IsConnectionActive = true; // TODO: just for testing
 	    }
+
+		private void SelectedPageVariableOnStateChanged(MainPage mainPage)
+		{
+			if (mainPage == MainPage.Connections)
+			{
+				CheckIfActicationIsPossible();
+			}
+		}
 
 		private void OnLoggedInUserUpdated(SessionInfo sessionInfo)
 		{
@@ -162,12 +178,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 		{
 			IsActivationPossible = !connectionActivationLocked && 
 								   !string.IsNullOrWhiteSpace(SelectedIpAddress) &&
-								   dataCenter.GetAllUsers().Count(user => !user.IsHidden) > 0 &&
+								   dataCenter.GetAllUsers().Count(user => !user.IsHidden && user.ListOfAccessableMedicalPractices.Any()) > 0 &&
 								   dataCenter.GetAllMedicalPractices().Any() &&
 								   dataCenter.GetAllTherapyPlaceTypes().Any();								  
 		}
 
-		protected override void CleanUp () { }
+		protected override void CleanUp()
+		{
+			selectedPageVariable.StateChanged -= SelectedPageVariableOnStateChanged;
+		}
 		public override event PropertyChangedEventHandler PropertyChanged;
 	}
 }

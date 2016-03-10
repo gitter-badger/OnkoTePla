@@ -110,6 +110,17 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		{
 			if (mainPage == MainPage.Infrastructure)
 			{
+//				if (!dataCenter.GetAllTherapyPlaceTypes().Any())
+//				{
+//					var dialog = new UserDialogBox("",
+//												   "Es muss erst ein TherapyPlatztyp angelegt werden, bevor eine Praxis angelegt werden kann",
+//												   MessageBoxButton.OK);
+//
+//					await dialog.ShowMahAppsDialog();
+//					selectedPageVariable.Value = MainPage.TherapyPlaceTypes;
+//					return;
+//				}
+
 				AvailableTherapyPlaceTypes.Clear();
 
 				dataCenter.GetAllTherapyPlaceTypesPlusDummy()

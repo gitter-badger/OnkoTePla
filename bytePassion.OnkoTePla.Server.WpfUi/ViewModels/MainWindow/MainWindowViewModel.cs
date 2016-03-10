@@ -24,7 +24,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 {
 	internal class MainWindowViewModel : ViewModel, IMainWindowViewModel
     {
-		private readonly ISharedStateWriteOnly<MainPage> selectedPageVariable;
+		private readonly ISharedState<MainPage> selectedPageVariable;
 
 		private MainPage selectedPage;		
 
@@ -38,11 +38,13 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 								   IPatientsPageViewModel patientsPageViewModel,
 								   IOptionsPageViewModel optionsPageViewModel, 
                                    IAboutPageViewModel aboutPageViewModel,
-								   ISharedStateWriteOnly<MainPage> selectedPageVariable)
+								   ISharedState<MainPage> selectedPageVariable)
         {
 	        this.selectedPageVariable     = selectedPageVariable;
-	        PatientsPageViewModel = patientsPageViewModel;
 
+			selectedPageVariable.StateChanged += OnSelectedPageVariableChanged;
+
+	        PatientsPageViewModel          = patientsPageViewModel;
 	        OverviewPageViewModel          = overviewPageViewModel;
             ConnectionsPageViewModel       = connectionsPageViewModel;
             UserPageViewModel              = userPageViewModel;
@@ -58,6 +60,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 
 			CheckWindowClosing = true;
         }
+
+		private void OnSelectedPageVariableChanged(MainPage newPage)
+		{
+			SelectedPage = newPage;
+		}
 
 		private void DoCloseApplication()
 		{
