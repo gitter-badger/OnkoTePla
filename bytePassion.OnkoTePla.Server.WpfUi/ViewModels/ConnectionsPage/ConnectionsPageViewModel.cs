@@ -1,7 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
@@ -26,6 +28,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 		private bool isConnectionActive;
 		private bool isActivationPossible;
 
+		private bool connectionActivationLocked;
+		private DispatcherTimer lockedTimer;
+
 		public ConnectionsPageViewModel(IDataCenter dataCenter, IConnectionService connectionService)
 	    {
 		    this.dataCenter = dataCenter;
@@ -40,6 +45,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 			ActiveConnection = NoConnection;
 			isConnectionActive = false;
+			connectionActivationLocked = false;
 		    SelectedIpAddress = AvailableIpAddresses.First();
 
 			connectionService.NewSessionStarted += OnNewSessionStarted;
@@ -96,6 +102,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 					}
 					else
 					{
+						connectionActivationLocked = true;
+						CheckIfActicationIsPossible();
+						lockedTimer = new DispatcherTimer
+						{
+							Interval = TimeSpan.FromSeconds(3),
+							IsEnabled = true
+						};
+						lockedTimer.Tick += OnLockedTimerTick;
+
 						ActiveConnection = NoConnection;
 						connectionService.StopCommunication();
 					}
@@ -103,6 +118,15 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 				PropertyChanged.ChangeAndNotify(this, ref isConnectionActive, value);
 			}
+		}
+
+		private void OnLockedTimerTick(object sender, EventArgs eventArgs)
+		{
+			lockedTimer.Tick -= OnLockedTimerTick;
+			lockedTimer.IsEnabled = false;			
+
+			connectionActivationLocked = false;
+			CheckIfActicationIsPossible();
 		}
 
 		public bool IsActivationPossible
@@ -117,7 +141,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 			set
 			{
 				PropertyChanged.ChangeAndNotify(this, ref selectedIpAddress, value);
-				IsActivationPossible = !string.IsNullOrWhiteSpace(SelectedIpAddress);
+				CheckIfActicationIsPossible();
 			}
 	    }
 
@@ -129,6 +153,13 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 	    public ObservableCollection<string> AvailableIpAddresses { get; }
 	    public ObservableCollection<ConnectedClientDisplayData> ConnectedClients { get; }
+
+
+		private void CheckIfActicationIsPossible()
+		{
+			IsActivationPossible = !connectionActivationLocked && 
+								   !string.IsNullOrWhiteSpace(SelectedIpAddress);
+		}
 
 		protected override void CleanUp () { }
 		public override event PropertyChangedEventHandler PropertyChanged;
