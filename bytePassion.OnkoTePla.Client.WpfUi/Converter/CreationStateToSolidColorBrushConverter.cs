@@ -16,8 +16,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Converter
 			{
 				case AppointmentCreationState.NoSpaceAvailable:
 				case AppointmentCreationState.NoPatientSelected:              return new SolidColorBrush(Constants.LayoutColors.AppointmentCreateStateImpossible); 
-				case AppointmentCreationState.PatientAndDespriptionAvailable: return new SolidColorBrush(Constants.LayoutColors.AppointmentCreateStatePossibleButNotComplete); 
-				case AppointmentCreationState.PatientSelected:                return new SolidColorBrush(Constants.LayoutColors.AppointmentCreateStatePossible); 
+				case AppointmentCreationState.PatientAndDespriptionAvailable: return new SolidColorBrush(Constants.LayoutColors.AppointmentCreateStatePossible); 
+				case AppointmentCreationState.PatientSelected:                return new SolidColorBrush(Constants.LayoutColors.AppointmentCreateStatePossibleButNotComplete); 
 			}
 
 			throw new Exception("inner exception");
