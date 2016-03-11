@@ -5,9 +5,9 @@ using System.Threading;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Config;
+using bytePassion.OnkoTePla.Contracts.Locking;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection;
-using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository.Helper;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 {
@@ -129,8 +129,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 				var potentialNewLock = new Lock(medicalPracticeId, day);
 
 				if (locks.Any(reservedLock => Equals(reservedLock, potentialNewLock)))
-				{
-					Console.WriteLine("lock denied");       // TODO: just for testing
+				{					
 					return false;
 				}
 
@@ -141,8 +140,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 										 TimeSpan.FromSeconds(3), 
 										 TimeSpan.FromSeconds(3));
 				
-				releaseLocksTimers.Add(potentialNewLock, newTimer);
-				Console.WriteLine("lock granted");                  // TODO: just for testing
+				releaseLocksTimers.Add(potentialNewLock, newTimer);				
 				return true;				
 			}
 		}
@@ -150,20 +148,27 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 		private void TimerTick(object observedLock)
 		{
 			var lockToRemove = (Lock) observedLock;
-			var timer = releaseLocksTimers[lockToRemove];
-
-			timer.Change(Timeout.Infinite, Timeout.Infinite);
-			timer.Dispose();
-
-			releaseLocksTimers.Remove(lockToRemove);
+			StopTimerAndRemove(lockToRemove);
 
 			lock (locks)
 			{
 				if (locks.Contains(lockToRemove))
-				{
-					Console.WriteLine("force lock remove!"); // TODO: just for testing
+				{					
 					locks.Remove(lockToRemove);
 				}
+			}
+		}
+
+		private void StopTimerAndRemove(Lock @lock)
+		{
+			if (releaseLocksTimers.ContainsKey(@lock))
+			{
+				var timer = releaseLocksTimers[@lock];
+
+				timer.Change(Timeout.Infinite, Timeout.Infinite);
+				timer.Dispose();
+
+				releaseLocksTimers.Remove(@lock);
 			}
 		}
 
@@ -176,8 +181,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 
 				if (lockToRemove != null)
 				{
-					locks.Remove(lockToRemove);
-					Console.WriteLine("lock released"); // TODO: just for testing
+					StopTimerAndRemove(lockToRemove);
+					locks.Remove(lockToRemove);					
 				}
 			}
 		}

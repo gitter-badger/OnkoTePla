@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
@@ -15,15 +16,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ICommandService commandService;
-		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;	    
-        
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
+		private readonly Action<string> errorCallback;
+
 		public ConfirmChangesMessageHandler (IViewModelCommunication viewModelCommunication, 
 											 ICommandService commandService,
-                                             ISharedState<AppointmentModifications> appointmentModificationsVariable)
+                                             ISharedState<AppointmentModifications> appointmentModificationsVariable,
+											 Action<string> errorCallback)
 		{
 		    this.viewModelCommunication = viewModelCommunication;
 			this.commandService = commandService;
-			this.appointmentModificationsVariable = appointmentModificationsVariable;		    
+			this.appointmentModificationsVariable = appointmentModificationsVariable;
+			this.errorCallback = errorCallback;
 		}
 
 	    public void Process(ConfirmChanges message)
@@ -32,24 +36,41 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 
 			if (currentAppointmentModification.IsInitialAdjustment)
 			{
-				viewModelCommunication.SendTo(
-					Constants.ViewModelCollections.AppointmentViewModelCollection,
-					currentAppointmentModification.OriginalAppointment.Id,
-					new Dispose()						
-				);
 				
-				commandService.TryAddNewAppointment(currentAppointmentModification.CurrentLocation.PlaceAndDate,
-													currentAppointmentModification.OriginalAppointment.Patient.Id,
-													currentAppointmentModification.Description,
-													currentAppointmentModification.BeginTime,
-													currentAppointmentModification.EndTime,
-													currentAppointmentModification.CurrentLocation.TherapyPlaceId,
-													Guid.NewGuid(),
-													ActionTag.RegularAction,
-													errorMsg =>
-													{
-														viewModelCommunication.Send(new ShowNotification($"anlegen des Termins nicht möglich: {errorMsg}", 5));	
-													});
+				
+				commandService.TryAddNewAppointment(
+					operationSuccessful =>
+					{
+						Application.Current.Dispatcher.Invoke(() =>
+						{
+							if (operationSuccessful)
+							{
+								viewModelCommunication.SendTo(
+									Constants.ViewModelCollections.AppointmentViewModelCollection,
+									currentAppointmentModification.OriginalAppointment.Id,
+									new Dispose()
+								);
+
+								currentAppointmentModification.Dispose();
+								appointmentModificationsVariable.Value = null;
+							}
+							else
+							{
+								viewModelCommunication.Send(new ShowNotification("anlegen des Termins nicht möglich: versuch es noch einmal oder breche die operation ab", 5));	
+							}
+
+						});						
+					},
+					currentAppointmentModification.CurrentLocation.PlaceAndDate,
+					currentAppointmentModification.OriginalAppointment.Patient.Id,
+					currentAppointmentModification.Description,
+					currentAppointmentModification.BeginTime,
+					currentAppointmentModification.EndTime,
+					currentAppointmentModification.CurrentLocation.TherapyPlaceId,
+					Guid.NewGuid(),
+					ActionTag.RegularAction,
+					errorCallback
+				);
 			}
 			else
 			{
@@ -67,36 +88,47 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 					return; // no changes to report
 				}
 
-				commandService.TryReplaceAppointment(currentAppointmentModification.InitialLocation.PlaceAndDate, 
-													 currentAppointmentModification.CurrentLocation.PlaceAndDate,
-													 currentAppointmentModification.OriginalAppointment.Patient.Id,
-													 currentAppointmentModification.OriginalAppointment.Description,
-													 currentAppointmentModification.Description,
-													 currentAppointmentModification.InitialLocation.PlaceAndDate.Date,
-													 currentAppointmentModification.CurrentLocation.PlaceAndDate.Date,
-													 currentAppointmentModification.OriginalAppointment.StartTime,
-													 currentAppointmentModification.BeginTime,
-													 currentAppointmentModification.OriginalAppointment.EndTime,
-													 currentAppointmentModification.EndTime,
-													 currentAppointmentModification.InitialLocation.TherapyPlaceId,
-													 currentAppointmentModification.CurrentLocation.TherapyPlaceId,
-													 currentAppointmentModification.OriginalAppointment.Id,													 
-													 ActionTag.RegularAction, 
-													 errorMsg =>
-													 {
-														 viewModelCommunication.Send(new ShowNotification($"veränderung des Termins nicht möglich: {errorMsg}", 5));
-														 
-														 viewModelCommunication.SendTo(
-															Constants.ViewModelCollections.AppointmentViewModelCollection,
-															originalAppointment.Id,
-															new RestoreOriginalValues()	 
-														 );
-													 });
+				commandService.TryReplaceAppointment(
 
+					operationSuccessful =>
+					{
+						Application.Current.Dispatcher.Invoke(() =>
+						{
+							if (operationSuccessful)
+							{
+								currentAppointmentModification.Dispose();
+								appointmentModificationsVariable.Value = null;
+							}
+							else
+							{
+								viewModelCommunication.Send(new ShowNotification("anlegen des Termins nicht möglich: versuch es noch einmal oder breche die operation ab", 5));
+
+								viewModelCommunication.SendTo(
+									Constants.ViewModelCollections.AppointmentViewModelCollection,
+									originalAppointment.Id,
+									new RestoreOriginalValues()
+								);
+							}
+						});						
+					},
+					currentAppointmentModification.InitialLocation.PlaceAndDate, 
+					currentAppointmentModification.CurrentLocation.PlaceAndDate,
+					currentAppointmentModification.OriginalAppointment.Patient.Id,
+					currentAppointmentModification.OriginalAppointment.Description,
+					currentAppointmentModification.Description,
+					currentAppointmentModification.InitialLocation.PlaceAndDate.Date,
+					currentAppointmentModification.CurrentLocation.PlaceAndDate.Date,
+					currentAppointmentModification.OriginalAppointment.StartTime,
+					currentAppointmentModification.BeginTime,
+					currentAppointmentModification.OriginalAppointment.EndTime,
+					currentAppointmentModification.EndTime,
+					currentAppointmentModification.InitialLocation.TherapyPlaceId,
+					currentAppointmentModification.CurrentLocation.TherapyPlaceId,
+					currentAppointmentModification.OriginalAppointment.Id,													 
+					ActionTag.RegularAction, 
+					errorCallback
+				);
 			}
-
-			currentAppointmentModification.Dispose();
-			appointmentModificationsVariable.Value = null;
 		}
 	}
 }

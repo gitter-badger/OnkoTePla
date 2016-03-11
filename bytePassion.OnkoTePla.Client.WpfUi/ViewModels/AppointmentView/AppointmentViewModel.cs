@@ -95,18 +95,28 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				    {
 						appointmentModificationsVariable.Value = null;
 
-						commandService.TryDeleteAppointment(currentLocation.PlaceAndDate, 															
-															appointment.Patient.Id,
-															appointment.Id,
-															appointment.Description,
-															appointment.StartTime,
-															appointment.EndTime,
-															appointment.TherapyPlace.Id, 
-															ActionTag.RegularAction,
-															errorMsg =>
-															{
-																viewModelCommunication.Send(new ShowNotification($"löschen des Termins fehlgeschlagen: {errorMsg}", 5));	
-															});
+						commandService.TryDeleteAppointment(
+							operationSuccessful =>
+							{
+								Application.Current.Dispatcher.Invoke(() =>
+								{
+									if (!operationSuccessful)
+									{
+										Process(new RestoreOriginalValues());
+										viewModelCommunication.Send(new ShowNotification("löschen des Termins fehlgeschlagen; bearbeitung wurde zurückgesetzt", 5));
+									}
+								});														
+							},
+							currentLocation.PlaceAndDate, 															
+							appointment.Patient.Id,
+							appointment.Id,
+							appointment.Description,
+							appointment.StartTime,
+							appointment.EndTime,
+							appointment.TherapyPlace.Id, 
+							ActionTag.RegularAction,
+							errorCallback
+						);
 					}					
 				}
 			);	

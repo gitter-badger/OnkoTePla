@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.Communication.State;
@@ -26,7 +27,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
-	    private readonly ISession session;		
+	    private readonly ISession session;
+		private readonly Action<string> errorCallback;
 
 
 		private AppointmentModifications currentAppointmentModifications;
@@ -35,11 +37,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 		public UndoRedoViewModel(IViewModelCommunication viewModelCommunication,
 								 ISharedState<AppointmentModifications> appointmentModificationsVariable, 
-								 ISession session)
+								 ISession session,
+								 Action<string> errorCallback)
 		{
 			this.viewModelCommunication = viewModelCommunication;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;
-			this.session = session;			
+			this.session = session;
+			this.errorCallback = errorCallback;
 
 			currentButtonMode = ButtonMode.ViewMode;
 			currentAppointmentModifications = null;
@@ -56,12 +60,18 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 	    private void OnUndoPossibleChanged(bool isUndoPossible)
 	    {
-			((Command)Undo).RaiseCanExecuteChanged();
+		    Application.Current.Dispatcher.Invoke(() =>
+		    {
+				((Command)Undo).RaiseCanExecuteChanged();
+			});			
 		}
 
 	    private void OnRedoPossibleChanged(bool isRedoPossible)
 	    {
-			((Command)Redo).RaiseCanExecuteChanged();
+		    Application.Current.Dispatcher.Invoke(() =>
+		    {
+				((Command)Redo).RaiseCanExecuteChanged();
+			});			
 		}
 
 	    private bool RedoPossible()
@@ -151,9 +161,21 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 					if (result == MessageDialogResult.Affirmative)
 					{
-						session.Redo(errorMsg => viewModelCommunication.Send(new ShowNotification($"redo nicht möglich: {errorMsg}",5)));
-					}
-					
+						session.Redo(
+							operationSuccessful =>
+							{
+								if (!operationSuccessful)
+								{
+									Application.Current.Dispatcher.Invoke(() =>
+									{
+										viewModelCommunication.Send(new ShowNotification($"redo nicht möglich: eventhistory wird zurückgesetzt", 5));
+										session.ResetUndoRedoHistory();
+									});									
+								}								
+							},
+							errorCallback							
+						);
+					}					
 					break;
 			    }
 			}
@@ -183,7 +205,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView
 
 					if (result == MessageDialogResult.Affirmative)
 					{
-						session.Undo(errorMsg => viewModelCommunication.Send(new ShowNotification($"undo nicht möglich: {errorMsg}", 5)));
+						session.Undo(
+							operationSuccessful =>
+							{
+								if (!operationSuccessful)
+								{
+									Application.Current.Dispatcher.Invoke(() =>
+									{
+										viewModelCommunication.Send(new ShowNotification($"undo nicht möglich: eventhistory wird zurückgesetzt", 5));
+										session.ResetUndoRedoHistory();
+									});
+								}
+							},
+							errorCallback
+						);
 					}
 					break;
 				}

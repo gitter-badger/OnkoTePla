@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo;
@@ -163,6 +164,16 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 			connectionService.TryDisconnect(dissconnectionSuccessful, errorCallback);
 		}
 
+		public void TryToGetLock(Action<bool> resultCallback, Guid medicalPracticeId, Date day, Action<string> errorCallback)
+		{
+			connectionService.TryToGetLock(resultCallback, medicalPracticeId, day, errorCallback);
+		}
+
+		public void ReleaseLock(Action actionCompleteCallback, Guid medicalPracticeId, Date day, Action<string> errorCallback)
+		{
+			connectionService.ReleaseLock(actionCompleteCallback, medicalPracticeId, day, errorCallback);
+		}
+
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////                                                                                   ///////////
@@ -178,11 +189,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		private void OnUndoRedoServiceUndoPossibleChanged (bool b) { UndoPossibleChanged?.Invoke(b); }		
 		private void OnUndoRedoServiceRedoPossibleChanged (bool b) { RedoPossibleChanged?.Invoke(b); }
 		
-		public bool UndoPossible () => undoRedoService != null && undoRedoService.UndoPossible;
+		public bool UndoPossible () => undoRedoService != null && undoRedoService.UndoPossible;		
 		public bool RedoPossible () => undoRedoService != null && undoRedoService.RedoPossible;
-
-		public void Undo (Action<string> errorCallback) { undoRedoService?.Undo(errorCallback); }
-		public void Redo (Action<string> errorCallback) { undoRedoService?.Redo(errorCallback); }
+		
+		public void Undo (Action<bool> operationResultCallback, Action<string> errorCallback) { undoRedoService?.Undo(operationResultCallback, errorCallback); }
+		public void Redo (Action<bool> operationResultCallback, Action<string> errorCallback) { undoRedoService?.Redo(operationResultCallback, errorCallback); }
 		
 		public string GetCurrentUndoActionMsg()
 		{
@@ -203,6 +214,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		public void ReportUserAction(IUserAction newUserAction)
 		{
 			undoRedoService.ReportUserAction(newUserAction);
+		}
+
+		public void ResetUndoRedoHistory()
+		{
+			undoRedoService.ResetHistory();
 		}
 	}
 }

@@ -138,7 +138,6 @@
     <Compile Include="Repositories\XMLDataStores\XmlPatientDataStore.cs" />
     <Compile Include="Repositories\XMLDataStores\XmlPracticeMetaDataPersistanceService.cs" />
     <Compile Include="SessionRepository\CurrentSessionsInfo.cs" />
-    <Compile Include="SessionRepository\Helper\Lock.cs" />
     <Compile Include="SessionRepository\ICurrentSessionsInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +162,9 @@
       <Name>bytePassion.OnkoTePla.Resources</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SessionRepository\Helper\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

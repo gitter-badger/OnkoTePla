@@ -118,20 +118,23 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 				medicalPracticeRepository.RequestPraticeVersion(
 					practiceVersion =>
 					{
-						commandService.TryDeleteAppointment(new AggregateIdentifier(appointment.Day,
-																					appointment.AppointmentRawData.MedicalPracticeId,
-																					practiceVersion),
-															appointment.AppointmentRawData.PatientId,
-															appointment.AppointmentRawData.Id,
-															appointment.Description,
-															appointment.AppointmentRawData.StartTime,
-															appointment.AppointmentRawData.EndTime,
-															appointment.AppointmentRawData.TherapyPlaceId,
-															ActionTag.RegularAction,
-															errorMsg =>
-															{
-																viewModelCommunication.Send(new ShowNotification($"Termin kann nicht gelöscht werden: {errorMsg}", 5));
-															});
+						commandService.TryDeleteAppointment(
+							operationSuccessful =>
+							{
+								if (!operationSuccessful)
+									viewModelCommunication.Send(new ShowNotification("Termin kann nicht gelöscht werden", 5));
+							},
+							new AggregateIdentifier(appointment.Day,
+													appointment.AppointmentRawData.MedicalPracticeId,
+													practiceVersion),
+							appointment.AppointmentRawData.PatientId,
+							appointment.AppointmentRawData.Id,
+							appointment.Description,
+							appointment.AppointmentRawData.StartTime,
+							appointment.AppointmentRawData.EndTime,
+							appointment.AppointmentRawData.TherapyPlaceId,
+							ActionTag.RegularAction,
+							errorCallBack);
 					},
 					appointment.AppointmentRawData.MedicalPracticeId,
 					appointment.Day,

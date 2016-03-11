@@ -167,7 +167,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
 	        confirmChangesMessageHandler = new ConfirmChangesMessageHandler(viewModelCommunication,
 																			commandService,
-																		    appointmentModificationsVariable);
+																		    appointmentModificationsVariable,
+																			errorCallback);
 
 	        rejectChangesMessageHandler = new RejectChangesMessageHandler(viewModelCommunication,
 																		  appointmentModificationsVariable);
@@ -210,7 +211,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);
             var undoRedoViewModel = new UndoRedoViewModel(viewModelCommunication,
                                                           appointmentModificationsVariable,
-                                                          session);
+                                                          session,
+														  errorCallback);
 
             var overviewPageViewModel = new OverviewPageViewModel(viewModelCommunication,
                                                                   dateDisplayViewModel,

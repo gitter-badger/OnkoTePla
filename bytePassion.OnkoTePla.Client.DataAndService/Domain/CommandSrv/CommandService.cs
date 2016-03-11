@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands;
@@ -8,6 +9,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelReposito
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
+using bytePassion.OnkoTePla.Contracts.Locking;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 {
@@ -17,6 +19,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 		private readonly IClientReadModelRepository readModelRepository;
 		private readonly ICommandBus commandBus;
 
+		private readonly IList<Lock> currentLocks;
+
 		public CommandService(ISession session,
 							  IClientReadModelRepository readModelRepository,
 							  ICommandBus commandBus)
@@ -24,9 +28,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 			this.session = session;
 			this.readModelRepository = readModelRepository;
 			this.commandBus = commandBus;
+
+			currentLocks = new List<Lock>();
 		}
 
-		public void TryAddNewAppointment(AggregateIdentifier aggregateId,
+		public void TryAddNewAppointment(Action<bool> operationResultCallback, 
+										 AggregateIdentifier aggregateId,
 										 Guid patientId, string description,
 										 Time startTime, Time endTime,
 										 Guid therapyPlaceId, Guid appointmentId,
@@ -34,15 +41,22 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 										 Action<string> errorCallback)
 		{
 			RequestLock(
-				() =>
-				{					
+				successfulLocked =>
+				{
+					if (!successfulLocked)
+					{
+						operationResultCallback(false);
+						return;
+					}
+								
 					readModelRepository.RequestAppointmentSetOfADay(
 						appointmentSet =>
 						{
 							if (!AddingIsPossible(aggregateId, therapyPlaceId, startTime, endTime, appointmentSet))
 							{
 								errorCallback("termin kann aufgrund von konflikten nicht angelegt werden");
-								ReleaseAllLocks();
+								ReleaseAllLocks(errorCallback);
+								operationResultCallback(false);
 								return;
 							}
 							
@@ -59,14 +73,16 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 
 
 
-							ReleaseAllLocks();
+							ReleaseAllLocks(errorCallback);
+							operationResultCallback(true);
 						},
 						aggregateId,
 						errorCallback	
 					);										
 				},
-				errorMsg => errorCallback($"lock is in use: {errorMsg}"),
-				aggregateId.Date	
+				aggregateId.MedicalPracticeId,
+				aggregateId.Date,
+				errorCallback
 			);						
 		}
 
@@ -78,8 +94,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 			return true;
 		}
 
-
-		public void TryReplaceAppointment(AggregateIdentifier sourceLocation, AggregateIdentifier destinationLocation, 
+		
+		public void TryReplaceAppointment(Action<bool> operationResultCallback,
+										  AggregateIdentifier sourceLocation, AggregateIdentifier destinationLocation, 
 										  Guid patientId, 
 										  string originalDescription, string newDescription,
 										  Date   originalDate,          Date newDate,
@@ -91,7 +108,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 										  Action<string> errorCallback)
 		{
 			if (sourceLocation == destinationLocation)
-				TryReplaceAppointmentWithinDay(sourceLocation, patientId, 
+				TryReplaceAppointmentWithinDay(operationResultCallback,
+											   sourceLocation, patientId, 
 											   originalDescription, newDescription,
 											   originalDate,
 											   originalStartTime, newStartTime,
@@ -101,7 +119,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 											   actionTag, errorCallback);
 			else
 			{
-				TryReplaceAppointmentBetweenDays(sourceLocation, destinationLocation, patientId,
+				TryReplaceAppointmentBetweenDays(operationResultCallback,
+												 sourceLocation, destinationLocation, patientId,
 												 originalDescription, newDescription,
 											     originalDate, newDate,
 											     originalStartTime, newStartTime,
@@ -111,8 +130,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 												 actionTag, errorCallback);
 			}			
 		}		
-
-		private void TryReplaceAppointmentWithinDay(AggregateIdentifier location, Guid patientId,
+		
+		private void TryReplaceAppointmentWithinDay(Action<bool> operationResultCallback,
+													AggregateIdentifier location, Guid patientId,
 													string originalDescription,  string newDescription,
 													Date   date,
 													Time   originalStartTime,      Time newStartTime,
@@ -123,8 +143,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 													Action<string> errorCallback)
 		{
 			RequestLock(
-				() =>
+				successfulLocked =>
 				{
+					if (!successfulLocked)
+					{
+						operationResultCallback(false);
+						return;
+					}
+
 					readModelRepository.RequestAppointmentSetOfADay(
 						appointmentSet =>
 						{
@@ -132,7 +158,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 													   originalAppointmendId, date, appointmentSet, appointmentSet))
 							{
 								errorCallback("termin kann aufgrund von konflikten nicht verschoben werden");
-								ReleaseAllLocks();
+								ReleaseAllLocks(errorCallback);
+								operationResultCallback(false);
 								return;
 							}
 							
@@ -155,18 +182,21 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																		  newTherapyPlaceId,
 																		  originalAppointmendId));
 
-							ReleaseAllLocks();
+							ReleaseAllLocks(errorCallback);
+							operationResultCallback(true);
 						},
 						location,
 						errorCallback
 					);
 				},
-				errorMsg => errorCallback($"lock is in use: {errorMsg}"),
-				location.Date
+				location.MedicalPracticeId,
+				location.Date,
+				errorCallback				
 			);
 		}
-
-		private void TryReplaceAppointmentBetweenDays(AggregateIdentifier sourceLocation, AggregateIdentifier destinationLocation,
+		
+		private void TryReplaceAppointmentBetweenDays(Action<bool> operationResultCallback,
+													  AggregateIdentifier sourceLocation, AggregateIdentifier destinationLocation,
 													  Guid patientId,
 													  string originalDescription, string newDescription,
 													  Date originalDate, Date newDate,
@@ -178,15 +208,27 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 													  Action<string> errorCallback)
 		{
 			RequestLock(
-				() =>
+				successfulLockedSource =>
 				{
+					if (!successfulLockedSource)
+					{
+						operationResultCallback(false);
+						return;
+					}
+
 					readModelRepository.RequestAppointmentSetOfADay(
 						sourceAppointmentSet =>
 						{
-
 							RequestLock(
-								() =>
+								successfulLockedDestination =>
 								{
+									if (!successfulLockedDestination)
+									{
+										ReleaseAllLocks(errorCallback);
+										operationResultCallback(false);
+										return;
+									}
+
 									readModelRepository.RequestAppointmentSetOfADay(
 										destinationAppointmentSet =>
 										{
@@ -195,7 +237,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																	   originalAppointmendId, originalDate, sourceAppointmentSet, destinationAppointmentSet))
 											{
 												errorCallback("termin kann aufgrund von konflikten nicht verschoben werden");
-												ReleaseAllLocks();
+												ReleaseAllLocks(errorCallback);
+												operationResultCallback(false);
 												return;
 											}
 											
@@ -218,27 +261,29 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																						  newTherapyPlaceId,
 																						  originalAppointmendId));
 
-											ReleaseAllLocks();
-
+											ReleaseAllLocks(errorCallback);
+											operationResultCallback(true);
 										},
 										destinationLocation,
 										errorCallback
 									);
 								},
+								destinationLocation.MedicalPracticeId,
+								destinationLocation.Date,
 								errorMsg =>
 								{
-									errorCallback($"lock is in use: {errorMsg}");
-									ReleaseAllLocks();
-								},
-								destinationLocation.Date
+									errorCallback(errorMsg);
+									ReleaseAllLocks(errorCallback);
+								}
 							);
 						}, 
 						sourceLocation,
 						errorCallback
 					);
 				},
-				errorMsg => errorCallback($"lock is in use: {errorMsg}"),
-				sourceLocation.Date
+				sourceLocation.MedicalPracticeId,
+				sourceLocation.Date,
+				errorCallback
 			);
 		}
 
@@ -252,20 +297,28 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 		}
 
 
-		public void TryDeleteAppointment (AggregateIdentifier location, Guid patientId, Guid removedAppointmentId,
+		public void TryDeleteAppointment (Action<bool> operationResultCallback, 
+										  AggregateIdentifier location, Guid patientId, Guid removedAppointmentId,
 										  string removedAppointmentDescription, Time removedAppointmentStartTime, Time removedAppointmentEndTime,
 										  Guid removedAppointmentTherapyPlaceId, ActionTag actionTag, Action<string> errorCallback)
 		{
 			RequestLock(
-				() =>
+				successfulLocked =>
 				{
+					if (!successfulLocked)
+					{
+						operationResultCallback(false);
+						return;
+					}
+
 					readModelRepository.RequestAppointmentSetOfADay(
 						appointmentSet =>
 						{
 							if (!DeletionPossible(removedAppointmentId, appointmentSet))
 							{
 								errorCallback("termin kann nicht gelöscht werden, da nicht vorhanden");
-								ReleaseAllLocks();
+								ReleaseAllLocks(errorCallback);
+								operationResultCallback(false);
 								return;
 							}
 
@@ -279,14 +332,16 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																		 removedAppointmentStartTime,
 																		 removedAppointmentEndTime,
 																		 removedAppointmentTherapyPlaceId));
-							ReleaseAllLocks();
+							ReleaseAllLocks(errorCallback);
+							operationResultCallback(true);
 						},
 						location,
 						errorCallback
 						);
 				},
-				errorMsg => errorCallback($"lock is in use: {errorMsg}"),
-				location.Date
+				location.MedicalPracticeId,
+				location.Date,
+				errorCallback				
 			);
 		}
 		
@@ -294,17 +349,37 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 		private static bool DeletionPossible(Guid appointmentId, FixedAppointmentSet appointmentSet)
 		{
 			return appointmentSet.Appointments.Any(appointment => appointment.Id == appointmentId);
-		}
+		}		
 
-		private void RequestLock(Action lockGranted, Action<string> lockDenied, Date day)
+		private void RequestLock(Action<bool> lockingResult, Guid medicalPracticeId, Date day, Action<string> errorCallback)
 		{
-			// TODO: Lock day
-			lockGranted();
+			session.TryToGetLock(
+				lockingSuccessful =>
+				{
+					if (lockingSuccessful)
+					{
+						currentLocks.Add(new Lock(medicalPracticeId, day));
+					}
+					lockingResult(lockingSuccessful);
+				}, 
+				medicalPracticeId, 
+				day, 
+				errorCallback
+			);			
 		}
-
-		private void ReleaseAllLocks()
+		
+		private void ReleaseAllLocks(Action<string> errorCallback)
 		{
-			// TODO: release lock
+			foreach (var @lock in currentLocks)
+			{
+				session.ReleaseLock(() =>
+				{
+					currentLocks.Remove(@lock);
+				}, 
+				@lock.MedicalPracticeId, 
+				@lock.Day, 
+				errorCallback);
+			}
 		}
 	}
 }

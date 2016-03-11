@@ -4,8 +4,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserAction
 {
 	public interface IUserAction
 	{		
-		void Undo(Action<string> errorCallback);
-		void Redo(Action<string> errorCallback);
+		void Undo(Action<bool> operationResultCallback, Action<string> errorCallback);
+		void Redo(Action<bool> operationResultCallback, Action<string> errorCallback);
 		
 		string GetUndoMsg();
 		string GetRedoMsg();

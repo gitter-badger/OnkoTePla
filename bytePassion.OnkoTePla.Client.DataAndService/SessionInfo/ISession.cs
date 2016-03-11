@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserActions;
 using bytePassion.OnkoTePla.Client.DataAndService.Workflow;
@@ -49,6 +50,16 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////                                                                                   ///////////
+		/////////                                     locking                                       ///////////
+		/////////                                                                                   ///////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////		
+
+		void TryToGetLock(Action<bool> resultCallback,   Guid medicalPracticeId, Date day, Action<string> errorCallback);
+		void ReleaseLock (Action actionCompleteCallback, Guid medicalPracticeId, Date day, Action<string> errorCallback);
+
+
+		///////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////                                                                                   ///////////
 		/////////                                    undo / redo                                    ///////////
 		/////////                                                                                   ///////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,13 +68,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.SessionInfo
 		event Action<bool> RedoPossibleChanged;
 
 		bool UndoPossible();
-		void Undo(Action<string> errorCallback);
+		void Undo(Action<bool> operationResultCallback, Action<string> errorCallback);
 		string GetCurrentUndoActionMsg();		
 		
 		bool RedoPossible();
-		void Redo(Action<string> errorCallback);
+		void Redo(Action<bool> operationResultCallback, Action<string> errorCallback);
 		string GetCurrentRedoActionMsg ();
 
 		void ReportUserAction(IUserAction newUserAction);
+		void ResetUndoRedoHistory();
 	}
 }

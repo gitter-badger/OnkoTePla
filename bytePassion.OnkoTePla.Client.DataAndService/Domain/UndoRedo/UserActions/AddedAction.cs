@@ -22,9 +22,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserAction
 			this.patient = patient;
 		}
 
-		public void Undo(Action<string> errorCallback)
+		public void Undo(Action<bool> operationResultCallback, Action<string> errorCallback)
 		{
-			commandService.TryDeleteAppointment(addAppointmentCommand.AggregateId,
+			commandService.TryDeleteAppointment(operationResultCallback,
+												addAppointmentCommand.AggregateId,
 												patient.Id,
 												addAppointmentCommand.AppointmentId,
 												addAppointmentCommand.Description,
@@ -35,9 +36,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserAction
 												errorCallback);
 		}
 
-		public void Redo(Action<string> errorCallback)
+		public void Redo(Action<bool> operationResultCallback, Action<string> errorCallback)
 		{
-			commandService.TryAddNewAppointment(addAppointmentCommand.AggregateId,
+			commandService.TryAddNewAppointment(operationResultCallback,
+												addAppointmentCommand.AggregateId,
 												addAppointmentCommand.PatientId,
 												addAppointmentCommand.Description,
 												addAppointmentCommand.StartTime,

@@ -2,9 +2,9 @@
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository.Helper
+namespace bytePassion.OnkoTePla.Contracts.Locking
 {
-	internal class Lock
+	public class Lock
 	{
 		public Lock(Guid medicalPracticeId, Date day)
 		{

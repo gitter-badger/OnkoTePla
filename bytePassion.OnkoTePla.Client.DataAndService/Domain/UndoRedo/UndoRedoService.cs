@@ -8,8 +8,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 	{
 		private class InitialListNode : IUserAction
 		{
-			public void Undo(Action<string> errorCallback) {}
-			public void Redo(Action<string> errorCallback) {}
+			public void Undo(Action<bool> operationResultCallback, Action<string> errorCallback) {}
+			public void Redo(Action<bool> operationResultCallback, Action<string> errorCallback) {}
+
 			public string GetUndoMsg() => null;			
 			public string GetRedoMsg() => null;
 		}
@@ -29,6 +30,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 			this.maximalSavedVersions = maximalSavedVersions;
 			userActions = new LinkedList<IUserAction>();
 
+			Initiate();
+		}
+
+		private void Initiate()
+		{
+			userActions.Clear();
 			userActions.AddFirst(new InitialListNode());
 			currentActionPointer = userActions.First;
 
@@ -62,26 +69,42 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 			}
 		}
 
-		public void Undo(Action<string> errorCallback)
+		public void Undo(Action<bool> operationResultCallback, Action<string> errorCallback)
 		{
 			if (!UndoPossible)
 				errorCallback("undo impossible");
 
-			currentActionPointer.Value.Undo(errorCallback);			// TODO: restart History on error
-			currentActionPointer = currentActionPointer.Previous;
-
-			CheckIfUndoAndRedoIsPossible();
+			currentActionPointer.Value.Undo(
+				operationSuccessful =>
+				{
+					if (operationSuccessful)
+					{
+						currentActionPointer = currentActionPointer.Previous;
+						CheckIfUndoAndRedoIsPossible();
+					}
+					operationResultCallback(operationSuccessful);
+				}, 
+				errorCallback
+			);										
 		}
-
-		public void Redo (Action<string> errorCallback)
+		
+		public void Redo (Action<bool> operationResultCallback, Action<string> errorCallback)
 		{
 			if (!RedoPossible)
 				errorCallback("redo impossible");
 
-			currentActionPointer.Next.Value.Redo(errorCallback);    // TODO: restart History on error
-			currentActionPointer = currentActionPointer.Next;
-
-			CheckIfUndoAndRedoIsPossible();
+			currentActionPointer.Next.Value.Redo(
+				operationSuccessul =>
+				{
+					if (operationSuccessul)
+					{
+						currentActionPointer = currentActionPointer.Next;
+						CheckIfUndoAndRedoIsPossible();
+					}
+					operationResultCallback(operationSuccessul);					
+				},
+				errorCallback
+			);    						
 		}
 
 		public string GetCurrentUndoActionMsg()
@@ -115,6 +138,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo
 			}
 
 			CheckIfUndoAndRedoIsPossible();
+		}
+
+		public void ResetHistory()
+		{
+			Initiate();
 		}
 
 		private void RemoveAllFromEndTo (LinkedListNode<IUserAction> node)
