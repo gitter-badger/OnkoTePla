@@ -22,7 +22,6 @@ using bytePassion.OnkoTePla.Resources;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi
 {
-
 	public partial class App
 	{
 		protected override void OnStartup (StartupEventArgs e)
@@ -33,8 +32,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			////////                                                                             //////////
 			////////                          Composition Root and Setup                         //////////
 			////////                                                                             //////////
-			///////////////////////////////////////////////////////////////////////////////////////////////
-						
+			///////////////////////////////////////////////////////////////////////////////////////////////								
+				
 			var connectionService = new ConnectionService();			
 			var eventBus          = new ClientEventBus(connectionService);
 
@@ -55,6 +54,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			var workFlow = new ClientWorkflow();
 			var session  = new Session(connectionService, workFlow);
 
+			var fatalErrorHandler = new FatalErrorHandler(session);
+
 			var commandService = new CommandService(session, clientReadmodelRepository, commandBus);
 
 
@@ -62,9 +63,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 
 			// CommandHandler
 
-			var     addAppointmentCommandHandler = new     AddAppointmentCommandHandler(connectionService, session, clientPatientRepository,                                  userActionBuilder, CommandHandlerErrorHandler);
-			var  deleteAppointmentCommandHandler = new  DeleteAppointmentCommandHandler(connectionService, session, clientPatientRepository,                                  userActionBuilder, CommandHandlerErrorHandler);
-			var replaceAppointmentCommandHandler = new ReplaceAppointmentCommandHandler(connectionService, session, clientPatientRepository, clientMedicalPracticeRepository, userActionBuilder, CommandHandlerErrorHandler);
+			var     addAppointmentCommandHandler = new     AddAppointmentCommandHandler(connectionService, session, clientPatientRepository,                                  userActionBuilder, fatalErrorHandler.HandleFatalError);
+			var  deleteAppointmentCommandHandler = new  DeleteAppointmentCommandHandler(connectionService, session, clientPatientRepository,                                  userActionBuilder, fatalErrorHandler.HandleFatalError);
+			var replaceAppointmentCommandHandler = new ReplaceAppointmentCommandHandler(connectionService, session, clientPatientRepository, clientMedicalPracticeRepository, userActionBuilder, fatalErrorHandler.HandleFatalError);
 
 			commandBus.RegisterCommandHandler(    addAppointmentCommandHandler);
 			commandBus.RegisterCommandHandler( deleteAppointmentCommandHandler);
@@ -91,15 +92,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 														  session,														   														 
                                                           "0.1.0.0");               // TODO: get real versionNumber       
 
-			var mainWindow = mainWindowBuilder.BuildWindow(
-				errorMsg =>
-				{
-					Current.Dispatcher.Invoke(() =>
-					{
-						MessageBox.Show("fatal Error >>>>");
-					});
-				}					
-			);
+			var mainWindow = mainWindowBuilder.BuildWindow(fatalErrorHandler.HandleFatalError);
 
 			mainWindow.ShowDialog();
 
@@ -114,11 +107,6 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			localSettingsRepository.PersistRepository();
 
 			connectionService.Dispose();
-		}
-
-		private void CommandHandlerErrorHandler(string errorMessage)
-		{
-			MessageBox.Show($"CommandHandler failed: {errorMessage}");
-		}
+		}		
 	}
 }

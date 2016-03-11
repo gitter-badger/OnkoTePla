@@ -90,7 +90,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
                                                               loginViewModelBuilder,
                                                               notificationServiceContainerViewModel,
                                                               actionBarViewModel,
-															  session);
+															  session, 
+															  errorCallback);
 
             // build mainWindow
 

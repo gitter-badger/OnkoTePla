@@ -105,6 +105,7 @@
     <Compile Include="Factorys\ViewModelBuilder\AppointmentViewModel\IAppointmentViewModelBuilder.cs" />
     <Compile Include="Factorys\WindowBuilder\AboutDialogWindowBuilder.cs" />
     <Compile Include="Factorys\WindowBuilder\EditDescriptionWindowBuilder.cs" />
+    <Compile Include="FatalErrorHandler.cs" />
     <Compile Include="Global\Constants.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
