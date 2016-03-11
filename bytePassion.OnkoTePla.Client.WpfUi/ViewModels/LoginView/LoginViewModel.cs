@@ -117,6 +117,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 															   "Die Verbindung wird getrennt!",
 															   MessageBoxButton.OK);
 								await dialog.ShowMahAppsDialog();
+								Disconnect.Execute(null);
 							}
 						});					
 					},
