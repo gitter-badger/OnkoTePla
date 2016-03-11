@@ -42,7 +42,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 		public IAppointmentViewModel Build (Appointment appointment, AggregateIdentifier location, Action<string> errorCallback)
 		{			
             var editDescriptionWindowBuilder = new EditDescriptionWindowBuilder(appointment, 																				
-																				appointmentModificationsVariable);
+																				appointmentModificationsVariable,
+																				errorCallback);
 			
 			return new ViewModels.AppointmentView.AppointmentViewModel(appointment,
 																	   commandService,

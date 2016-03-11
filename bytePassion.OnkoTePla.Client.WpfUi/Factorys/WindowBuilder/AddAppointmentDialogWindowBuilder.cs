@@ -23,13 +23,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		private readonly ISharedStateReadOnly<Guid> selectedMedicalPractiveVariable;       
         private readonly ISharedStateReadOnly<Date> selectedDateVariable;	    	   
 	    private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
-		
-	    public AddAppointmentDialogWindowBuilder(IClientPatientRepository patientRepository,
+		private readonly Action<string> errorCallback;
+
+		public AddAppointmentDialogWindowBuilder(IClientPatientRepository patientRepository,
 												 IClientReadModelRepository readModelRepository,
 												 IClientMedicalPracticeRepository medicalPracticeRepository,
 												 ISharedStateReadOnly<Guid> selectedMedicalPractiveVariable,                                                 
                                                  ISharedStateReadOnly<Date> selectedDateVariable, 												
-												 IAppointmentViewModelBuilder appointmentViewModelBuilder)
+												 IAppointmentViewModelBuilder appointmentViewModelBuilder,
+												 Action<string> errorCallback)
 		{
 		    this.patientRepository = patientRepository;
 		    this.readModelRepository = readModelRepository;
@@ -37,9 +39,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		    this.selectedMedicalPractiveVariable = selectedMedicalPractiveVariable;            
             this.selectedDateVariable = selectedDateVariable;	        
 		    this.appointmentViewModelBuilder = appointmentViewModelBuilder;
+			this.errorCallback = errorCallback;
 		}
 
-		public AddAppointmentDialog BuildWindow(Action<string> errorCallback)
+		public AddAppointmentDialog BuildWindow()
 		{
 
             var selectedPatientVariable = new SharedState<Patient>();

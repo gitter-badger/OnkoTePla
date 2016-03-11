@@ -126,7 +126,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				{
 				    viewModelCommunication.Send(new ShowDisabledOverlay());
 
-				    var dialog = editDescriptionWindowBuilder.BuildWindow(errorCallback);
+				    var dialog = editDescriptionWindowBuilder.BuildWindow();
 				    dialog.ShowDialog();
 
 				    viewModelCommunication.Send(new HideDisabledOverlay());

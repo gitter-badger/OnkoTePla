@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace bytePassion.Lib.Utils
+﻿namespace bytePassion.Lib.Utils
 {
 	public interface IWindowBuilder<TWindow>
 	{
-		TWindow BuildWindow (Action<string> errorCallback);
+		TWindow BuildWindow ();
 		void DisposeWindow(TWindow buildedWindow);
 	}
 }

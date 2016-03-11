@@ -74,7 +74,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 			{
 				viewModelCommunication.Send(new ShowDisabledOverlay());
 
-				var dialogWindow = dialogBuilder.BuildWindow(this.errorCallback);
+				var dialogWindow = dialogBuilder.BuildWindow();
 				dialogWindow.ShowDialog();
 
                 viewModelCommunication.Send(new HideDisabledOverlay());                

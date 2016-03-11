@@ -12,16 +12,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 	internal class EditDescriptionWindowBuilder : IWindowBuilder<EditDescription>
     {
         private readonly Appointment appointmentToEdit;        
-        private readonly ISharedState<AppointmentModifications> modificationsVar;        
-       
-        public EditDescriptionWindowBuilder(Appointment appointmentToEdit, 
-										    ISharedState<AppointmentModifications> modificationsVar) 			
+        private readonly ISharedState<AppointmentModifications> modificationsVar;
+		private readonly Action<string> errorCallback;
+
+		public EditDescriptionWindowBuilder(Appointment appointmentToEdit, 
+										    ISharedState<AppointmentModifications> modificationsVar,
+											Action<string> errorCallback) 			
         {            
-            this.modificationsVar = modificationsVar;            
+            this.modificationsVar = modificationsVar;
+			this.errorCallback = errorCallback;
 			this.appointmentToEdit = appointmentToEdit;
 		}
 		
-        public EditDescription BuildWindow(Action<string> errorCallback)
+        public EditDescription BuildWindow()
         {
 	        var view = new EditDescription
 	        {

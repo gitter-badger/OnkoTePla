@@ -10,13 +10,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 	internal class AboutDialogWindowBuilder : IWindowBuilder<AboutDialog>
     {
         private readonly string versionNumber;
+		private readonly Action<string> errorCallback;
 
-        public AboutDialogWindowBuilder(string versionNumber)
-        {
-            this.versionNumber = versionNumber;
-        }
+		public AboutDialogWindowBuilder(string versionNumber, Action<string> errorCallback)
+		{
+			this.versionNumber = versionNumber;
+			this.errorCallback = errorCallback;
+		}
 
-        public AboutDialog BuildWindow(Action<string> errorCallback)
+		public AboutDialog BuildWindow()
         {
             var aboutDialogViewModel = new AboutDialogViewModel(versionNumber);
 

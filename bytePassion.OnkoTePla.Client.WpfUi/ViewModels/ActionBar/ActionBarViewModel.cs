@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using bytePassion.Lib.Communication.ViewModel;
@@ -20,20 +19,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
     {
 		private readonly ISession session;
 		private readonly IViewModelCommunication viewModelCommunication;
-        private readonly IWindowBuilder<Views.AboutDialog> dialogBuilder;
-		private readonly Action<string> errorCallback;
+        private readonly IWindowBuilder<Views.AboutDialog> dialogBuilder;		
 		private bool navigationAndLogoutButtonVisibility;
 
 		public ActionBarViewModel(ISession session,
 								  IConnectionStatusViewModel connectionStatusViewModel,
                                   IViewModelCommunication viewModelCommunication,
-                                  IWindowBuilder<Views.AboutDialog> dialogBuilder,
-								  Action<string> errorCallback)
+                                  IWindowBuilder<Views.AboutDialog> dialogBuilder)
         {
 	        this.session = session;
 	        this.viewModelCommunication = viewModelCommunication;
-            this.dialogBuilder = dialogBuilder;
-			this.errorCallback = errorCallback;
+            this.dialogBuilder = dialogBuilder;			
 			ConnectionStatusViewModel = connectionStatusViewModel;
 
             ShowOverview = new Command(() => viewModelCommunication.Send(new ShowPage(MainPage.Overview)));
@@ -74,7 +70,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ActionBar
         {
             viewModelCommunication.Send(new ShowDisabledOverlay());
 
-            var dialogWindow = dialogBuilder.BuildWindow(errorCallback);
+            var dialogWindow = dialogBuilder.BuildWindow();
             dialogWindow.ShowDialog();
 			
             viewModelCommunication.Send(new HideDisabledOverlay());

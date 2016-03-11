@@ -161,7 +161,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 																						  medicalPracticeRepository,
                                                                                           selectedMedicalPracticeIdVariable,
                                                                                           selectedDateVariable,
-                                                                                          appointmentViewModelBuilder);
+                                                                                          appointmentViewModelBuilder,
+																						  errorCallback);
 
             // build stand-alone viewModelMessageHandler
 

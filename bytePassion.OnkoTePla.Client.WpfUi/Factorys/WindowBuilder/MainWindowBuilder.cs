@@ -31,8 +31,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISession session;			    	
         private readonly string versionNumber;
-		
-        public MainWindowBuilder(ILocalSettingsRepository localSettingsRepository,
+		private readonly Action<string> errorCallback;
+
+		public MainWindowBuilder(ILocalSettingsRepository localSettingsRepository,
 								 IClientPatientRepository patientRepository,
 								 IClientMedicalPracticeRepository medicalPracticeRepository,								 
 								 IClientReadModelRepository readModelRepository,	
@@ -40,7 +41,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 								 ICommandService commandService,
                                  IViewModelCommunication viewModelCommunication,
 								 ISession session,								
-                                 string versionNumber)
+                                 string versionNumber,
+								 Action<string> errorCallback)
 		{
 	        this.localSettingsRepository = localSettingsRepository;
 	        this.patientRepository = patientRepository;
@@ -51,9 +53,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 	        this.viewModelCommunication = viewModelCommunication;
 	        this.session = session;	        
             this.versionNumber = versionNumber;
+			this.errorCallback = errorCallback;
 		}
 
-		public MainWindow BuildWindow(Action<string> errorCallback)
+		public MainWindow BuildWindow()
 		{
             // build modules
 
@@ -78,13 +81,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 
 		    var connectionStatusViewModel = new ConnectionStatusViewModel(session);
 
-		    var dialogBuilder = new AboutDialogWindowBuilder(versionNumber);
+		    var dialogBuilder = new AboutDialogWindowBuilder(versionNumber, errorCallback);
 
 		    var actionBarViewModel = new ActionBarViewModel(session,
 															connectionStatusViewModel,
                                                             viewModelCommunication,
-                                                            dialogBuilder,
-															errorCallback);
+                                                            dialogBuilder);
 
 		    var mainWindowViewModel = new MainWindowViewModel(mainViewModelBuilder,
                                                               loginViewModelBuilder,
