@@ -100,7 +100,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             var licencePageViewModel           = new LicencePageViewModel();
             var infrastructurePageViewModel    = new InfrastructurePageViewModel(dataCenter, selectedPageVariable, appointmentGenerator);
 			var hoursOfOpeningPageViewModel    = new HoursOfOpeningPageViewModel(dataCenter, selectedPageVariable);
-			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter);
+			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter, connectionService);
 			var patientsPageViewModel          = new PatientsPageViewModel(patientSelectorViewModel, patientRepository, selectedPatientVariable, patientNameGenerator);
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel();

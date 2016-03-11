@@ -9,6 +9,7 @@ using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Resources;
+using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage.Helper;
 
@@ -20,15 +21,18 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 		private const string BasePath = "pack://application:,,,/bytePassion.OnkoTePla.Resources;component/Icons/TherapyPlaceType/";
 
 		private readonly IDataCenter dataCenter;
+		private readonly IConnectionService connectionService;
 
 		private TherapyPlaceType selectedTherapyPlaceType;
 		private bool showModificationView;		
 		private string name;
 		private IconDisplayData iconType;
 
-		public TherapyPlaceTypesPageViewModel (IDataCenter dataCenter)
+		public TherapyPlaceTypesPageViewModel (IDataCenter dataCenter,
+											   IConnectionService connectionService)
 		{
 			this.dataCenter = dataCenter;
+			this.connectionService = connectionService;
 
 			AddTherapyPlaceType = new Command(DoAddTheraptPlaceType);
 			SaveChanges         = new Command(DoSaveChanges);
@@ -72,6 +76,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 			var newTherapyPlaceType = SelectedTherapyPlaceType.SetNewName(Name)
 															  .SetNewIcon(IconType.IconType);
 			dataCenter.UpdateTherapyPlaceType(newTherapyPlaceType);
+			connectionService.SendTherapyPlaceTypeUpdatedNotification(newTherapyPlaceType);
 
 			TherapyPlaceTypes.Remove(SelectedTherapyPlaceType);
 			TherapyPlaceTypes.Add(newTherapyPlaceType);
@@ -84,6 +89,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 		{
 			var newTherapyPlaceType = TherapyPlaceTypeCreateAndEditLogic.Create();
 			dataCenter.AddNewTherapyPlaceType(newTherapyPlaceType);
+			connectionService.SendTherapyPlaceTypeAddedNotification(newTherapyPlaceType);
 			TherapyPlaceTypes.Add(newTherapyPlaceType);
 
 			SelectedTherapyPlaceType = newTherapyPlaceType;
