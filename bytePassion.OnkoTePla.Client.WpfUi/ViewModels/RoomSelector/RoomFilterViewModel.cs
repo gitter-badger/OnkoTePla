@@ -141,7 +141,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector
 
 	    public bool CheckSelectionValidity(RoomSelectorData data)
 	    {
-            if(appointmentModificationsVariable.Value==null)
+            if(appointmentModificationsVariable.Value == null || data == allRoomFilter)
             {
                 return true;
             }
