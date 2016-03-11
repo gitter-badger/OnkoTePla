@@ -122,7 +122,8 @@
                             Width="24"
                             Height="24"
                             Command="{Binding DeleteAppointment,
-                                              Mode=OneTime}">
+                                              Mode=OneTime}"
+                            Cursor="Hand">
 
                         <Button.Template>
                             <ControlTemplate>
@@ -157,7 +158,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-<!--				Background="#CC119EDA"-->
+                <!--  Background="#CC119EDA"  -->
                 <Border Grid.Column="0"
                         Width="20"
                         Background="Black"
@@ -187,7 +188,7 @@
                            Visibility="{Binding ShowDisabledOverlay,
                                                 Converter={StaticResource BoolToCollapsedVisibilityConverter}}" />
 
-                <Border Grid.Column="1"                        
+                <Border Grid.Column="1"
                         BorderBrush="Black"
                         BorderThickness="1">
 
@@ -195,12 +196,12 @@
                         <Style TargetType="{x:Type Border}">
                             <Style.Setters>
                                 <Setter Property="Opacity" Value="1.0" />
-								<Setter Property="Background" Value="{StaticResource AccentColorBrush}"/>
+                                <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
                             </Style.Setters>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
                                     <Setter Property="Opacity" Value="0.8" />
-									<Setter Property="Background" Value="DarkViolet"/>
+                                    <Setter Property="Background" Value="#FFAA00" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -210,10 +211,21 @@
                                VerticalAlignment="Center"
                                FontFamily="Segoe UI Semibold"
                                FontSize="18"
-                               Foreground="#FFE4EBEC"
                                Text="{Binding PatientDisplayName,
                                               Mode=OneTime}"
-                               TextTrimming="CharacterEllipsis" />
+                               TextTrimming="CharacterEllipsis">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="#FFE4EBEC" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
+                                        <Setter Property="Opacity" Value="0.9" />
+                                        <Setter Property="Foreground" Value="Black" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Border>
 
                 <Border Grid.Column="1"
