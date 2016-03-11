@@ -52,7 +52,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 					readModelRepository.RequestAppointmentSetOfADay(
 						appointmentSet =>
 						{
-							if (!AddingIsPossible(therapyPlaceId, startTime, endTime, appointmentSet))
+							if (!AddingIsPossible(therapyPlaceId, appointmentId, startTime, endTime, appointmentSet))
 							{								
 								ReleaseAllLocks(errorCallback);
 								operationResultCallback(false);
@@ -85,12 +85,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 			);						
 		}
 
-		private static bool AddingIsPossible(Guid therapyPlaceId,
+		private static bool AddingIsPossible(Guid therapyPlaceId, Guid appointmentId,
 											 Time startTime, Time endTime, 
 											 FixedAppointmentSet appointmentSet)
 		{			
 			return appointmentSet.Appointments
 								 .Where(appointment => appointment.TherapyPlace.Id == therapyPlaceId)
+								 .Where(appointment => appointment.Id != appointmentId)
 								 .All(appointment => (appointment.StartTime <= startTime || appointment.StartTime >= endTime) && 
 													 (appointment.EndTime   <= startTime || appointment.EndTime   >= endTime));
 		}
@@ -291,7 +292,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 												  FixedAppointmentSet sourceAppointmentSet, FixedAppointmentSet destinationAppointmentSet)
 		{
 			return DeletionPossible(originalAppointmentId, sourceAppointmentSet) && 
-				   AddingIsPossible(newTherapyplaceId, newBeginTime, newEndTime, destinationAppointmentSet);
+				   AddingIsPossible(newTherapyplaceId, originalAppointmentId, newBeginTime, newEndTime, destinationAppointmentSet);
 		}
 
 
