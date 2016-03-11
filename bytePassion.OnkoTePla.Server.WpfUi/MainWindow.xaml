@@ -8,7 +8,8 @@
                       xmlns:enum="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Enums"                      
                       xmlns:panels="clr-namespace:bytePassion.Lib.WpfLib.Panels;assembly=bytePassion.Lib"
                       xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow"
-                      xmlns:views="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Views"                                          
+                      xmlns:views="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Views"
+                      xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Computations"
                       Title="MainWindow"
                       Width="1300"
                       Height="900"
@@ -24,6 +25,7 @@
 
     <Window.Resources>
         <converter:MainPageToIntConverter x:Key="MainPageToIntConverter" />
+		<computations:ButtonBackgroundColor x:Key="BackgroundColor"/>
     </Window.Resources>
 	
     <Grid>
@@ -44,16 +46,16 @@
 
             </StackPanel.Resources>
 
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Overview}"          Content="Übersicht" />
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Connections}"       Content="Verbindungen" />
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.User}"              Content="Benutzer" />
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Licence}"           Content="Lizenz" />
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Infrastructure}"    Content="Infrastruktur" />
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.HoursOfOpening}"    Content="Öffnungszeiten" />
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.TherapyPlaceTypes}" Content="TherapyPlaceTypes" />
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Patients}"          Content="Patients" />
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Options}"           Content="Einstellungen" />
-			<Button Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.About}"             Content="Über ..." />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Overview          }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Overview}"          Content="Übersicht" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Connections       }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Connections}"       Content="Verbindungen" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.User              }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.User}"              Content="Benutzer" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Licence           }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Licence}"           Content="Lizenz" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Infrastructure    }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Infrastructure}"    Content="Infrastruktur" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.HoursOfOpening    }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.HoursOfOpening}"    Content="Öffnungszeiten" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.TherapyPlaceTypes }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.TherapyPlaceTypes}" Content="TherapyPlaceTypes" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Patients          }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Patients}"          Content="Patients" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Options           }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Options}"           Content="Einstellungen" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.About             }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.About}"             Content="Über ..." />
 
         </StackPanel>
 
