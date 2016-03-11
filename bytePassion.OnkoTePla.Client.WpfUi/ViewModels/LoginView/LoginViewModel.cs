@@ -73,7 +73,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.LoginView
 				{
 					ClientAddress = clientIpAddress;
 					ServerAddress = localSettingsRepository.AutoConnectionServerAddress.ToString();
-					DebugConnect.Execute(null);
+					Connect.Execute(null);
 				}
 			}
 	    }		

@@ -21,15 +21,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer
 	internal class GridContainerViewModel : ViewModel, 
                                             IGridContainerViewModel
 	{
-		private readonly IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder;
-		private readonly Action<string> errorCallback;
-		
+		private readonly IAppointmentGridViewModelBuilder appointmentGridViewModelBuilder;				
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
 		private readonly ISharedStateReadOnly<Date> selectedDateVariable;
 		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
 	    private readonly ISharedState<Size> appointmentGridSizeVariable;
-	   		
+		private readonly Action<string> errorCallback;
+
 
 		private readonly IDictionary<AggregateIdentifier, IAppointmentGridViewModel> cachedAppointmentGridViewModels; 
 
