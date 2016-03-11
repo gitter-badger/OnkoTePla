@@ -17,10 +17,17 @@
 	</d:DesignData.DataContext>
    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
 
         <Border Width="450"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"               
                 Background="{StaticResource AccentColorBrush}"
                 BorderBrush="#444444"
                 BorderThickness="0,0,0,3">
