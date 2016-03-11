@@ -184,6 +184,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
             var medicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModel(session, 
 																						medicalPracticeRepository,
+																						localSettingsRepository,
                                                                                         selectedMedicalPracticeIdVariable,
                                                                                         appointmentModificationsVariable, 
 																						errorCallback);

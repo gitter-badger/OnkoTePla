@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.SessionInfo;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
@@ -14,8 +15,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 {
 	internal class MedicalPracticeSelectorViewModel : ViewModel, 
                                                       IMedicalPracticeSelectorViewModel
-	{		
-		private readonly ISharedState<Guid>                             selectedMedicalPracticeIdVariable;
+	{
+		private readonly ILocalSettingsRepository localSettingsRepository;
+		private readonly ISharedState<Guid> selectedMedicalPracticeIdVariable;
 	    private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable; 
 
 		private MedicalPracticeDisplayData selectedPractice;
@@ -23,14 +25,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 		
 		public MedicalPracticeSelectorViewModel (ISession session,
 												 IClientMedicalPracticeRepository medicalPracticeRepository,
+												 ILocalSettingsRepository localSettingsRepository,
                                                  ISharedState<Guid> selectedMedicalPracticeIdVariable, 
                                                  ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
 												 Action<string> errorCallback)
-		{			
+		{
+			this.localSettingsRepository = localSettingsRepository;
 			this.selectedMedicalPracticeIdVariable = selectedMedicalPracticeIdVariable;
-		    this.appointmentModificationsVariable = appointmentModificationsVariable;
-		   
-
+		    this.appointmentModificationsVariable = appointmentModificationsVariable;		   
 			
 			selectedMedicalPracticeIdVariable.StateChanged += OnSelectedMedicalPracticeIdVariableChanged;
             appointmentModificationsVariable.StateChanged += OnAppointmentModificationVariableChanged;
@@ -67,6 +69,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 				if (!Equals(selectedPractice, value))
 				{					
 					selectedMedicalPracticeIdVariable.Value = value.MedicalPracticeId;
+					localSettingsRepository.LastUsedMedicalPracticeId = value.MedicalPracticeId;
 				}
 
 				PropertyChanged.ChangeAndNotify(this, ref selectedPractice, value);
@@ -86,6 +89,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector
 
         private void OnSelectedMedicalPracticeIdVariableChanged(Guid medicalPracticeId)
         {
+	        localSettingsRepository.LastUsedMedicalPracticeId = medicalPracticeId;
             selectedPractice = AvailableMedicalPractices.First(practice => practice.MedicalPracticeId == medicalPracticeId);
 			PropertyChanged.Notify(this, nameof(SelectedMedicalPractice));
         }
