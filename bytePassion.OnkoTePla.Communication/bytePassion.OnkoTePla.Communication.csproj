@@ -64,6 +64,8 @@
     <Compile Include="NetworkMessages\RequestsAndResponses\GetAppointmentsOfADayRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetAppointmentsOfAPatientResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetAppointmentsOfADayResponse.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetLockRequest.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetLockResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetPracticeVersionInfoRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetPracticeVersionInfoResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetTherapyPlacesTypeListRequest.cs" />
@@ -84,6 +86,8 @@
     <Compile Include="NetworkMessages\RequestsAndResponses\LogoutResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetUserListRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetUserListResponse.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\ReleaseLockRequest.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\ReleaseLockResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\TryToAddNewEventsRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\TryToAddNewEventsResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
