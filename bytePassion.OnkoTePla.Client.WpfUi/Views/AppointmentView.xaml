@@ -157,9 +157,10 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
+<!--				Background="#CC119EDA"-->
                 <Border Grid.Column="0"
                         Width="20"
-                        Background="#CC119EDA"
+                        Background="Black"
                         BorderBrush="{StaticResource AccentColorBrush}"
                         BorderThickness="1,1,0,1"
                         Visibility="{Binding OperatingMode,
@@ -186,8 +187,7 @@
                            Visibility="{Binding ShowDisabledOverlay,
                                                 Converter={StaticResource BoolToCollapsedVisibilityConverter}}" />
 
-                <Border Grid.Column="1"
-                        Background="{StaticResource AccentColorBrush}"
+                <Border Grid.Column="1"                        
                         BorderBrush="Black"
                         BorderThickness="1">
 
@@ -195,10 +195,12 @@
                         <Style TargetType="{x:Type Border}">
                             <Style.Setters>
                                 <Setter Property="Opacity" Value="1.0" />
+								<Setter Property="Background" Value="{StaticResource AccentColorBrush}"/>
                             </Style.Setters>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
-                                    <Setter Property="Opacity" Value="0.6" />
+                                    <Setter Property="Opacity" Value="0.8" />
+									<Setter Property="Background" Value="DarkViolet"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -226,10 +228,9 @@
                     </i:Interaction.Behaviors>
                 </Border>
 
-
                 <Border Grid.Column="2"
                         Width="20"
-                        Background="#CC119EDA"
+                        Background="Black"
                         BorderBrush="{StaticResource AccentColorBrush}"
                         BorderThickness="0,1,1,1"
                         Visibility="{Binding OperatingMode,
