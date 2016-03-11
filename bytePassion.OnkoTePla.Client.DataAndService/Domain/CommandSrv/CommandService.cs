@@ -52,9 +52,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 					readModelRepository.RequestAppointmentSetOfADay(
 						appointmentSet =>
 						{
-							if (!AddingIsPossible(aggregateId, therapyPlaceId, startTime, endTime, appointmentSet))
-							{
-								errorCallback("termin kann aufgrund von konflikten nicht angelegt werden");
+							if (!AddingIsPossible(therapyPlaceId, startTime, endTime, appointmentSet))
+							{								
 								ReleaseAllLocks(errorCallback);
 								operationResultCallback(false);
 								return;
@@ -86,12 +85,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 			);						
 		}
 
-		private static bool AddingIsPossible(AggregateIdentifier aggregateId, Guid therapyPlaceId,
+		private static bool AddingIsPossible(Guid therapyPlaceId,
 											 Time startTime, Time endTime, 
 											 FixedAppointmentSet appointmentSet)
-		{
-			// TODO
-			return true;
+		{			
+			return appointmentSet.Appointments
+								 .Where(appointment => appointment.TherapyPlace.Id == therapyPlaceId)
+								 .All(appointment => (appointment.StartTime <= startTime || appointment.StartTime >= endTime) && 
+													 (appointment.EndTime   <= startTime || appointment.EndTime   >= endTime));
 		}
 
 		
@@ -154,10 +155,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 					readModelRepository.RequestAppointmentSetOfADay(
 						appointmentSet =>
 						{
-							if (!ReplacementIsPossible(location, location, date, newStartTime, newEndTime, newTherapyPlaceId,
-													   originalAppointmendId, date, appointmentSet, appointmentSet))
-							{
-								errorCallback("termin kann aufgrund von konflikten nicht verschoben werden");
+							if (!ReplacementIsPossible(newStartTime, newEndTime, newTherapyPlaceId,
+													   originalAppointmendId, appointmentSet, appointmentSet))
+							{								
 								ReleaseAllLocks(errorCallback);
 								operationResultCallback(false);
 								return;
@@ -233,10 +233,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 										destinationAppointmentSet =>
 										{
 
-											if (!ReplacementIsPossible(sourceLocation, destinationLocation, newDate, newStartTime, newEndTime, newTherapyPlaceId,
-																	   originalAppointmendId, originalDate, sourceAppointmentSet, destinationAppointmentSet))
-											{
-												errorCallback("termin kann aufgrund von konflikten nicht verschoben werden");
+											if (!ReplacementIsPossible(newStartTime, newEndTime, newTherapyPlaceId,
+																	   originalAppointmendId, sourceAppointmentSet, destinationAppointmentSet))
+											{												
 												ReleaseAllLocks(errorCallback);
 												operationResultCallback(false);
 												return;
@@ -287,13 +286,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 			);
 		}
 
-		private static bool ReplacementIsPossible(AggregateIdentifier sourceLocation, AggregateIdentifier destinationLocation,
-												  Date newDate, Time newBeginTime, Time newEndTime, Guid newTherapyplaceId,
-												  Guid originalAppointmentId, Date originalDate,
+		private static bool ReplacementIsPossible(Time newBeginTime, Time newEndTime, Guid newTherapyplaceId,
+												  Guid originalAppointmentId,
 												  FixedAppointmentSet sourceAppointmentSet, FixedAppointmentSet destinationAppointmentSet)
 		{
-			// TODO
-			return true;
+			return DeletionPossible(originalAppointmentId, sourceAppointmentSet) && 
+				   AddingIsPossible(newTherapyplaceId, newBeginTime, newEndTime, destinationAppointmentSet);
 		}
 
 

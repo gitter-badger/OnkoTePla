@@ -17,7 +17,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 
 		public void HandleFatalError(string errorMsg)
 		{
-			MessageBox.Show($"A fatal error Occured");
+			MessageBox.Show($"A fatal and very unexpected error Occured:\n{errorMsg}");
 
 			switch (session.CurrentApplicationState)
 			{
