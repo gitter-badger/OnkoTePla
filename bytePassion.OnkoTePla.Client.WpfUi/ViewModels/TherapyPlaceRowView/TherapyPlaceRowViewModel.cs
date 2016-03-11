@@ -26,6 +26,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository;
+		private readonly TherapyPlace therapyPlace;
 		private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
 		
 
@@ -48,8 +49,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 		{
 			this.viewModelCommunication = viewModelCommunication;
 			this.therapyPlaceTypeRepository = therapyPlaceTypeRepository;
+			this.therapyPlace = therapyPlace;
 			this.appointmentModificationsVariable = appointmentModificationsVariable;						
 			
+			therapyPlaceTypeRepository.UpdatedTherapyPlaceTypeAvailable += OnUpdatedTherapyPlaceTypeAvailable;
+
 			IsVisible		      = true;
 			RoomColor             = roomDisplayColor;		
 			Identifier            = identifier;			
@@ -83,7 +87,17 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 				errorCallback
 			);
 		}
-		
+
+		private void OnUpdatedTherapyPlaceTypeAvailable(TherapyPlaceType updatedTherapyPlaceType)
+		{
+			if (updatedTherapyPlaceType.Id == therapyPlace.TypeId)
+			{
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+					PlaceTypeIcon = GetIconForTherapyPlaceType(updatedTherapyPlaceType.IconType);
+				});
+			}
+		}
 
 		private void OnAppointmentModificationsChanged(AppointmentModifications newAppointmentModifications)
 		{
@@ -94,8 +108,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 
 		public ObservableCollection<IAppointmentViewModel> AppointmentViewModels { get; }		
 		
-		public Color       RoomColor        { get; }		
-		public string      TherapyPlaceName { get; }
+		public Color  RoomColor        { get; }		
+		public string TherapyPlaceName { get; }
 
 		public ImageSource PlaceTypeIcon
 		{
@@ -176,7 +190,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView
 				this
 			);
 
-			appointmentModificationsVariable.StateChanged -= OnAppointmentModificationsChanged;			
+			appointmentModificationsVariable.StateChanged -= OnAppointmentModificationsChanged;
+			therapyPlaceTypeRepository.UpdatedTherapyPlaceTypeAvailable -= OnUpdatedTherapyPlaceTypeAvailable;
 		}		
 
 		public override event PropertyChangedEventHandler PropertyChanged;		

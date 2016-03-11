@@ -25,6 +25,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.TherapyPlaceT
 		private void OnUpdatedTherapyPlaceTypeAvailable(TherapyPlaceType updatedTherapyPlaceType)
 		{
 			cachedTherapyPlaceTypes[updatedTherapyPlaceType.Id] = updatedTherapyPlaceType;
+			UpdatedTherapyPlaceTypeAvailable?.Invoke(updatedTherapyPlaceType);
 		}
 
 		private void OnNewTherapyPlaceTypeAvailable(TherapyPlaceType newTherapyPlaceType)
