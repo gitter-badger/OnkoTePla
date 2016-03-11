@@ -136,6 +136,7 @@
     <Compile Include="Repositories\XMLDataStores\XmlPatientDataStore.cs" />
     <Compile Include="Repositories\XMLDataStores\XmlPracticeMetaDataPersistanceService.cs" />
     <Compile Include="SessionRepository\CurrentSessionsInfo.cs" />
+    <Compile Include="SessionRepository\Helper\Lock.cs" />
     <Compile Include="SessionRepository\ICurrentSessionsInfo.cs" />
   </ItemGroup>
   <ItemGroup>

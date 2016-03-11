@@ -22,10 +22,12 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 		
 		void AddSession(ConnectionSessionId sessionId, Time creationTime,
 						AddressIdentifier clientAddress, bool isDebugConnection);
-
 		void RemoveSession(ConnectionSessionId sessionId);
 		
 		void UpdateLoggedInUser(ConnectionSessionId sessionId, User newUser);
+
+		bool TryToGetLock(Guid medicalPracticeId, Date day);
+		void ReleaseLock (Guid medicalPracticeId, Date day);
 
 		void ClearRepository();
 	}

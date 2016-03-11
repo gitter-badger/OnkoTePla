@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Types;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection;
+using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository.Helper;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 {
@@ -15,11 +17,16 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 		public event Action<SessionInfo> SessionTerminated;
 		public event Action<SessionInfo> LoggedInUserUpdated;
 
-		private readonly IDictionary<ConnectionSessionId, SessionInfo> currentSessions; 
+		private readonly IDictionary<ConnectionSessionId, SessionInfo> currentSessions;
+
+		private readonly IList<Lock> locks;
+		private readonly IDictionary<Lock, Timer> releaseLocksTimers; 
 
 		public CurrentSessionsInfo()
 		{
 			currentSessions = new Dictionary<ConnectionSessionId, SessionInfo>();
+			locks = new List<Lock>();
+			releaseLocksTimers = new Dictionary<Lock, Timer>();
 		}
 
 		public SessionInfo GetSessionInfo(ConnectionSessionId id)
@@ -112,6 +119,59 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 				{
 					LoggedInUserUpdated?.Invoke(updatedSessionInfo);
 				});				
+			}
+		}
+
+		public bool TryToGetLock(Guid medicalPracticeId, Date day)
+		{
+			lock (locks)
+			{
+				var potentialNewLock = new Lock(medicalPracticeId, day);
+
+				if (locks.Any(reservedLock => Equals(reservedLock, potentialNewLock)))
+					return false;
+				
+				locks.Add(potentialNewLock);
+
+				var newTimer = new Timer(TimerTick, 
+										 potentialNewLock, 
+										 TimeSpan.FromSeconds(3), 
+										 TimeSpan.FromSeconds(3));
+				
+				releaseLocksTimers.Add(potentialNewLock, newTimer);
+				return true;				
+			}
+		}
+
+		private void TimerTick(object observedLock)
+		{
+			var lockToRemove = (Lock) observedLock;
+			var timer = releaseLocksTimers[lockToRemove];
+
+			timer.Change(Timeout.Infinite, Timeout.Infinite);
+			timer.Dispose();
+
+			releaseLocksTimers.Remove(lockToRemove);
+
+			lock (locks)
+			{
+				if (locks.Contains(lockToRemove))
+				{
+					Console.WriteLine("force lock remove!"); // TODO: just for testing
+					locks.Remove(lockToRemove);
+				}
+			}
+		}
+
+		public void ReleaseLock(Guid medicalPracticeId, Date day)
+		{
+			lock (locks)
+			{
+				var lockToRemove = locks.FirstOrDefault(reservedLock => reservedLock.Day == day &&
+				                                                        reservedLock.MedicalPracticeId == medicalPracticeId);
+				
+				if (lockToRemove != null)
+					locks.Remove(lockToRemove);
 			}
 		}
 
