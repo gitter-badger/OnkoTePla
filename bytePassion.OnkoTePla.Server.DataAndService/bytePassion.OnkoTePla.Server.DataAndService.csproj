@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\ConnectionService.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\GetLockResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\ReleaseLockResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\TryToAddNewEventResponseHandler.cs" />
     <Compile Include="Connection\ThreadCollections\IHeartbeatThreadCollection.cs" />
     <Compile Include="Connection\ThreadCollections\INotificationThreadCollection.cs" />

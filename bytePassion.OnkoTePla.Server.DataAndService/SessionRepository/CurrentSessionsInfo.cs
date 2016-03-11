@@ -129,8 +129,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 				var potentialNewLock = new Lock(medicalPracticeId, day);
 
 				if (locks.Any(reservedLock => Equals(reservedLock, potentialNewLock)))
+				{
+					Console.WriteLine("lock denied");       // TODO: just for testing
 					return false;
-				
+				}
+
 				locks.Add(potentialNewLock);
 
 				var newTimer = new Timer(TimerTick, 
@@ -139,6 +142,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 										 TimeSpan.FromSeconds(3));
 				
 				releaseLocksTimers.Add(potentialNewLock, newTimer);
+				Console.WriteLine("lock granted");                  // TODO: just for testing
 				return true;				
 			}
 		}
@@ -169,9 +173,12 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 			{
 				var lockToRemove = locks.FirstOrDefault(reservedLock => reservedLock.Day == day &&
 				                                                        reservedLock.MedicalPracticeId == medicalPracticeId);
-				
+
 				if (lockToRemove != null)
+				{
 					locks.Remove(lockToRemove);
+					Console.WriteLine("lock released"); // TODO: just for testing
+				}
 			}
 		}
 

@@ -36,6 +36,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 			switch (request.Type)
 			{				
 				case NetworkMessageType.LogoutRequest:                    return (IResponseHandler<TRequest>) new LogoutResponseHandler                    (sessionRespository, socket );
+				case NetworkMessageType.GetLockRequest:					  return (IResponseHandler<TRequest>) new GetLockResponseHandler				   (sessionRespository, socket );
+				case NetworkMessageType.ReleaseLockRequest:				  return (IResponseHandler<TRequest>) new ReleaseLockResponseHandler			   (sessionRespository, socket );
 				case NetworkMessageType.BeginDebugConnectionRequest:      return (IResponseHandler<TRequest>) new BeginDebugConnectionResponseHandler      (sessionRespository, socket, newDebugConnectionEstablishedCallback);			
 				case NetworkMessageType.BeginConnectionRequest:           return (IResponseHandler<TRequest>) new BeginConnectionResponseHandler           (sessionRespository, socket, newConnectionEstablishedCallback);				
 				case NetworkMessageType.EndConnectionRequest:             return (IResponseHandler<TRequest>) new EndConnectionResponseHandler             (sessionRespository, socket, connectionEndedCallback);		
