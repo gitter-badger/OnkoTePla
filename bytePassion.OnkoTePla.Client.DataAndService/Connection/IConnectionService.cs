@@ -28,7 +28,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		event Action<TherapyPlaceType> NewTherapyPlaceTypeAvailable;                                                                        ////////
 		event Action<TherapyPlaceType> UpdatedTherapyPlaceTypeAvailable;                                                                    ////////
                                                                                                                                             ////////
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////																																		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -42,7 +42,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
                                                                                                                                             ////////
 		void TryConnect     (Address serverAddress, Address clientAddress, Action<string> errorCallback);                                   ////////
 		void TryDebugConnect(Address serverAddress, Address clientAddress, Action<string> errorCallback);                                   ////////
-		void TryDisconnect  (Action dissconnectionSuccessful, Action<string> errorCallback);                                                                                 ////////
+		void TryDisconnect  (Action dissconnectionSuccessful, Action<string> errorCallback);                                                ////////
 		                                                                                                                                    ////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -62,21 +62,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		////////                                                                                                                            ////////
-		////////                                                    push-requests		    	                                            ////////
-		////////                                                                                                                            ////////
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                                            ////////
-		void TryAddEvents(Action<bool> resultCallback, IReadOnlyList<DomainEvent> newEvents, Action<string> errorCallback);                 ////////
-                                                                                                                                            ////////
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////																																			
-
-
-
+		
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,6 +96,22 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		void RequestTherapyPlaceTypeList(Action<IReadOnlyList<TherapyPlaceType>> dataReceivedCallback,                                      ////////
 										 Action<string> errorCallback);                                                                     ////////
                                                                                                                                             ////////
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////																																		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+
+
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		////////                                                                                                                            ////////
+		////////                                                    other-requests		    	                                            ////////
+		////////                                                                                                                            ////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                                            ////////
+		void TryAddEvents(Action<bool> resultCallback,   IReadOnlyList<DomainEvent> newEvents, Action<string> errorCallback);               ////////
+		void TryToGetLock(Action<bool> resultCallback,   Guid medicalPracticeId, Date day,     Action<string> errorCallback);				////////
+		void ReleaseLock (Action actionCompleteCallback, Guid medicalPracticeId, Date day,     Action<string> errorCallback);				////////
+                                                                                                                                            ////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 }

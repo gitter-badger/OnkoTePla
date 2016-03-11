@@ -64,6 +64,7 @@
     <Compile Include="Connection\RequestHandling\Handlers\EndConnectionRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetAppointmentsOfADayRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetAppointmentsOfAPatientRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\GetLockRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetMedicalPracticeRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetPatientListRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetPracticeVersionInfoRequestHandler.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Connection\RequestHandling\Handlers\LoginRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\LogoutRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetUserListRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\ReleaseLockRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\TryToAddNewEventsRequestHander.cs" />
     <Compile Include="Connection\RequestHandling\IRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\RequestHandlerBase.cs" />

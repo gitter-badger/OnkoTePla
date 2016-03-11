@@ -22,12 +22,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 				return;
 
 			var lockGranted = sessionRepository.TryToGetLock(request.MedicalPracticeId, request.Day);
-
-			if (lockGranted)			
-				Socket.SendNetworkMsg(new GetLockResponse());			
-			else			
-				Socket.SendNetworkMsg(new ErrorResponse("lock assignment was not successful"));
-			
+				
+			Socket.SendNetworkMsg(new GetLockResponse(lockGranted));									
 		}
 	}
 }

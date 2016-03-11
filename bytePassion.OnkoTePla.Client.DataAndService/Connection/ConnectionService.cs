@@ -54,7 +54,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		private TimeoutBlockingQueue<IRequestHandler> requestWorkQueue;
 
 
-		#region start and stop threads
+		#region starting and stopping threads
 
 		private void RunHeartbeatThread(ConnectionSessionId connectionSessionId)
 		{
@@ -199,6 +199,24 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 																	errorCallback));
 		}
 
+		public void TryToGetLock(Action<bool> resultCallback, Guid medicalPracticeId, Date day, Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new GetLockRequestHandler(resultCallback, 
+														   connectionInfoVariable, 
+														   medicalPracticeId, 
+														   day, 
+														   errorCallback));
+		}
+
+		public void ReleaseLock(Action actionCompleteCallback, Guid medicalPracticeId, Date day, Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new ReleaseLockRequestHandler(actionCompleteCallback,
+															   connectionInfoVariable,
+															   medicalPracticeId,
+															   day,
+															   errorCallback));
+		}
+
 		public void RequestUserList(Action<IReadOnlyList<ClientUserData>> dataReceivedCallback,
 									Action<string> errorCallback)
 		{
@@ -282,6 +300,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 
 		#endregion
 
+		#region Connection Begin-/End-Callbacks
+
 		private void ConnectionEndResponseReceived()
 		{
 			Application.Current.Dispatcher.Invoke(
@@ -292,6 +312,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					CleanUpAfterDisconnection();
 				});
 		}
+
 		private void ConnectionBeginResponeReceived(ConnectionSessionId connectionSessionId)
 		{
 			Application.Current.Dispatcher.Invoke(
@@ -305,7 +326,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 					ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionEstablished);
 				}
 			);			
-		}		
+		}
+				
 		private void DebugConnectionBeginResponeReceived (ConnectionSessionId connectionSessionId)
 		{
 			Application.Current.Dispatcher.Invoke(
@@ -319,6 +341,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 				}
 			);
 		}
+
 		private void OnServerVanished()
 		{							
 			CleanUpAfterDisconnection();
@@ -328,7 +351,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 				ConnectionEventInvoked?.Invoke(ConnectionEvent.ConnectionLost);				
 			}
 		}
-		
+
+		#endregion
+
 		private void CleanUpAfterDisconnection()
 		{						
 			StopHeartbeatThread();
