@@ -1,21 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.TherapyPlaceTypeRepository
 {
-	public class ClientTherapyPlaceTypeRepository : IClientTherapyPlaceTypeRepository
-	{		
+	public class ClientTherapyPlaceTypeRepository : DisposingObject, IClientTherapyPlaceTypeRepository
+	{
+		public event Action<TherapyPlaceType> UpdatedTherapyPlaceTypeAvailable;
+
 		private readonly IConnectionService connectionService;
 		private  IDictionary<Guid, TherapyPlaceType> cachedTherapyPlaceTypes; 
 
 
 		public ClientTherapyPlaceTypeRepository (IConnectionService connectionService)
 		{
-			this.connectionService = connectionService;			
-		}																
-		 				
+			this.connectionService = connectionService;		
+			
+			connectionService.NewTherapyPlaceTypeAvailable     += OnNewTherapyPlaceTypeAvailable;
+			connectionService.UpdatedTherapyPlaceTypeAvailable += OnUpdatedTherapyPlaceTypeAvailable;	
+		}
+
+		private void OnUpdatedTherapyPlaceTypeAvailable(TherapyPlaceType updatedTherapyPlaceType)
+		{
+			cachedTherapyPlaceTypes[updatedTherapyPlaceType.Id] = updatedTherapyPlaceType;
+		}
+
+		private void OnNewTherapyPlaceTypeAvailable(TherapyPlaceType newTherapyPlaceType)
+		{
+			cachedTherapyPlaceTypes.Add(newTherapyPlaceType.Id, newTherapyPlaceType);
+		}		
 
 		public void RequestTherapyPlaceTypes(Action<TherapyPlaceType> therapyPlacetypesAvailableCallback, Guid id, Action<string> errorCallback)
 		{
@@ -50,6 +65,12 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.TherapyPlaceT
 
 			errorCallback("therpyPlaceType not found");
 			return null;
+		}
+
+		protected override void CleanUp()
+		{
+			connectionService.NewTherapyPlaceTypeAvailable     -= OnNewTherapyPlaceTypeAvailable;
+			connectionService.UpdatedTherapyPlaceTypeAvailable -= OnUpdatedTherapyPlaceTypeAvailable;
 		}
 	}
 }
