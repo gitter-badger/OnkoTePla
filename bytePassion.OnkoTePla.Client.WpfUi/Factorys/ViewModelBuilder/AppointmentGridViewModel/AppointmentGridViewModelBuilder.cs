@@ -7,6 +7,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelReposito
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.TherapyPlaceRowViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using Size = bytePassion.Lib.Types.SemanticTypes.Size;
 
@@ -21,6 +22,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
 		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;
 		private readonly ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable;
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 		private readonly ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder;
 
@@ -30,6 +32,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 											   ISharedStateReadOnly<Size> gridSizeVariable, 
 											   ISharedStateReadOnly<Guid?> roomFilterVariable,
 											   ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable,
+											   ISharedState<AppointmentModifications> appointmentModificationsVariable,
 											   IAppointmentViewModelBuilder appointmentViewModelBuilder, 
 											   ITherapyPlaceRowViewModelBuilder therapyPlaceRowViewModelBuilder)
 											   
@@ -40,6 +43,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 			this.gridSizeVariable = gridSizeVariable;
 			this.roomFilterVariable = roomFilterVariable;
 			this.displayedMedicalPracticeVariable = displayedMedicalPracticeVariable;
+			this.appointmentModificationsVariable = appointmentModificationsVariable;
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.therapyPlaceRowViewModelBuilder = therapyPlaceRowViewModelBuilder;
 		}
@@ -71,6 +75,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 																															   gridSizeVariable,
 																															   roomFilterVariable,
 																															   displayedMedicalPracticeVariable,
+																															   appointmentModificationsVariable,
 																															   appointmentViewModelBuilder,
 																															   readModel,
 																															   therapyPlaceRowViewModels,

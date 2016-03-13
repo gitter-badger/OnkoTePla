@@ -10,6 +10,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Notification
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
 using bytePassion.OnkoTePla.Client.WpfUi.Global;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TimeGrid;
@@ -31,6 +32,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		private readonly ISharedStateReadOnly<Size> gridSizeVariable;
 		private readonly ISharedStateReadOnly<Guid?> roomFilterVariable;
 		private readonly ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable;
+		private readonly ISharedState<AppointmentModifications> appointmentModificationsVariable;
 		private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
 		private readonly Action<string> errorCallback;
 		  
@@ -44,6 +46,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
                                         ISharedStateReadOnly<Size> gridSizeVariable,
 										ISharedStateReadOnly<Guid?> roomFilterVariable,
 										ISharedStateReadOnly<Guid> displayedMedicalPracticeVariable,
+										ISharedState<AppointmentModifications> appointmentModificationsVariable,
 										IAppointmentViewModelBuilder appointmentViewModelBuilder,										
 										AppointmentsOfADayReadModel readModel,
 										IEnumerable<ITherapyPlaceRowViewModel> therapyPlaceRowViewModels,
@@ -54,6 +57,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		    this.gridSizeVariable = gridSizeVariable;
 		    this.roomFilterVariable = roomFilterVariable;
 			this.displayedMedicalPracticeVariable = displayedMedicalPracticeVariable;
+			this.appointmentModificationsVariable = appointmentModificationsVariable;
 			this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.readModel = readModel;
 			this.errorCallback = errorCallback;
@@ -139,6 +143,46 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 					RemoveAppointment(appointmentChangedEventArgs.Appointment);
 					AddAppointment(appointmentChangedEventArgs.Appointment);
 					break;
+				}
+			}
+
+			if (appointmentModificationsVariable.Value != null &&
+			    appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate == Identifier &&
+				appointmentChangedEventArgs.ChangeAction != ChangeAction.Deleted)
+			{
+
+				var newEventBeginTime = appointmentChangedEventArgs.Appointment.StartTime;
+				var newEventEndTime  = appointmentChangedEventArgs.Appointment.EndTime;
+
+				if ((newEventBeginTime > appointmentModificationsVariable.Value.BeginTime && newEventBeginTime < appointmentModificationsVariable.Value.EndTime) ||
+					(newEventEndTime   > appointmentModificationsVariable.Value.BeginTime && newEventEndTime   < appointmentModificationsVariable.Value.EndTime) ||
+					(appointmentModificationsVariable.Value.BeginTime > newEventBeginTime && appointmentModificationsVariable.Value.BeginTime < newEventEndTime) ||
+					(appointmentModificationsVariable.Value.EndTime   > newEventBeginTime && appointmentModificationsVariable.Value.EndTime   < newEventEndTime))
+				{
+					var isInitial = appointmentModificationsVariable.Value.IsInitialAdjustment;
+					var originalAppointmentId = appointmentModificationsVariable.Value.OriginalAppointment.Id;
+
+					appointmentModificationsVariable.Value.Dispose();
+					appointmentModificationsVariable.Value = null;
+
+					if (isInitial)
+					{
+						viewModelCommunication.SendTo(                                          //
+							Constants.ViewModelCollections.AppointmentViewModelCollection,      // do nothing but
+							originalAppointmentId,                                              // deleting the temporarly
+							new Dispose()                                                       // created Appointment
+						);                                                                      //
+					}
+					else
+					{
+						viewModelCommunication.SendTo(
+							Constants.ViewModelCollections.AppointmentViewModelCollection,
+							originalAppointmentId,
+							new RestoreOriginalValues()
+						);
+					}
+
+					viewModelCommunication.Send(new ShowNotification("Die Terminbearbeitung wurde aufgrund von Konflikten abgebrochen!", 5));
 				}
 			}
 		}

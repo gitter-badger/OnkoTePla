@@ -153,6 +153,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                                       gridSizeVariable,
                                                                                       roomFilterVariable,
 																					  selectedMedicalPracticeIdVariable,
+																					  appointmentModificationsVariable,
 																					  appointmentViewModelBuilder,
                                                                                       therapyPlaceRowViewModelBuilder);
 			
