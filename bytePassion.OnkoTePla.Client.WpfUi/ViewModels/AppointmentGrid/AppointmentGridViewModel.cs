@@ -147,6 +147,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 			}
 
 			if (appointmentModificationsVariable.Value != null &&
+			    appointmentChangedEventArgs.ChangeAction == ChangeAction.Deleted &&
+			    appointmentModificationsVariable.Value.OriginalAppointment.Id == appointmentChangedEventArgs.Appointment.Id)
+			{
+				EndEditing();
+				return;
+			}
+
+			if (appointmentModificationsVariable.Value != null &&
 			    appointmentModificationsVariable.Value.CurrentLocation.PlaceAndDate == Identifier &&
 				appointmentChangedEventArgs.ChangeAction != ChangeAction.Deleted)
 			{
@@ -159,32 +167,37 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 					(appointmentModificationsVariable.Value.BeginTime > newEventBeginTime && appointmentModificationsVariable.Value.BeginTime < newEventEndTime) ||
 					(appointmentModificationsVariable.Value.EndTime   > newEventBeginTime && appointmentModificationsVariable.Value.EndTime   < newEventEndTime))
 				{
-					var isInitial = appointmentModificationsVariable.Value.IsInitialAdjustment;
-					var originalAppointmentId = appointmentModificationsVariable.Value.OriginalAppointment.Id;
-
-					appointmentModificationsVariable.Value.Dispose();
-					appointmentModificationsVariable.Value = null;
-
-					if (isInitial)
-					{
-						viewModelCommunication.SendTo(                                          //
-							Constants.ViewModelCollections.AppointmentViewModelCollection,      // do nothing but
-							originalAppointmentId,                                              // deleting the temporarly
-							new Dispose()                                                       // created Appointment
-						);                                                                      //
-					}
-					else
-					{
-						viewModelCommunication.SendTo(
-							Constants.ViewModelCollections.AppointmentViewModelCollection,
-							originalAppointmentId,
-							new RestoreOriginalValues()
-						);
-					}
-
-					viewModelCommunication.Send(new ShowNotification("Die Terminbearbeitung wurde aufgrund von Konflikten abgebrochen!", 5));
+					EndEditing();
 				}
 			}
+		}
+
+		private void EndEditing()
+		{
+			var isInitial = appointmentModificationsVariable.Value.IsInitialAdjustment;
+			var originalAppointmentId = appointmentModificationsVariable.Value.OriginalAppointment.Id;
+
+			appointmentModificationsVariable.Value.Dispose();
+			appointmentModificationsVariable.Value = null;
+
+			if (isInitial)
+			{
+				viewModelCommunication.SendTo(                                          //
+					Constants.ViewModelCollections.AppointmentViewModelCollection,      // do nothing but
+					originalAppointmentId,                                              // deleting the temporarly
+					new Dispose()                                                       // created Appointment
+				);                                                                      //
+			}
+			else
+			{
+				viewModelCommunication.SendTo(
+					Constants.ViewModelCollections.AppointmentViewModelCollection,
+					originalAppointmentId,
+					new RestoreOriginalValues()
+				);
+			}
+
+			viewModelCommunication.Send(new ShowNotification("Die Terminbearbeitung wurde aufgrund von Konflikten abgebrochen!", 5));
 		}
 
 		private void AddAppointment(Appointment newAppointment)
