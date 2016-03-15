@@ -50,7 +50,6 @@ namespace bytePassion.OnkoTePla.Communication.SendReceive
 				return null;
 			}
 			
-
 			var str = inMsg.Size > 0
 				? Encoding.GetString(inMsg.Data, 0, inMsg.Size)
 				: string.Empty;

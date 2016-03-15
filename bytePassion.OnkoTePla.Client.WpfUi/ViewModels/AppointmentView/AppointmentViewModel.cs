@@ -93,30 +93,41 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 
 				    if (result == MessageDialogResult.Affirmative)
 				    {
-						appointmentModificationsVariable.Value = null;
-
-						commandService.TryDeleteAppointment(
-							operationSuccessful =>
-							{
-								Application.Current.Dispatcher.Invoke(() =>
+					    if (appointmentModificationsVariable.Value.IsInitialAdjustment)
+					    {
+						    viewModelCommunication.SendTo(											//
+							    Constants.ViewModelCollections.AppointmentViewModelCollection,		// do nothing but
+							    appointmentModificationsVariable.Value.OriginalAppointment.Id,		// deleting the temporarly
+							    new Dispose()														// created Appointment
+							);																		//
+					    }
+					    else
+					    {
+							commandService.TryDeleteAppointment(
+								operationSuccessful =>
 								{
-									if (!operationSuccessful)
+									Application.Current.Dispatcher.Invoke(() =>
 									{
-										Process(new RestoreOriginalValues());
-										viewModelCommunication.Send(new ShowNotification("löschen des Termins fehlgeschlagen; bearbeitung wurde zurückgesetzt", 5));
-									}
-								});														
-							},
-							currentLocation.PlaceAndDate, 															
-							appointment.Patient.Id,
-							appointment.Id,
-							appointment.Description,
-							appointment.StartTime,
-							appointment.EndTime,
-							appointment.TherapyPlace.Id, 
-							ActionTag.RegularAction,
-							errorCallback
-						);
+										if (!operationSuccessful)
+										{
+											Process(new RestoreOriginalValues());
+											viewModelCommunication.Send(new ShowNotification("löschen des Termins fehlgeschlagen; bearbeitung wurde zurückgesetzt", 5));
+										}
+									});
+								},
+								currentLocation.PlaceAndDate,
+								appointment.Patient.Id,
+								appointment.Id,
+								appointment.Description,
+								appointment.StartTime,
+								appointment.EndTime,
+								appointment.TherapyPlace.Id,
+								ActionTag.RegularAction,
+								errorCallback
+							);
+						}
+
+					    appointmentModificationsVariable.Value = null;						
 					}					
 				}
 			);	

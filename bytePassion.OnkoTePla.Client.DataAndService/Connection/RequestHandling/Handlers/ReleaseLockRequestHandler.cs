@@ -28,6 +28,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.RequestHandling
 
 		public override void HandleRequest (RequestSocket socket)
 		{
+			if (connectionInfoVariable.Value.LoggedInUser == null)
+				return;
+
 			HandleRequestHelper<ReleaseLockRequest, ReleaseLockResponse>(
 				new ReleaseLockRequest(connectionInfoVariable.Value.SessionId,
 									   connectionInfoVariable.Value.LoggedInUser.Id,
