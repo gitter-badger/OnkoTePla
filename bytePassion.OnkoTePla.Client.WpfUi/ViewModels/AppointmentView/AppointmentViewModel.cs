@@ -144,6 +144,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 				}
 			);
 
+			ConfirmChanges = new Command(() => viewModelCommunication.Send(new ConfirmChanges()));
+			RejectChanges  = new Command(() => viewModelCommunication.Send(new RejectChanges()));
+
 			BeginTime = appointment.StartTime;
 			EndTime = appointment.EndTime;
             Description = appointment.Description;
@@ -216,8 +219,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		
 		public ICommand DeleteAppointment { get; }
 		public ICommand SwitchToEditMode  { get; }
-        public ICommand EditDescription { get; }
-
+        public ICommand EditDescription   { get; }
+		public ICommand ConfirmChanges    { get; }
+		public ICommand RejectChanges     { get; }
 
 		public Time BeginTime
 		{

@@ -1,16 +1,16 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
+﻿using System;
+using System.Windows.Input;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using System;
-using System.Windows.Input;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
-    internal interface IAppointmentViewModel : IViewModel,
+	internal interface IAppointmentViewModel : IViewModel,
 											   IViewModelCommunicationDeliverer,
 											   IViewModelCollectionItem<Guid>,											
                                                IViewModelMessageHandler<Dispose>,											 
@@ -21,7 +21,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 	{
 		ICommand DeleteAppointment { get; }
 		ICommand SwitchToEditMode  { get; }	
-        ICommand EditDescription { get; }	
+        ICommand EditDescription   { get; }	
+		ICommand ConfirmChanges    { get; }
+		ICommand RejectChanges     { get; }
 		
 		Time BeginTime { get; }
 		Time EndTime   { get; }

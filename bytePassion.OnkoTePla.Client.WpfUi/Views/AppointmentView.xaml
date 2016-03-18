@@ -89,67 +89,115 @@
             </adorner:AdornedControl.IsAdornerVisible>
 
             <adorner:AdornedControl.AdornerContent>
-                <StackPanel Margin="0,-25,0,30"
+				<StackPanel Margin="0,-25,0,30"
                             HorizontalAlignment="Center"
                             Orientation="Horizontal">
-                    <Button x:Name="EditButton"
-                            Width="24"
-                            Height="24"
-                            Margin="10,0"
-                            Command="{Binding EditDescription,
-                                              Mode=OneTime}"
+
+					<Button Width="24"
+                            Height="24"                            
+                            Command="{Binding ConfirmChanges, Mode=OneTime}"
                             Cursor="Hand">
 
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Grid>
-                                    <Ellipse Width="24"
+						<Button.Template>
+							<ControlTemplate>
+								<Grid>
+									<Ellipse Width="24"
+                                             Height="24"
+                                             Fill="GreenYellow" />
+									<Viewbox Width="20" Height="20">
+										<Canvas Width="24" Height="24">
+											<Path Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" Fill="#444444" />
+										</Canvas>
+									</Viewbox>
+								</Grid>
+
+
+							</ControlTemplate>
+						</Button.Template>
+					</Button>
+
+					<Button Width="24"
+                            Height="24"
+                            Margin="2,0,0,0"
+                            Command="{Binding RejectChanges, Mode=OneTime}"
+                            Cursor="Hand">
+
+						<Button.Template>
+							<ControlTemplate>
+								<Grid>
+									<Ellipse Width="24"
+                                             Height="24"
+                                             Fill="Red" />
+									<Viewbox Width="20" Height="20">
+										<Canvas Width="24" Height="24">
+											<Path Canvas.Left="1"
+												  Canvas.Top="1"
+												  Width="22" Height="22"
+												  Data="F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 19,38C 19,27.5066 27.5066,19 38,19 Z M 38,23.75C 35.2116,23.75 32.6102,24.5509 30.4134,25.9352L 50.0648,45.5866C 51.4491,43.3898 52.25,40.7884 52.25,38C 52.25,30.13 45.87,23.75 38,23.75 Z M 23.75,38C 23.75,45.8701 30.1299,52.25 38,52.25C 40.7884,52.25 43.3897,51.4491 45.5865,50.0649L 25.9351,30.4136C 24.5509,32.6103 23.75,35.2117 23.75,38 Z "
+												  Fill="#444444"
+												  Stretch="Fill" />
+										</Canvas>
+									</Viewbox>
+								</Grid>
+
+
+							</ControlTemplate>
+						</Button.Template>
+					</Button>
+
+					<Button Width="24"
+                            Height="24"
+                            Margin="10,0,2,0"
+                            Command="{Binding EditDescription, Mode=OneTime}"
+                            Cursor="Hand">
+
+						<Button.Template>
+							<ControlTemplate>
+								<Grid>
+									<Ellipse Width="24"
                                              Height="24"
                                              Fill="DarkGray" />
-                                    <Viewbox Width="20" Height="20">
-                                        <Canvas Width="24" Height="24">
-                                            <Path Data="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" Fill="Black" />
-                                        </Canvas>
-                                    </Viewbox>
-                                </Grid>
+									<Viewbox Width="20" Height="20">
+										<Canvas Width="24" Height="24">
+											<Path Data="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" Fill="Black" />
+										</Canvas>
+									</Viewbox>
+								</Grid>
 
 
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+							</ControlTemplate>
+						</Button.Template>
+					</Button>
 
-                    <Button x:Name="DeleteButton"
-                            Width="24"
+					<Button Width="24"
                             Height="24"
-                            Command="{Binding DeleteAppointment,
-                                              Mode=OneTime}"
+                            Command="{Binding DeleteAppointment, Mode=OneTime}"
                             Cursor="Hand">
 
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Canvas>
-                                    <Ellipse Width="24"
+						<Button.Template>
+							<ControlTemplate>
+								<Canvas>
+									<Ellipse Width="24"
                                              Height="24"
                                              Fill="White" />
-                                    <Viewbox Canvas.Left="-1"
+									<Viewbox Canvas.Left="-1"
                                              Canvas.Top="-1"
                                              Width="24"
                                              Height="24">
-                                        <Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,            2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,            15.59L13.41,12L17,8.41L15.59,7Z" Fill="Red" />
-                                    </Viewbox>
-                                </Canvas>
-                            </ControlTemplate>
-                        </Button.Template>
+										<Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,            2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,            15.59L13.41,12L17,8.41L15.59,7Z" Fill="Red" />
+									</Viewbox>
+								</Canvas>
+							</ControlTemplate>
+						</Button.Template>
 
+					</Button>
 
-                    </Button>
-                    <i:Interaction.Behaviors>
-                        <behaviors:AppointmentAdornerPlacementBehavior ReferenceElement="{x:Reference ParentBorder}" />
-                    </i:Interaction.Behaviors>
-                </StackPanel>
+					<i:Interaction.Behaviors>
+						<behaviors:AppointmentAdornerPlacementBehavior ReferenceElement="{x:Reference ParentBorder}" />
+					</i:Interaction.Behaviors>
+				</StackPanel>
 
-
-            </adorner:AdornedControl.AdornerContent>
+			</adorner:AdornedControl.AdornerContent>
 
             <Grid>
                 <Grid.ColumnDefinitions>

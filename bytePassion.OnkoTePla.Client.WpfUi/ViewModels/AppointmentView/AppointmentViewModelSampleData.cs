@@ -1,17 +1,17 @@
-﻿using bytePassion.Lib.Communication.ViewModel;
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Input;
+using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using System;
-using System.ComponentModel;
-using System.Windows.Input;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
-    internal class AppointmentViewModelSampleData : IAppointmentViewModel
+	internal class AppointmentViewModelSampleData : IAppointmentViewModel
 	{
 		public AppointmentViewModelSampleData()
 			: this(new Time(9,0), new Time(11,0))
@@ -36,7 +36,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 
 		public ICommand DeleteAppointment => null;
 		public ICommand SwitchToEditMode  => null;
-        public ICommand EditDescription => null;
+        public ICommand EditDescription   => null;
+	    public ICommand ConfirmChanges    => null;
+		public ICommand RejectChanges     => null;
 
 		public Time   BeginTime     { get; }
 		public Time   EndTime       { get; }		
