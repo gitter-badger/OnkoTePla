@@ -247,9 +247,11 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 
             var optionsPageViewModel = new OptionsPageViewModel();            
 
-            var mainViewModel = new ViewModels.MainView.MainViewModel(overviewPageViewModel,
+            var mainViewModel = new ViewModels.MainView.MainViewModel(viewModelCommunication,
+																	  overviewPageViewModel,
                                                                       searchPageViewModel,
-                                                                      optionsPageViewModel);
+                                                                      optionsPageViewModel,
+																	  appointmentModificationsVariable);
 			
 			viewModelCommunication.RegisterViewModelMessageHandler<AsureDayIsLoaded>(gridContainerViewModel);
             viewModelCommunication.RegisterViewModelMessageHandler<ShowPage>(mainViewModel);

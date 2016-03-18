@@ -1,22 +1,31 @@
-﻿using bytePassion.Lib.FrameworkExtensions;
+﻿using System.ComponentModel;
+using bytePassion.Lib.Communication.State;
+using bytePassion.Lib.Communication.ViewModel;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage;
-using System.ComponentModel;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
 {
-    internal class MainViewModel : ViewModel, 
+	internal class MainViewModel : ViewModel, 
                                    IMainViewModel
-    {        
-        private int selectedPage;        
+    {
+	    private readonly IViewModelCommunication viewModelCommunication;
+	    private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
+	    private int selectedPage;        
 
-        public MainViewModel(IOverviewPageViewModel overviewPageViewModel,
+        public MainViewModel(IViewModelCommunication viewModelCommunication,
+							 IOverviewPageViewModel overviewPageViewModel,
 						     ISearchPageViewModel searchPageViewModel,
-						     IOptionsPageViewModel optionsPageViewModel)
-        {           
+						     IOptionsPageViewModel optionsPageViewModel,
+							 ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable)
+        {
+	        this.viewModelCommunication = viewModelCommunication;
+	        this.appointmentModificationsVariable = appointmentModificationsVariable;
 	        OverviewPageViewModel = overviewPageViewModel;
             SearchPageViewModel = searchPageViewModel;
             OptionsPageViewModel = optionsPageViewModel;
@@ -36,7 +45,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MainView
 
 		public void Process (ShowPage message)
 		{
-		    SelectedPage = (int) message.Page;
+			if (appointmentModificationsVariable.Value == null)
+			{
+				SelectedPage = (int) message.Page;
+			}
+			else
+			{
+				viewModelCommunication.Send(new ShowNotification("Seite kann nicht gewechselt werden, da Termin noch in Bearbeitung", 10));
+			}
 		}		
 	            
 	    protected override void CleanUp() {	}
