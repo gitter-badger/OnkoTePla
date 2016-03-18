@@ -95,7 +95,6 @@
     <Compile Include="Data\DataCenter.cs" />
     <Compile Include="Data\DataCenterContainer.cs" />
     <Compile Include="Data\IDataCenter.cs" />
-    <Compile Include="EventStreamUtils\EventStreamAggregator.cs" />
     <Compile Include="Factorys\ConnectionServiceBuilder.cs" />
     <Compile Include="Factorys\DataCenterBuilder.cs" />
     <Compile Include="Factorys\IConnectionServiceBuilder.cs" />

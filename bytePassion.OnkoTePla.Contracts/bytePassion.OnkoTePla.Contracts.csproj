@@ -50,6 +50,7 @@
     <Compile Include="Config\User.cs" />
     <Compile Include="Config\UserCreateAndUpdateLogic.cs" />
     <Compile Include="Domain\AggregateIdentifier.cs" />
+    <Compile Include="Domain\EventStreamUtils\EventStreamAggregator.cs" />
     <Compile Include="Domain\Events\Base\ActionTag.cs" />
     <Compile Include="Domain\Events\Base\DomainEvent.cs" />
     <Compile Include="Domain\EventStream.cs" />

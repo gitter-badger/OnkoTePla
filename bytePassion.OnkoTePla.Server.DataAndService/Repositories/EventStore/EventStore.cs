@@ -58,11 +58,17 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 				{
 					errorOccured = true;
 					break;
-				}
-                
-                metaDataService.UpdateMetaData(domainEvent);
+				}                                
 
-				eventStream.AddEvent(domainEvent);
+				var operationSuccessful = eventStream.AddEvent(domainEvent);
+
+				if (!operationSuccessful)
+				{
+					errorOccured = true;
+					break;
+				}
+
+				metaDataService.UpdateMetaData(domainEvent);
 				connectionService.SendEventNotification(domainEvent);
 			}
 

@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
+using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Domain;
+using bytePassion.OnkoTePla.Contracts.Domain.EventStreamUtils;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
-using bytePassion.OnkoTePla.Server.DataAndService.EventStreamUtils;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ.Sockets;
 
@@ -26,13 +28,13 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 				return;
 
 			var eventStream = dataCenter.GetEventStreamForADay(new AggregateIdentifier(request.Day, request.MedicalPracticeId));
-			var eventStreamAggregator = new EventStreamAggregator(eventStream);
+			var eventStreamAggregator = new EventStreamAggregator<AggregateIdentifier>(eventStream);
 			
 			Socket.SendNetworkMsg(
 				new GetAppointmentsOfADayResponse(eventStream.Id.MedicalPracticeId,
 												  eventStream.Id.PracticeVersion,
 												  eventStreamAggregator.AggregateVersion,
-												  eventStreamAggregator.AppointmentData)
+												  (IReadOnlyList<AppointmentTransferData>) eventStreamAggregator.AppointmentData)
 			);
 		}
 	}
