@@ -21,8 +21,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 {
-	internal class OverviewPageViewModel : ViewModel, 
-                                           IOverviewPageViewModel
+	internal class OverviewPageViewModel : ViewModel, IOverviewPageViewModel
 	{
         private readonly ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable;
 		private readonly ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable;
@@ -40,8 +39,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 									 IDateSelectorViewModel dateSelectorViewModel, 
 									 IGridContainerViewModel gridContainerViewModel, 									
 									 IUndoRedoViewModel undoRedoViewModel,									 
-                                     IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder,
-                                     ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
+                                     IWindowBuilder<Views.AddAppointmentDialog> addAppointmentDialogBuilder,
+									 IWindowBuilder<Views.PrintDialog> printDialogBuilder,
+									 ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
 									 ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
 									 ISharedStateReadOnly<Date> selectedDayVariable,
 									 IClientMedicalPracticeRepository medicalPracticeRepository,
@@ -71,11 +71,23 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 			{
 				viewModelCommunication.Send(new ShowDisabledOverlay());
 
-				var dialogWindow = dialogBuilder.BuildWindow();
+				var dialogWindow = addAppointmentDialogBuilder.BuildWindow();
 				dialogWindow.ShowDialog();
+				//addAppointmentDialogBuilder.DisposeWindow(dialogWindow);
 
                 viewModelCommunication.Send(new HideDisabledOverlay());                
             });
+
+			ShowPrintDialog = new Command(() =>
+			{
+				viewModelCommunication.Send(new ShowDisabledOverlay());
+
+				var dialogWindow = printDialogBuilder.BuildWindow();
+				dialogWindow.ShowDialog();
+				//printDialogBuilder.DisposeWindow(dialogWindow);
+				
+				viewModelCommunication.Send(new HideDisabledOverlay());
+			});
 		}
 
 		private void OnSelectedDayVariablChanged(Date date)
@@ -127,6 +139,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		public IUndoRedoViewModel                UndoRedoViewModel                { get; }
 
 		public ICommand ShowAddAppointmentDialog { get; }
+		public ICommand ShowPrintDialog { get; }
 
 		public bool ChangeConfirmationVisible
 		{

@@ -19,6 +19,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		IUndoRedoViewModel                UndoRedoViewModel                { get; }
 
 		ICommand ShowAddAppointmentDialog { get; }
+		ICommand ShowPrintDialog          { get; }
 
 		bool ChangeConfirmationVisible { get; }
 		bool AddAppointmentPossible    { get; }		

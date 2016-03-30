@@ -104,6 +104,7 @@
     <Compile Include="Factorys\ViewModelBuilder\AppointmentViewModel\AppointmentViewModelBuilder.cs" />
     <Compile Include="Factorys\ViewModelBuilder\AppointmentViewModel\IAppointmentViewModelBuilder.cs" />
     <Compile Include="Factorys\WindowBuilder\AboutDialogWindowBuilder.cs" />
+    <Compile Include="Factorys\WindowBuilder\PrintDialogWindowBuilder.cs" />
     <Compile Include="Factorys\WindowBuilder\EditDescriptionWindowBuilder.cs" />
     <Compile Include="FatalErrorHandler.cs" />
     <Compile Include="Global\Constants.cs" />
@@ -163,6 +164,9 @@
     <Compile Include="ViewModels\NotificationView\INotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModelSampleData.cs" />
+    <Compile Include="ViewModels\PrintDialog\IPrintDialogViewModel.cs" />
+    <Compile Include="ViewModels\PrintDialog\PrintDialogViewModel.cs" />
+    <Compile Include="ViewModels\PrintDialog\PrintDialogViewModelSampleData.cs" />
     <Compile Include="ViewModels\SearchPage\Helper\DisplayAppointmentData.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />
     <Compile Include="ViewModelMessages\Deactivate.cs" />
@@ -274,6 +278,9 @@
     <Compile Include="Views\PatientSelector.xaml.cs">
       <DependentUpon>PatientSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PrintDialog.xaml.cs">
+      <DependentUpon>PrintDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RoomSelector.xaml.cs">
       <DependentUpon>RoomSelector.xaml</DependentUpon>
     </Compile>
@@ -375,6 +382,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PatientSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

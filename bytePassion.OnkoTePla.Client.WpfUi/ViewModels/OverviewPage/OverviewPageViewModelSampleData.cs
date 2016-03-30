@@ -33,7 +33,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		public IGridContainerViewModel           GridContainerViewModel           { get; }	
 		public IUndoRedoViewModel                UndoRedoViewModel                { get; }
 
-		public ICommand ShowAddAppointmentDialog { get; } = null;
+		public ICommand ShowAddAppointmentDialog => null;
+		public ICommand ShowPrintDialog          => null;
 
 		public bool ChangeConfirmationVisible { get; }
 		public bool AddAppointmentPossible { get; }		

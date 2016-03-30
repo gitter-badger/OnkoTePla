@@ -164,6 +164,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                                           appointmentViewModelBuilder,
 																						  errorCallback);
 
+			var printDialogWindowBuilder = new PrintDialogWindowBuilder();
+
             // build stand-alone viewModelMessageHandler
 
 	        confirmChangesMessageHandler = new ConfirmChangesMessageHandler(viewModelCommunication,
@@ -222,6 +224,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                   gridContainerViewModel,                                                                
                                                                   undoRedoViewModel,
                                                                   addAppointmentDialogWindowBuilder,
+																  printDialogWindowBuilder,
                                                                   appointmentModificationsVariable,
 																  selectedMedicalPracticeIdVariable,
 																  selectedDateVariable,

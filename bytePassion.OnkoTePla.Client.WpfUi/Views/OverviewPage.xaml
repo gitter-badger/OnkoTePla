@@ -63,6 +63,11 @@
 
 			</StackPanel>
 
+			<Button Grid.Row="4"
+					Margin="10"
+					Content="Print"
+					Command="{Binding ShowPrintDialog}"/>
+			
 		</Grid>
 
         <views:GridContainer Grid.Column="1"
