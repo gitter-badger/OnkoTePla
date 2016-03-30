@@ -34,7 +34,7 @@
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
 			
 			<StackPanel Grid.Row="0"
@@ -63,12 +63,12 @@
 
             </StackPanel>
 
-            <Grid Grid.Row="4" Visibility="{Binding ChangeConfirmationVisible, 
-													Converter={StaticResource BoolToCollapsedVisibilityConverter}}">
-
-                <views:ChangeConfirmationView Margin="5" DataContext="{Binding ChangeConfirmationViewModel}" />
-            </Grid>
-
+<!--            <Grid Grid.Row="4" Visibility="{Binding ChangeConfirmationVisible, -->
+<!--													Converter={StaticResource BoolToCollapsedVisibilityConverter}}">-->
+<!---->
+<!--                <views:ChangeConfirmationView Margin="5" DataContext="{Binding ChangeConfirmationViewModel}" />-->
+<!--            </Grid>-->			
+			
         </Grid>
 
         <views:GridContainer Grid.Column="1"
