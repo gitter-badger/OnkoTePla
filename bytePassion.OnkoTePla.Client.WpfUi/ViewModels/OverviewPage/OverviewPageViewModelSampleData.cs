@@ -1,18 +1,17 @@
-﻿using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
-using System.ComponentModel;
-using System.Windows.Input;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 {
-    internal class OverviewPageViewModelSampleData : IOverviewPageViewModel
+	internal class OverviewPageViewModelSampleData : IOverviewPageViewModel
 	{
 		public OverviewPageViewModelSampleData()
 		{
@@ -20,8 +19,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 			MedicalPracticeSelectorViewModel = new MedicalPracticeSelectorViewModelSampleData();
 			RoomFilterViewModel              = new RoomFilterViewModelSampleData();
 			DateSelectorViewModel            = new DateSelectorViewModelSampleData();
-			GridContainerViewModel           = new GridContainerViewModelSampleData();
-			ChangeConfirmationViewModel      = new ChangeConfirmationViewModelSampleData();
+			GridContainerViewModel           = new GridContainerViewModelSampleData();			
 			UndoRedoViewModel                = new UndoRedoViewModelSampleData();
 
 			ChangeConfirmationVisible = true;
@@ -32,8 +30,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		public IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }
 		public IRoomFilterViewModel              RoomFilterViewModel              { get; }
 		public IDateSelectorViewModel            DateSelectorViewModel            { get; }
-		public IGridContainerViewModel           GridContainerViewModel           { get; }
-		public IChangeConfirmationViewModel      ChangeConfirmationViewModel      { get; }
+		public IGridContainerViewModel           GridContainerViewModel           { get; }	
 		public IUndoRedoViewModel                UndoRedoViewModel                { get; }
 
 		public ICommand ShowAddAppointmentDialog { get; } = null;

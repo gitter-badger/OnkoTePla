@@ -47,29 +47,23 @@
 
             </StackPanel>
 
-            <StackPanel Grid.Row="2"
+			<StackPanel Grid.Row="2"
 						Margin="5">
 
-                <TextBlock FontSize="20"
+				<TextBlock FontSize="20"
                        Foreground="{DynamicResource SemiTransparentWhiteBrush}"
                        Text="Ortsnavigation" />
 
-                <Border BorderThickness="0,0,0,1" Margin="0,5" BorderBrush="{StaticResource SemiTransparentWhiteBrush}">
-                    <TextBlock Text="Praxis" Foreground="{StaticResource SemiTransparentWhiteBrush}" ></TextBlock>
-                </Border>
+				<Border BorderThickness="0,0,0,1" Margin="0,5" BorderBrush="{StaticResource SemiTransparentWhiteBrush}">
+					<TextBlock Text="Praxis" Foreground="{StaticResource SemiTransparentWhiteBrush}" ></TextBlock>
+				</Border>
 
-                <views:MedicalPracticeSelector DataContext="{Binding MedicalPracticeSelectorViewModel}" />
-                <views:RoomSelector DataContext="{Binding RoomFilterViewModel}" />
+				<views:MedicalPracticeSelector DataContext="{Binding MedicalPracticeSelectorViewModel}" />
+				<views:RoomSelector DataContext="{Binding RoomFilterViewModel}" />
 
-            </StackPanel>
+			</StackPanel>
 
-<!--            <Grid Grid.Row="4" Visibility="{Binding ChangeConfirmationVisible, -->
-<!--													Converter={StaticResource BoolToCollapsedVisibilityConverter}}">-->
-<!---->
-<!--                <views:ChangeConfirmationView Margin="5" DataContext="{Binding ChangeConfirmationViewModel}" />-->
-<!--            </Grid>-->			
-			
-        </Grid>
+		</Grid>
 
         <views:GridContainer Grid.Column="1"
                              Margin="5"

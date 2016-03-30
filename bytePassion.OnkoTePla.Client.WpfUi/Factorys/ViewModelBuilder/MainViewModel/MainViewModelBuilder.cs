@@ -24,7 +24,6 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer;
@@ -209,9 +208,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                     50,
                                                                     appointmentGridViewModelBuilder,
 																	errorCallback);
-
-
-            var changeConfirmationViewModel = new ChangeConfirmationViewModel(viewModelCommunication);
+            
             var undoRedoViewModel = new UndoRedoViewModel(viewModelCommunication,
                                                           appointmentModificationsVariable,
                                                           session,
@@ -222,8 +219,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                   medicalPracticeSelectorViewModel,
                                                                   roomSelectorViewModel,
                                                                   dateSelectorViewModel,
-                                                                  gridContainerViewModel,
-                                                                  changeConfirmationViewModel,
+                                                                  gridContainerViewModel,                                                                
                                                                   undoRedoViewModel,
                                                                   addAppointmentDialogWindowBuilder,
                                                                   appointmentModificationsVariable,
@@ -276,8 +272,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 	        var medicalPracticeSelectorViewModel = overviewPageViewModel.MedicalPracticeSelectorViewModel;
 	        var roomSelectorViewModel            = overviewPageViewModel.RoomFilterViewModel;
 	        var dateSelectorViewModel            = overviewPageViewModel.DateSelectorViewModel;
-	        var gridContainerViewModel           = overviewPageViewModel.GridContainerViewModel;
-	        var changeConfirmationViewModel      = overviewPageViewModel.ChangeConfirmationViewModel;
+	        var gridContainerViewModel           = overviewPageViewModel.GridContainerViewModel;	        
 	        var undoRedoViewModel                = overviewPageViewModel.UndoRedoViewModel;
 
 			viewModelCommunication.DeregisterViewModelMessageHandler<AsureDayIsLoaded>(gridContainerViewModel);
@@ -293,8 +288,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 			medicalPracticeSelectorViewModel.Dispose();
 			roomSelectorViewModel.Dispose();
 			dateSelectorViewModel.Dispose();
-			gridContainerViewModel.Dispose();
-			changeConfirmationViewModel.Dispose();
+			gridContainerViewModel.Dispose();			
 			undoRedoViewModel.Dispose();
 		}
 

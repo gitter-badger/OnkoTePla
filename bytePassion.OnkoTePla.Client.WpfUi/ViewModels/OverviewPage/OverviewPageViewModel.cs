@@ -11,7 +11,6 @@ using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer;
@@ -30,7 +29,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		private readonly ISharedStateReadOnly<Date> selectedDayVariable;
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
 		private readonly Action<string> errorCallback;
-
+		 
 	    private bool changeConfirmationVisible;
 		private bool addAppointmentPossible;		
 
@@ -39,8 +38,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 									 IMedicalPracticeSelectorViewModel medicalPracticeSelectorViewModel, 
 									 IRoomFilterViewModel roomFilterViewModel, 
 									 IDateSelectorViewModel dateSelectorViewModel, 
-									 IGridContainerViewModel gridContainerViewModel, 
-									 IChangeConfirmationViewModel changeConfirmationViewModel, 									
+									 IGridContainerViewModel gridContainerViewModel, 									
 									 IUndoRedoViewModel undoRedoViewModel,									 
                                      IWindowBuilder<Views.AddAppointmentDialog> dialogBuilder,
                                      ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
@@ -58,8 +56,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 			MedicalPracticeSelectorViewModel = medicalPracticeSelectorViewModel;
 			RoomFilterViewModel = roomFilterViewModel;
 			DateSelectorViewModel = dateSelectorViewModel;
-			GridContainerViewModel = gridContainerViewModel;
-			ChangeConfirmationViewModel = changeConfirmationViewModel;
+			GridContainerViewModel = gridContainerViewModel;		
 			UndoRedoViewModel = undoRedoViewModel;
 
 			ChangeConfirmationVisible = false;
@@ -126,8 +123,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		public IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }
 		public IRoomFilterViewModel              RoomFilterViewModel              { get; }
 		public IDateSelectorViewModel            DateSelectorViewModel            { get; }
-		public IGridContainerViewModel           GridContainerViewModel           { get; }
-		public IChangeConfirmationViewModel      ChangeConfirmationViewModel      { get; }
+		public IGridContainerViewModel           GridContainerViewModel           { get; }		
 		public IUndoRedoViewModel                UndoRedoViewModel                { get; }
 
 		public ICommand ShowAddAppointmentDialog { get; }

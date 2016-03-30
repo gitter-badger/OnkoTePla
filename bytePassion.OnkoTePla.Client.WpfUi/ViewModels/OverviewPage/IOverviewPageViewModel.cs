@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.ChangeConfirmationView;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer;
@@ -16,8 +15,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 		IMedicalPracticeSelectorViewModel MedicalPracticeSelectorViewModel { get; }
 		IRoomFilterViewModel              RoomFilterViewModel              { get; }
 		IDateSelectorViewModel            DateSelectorViewModel            { get; }
-		IGridContainerViewModel           GridContainerViewModel           { get; }	
-		IChangeConfirmationViewModel      ChangeConfirmationViewModel      { get; }
+		IGridContainerViewModel           GridContainerViewModel           { get; }			
 		IUndoRedoViewModel                UndoRedoViewModel                { get; }
 
 		ICommand ShowAddAppointmentDialog { get; }

@@ -147,9 +147,6 @@
     <Compile Include="ViewModels\EditDescriptionViewModel\EditDescriptionViewModelSampleData.cs" />
     <Compile Include="ViewModels\EditDescriptionViewModel\IEditDescriptionViewModel.cs" />
     <Compile Include="ViewModels\IDataCenterDeliverer.cs" />
-    <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModel.cs" />
-    <Compile Include="ViewModels\ChangeConfirmationView\ChangeConfirmationViewModelSampleData.cs" />
-    <Compile Include="ViewModels\ChangeConfirmationView\IChangeConfirmationViewModel.cs" />
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModel.cs" />
     <Compile Include="ViewModels\DateDisplay\DateDisplayViewModelSampleData.cs" />
     <Compile Include="ViewModels\DateDisplay\IDateDisplayViewModel.cs" />
@@ -237,9 +234,6 @@
     </Compile>
     <Compile Include="Views\AppointmentViewToolTip.xaml.cs">
       <DependentUpon>AppointmentViewToolTip.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ChangeConfirmationView.xaml.cs">
-      <DependentUpon>ChangeConfirmationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConnectionStatusView.xaml.cs">
       <DependentUpon>ConnectionStatusView.xaml</DependentUpon>
@@ -329,10 +323,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AppointmentViewToolTip.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ChangeConfirmationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
