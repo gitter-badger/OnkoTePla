@@ -9,6 +9,7 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.DateDisplay;
@@ -17,6 +18,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.GridContainer;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.MedicalPracticeSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.RoomSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.UndoRedoView;
+using bytePassion.OnkoTePla.Contracts.Domain;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
@@ -40,7 +42,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 									 IGridContainerViewModel gridContainerViewModel, 									
 									 IUndoRedoViewModel undoRedoViewModel,									 
                                      IWindowBuilder<Views.AddAppointmentDialog> addAppointmentDialogBuilder,
-									 IWindowBuilder<Views.PrintDialog> printDialogBuilder,
+									 PrintDialogWindowBuilder printDialogBuilder,
 									 ISharedStateReadOnly<AppointmentModifications> appointmentModificationsVariable,
 									 ISharedStateReadOnly<Guid> selectedMedicalPracticeIdVariable,
 									 ISharedStateReadOnly<Date> selectedDayVariable,
@@ -82,7 +84,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.OverviewPage
 			{
 				viewModelCommunication.Send(new ShowDisabledOverlay());
 
-				var dialogWindow = printDialogBuilder.BuildWindow();
+				var dialogWindow = printDialogBuilder.BuildWindow(new AggregateIdentifier(selectedDayVariable.Value, 
+																						  selectedMedicalPracticeIdVariable.Value));
 				dialogWindow.ShowDialog();
 				//printDialogBuilder.DisposeWindow(dialogWindow);
 				

@@ -164,9 +164,18 @@
     <Compile Include="ViewModels\NotificationView\INotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModel.cs" />
     <Compile Include="ViewModels\NotificationView\NotificationViewModelSampleData.cs" />
+    <Compile Include="ViewModels\PrintAppointmentGrid\IPrintAppointmentGridViewModel.cs" />
+    <Compile Include="ViewModels\PrintAppointmentGrid\PrintAppointmentGridViewModel.cs" />
+    <Compile Include="ViewModels\PrintAppointmentGrid\PrintAppointmentGridViewModelSampleData.cs" />
+    <Compile Include="ViewModels\PrintAppointmentView\IPrintAppointmentViewModel.cs" />
+    <Compile Include="ViewModels\PrintAppointmentView\PrintAppointmentViewModel.cs" />
+    <Compile Include="ViewModels\PrintAppointmentView\PrintAppointmentViewModelSampleData.cs" />
     <Compile Include="ViewModels\PrintDialog\IPrintDialogViewModel.cs" />
     <Compile Include="ViewModels\PrintDialog\PrintDialogViewModel.cs" />
     <Compile Include="ViewModels\PrintDialog\PrintDialogViewModelSampleData.cs" />
+    <Compile Include="ViewModels\PrintTherapyPlaceRow\IPrintTherapyPlaceRowViewModel.cs" />
+    <Compile Include="ViewModels\PrintTherapyPlaceRow\PrintTherapyPlaceRowViewModel.cs" />
+    <Compile Include="ViewModels\PrintTherapyPlaceRow\PrintTherapyPlaceRowViewModelSampleData.cs" />
     <Compile Include="ViewModels\SearchPage\Helper\DisplayAppointmentData.cs" />
     <Compile Include="ViewModels\TimeGrid\ITimeGridViewModel.cs" />
     <Compile Include="ViewModelMessages\Deactivate.cs" />
@@ -215,6 +224,7 @@
     <Compile Include="ViewModels\RoomSelector\RoomFilterViewModel.cs" />
     <Compile Include="ViewModels\TherapyPlaceRowView\TherapyPlaceRowViewModel.cs" />
     <Compile Include="ViewModelMessages\NewSizeAvailable.cs" />
+    <Compile Include="ViewModels\TimeGrid\PrintTimeGridViewModel.cs" />
     <Compile Include="ViewModels\TimeGrid\TimeGridViewModel.cs" />
     <Compile Include="ViewModels\TimeGrid\TimeGridViewModelSampleData.cs" />
     <Compile Include="ViewModels\UndoRedoView\IUndoRedoViewModel.cs" />
@@ -278,8 +288,17 @@
     <Compile Include="Views\PatientSelector.xaml.cs">
       <DependentUpon>PatientSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PrintAppointmentGrid.xaml.cs">
+      <DependentUpon>PrintAppointmentGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintAppointmentView.xaml.cs">
+      <DependentUpon>PrintAppointmentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PrintDialog.xaml.cs">
       <DependentUpon>PrintDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintTherapyPlaceRow.xaml.cs">
+      <DependentUpon>PrintTherapyPlaceRow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RoomSelector.xaml.cs">
       <DependentUpon>RoomSelector.xaml</DependentUpon>
@@ -385,7 +404,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PrintAppointmentGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintAppointmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PrintDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintTherapyPlaceRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

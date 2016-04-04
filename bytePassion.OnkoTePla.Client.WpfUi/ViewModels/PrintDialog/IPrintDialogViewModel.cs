@@ -1,4 +1,6 @@
 ﻿using System.Windows.Input;
+using bytePassion.Lib.Types.SemanticTypes;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintAppointmentGrid;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog
 {
@@ -6,5 +8,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog
 	{
 		ICommand Cancel { get; }
 		ICommand Print  { get; }
+
+		IPrintAppointmentGridViewModel AppointmentGrid { get; }
+
+		Size CurrentGridSize { set; }
 	}
 }

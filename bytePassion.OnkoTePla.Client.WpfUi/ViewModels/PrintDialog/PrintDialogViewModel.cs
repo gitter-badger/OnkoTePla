@@ -3,7 +3,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using bytePassion.Lib.FrameworkExtensions;
+using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintAppointmentGrid;
+using bytePassion.OnkoTePla.Contracts.Domain;
+using Size = bytePassion.Lib.Types.SemanticTypes.Size;
 
 #pragma warning disable 0067
 
@@ -11,14 +18,65 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog
 {
 	internal class PrintDialogViewModel : ViewModel, IPrintDialogViewModel
 	{
-		public PrintDialogViewModel()
+		private IPrintAppointmentGridViewModel appointmentGrid;
+		private Size currentGridSize;
+
+		public PrintDialogViewModel(AggregateIdentifier identifier,
+									IClientMedicalPracticeRepository medicalPracticeRepository,
+									IClientReadModelRepository readModelRepository,
+									Action<string> errorCallback)
 		{
 			Cancel = new Command(CloseWindow);
 			Print  = new Command(DoPrint);
+
+			medicalPracticeRepository.RequestMedicalPractice(
+				practice =>
+				{					
+					readModelRepository.RequestAppointmentSetOfADay(
+						appointmentSet =>
+						{
+							Application.Current.Dispatcher.Invoke(() =>
+							{
+								var initialGridSize = CurrentGridSize ?? new Size(new Width(800), new Height(600));
+								
+								AppointmentGrid = new PrintAppointmentGridViewModel(identifier, practice, appointmentSet.Appointments, initialGridSize);
+							});
+						},
+						identifier,
+						errorCallback							
+					);
+				},
+				identifier.MedicalPracticeId,
+				identifier.Date,
+				errorCallback	
+			);
 		}
 
 		public ICommand Cancel { get; }
 		public ICommand Print  { get; }
+
+		public IPrintAppointmentGridViewModel AppointmentGrid
+		{
+			get { return appointmentGrid; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref appointmentGrid, value); }
+		}
+
+		public Size CurrentGridSize
+		{
+			private get { return currentGridSize; }
+			set
+			{
+				currentGridSize = value;
+
+				if (AppointmentGrid != null && value != null)
+				{
+					foreach (var printTherapyPlaceRowViewModel in AppointmentGrid.TherapyPlaceRowViewModels)
+					{
+						printTherapyPlaceRowViewModel.GridWidth = CurrentGridSize.Width;
+					}
+				}					
+			}
+		}
 
 		private void DoPrint()
 		{

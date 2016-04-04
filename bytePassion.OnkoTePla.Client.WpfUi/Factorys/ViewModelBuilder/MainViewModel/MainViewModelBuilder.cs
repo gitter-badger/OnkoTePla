@@ -164,7 +164,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                                           appointmentViewModelBuilder,
 																						  errorCallback);
 
-			var printDialogWindowBuilder = new PrintDialogWindowBuilder();
+			var printDialogWindowBuilder = new PrintDialogWindowBuilder(medicalPracticeRepository,
+																		readModelRepository, 
+																		errorCallback);
 
             // build stand-alone viewModelMessageHandler
 

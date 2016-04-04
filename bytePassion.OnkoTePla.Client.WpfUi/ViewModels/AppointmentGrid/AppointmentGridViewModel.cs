@@ -275,7 +275,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentGrid
 		
         protected override void CleanUp()
         {
-            gridSizeVariable.StateChanged -= OnGridSizeChanged;
+			gridSizeVariable.StateChanged -= OnGridSizeChanged;
             roomFilterVariable.StateChanged -= OnGlobalRoomFilterVariableChanged;
             readModel.AppointmentChanged -= OnReadModelAppointmentChanged;
 

@@ -5,6 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"      
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:printDialog="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviors="clr-namespace:bytePassion.Lib.WpfLib.Behaviors;assembly=bytePassion.Lib"
+        xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Global"
+        xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Views"
         mc:Ignorable="d"
 		Width="1000"
         Height="720"
@@ -24,6 +28,35 @@
 			<RowDefinition/>
 			<RowDefinition Height="40"/>
 		</Grid.RowDefinitions>
+
+
+		<Grid Background="White">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="{x:Static global:Constants+Layout.AppointmentGridLeftColumsSize}"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<Border Grid.Column="1">
+				<i:Interaction.Behaviors>
+					<behaviors:SizeReportingBehavior ReportedSize="{Binding CurrentGridSize, 
+																		    Mode=OneWayToSource, 
+																		    UpdateSourceTrigger=PropertyChanged}" />
+				</i:Interaction.Behaviors>
+			</Border>
+
+			<ContentControl Grid.Column="0"
+							Grid.ColumnSpan="2">
+				
+				<ContentControl.Template>
+					<ControlTemplate>
+						<views:PrintAppointmentGrid DataContext="{Binding AppointmentGrid}"/>
+					</ControlTemplate>
+				</ContentControl.Template>
+				
+			</ContentControl>
+			
+		</Grid>
 
 		<StackPanel Orientation="Horizontal"
 					Grid.Row="1"
