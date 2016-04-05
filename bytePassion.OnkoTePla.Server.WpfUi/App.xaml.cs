@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Resources;
@@ -33,6 +34,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+			AssureAppDataDirectoriesExist();
 
 			///////////////////////////////////////////////////////////////////////////////////////////////////
 			////////                                                                                 //////////
@@ -136,5 +139,14 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 			connectionServiceBuilder.DisposeConnectionService(connectionService);
         }
+
+		private void AssureAppDataDirectoriesExist()
+		{
+			if (!Directory.Exists(GlobalConstants.ServerBasePath))
+			{
+				Directory.CreateDirectory(GlobalConstants.ServerBasePath);
+				Directory.CreateDirectory(GlobalConstants.EventHistoryBasePath);
+			}
+		}
     }
 }

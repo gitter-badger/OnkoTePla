@@ -1,4 +1,6 @@
-﻿namespace bytePassion.OnkoTePla.Resources
+﻿using System;
+
+namespace bytePassion.OnkoTePla.Resources
 {
 	public static class GlobalConstants
     {		
@@ -17,11 +19,16 @@
 		public const uint ClientWaitTimeForHeartbeat		 = 10000;	 //			"
 		public const uint ServerWaitTimeForHeartbeatResponse =  2000;    //			"
 
-		public const string PatientPersistenceFile          = @"..\..\..\AppData\patients.xml";		
-		public const string ConfigPersistenceFile           = @"..\..\..\AppData\config.xml";		
-		public const string LocalSettingsPersistenceFile    = @"..\..\..\AppData\settings.xml";
-		public const string MetaDataPersistanceFile         = @"..\..\..\AppData\metaData.xml";
+		private static readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+		public static readonly string ClientBasePath = AppDataPath + @"\bytePassion\OnkoTePla\Client\";
+		public static readonly string ServerBasePath = AppDataPath + @"\bytePassion\OnkoTePla\Server\";
+
+		public static readonly string PatientPersistenceFile       = ServerBasePath + @"patients.xml";		
+		public static readonly string ConfigPersistenceFile        = ServerBasePath + @"config.xml";				
+		public static readonly string MetaDataPersistanceFile      = ServerBasePath + @"metaData.xml";
+		public static readonly string EventHistoryBasePath         = ServerBasePath + @"EventHistory";
 		
-		public const string EventHistoryBasePath            = @"..\..\..\AppData\EventHistory";		
-    }
+		public static readonly string LocalSettingsPersistenceFile = ClientBasePath + @"settings.xml";
+	}
 }

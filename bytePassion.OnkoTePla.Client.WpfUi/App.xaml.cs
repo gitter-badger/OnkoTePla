@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using bytePassion.Lib.Communication.MessageBus;
 using bytePassion.Lib.Communication.MessageBus.HandlerCollection;
 using bytePassion.Lib.Communication.ViewModel;
@@ -28,12 +29,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 		{
 			base.OnStartup(e);
 
+			AssureAppDataDirectoriesExist();
+
 			///////////////////////////////////////////////////////////////////////////////////////////////
 			////////                                                                             //////////
 			////////                          Composition Root and Setup                         //////////
 			////////                                                                             //////////
 			///////////////////////////////////////////////////////////////////////////////////////////////								
-				
+
 			var connectionService = new ConnectionService();			
 			var eventBus          = new ClientEventBus(connectionService);
 
@@ -108,6 +111,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			localSettingsRepository.PersistRepository();
 
 			connectionService.Dispose();
-		}		
+		}
+
+		private void AssureAppDataDirectoriesExist()
+		{
+			if (!Directory.Exists(GlobalConstants.ClientBasePath))
+			{
+				Directory.CreateDirectory(GlobalConstants.ClientBasePath);				
+			}
+		}
 	}
 }
