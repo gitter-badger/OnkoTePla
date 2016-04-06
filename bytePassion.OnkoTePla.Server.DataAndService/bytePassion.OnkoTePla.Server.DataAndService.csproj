@@ -57,6 +57,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backup\BackupDataSet.cs" />
+    <Compile Include="Backup\BackupService.cs" />
+    <Compile Include="Backup\IBackupService.cs" />
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetLockResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\ReleaseLockResponseHandler.cs" />

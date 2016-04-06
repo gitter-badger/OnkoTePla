@@ -11,7 +11,10 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 {
 	public interface IDataCenter
-	{		
+	{
+		void ExportCurrentData(string filename);
+		void ImportDataSet(string filename);
+
 		IReadOnlyList<Address> GetAllAvailableAddresses();
 
 		IEnumerable<Patient> GetAllPatients();
