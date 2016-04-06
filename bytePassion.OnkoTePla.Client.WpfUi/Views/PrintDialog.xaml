@@ -45,6 +45,7 @@
 			</Border>
 
 			<ContentControl Grid.Column="0"
+                            x:Name="controlToPrint"
 							Grid.ColumnSpan="2">
 				
 				<ContentControl.Template>
@@ -67,8 +68,8 @@
 					Command="{Binding Cancel}"/>
 
 			<Button Width="120"					
-					Content="Print"
-					Command="{Binding Print}"/>
+					Content="Print" Click="Button_Click"
+					/>
 			
 		</StackPanel>
 		
