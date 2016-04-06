@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"      
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:printDialog="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:printDialog="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog"        
         xmlns:behaviors="clr-namespace:bytePassion.Lib.WpfLib.Behaviors;assembly=bytePassion.Lib"
         xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Global"
         xmlns:views="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Views"
@@ -45,7 +45,7 @@
 			</Border>
 
 			<ContentControl Grid.Column="0"
-                            x:Name="controlToPrint"
+                            x:Name="ControlToPrint"
 							Grid.ColumnSpan="2">
 				
 				<ContentControl.Template>
@@ -68,8 +68,9 @@
 					Command="{Binding Cancel}"/>
 
 			<Button Width="120"					
-					Content="Print" Click="Button_Click"
-					/>
+					Content="Print"
+					Command="{Binding Print}"
+					CommandParameter="{Binding ElementName=ControlToPrint}"/>
 			
 		</StackPanel>
 		

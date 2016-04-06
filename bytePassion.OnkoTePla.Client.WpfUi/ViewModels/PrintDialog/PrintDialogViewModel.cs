@@ -27,7 +27,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog
 									Action<string> errorCallback)
 		{
 			Cancel = new Command(CloseWindow);
-			
+			Print = new ParameterrizedCommand<FrameworkElement>(DoPrint);
+
 			medicalPracticeRepository.RequestMedicalPractice(
 				practice =>
 				{					
@@ -77,8 +78,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog
 			}
 		}
 
-		private void DoPrint()
+		private static void DoPrint(FrameworkElement grid)
 		{
+			var pd = new System.Windows.Controls.PrintDialog();
+			if (pd.ShowDialog() == true)
+			{
+				pd.PrintVisual(grid, "appointments to print");
+			}
 		}
 
 		private static void CloseWindow ()
