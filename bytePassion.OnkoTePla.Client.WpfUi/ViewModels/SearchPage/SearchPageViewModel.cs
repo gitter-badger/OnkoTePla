@@ -90,7 +90,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 		}
 
 		private void DoModifyAppointment(DisplayAppointmentData appointment)
-		{						
+		{
+			viewModelCommunication.Send(new ShowPage(MainPage.Overview));
+
 			viewModelCommunication.Send(new AsureDayIsLoaded(appointment.AppointmentRawData.MedicalPracticeId, 
 															 appointment.Day, 
 															 () =>
@@ -102,9 +104,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 																	appointment.AppointmentRawData.Id,
 																	new SwitchToEditMode()	
 																 );															  
-															 }));
-			
-			viewModelCommunication.Send(new ShowPage(MainPage.Overview));
+															 }));					
 		}
 
 		private async void DoDeleteAppointment(DisplayAppointmentData appointment)
