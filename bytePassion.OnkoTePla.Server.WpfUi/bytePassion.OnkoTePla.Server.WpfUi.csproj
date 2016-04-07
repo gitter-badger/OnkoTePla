@@ -73,6 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Computations\ButtonBackgroundColor.cs" />
+    <Compile Include="Computations\ConnectionStatusBackgroundColor.cs" />
     <Compile Include="Converter\BirthdayToStringConverter.cs" />
     <Compile Include="Converter\MainPageToIntConverter.cs" />
     <Compile Include="Enums\MainPage.cs" />

@@ -75,7 +75,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 
 			if (ConnectionsPageViewModel.IsConnectionActive)
 			{
-				ConnectionsPageViewModel.IsConnectionActive = false;				
+				ConnectionsPageViewModel.DeactivateConnection.Execute(null);
 				Application.Current.Dispatcher.DelayInvoke(KillWindow, TimeSpan.FromSeconds(3));
 			}
 			else

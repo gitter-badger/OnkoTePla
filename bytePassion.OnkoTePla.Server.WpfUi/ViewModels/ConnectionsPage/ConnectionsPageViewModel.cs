@@ -8,6 +8,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.Lib.WpfLib.Commands;
+using bytePassion.Lib.WpfLib.Commands.Updater;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
@@ -19,7 +20,6 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 {
 	internal class ConnectionsPageViewModel : ViewModel, IConnectionsPageViewModel
 	{
-
 		private const string NoConnection = "- keine Verbindung momentan -";
 
 	    private readonly IDataCenter dataCenter;
@@ -27,12 +27,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 		private readonly ISharedStateReadOnly<MainPage> selectedPageVariable;
 
 		private string selectedIpAddress;
-	    private string activeConnection;
-		private bool isConnectionActive;
+	    private string activeConnection;		
 		private bool isActivationPossible;
 
 		private bool connectionActivationLocked;
 		private DispatcherTimer lockedTimer;
+		private bool isConnectionActive;
 
 		public ConnectionsPageViewModel(IDataCenter dataCenter, 
 										IConnectionService connectionService,
@@ -46,13 +46,19 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 			UpdateAvailableAddresses = new Command(UpdateAddresses);
 
+			ActivateConnection = new Command(DoActivateConnection,
+											 () => !IsConnectionActive && IsActivationPossible,
+											 new PropertyChangedCommandUpdater(this, nameof(IsConnectionActive), nameof(IsActivationPossible)));
+			DeactivateConnection = new Command(DoDeactivateConnection, 
+											   () => IsConnectionActive,
+											   new PropertyChangedCommandUpdater(this, nameof(IsConnectionActive)));
+
 			AvailableIpAddresses = new ObservableCollection<string>();
 			ConnectedClients = new ObservableCollection<ConnectedClientDisplayData>();
 
 		    UpdateAddresses();
 
-			ActiveConnection = NoConnection;
-			isConnectionActive = false;
+			ActiveConnection = NoConnection;			
 			connectionActivationLocked = false;
 		    SelectedIpAddress = AvailableIpAddresses.First();
 
@@ -60,11 +66,20 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 			connectionService.SessionTerminated += OnSessionTerminated;
 			connectionService.LoggedInUserUpdated += OnLoggedInUserUpdated;
 
+			connectionService.ConnectionStatusChanged += OnConnectionStatusChanged;
+
+			IsConnectionActive = connectionService.IsConnectionActive;
+
 			CheckIfActicationIsPossible();
 
-			if (IsActivationPossible)
-				IsConnectionActive = true; // TODO: just for testing
+			if (ActivateConnection.CanExecute(null))
+				ActivateConnection.Execute(null);	 // TODO: just for testing
 	    }
+
+		private void OnConnectionStatusChanged()
+		{
+			IsConnectionActive = connectionService.IsConnectionActive;
+		}
 
 		private void SelectedPageVariableOnStateChanged(MainPage mainPage)
 		{
@@ -105,38 +120,29 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 	    }
 
 	    public ICommand UpdateAvailableAddresses { get; }
+		public ICommand ActivateConnection       { get; }
+		public ICommand DeactivateConnection     { get; }		
 
-		public bool IsConnectionActive
+		private void DoDeactivateConnection ()
 		{
-			get { return isConnectionActive; }
-			set
+			connectionActivationLocked = true;
+			CheckIfActicationIsPossible();
+			lockedTimer = new DispatcherTimer
 			{
-				if (value != isConnectionActive)
-				{
-					if (value)
-					{
-						ActiveConnection = SelectedIpAddress;
-						connectionService.InitiateCommunication(new Address(new TcpIpProtocol(), 
-																			AddressIdentifier.GetIpAddressIdentifierFromString(SelectedIpAddress)));
-					}
-					else
-					{
-						connectionActivationLocked = true;
-						CheckIfActicationIsPossible();
-						lockedTimer = new DispatcherTimer
-						{
-							Interval = TimeSpan.FromSeconds(3),
-							IsEnabled = true
-						};
-						lockedTimer.Tick += OnLockedTimerTick;
+				Interval = TimeSpan.FromSeconds(3),
+				IsEnabled = true
+			};
+			lockedTimer.Tick += OnLockedTimerTick;
 
-						ActiveConnection = NoConnection;
-						connectionService.StopCommunication();
-					}
-				}
+			ActiveConnection = NoConnection;
+			connectionService.StopCommunication();
+		}
 
-				PropertyChanged.ChangeAndNotify(this, ref isConnectionActive, value);
-			}
+		private void DoActivateConnection ()
+		{
+			ActiveConnection = SelectedIpAddress;
+			connectionService.InitiateCommunication(new Address(new TcpIpProtocol(),
+																AddressIdentifier.GetIpAddressIdentifierFromString(SelectedIpAddress)));
 		}
 
 		private void OnLockedTimerTick(object sender, EventArgs eventArgs)
@@ -146,6 +152,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 			connectionActivationLocked = false;
 			CheckIfActicationIsPossible();
+		}
+
+		public bool IsConnectionActive
+		{
+			get { return isConnectionActive; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref isConnectionActive, value); }
 		}
 
 		public bool IsActivationPossible
@@ -179,14 +191,19 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 			IsActivationPossible = !connectionActivationLocked && 
 								   !string.IsNullOrWhiteSpace(SelectedIpAddress) &&
 								   dataCenter.GetAllUsers().Count(user => !user.IsHidden && user.ListOfAccessableMedicalPractices.Any()) > 0 &&
-								   dataCenter.GetAllMedicalPractices().Any() &&
-								   dataCenter.GetAllTherapyPlaceTypes().Any();								  
+								   dataCenter.GetAllMedicalPractices().Any();								  
 		}
 
 		protected override void CleanUp()
 		{
 			selectedPageVariable.StateChanged -= SelectedPageVariableOnStateChanged;
+
+			connectionService.NewSessionStarted       -= OnNewSessionStarted;
+			connectionService.SessionTerminated       -= OnSessionTerminated;
+			connectionService.LoggedInUserUpdated     -= OnLoggedInUserUpdated;
+			connectionService.ConnectionStatusChanged -= OnConnectionStatusChanged;
 		}
+
 		public override event PropertyChangedEventHandler PropertyChanged;
 	}
 }

@@ -19,7 +19,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 {
 	public class ConnectionService : DisposingObject, 
 								     IConnectionService
-	{		
+	{
+		public event Action ConnectionStatusChanged;
+
 		public event Action<SessionInfo> NewSessionStarted
 		{
 			add    { sessionRepository.NewSessionStarted += value; }
@@ -41,6 +43,19 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 			return sessionRepository.GetSessionInfo(id);
 		}
 
+		public bool IsConnectionActive
+		{
+			get { return isConnectionActive; }
+			private set
+			{
+				if (IsConnectionActive != value)
+				{
+					isConnectionActive = value;
+					ConnectionStatusChanged?.Invoke();
+				}
+			}
+		}
+
 		private readonly NetMQContext zmqContext;
 		private          IDataCenter dataCenter;		
 
@@ -49,8 +64,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		private			 INotificationThreadCollection notificationThreadCollection;
 
 		private UniversalResponseThread   universalResponseThread;
-				
-		
+		private bool isConnectionActive;
+
+
 		internal ConnectionService (NetMQContext zmqContext, 
 									DataCenterContainer dataCenterContainer) 								   
 		{
@@ -58,7 +74,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 			this.zmqContext = zmqContext;
 			
-			dataCenterContainer.DataCenterAvailable += OnDataCenterAvailable;			
+			dataCenterContainer.DataCenterAvailable += OnDataCenterAvailable;
+			IsConnectionActive = false;
 		}
 
 		private void OnDataCenterAvailable(DataCenterContainer dataCenterContainer, IDataCenter data)
@@ -82,6 +99,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 			universalResponseThread = new UniversalResponseThread(zmqContext, serverAddress, responseHandlerFactory);
 			new Thread(universalResponseThread.Run).Start();
+
+			IsConnectionActive = true;
 		}
 
 		
@@ -133,6 +152,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 
 			universalResponseThread?.Stop();
 			universalResponseThread = null;
+
+			IsConnectionActive = false;
 		}
 
 		public void SendEventNotification                  (DomainEvent      domainEvent)             { notificationThreadCollection?.SendNotification(new EventNotificationObject                 (domainEvent));             }

@@ -9,7 +9,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
     {
 		ICommand UpdateAvailableAddresses { get; }
 		
-		bool IsConnectionActive   { get; set; }
+		ICommand ActivateConnection   { get; }
+		ICommand DeactivateConnection { get; }
+		
+		bool IsConnectionActive   { get; }
 		bool IsActivationPossible { get; }
 
 		string SelectedIpAddress { get; set; }

@@ -386,7 +386,8 @@
 		</Grid>
 
 		<TextBlock HorizontalAlignment="Center"
-				   VerticalAlignment="Center"
+				   VerticalAlignment="Top"
+				   Margin="0,150"
 				   FontSize="25"
 				   FontFamily="{StaticResource StandardFontFamily}"
 				   Visibility="{Binding IsAnyPracticeAvailable, 

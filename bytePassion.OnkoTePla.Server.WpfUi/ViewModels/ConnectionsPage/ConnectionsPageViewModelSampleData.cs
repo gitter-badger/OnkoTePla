@@ -44,8 +44,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 	    }
 
 	    public ICommand UpdateAvailableAddresses => null;
+		public ICommand ActivateConnection       => null;
+		public ICommand DeactivateConnection     => null;
 
-	    public bool IsConnectionActive   { get; set; }
+		public bool IsConnectionActive { get; }
 		public bool IsActivationPossible { get; }
 
 		public string SelectedIpAddress { get; set; }

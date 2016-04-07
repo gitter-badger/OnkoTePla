@@ -9,17 +9,17 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 {
 	public interface IConnectionService : IDisposable
 	{
+		event Action ConnectionStatusChanged;
+
 		event Action<SessionInfo> NewSessionStarted;
 		event Action<SessionInfo> SessionTerminated;
 		event Action<SessionInfo> LoggedInUserUpdated;
 		
-
 		SessionInfo GetSessionInfo(ConnectionSessionId id);
-
+		bool IsConnectionActive { get; }
 
 		void InitiateCommunication (Address serverAddress);
 		void StopCommunication ();
-
 
 		void SendEventNotification(DomainEvent domainEvent);
 		void SendPatientAddedNotification(Patient newPatient);

@@ -7,6 +7,7 @@
              xmlns:libConverter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
              xmlns:helper="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage.Helper"
              xmlns:libComputations="clr-namespace:bytePassion.Lib.WpfLib.Computations;assembly=bytePassion.Lib"
+             xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Computations"
 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="700">
@@ -16,8 +17,8 @@
     </d:DesignData.DataContext>
 
 	<UserControl.Resources>
-		<libConverter:BoolToNullableBoolConverter x:Key="BoolToNullableBoolConverter"/>
 		<libComputations:BoolInverter x:Key="BoolInverter"/>
+		<computations:ConnectionStatusBackgroundColor x:Key="ConnectionStatusBackgroundColor"/>
 	</UserControl.Resources>
 
 	<Grid Background="White">
@@ -29,22 +30,32 @@
 			<RowDefinition/>
 		</Grid.RowDefinitions>
 
-		<CheckBox Grid.Row="0"
-				  Margin="10"
-				  Content="Verbindungen aktivieren"
-				  IsEnabled="{Binding IsActivationPossible}"
-				  IsChecked="{Binding IsConnectionActive, 
-									  Converter={StaticResource BoolToNullableBoolConverter},
-									  Mode=TwoWay,
-									  UpdateSourceTrigger=PropertyChanged}"/>
-		
-		<TextBlock Grid.Row="1" 
-				   Text="Momentan aktive Server-Addresse:"
-				   Margin="10"/>
+		<Button Grid.Row="0"
+				Width="200"
+				Margin="10,0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Center"
+				Content="Verbindung aktivieren"
+				Command="{Binding ActivateConnection}"/>
 
-		<TextBlock Grid.Row="1" 
-				   Text="{Binding ActiveConnection}"
-				   Margin="210,10,10,10"/>
+		<Button Grid.Row="0"
+				Width="200"
+				Margin="220,0,0,0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Center"
+				Content="Verbindung deaktivieren"
+				Command="{Binding DeactivateConnection}"/>
+
+		<Grid Grid.Row="1" 
+			  Background="{Binding IsConnectionActive, Converter={StaticResource ConnectionStatusBackgroundColor}}">
+
+			<TextBlock Text="Momentan aktive Server-Addresse:"
+					   Margin="10"/>
+
+			<TextBlock Text="{Binding ActiveConnection}"
+					   Margin="210,10,10,10"/>
+
+		</Grid>
 
 		<StackPanel Grid.Row="2"
 					Margin="10"
