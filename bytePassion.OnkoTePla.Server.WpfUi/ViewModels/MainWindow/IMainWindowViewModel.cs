@@ -6,6 +6,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LabelPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
@@ -31,6 +32,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         IInfrastructurePageViewModel    InfrastructurePageViewModel    { get; }
 		IHoursOfOpeningPageViewModel    HoursOfOpeningPageViewModel    { get; }
 		ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
+		ILabelPageViewModel				LabelPageViewModel			   { get; }
 		IPatientsPageViewModel			PatientsPageViewModel		   { get; }
 		IBackupPageViewModel			BackupPageViewModel			   { get; }
 		IOptionsPageViewModel           OptionsPageViewModel           { get; }

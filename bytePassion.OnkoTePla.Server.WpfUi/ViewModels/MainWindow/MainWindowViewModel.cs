@@ -13,6 +13,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LabelPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage;
@@ -36,6 +37,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
                                    IInfrastructurePageViewModel infrastructurePageViewModel,
 								   IHoursOfOpeningPageViewModel hoursOfOpeningPageViewModel,
 								   ITherapyPlaceTypesPageViewModel therapyPlaceTypesPageViewModel,
+								   ILabelPageViewModel labelPageViewModel,
 								   IPatientsPageViewModel patientsPageViewModel,
 								   IBackupPageViewModel backupPageViewModel,
 								   IOptionsPageViewModel optionsPageViewModel, 
@@ -43,6 +45,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 								   ISharedState<MainPage> selectedPageVariable)
         {
 	        this.selectedPageVariable     = selectedPageVariable;
+			LabelPageViewModel = labelPageViewModel;
 			BackupPageViewModel = backupPageViewModel;
 			
 			selectedPageVariable.StateChanged += OnSelectedPageVariableChanged;
@@ -118,6 +121,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
         public IInfrastructurePageViewModel    InfrastructurePageViewModel    { get; }
 		public IHoursOfOpeningPageViewModel    HoursOfOpeningPageViewModel    { get; }
 		public ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
+		public ILabelPageViewModel			   LabelPageViewModel			  { get; }
 		public IPatientsPageViewModel		   PatientsPageViewModel          { get; }
 		public IBackupPageViewModel			   BackupPageViewModel			  { get; }
 		public IOptionsPageViewModel           OptionsPageViewModel           { get; }

@@ -19,6 +19,7 @@ using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LabelPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage;
@@ -108,11 +109,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             var infrastructurePageViewModel    = new InfrastructurePageViewModel(dataCenter, selectedPageVariable, appointmentGenerator);
 			var hoursOfOpeningPageViewModel    = new HoursOfOpeningPageViewModel(dataCenter, selectedPageVariable);
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter, connectionService);
+			var labelPageViewModel			   = new LabelPageViewModel();
 			var patientsPageViewModel          = new PatientsPageViewModel(patientSelectorViewModel, patientRepository, selectedPatientVariable, patientNameGenerator);
 			var backupPageViewModel			   = new BackupPageViewModel(backUpService);
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel();
-
 	        
 	        var mainWindowViewModel = new MainWindowViewModel(overviewPageViewModel,
                                                               connectionsPageViewModel,
@@ -121,6 +122,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
                                                               infrastructurePageViewModel, 
 															  hoursOfOpeningPageViewModel,  
 															  therapyPlaceTypesPageViewModel,  
+															  labelPageViewModel,
 															  patientsPageViewModel,
 															  backupPageViewModel,                                                         
                                                               optionsPageViewModel,

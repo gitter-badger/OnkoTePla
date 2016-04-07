@@ -2,8 +2,8 @@
 using System.Windows.Input;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
-using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Backup;
+using Microsoft.Win32;
 
 #pragma warning disable 0067
 
@@ -11,8 +11,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 {
 	internal class BackupPageViewModel : ViewModel, IBackupPageViewModel
 	{
-		private readonly IBackupService backupService;
-		private static readonly string TestFile = GlobalConstants.BackupBasePath + "test.obf";
+		private readonly IBackupService backupService;		
 		
 		public BackupPageViewModel(IBackupService backupService)
 		{
@@ -27,7 +26,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 
 		private void DoImportData()
 		{			
-			var openFileDialog = new Microsoft.Win32.OpenFileDialog
+			var openFileDialog = new OpenFileDialog
 			{
 				DefaultExt = ".obf",
 				Filter = "OnkoTePla Backup Files (*.obf)|*.obf"
@@ -42,7 +41,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 
 		private void DoExportData ()
 		{
-			var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+			var saveFileDialog = new SaveFileDialog
 			{
 				DefaultExt = ".obf",
 				Filter = "OnkoTePla Backup Files (*.obf)|*.obf"

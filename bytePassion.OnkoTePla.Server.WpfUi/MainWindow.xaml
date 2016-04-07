@@ -40,8 +40,8 @@
             <StackPanel.Resources>
 
                 <Style BasedOn="{StaticResource MetroButton}" TargetType="Button">
-                    <Setter Property="Height" Value="40" />
-                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Height" Value="30" />
+                    <Setter Property="Margin" Value="2" />
                 </Style>
 
             </StackPanel.Resources>
@@ -53,6 +53,7 @@
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Infrastructure    }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Infrastructure}"    Content="Infrastruktur" />
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.HoursOfOpening    }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.HoursOfOpening}"    Content="Öffnungszeiten" />
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.TherapyPlaceTypes }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.TherapyPlaceTypes}" Content="TherapyPlaceTypes" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Labels            }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Labels}"            Content="Labels" />
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Patients          }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Patients}"          Content="Patients" />
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Backup            }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Backup}"            Content="Backup" />
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Options           }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Options}"           Content="Einstellungen" />
@@ -69,6 +70,7 @@
             <views:InfrastructurePage    DataContext="{Binding InfrastructurePageViewModel}"/>
 			<views:HoursOfOpeningPage    DataContext="{Binding HoursOfOpeningPageViewModel}"/>
             <views:TherapyPlaceTypesPage DataContext="{Binding TherapyPlaceTypesPageViewModel}"/>
+			<views:LabelPage			 DataContext="{Binding LabelPageViewModel}"/>
 			<views:PatientsPage          DataContext="{Binding PatientsPageViewModel}"/>
 			<views:BackupPage			 DataContext="{Binding BackupPageViewModel}"/>
             <views:OptionsPage           DataContext="{Binding OptionsPageViewModel}"/>

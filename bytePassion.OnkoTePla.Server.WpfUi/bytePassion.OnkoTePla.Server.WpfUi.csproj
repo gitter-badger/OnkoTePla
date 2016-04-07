@@ -98,6 +98,9 @@
     <Compile Include="ViewModels\InfrastructurePage\InfrastructurePageViewModel.cs" />
     <Compile Include="ViewModels\InfrastructurePage\InfrastructurePageViewModelSampleData.cs" />
     <Compile Include="ViewModels\InfrastructurePage\Helper\ColorDisplayData.cs" />
+    <Compile Include="ViewModels\LabelPage\ILabelPageViewModel.cs" />
+    <Compile Include="ViewModels\LabelPage\LabelPageViewModel.cs" />
+    <Compile Include="ViewModels\LabelPage\LabelPageViewModelSampleData.cs" />
     <Compile Include="ViewModels\LicencePage\ILicencePageViewModel.cs" />
     <Compile Include="ViewModels\LicencePage\LicencePageViewModel.cs" />
     <Compile Include="ViewModels\LicencePage\LicencePageViewModelSampleData.cs" />
@@ -140,6 +143,9 @@
     </Compile>
     <Compile Include="Views\InfrastructurePage.xaml.cs">
       <DependentUpon>InfrastructurePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LabelPage.xaml.cs">
+      <DependentUpon>LabelPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LicencePage.xaml.cs">
       <DependentUpon>LicencePage.xaml</DependentUpon>
@@ -191,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InfrastructurePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LabelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

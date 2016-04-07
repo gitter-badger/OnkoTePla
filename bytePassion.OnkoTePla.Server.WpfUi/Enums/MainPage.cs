@@ -9,6 +9,7 @@
         Infrastructure,
 		HoursOfOpening,
 		TherapyPlaceTypes,
+		Labels,
 		Patients,
 		Backup,
         Options,
