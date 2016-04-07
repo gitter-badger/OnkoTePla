@@ -83,6 +83,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore
 
 		public void LoadRepository()
 		{
+			streamPersistenceService.Clear();
 			streamPersistenceService.FillCacheInitially();
 			metaDataService.LoadRepository();	
 		}

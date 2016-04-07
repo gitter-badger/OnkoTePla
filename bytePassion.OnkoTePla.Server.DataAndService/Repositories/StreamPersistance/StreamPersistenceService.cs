@@ -124,6 +124,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamPersist
 			}						
 		}
 
+		public void Clear()
+		{
+			cachedEventStreams.Clear();
+		}
+
 		private void CreateNewEventStream(AggregateIdentifier identifier)
 		{
 			var newEventStream = new EventStream<AggregateIdentifier>(new AggregateIdentifier(identifier.Date,

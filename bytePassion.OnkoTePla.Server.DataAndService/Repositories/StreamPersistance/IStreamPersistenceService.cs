@@ -7,5 +7,6 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamPersist
         EventStream<AggregateIdentifier> GetEventStream(AggregateIdentifier identifier);
 		void FillCacheInitially();
         void PersistStreams();
+		void Clear();
     }
 }

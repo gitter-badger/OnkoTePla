@@ -15,6 +15,7 @@ using bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
@@ -82,7 +83,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 	        dataCenterContainer.DataCenter = dataCenter;
 
-	        var backUpService = new BackupService(dataCenter, connectionService);
+	        var backUpService = new BackupService(patientRepository, configRepository, eventStore, connectionService);
 
 			// ViewModel-Variables
 
@@ -108,6 +109,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			var hoursOfOpeningPageViewModel    = new HoursOfOpeningPageViewModel(dataCenter, selectedPageVariable);
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter, connectionService);
 			var patientsPageViewModel          = new PatientsPageViewModel(patientSelectorViewModel, patientRepository, selectedPatientVariable, patientNameGenerator);
+			var backupPageViewModel			   = new BackupPageViewModel(backUpService);
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel();
 
@@ -119,7 +121,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
                                                               infrastructurePageViewModel, 
 															  hoursOfOpeningPageViewModel,  
 															  therapyPlaceTypesPageViewModel,  
-															  patientsPageViewModel,                                                         
+															  patientsPageViewModel,
+															  backupPageViewModel,                                                         
                                                               optionsPageViewModel,
                                                               aboutPageViewModel,
 															  selectedPageVariable);
@@ -148,6 +151,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			if (!Directory.Exists(GlobalConstants.ServerBasePath))
 			{
 				Directory.CreateDirectory(GlobalConstants.ServerBasePath);
+				Directory.CreateDirectory(GlobalConstants.BackupBasePath);
 				Directory.CreateDirectory(GlobalConstants.EventHistoryBasePath);
 			}
 		}

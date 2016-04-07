@@ -10,6 +10,7 @@
 		HoursOfOpening,
 		TherapyPlaceTypes,
 		Patients,
+		Backup,
         Options,
         About
     }

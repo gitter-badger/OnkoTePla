@@ -23,7 +23,8 @@ namespace bytePassion.OnkoTePla.Resources
 
 		public static readonly string ClientBasePath = AppDataPath + @"\bytePassion\OnkoTePla\Client\";
 		public static readonly string ServerBasePath = AppDataPath + @"\bytePassion\OnkoTePla\Server\";
-
+		public static readonly string BackupBasePath = AppDataPath + @"\bytePassion\OnkoTePla\Backup\";
+		
 		public static readonly string PatientPersistenceFile       = ServerBasePath + @"patients.xml";		
 		public static readonly string ConfigPersistenceFile        = ServerBasePath + @"config.xml";				
 		public static readonly string MetaDataPersistanceFile      = ServerBasePath + @"metaData.xml";

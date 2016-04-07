@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
@@ -33,6 +34,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
             AboutPageViewModel             = new AboutPageViewModelSampleData();
 			TherapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModelSampleData();
 			PatientsPageViewModel		   = new PatientsPageViewModelSampleData();
+			BackupPageViewModel			   = new BackupPageViewModelSampleData();
 		}
 
         public ICommand SwitchToPage => null;
@@ -49,6 +51,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 		public IHoursOfOpeningPageViewModel    HoursOfOpeningPageViewModel    { get; }
 		public ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
 		public IPatientsPageViewModel          PatientsPageViewModel          { get; }
+		public IBackupPageViewModel			   BackupPageViewModel			  { get; }
 		public IOptionsPageViewModel           OptionsPageViewModel           { get; }
         public IAboutPageViewModel             AboutPageViewModel             { get; }
 

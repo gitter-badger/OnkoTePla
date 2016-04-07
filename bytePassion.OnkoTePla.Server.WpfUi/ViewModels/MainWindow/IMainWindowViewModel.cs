@@ -2,6 +2,7 @@
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;
+using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.HoursOfOpeningPage;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage;
@@ -31,6 +32,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.MainWindow
 		IHoursOfOpeningPageViewModel    HoursOfOpeningPageViewModel    { get; }
 		ITherapyPlaceTypesPageViewModel TherapyPlaceTypesPageViewModel { get; }
 		IPatientsPageViewModel			PatientsPageViewModel		   { get; }
+		IBackupPageViewModel			BackupPageViewModel			   { get; }
 		IOptionsPageViewModel           OptionsPageViewModel           { get; }
         IAboutPageViewModel             AboutPageViewModel             { get; }
     }

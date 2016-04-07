@@ -54,6 +54,7 @@
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.HoursOfOpening    }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.HoursOfOpening}"    Content="Öffnungszeiten" />
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.TherapyPlaceTypes }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.TherapyPlaceTypes}" Content="TherapyPlaceTypes" />
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Patients          }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Patients}"          Content="Patients" />
+			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Backup            }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Backup}"            Content="Backup" />
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.Options           }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.Options}"           Content="Einstellungen" />
 			<Button Background="{Binding SelectedPage, Converter={StaticResource BackgroundColor}, ConverterParameter={x:Static enum:MainPage.About             }}" Command="{Binding SwitchToPage}" CommandParameter="{x:Static enum:MainPage.About}"             Content="Über ..." />
 
@@ -69,6 +70,7 @@
 			<views:HoursOfOpeningPage    DataContext="{Binding HoursOfOpeningPageViewModel}"/>
             <views:TherapyPlaceTypesPage DataContext="{Binding TherapyPlaceTypesPageViewModel}"/>
 			<views:PatientsPage          DataContext="{Binding PatientsPageViewModel}"/>
+			<views:BackupPage			 DataContext="{Binding BackupPageViewModel}"/>
             <views:OptionsPage           DataContext="{Binding OptionsPageViewModel}"/>
             <views:AboutPage             DataContext="{Binding AboutPageViewModel}"/>
 
