@@ -3,6 +3,7 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.OnkoTePla.Contracts.Patients;
 using bytePassion.OnkoTePla.Resources;
+using bytePassion.OnkoTePla.Server.DataAndService.Backup;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
@@ -80,6 +81,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			var dataCenter = dataCenterBuilder.Build();
 
 	        dataCenterContainer.DataCenter = dataCenter;
+
+	        var backUpService = new BackupService(dataCenter, connectionService);
 
 			// ViewModel-Variables
 

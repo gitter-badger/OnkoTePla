@@ -1,5 +1,4 @@
-﻿using bytePassion.OnkoTePla.Server.DataAndService.Backup;
-using bytePassion.OnkoTePla.Server.DataAndService.Data;
+﻿using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
@@ -26,8 +25,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 		{
 			return new DataCenter(configRepository,
 								  patientRepository,
-								  eventStore, 
-								  new BackupService());
+								  eventStore);
 		}
 
 		public void PersistConfigRepostiory()

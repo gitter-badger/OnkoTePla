@@ -9,7 +9,6 @@ using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Server.DataAndService.Backup;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
@@ -20,18 +19,15 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 	{
 		private readonly IConfigurationRepository configRepo;		
 		private readonly IPatientRepository patientRepository;		
-		private readonly IEventStore eventStore;
-		private readonly IBackupService backupService;
+		private readonly IEventStore eventStore;		
 
 		public DataCenter(IConfigurationRepository configRepo,						 
 						  IPatientRepository patientRepository,						 
-						  IEventStore eventStore,
-						  IBackupService backupService)
+						  IEventStore eventStore)
 		{
 			this.configRepo = configRepo;			
 			this.patientRepository = patientRepository;			
-			this.eventStore = eventStore;
-			this.backupService = backupService;
+			this.eventStore = eventStore;			
 
 			practiceVersionCache = new Dictionary<Guid, IDictionary<Date, uint>>();
 		}
@@ -39,21 +35,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		public IReadOnlyList<Address> GetAllAvailableAddresses ()
 		{
 			return IpAddressCatcher.GetAllAvailableLocalIpAddresses();
-		}
-
-		#region backUp
-
-		public void ExportCurrentData(string filename)
-		{
-			backupService.Export(filename);
-		}
-
-		public void ImportDataSet(string filename)
-		{
-			backupService.Import(filename);
-		}
-
-		#endregion
+		}	
 
 		#region patients
 
