@@ -11,7 +11,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientSelector
 	internal class PatientSelectorViewModel : ViewModel, 
                                               IPatientSelectorViewModel
     {
-		private readonly IPatientReadRepository patientRepository;
+		private readonly IPatientRepository patientRepository;
 		private readonly ISharedState<Patient> selectedPatientSharedVariable;
 
         private bool listIsEmpty;
@@ -19,7 +19,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientSelector
         private Patient selectedPatient;
         private bool showDeceasedPatients;
 
-        public PatientSelectorViewModel(IPatientReadRepository patientRepository, 
+        public PatientSelectorViewModel(IPatientRepository patientRepository, 
 									    ISharedState<Patient> selectedPatientSharedVariable)
         {
 	        this.patientRepository = patientRepository;

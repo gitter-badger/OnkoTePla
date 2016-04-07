@@ -16,7 +16,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage
 {
 	internal class PatientsPageViewModel : ViewModel, IPatientsPageViewModel
 	{
-		private readonly IPatientWriteRepository patientWriteRepository;
+		private readonly IPatientRepository patientRepository;
 		private readonly ISharedStateReadOnly<Patient> selectedPatientVariable;
 		private readonly PatientNameGenerator patientNameGenerator;		
 
@@ -28,11 +28,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage
 		private Date patientBirthday;
 
 		public PatientsPageViewModel(IPatientSelectorViewModel patientSelectorViewModel,
-									 IPatientWriteRepository patientWriteRepository,
+									 IPatientRepository patientRepository,
 									 ISharedStateReadOnly<Patient> selectedPatientVariable,
 									 PatientNameGenerator patientNameGenerator)
 		{
-			this.patientWriteRepository = patientWriteRepository;
+			this.patientRepository = patientRepository;
 			this.selectedPatientVariable = selectedPatientVariable;
 			this.patientNameGenerator = patientNameGenerator;			
 			PatientSelectorViewModel = patientSelectorViewModel;
@@ -48,13 +48,13 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.PatientsPage
 			for (int i = 0; i < 1000; i++)
 			{
 				var newPatient = patientNameGenerator.NewPatient();
-				patientWriteRepository.AddPatient(newPatient.Name, 
+				patientRepository.AddPatient(newPatient.Name, 
 												  newPatient.Birthday, 
 												  newPatient.Alive, 
 												  newPatient.ExternalId);
 			}
 
-			MessageBox.Show("1 Patents was generated");
+			MessageBox.Show("1000 Patents were generated");
 		}
 
 		private void OnSelectedPatientChanged(Patient patient)

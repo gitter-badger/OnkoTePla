@@ -8,7 +8,7 @@ using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients
 {
-	public class PatientRepository : IPatientReadRepository, IPatientWriteRepository
+	public class PatientRepository : IPatientRepository
 	{
 		private readonly IPersistenceService<IEnumerable<Patient>> persistenceService;
 		private readonly IConnectionService connectionService;

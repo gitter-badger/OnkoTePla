@@ -19,12 +19,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators
 	{
 		private readonly Random rand;
 		
-		private readonly IConfigurationReadRepository configurationRepository;
-		private readonly IPatientReadRepository patientRepository;
+		private readonly IConfigurationRepository configurationRepository;
+		private readonly IPatientRepository patientRepository;
 		private readonly IEventStore eventStore;
 
-		public AppointmentGenerator(IConfigurationReadRepository configurationRepository,
-									IPatientReadRepository patientRepository,
+		public AppointmentGenerator(IConfigurationRepository configurationRepository,
+									IPatientRepository patientRepository,
 									IEventStore eventStore)
 		{
 			this.configurationRepository = configurationRepository;

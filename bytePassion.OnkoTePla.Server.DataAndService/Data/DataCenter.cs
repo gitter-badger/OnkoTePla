@@ -18,24 +18,18 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 {
 	internal class DataCenter : IDataCenter
 	{
-		private readonly IConfigurationReadRepository readConfig;
-		private readonly IConfigurationWriteRepository writeConfig;
-		private readonly IPatientReadRepository patientReadRepository;
-		private readonly IPatientWriteRepository patientWriteRepository;
+		private readonly IConfigurationRepository configRepo;		
+		private readonly IPatientRepository patientRepository;		
 		private readonly IEventStore eventStore;
 		private readonly IBackupService backupService;
 
-		public DataCenter(IConfigurationReadRepository readConfig,
-						  IConfigurationWriteRepository writeConfig,
-						  IPatientReadRepository patientReadRepository,
-						  IPatientWriteRepository patientWriteRepository,
+		public DataCenter(IConfigurationRepository configRepo,						 
+						  IPatientRepository patientRepository,						 
 						  IEventStore eventStore,
 						  IBackupService backupService)
 		{
-			this.readConfig = readConfig;
-			this.writeConfig = writeConfig;
-			this.patientReadRepository = patientReadRepository;
-			this.patientWriteRepository = patientWriteRepository;
+			this.configRepo = configRepo;			
+			this.patientRepository = patientRepository;			
 			this.eventStore = eventStore;
 			this.backupService = backupService;
 
@@ -65,7 +59,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 
 		public IEnumerable<Patient> GetAllPatients()
 		{
-			return patientReadRepository.GetAllPatients();
+			return patientRepository.GetAllPatients();
 		}
 
 		#endregion
@@ -76,7 +70,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				return readConfig.GetAllUsers();
+				return configRepo.GetAllUsers();
 			}			
 		}
 
@@ -84,7 +78,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				writeConfig.AddUser(newUser);
+				configRepo.AddUser(newUser);
 			}
 		}
 
@@ -92,7 +86,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				writeConfig.UpdateUser(updatedUser);
+				configRepo.UpdateUser(updatedUser);
 			}
 		}
 
@@ -100,7 +94,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				return readConfig.GetUserById(id);
+				return configRepo.GetUserById(id);
 			}
 		}
 
@@ -112,7 +106,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				return readConfig.GetAllTherapyPlaceTypes();
+				return configRepo.GetAllTherapyPlaceTypes();
 			}
 		}
 
@@ -120,7 +114,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				return readConfig.GetAllTherapyPlaceTypes()
+				return configRepo.GetAllTherapyPlaceTypes()
 								 .Append(TherapyPlaceType.NoType);
 			}
 		}
@@ -129,7 +123,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				writeConfig.AddTherapyPlaceType(newTherapyPlaceType);
+				configRepo.AddTherapyPlaceType(newTherapyPlaceType);
 			}
 		}
 
@@ -137,7 +131,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				writeConfig.UpdateTherapyPlaceType(updatedTherapyPlaceType);
+				configRepo.UpdateTherapyPlaceType(updatedTherapyPlaceType);
 			}
 		}
 
@@ -145,7 +139,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				return readConfig.GetTherapyPlaceTypeById(id);
+				return configRepo.GetTherapyPlaceTypeById(id);
 			}
 		}
 
@@ -157,7 +151,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				return readConfig.GetAllMedicalPractices();
+				return configRepo.GetAllMedicalPractices();
 			}
 		}
 
@@ -165,7 +159,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				writeConfig.AddMedicalPractice(newMedicalPractice);
+				configRepo.AddMedicalPractice(newMedicalPractice);
 			}
 		}
 
@@ -173,8 +167,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				writeConfig.RemoveMedicalPractice(updatedMedicalPractice.Id);
-				writeConfig.AddMedicalPractice(updatedMedicalPractice);
+				configRepo.RemoveMedicalPractice(updatedMedicalPractice.Id);
+				configRepo.AddMedicalPractice(updatedMedicalPractice);
 			}
 		}
 
@@ -182,7 +176,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				writeConfig.RemoveMedicalPractice(medicalPracticeToRemove.Id);
+				configRepo.RemoveMedicalPractice(medicalPracticeToRemove.Id);
 			}
 		}
 
@@ -190,7 +184,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				return readConfig.GetMedicalPracticeById(id);
+				return configRepo.GetMedicalPracticeById(id);
 			}
 		}
 
@@ -198,7 +192,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		{
 			lock (this)
 			{
-				return readConfig.GetMedicalPracticeByIdAndVersion(id, version);
+				return configRepo.GetMedicalPracticeByIdAndVersion(id, version);
 			}
 		}
 

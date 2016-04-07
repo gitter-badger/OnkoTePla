@@ -6,8 +6,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config
 {
-	public class ConfigurationRepository : IConfigurationReadRepository, 
-										   IConfigurationWriteRepository
+	public class ConfigurationRepository : IConfigurationRepository										   
 	{
 		private Configuration configuration;
 		private readonly IPersistenceService<Configuration> persistenceService; 

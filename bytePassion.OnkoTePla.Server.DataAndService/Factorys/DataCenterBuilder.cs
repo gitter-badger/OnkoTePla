@@ -9,23 +9,23 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Factorys
 	public class DataCenterBuilder : IDataCenterBuilder
 	{
 		
-		private readonly PatientRepository patientRepository;
-		private readonly ConfigurationRepository configRepository;
+		private readonly IPatientRepository patientRepository;
+		private readonly IConfigurationRepository configRepository;
 		private readonly IEventStore eventStore;
 
-		public DataCenterBuilder(PatientRepository patientRepository, 
-								 ConfigurationRepository configRepository,
+		public DataCenterBuilder(IPatientRepository patientRepository, 
+								 IConfigurationRepository configRepository,
 								 IEventStore eventStore)
 		{
 			this.patientRepository = patientRepository;
 			this.configRepository = configRepository;
 			this.eventStore = eventStore;
 		}
-
+		
 		public IDataCenter Build()
 		{
-			return new DataCenter(configRepository, configRepository,
-								  patientRepository, patientRepository,
+			return new DataCenter(configRepository,
+								  patientRepository,
 								  eventStore, 
 								  new BackupService());
 		}

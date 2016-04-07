@@ -6,7 +6,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config
 {
-	public interface IConfigurationReadRepository : IPersistable
+	public interface IConfigurationRepository : IPersistable
 	{		
 		/////////////////////////////////////////////////////////////////////////////////////
 		////////                          Medical practice                          /////////
@@ -16,6 +16,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config
 		MedicalPractice GetMedicalPracticeByIdAndVersion (Guid id, uint version);	/////////																				
 		IEnumerable<MedicalPractice> GetAllMedicalPractices ();						/////////
 		uint GetLatestVersionFor(Guid medicalPractiveId);							/////////
+																					/////////
+		void AddMedicalPractice   (MedicalPractice practice);						/////////
+		void RemoveMedicalPractice(Guid medicalPracticeId);							/////////
 																					/////////	
 		/////////////////////////////////////////////////////////////////////////////////////
 		
@@ -26,7 +29,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config
 		/////////////////////////////////////////////////////////////////////////////////////
 																					/////////		
 		TherapyPlaceType GetTherapyPlaceTypeById (Guid id);							/////////
-		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes ();					/////////
+		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes ();                   /////////
+																					/////////
+		void AddTherapyPlaceType   (TherapyPlaceType newTherapyPlaceType);			/////////
+		void UpdateTherapyPlaceType(TherapyPlaceType updatedTherapyPlaceType);		/////////
 																					/////////
 		/////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +43,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config
 		/////////////////////////////////////////////////////////////////////////////////////
 																					/////////
 		User GetUserById (Guid id);													/////////
-		IEnumerable<User> GetAllUsers ();											/////////
+		IEnumerable<User> GetAllUsers ();                                           /////////
+																					/////////
+		void AddUser    (User newUser);												/////////
+		void UpdateUser (User updatedUser);											/////////
 																					/////////																					
 		/////////////////////////////////////////////////////////////////////////////////////
 	}

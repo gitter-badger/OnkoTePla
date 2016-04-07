@@ -16,13 +16,13 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamPersist
         private readonly string basePath;
 		private readonly int maxCachedDays;	// TODO: implement caching
 		private readonly IXmlEventStreamPersistanceService eventStreamPersistenceService;
-		private readonly IConfigurationReadRepository config;
+		private readonly IConfigurationRepository config;
 
 
 		private readonly IDictionary<AggregateIdentifier, EventStream<AggregateIdentifier>> cachedEventStreams; 		 
 
         public StreamPersistenceService(IXmlEventStreamPersistanceService eventStreamPersistenceService, 
-									    IConfigurationReadRepository config, 
+									    IConfigurationRepository config, 
 										string basePath,
 										int maxCachedDays)
         {

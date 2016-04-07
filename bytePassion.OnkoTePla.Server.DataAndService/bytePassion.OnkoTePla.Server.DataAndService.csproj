@@ -104,14 +104,12 @@
     <Compile Include="Factorys\IDataCenterBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Config\ConfigurationRepository.cs" />
-    <Compile Include="Repositories\Config\IConfigurationReadRepository.cs" />
-    <Compile Include="Repositories\Config\IConfigurationWriteRepository.cs" />
+    <Compile Include="Repositories\Config\IConfigurationRepository.cs" />
     <Compile Include="Repositories\Config\JsonConfigurationDataStore.cs" />
     <Compile Include="Repositories\EventStore\EventStore.cs" />
     <Compile Include="Repositories\EventStore\IEventStore.cs" />
     <Compile Include="Repositories\EventStore\JsonEventStreamDataStore.cs" />
-    <Compile Include="Repositories\Patients\IPatientReadRepository.cs" />
-    <Compile Include="Repositories\Patients\IPatientWriteRepository.cs" />
+    <Compile Include="Repositories\Patients\IPatientRepository.cs" />
     <Compile Include="Repositories\Patients\JSonPatientDataStore.cs" />
     <Compile Include="Repositories\Patients\PatientRepository.cs" />
     <Compile Include="Repositories\JsonSerializationDoubles\AggregateIdentifierSerializationDouble.cs" />
