@@ -11,16 +11,49 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 {
 	internal class BackupPageViewModel : ViewModel, IBackupPageViewModel
 	{
-		private static readonly string TestFile = GlobalConstants.BackupBasePath + "test.zip";
+		private readonly IBackupService backupService;
+		private static readonly string TestFile = GlobalConstants.BackupBasePath + "test.obf";
 		
 		public BackupPageViewModel(IBackupService backupService)
 		{
-			ImportData = new Command(() => backupService.Import(TestFile));
-			ExportData = new Command(() => backupService.Export(TestFile));
-		}
-					
+			this.backupService = backupService;
+
+			ImportData = new Command(DoImportData);
+			ExportData = new Command(DoExportData);
+		}		
+
 		public ICommand ImportData { get; }
 		public ICommand ExportData { get; }
+
+		private void DoImportData()
+		{			
+			var openFileDialog = new Microsoft.Win32.OpenFileDialog
+			{
+				DefaultExt = ".obf",
+				Filter = "OnkoTePla Backup Files (*.obf)|*.obf"
+			};
+
+			var dialogResult = openFileDialog.ShowDialog();			
+			if (dialogResult == true)
+			{								
+				backupService.Import(openFileDialog.FileName);			
+			}
+		}
+
+		private void DoExportData ()
+		{
+			var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+			{
+				DefaultExt = ".obf",
+				Filter = "OnkoTePla Backup Files (*.obf)|*.obf"
+			};
+
+			var dialogResult = saveFileDialog.ShowDialog();
+			if (dialogResult == true)
+			{
+				backupService.Export(saveFileDialog.FileName);
+			}			
+		}
 
 		protected override void CleanUp () { }
 		public override event PropertyChangedEventHandler PropertyChanged;

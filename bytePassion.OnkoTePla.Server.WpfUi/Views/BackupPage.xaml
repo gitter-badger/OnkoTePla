@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"            
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="400">
 	
 	<d:DesignData.DataContext>
 		<sampleData:BackupPageViewModelSampleData/>
@@ -14,21 +14,51 @@
     <Grid Background="White">
          
 		<Grid.RowDefinitions>
-			<RowDefinition/>
+			<RowDefinition Height="50"/>
+			<RowDefinition Height="50"/>
 			<RowDefinition/>
 		</Grid.RowDefinitions>
 		
 		<Button Grid.Row="0"
-				Width="200"
-				Height="50"
-				Content="ImportTest"
+				Width="350"
+				Height="30"
+				HorizontalAlignment="Left"
+				Margin="10"
+				Content="Kompletten Datenbestand aus Backup-File laden"
 				Command="{Binding ImportData}"/>
 
 		<Button Grid.Row="1"
-				Width="200"
-				Height="50"
-				Content="ExportTest"
+				Width="350"
+				Height="30"
+				HorizontalAlignment="Left"
+				Margin="10"
+				Content="Kompletten Datenbestand in Backup-File speichern"
 				Command="{Binding ExportData}"/>
+
+		<Grid Grid.Row="2">
+			
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50"/>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+			
+			<TextBlock Grid.Row="0"
+					   Text="Regemäßige Backups"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Center"
+					   Margin="10"
+					   FontSize="20"
+					   FontFamily="{StaticResource StandardFontFamily}"/>
+			
+			<TextBlock Grid.Row="1"
+					   Text="TODO"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   FontSize="40"
+					   FontFamily="{StaticResource StandardFontFamily}"/>
+			
+		</Grid>
 
 	</Grid>
 </UserControl>
