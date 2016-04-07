@@ -68,12 +68,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 			DeleteTherapyPlace           = new Command(DoDeleteTherapyPlace);
 			GenerateAppointmentsForToday = new Command(DoGenerateAppointments);
 
-			MedicalPractices = dataCenter.GetAllMedicalPractices()
-										 .Select(practice => new MedPracticeDisplayData(practice.Name, practice.Id))
-										 .ToObservableCollection();
-			
-			Rooms         = new ObservableCollection<RoomDisplayData>();
-			TherapyPlaces = new ObservableCollection<TherapyPlaceDisplayData>();
+			MedicalPractices           = new ObservableCollection<MedPracticeDisplayData>();			
+			Rooms                      = new ObservableCollection<RoomDisplayData>();
+			TherapyPlaces              = new ObservableCollection<TherapyPlaceDisplayData>();
+			AvailableTherapyPlaceTypes = new ObservableCollection<TherapyPlaceTypeDisplayData>();
 
 			SelectedMedicalPractice = null;
 			SelectedRoom            = null;
@@ -83,13 +81,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 											 .Select(p => (Color) p.GetValue(null, null))
 											 .Select(color => new ColorDisplayData(color))
 											 .ToObservableCollection();
-
-			AvailableTherapyPlaceTypes = this.dataCenter.GetAllTherapyPlaceTypesPlusDummy()
-														.Select(placeType => new TherapyPlaceTypeDisplayData(placeType.Name, 
-																											 GetIconForTherapyPlaceType(placeType.IconType), 
-																											 placeType.Id))
-														.ToObservableCollection();
-
+			
 			selectedPageVariable.StateChanged += OnSelectedPageStateChanged;
 		}		
 
@@ -110,17 +102,6 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 		{
 			if (mainPage == MainPage.Infrastructure)
 			{
-//				if (!dataCenter.GetAllTherapyPlaceTypes().Any())
-//				{
-//					var dialog = new UserDialogBox("",
-//												   "Es muss erst ein TherapyPlatztyp angelegt werden, bevor eine Praxis angelegt werden kann",
-//												   MessageBoxButton.OK);
-//
-//					await dialog.ShowMahAppsDialog();
-//					selectedPageVariable.Value = MainPage.TherapyPlaceTypes;
-//					return;
-//				}
-
 				AvailableTherapyPlaceTypes.Clear();
 
 				dataCenter.GetAllTherapyPlaceTypesPlusDummy()
@@ -128,6 +109,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.InfrastructurePage
 																			   GetIconForTherapyPlaceType(placeType.IconType), 
 																			   placeType.Id))
 						  .Do(AvailableTherapyPlaceTypes.Add);
+
+				MedicalPractices.Clear();
+
+				dataCenter.GetAllMedicalPractices()
+						  .Select(practice => new MedPracticeDisplayData(practice.Name, practice.Id))
+						  .Do(MedicalPractices.Add);
 
 				SelectedMedicalPractice = null;
 			}
