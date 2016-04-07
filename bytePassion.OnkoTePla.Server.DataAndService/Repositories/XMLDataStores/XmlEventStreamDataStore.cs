@@ -8,7 +8,7 @@ using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Domain.Events;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 {
 	public class XmlEventStreamDataStore : IPersistenceService<IEnumerable<EventStream<AggregateIdentifier>>>
 	{

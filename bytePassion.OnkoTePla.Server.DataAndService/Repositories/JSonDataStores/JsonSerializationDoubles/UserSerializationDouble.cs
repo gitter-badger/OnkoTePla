@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using bytePassion.OnkoTePla.Contracts.Config;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JsonSerializationDoubles
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
 	public class UserSerializationDouble
 	{

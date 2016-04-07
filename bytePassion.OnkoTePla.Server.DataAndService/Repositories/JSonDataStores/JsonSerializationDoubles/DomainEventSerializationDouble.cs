@@ -3,7 +3,7 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Domain.Events;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JsonSerializationDoubles
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
 	public class DomainEventSerializationDouble
 	{

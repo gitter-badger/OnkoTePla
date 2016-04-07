@@ -3,10 +3,10 @@ using System.IO;
 using System.Linq;
 using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using bytePassion.OnkoTePla.Server.DataAndService.Repositories.JsonSerializationDoubles;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles;
 using Newtonsoft.Json;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores
 {
 	public class JSonPatientDataStore : IPersistenceService<IEnumerable<Patient>>
     {		

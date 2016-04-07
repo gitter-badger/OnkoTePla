@@ -9,7 +9,7 @@ using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 {
 	public class XmlConfigurationDataStore : IPersistenceService<Configuration>
 	{

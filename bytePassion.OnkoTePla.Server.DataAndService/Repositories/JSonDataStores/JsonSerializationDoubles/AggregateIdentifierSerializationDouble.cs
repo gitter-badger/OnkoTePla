@@ -1,7 +1,7 @@
 ﻿using System;
 using bytePassion.OnkoTePla.Contracts.Domain;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JsonSerializationDoubles
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
 	public class AggregateIdentifierSerializationDouble
 	{

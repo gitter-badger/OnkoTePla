@@ -7,7 +7,7 @@ using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Repository;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamMetaData;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 {
 	public class XmlPracticeMetaDataPersistanceService : IPersistenceService<IEnumerable<IPracticeMetaData>>
 	{

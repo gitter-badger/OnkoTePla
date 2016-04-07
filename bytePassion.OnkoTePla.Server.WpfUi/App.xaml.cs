@@ -10,7 +10,7 @@ using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamMetaData;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamPersistance;
-using bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores;
 using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage;

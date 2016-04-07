@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JsonSerializationDoubles
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
 	public class MedicalPracticeSerializationDouble
 	{

@@ -5,7 +5,7 @@ using System.Linq;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
-using bytePassion.OnkoTePla.Server.DataAndService.Repositories.XMLDataStores;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamPersistance
 {

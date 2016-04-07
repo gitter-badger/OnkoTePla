@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Media;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JsonSerializationDoubles
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
 	public class RoomSerializationDouble
 	{

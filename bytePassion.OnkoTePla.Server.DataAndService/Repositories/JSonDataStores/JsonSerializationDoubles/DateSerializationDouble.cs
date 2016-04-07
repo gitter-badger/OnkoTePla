@@ -1,6 +1,6 @@
 ﻿using bytePassion.Lib.TimeLib;
 
-namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JsonSerializationDoubles
+namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
 
 	public class DateSerializationDouble
