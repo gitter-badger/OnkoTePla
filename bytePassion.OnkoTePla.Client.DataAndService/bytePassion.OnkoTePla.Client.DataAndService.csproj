@@ -112,6 +112,8 @@
     <Compile Include="Domain\UndoRedo\UserActions\DeletedAction.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\ReplacedAction.cs" />
     <Compile Include="Domain\UndoRedo\UserActions\IUserAction.cs" />
+    <Compile Include="Repositories\LabelRepository\ClientLabelRepository.cs" />
+    <Compile Include="Repositories\LabelRepository\IClientLabelRepository.cs" />
     <Compile Include="Repositories\LocalSettings\ILocalSettingsRepository.cs" />
     <Compile Include="Repositories\LocalSettings\LocalSettingsData.cs" />
     <Compile Include="Repositories\LocalSettings\LocalSettingsRepository.cs" />
