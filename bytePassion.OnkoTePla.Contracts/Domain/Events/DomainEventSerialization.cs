@@ -22,6 +22,7 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 			sb.Append(addedEvent.StartTime);                     sb.Append("|");
 			sb.Append(addedEvent.EndTime);                       sb.Append("|");
 			sb.Append(addedEvent.TherapyPlaceId);                sb.Append("|");
+			sb.Append(addedEvent.LabelId);						 sb.Append("|");
 			sb.Append(addedEvent.AppointmentId);                 sb.Append("|");
 
 			sb.Append(addedEvent.AggregateVersion);              sb.Append("|");
@@ -48,16 +49,17 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 			var creationDataStartTime      = Time.Parse(eventParts[6]);
 			var creationDataEndTime        = Time.Parse(eventParts[7]);
 			var creationDataTherapyPlaceId = Guid.Parse(eventParts[8]);
-			var creationDataAppointmentId  = Guid.Parse(eventParts[9]);			
+			var creationDataLabelId        = Guid.Parse(eventParts[9]);
+			var creationDataAppointmentId  = Guid.Parse(eventParts[10]);			
 
-			var aggregateVersion = uint.Parse(eventParts[10]);
-			var userId           = Guid.Parse(eventParts[11]);
-			var timeStampDate    = Date.Parse(eventParts[12]);
-			var timeStampTime    = Time.Parse(eventParts[13]);
+			var aggregateVersion = uint.Parse(eventParts[11]);
+			var userId           = Guid.Parse(eventParts[12]);
+			var timeStampDate    = Date.Parse(eventParts[13]);
+			var timeStampTime    = Time.Parse(eventParts[14]);
 
 			var timeStamp = new Tuple<Date, Time>(timeStampDate, timeStampTime);
 
-			var actionTag = (ActionTag) Enum.Parse(typeof (ActionTag), eventParts[14]);
+			var actionTag = (ActionTag) Enum.Parse(typeof (ActionTag), eventParts[15]);
 
 			return new AppointmentAdded(aggregateId, aggregateVersion, userId, timeStamp, actionTag,
 										creationDataPatientId,
@@ -65,6 +67,7 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 										creationDataStartTime,
 										creationDataEndTime,										
 										creationDataTherapyPlaceId,
+										creationDataLabelId,
 										creationDataAppointmentId);
 		}
 
@@ -132,6 +135,7 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 			sb.Append(replacedEvent.NewStartTime);                  sb.Append("|");
 			sb.Append(replacedEvent.NewEndTime);                    sb.Append("|");
 			sb.Append(replacedEvent.NewTherapyPlaceId);             sb.Append("|");
+			sb.Append(replacedEvent.NewLabelId);					sb.Append("|");
 			sb.Append(replacedEvent.OriginalAppointmendId);         sb.Append("|");
 
 			sb.Append(replacedEvent.PatientId);                     sb.Append("|");
@@ -159,31 +163,32 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 			var newStartTime          = Time.Parse(eventParts[6]);
 			var newEndTime            = Time.Parse(eventParts[7]);
 			var newTherpyPlaceId      = Guid.Parse(eventParts[8]);
-			var originalAppointmentId = Guid.Parse(eventParts[9]);
+			var newLabelId            = Guid.Parse(eventParts[9]);
+			var originalAppointmentId = Guid.Parse(eventParts[10]);
 
-			var patientId        = Guid.Parse(eventParts[10]);
-			var aggregateVersion = uint.Parse(eventParts[11]);
-			var userId           = Guid.Parse(eventParts[12]);
-			var timeStampDate    = Date.Parse(eventParts[13]);
-			var timeStampTime    = Time.Parse(eventParts[14]);
+			var patientId        = Guid.Parse(eventParts[11]);
+			var aggregateVersion = uint.Parse(eventParts[12]);
+			var userId           = Guid.Parse(eventParts[13]);
+			var timeStampDate    = Date.Parse(eventParts[14]);
+			var timeStampTime    = Time.Parse(eventParts[15]);
 
 			var timeStamp = new Tuple<Date, Time>(timeStampDate, timeStampTime);
 
-			var actionTag = (ActionTag) Enum.Parse(typeof (ActionTag), eventParts[15]);
+			var actionTag = (ActionTag) Enum.Parse(typeof (ActionTag), eventParts[16]);
 
 			return new AppointmentReplaced(aggregateId, aggregateVersion, userId, patientId,
 										   timeStamp, actionTag, 
 										   newDescription, newDate, newStartTime, newEndTime, 
-										   newTherpyPlaceId, originalAppointmentId);
+										   newTherpyPlaceId, newLabelId, originalAppointmentId);
 		}
-
+		
 		public static string Serialize(DomainEvent domainEvent)
 		{
 			if (domainEvent.GetType() == typeof(AppointmentAdded))    return SerializeAppointmentAdded   ((AppointmentAdded)    domainEvent); 
 			if (domainEvent.GetType() == typeof(AppointmentDeleted))  return SerializeAppointmentDeleted ((AppointmentDeleted)  domainEvent); 
 			if (domainEvent.GetType() == typeof(AppointmentReplaced)) return SerializeAppointmentReplaced((AppointmentReplaced) domainEvent);
-
-			throw new NotImplementedException();
+			
+			throw new ArgumentException();
 		}
 
 		public static DomainEvent Deserialize(string s)

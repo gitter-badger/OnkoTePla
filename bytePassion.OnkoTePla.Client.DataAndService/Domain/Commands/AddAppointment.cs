@@ -12,7 +12,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands
 							  Guid userId, ActionTag actionTag,
 							  Guid patientId, string description, 
 							  Time startTime, Time endTime, 
-							  Guid therapyPlaceId, Guid appointmentId)
+							  Guid therapyPlaceId, Guid labelId,
+							  Guid appointmentId)
 			: base(userId, patientId, actionTag)
 		{
 			Description = description;
@@ -22,12 +23,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands
 			AppointmentId = appointmentId;			
 			AggregateId = aggregateId;
 			AggregateVersion = aggregateVersion;
+			LabelId = labelId;
 		}
 				
 		public string                Description      { get; }		
 		public Time                  StartTime        { get; }
 		public Time                  EndTime          { get; }
 		public Guid                  TherapyPlaceId   { get; }
+		public Guid					 LabelId		  { get; }
 		public Guid                  AppointmentId    { get; }
 		public AggregateIdentifier   AggregateId      { get; }
 		public uint                  AggregateVersion { get; }

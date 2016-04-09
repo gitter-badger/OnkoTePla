@@ -19,6 +19,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands
 								   Time   originalStartTime,     Time newStartTime,
 								   Time   originalEndTime,       Time newEndTime,
 								   Guid   originalTherapyPlaceId,Guid newTherapyPlaceId, 
+								   Guid   originalLabelId,       Guid newLabelId,
 								   Guid   originalAppointmendId)
 
 			: base(userId, patientId, actionTag)
@@ -32,12 +33,14 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands
 			NewStartTime = newStartTime;
 			NewEndTime = newEndTime;
 			NewTherapyPlaceId = newTherapyPlaceId;
+			NewLabelId = newLabelId;
 			OriginalAppointmendId = originalAppointmendId;
 			OriginalDate = originalDate;
 			OriginalDescription = originalDescription;
 			OriginalStartTime = originalStartTime;
 			OriginalEndTime = originalEndTime;
 			OriginalTherapyPlaceId = originalTherapyPlaceId;
+			OriginalLabelId = originalLabelId;
 		}
 
 		public AggregateIdentifier SourceAggregateId      { get; }
@@ -51,6 +54,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands
 		public Time   OriginalStartTime      { get; }
 		public Time   OriginalEndTime        { get; }
 		public Guid   OriginalTherapyPlaceId { get; }
+		public Guid   OriginalLabelId        { get; }
 		public Guid   OriginalAppointmendId  { get; }
 
 		public string NewDescription         { get; }		
@@ -58,6 +62,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Commands
 		public Time   NewStartTime           { get; }		
 		public Time   NewEndTime             { get; }		
 		public Guid   NewTherapyPlaceId      { get; }
+		public Guid   NewLabelId             { get; }
 						
 	}
 }

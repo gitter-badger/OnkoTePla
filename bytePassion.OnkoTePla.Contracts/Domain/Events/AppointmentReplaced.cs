@@ -11,8 +11,8 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 									ActionTag actionTag,
 									string newDescription, Date newDate,
 								    Time newStartTime, Time newEndTime,
-								    Guid newTherapyPlaceId,
-								    Guid originalAppointmendId)
+								    Guid newTherapyPlaceId, Guid newLabelId,
+									Guid originalAppointmendId)
 			: base(aggregateId, aggregateVersion, userId, patientId, timeStamp, actionTag)
 		{
 			NewDescription = newDescription;
@@ -21,6 +21,7 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 			NewEndTime = newEndTime;
 			NewTherapyPlaceId = newTherapyPlaceId;
 			OriginalAppointmendId = originalAppointmendId;
+			NewLabelId = newLabelId;
 		}
 
 		public string NewDescription        { get; }
@@ -28,6 +29,7 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.Events
 		public Time   NewStartTime          { get; }
 		public Time   NewEndTime            { get; }
 		public Guid   NewTherapyPlaceId     { get; }
+		public Guid   NewLabelId            { get; }
 		public Guid   OriginalAppointmendId { get; }
 	}
 }
