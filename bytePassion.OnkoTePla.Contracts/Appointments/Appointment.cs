@@ -2,6 +2,7 @@
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
@@ -13,7 +14,7 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 	public class Appointment
 	{
 		public Appointment (Patient patient, string description, TherapyPlace therapyPlace, 
-						    Date day, Time startTime, Time endTime, Guid id)
+						    Date day, Time startTime, Time endTime, Guid id, Label label)
 		{
 			Guard.ArgumentNotNull(patient);
 			Guard.ArgumentNotNull(description);
@@ -26,6 +27,7 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 			EndTime      = endTime;
 		    Description  = description;
 			Id           = id;
+			Label = label;
 		}
 		
 		public Patient      Patient      { get; }
@@ -34,7 +36,8 @@ namespace bytePassion.OnkoTePla.Contracts.Appointments
 		public Time         StartTime    { get; }
 		public Time         EndTime      { get; }
 		public TherapyPlace TherapyPlace { get; }
-		public Guid         Id           { get; }				
+		public Guid         Id           { get; }
+		public Label		Label		 { get; }				
 				
 		
 		public static bool operator ==(Appointment a1, Appointment a2) => EqualsForEqualityOperator(a1,a2);

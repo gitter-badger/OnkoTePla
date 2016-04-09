@@ -6,6 +6,8 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 {
 	public class Label
 	{
+		public static readonly Label DefaultLabel = new Label("", Colors.Transparent, Guid.Empty);
+
 		public Label(string name, Color color, Guid id)
 		{
 			Name = name;
