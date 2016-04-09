@@ -128,6 +128,15 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 						WriteUser(writer, user);
 					}
 					writer.WriteEndElement();
+
+					writer.WriteStartElement(Labels);
+					writer.WriteAttributeString(CountAttribute, config.GetAllLabels().Count().ToString());
+					foreach (var label in config.GetAllLabels())
+					{
+						WriteLabel(writer, label);
+					}
+					writer.WriteEndElement();
+					
 				writer.WriteEndElement();
 
 			writer.WriteEndDocument();
@@ -135,6 +144,16 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 		}
 
 		#region writer methods
+
+		private static void WriteLabel (XmlWriter writer, Label label)
+		{
+			writer.WriteStartElement(Label);
+			writer.WriteAttributeString(NameAttribute, label.Name);
+			writer.WriteAttributeString(ColorAttribute, label.Color.ToString());
+			writer.WriteAttributeString(IdAttribute, label.Id.ToString());
+			writer.WriteEndElement();
+		}
+
 		private static void WriteUser(XmlWriter writer, User user)
 		{
 			writer.WriteStartElement(User);
@@ -149,7 +168,6 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 				writer.WriteAttributeString(AccessablePratice + (index++), id.ToString());
 			}
 			
-
 			writer.WriteEndElement();
 		}
 		
@@ -314,7 +332,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 						while (reader.MoveToNextAttribute())
 						{
 							if (reader.Name == CountAttribute)
-								therapyPlaceTypesCount = Int32.Parse(reader.Value);
+								therapyPlaceTypesCount = int.Parse(reader.Value);
 						}
 
 						therapyPlaceTypes = AcceptTherapyPlaceTypes(reader, therapyPlaceTypesCount);						
@@ -330,7 +348,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 						while (reader.MoveToNextAttribute())
 						{
 							if (reader.Name == CountAttribute)
-								medicalPracticesCount = Int32.Parse(reader.Value);
+								medicalPracticesCount = int.Parse(reader.Value);
 						}
 
 						practices = AcceptMedicalPractices(reader, medicalPracticesCount);
@@ -346,10 +364,25 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 						while (reader.MoveToNextAttribute())
 						{
 							if (reader.Name == CountAttribute)
-								userCount = Int32.Parse(reader.Value);
+								userCount = int.Parse(reader.Value);
 						}
 
 						users = AcceptUsers(reader, userCount);						
+					}
+
+					if (reader.NodeType == XmlNodeType.Element && reader.Name == Labels)
+					{
+						if (!reader.HasAttributes) continue;
+
+						var labelCount = 0;
+
+						while (reader.MoveToNextAttribute())
+						{
+							if (reader.Name == CountAttribute)
+								labelCount = int.Parse(reader.Value);
+						}
+
+						labels = AcceptLabels(reader, labelCount);
 					}
 				}
 			}
@@ -357,7 +390,39 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 
 			return new Configuration(therapyPlaceTypes, practices, users, labels);
 		}
-		
+
+		private static IList<Label> AcceptLabels(XmlReader reader, int labelCount)
+		{
+			IList<Label> labels = new List<Label>();
+
+			var i = 0;
+			while (i < labelCount)
+			{
+				reader.Read();
+
+				if (reader.NodeType != XmlNodeType.Element || reader.Name != Label) continue;
+				i++;
+				
+				var name = string.Empty;
+				var id = new Guid();
+				var color = Colors.Transparent;
+
+				if (reader.HasAttributes)
+				{
+					while (reader.MoveToNextAttribute())
+					{
+						if (reader.Name == NameAttribute) name   = reader.Value;						
+						if (reader.Name == IdAttribute)   id     = Guid.Parse(reader.Value);
+						if (reader.Name == ColorAttribute) color = (Color)ColorConverter.ConvertFromString(reader.Value);
+					}
+				}
+
+				labels.Add(new Label(name, color, id));
+			}
+
+			return labels;
+		}
+
 		#region readerMethods
 		private IList<User> AcceptUsers(XmlReader reader, int userCount)
 		{
@@ -422,7 +487,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 
 		private static MedicalPractice AcceptMedicalPractice (XmlReader reader)
 		{
-			var name = String.Empty;
+			var name = string.Empty;
 			var version = 0u;
 			var roomCount = 0;
 			var id = new Guid();
@@ -433,10 +498,10 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 				while (reader.MoveToNextAttribute())
 				{
 					if (reader.Name == NameAttribute)                name               = reader.Value;
-					if (reader.Name == MPVersionAttribute)           version            = UInt32.Parse(reader.Value);
-					if (reader.Name == CountAttribute)               roomCount          = Int32.Parse(reader.Value);
+					if (reader.Name == MPVersionAttribute)           version            = uint.Parse(reader.Value);
+					if (reader.Name == CountAttribute)               roomCount          = int.Parse(reader.Value);
 					if (reader.Name == IdAttribute)                  id                 = Guid.Parse(reader.Value);
-					if (reader.Name == HasPreviousVersionsAttribute) hasPreviousVersion = Boolean.Parse(reader.Value);
+					if (reader.Name == HasPreviousVersionsAttribute) hasPreviousVersion = bool.Parse(reader.Value);
 				}
 			}
 
@@ -510,13 +575,13 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 							case ClosingTimeSaturdayAttribute:  closingTimeSaturday  = Time.Parse(reader.Value); break;
 							case ClosingTimeSundayAttribute:    closingTimeSunday    = Time.Parse(reader.Value); break;
 
-							case IsOpenOnMondayAttribute:    isOpenOnMonday    = Boolean.Parse(reader.Value); break;
-							case IsOpenOnTuesdayAttribute:   isOpenOnTuesday   = Boolean.Parse(reader.Value); break;
-							case IsOpenOnWednesdayAttribute: isOpenOnWednesday = Boolean.Parse(reader.Value); break;
-							case IsOpenOnThursdayAttribute:  isOpenOnThursday  = Boolean.Parse(reader.Value); break;
-							case IsOpenOnFridayAttribute:    isOpenOnFriday    = Boolean.Parse(reader.Value); break;
-							case IsOpenOnSaturdayAttribute:  isOpenOnSaturday  = Boolean.Parse(reader.Value); break;
-							case IsOpenOnSundayAttribute:    isOpenOnSunday    = Boolean.Parse(reader.Value); break;
+							case IsOpenOnMondayAttribute:    isOpenOnMonday    = bool.Parse(reader.Value); break;
+							case IsOpenOnTuesdayAttribute:   isOpenOnTuesday   = bool.Parse(reader.Value); break;
+							case IsOpenOnWednesdayAttribute: isOpenOnWednesday = bool.Parse(reader.Value); break;
+							case IsOpenOnThursdayAttribute:  isOpenOnThursday  = bool.Parse(reader.Value); break;
+							case IsOpenOnFridayAttribute:    isOpenOnFriday    = bool.Parse(reader.Value); break;
+							case IsOpenOnSaturdayAttribute:  isOpenOnSaturday  = bool.Parse(reader.Value); break;
+							case IsOpenOnSundayAttribute:    isOpenOnSunday    = bool.Parse(reader.Value); break;
 						}
 					}
 				}
@@ -547,7 +612,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 
 				if (reader.HasAttributes)				
 					while (reader.MoveToNextAttribute())					
-						if (reader.Name == CountAttribute) dayCount = Int32.Parse(reader.Value);						
+						if (reader.Name == CountAttribute) dayCount = int.Parse(reader.Value);						
 									
 				return AcceptDayList(reader, dayCount);
 			}
@@ -564,7 +629,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 
 				if (reader.HasAttributes)
 					while (reader.MoveToNextAttribute())
-						if (reader.Name == CountAttribute) dayCount = Int32.Parse(reader.Value);
+						if (reader.Name == CountAttribute) dayCount = int.Parse(reader.Value);
 
 				return AcceptDayList(reader, dayCount);
 			}
@@ -607,7 +672,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 				i++;
 				
 				var id = new Guid();
-				var name = String.Empty;
+				var name = string.Empty;
 				var placeCount = 0;
 				var color = new Color();
 
@@ -616,7 +681,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 					while (reader.MoveToNextAttribute())
 					{
 						if (reader.Name == IdAttribute)    id         = Guid.Parse(reader.Value);
-						if (reader.Name == CountAttribute) placeCount = Int32.Parse(reader.Value);
+						if (reader.Name == CountAttribute) placeCount = int.Parse(reader.Value);
 						if (reader.Name == NameAttribute)  name       = reader.Value;
 						if (reader.Name == ColorAttribute) color      = (Color)ColorConverter.ConvertFromString(reader.Value);
 					}
@@ -643,7 +708,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 
 				var id = new Guid();
 				var typeId = new Guid();
-				var name = String.Empty;
+				var name = string.Empty;
 
 				if (reader.HasAttributes)
 				{
@@ -675,7 +740,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 				if (reader.NodeType != XmlNodeType.Element || reader.Name != TherapyPlaceType) continue;
 				i++;
 
-				var name     = String.Empty;
+				var name     = string.Empty;
 				var iconType = TherapyPlaceTypeIcon.BedType1;
 				var id = new Guid();
 
