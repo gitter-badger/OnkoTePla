@@ -47,6 +47,8 @@
     <Compile Include="Appointments\AppointmentTransferData.cs" />
     <Compile Include="Config\ClientUserData.cs" />
     <Compile Include="Config\Configuration.cs" />
+    <Compile Include="Config\Label.cs" />
+    <Compile Include="Config\LabelCreateAndUpdateLogic.cs" />
     <Compile Include="Config\User.cs" />
     <Compile Include="Config\UserCreateAndUpdateLogic.cs" />
     <Compile Include="Domain\AggregateIdentifier.cs" />
