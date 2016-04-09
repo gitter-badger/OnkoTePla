@@ -10,6 +10,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSystem;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserActionFactory;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
@@ -51,7 +52,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			var clientMedicalPracticeRepository  = new ClientMedicalPracticeRepository(connectionService);
 			var clientPatientRepository          = new ClientPatientRepository(connectionService);
 			var clienttherapyPlaceTypeRepository = new ClientTherapyPlaceTypeRepository(connectionService);
-			var clientReadmodelRepository        = new ClientReadModelRepository(eventBus, clientPatientRepository,clientMedicalPracticeRepository, connectionService);
+			var clientLabelRepository			 = new ClientLabelRepository(connectionService);
+			var clientReadmodelRepository        = new ClientReadModelRepository(eventBus, clientPatientRepository, clientMedicalPracticeRepository, clientLabelRepository, connectionService);
 
 
 			var workFlow = new ClientWorkflow();

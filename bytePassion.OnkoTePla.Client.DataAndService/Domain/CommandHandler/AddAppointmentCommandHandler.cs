@@ -53,6 +53,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandHandler
 												  command.StartTime,
 												  command.EndTime,
 												  command.TherapyPlaceId,
+												  command.LabelId,
 												  command.AppointmentId);
 
 			connectionService.TryAddEvents(

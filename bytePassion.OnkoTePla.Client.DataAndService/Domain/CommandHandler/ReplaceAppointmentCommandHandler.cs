@@ -63,6 +63,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandHandler
 													  command.NewStartTime,
 													  command.NewEndTime,
 													  command.NewTherapyPlaceId,
+													  command.NewLabelId,
 													  command.OriginalAppointmendId));				
 			}
 			else
@@ -85,9 +86,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandHandler
 												   command.NewStartTime, 
 												   command.NewEndTime, 
 												   command.NewTherapyPlaceId, 
+												   command.NewLabelId,
 												   command.OriginalAppointmendId));				
 			}
-
+			
 			connectionService.TryAddEvents(
 				addingWasSuccesscful =>
 				{

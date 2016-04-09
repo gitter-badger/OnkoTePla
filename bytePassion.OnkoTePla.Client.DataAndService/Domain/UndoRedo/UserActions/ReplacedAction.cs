@@ -45,6 +45,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserAction
 												 replaceAppointmentCommand.OriginalEndTime,
 												 replaceAppointmentCommand.NewTherapyPlaceId,
 												 replaceAppointmentCommand.OriginalTherapyPlaceId,
+												 replaceAppointmentCommand.NewLabelId,
+												 replaceAppointmentCommand.OriginalLabelId,
 												 replaceAppointmentCommand.OriginalAppointmendId,
 												 ActionTag.UndoAction, 
 												 errorCallback);
@@ -66,6 +68,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.UndoRedo.UserAction
 												 replaceAppointmentCommand.NewEndTime,
 												 replaceAppointmentCommand.OriginalTherapyPlaceId,
 												 replaceAppointmentCommand.NewTherapyPlaceId,
+												 replaceAppointmentCommand.OriginalLabelId,
+												 replaceAppointmentCommand.NewLabelId,
 												 replaceAppointmentCommand.OriginalAppointmendId,
 												 ActionTag.RedoAction, 
 												 errorCallback);

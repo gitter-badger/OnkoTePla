@@ -21,8 +21,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic
 
 		public void AddAppointment (Guid patientId, string description,
 									Time startTime, Time endTime, Date day, 
-									Guid therapyPlaceId, Guid appointmentId,
-									Guid medicalPracticeId)
+									Guid therapyPlaceId, Guid labelId, 
+									Guid appointmentId, Guid medicalPracticeId)
 		{
 			var newAppointment = new AppointmentTransferData(patientId,
 															 description,							
@@ -31,7 +31,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic
 															 endTime,
 															 therapyPlaceId,
 															 appointmentId,
-															 medicalPracticeId);
+															 medicalPracticeId,
+															 labelId);
 			
 			ObservableAppointments.AddAppointment(newAppointment);				
 		}
@@ -43,12 +44,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic
 
 		public void ReplaceAppointment (string newDescription, Date newDate,
 									    Time newStartTime, Time newEndTime,
-									    Guid newTherapyPlaceId,
+									    Guid newTherapyPlaceId, Guid newLabelId,
 									    Guid originalAppointmendId)
 		{
 			var appointmentToBeUpdated = ObservableAppointments.GetAppointmentById(originalAppointmendId);
 			
-
 			var updatedAppointment = new AppointmentTransferData(appointmentToBeUpdated.PatientId,
 																 newDescription,																 
 																 newDate,
@@ -56,8 +56,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic
 																 newEndTime,
 																 newTherapyPlaceId,
 																 originalAppointmendId,
-																 appointmentToBeUpdated.MedicalPracticeId);
-
+																 appointmentToBeUpdated.MedicalPracticeId,
+																 newLabelId);
+			
 			ObservableAppointments.ReplaceAppointment(updatedAppointment);
 		}
 	}

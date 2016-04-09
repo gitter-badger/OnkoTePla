@@ -36,7 +36,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 										 AggregateIdentifier aggregateId,
 										 Guid patientId, string description,
 										 Time startTime, Time endTime,
-										 Guid therapyPlaceId, Guid appointmentId,
+										 Guid therapyPlaceId, Guid labelId, 
+										 Guid appointmentId,
 										 ActionTag actionTag,
 										 Action<string> errorCallback)
 		{
@@ -68,6 +69,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																	  startTime, 
 																	  endTime, 
 																	  therapyPlaceId,
+																	  labelId,
 																	  appointmentId));
 
 
@@ -105,6 +107,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 										  Time   originalStartTime,     Time newStartTime,
 										  Time   originalEndTime,       Time newEndTime,
 										  Guid   originalTherapyPlaceId,Guid newTherapyPlaceId,
+										  Guid   originalLabelId,       Guid newLabelId,
 										  Guid   originalAppointmendId,
 										  ActionTag actionTag, 
 										  Action<string> errorCallback)
@@ -117,6 +120,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 											   originalStartTime, newStartTime,
 											   originalEndTime, newEndTime,
 											   originalTherapyPlaceId, newTherapyPlaceId,
+											   originalLabelId, newLabelId,
 											   originalAppointmendId,
 											   actionTag, errorCallback);
 			else
@@ -128,7 +132,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 											     originalStartTime, newStartTime,
 											     originalEndTime, newEndTime,
 											     originalTherapyPlaceId, newTherapyPlaceId,
-											     originalAppointmendId,
+												 originalLabelId, newLabelId,
+												 originalAppointmendId,
 												 actionTag, errorCallback);
 			}			
 		}		
@@ -140,6 +145,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 													Time   originalStartTime,      Time newStartTime,
 													Time   originalEndTime,        Time newEndTime,
 													Guid   originalTherapyPlaceId, Guid newTherapyPlaceId,
+													Guid   originalLabelId,         Guid newLabelId,
 													Guid   originalAppointmendId,
 													ActionTag actionTag,
 													Action<string> errorCallback)
@@ -181,6 +187,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																		  newEndTime,
 																		  originalTherapyPlaceId,
 																		  newTherapyPlaceId,
+																		  originalLabelId,
+																		  newLabelId,
 																		  originalAppointmendId));
 
 							ReleaseAllLocks(errorCallback);
@@ -204,6 +212,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 													  Time originalStartTime, Time newStartTime,
 													  Time originalEndTime, Time newEndTime,
 													  Guid originalTherapyPlaceId, Guid newTherapyPlaceId,
+													  Guid originalLabelId, Guid newLabelId,
 													  Guid originalAppointmendId,
 													  ActionTag actionTag,
 													  Action<string> errorCallback)
@@ -259,6 +268,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																						  newEndTime,
 																						  originalTherapyPlaceId,
 																						  newTherapyPlaceId,
+																						  originalLabelId,
+																						  newLabelId,
 																						  originalAppointmendId));
 
 											ReleaseAllLocks(errorCallback);
@@ -295,11 +306,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 				   AddingIsPossible(newTherapyplaceId, originalAppointmentId, newBeginTime, newEndTime, destinationAppointmentSet);
 		}
 
-
+		
 		public void TryDeleteAppointment (Action<bool> operationResultCallback, 
 										  AggregateIdentifier location, Guid patientId, Guid removedAppointmentId,
 										  string removedAppointmentDescription, Time removedAppointmentStartTime, Time removedAppointmentEndTime,
-										  Guid removedAppointmentTherapyPlaceId, ActionTag actionTag, Action<string> errorCallback)
+										  Guid removedAppointmentTherapyPlaceId, Guid removedAppointmentLabelId, ActionTag actionTag, Action<string> errorCallback)
 		{
 			RequestLock(
 				successfulLocked =>
@@ -330,7 +341,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 																		 removedAppointmentDescription,
 																		 removedAppointmentStartTime,
 																		 removedAppointmentEndTime,
-																		 removedAppointmentTherapyPlaceId));
+																		 removedAppointmentTherapyPlaceId, 
+																		 removedAppointmentLabelId));
 							ReleaseAllLocks(errorCallback);
 							operationResultCallback(true);
 						},

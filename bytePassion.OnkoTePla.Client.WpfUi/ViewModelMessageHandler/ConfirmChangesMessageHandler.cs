@@ -67,6 +67,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 					currentAppointmentModification.BeginTime,
 					currentAppointmentModification.EndTime,
 					currentAppointmentModification.CurrentLocation.TherapyPlaceId,
+					currentAppointmentModification.Label.Id,
 					Guid.NewGuid(),
 					ActionTag.RegularAction,
 					errorCallback
@@ -124,6 +125,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 					currentAppointmentModification.EndTime,
 					currentAppointmentModification.InitialLocation.TherapyPlaceId,
 					currentAppointmentModification.CurrentLocation.TherapyPlaceId,
+					currentAppointmentModification.OriginalAppointment.Label.Id,
+					currentAppointmentModification.Label.Id,
 					currentAppointmentModification.OriginalAppointment.Id,													 
 					ActionTag.RegularAction, 
 					errorCallback

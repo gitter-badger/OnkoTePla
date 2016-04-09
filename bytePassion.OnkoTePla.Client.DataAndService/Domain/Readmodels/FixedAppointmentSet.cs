@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Domain;
@@ -22,6 +23,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 
 		public FixedAppointmentSet (ClientMedicalPracticeData medicalPractice,
 									IClientPatientRepository patientsRepository,
+									IClientLabelRepository labelRepository,
 									IEnumerable<AppointmentTransferData> initialAppointmentData,
 									uint aggregateVersion,
 									AggregateIdentifier identifier,
@@ -30,7 +32,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 			AggregateVersion = aggregateVersion;
 			Identifier = identifier;
 
-			var appointmentSet = new AppointmentSet(patientsRepository, initialAppointmentData,
+			var appointmentSet = new AppointmentSet(patientsRepository, labelRepository, initialAppointmentData,
 													medicalPractice, errorCallback);
 			Appointments = appointmentSet.AppointmentList;
 		}

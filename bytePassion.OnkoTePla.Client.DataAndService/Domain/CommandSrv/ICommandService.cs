@@ -9,7 +9,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 	{
 		void TryAddNewAppointment(Action<bool> operationResultCallback, 
 								  AggregateIdentifier location, Guid patientId, string description, Time startTime, 
-								  Time endTime, Guid therapyPlaceId, Guid appointmentId, ActionTag actionTag,
+								  Time endTime, Guid therapyPlaceId, Guid labelId, Guid appointmentId, ActionTag actionTag,
 								  Action<string> errorCallback);
 
 		
@@ -21,6 +21,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 								   Time   originalStartTime,     Time newStartTime,
 								   Time   originalEndTime,       Time newEndTime,
 								   Guid   originalTherapyPlaceId,Guid newTherapyPlaceId,
+								   Guid   originalLabelId,       Guid newLabelId,
 								   Guid   originalAppointmendId,
 								   ActionTag actionTag,
 								   Action<string> errorCallback);
@@ -29,7 +30,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv
 								  AggregateIdentifier location, Guid patientId,
 								  Guid removedAppointmentId, string removedAppointmentDescription,
 								  Time removedAppointmentStartTime, Time removedAppointmentEndTime,
-								  Guid removedAppointmentTherapyPlaceId,
+								  Guid removedAppointmentTherapyPlaceId,Guid removedAppointmentLabelId,
 								  ActionTag actionTag, Action<string> errorCallback);
 	}
 }

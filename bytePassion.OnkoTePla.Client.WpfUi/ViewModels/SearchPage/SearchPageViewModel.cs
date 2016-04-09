@@ -133,6 +133,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.SearchPage
 							appointment.AppointmentRawData.StartTime,
 							appointment.AppointmentRawData.EndTime,
 							appointment.AppointmentRawData.TherapyPlaceId,
+							appointment.AppointmentRawData.LabelId,
 							ActionTag.RegularAction,
 							errorCallBack);
 					},

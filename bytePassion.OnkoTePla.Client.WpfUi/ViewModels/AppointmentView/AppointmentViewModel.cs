@@ -122,6 +122,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 								appointment.StartTime,
 								appointment.EndTime,
 								appointment.TherapyPlace.Id,
+								appointment.Label.Id,
 								ActionTag.RegularAction,
 								errorCallback
 							);

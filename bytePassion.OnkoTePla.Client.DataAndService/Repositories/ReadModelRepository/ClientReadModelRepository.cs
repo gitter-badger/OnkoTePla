@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using bytePassion.OnkoTePla.Client.DataAndService.Connection;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
 using bytePassion.OnkoTePla.Contracts.Domain;
@@ -16,19 +17,22 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 		private readonly IClientEventBus eventBus;		
 		private readonly IClientPatientRepository patientsRepository;
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
+		private readonly IClientLabelRepository labelRepository;
 		private readonly IConnectionService connectionService;
 		 
 		private readonly IDictionary<AggregateIdentifier, AppointmentsOfADayReadModel>     cachedDayReadmodels;
 		private readonly IDictionary<Guid,                AppointmentsOfAPatientReadModel> cachedPatientReadmodel; 
 		 
 		public ClientReadModelRepository (IClientEventBus eventBus,										    
-										    IClientPatientRepository patientsRepository,
-											IClientMedicalPracticeRepository medicalPracticeRepository,
-										    IConnectionService connectionService)
+										  IClientPatientRepository patientsRepository,
+										  IClientMedicalPracticeRepository medicalPracticeRepository,
+										  IClientLabelRepository labelRepository,
+										  IConnectionService connectionService)
 		{
 			this.eventBus = eventBus;			
 			this.patientsRepository = patientsRepository;
 			this.medicalPracticeRepository = medicalPracticeRepository;
+			this.labelRepository = labelRepository;
 			this.connectionService = connectionService;
 
 			cachedDayReadmodels    = new ConcurrentDictionary<AggregateIdentifier, AppointmentsOfADayReadModel>();
@@ -53,6 +57,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 						{
 							var newReadModel = new AppointmentsOfADayReadModel(eventBus,
 																			   patientsRepository,
+																			   labelRepository,
 																			   practice,
 																			   appointments,
 																			   aggregateId,
@@ -94,12 +99,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 						practice =>
 						{
 							var newReadModel = new AppointmentsOfADayReadModel(eventBus,
-																				patientsRepository,
-																				practice,
-																				appointments,
-																				aggregateId,
-																				aggregateVersion,
-																				errorCallback);
+																			   patientsRepository,
+																			   labelRepository,
+																			   practice,
+																			   appointments,
+																			   aggregateId,
+																			   aggregateVersion,
+																			   errorCallback);
 							if (!cachedDayReadmodels.ContainsKey(aggregateId))
 								cachedDayReadmodels.Add(aggregateId, newReadModel);
 
@@ -134,6 +140,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 						{
 							var newReadModel = new AppointmentsOfADayReadModel(eventBus,
 																			   patientsRepository,
+																			   labelRepository,
 																			   practice,
 																			   appointments,
 																			   aggregateId,
@@ -169,8 +176,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepo
 				{
 					var newReadModel = new AppointmentsOfAPatientReadModel(patientId, 
 																		  eventBus, 
-																		  apointments,
-																		  patientsRepository);
+																		  apointments);
 
 					if (!cachedPatientReadmodel.ContainsKey(patientId))
 						cachedPatientReadmodel.Add(patientId, newReadModel);

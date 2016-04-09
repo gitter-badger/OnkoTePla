@@ -5,7 +5,6 @@ using bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Base;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Notification;
-using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Domain.Events;
@@ -23,11 +22,10 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 		}
 					
 		private readonly RawAppointmentSet appointmentSet;		
-
+		
 		public AppointmentsOfAPatientReadModel (Guid patientId,
 												IClientEventBus eventBus,
-												IEnumerable<AppointmentTransferData> initialAppointmentData,
-												IClientPatientRepository patientsRepository) 
+												IEnumerable<AppointmentTransferData> initialAppointmentData) 
 			: base(eventBus)
 		{
 			this.patientId = patientId;
@@ -56,7 +54,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 										  domainEvent.StartTime, 
 										  domainEvent.EndTime, 
 										  domainEvent.AggregateId.Date, 
-										  domainEvent.TherapyPlaceId, 
+										  domainEvent.TherapyPlaceId,
+										  domainEvent.LabelId, 
 										  domainEvent.AppointmentId,
 										  domainEvent.AggregateId.MedicalPracticeId);						
 		}
@@ -70,6 +69,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 											  domainEvent.NewStartTime,
 											  domainEvent.NewEndTime,
 											  domainEvent.NewTherapyPlaceId,
+											  domainEvent.NewLabelId,
 											  domainEvent.OriginalAppointmendId);
 		}
 		 

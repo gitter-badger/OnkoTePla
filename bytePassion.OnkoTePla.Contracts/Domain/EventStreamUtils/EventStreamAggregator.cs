@@ -117,7 +117,8 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.EventStreamUtils
 															addedEvent.EndTime,
 															addedEvent.TherapyPlaceId,
 															addedEvent.AppointmentId,
-															addedEvent.AggregateId.MedicalPracticeId));
+															addedEvent.AggregateId.MedicalPracticeId,
+															addedEvent.LabelId));
 			
 		}
 		
@@ -133,7 +134,8 @@ namespace bytePassion.OnkoTePla.Contracts.Domain.EventStreamUtils
 															replacedEvent.NewEndTime,
 															replacedEvent.NewTherapyPlaceId,
 															originalAppointment.Id,
-															originalAppointment.MedicalPracticeId));			
+															originalAppointment.MedicalPracticeId,
+															replacedEvent.NewLabelId));			
 		}
 		
 		private void HandleDeletedEvent(AppointmentDeleted deletedEvent)

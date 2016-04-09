@@ -5,6 +5,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Domain.AppointmentLogic;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.EventBus;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Base;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels.Notification;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
 using bytePassion.OnkoTePla.Contracts.Appointments;
 using bytePassion.OnkoTePla.Contracts.Domain;
@@ -28,6 +29,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 		
 		public AppointmentsOfADayReadModel (IClientEventBus eventBus,
 										    IClientPatientRepository patientsRepository,
+											IClientLabelRepository labelRepository,
 											ClientMedicalPracticeData medicalPractice, 								            
 											IEnumerable<AppointmentTransferData> initialAppointmentData,
 											AggregateIdentifier identifier,
@@ -42,8 +44,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 
 			var initialAppointmentList = initialAppointmentData.ToList();
 			
-			appointmentSet = new AppointmentSet(patientsRepository, initialAppointmentList, 
-												medicalPractice, errorCallback);			
+			appointmentSet = new AppointmentSet(patientsRepository, labelRepository, 
+												initialAppointmentList, medicalPractice, 
+												errorCallback);			
 		}		
 
 		public uint AggregateVersion { private set; get; }
@@ -68,6 +71,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 										  domainEvent.AggregateId.Date, 
 										  domainEvent.TherapyPlaceId,
 										  domainEvent.AppointmentId, 
+										  domainEvent.LabelId,
 										  errorCallback);	
 
 			AggregateVersion = domainEvent.AggregateVersion + 1;
@@ -85,7 +89,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Domain.Readmodels
 											  domainEvent.NewStartTime,
 											  domainEvent.NewEndTime,
 											  domainEvent.NewTherapyPlaceId,
-											  domainEvent.OriginalAppointmendId);
+											  domainEvent.NewLabelId,
+											  domainEvent.OriginalAppointmendId, 
+											  errorCallback);
 
 			AggregateVersion = domainEvent.AggregateVersion + 1;
 		}

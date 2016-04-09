@@ -14,6 +14,7 @@ using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelReposito
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using Duration = bytePassion.Lib.TimeLib.Duration;
@@ -29,7 +30,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 		{
 			public ModificationDataSet(Time beginTime, 
 									   Time endTime, 
-									   string description, 
+									   string description,
+									   Label label,
 									   TherapyPlaceRowIdentifier location, 
 									   bool slotRecomputationRequired)
 			{
@@ -38,14 +40,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 				Description = description;
 				Location = location;
 				SlotRecomputationRequired = slotRecomputationRequired;
+				Label = label;
 			}
-
+			
 			public Time BeginTime { get; }
 			public Time EndTime { get; }
 
 			public bool SlotRecomputationRequired { get; }
 
 			public string Description { get; }
+			public Label Label { get; }
 			public TherapyPlaceRowIdentifier Location { get; }
 		}
 		
@@ -74,6 +78,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 		private Width currentGridWidth;				
 		private TherapyPlaceRowIdentifier currentLocation;
 		private string description;
+		private Label label;
 
 		public AppointmentModifications(Appointment originalAppointment,										
 										Guid medicalPracticeId,
@@ -119,6 +124,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 			var initialDataSet = new ModificationDataSet(originalAppointment.StartTime,
 													     originalAppointment.EndTime,
 														 originalAppointment.Description,
+														 originalAppointment.Label,
 														 InitialLocation,
 														 true);
 
@@ -165,6 +171,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 		private void ApplyModificationDataset(ModificationDataSet dataSet)
 		{
 			Description = dataSet.Description;
+			Label = dataSet.Label;
 
 			BeginTime = dataSet.BeginTime;
 			EndTime = dataSet.EndTime;
@@ -317,6 +324,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 			private set { PropertyChanged.ChangeAndNotify(this, ref description, value); }
 		}
 
+		public Label Label
+		{
+			get { return label; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref label, value); }
+		}
+
 		#endregion
 
 		#region set and fix new values of location / time shift / begin / end / description
@@ -334,6 +347,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               finalEndTime,
 				                                               versions.CurrentVersion.Description,
+															   versions.CurrentVersion.Label,
 				                                               newLocation,
 															   true));
 			}
@@ -381,6 +395,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               finalEndTime,
 				                                               versions.CurrentVersion.Description,
+															   versions.CurrentVersion.Label,
 				                                               versions.CurrentVersion.Location,
 															   false));
 			}
@@ -411,6 +426,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 				versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
 				                                               finalEndTime,
 				                                               versions.CurrentVersion.Description,
+															   versions.CurrentVersion.Label,
 				                                               versions.CurrentVersion.Location,
 															   false));
 			}
@@ -440,6 +456,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 				versions.AddnewVersion(new ModificationDataSet(finalBeginTime,
 				                                               versions.CurrentVersion.EndTime,
 				                                               versions.CurrentVersion.Description,
+															   versions.CurrentVersion.Label,
 				                                               versions.CurrentVersion.Location,
 															   false));
 			}
@@ -456,6 +473,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 				versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
 															   versions.CurrentVersion.EndTime,
 															   newDescription,
+															   versions.CurrentVersion.Label,
+															   versions.CurrentVersion.Location,
+															   false));
+			}
+		}
+
+		public void SetNewLabel(Label newLabel)
+		{
+			if (newLabel != Label)
+			{
+				versions.AddnewVersion(new ModificationDataSet(versions.CurrentVersion.BeginTime,
+															   versions.CurrentVersion.EndTime,
+															   versions.CurrentVersion.Description,
+															   newLabel,
 															   versions.CurrentVersion.Location,
 															   false));
 			}
@@ -556,18 +587,19 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView.Helper
 						fixedAppointmentSet =>
 						{							
 							var appointmentWithCorrectStartAndEnd = new Appointment(OriginalAppointment.Patient,
-																	OriginalAppointment.Description,
-																	OriginalAppointment.TherapyPlace,
-																	OriginalAppointment.Day,
-																	BeginTime,
-																	EndTime,
-																	OriginalAppointment.Id);
+																					OriginalAppointment.Description,
+																					OriginalAppointment.TherapyPlace,
+																					OriginalAppointment.Day,
+																					BeginTime,
+																					EndTime,
+																					OriginalAppointment.Id,
+																					OriginalAppointment.Label);
 
 							var appointmentsWithinTheSameRow = fixedAppointmentSet.Appointments
-															   .Where(appointment => appointment.TherapyPlace.Id == CurrentLocation.TherapyPlaceId)
-															   .Where(appointment => appointment.Id != OriginalAppointment.Id)
-															   .Append(appointmentWithCorrectStartAndEnd)
-															   .ToList();							
+																				  .Where(appointment => appointment.TherapyPlace.Id == CurrentLocation.TherapyPlaceId)
+																				  .Where(appointment => appointment.Id != OriginalAppointment.Id)
+																				  .Append(appointmentWithCorrectStartAndEnd)
+																				  .ToList();							
 
 							appointmentsWithinTheSameRow.Sort((appointment, appointment1) => appointment.StartTime.CompareTo(appointment1.StartTime));
 							var indexOfThisAppointment = appointmentsWithinTheSameRow.IndexOf(appointmentWithCorrectStartAndEnd);
