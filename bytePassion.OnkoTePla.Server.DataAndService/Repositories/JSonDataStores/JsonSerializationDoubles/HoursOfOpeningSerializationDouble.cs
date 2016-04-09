@@ -4,7 +4,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
-	public class HoursOfOpeningSerializationDouble
+	internal class HoursOfOpeningSerializationDouble
 	{
 		public HoursOfOpeningSerializationDouble()
 		{			

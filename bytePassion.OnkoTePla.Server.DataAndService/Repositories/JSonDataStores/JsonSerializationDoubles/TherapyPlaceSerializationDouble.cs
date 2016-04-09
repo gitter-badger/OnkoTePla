@@ -3,7 +3,7 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
-	public class TherapyPlaceSerializationDouble
+	internal class TherapyPlaceSerializationDouble
 	{
 		public TherapyPlaceSerializationDouble()
 		{			

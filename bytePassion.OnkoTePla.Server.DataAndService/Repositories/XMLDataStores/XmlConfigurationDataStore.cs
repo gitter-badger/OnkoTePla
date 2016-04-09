@@ -50,6 +50,9 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 
 		private const string Users = "users";
 		private const string User  = "user";
+
+		private const string Labels = "labels";
+		private const string Label = "label";
 		
 		private const string Room                 = "room";
 		private const string TherapyPlace         = "therapyPlace";
@@ -282,12 +285,16 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 		{
 			if (!File.Exists(filename))
 			{
-				return new Configuration(new List<TherapyPlaceType>(), new List<MedicalPractice>(), new List<User>());
+				return new Configuration(new List<TherapyPlaceType>(), 
+										 new List<MedicalPractice>(), 
+										 new List<User>(),
+										 new List<Label>());
 			}
 
 			IEnumerable<TherapyPlaceType> therapyPlaceTypes = null;
 			IList<MedicalPractice> practices = new List<MedicalPractice>();
 			IList<User> users = new List<User>();
+			IList<Label> labels = new List<Label>();
 
 			var reader = XmlReader.Create(filename);
 
@@ -348,7 +355,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 			}
 			reader.Close();
 
-			return new Configuration(therapyPlaceTypes, practices, users);
+			return new Configuration(therapyPlaceTypes, practices, users, labels);
 		}
 		
 		#region readerMethods

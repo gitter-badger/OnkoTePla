@@ -110,6 +110,7 @@
     <Compile Include="Repositories\EventStore\EventStore.cs" />
     <Compile Include="Repositories\EventStore\IEventStore.cs" />
     <Compile Include="Repositories\JSonDataStores\JsonEventStreamDataStore.cs" />
+    <Compile Include="Repositories\JSonDataStores\JsonSerializationDoubles\LabelSerializationDouble.cs" />
     <Compile Include="Repositories\Patients\IPatientRepository.cs" />
     <Compile Include="Repositories\JSonDataStores\JSonPatientDataStore.cs" />
     <Compile Include="Repositories\Patients\PatientRepository.cs" />

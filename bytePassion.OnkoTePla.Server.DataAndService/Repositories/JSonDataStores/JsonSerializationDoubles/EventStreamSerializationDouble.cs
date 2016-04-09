@@ -4,7 +4,7 @@ using bytePassion.OnkoTePla.Contracts.Domain;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
-	public class EventStreamSerializationDouble
+	internal class EventStreamSerializationDouble
 	{
 
 		public EventStreamSerializationDouble()

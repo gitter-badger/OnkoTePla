@@ -2,7 +2,7 @@
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
-	public class TimeSerializationDouble
+	internal class TimeSerializationDouble
 	{
 		public TimeSerializationDouble()
 		{			

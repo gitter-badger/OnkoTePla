@@ -11,16 +11,19 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 	{
         private readonly IList<TherapyPlaceType> configuredTherapyPlaceTypes;
         private readonly IList<MedicalPractice>  configuredMedicalPractices;
-        private readonly IList<User>			 configuredUsers; 
+        private readonly IList<User>			 configuredUsers;
+		private readonly IList<Label>			 configuredLabels; 
 		
 
 		public Configuration(IEnumerable<TherapyPlaceType> configuredTherapyPlaceTypes, 
 							 IEnumerable<MedicalPractice> configuredMedicalPractices, 
-							 IEnumerable<User> configuredUsers)
+							 IEnumerable<User> configuredUsers, 
+							 IEnumerable<Label> configuredLabels)
 		{			
 			this.configuredMedicalPractices = configuredMedicalPractices.ToList();
 			this.configuredTherapyPlaceTypes = configuredTherapyPlaceTypes.ToList();
 			this.configuredUsers = configuredUsers.ToList();
+			this.configuredLabels = configuredLabels.ToList();
 		}
 
 		#region TherapyPlaceTypes		
@@ -106,6 +109,32 @@ namespace bytePassion.OnkoTePla.Contracts.Config
 			AddUser(updatedUser);
 		}
 
-		#endregion		
+		#endregion
+
+
+		#region Labels
+
+		public Label GetLabelById(Guid id)
+		{
+			return configuredLabels.FirstOrDefault(label => label.Id == id);
+		}
+
+		public IEnumerable<Label> GetAllLabels()
+		{
+			return configuredLabels.ToList();
+		}
+
+		public void AddLabel(Label newLabel)
+		{
+			configuredLabels.Add(newLabel);
+		}
+
+		public void UpdateLabel(Label updatedLabel)
+		{
+			configuredLabels.Remove(GetLabelById(updatedLabel.Id));
+			AddLabel(updatedLabel);
+		}
+
+		#endregion
 	} 
 }

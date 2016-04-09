@@ -3,7 +3,7 @@ using bytePassion.OnkoTePla.Contracts.Domain;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
-	public class AggregateIdentifierSerializationDouble
+	internal class AggregateIdentifierSerializationDouble
 	{
 		public AggregateIdentifierSerializationDouble()
 		{			

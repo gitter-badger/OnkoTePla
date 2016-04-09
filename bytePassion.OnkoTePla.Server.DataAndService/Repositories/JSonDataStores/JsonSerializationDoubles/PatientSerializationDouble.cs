@@ -4,7 +4,7 @@ using bytePassion.OnkoTePla.Contracts.Patients;
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
 
-	public class PatientSerializationDouble
+	internal class PatientSerializationDouble
 	{									
 		public PatientSerializationDouble()
 		{				

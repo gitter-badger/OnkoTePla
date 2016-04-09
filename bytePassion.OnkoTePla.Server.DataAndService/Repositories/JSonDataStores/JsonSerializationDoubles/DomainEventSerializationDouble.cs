@@ -5,7 +5,7 @@ using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStores.JsonSerializationDoubles
 {
-	public class DomainEventSerializationDouble
+	internal class DomainEventSerializationDouble
 	{
 		public enum EventType
 		{
