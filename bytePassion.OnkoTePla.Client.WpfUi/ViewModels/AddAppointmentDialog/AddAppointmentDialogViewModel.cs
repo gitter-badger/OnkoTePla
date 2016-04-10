@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -9,6 +10,7 @@ using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.Commands.Updater;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.AppointmentViewModel;
@@ -16,6 +18,7 @@ using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.TherapyPlaceRowView.Helper;
 using bytePassion.OnkoTePla.Contracts.Appointments;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -24,8 +27,7 @@ using Duration = bytePassion.Lib.TimeLib.Duration;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 {
-	internal class AddAppointmentDialogViewModel : ViewModel, 
-                                                   IAddAppointmentDialogViewModel
+	internal class AddAppointmentDialogViewModel : ViewModel, IAddAppointmentDialogViewModel
 	{				
 		private readonly IClientReadModelRepository readModelRepository;
 		private readonly Date creationDate;		
@@ -44,10 +46,12 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 		private AppointmentCreationState creationState;
 		private string description;
 		
-		private Tuple<TherapyPlaceRowIdentifier, TimeSlot> firstFittingTimeSlot; 
-         
+		private Tuple<TherapyPlaceRowIdentifier, TimeSlot> firstFittingTimeSlot;
+		private Label selectedLabel;
+
 		public AddAppointmentDialogViewModel(IClientMedicalPracticeRepository medicalPracticeRepository,
 											 IClientReadModelRepository readModelRepository,
+											 IClientLabelRepository labelRepository,
                                              IPatientSelectorViewModel patientSelectorViewModel,											 											 
                                              ISharedStateReadOnly<Patient> selectedPatientVariable,
                                              Date creationDate,   
@@ -96,6 +100,20 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 			DurationHours = 2;
 
 			CreationState = AppointmentCreationState.NoPatientSelected;
+
+			AllAvailablesLabels = new ObservableCollection<Label>();
+
+			labelRepository.RequestAllLabels(
+				labelList =>
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						labelList.Do(AllAvailablesLabels.Add);
+						SelectedLabel = labelList.First();
+					});					
+				},	
+				errorCallback
+			);
 		}
 
 		private void DetermineCreationState()
@@ -182,7 +200,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 																						    creationDate,
 																						    firstFittingTimeSlot.Item2.Begin,
 																						    firstFittingTimeSlot.Item2.Begin + duration,
-																						    Guid.NewGuid()),
+																						    Guid.NewGuid(),
+																							selectedLabel),
 											                                new AggregateIdentifier(creationDate, medicalPractice.Id, medicalPractice.Version), 
 																			errorCallback);
 		
@@ -258,6 +277,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 				PropertyChanged.ChangeAndNotify(this, ref durationMinutes, value);
 				DetermineCreationState();
 			}
+		}
+
+		public ObservableCollection<Label> AllAvailablesLabels { get; }
+
+		public Label SelectedLabel
+		{
+			get { return selectedLabel; }
+			set { PropertyChanged.ChangeAndNotify(this, ref selectedLabel, value); }
 		}
 
 		public AppointmentCreationState CreationState

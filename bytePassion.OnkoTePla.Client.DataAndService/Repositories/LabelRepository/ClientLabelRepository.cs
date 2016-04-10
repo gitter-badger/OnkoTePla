@@ -53,7 +53,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelReposito
 						labelAvailableCallback(GetLabel(labelId, errorCallback));
 					},
 					errorCallback					
-					);
+				);
 			}
 			else
 			{
@@ -68,11 +68,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelReposito
 				connectionService.RequestLabelList(
 					labelList =>
 					{
-						cachedLabels = labelList.ToList();
+						cachedLabels = labelList.ToList();						
 						labelsAvailableCallback(cachedLabels.ToList());
 					},
 					errorCallback
-					);
+				);
 			}
 			else
 			{

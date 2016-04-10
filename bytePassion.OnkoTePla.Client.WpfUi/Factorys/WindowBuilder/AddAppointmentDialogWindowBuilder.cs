@@ -3,6 +3,7 @@ using System.Windows;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Utils;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
@@ -20,6 +21,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		private readonly IClientPatientRepository patientRepository;
 		private readonly IClientReadModelRepository readModelRepository;
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;
+		private readonly IClientLabelRepository labelRepository;
 		private readonly ISharedStateReadOnly<Guid> selectedMedicalPractiveVariable;       
         private readonly ISharedStateReadOnly<Date> selectedDateVariable;	    	   
 	    private readonly IAppointmentViewModelBuilder appointmentViewModelBuilder;
@@ -28,6 +30,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		public AddAppointmentDialogWindowBuilder(IClientPatientRepository patientRepository,
 												 IClientReadModelRepository readModelRepository,
 												 IClientMedicalPracticeRepository medicalPracticeRepository,
+												 IClientLabelRepository labelRepository,
 												 ISharedStateReadOnly<Guid> selectedMedicalPractiveVariable,                                                 
                                                  ISharedStateReadOnly<Date> selectedDateVariable, 												
 												 IAppointmentViewModelBuilder appointmentViewModelBuilder,
@@ -36,7 +39,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		    this.patientRepository = patientRepository;
 		    this.readModelRepository = readModelRepository;
 		    this.medicalPracticeRepository = medicalPracticeRepository;
-		    this.selectedMedicalPractiveVariable = selectedMedicalPractiveVariable;            
+			this.labelRepository = labelRepository;
+			this.selectedMedicalPractiveVariable = selectedMedicalPractiveVariable;            
             this.selectedDateVariable = selectedDateVariable;	        
 		    this.appointmentViewModelBuilder = appointmentViewModelBuilder;
 			this.errorCallback = errorCallback;
@@ -56,6 +60,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 						Owner = Application.Current.MainWindow,
 						DataContext = new AddAppointmentDialogViewModel(medicalPracticeRepository,
 																		readModelRepository,
+																		labelRepository,
                                                                         patientSelectorViewModel, 																		
                                                                         selectedPatientVariable,
                                                                         selectedDateVariable.Value,                                                                         																		

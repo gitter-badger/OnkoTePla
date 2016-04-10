@@ -1,16 +1,19 @@
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
+using System.Windows.Media;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Patients;
-using System;
-using System.ComponentModel;
-using System.Windows.Input;
 
 #pragma warning disable 0067
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 {
-    internal class AddAppointmentDialogViewModelSampleData : IAddAppointmentDialogViewModel
+	internal class AddAppointmentDialogViewModelSampleData : IAddAppointmentDialogViewModel
 	{
 		public AddAppointmentDialogViewModelSampleData()
 		{
@@ -22,6 +25,16 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 			DurationMinutes = 15;
 
 			CreationState = AppointmentCreationState.NoPatientSelected;
+
+			AllAvailablesLabels = new ObservableCollection<Label>
+			{
+				new Label("label1", Colors.Aqua,       Guid.NewGuid()),
+				new Label("label2", Colors.BurlyWood,  Guid.NewGuid()),
+				new Label("label3", Colors.Chartreuse, Guid.NewGuid()),
+				new Label("label4", Colors.Gold,       Guid.NewGuid())
+			};
+
+			SelectedLabel = AllAvailablesLabels[2];
 		}
 
 		public IPatientSelectorViewModel PatientSelectorViewModel { get; }
@@ -37,7 +50,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 		public byte DurationHours   { get; }
 		public byte DurationMinutes { get; }
 
-		public AppointmentCreationState CreationState { get; }
+	    public ObservableCollection<Label> AllAvailablesLabels { get; }
+	    public Label SelectedLabel { get; set; }
+
+	    public AppointmentCreationState CreationState { get; }
 
 		public Patient SelectedPatient { get; }
 		public string  Description     { set {} }

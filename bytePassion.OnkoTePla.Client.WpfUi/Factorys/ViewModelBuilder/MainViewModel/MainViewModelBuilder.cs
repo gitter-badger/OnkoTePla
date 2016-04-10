@@ -6,6 +6,7 @@ using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
@@ -50,6 +51,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 		private readonly IClientReadModelRepository readModelRepository;
 		private readonly IClientPatientRepository patientRepository;
 		private readonly IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository;
+		private readonly IClientLabelRepository labelRepository;
 		private readonly ICommandService commandService;
 		private readonly ILocalSettingsRepository localSettingsRepository;
 		private readonly IViewModelCommunication viewModelCommunication;
@@ -64,7 +66,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 		public MainViewModelBuilder(IClientMedicalPracticeRepository medicalPracticeRepository,
 									IClientReadModelRepository readModelRepository,
 									IClientPatientRepository patientRepository,		
-									IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository,							
+									IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository,
+									IClientLabelRepository labelRepository,							
 									ICommandService commandService,
 									ILocalSettingsRepository localSettingsRepository,
                                     IViewModelCommunication viewModelCommunication,
@@ -75,6 +78,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
 			this.readModelRepository = readModelRepository;
 			this.patientRepository = patientRepository;
 			this.therapyPlaceTypeRepository = therapyPlaceTypeRepository;
+			this.labelRepository = labelRepository;
 			this.commandService = commandService;
 			this.localSettingsRepository = localSettingsRepository;
 			this.viewModelCommunication = viewModelCommunication;
@@ -159,6 +163,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
             var addAppointmentDialogWindowBuilder = new AddAppointmentDialogWindowBuilder(patientRepository,
 																						  readModelRepository,
 																						  medicalPracticeRepository,
+																						  labelRepository,
                                                                                           selectedMedicalPracticeIdVariable,
                                                                                           selectedDateVariable,
                                                                                           appointmentViewModelBuilder,

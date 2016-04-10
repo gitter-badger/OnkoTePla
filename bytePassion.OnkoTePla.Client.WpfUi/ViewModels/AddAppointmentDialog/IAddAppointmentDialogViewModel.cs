@@ -1,14 +1,14 @@
-using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog.Helper;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PatientSelector;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Patients;
 
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 {
-	internal interface IAddAppointmentDialogViewModel : IDisposable, 
-													  IViewModel
+	internal interface IAddAppointmentDialogViewModel : IViewModel
 	{
 		IPatientSelectorViewModel PatientSelectorViewModel { get; }
 
@@ -22,6 +22,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AddAppointmentDialog
 
 		byte DurationHours   { get; }
 		byte DurationMinutes { get; }
+
+		ObservableCollection<Label> AllAvailablesLabels { get; }
+		Label SelectedLabel { get; set; }
 
 		AppointmentCreationState CreationState { get; }
 

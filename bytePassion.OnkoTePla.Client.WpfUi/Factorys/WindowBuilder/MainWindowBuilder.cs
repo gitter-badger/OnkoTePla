@@ -2,6 +2,7 @@
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Utils;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.PatientRepository;
@@ -27,6 +28,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 		private readonly IClientMedicalPracticeRepository medicalPracticeRepository;		
 		private readonly IClientReadModelRepository readModelRepository;
 		private readonly IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository;
+		private readonly IClientLabelRepository labelRepository;
 		private readonly ICommandService commandService;
 		private readonly IViewModelCommunication viewModelCommunication;
 		private readonly ISession session;			    	
@@ -37,7 +39,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 								 IClientPatientRepository patientRepository,
 								 IClientMedicalPracticeRepository medicalPracticeRepository,								 
 								 IClientReadModelRepository readModelRepository,	
-								 IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository,							 
+								 IClientTherapyPlaceTypeRepository therapyPlaceTypeRepository,	
+								 IClientLabelRepository labelRepository,						 
 								 ICommandService commandService,
                                  IViewModelCommunication viewModelCommunication,
 								 ISession session,								
@@ -49,7 +52,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
 	        this.medicalPracticeRepository = medicalPracticeRepository;	        
 	        this.readModelRepository = readModelRepository;
 	        this.therapyPlaceTypeRepository = therapyPlaceTypeRepository;
-	        this.commandService = commandService;
+			this.labelRepository = labelRepository;
+			this.commandService = commandService;
 	        this.viewModelCommunication = viewModelCommunication;
 	        this.session = session;	        
             this.versionNumber = versionNumber;
@@ -67,7 +71,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder
             var mainViewModelBuilder = new MainViewModelBuilder(medicalPracticeRepository,
 																readModelRepository,
 																patientRepository,
-																therapyPlaceTypeRepository,																
+																therapyPlaceTypeRepository,	
+																labelRepository,															
 																commandService, 
 																localSettingsRepository, 
                                                                 viewModelCommunication,

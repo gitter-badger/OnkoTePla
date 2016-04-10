@@ -91,7 +91,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 														  clientPatientRepository,
 														  clientMedicalPracticeRepository,														  
 														  clientReadmodelRepository,
-														  clienttherapyPlaceTypeRepository,														  
+														  clienttherapyPlaceTypeRepository,	
+														  clientLabelRepository,													  
 														  commandService,
                                                           viewModelCommunication,
 														  session,														   														 
@@ -115,7 +116,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi
 			connectionService.Dispose();
 		}
 
-		private void AssureAppDataDirectoriesExist()
+		private static void AssureAppDataDirectoriesExist()
 		{
 			if (!Directory.Exists(GlobalConstants.ClientBasePath))
 			{
