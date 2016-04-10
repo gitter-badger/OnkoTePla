@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using System.Windows.Media;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.Communication.ViewModel.Messages;
 using bytePassion.Lib.TimeLib;
@@ -28,6 +29,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		Time BeginTime { get; }
 		Time EndTime   { get; }
 	
+		Color LabelColor { get; }
+
 		string PatientDisplayName { get; }
 
 		string TimeSpan           { get; }		//

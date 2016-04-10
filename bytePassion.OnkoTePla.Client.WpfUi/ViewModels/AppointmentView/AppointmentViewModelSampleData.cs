@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows.Media;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
@@ -27,7 +28,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 			Room = "A12";
 
 			BeginTime = beginTime;
-			EndTime = endTime;			
+			EndTime = endTime;
+
+			LabelColor = Colors.SteelBlue;
 
 			OperatingMode = OperatingMode.Edit;
 			ShowDisabledOverlay = false;
@@ -41,7 +44,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		public ICommand RejectChanges     => null;
 
 		public Time   BeginTime     { get; }
-		public Time   EndTime       { get; }		
+		public Time   EndTime       { get; }
+
+		public Color LabelColor { get; }
 
 		public string PatientDisplayName { get; }
 		public string TimeSpan           { get; }

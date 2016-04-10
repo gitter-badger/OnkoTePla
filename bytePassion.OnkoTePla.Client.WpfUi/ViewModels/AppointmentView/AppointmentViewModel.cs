@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.FrameworkExtensions;
@@ -24,8 +25,7 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 {
-	internal class AppointmentViewModel : ViewModel, 
-										  IAppointmentViewModel										
+	internal class AppointmentViewModel : ViewModel, IAppointmentViewModel										
 	{		
 		private readonly Appointment appointment;		
 		private readonly TherapyPlaceRowIdentifier initialLocalisation;
@@ -42,8 +42,9 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		private bool showDisabledOverlay;
 		private AppointmentModifications currentAppointmentModifications;
         private string description;
+		private Color labelColor;
 
-        public AppointmentViewModel(Appointment appointment,
+		public AppointmentViewModel(Appointment appointment,
 									ICommandService commandService,
 									IViewModelCommunication viewModelCommunication,																
 									TherapyPlaceRowIdentifier initialLocalisation, 
@@ -151,6 +152,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 			BeginTime = appointment.StartTime;
 			EndTime = appointment.EndTime;
             Description = appointment.Description;
+			LabelColor = appointment.Label.Color;
 
 			ShowDisabledOverlay = false;
 			
@@ -178,9 +180,15 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 					break;
 				}
                 case nameof(AppointmentModifications.Description):
-			    {
+				{
+					Description = appointmentModifications.Description;
 			        break;
 			    }
+				case nameof(AppointmentModifications.Label):
+				{
+					LabelColor = appointmentModifications.Label.Color;
+					break;
+				}
 			}
 		}
 
@@ -236,7 +244,13 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 			private set { PropertyChanged.ChangeAndNotify(this, ref endTime, value); }
 		}
 
-		
+		public Color LabelColor
+		{
+			get { return labelColor; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref labelColor, value); }
+		}
+
+
 		public string PatientDisplayName => $"{appointment.Patient.Name} (*{appointment.Patient.Birthday.Year})";
         public string TimeSpan           => $"{appointment.StartTime.ToString().Substring(0, 5)} - {appointment.EndTime.ToString().Substring(0, 5)}";
 		public string AppointmentDate    => appointment.Day.ToString();
@@ -283,8 +297,10 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AppointmentView
 		
 		public void Process (RestoreOriginalValues message)
 		{
-			BeginTime = appointment.StartTime;
-			EndTime   = appointment.EndTime;
+			BeginTime   = appointment.StartTime;
+			EndTime     = appointment.EndTime;
+			Description = appointment.Description;
+			LabelColor  = appointment.Label.Color;
 
 			if (initialLocalisation != currentLocation)			
 				SetNewLocation(initialLocalisation, false);

@@ -23,6 +23,7 @@
         <converter:OperatingModeToVisibilityConverter x:Key="OperatingModeToVisibilityConverter" />
         <computations:ControlAdornerVisibility x:Key="ControlAdornerVisibility" />
         <libConverter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter" />
+		<libConverter:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
 
         <Style x:Key="WhiteLineBorderStyle" TargetType="Border">
 
@@ -267,25 +268,34 @@
                         </Style>
                     </Border.Style>
 
-                    <TextBlock HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontFamily="Segoe UI Semibold"
-                               FontSize="18"
-                               Text="{Binding PatientDisplayName,
-                                              Mode=OneTime}"
-                               TextTrimming="CharacterEllipsis">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Foreground" Value="#FFE4EBEC" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
-                                        <Setter Property="Opacity" Value="0.9" />
-                                        <Setter Property="Foreground" Value="Black" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+					<Grid>
+
+						<Rectangle Width="40"
+								   HorizontalAlignment="Right"
+								   Fill="{Binding LabelColor, Converter={StaticResource ColorToSolidColorBrushConverter}}"/>
+						
+						<TextBlock HorizontalAlignment="Center"
+								   VerticalAlignment="Center"
+								   FontFamily="Segoe UI Semibold"
+								   FontSize="18"
+								   Text="{Binding PatientDisplayName,
+								                  Mode=OneTime}"
+								   TextTrimming="CharacterEllipsis">
+							<TextBlock.Style>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Foreground" Value="#FFE4EBEC" />
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding OperatingMode}" Value="{x:Static enum:OperatingMode.Edit}">
+											<Setter Property="Opacity" Value="0.9" />
+											<Setter Property="Foreground" Value="Black" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+
+					</Grid>
+					                   
                 </Border>
 
                 <Border Grid.Column="1"
