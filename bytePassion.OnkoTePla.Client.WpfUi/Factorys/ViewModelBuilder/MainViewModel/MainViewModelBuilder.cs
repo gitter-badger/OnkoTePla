@@ -137,6 +137,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.MainViewM
                                                                                       gridSizeVariable);
 
             var appointmentViewModelBuilder = new AppointmentViewModelBuilder(viewModelCommunication,
+																			  labelRepository,
 																			  commandService,
                                                                               appointmentModificationsVariable,
                                                                               selectedDateVariable,

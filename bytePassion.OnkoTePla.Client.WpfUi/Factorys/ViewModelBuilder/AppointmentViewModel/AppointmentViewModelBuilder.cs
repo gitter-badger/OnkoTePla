@@ -3,6 +3,7 @@ using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.Communication.ViewModel;
 using bytePassion.Lib.TimeLib;
 using bytePassion.OnkoTePla.Client.DataAndService.Domain.CommandSrv;
+using bytePassion.OnkoTePla.Client.DataAndService.Repositories.LabelRepository;
 using bytePassion.OnkoTePla.Client.WpfUi.Adorner;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.AppointmentModification;
 using bytePassion.OnkoTePla.Client.WpfUi.Factorys.WindowBuilder;
@@ -18,6 +19,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 	internal class AppointmentViewModelBuilder : IAppointmentViewModelBuilder 
 	{
 		private readonly IViewModelCommunication viewModelCommunication;
+		private readonly IClientLabelRepository labelRepository;
 		private readonly ICommandService commandService;
 		private readonly ISharedState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable;
 		private readonly ISharedState<Date> selectedDateVariable;		
@@ -25,6 +27,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 	    private readonly IAppointmentModificationsBuilder appointmentModificationsBuilder;
 
 	    public AppointmentViewModelBuilder(IViewModelCommunication viewModelCommunication, 	
+										   IClientLabelRepository labelRepository,
 										   ICommandService commandService,									   
 										   ISharedState<ViewModels.AppointmentView.Helper.AppointmentModifications> appointmentModificationsVariable, 
 										   ISharedState<Date> selectedDateVariable, 
@@ -32,6 +35,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
                                            IAppointmentModificationsBuilder appointmentModificationsBuilder)
 		{
 			this.viewModelCommunication = viewModelCommunication;
+		    this.labelRepository = labelRepository;
 		    this.commandService = commandService;
 		    this.appointmentModificationsVariable = appointmentModificationsVariable;
 			this.selectedDateVariable = selectedDateVariable;			
@@ -41,7 +45,8 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.Factorys.ViewModelBuilder.Appointme
 
 		public IAppointmentViewModel Build (Appointment appointment, AggregateIdentifier location, Action<string> errorCallback)
 		{			
-            var editDescriptionWindowBuilder = new EditDescriptionWindowBuilder(appointment, 																				
+            var editDescriptionWindowBuilder = new EditDescriptionWindowBuilder(appointment, 
+																				labelRepository,																				
 																				appointmentModificationsVariable,
 																				errorCallback);
 			

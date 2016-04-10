@@ -27,16 +27,9 @@
 
         <libConverter:InvertedBoolToCollapsedVisibilityConverter x:Key="InvertedBoolToCollapsedVisibilityConverter" />
 		<libConverter:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
-        <converter:CreationStateToSolidColorBrushConverter x:Key="CreationStateToSolidColorBrushConverter" />
+		<converter:CreationStateToSolidColorBrushConverter x:Key="CreationStateToSolidColorBrushConverter" />
 
-        <Style x:Key="OpticalDivisionBorder" TargetType="Border">
-            <Setter Property="Height" Value="1" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="Black" />
-            <Setter Property="Margin" Value="0,2,40,15" />
-        </Style>
-
-        <Style x:Key="HeaderTextBlock" TargetType="TextBlock">
+		<Style x:Key="HeaderTextBlock" TargetType="TextBlock">
 
             <Setter Property="FontSize" Value="28" />
             <Setter Property="FontWeight" Value="SemiBold" />
