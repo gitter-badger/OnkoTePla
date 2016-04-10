@@ -36,8 +36,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 			SaveChanges    = new Command(DoSaveChanges);
 			DiscardChanges = new Command(DoDiscardChanges);
 
-		    Users = dataCenter.GetAllUsers()
-							  .ToObservableCollection();
+		    Users = new ObservableCollection<User>();
+			SelectedUser = null;
 
 			AccessablePractices = new ObservableCollection<MedPracticeListItemData>();
 
@@ -50,6 +50,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.UserPage
 		{
 			if (mainPage != MainPage.User)
 			{
+				Users.Clear();
+
+				dataCenter.GetAllUsers()
+						  .Do(Users.Add);
+
 				SelectedUser = null;
 			}			
 		}		

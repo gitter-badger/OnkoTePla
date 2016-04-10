@@ -88,7 +88,12 @@
 
 		<TextBox Grid.Row="4"
 				 Height="100"
-                 VerticalAlignment="Stretch"
+                 VerticalAlignment="Stretch"				 				 
+				 AcceptsReturn="True"
+                 FontSize="18"
+                 Foreground="#FF494949"                 
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"				 				 
                  Text="{Binding Description, 
 								Mode=TwoWay, 
 								UpdateSourceTrigger=PropertyChanged}"/>

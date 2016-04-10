@@ -54,6 +54,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LabelPage
 		{
 			if (mainPage == MainPage.Labels)
 			{
+				Labels.Clear();
+
 				dataCenter.GetAllLabels().Do(Labels.Add);
 				SelectedLabel = null;
 			}

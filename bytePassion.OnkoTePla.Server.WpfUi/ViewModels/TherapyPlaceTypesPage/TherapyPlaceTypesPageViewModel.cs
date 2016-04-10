@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using bytePassion.Lib.Communication.State;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.Utils;
 using bytePassion.Lib.WpfLib.Commands;
@@ -11,16 +12,17 @@ using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Resources;
 using bytePassion.OnkoTePla.Server.DataAndService.Connection;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
+using bytePassion.OnkoTePla.Server.WpfUi.Enums;
 using bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage.Helper;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 {
-	internal class TherapyPlaceTypesPageViewModel : ViewModel, 
-													ITherapyPlaceTypesPageViewModel
+	internal class TherapyPlaceTypesPageViewModel : ViewModel, ITherapyPlaceTypesPageViewModel
 	{
 		private const string BasePath = "pack://application:,,,/bytePassion.OnkoTePla.Resources;component/Icons/TherapyPlaceType/";
 
 		private readonly IDataCenter dataCenter;
+		private readonly ISharedStateReadOnly<MainPage> selectedPageVariable;
 		private readonly IConnectionService connectionService;
 
 		private TherapyPlaceType selectedTherapyPlaceType;
@@ -29,17 +31,21 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 		private IconDisplayData iconType;
 
 		public TherapyPlaceTypesPageViewModel (IDataCenter dataCenter,
+											   ISharedStateReadOnly<MainPage> selectedPageVariable, 
 											   IConnectionService connectionService)
 		{
 			this.dataCenter = dataCenter;
+			this.selectedPageVariable = selectedPageVariable;
 			this.connectionService = connectionService;
 
 			AddTherapyPlaceType = new Command(DoAddTheraptPlaceType);
 			SaveChanges         = new Command(DoSaveChanges);
 			DiscardChanges      = new Command(DoDiscardChanges);
 
-			TherapyPlaceTypes = dataCenter.GetAllTherapyPlaceTypes()
-										  .ToObservableCollection();
+			selectedPageVariable.StateChanged += OnSelectedPageChanged;
+
+			TherapyPlaceTypes = new ObservableCollection<TherapyPlaceType>();
+			SelectedTherapyPlaceType = null;
 
 			ShowModificationView = false;
 
@@ -57,6 +63,19 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "chair05.png")), TherapyPlaceTypeIcon.ChairType5, "Chair5"),
 				new IconDisplayData(ImageLoader.LoadImage(new Uri(BasePath + "none.png")),    TherapyPlaceTypeIcon.None,       "None"),
 			};
+		}
+
+		private void OnSelectedPageChanged(MainPage mainPage)
+		{
+			if (mainPage == MainPage.TherapyPlaceTypes)
+			{
+				TherapyPlaceTypes.Clear();
+
+				dataCenter.GetAllTherapyPlaceTypes()
+						  .Do(TherapyPlaceTypes.Add);
+
+				SelectedTherapyPlaceType = null;
+			}
 		}
 
 		private void DoDiscardChanges ()
@@ -141,7 +160,10 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.TherapyPlaceTypesPage
 
 		public ObservableCollection<IconDisplayData> AllIcons { get; }
 
-		protected override void CleanUp () { }
+		protected override void CleanUp()
+		{
+			selectedPageVariable.StateChanged -= OnSelectedPageChanged;
+		}
 		public override event PropertyChangedEventHandler PropertyChanged;
 	}
 }

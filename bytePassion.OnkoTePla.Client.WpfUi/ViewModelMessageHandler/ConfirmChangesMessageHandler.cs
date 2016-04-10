@@ -84,9 +84,14 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessageHandler
 					originalAppointment.StartTime       == currentAppointmentModification.BeginTime &&
 					originalAppointment.EndTime         == currentAppointmentModification.EndTime &&
 					originalAppointment.Day             == currentAppointmentModification.CurrentLocation.PlaceAndDate.Date &&
-					originalAppointment.TherapyPlace.Id == currentAppointmentModification.CurrentLocation.TherapyPlaceId)
+					originalAppointment.TherapyPlace.Id == currentAppointmentModification.CurrentLocation.TherapyPlaceId &&
+					originalAppointment.Label.Id        == currentAppointmentModification.Label.Id)
 				{
-					return; // no changes to report
+
+					currentAppointmentModification.Dispose();		//
+					appointmentModificationsVariable.Value = null;  //
+																	//	no changes to report
+					return;											// 
 				}
 
 				commandService.TryReplaceAppointment(
