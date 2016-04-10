@@ -47,6 +47,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 				case NetworkMessageType.GetMedicalPracticeRequest:        return (IResponseHandler<TRequest>) new GetMedicalPracticeResponseHandler        (sessionRespository, socket, dataCenter);
 				case NetworkMessageType.GetTherapyPlacesTypeListRequest:  return (IResponseHandler<TRequest>) new GetTherapyPlaceTypeListResponseHandler   (sessionRespository, socket, dataCenter);
 				case NetworkMessageType.GetUserListRequest:               return (IResponseHandler<TRequest>) new GetUserListResponseHandler               (sessionRespository, socket, dataCenter);
+				case NetworkMessageType.GetLabelListRequest:			  return (IResponseHandler<TRequest>) new GetLabelListResponseHandler              (sessionRespository, socket, dataCenter);
 				case NetworkMessageType.GetPracticeVersionInfoRequest:    return (IResponseHandler<TRequest>) new GetPracticeVersionInfoResponseHandler    (sessionRespository, socket, dataCenter);
 				case NetworkMessageType.LoginRequest:                     return (IResponseHandler<TRequest>) new LoginResponseHandler                     (sessionRespository, socket, dataCenter);
 				case NetworkMessageType.TryToAddNewEventsRequest:         return (IResponseHandler<TRequest>) new TryToAddNewEventResponseHandler          (sessionRespository, socket, dataCenter);

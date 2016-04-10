@@ -62,7 +62,10 @@
     <Compile Include="Backup\BackupService.cs" />
     <Compile Include="Backup\IBackupService.cs" />
     <Compile Include="Connection\ConnectionService.cs" />
+    <Compile Include="Connection\NotificationObjects\LabelAddedNotificationObject.cs" />
+    <Compile Include="Connection\NotificationObjects\LabelUpdatedNotificationObject.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\GetLockResponseHandler.cs" />
+    <Compile Include="Connection\ResponseHandling\Handers\GetLabelListResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\ReleaseLockResponseHandler.cs" />
     <Compile Include="Connection\ResponseHandling\Handers\TryToAddNewEventResponseHandler.cs" />
     <Compile Include="Connection\ThreadCollections\IHeartbeatThreadCollection.cs" />

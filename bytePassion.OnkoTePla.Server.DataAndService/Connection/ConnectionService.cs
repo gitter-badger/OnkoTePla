@@ -3,6 +3,7 @@ using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -161,6 +162,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		public void SendPatientUpdatedNotification         (Patient          updatedPatient)          { notificationThreadCollection?.SendNotification(new PatientUpdatedNotificationObject        (updatedPatient));          }
 		public void SendTherapyPlaceTypeAddedNotification  (TherapyPlaceType newTherapyPlaceType)     { notificationThreadCollection?.SendNotification(new TherpyPlaceTypeAddedNotificationObject  (newTherapyPlaceType));     }
 		public void SendTherapyPlaceTypeUpdatedNotification(TherapyPlaceType updatedTherapyPlaceType) { notificationThreadCollection?.SendNotification(new TherpyPlaceTypeUpdatedNotificationObject(updatedTherapyPlaceType)); }
+		public void SendLabelAddedNotification             (Label            newLabel)                { notificationThreadCollection?.SendNotification(new LabelAddedNotificationObject            (newLabel));                }
+		public void SendLabelUpdatedNotification           (Label            updatedLabel)            { notificationThreadCollection?.SendNotification(new LabelUpdatedNotificationObject          (updatedLabel));            }
 
 		protected override void CleanUp()
 		{	

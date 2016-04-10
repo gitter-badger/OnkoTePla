@@ -1,5 +1,6 @@
 ﻿using System;
 using bytePassion.Lib.Types.Communication;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -26,5 +27,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		void SendPatientUpdatedNotification(Patient updatedPatient);
 		void SendTherapyPlaceTypeAddedNotification(TherapyPlaceType newTherapyPlaceType);
 		void SendTherapyPlaceTypeUpdatedNotification(TherapyPlaceType updatedTherapyPlaceType);
+		void SendLabelAddedNotification(Label newLabel);
+		void SendLabelUpdatedNotification(Label updatedLabel);
 	}
 }
