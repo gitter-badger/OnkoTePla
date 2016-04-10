@@ -21,6 +21,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 		void UpdateUser(User updatedUser);
 		User GetUser(Guid id);
 
+		IEnumerable<Label> GetAllLabels();
+		void AddNewLabel(Label newLabel);
+		void UpdateLabel(Label updatedLabel);
+		Label GetLabel(Guid id);
+			
 		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes();
 		IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypesPlusDummy(); 
 		void AddNewTherapyPlaceType(TherapyPlaceType newTherapyPlaceType);

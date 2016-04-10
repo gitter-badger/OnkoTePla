@@ -96,7 +96,27 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config
 		    configuration.UpdateUser(updatedUser);
 	    }
 
-	    #endregion
+		public Label GetLabelById(Guid id)
+		{
+			return configuration.GetLabelById(id);
+		}
+
+		public IEnumerable<Label> GetAllLabels()
+		{
+			return configuration.GetAllLabels();
+		}
+
+		public void AddLabel(Label newLabel)
+		{
+			configuration.AddLabel(newLabel);
+		}
+		
+		public void UpdateLabel(Label updatedLabel)
+		{
+			configuration.UpdateLabel(updatedLabel);
+		}
+
+		#endregion
 
 		public void PersistRepository()
 		{

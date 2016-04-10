@@ -82,6 +82,42 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 
 		#endregion
 
+		#region labels
+
+		public IEnumerable<Label> GetAllLabels()
+		{
+			lock (this)
+			{
+				return configRepo.GetAllLabels();
+			}
+		}
+
+		public void AddNewLabel(Label newLabel)
+		{
+			lock (this)
+			{
+				configRepo.AddLabel(newLabel);
+			}
+		}
+
+		public void UpdateLabel(Label updatedLabel)
+		{
+			lock (this)
+			{
+				configRepo.UpdateLabel(updatedLabel);
+			}
+		}
+
+		public Label GetLabel(Guid id)
+		{
+			lock (this)
+			{
+				return configRepo.GetLabelById(id);
+			}
+		}
+
+		#endregion
+
 		#region therapyPlaceTypes
 
 		public IEnumerable<TherapyPlaceType> GetAllTherapyPlaceTypes()

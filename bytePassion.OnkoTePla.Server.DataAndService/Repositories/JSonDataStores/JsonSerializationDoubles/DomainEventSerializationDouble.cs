@@ -39,6 +39,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStore
 			EndTime        = new TimeSerializationDouble(appointmentAddedEvent.EndTime);
 			TherapyPlaceId =                             appointmentAddedEvent.TherapyPlaceId;
 			AppointmentId  =                             appointmentAddedEvent.AppointmentId;
+			LabelId		   =							 appointmentAddedEvent.LabelId;
 		}
 
 		public DomainEventSerializationDouble(AppointmentReplaced appointmentReplacedEvent)
@@ -51,6 +52,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStore
 			NewStartTime          = new TimeSerializationDouble(appointmentReplacedEvent.NewStartTime);
 			NewEndTime            = new TimeSerializationDouble(appointmentReplacedEvent.NewEndTime);
 			NewTherapyPlaceId     =                             appointmentReplacedEvent.NewTherapyPlaceId;
+			NewLabelId			  =							    appointmentReplacedEvent.NewLabelId;
 			OriginalAppointmendId =                             appointmentReplacedEvent.OriginalAppointmendId;
 		}
 
@@ -75,16 +77,18 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStore
 		public Guid? RemovedAppointmentId { get; set; }											//  appointmentRemoved - Properties
 
 		public string                    Description    { get; set; }							//
-		public TimeSerializationDouble   StartTime      { get; set; }							//	appointmentAdded - Properties
-		public TimeSerializationDouble   EndTime        { get; set; }							//
+		public TimeSerializationDouble   StartTime      { get; set; }							//	
+		public TimeSerializationDouble   EndTime        { get; set; }                           //	appointmentAdded - Properties
 		public Guid?                     TherapyPlaceId { get; set; }							//
+		public Guid?					 LabelId	    { get; set; }							//
 		public Guid?                     AppointmentId  { get; set; }							//
 
 		public string                  NewDescription        { get; set; }						//
 		public DateSerializationDouble NewDate               { get; set; }						//
-		public TimeSerializationDouble NewStartTime          { get; set; }						//	appointmentReplaced - Properties
-		public TimeSerializationDouble NewEndTime            { get; set; }						//
+		public TimeSerializationDouble NewStartTime          { get; set; }						//	
+		public TimeSerializationDouble NewEndTime            { get; set; }                      //  appointmentReplaced - Properties
 		public Guid?                   NewTherapyPlaceId     { get; set; }						//
+		public Guid?				   NewLabelId			 { get; set; }						//
 		public Guid?                   OriginalAppointmendId { get; set; }						//
 
 		
@@ -119,6 +123,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStore
 												StartTime.GetTime(),
 												EndTime.GetTime(),																		  
 												TherapyPlaceId.Value,
+												LabelId.Value,
 												AppointmentId.Value);
 				}
 				case EventType.Replaced:
@@ -134,6 +139,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.JSonDataStore
 												   NewStartTime.GetTime(),
 												   NewEndTime.GetTime(),
 												   NewTherapyPlaceId.Value,
+												   NewLabelId.Value,
 												   OriginalAppointmendId.Value);
 				}
 				case EventType.Removed:

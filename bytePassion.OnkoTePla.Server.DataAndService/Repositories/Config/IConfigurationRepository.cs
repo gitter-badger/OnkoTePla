@@ -25,7 +25,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config
 
 
 		/////////////////////////////////////////////////////////////////////////////////////
-		////////                            Therapy Place                           /////////
+		////////                           TherapyPlaceType                         /////////
 		/////////////////////////////////////////////////////////////////////////////////////
 																					/////////		
 		TherapyPlaceType GetTherapyPlaceTypeById (Guid id);							/////////
@@ -47,6 +47,20 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config
 																					/////////
 		void AddUser    (User newUser);												/////////
 		void UpdateUser (User updatedUser);											/////////
+																					/////////																					
+		/////////////////////////////////////////////////////////////////////////////////////
+		
+
+
+		/////////////////////////////////////////////////////////////////////////////////////
+		////////                                 Label                              /////////
+		/////////////////////////////////////////////////////////////////////////////////////
+																					/////////
+		Label GetLabelById (Guid id);												/////////
+		IEnumerable<Label> GetAllLabels ();                                         /////////
+																					/////////
+		void AddLabel    (Label newLabel);											/////////
+		void UpdateLabel (Label updatedLabel);										/////////
 																					/////////																					
 		/////////////////////////////////////////////////////////////////////////////////////
 	}

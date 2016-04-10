@@ -101,6 +101,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.SampleDataGenerators
 										startTime,
 										startTime + GetAppointmentDuration(startTime, closingTime),																  
 										therapyPlaceId,
+										Guid.Empty,
 										Guid.NewGuid());			
 		}
 

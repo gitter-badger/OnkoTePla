@@ -47,6 +47,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 		private const string EndTimeAttribute		        = "endTime";
 		private const string TherapyPlaceIdAttribute        = "therapyPlaceId";
 		private const string OriginalAppointmentIdAttribute = "originalAppointmentId";
+		private const string LabelIdAttribute               = "labelId";
 		private const string UserIdAttribute                = "userId";
 		private const string TimeStampTimeAttribute         = "timeStampTime";
 		private const string TimeStampDateAttribute         = "timeStampDate";
@@ -130,6 +131,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 			writer.WriteAttributeString(EndTimeAttribute,               @event.NewEndTime.ToString());
 			writer.WriteAttributeString(TherapyPlaceIdAttribute,        @event.NewTherapyPlaceId.ToString());
 			writer.WriteAttributeString(OriginalAppointmentIdAttribute, @event.OriginalAppointmendId.ToString());
+			writer.WriteAttributeString(LabelIdAttribute,				@event.NewLabelId.ToString());
 
 			writer.WriteEndElement();
 		}
@@ -143,6 +145,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 			writer.WriteAttributeString(StartTimeAttribute,      @event.StartTime.ToString());
 			writer.WriteAttributeString(EndTimeAttribute,        @event.EndTime.ToString());
 			writer.WriteAttributeString(AppointmentIdAttribute,  @event.AppointmentId.ToString());
+			writer.WriteAttributeString(LabelIdAttribute,		 @event.LabelId.ToString());
 			
 			writer.WriteEndElement();
 		}
@@ -298,6 +301,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 			var newEndTime = Time.Dummy;
 			var newTherapyPlaceId = Guid.Empty;
 			var originalAppointmentId = Guid.Empty;
+			var newLabelId = Guid.Empty;
 
 			if (reader.HasAttributes)
 			{
@@ -311,6 +315,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 						case EndTimeAttribute:               newEndTime            = Time.Parse(reader.Value); break;
 						case TherapyPlaceIdAttribute:        newTherapyPlaceId     = Guid.Parse(reader.Value); break;
 						case OriginalAppointmentIdAttribute: originalAppointmentId = Guid.Parse(reader.Value); break;
+						case LabelIdAttribute:				 newLabelId            = Guid.Parse(reader.Value); break;
 					}
 				}
 			}
@@ -319,7 +324,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 										   patientId, timeStamp, actionTag,
 										   newDiscription, newDate,
 										   newStartTime, newEndTime, 
-										   newTherapyPlaceId,
+										   newTherapyPlaceId, newLabelId,
 										   originalAppointmentId);
 		}
 
@@ -332,6 +337,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 			var endTime       = new Time();
 			var therpyPlaceId = new Guid();
 			var appointmentId = new Guid();
+			var labelId       = new Guid();
 
 			if (reader.HasAttributes)
 			{
@@ -344,13 +350,14 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Repositories.XmlDataStores
 						case StartTimeAttribute:      startTime     = Time.Parse(reader.Value); break;
 						case EndTimeAttribute:        endTime       = Time.Parse(reader.Value); break;
 						case AppointmentIdAttribute:  appointmentId = Guid.Parse(reader.Value); break;
+						case LabelIdAttribute:        labelId       = Guid.Parse(reader.Value); break;
 					}										
 				}
 			}			
 
 			return new AppointmentAdded(identifier, aggregateVersion, userId, timeStamp, 
 										actionTag, patientId, description, startTime, 
-										endTime, therpyPlaceId, appointmentId);
+										endTime, therpyPlaceId, labelId, appointmentId);
 		}
 	}
 }
