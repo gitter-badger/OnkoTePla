@@ -4,6 +4,7 @@ using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Communication.NetworkMessages;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.Notifications;
 using bytePassion.OnkoTePla.Communication.SendReceive;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
 using bytePassion.OnkoTePla.Contracts.Infrastructure;
 using bytePassion.OnkoTePla.Contracts.Patients;
@@ -20,6 +21,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 		public event Action<Patient> UpdatedPatientAvailable;
 		public event Action<TherapyPlaceType> NewTherapyPlaceTypeAvailable;
 		public event Action<TherapyPlaceType> UpdatedTherapyPlaceTypeAvailable;
+		public event Action<Label> NewLabelAvailable;
+		public event Action<Label> UpdatedLabelAvailable;
 
 		private readonly NetMQContext context;
 		private readonly Address clientAddress;
@@ -98,6 +101,24 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection.Threads
 
 							if (therpyPlaceTypeUpdatedNotification.SessionId == sessionId)
 								UpdatedTherapyPlaceTypeAvailable(therpyPlaceTypeUpdatedNotification.TherapyPlaceType);
+
+							break;
+						}
+						case NetworkMessageType.LabelAddedNotification:
+						{
+							var labelAddedNotification = (LabelAddedNotification) notification;
+
+							if (labelAddedNotification.SessionId == sessionId)
+								NewLabelAvailable(labelAddedNotification.Label);
+
+							break;
+						}
+						case NetworkMessageType.LabelUpdatedNotification:
+						{
+							var labelUpdatedNotification = (LabelUpdatedNotification) notification;
+
+							if (labelUpdatedNotification.SessionId == sessionId)
+								UpdatedLabelAvailable(labelUpdatedNotification.Label);
 
 							break;
 						}

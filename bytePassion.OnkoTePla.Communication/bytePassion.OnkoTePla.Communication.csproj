@@ -39,6 +39,7 @@
       <HintPath>..\packages\NetMQ.3.3.2.2\lib\net40\NetMQ.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NetworkMessages\Notifications\EventBusNotification.cs" />
+    <Compile Include="NetworkMessages\Notifications\LabelAddedNotification.cs" />
+    <Compile Include="NetworkMessages\Notifications\LabelUpdatedNotification.cs" />
     <Compile Include="NetworkMessages\Notifications\PatientAddedNotification.cs" />
     <Compile Include="NetworkMessages\Notifications\PatientUpdatedNotification.cs" />
     <Compile Include="NetworkMessages\Notifications\TherapyPlaceTypeAddedNotification.cs" />
@@ -74,6 +77,8 @@
     <Compile Include="NetworkMessages\RequestsAndResponses\GetPatientListRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetMedicalPracticeResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\GetPatientListResponse.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetLabelListRequest.cs" />
+    <Compile Include="NetworkMessages\RequestsAndResponses\GetLabelListResponse.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\HeartbeatRequest.cs" />
     <Compile Include="NetworkMessages\RequestsAndResponses\HeartbeatResponse.cs" />
     <Compile Include="NetworkMessages\NetworkMessageBase.cs" />

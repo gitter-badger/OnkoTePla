@@ -36,12 +36,16 @@
 		GetLockResponse,
 		ReleaseLockRequest,
 		ReleaseLockResponse,
+		GetLabelListRequest,
+		GetLabelListResponse,
 		
 		EventBusNotification,
 		PatientAddedNotification,
 		PatientUpdatedNotification,		
 		TherapyPlaceTypeAddedNotification,
 		TherapyPlaceTypeUpdatedNotification,
+		LabelAddedNotification,
+		LabelUpdatedNotification,
 
 		ErrorResponse,
 		

@@ -26,10 +26,10 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages.Notifications
 
 			sb.Append('|');
 
-			sb.Append(Patient.Name); sb.Append(';');
-			sb.Append(Patient.Alive); sb.Append(';');
-			sb.Append(Patient.Birthday); sb.Append(';');
-			sb.Append(Patient.Id); sb.Append(';');
+			sb.Append(Patient.Name);       sb.Append(';');
+			sb.Append(Patient.Alive);      sb.Append(';');
+			sb.Append(Patient.Birthday);   sb.Append(';');
+			sb.Append(Patient.Id);         sb.Append(';');
 			sb.Append(Patient.ExternalId);
 
 			return sb.ToString();

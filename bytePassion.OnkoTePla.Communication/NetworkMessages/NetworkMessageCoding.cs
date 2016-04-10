@@ -56,6 +56,8 @@ namespace bytePassion.OnkoTePla.Communication.NetworkMessages
 				case NetworkMessageType.GetLockResponse:					 return GetLockResponse.Parse(msg);
 				case NetworkMessageType.ReleaseLockRequest:					 return ReleaseLockRequest.Parse(msg);
 				case NetworkMessageType.ReleaseLockResponse:				 return ReleaseLockResponse.Parse(msg);
+				case NetworkMessageType.GetLabelListRequest:				 return GetLabelListRequest.Parse(msg);
+				case NetworkMessageType.GetLabelListResponse:				 return GetLabelListResponse.Parse(msg);
 																		   
  				case NetworkMessageType.EventBusNotification:                return EventBusNotification.Parse(msg);
 				case NetworkMessageType.PatientAddedNotification:            return PatientAddedNotification.Parse(msg);

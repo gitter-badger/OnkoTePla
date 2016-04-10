@@ -69,6 +69,7 @@
     <Compile Include="Connection\RequestHandling\Handlers\GetPatientListRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetPracticeVersionInfoRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetTherapyPlaceListRequestHandler.cs" />
+    <Compile Include="Connection\RequestHandling\Handlers\GetLabelListRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\LoginRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\LogoutRequestHandler.cs" />
     <Compile Include="Connection\RequestHandling\Handlers\GetUserListRequestHandler.cs" />

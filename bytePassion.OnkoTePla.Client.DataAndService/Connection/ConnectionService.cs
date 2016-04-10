@@ -31,6 +31,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		public event Action<Patient> UpdatedPatientAvailable;
 		public event Action<TherapyPlaceType> NewTherapyPlaceTypeAvailable;
 		public event Action<TherapyPlaceType> UpdatedTherapyPlaceTypeAvailable;
+		public event Action<Label> NewLabelAvailable;
+		public event Action<Label> UpdatedLabelAvailable;
 
 		private readonly NetMQContext zmqContext;
 		private readonly SharedState<ConnectionInfo> connectionInfoVariable;
@@ -83,9 +85,11 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 			notificationThread.UpdatedPatientAvailable          += OnUpdatedPatientAvailable;
 			notificationThread.NewTherapyPlaceTypeAvailable     += OnNewTherapyPlaceTypeAvailable;
 			notificationThread.UpdatedTherapyPlaceTypeAvailable += OnUpdatedTherapyPlaceTypeAvailable;
+			notificationThread.NewLabelAvailable                += OnNewLabelAvailable;
+			notificationThread.UpdatedLabelAvailable            += OnUpdatedLabelAvailable;
 
 			new Thread(notificationThread.Run).Start();
-		}
+		}		
 
 		private void StopNotificationThread()
 		{
@@ -96,6 +100,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 				notificationThread.UpdatedPatientAvailable          -= OnUpdatedPatientAvailable;
 				notificationThread.NewTherapyPlaceTypeAvailable     -= OnNewTherapyPlaceTypeAvailable;
 				notificationThread.UpdatedTherapyPlaceTypeAvailable -= OnUpdatedTherapyPlaceTypeAvailable;
+				notificationThread.NewLabelAvailable                -= OnNewLabelAvailable;
+				notificationThread.UpdatedLabelAvailable            -= OnUpdatedLabelAvailable;
 
 				notificationThread.Stop();
 				notificationThread = null;
@@ -129,6 +135,8 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		private void OnUpdatedPatientAvailable          (Patient patient)                   { UpdatedPatientAvailable?.Invoke(patient);                   }
 		private void OnNewPatientAvailable              (Patient patient)                   { NewPatientAvailable?.Invoke(patient);                       }
 		private void OnNewDomainEventAvailable          (DomainEvent domainEvent)           { NewDomainEventAvailable?.Invoke(domainEvent);               }
+		private void OnUpdatedLabelAvailable            (Label label)                       { UpdatedLabelAvailable?.Invoke(label);                       }
+		private void OnNewLabelAvailable                (Label label)                       { NewLabelAvailable?.Invoke(label);                           }
 
 		#endregion
 
@@ -189,7 +197,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 																 },														
 																 connectionInfoVariable,
 																 errorCallback));
-		}
+		}		
 
 		public void TryAddEvents(Action<bool> resultCallback, IReadOnlyList<DomainEvent> newEvents, Action<string> errorCallback)
 		{
@@ -260,6 +268,13 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 																	  medicalPracticeId, 
 																	  medicalPracticeVersion, 
 																	  errorCallback));
+		}
+
+		public void RequestLabelList (Action<IReadOnlyList<Label>> dataReceivedCallback, Action<string> errorCallback)
+		{
+			requestWorkQueue.Put(new GetLabelListRequestHandler(dataReceivedCallback, 
+																connectionInfoVariable, 
+																errorCallback));
 		}
 
 		public void RequestPracticeVersionInfo(Action<uint> dataReceivedCallback, Guid medicalPracticeId, Date day, Action<string> errorCallback)

@@ -27,7 +27,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		event Action<Patient> UpdatedPatientAvailable;                                                                                      ////////
 		event Action<TherapyPlaceType> NewTherapyPlaceTypeAvailable;                                                                        ////////
 		event Action<TherapyPlaceType> UpdatedTherapyPlaceTypeAvailable;                                                                    ////////
-                                                                                                                                            ////////
+		event Action<Label> NewLabelAvailable;                                                                                              ////////
+		event Action<Label> UpdatedLabelAvailable;																							////////
+																																			////////
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -39,7 +41,7 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
 		////////                                              connect and disconnect			                                            ////////
 		////////                                                                                                                            ////////
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                                            ////////
+		                                                                                                                                    ////////
 		void TryConnect     (Address serverAddress, Address clientAddress, Action<string> errorCallback);                                   ////////
 		void TryDebugConnect(Address serverAddress, Address clientAddress, Action<string> errorCallback);                                   ////////
 		void TryDisconnect  (Action dissconnectionSuccessful, Action<string> errorCallback);                                                ////////
@@ -95,6 +97,9 @@ namespace bytePassion.OnkoTePla.Client.DataAndService.Connection
                                                                                                                                             ////////
 		void RequestTherapyPlaceTypeList(Action<IReadOnlyList<TherapyPlaceType>> dataReceivedCallback,                                      ////////
 										 Action<string> errorCallback);                                                                     ////////
+                                                                                                                                            ////////
+		void RequestLabelList (Action<IReadOnlyList<Label>> dataReceivedCallback,                                                           ////////
+							  Action<string> errorCallback);																				////////
                                                                                                                                             ////////
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
