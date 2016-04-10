@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.OnkoTePla.Communication.NetworkMessages.RequestsAndResponses;
 using bytePassion.OnkoTePla.Communication.SendReceive;
+using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.SessionRepository;
 using NetMQ.Sockets;
@@ -23,11 +26,15 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection.ResponseHandlin
 		{			
 			if (!IsRequestValid(request.SessionId))
 				return;
-		
-			var userList = dataCenter.GetAllLabels()
-									 .ToList();									
-			
-			Socket.SendNetworkMsg(new GetLabelListResponse(userList));
+
+			var labelList = new List<Label>
+			{
+				Label.DefaultLabel
+			};
+
+			dataCenter.GetAllLabels().Do(labelList.Add);
+									 			
+			Socket.SendNetworkMsg(new GetLabelListResponse(labelList));
 		}
 	}
 }
