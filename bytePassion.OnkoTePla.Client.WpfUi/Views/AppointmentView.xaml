@@ -270,11 +270,13 @@
 
 					<Grid>
 
-						<Rectangle Width="40"
-								   HorizontalAlignment="Right"
-								   Fill="{Binding LabelColor, Converter={StaticResource ColorToSolidColorBrushConverter}}"/>
-						
-						<TextBlock HorizontalAlignment="Center"
+                        <Path Stretch="Uniform" 
+                              Fill="{Binding LabelColor, Converter={StaticResource ColorToSolidColorBrushConverter}}" 
+                              Data="M159.5,99.500241 L159.5,159.50069 179.49888,139.50056 199.49618,159.8313 199.49818,99.500241 z" 
+                              Width="40" 
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Right"/>
+                        <TextBlock HorizontalAlignment="Center"
 								   VerticalAlignment="Center"
 								   FontFamily="Segoe UI Semibold"
 								   FontSize="18"
