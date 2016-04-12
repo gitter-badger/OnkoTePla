@@ -7,7 +7,7 @@
              xmlns:global="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.Global"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintAppointmentGrid"
              mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="900">
+             d:DesignHeight="700" d:DesignWidth="900">
 	
 	<d:UserControl.DataContext>
 		<sampleData:PrintAppointmentGridViewModelSampleData/>

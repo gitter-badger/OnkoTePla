@@ -8,6 +8,7 @@ using bytePassion.Lib.Types.SemanticTypes;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.MedicalPracticeRepository;
 using bytePassion.OnkoTePla.Client.DataAndService.Repositories.ReadModelRepository;
+using bytePassion.OnkoTePla.Client.WpfUi.ViewModelMessages;
 using bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintAppointmentGrid;
 using bytePassion.OnkoTePla.Contracts.Domain;
 using Size = bytePassion.Lib.Types.SemanticTypes.Size;
@@ -37,7 +38,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog
 						{
 							Application.Current.Dispatcher.Invoke(() =>
 							{
-								var initialGridSize = CurrentGridSize ?? new Size(new Width(800), new Height(600));
+								var initialGridSize = CurrentGridSize ?? new Size(new Width(850), new Height(600));
 								
 								AppointmentGrid = new PrintAppointmentGridViewModel(identifier, practice, appointmentSet.Appointments, initialGridSize);
 							});
@@ -70,6 +71,7 @@ namespace bytePassion.OnkoTePla.Client.WpfUi.ViewModels.PrintDialog
 
 				if (AppointmentGrid != null && value != null)
 				{
+					AppointmentGrid.TimeGridViewModel.Process(new NewSizeAvailable(CurrentGridSize));
 					foreach (var printTherapyPlaceRowViewModel in AppointmentGrid.TherapyPlaceRowViewModels)
 					{
 						printTherapyPlaceRowViewModel.GridWidth = CurrentGridSize.Width;
