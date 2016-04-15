@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.LicencePage"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
     
     <d:DesignData.DataContext>
         <sampleData:LicencePageViewModelSampleData/>
@@ -13,9 +13,10 @@
     
     <Grid Background="White">
 
-        <TextBlock Text="LicencePage"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
+        <TextBlock Text="No Licencing necessary while beta-Test"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+				   Margin="30"
                    FontSize="25"
                    FontFamily="Sigoe UI Light"/>
 

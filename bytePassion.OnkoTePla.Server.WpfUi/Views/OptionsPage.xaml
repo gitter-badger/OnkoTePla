@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OptionsPage"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
     
     <d:DesignData.DataContext>
         <sampleData:OptionsPageViewModelSampleData/>
@@ -13,9 +13,10 @@
     
     <Grid Background="White">
         
-        <TextBlock Text="OptionsPage"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
+        <TextBlock Text="There are no options until now"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+				   Margin="30"
                    FontSize="25"
                    FontFamily="Sigoe UI Light"/>
         
