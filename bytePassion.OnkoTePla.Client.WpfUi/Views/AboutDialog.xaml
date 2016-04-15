@@ -6,7 +6,7 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Client.WpfUi.ViewModels.AboutDialog"
                       Title="AddAppointmentDialog"
-                      Width="300"
+                      Width="450"
                       ResizeMode="NoResize"
                       ShowTitleBar="False"
                       SizeToContent="Height"
@@ -30,7 +30,7 @@
             <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="120" />
+            <RowDefinition Height="200" />
             <RowDefinition />
             <RowDefinition Height="40" />
             <RowDefinition Height="Auto" />
@@ -49,7 +49,7 @@
                    HorizontalAlignment="Center"
                    FontSize="32pt"
                    Foreground="#FF444444"
-                   Text="OnkoTePla" />
+                   Text="OnkoTePla - Client" />
         <DockPanel Grid.Row="2"
                    Grid.Column="1"
                    LastChildFill="False">
