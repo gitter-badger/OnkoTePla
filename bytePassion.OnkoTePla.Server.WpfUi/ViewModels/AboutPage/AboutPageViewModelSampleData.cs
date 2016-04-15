@@ -4,9 +4,16 @@
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage
 {
-    internal class AboutPageViewModelSampleData : IAboutPageViewModel
+	internal class AboutPageViewModelSampleData : IAboutPageViewModel
     {
-        public void Dispose() { }
-        public event PropertyChangedEventHandler PropertyChanged;        
+	    public AboutPageViewModelSampleData()
+	    {
+		    VersionNumber = "0.1.0.0";
+	    }
+
+		public string VersionNumber { get; }
+
+		public void Dispose() { }
+        public event PropertyChangedEventHandler PropertyChanged;	    
     }
 }

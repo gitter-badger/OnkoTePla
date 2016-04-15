@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.AboutPage"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="600">
     
     <d:DesignData.DataContext>
         <sampleData:AboutPageViewModelSampleData/>
@@ -13,11 +13,57 @@
     
     <Grid Background="White">
 
-        <TextBlock Text="AboutPage"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="25"
-                   FontFamily="Sigoe UI Light"/>
+		<Grid Background="{StaticResource WhiteColorBrush}"
+			  Width="450"
+			  Height="400">
 
-    </Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="20" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="20" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="20" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="200" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+
+			<Image Grid.RowSpan="8"
+               Grid.ColumnSpan="3"
+               HorizontalAlignment="Left"
+               Opacity="0.1"
+               Source="{StaticResource Logo}"
+               Stretch="Uniform" />
+
+			<TextBlock Grid.Row="1"
+                   Grid.Column="1"
+                   HorizontalAlignment="Center"
+                   FontSize="32pt"
+                   Foreground="#FF444444"
+                   Text="OnkoTePla - Server" />
+			<DockPanel Grid.Row="2"
+                   Grid.Column="1"
+                   LastChildFill="False">
+				<TextBlock DockPanel.Dock="Left" Text="{Binding VersionNumber, Mode=OneTime}" />
+				<TextBlock VerticalAlignment="Center"
+                       DockPanel.Dock="Right"
+                       Text="bytePassion &#169; 2016" />
+			</DockPanel>
+
+			<StackPanel Grid.Row="4" Grid.Column="1">
+				<TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       FontSize="12pt"
+                       FontWeight="Bold"
+                       Foreground="#FF444444"
+                       Text="Developer" />
+				<TextBlock Text="Alexander Horn" />
+				<TextBlock Text="Matthias Drescher" />
+			</StackPanel>
+			
+		</Grid>
+
+	</Grid>
 </UserControl>
