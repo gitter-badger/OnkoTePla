@@ -1,4 +1,5 @@
-﻿using bytePassion.Lib.WpfLib.ViewModelBase;
+﻿using System.Collections.ObjectModel;
+using bytePassion.Lib.WpfLib.ViewModelBase;
 
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage
 {
@@ -6,5 +7,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage
     {   
 		string ConnectionStatusText { get; }
 		bool   IsConnectionActive   { get; }
+
+		ObservableCollection<string> CurrentlyLoggedInUser { get; } 
     }
 }

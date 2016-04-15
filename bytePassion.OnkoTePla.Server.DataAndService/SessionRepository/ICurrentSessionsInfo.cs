@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using bytePassion.Lib.TimeLib;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Config;
@@ -19,7 +20,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 		bool IsUserLoggedIn(Guid userId);
 		bool IsClientAddressConnected(AddressIdentifier clientAddress);
 		SessionInfo GetSessionForUser(Guid userId);
-		
+		IEnumerable<User> GetAllLoggedInUsers(); 
+
 		void AddSession(ConnectionSessionId sessionId, Time creationTime,
 						AddressIdentifier clientAddress, bool isDebugConnection);
 		void RemoveSession(ConnectionSessionId sessionId);

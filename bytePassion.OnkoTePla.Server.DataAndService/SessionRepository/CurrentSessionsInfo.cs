@@ -73,6 +73,15 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 			}
 		}
 
+		public IEnumerable<User> GetAllLoggedInUsers()
+		{
+			lock (currentSessions)
+			{
+				return currentSessions.Values.Where(sessionInfo => sessionInfo.LoggedInUser != null)
+										     .Select(sessionInfo => sessionInfo.LoggedInUser).ToList();
+			}
+		}
+
 		public void AddSession(ConnectionSessionId sessionId, Time creationTime, 
 							   AddressIdentifier clientAddress, bool isDebugConnection)
 		{
@@ -80,11 +89,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 			{
 				var newSessionInfo = new SessionInfo(sessionId, creationTime, clientAddress, isDebugConnection);
 				currentSessions.Add(sessionId, newSessionInfo);
-
-				System.Windows.Application.Current.Dispatcher.Invoke(() =>
-				{
-					NewSessionStarted?.Invoke(newSessionInfo);
-				});				
+				
+				NewSessionStarted?.Invoke(newSessionInfo);								
 			}
 		}
 
@@ -94,11 +100,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 			{
 				var sessionToRemove = GetSessionInfo(sessionId);
 				currentSessions.Remove(sessionId);
-
-				System.Windows.Application.Current.Dispatcher.Invoke(() =>
-				{
-					SessionTerminated?.Invoke(sessionToRemove);
-				});				
+				
+				SessionTerminated?.Invoke(sessionToRemove);							
 			}
 		}
 
@@ -114,11 +117,8 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.SessionRepository
 														 sessionToUpdate.IsDebugConnection,
 														 newUser);
 				currentSessions.Add(sessionId, updatedSessionInfo);
-
-				System.Windows.Application.Current.Dispatcher.Invoke(() =>
-				{
-					LoggedInUserUpdated?.Invoke(updatedSessionInfo);
-				});				
+				
+				LoggedInUserUpdated?.Invoke(updatedSessionInfo);								
 			}
 		}
 

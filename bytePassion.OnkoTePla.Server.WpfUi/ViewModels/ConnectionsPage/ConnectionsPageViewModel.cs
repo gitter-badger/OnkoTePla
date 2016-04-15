@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using bytePassion.Lib.Communication.State;
@@ -91,23 +92,32 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.ConnectionsPage
 
 		private void OnLoggedInUserUpdated(SessionInfo sessionInfo)
 		{
-			var displayData = ConnectedClients.First(dd => dd.SessionId == sessionInfo.SessionId.ToString());
-			displayData.LogginInUser = sessionInfo.LoggedInUser == null 
-											? "no User logged in" 
-											: sessionInfo.LoggedInUser.Name;
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				var displayData = ConnectedClients.First(dd => dd.SessionId == sessionInfo.SessionId.ToString());
+				displayData.LogginInUser = sessionInfo.LoggedInUser == null
+												? "no User logged in"
+												: sessionInfo.LoggedInUser.Name;
+			});			
 		}
 
 		private void OnSessionTerminated(SessionInfo sessionInfo)
 		{
-			var displayData = ConnectedClients.First(dd => dd.SessionId == sessionInfo.SessionId.ToString());
-			ConnectedClients.Remove(displayData);
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				var displayData = ConnectedClients.First(dd => dd.SessionId == sessionInfo.SessionId.ToString());
+				ConnectedClients.Remove(displayData);
+			});			
 		}
 
 		private void OnNewSessionStarted(SessionInfo sessionInfo)
 		{
-			ConnectedClients.Add(new ConnectedClientDisplayData(sessionInfo.SessionId.ToString(),
-																sessionInfo.CreationTime.ToString(),
-																sessionInfo.ClientAddress.ToString()));			
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				ConnectedClients.Add(new ConnectedClientDisplayData(sessionInfo.SessionId.ToString(),
+																	sessionInfo.CreationTime.ToString(),
+																	sessionInfo.ClientAddress.ToString()));
+			});			
 		}
 
 		private void UpdateAddresses()

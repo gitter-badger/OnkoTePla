@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using bytePassion.Lib.Types.Communication;
 using bytePassion.OnkoTePla.Contracts.Config;
 using bytePassion.OnkoTePla.Contracts.Domain.Events.Base;
@@ -17,6 +18,7 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		event Action<SessionInfo> LoggedInUserUpdated;
 		
 		SessionInfo GetSessionInfo(ConnectionSessionId id);
+		IEnumerable<User> GetAllCurrentlyLoggedInUser(); 
 		bool IsConnectionActive { get; }
 
 		void InitiateCommunication (Address serverAddress);

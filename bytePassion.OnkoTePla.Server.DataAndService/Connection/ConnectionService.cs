@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using bytePassion.Lib.FrameworkExtensions;
 using bytePassion.Lib.TimeLib;
@@ -42,6 +43,11 @@ namespace bytePassion.OnkoTePla.Server.DataAndService.Connection
 		public SessionInfo GetSessionInfo (ConnectionSessionId id)
 		{
 			return sessionRepository.GetSessionInfo(id);
+		}
+
+		public IEnumerable<User> GetAllCurrentlyLoggedInUser()
+		{
+			return sessionRepository.GetAllLoggedInUsers();
 		}
 
 		public bool IsConnectionActive
