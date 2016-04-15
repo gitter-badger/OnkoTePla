@@ -4,20 +4,66 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage"
+             xmlns:converter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
+             xmlns:computations="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.Computations"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="600">
     
     <d:DesignData.DataContext>
         <sampleData:OverviewPageViewModelSampleData/>
     </d:DesignData.DataContext>
     
+	<UserControl.Resources>
+
+		<computations:ConnectionStatusBackgroundColor x:Key="ColorToSolidColorBrushConverter"/>
+		
+		<Style x:Key="SectionHeader"
+			   TargetType="TextBlock">
+			
+			<Setter Property="Margin" Value="50,5"/>
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+			<Setter Property="VerticalAlignment" Value="Top"/>
+			<Setter Property="FontSize" Value="20"/>
+			<Setter Property="FontFamily" Value="Segoe Ui Light"/>
+						
+		</Style>
+		
+		<Style x:Key="SectionBorder"
+			   TargetType="Border">
+			
+			<Setter Property="Margin" Value="20"/>
+			<Setter Property="Background" Value="LightGray"/>
+			<Setter Property="CornerRadius" Value="15"/>
+			
+		</Style>
+		
+	</UserControl.Resources>
+	
     <Grid Background="White">
 
-        <TextBlock Text="OverviewPage"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="25"
-                   FontFamily="Sigoe UI Light"/>
+        <Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
 
-    </Grid>
+		<Border Grid.Row="0"
+				Style="{StaticResource SectionBorder}"
+				Background="{Binding IsConnectionActive, Converter={StaticResource ColorToSolidColorBrushConverter}}"
+				Height="40">
+
+			<Grid>
+
+				<TextBlock Text="Server-Verbindungsstatus:"
+						   Style="{StaticResource SectionHeader}"/>
+
+				<TextBlock Text="{Binding ConnectionStatusText}"						   
+						   Style="{StaticResource SectionHeader}"
+						   Margin="450,5"/>
+
+			</Grid>
+
+		</Border>
+
+	</Grid>
 </UserControl>

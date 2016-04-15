@@ -102,7 +102,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			var selectedPatientVariable = new SharedState<Patient>(null);
 			var patientSelectorViewModel = new PatientSelectorViewModel(patientRepository, selectedPatientVariable);
 
-            var overviewPageViewModel          = new OverviewPageViewModel();
+            var overviewPageViewModel          = new OverviewPageViewModel(connectionService);
             var connectionsPageViewModel       = new ConnectionsPageViewModel(dataCenter, connectionService, selectedPageVariable);
             var userPageViewModel              = new UserPageViewModel(dataCenter, selectedPageVariable);
             var licencePageViewModel           = new LicencePageViewModel();

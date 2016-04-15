@@ -5,8 +5,17 @@
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage
 {
 	internal class OverviewPageViewModelSampleData : IOverviewPageViewModel
-    {        
-        public void Dispose() { }
-        public event PropertyChangedEventHandler PropertyChanged;        
+    {
+		public OverviewPageViewModelSampleData()
+		{
+			ConnectionStatusText  = "inactive";			
+			IsConnectionActive = false;
+		}
+
+		public string ConnectionStatusText { get; }
+		public bool   IsConnectionActive   { get; }		
+
+		public void Dispose() { }
+        public event PropertyChangedEventHandler PropertyChanged;		
     }
 }

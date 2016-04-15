@@ -3,6 +3,8 @@
 namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.OverviewPage
 {
 	internal interface IOverviewPageViewModel : IViewModel
-    {        
+    {   
+		string ConnectionStatusText { get; }
+		bool   IsConnectionActive   { get; }
     }
 }
