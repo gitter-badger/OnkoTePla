@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Bundle Name="Bootstrapper1" Version="0.1.0.0" Manufacturer="BytePassion" UpgradeCode="eac40df4-91a7-4fa2-ae2b-ec94896aa22a"
+                Condition="(VersionNT >= v6.1)"
+                xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
+                xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+                xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+        <BootstrapperApplicationRef 
+        Id="WixExtendedBootstrapperApplication.HyperlinkLicense"/>
+        <WixVariable Id="WixExtbaLicenseUrl" Value="license.rtf" />
+        <Variable Name="InstallFolder"  Type="string" Value="[ProgramFilesFolder]bytePassion\OnkoTePla" />
+        <!--<util:ProductSearch  Id="PS_PYTHON_27"
+          ProductCode="91915B2EA702BE34EA8737F3C976792C"
+          Variable="V_PYTHON_27_INSTALLED"
+          Result="state"
+          />-->
+
+        <Chain>
+            <PackageGroupRef Id="NetFx46Web"/>
+
+            <!-- TODO: Define the list of chained packages. -->
+            <!-- <MsiPackage SourceFile="path\to\your.msi" /> -->
+            <MsiPackage
+              Id="P_ONKOTEPLA"
+              SourceFile="..\..\SetupProject1\SetupProject1\bin\Debug\SetupProject1.msi"
+              Compressed="yes"
+              Description="OnkoTePla x.y.z"
+              ForcePerMachine="yes"
+              Permanent="no"
+              Vital="yes"
+              Visible="yes">
+                <MsiProperty Name="INSTALLFOLDER" Value="[InstallFolder]"/>
+            </MsiPackage>
+
+        </Chain>
+    </Bundle>
+</Wix>
