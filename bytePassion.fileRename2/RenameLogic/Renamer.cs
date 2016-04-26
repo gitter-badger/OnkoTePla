@@ -75,7 +75,16 @@ namespace bytePassion.FileRename2.RenameLogic
 			changes.Add(new ChangeAction(originalFileName, renamedFileName));			
 			UndoAvailable = true;
 		}
-		
+
+//		private string GetName (string originalFilePath, string newName)
+//		{
+//			
+//				var extension = Path.GetExtension(originalFilePath);				
+//
+//				return newName + extension;
+//			
+//		}
+
 		private Task<Tuple<bool, string>> RecursiveRenamerAsync(DirectoryInfo directory)
 		{
 			return Task.Factory.StartNew(() => RecursiveRenamer(directory));
@@ -93,18 +102,21 @@ namespace bytePassion.FileRename2.RenameLogic
 					if (abortSearch)
 						return abortReturn;
 
-					if (filenameAssosiactions.ContainsKey(currentFile.Name))
-					{											
-						var oldName = currentFile.Name;
-						var newName = filenameAssosiactions[oldName];
+					var nameWithoutExtension = Path.GetFileNameWithoutExtension(currentFile.FullName);
+					var nameWithExtension = currentFile.Name;
+					var extension = Path.GetExtension(currentFile.FullName);
 
-						while (File.Exists(currentFile.DirectoryName + "\\" + newName))
-							newName = Path.GetFileNameWithoutExtension(newName) + "_2" + Path.GetExtension(newName);
+					if (filenameAssosiactions.ContainsKey(nameWithoutExtension))
+					{																													
+						var newName = filenameAssosiactions[nameWithoutExtension];
 
-						currentFile.MoveTo(currentFile.DirectoryName + "\\" + newName);
+						while (File.Exists(currentFile.DirectoryName + "\\" + newName + extension))
+							newName = Path.GetFileNameWithoutExtension(newName) + "_2" + extension;
 
-						AddFileToLastChanges(currentFile.DirectoryName + "\\" + oldName,
-											 currentFile.DirectoryName + "\\" + newName);						
+						currentFile.MoveTo(currentFile.DirectoryName + "\\" + newName + extension);
+
+						AddFileToLastChanges(currentFile.DirectoryName + "\\" + nameWithExtension,
+											 currentFile.DirectoryName + "\\" + newName + extension);						
 					}					
 				}					
 			}

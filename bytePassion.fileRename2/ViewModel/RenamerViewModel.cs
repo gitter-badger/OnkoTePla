@@ -196,7 +196,7 @@ namespace bytePassion.FileRename2.ViewModel
 
 					foreach (var currentFile in new DirectoryInfo(StartDirectory).GetFiles())
 					{
-						sb.Append(currentFile.Name);
+						sb.Append(Path.GetFileNameWithoutExtension(currentFile.FullName));
 						sb.Append('\n');												
 					}
 
