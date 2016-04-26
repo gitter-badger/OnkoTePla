@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -194,11 +195,13 @@ namespace bytePassion.FileRename2.ViewModel
 				{
 					var sb = new StringBuilder();
 
-					foreach (var currentFile in new DirectoryInfo(StartDirectory).GetFiles())
-					{
-						sb.Append(Path.GetFileNameWithoutExtension(currentFile.FullName));
-						sb.Append('\n');												
-					}
+					var fileList = new DirectoryInfo(StartDirectory)
+											.GetFiles()
+											.Select(currentFile => Path.GetFileNameWithoutExtension(currentFile.FullName))
+											.ToList();
+
+					fileList.Sort(new LikeWindowsComparer());
+					fileList.Do(name => sb.Append(name + "\n"));
 
 					if (sb.Length > 0)
 						sb.Remove(sb.Length - 1, 1);
@@ -207,6 +210,18 @@ namespace bytePassion.FileRename2.ViewModel
 					NewNames = "";
 				}
 			}
+		}
+		
+		private class LikeWindowsComparer : IComparer<string>
+		{
+			[DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+			private static extern int StrCmpLogicalW (string x, string y);
+
+			public int Compare (string x, string y)
+			{
+				return StrCmpLogicalW(x, y);
+			}
+
 		}
 
 		public string OriginalNames
@@ -225,4 +240,7 @@ namespace bytePassion.FileRename2.ViewModel
 
 		public event PropertyChangedEventHandler PropertyChanged;		
 	}
+
+	
+
 }

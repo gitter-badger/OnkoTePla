@@ -76,15 +76,6 @@ namespace bytePassion.FileRename2.RenameLogic
 			UndoAvailable = true;
 		}
 
-//		private string GetName (string originalFilePath, string newName)
-//		{
-//			
-//				var extension = Path.GetExtension(originalFilePath);				
-//
-//				return newName + extension;
-//			
-//		}
-
 		private Task<Tuple<bool, string>> RecursiveRenamerAsync(DirectoryInfo directory)
 		{
 			return Task.Factory.StartNew(() => RecursiveRenamer(directory));
