@@ -15,7 +15,7 @@ using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
 
 namespace bytePassion.OnkoTePla.Server.DataAndService.Data
 {
-	internal class DataCenter : IDataCenter
+	public class DataCenter : IDataCenter
 	{
 		private readonly IConfigurationRepository configRepo;		
 		private readonly IPatientRepository patientRepository;		

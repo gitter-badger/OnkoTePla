@@ -86,8 +86,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 			// DataAndService
 
-			var dataCenterBuilder = new DataCenterBuilder(patientRepository, configRepository, eventStore);
-			var dataCenter = dataCenterBuilder.Build();
+			var dataCenter = new DataCenter(configRepository, patientRepository, eventStore);			
 
 	        dataCenterContainer.DataCenter = dataCenter;
 
@@ -148,9 +147,9 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             ////////                                                                             //////////
             ///////////////////////////////////////////////////////////////////////////////////////////////
             
-			dataCenterBuilder.PersistConfigRepostiory();
-			dataCenterBuilder.PersistPatientRepository();
-			dataCenterBuilder.PersistEventStore();
+			configRepository.PersistRepository();
+			patientRepository.PersistRepository();
+			eventStore.PersistRepository();			
 			localSettingsRepository.PersistRepository();
 
 			connectionServiceBuilder.DisposeConnectionService(connectionService);
