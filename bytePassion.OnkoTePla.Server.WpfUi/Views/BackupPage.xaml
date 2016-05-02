@@ -36,20 +36,14 @@
 				Command="{Binding ExportData}"/>
 
 		<Grid Grid.Row="2">
-			
+
 			<Grid.RowDefinitions>
 				<RowDefinition Height="50"/>
 				<RowDefinition/>
-				<RowDefinition/>
+				<RowDefinition Height="50"/>
 			</Grid.RowDefinitions>
-			
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
-			
-			<TextBlock Grid.Row="0"
-					   Grid.Column="0"
+
+			<TextBlock Grid.Row="0"					  
 					   Text="Regemäßige Backups"
 					   HorizontalAlignment="Left"
 					   VerticalAlignment="Center"
@@ -57,24 +51,38 @@
 					   FontSize="20"
 					   FontFamily="{StaticResource StandardFontFamily}"/>
 			
-			<Border Grid.Row="1"
-					Grid.Column="0">
-				
+			<Border Grid.Row="1">
+
 				<Grid>
-					
 					<Grid.RowDefinitions>
-						<RowDefinition/>
-						<RowDefinition/>
-						<RowDefinition/>
-						<RowDefinition/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 					
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="100"/>
+						<ColumnDefinition Width="150"/>
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 
+
 					<TextBlock Grid.Row="0"
+							   Grid.Column="0"
+							   Text="Interval:"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Center"
+							   Margin="5"
+							   FontSize="15"
+							   FontFamily="{StaticResource StandardFontFamily}"/>
+					
+					<ComboBox Grid.Row="0"
+							  Grid.Column="1"
+							  Margin="5"/>
+
+					<TextBlock Grid.Row="2"
 							   Grid.Column="0"
 							   Text="Uhrzeit:"
 							   HorizontalAlignment="Right"
@@ -83,7 +91,7 @@
 							   FontSize="15"
 							   FontFamily="{StaticResource StandardFontFamily}"/>
 
-					<TextBox Grid.Row="0"
+					<TextBox Grid.Row="2"
 							 Grid.Column="1"
 							 Margin="5"/>
 					
@@ -98,8 +106,41 @@
 					
 					<TextBox Grid.Row="1"
 							 Grid.Column="1"
-							 Margin="5"/>
+							 Margin="5,5,150,5"/>
 					
+					<Button Grid.Column="1"
+							Grid.Row="1"
+							Width="140"
+							Margin="5"
+							HorizontalAlignment="Right"
+							Content="Ordner wählen"/>
+
+					<TextBlock Grid.Row="3"
+							   Grid.Column="0"
+							   Text="Wochentag:"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Center"
+							   Margin="5"
+							   FontSize="15"
+							   FontFamily="{StaticResource StandardFontFamily}"/>
+					
+					<ComboBox Grid.Row="3"
+							  Grid.Column="1"
+							  Margin="5"/>
+
+					<TextBlock Grid.Row="4"
+							   Grid.Column="0"
+							   Text="Tag (im Monat):"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Center"
+							   Margin="5"
+							   FontSize="15"
+							   FontFamily="{StaticResource StandardFontFamily}"/>
+					
+					<TextBox Grid.Row="4"
+							 Grid.Column="1"
+							 Margin="5"/>
+
 				</Grid>
 				
 			</Border>
