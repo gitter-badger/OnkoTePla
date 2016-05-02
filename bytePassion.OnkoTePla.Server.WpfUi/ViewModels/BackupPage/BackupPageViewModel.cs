@@ -3,6 +3,7 @@ using System.Windows.Input;
 using bytePassion.Lib.WpfLib.Commands;
 using bytePassion.Lib.WpfLib.ViewModelBase;
 using bytePassion.OnkoTePla.Server.DataAndService.Backup;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.LocalSettings;
 using Microsoft.Win32;
 
 #pragma warning disable 0067
@@ -11,11 +12,14 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 {
 	internal class BackupPageViewModel : ViewModel, IBackupPageViewModel
 	{
-		private readonly IBackupService backupService;		
-		
-		public BackupPageViewModel(IBackupService backupService)
+		private readonly IBackupService backupService;
+		private readonly ILocalSettingsRepository localSettingsRepository;
+
+		public BackupPageViewModel(IBackupService backupService,
+								   ILocalSettingsRepository localSettingsRepository)
 		{
 			this.backupService = backupService;
+			this.localSettingsRepository = localSettingsRepository;
 
 			ImportData = new Command(DoImportData);
 			ExportData = new Command(DoExportData);

@@ -24,12 +24,15 @@ namespace bytePassion.OnkoTePla.Resources
 		public static readonly string ClientBasePath = AppDataPath + @"\bytePassion\OnkoTePla\Client\";
 		public static readonly string ServerBasePath = AppDataPath + @"\bytePassion\OnkoTePla\Server\";
 		public static readonly string BackupBasePath = AppDataPath + @"\bytePassion\OnkoTePla\Backup\";
-		
-		public static readonly string PatientPersistenceFile       = ServerBasePath + @"patients.xml";		
-		public static readonly string ConfigPersistenceFile        = ServerBasePath + @"config.xml";				
-		public static readonly string MetaDataPersistanceFile      = ServerBasePath + @"metaData.xml";
-		public static readonly string EventHistoryBasePath         = ServerBasePath + @"EventHistory";
-		
-		public static readonly string LocalSettingsPersistenceFile = ClientBasePath + @"settings.xml";
+
+		private const string Extension = ".xml";
+
+		public static readonly string PatientPersistenceFile             = ServerBasePath + "patients" + Extension;		
+		public static readonly string ConfigPersistenceFile              = ServerBasePath + "config"   + Extension;				
+		public static readonly string MetaDataPersistanceFile            = ServerBasePath + "metaData" + Extension;
+		public static readonly string LocalServerSettingsPersistanceFile = ServerBasePath + "settings" + Extension;
+		public static readonly string EventHistoryBasePath               = ServerBasePath + "EventHistory";
+																         
+		public static readonly string LocalSettingsPersistenceFile       = ClientBasePath + "settings" + Extension;
 	}
 }

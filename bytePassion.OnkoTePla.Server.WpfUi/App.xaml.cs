@@ -8,6 +8,7 @@ using bytePassion.OnkoTePla.Server.DataAndService.Data;
 using bytePassion.OnkoTePla.Server.DataAndService.Factorys;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Config;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.EventStore;
+using bytePassion.OnkoTePla.Server.DataAndService.Repositories.LocalSettings;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.Patients;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamMetaData;
 using bytePassion.OnkoTePla.Server.DataAndService.Repositories.StreamPersistance;
@@ -67,6 +68,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			configRepository.LoadRepository();
 
 			
+			// LocalSettings-Repository
+
+			var settingsPersistenceService = new LocalSettingsXmlPersistenceService(GlobalConstants.LocalServerSettingsPersistanceFile);
+			var localSettingsRepository = new LocalSettingsRepository(settingsPersistenceService);
+
+
 			// Event-Store
 
 			var eventStreamPersistenceService = new XmlEventStreamPersistanceService();
@@ -111,7 +118,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter, selectedPageVariable, connectionService);
 			var labelPageViewModel			   = new LabelPageViewModel(dataCenter, selectedPageVariable, connectionService);
 			var patientsPageViewModel          = new PatientsPageViewModel(patientSelectorViewModel, patientRepository, selectedPatientVariable, patientNameGenerator);
-			var backupPageViewModel			   = new BackupPageViewModel(backUpService);
+			var backupPageViewModel			   = new BackupPageViewModel(backUpService, localSettingsRepository);
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel("0.1.0.0"); 
 	        
@@ -144,6 +151,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			dataCenterBuilder.PersistConfigRepostiory();
 			dataCenterBuilder.PersistPatientRepository();
 			dataCenterBuilder.PersistEventStore();
+			localSettingsRepository.PersistRepository();
 
 			connectionServiceBuilder.DisposeConnectionService(connectionService);
         }

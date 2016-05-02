@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"            
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400">
+             d:DesignHeight="500" d:DesignWidth="600">
 	
 	<d:DesignData.DataContext>
 		<sampleData:BackupPageViewModelSampleData/>
@@ -43,7 +43,13 @@
 				<RowDefinition/>
 			</Grid.RowDefinitions>
 			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			
 			<TextBlock Grid.Row="0"
+					   Grid.Column="0"
 					   Text="Regemäßige Backups"
 					   HorizontalAlignment="Left"
 					   VerticalAlignment="Center"
@@ -51,12 +57,52 @@
 					   FontSize="20"
 					   FontFamily="{StaticResource StandardFontFamily}"/>
 			
-			<TextBlock Grid.Row="1"
-					   Text="TODO"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Center"
-					   FontSize="40"
-					   FontFamily="{StaticResource StandardFontFamily}"/>
+			<Border Grid.Row="1"
+					Grid.Column="0">
+				
+				<Grid>
+					
+					<Grid.RowDefinitions>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+					
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="100"/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Row="0"
+							   Grid.Column="0"
+							   Text="Uhrzeit:"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Center"
+							   Margin="5"
+							   FontSize="15"
+							   FontFamily="{StaticResource StandardFontFamily}"/>
+
+					<TextBox Grid.Row="0"
+							 Grid.Column="1"
+							 Margin="5"/>
+					
+					<TextBlock Grid.Row="1"
+							   Grid.Column="0"
+							   Text="Ziel-Ordner:"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Center"
+							   Margin="5"
+							   FontSize="15"
+							   FontFamily="{StaticResource StandardFontFamily}"/>
+					
+					<TextBox Grid.Row="1"
+							 Grid.Column="1"
+							 Margin="5"/>
+					
+				</Grid>
+				
+			</Border>
 			
 		</Grid>
 

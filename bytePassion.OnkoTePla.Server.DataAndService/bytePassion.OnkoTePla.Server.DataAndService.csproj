@@ -59,6 +59,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backup\BackupInterval.cs" />
     <Compile Include="Backup\BackupService.cs" />
     <Compile Include="Backup\IBackupService.cs" />
     <Compile Include="Connection\ConnectionService.cs" />
@@ -114,6 +115,10 @@
     <Compile Include="Repositories\EventStore\IEventStore.cs" />
     <Compile Include="Repositories\JSonDataStores\JsonEventStreamDataStore.cs" />
     <Compile Include="Repositories\JSonDataStores\JsonSerializationDoubles\LabelSerializationDouble.cs" />
+    <Compile Include="Repositories\LocalSettings\ILocalSettingsRepository.cs" />
+    <Compile Include="Repositories\LocalSettings\LocalSettingsData.cs" />
+    <Compile Include="Repositories\LocalSettings\LocalSettingsRepository.cs" />
+    <Compile Include="Repositories\XmlDataStores\LocalSettingsXMLPersistenceService.cs" />
     <Compile Include="Repositories\Patients\IPatientRepository.cs" />
     <Compile Include="Repositories\JSonDataStores\JSonPatientDataStore.cs" />
     <Compile Include="Repositories\Patients\PatientRepository.cs" />
