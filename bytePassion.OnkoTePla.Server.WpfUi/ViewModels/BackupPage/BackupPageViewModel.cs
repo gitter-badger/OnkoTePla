@@ -27,6 +27,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 		private bool isBackupTimeVisible;
 		private bool isBackupDayOfWeekVisible;
 		private bool isBackupDayVisible;
+		private bool isActivateButtonVisible;
+		private bool isDeactivateButtonVisible;
 
 		public BackupPageViewModel(IBackupService backupService,
 								   ILocalSettingsRepository localSettingsRepository)
@@ -42,14 +44,18 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 													   .Select(p => (DayOfWeek)p.GetValue(null, null))
 													   .ToObservableCollection();
 
-			ImportData         = new Command(DoImportData);
-			ExportData         = new Command(DoExportData);
-			SelectBackupFolder = new Command(DoSelectBackupFolder);
+			ImportData               = new Command(DoImportData);
+			ExportData               = new Command(DoExportData);
+			SelectBackupFolder       = new Command(DoSelectBackupFolder);
+			ActivateBackupSchedule   = new Command(DoActivateBackupSchedule);
+			DeactivateBackupSchedule = new Command(DoDeactivateBackupScheldule);
 		}
 		
-		public ICommand ImportData         { get; }
-		public ICommand ExportData         { get; }
-		public ICommand SelectBackupFolder { get; }
+		public ICommand ImportData               { get; }
+		public ICommand ExportData               { get; }
+		public ICommand SelectBackupFolder       { get; }
+		public ICommand ActivateBackupSchedule   { get; }
+		public ICommand DeactivateBackupSchedule { get; }
 
 		public ObservableCollection<BackupInterval> AllBackupIntervals { get; }
 		public ObservableCollection<DayOfWeek>      AllDaysOfWeek      { get; }
@@ -108,6 +114,18 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 			private set { PropertyChanged.ChangeAndNotify(this, ref isBackupDayVisible, value); }
 		}
 
+		public bool IsActivateButtonVisible
+		{
+			get { return isActivateButtonVisible; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref isActivateButtonVisible, value); }
+		}
+
+		public bool IsDeactivateButtonVisible
+		{
+			get { return isDeactivateButtonVisible; }
+			private set { PropertyChanged.ChangeAndNotify(this, ref isDeactivateButtonVisible, value); }
+		}
+
 		private void DoImportData()
 		{			
 			var openFileDialog = new OpenFileDialog
@@ -139,6 +157,16 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 		}
 
 		private void DoSelectBackupFolder ()
+		{
+			// TODO
+		}
+
+		private void DoDeactivateBackupScheldule ()
+		{
+			// TODO
+		}
+
+		private void DoActivateBackupSchedule ()
 		{
 			// TODO
 		}

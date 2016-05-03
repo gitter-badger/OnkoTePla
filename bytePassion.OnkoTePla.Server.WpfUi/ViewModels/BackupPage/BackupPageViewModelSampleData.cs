@@ -29,15 +29,19 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 			SelectedDayOfWeek = AllDaysOfWeek[4];
 			BackupDay = "10";
 
-			IsBackupDayOfWeekVisible = true;
-			IsBackupDayVisible       = true;
-			IsBackupFolderVisible    = true;
-			IsBackupTimeVisible      = true;
+			IsBackupDayOfWeekVisible  = true;
+			IsBackupDayVisible        = true;
+			IsBackupFolderVisible     = true;
+			IsBackupTimeVisible       = true;
+			IsActivateButtonVisible   = true;
+			IsDeactivateButtonVisible = false;
 		}
 
-		public ICommand ImportData         => null;
-		public ICommand ExportData         => null;
-		public ICommand SelectBackupFolder => null;
+		public ICommand ImportData               => null;
+		public ICommand ExportData               => null;
+		public ICommand SelectBackupFolder       => null;
+		public ICommand ActivateBackupSchedule   => null;
+		public ICommand DeactivateBackupSchedule => null;
 
 		public ObservableCollection<BackupInterval> AllBackupIntervals { get; }
 		public ObservableCollection<DayOfWeek> AllDaysOfWeek { get; }
@@ -48,10 +52,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 		public DayOfWeek      SelectedDayOfWeek       { get; set; }
 		public string         BackupDay               { get; set; }
 
-		public bool IsBackupFolderVisible    { get; }
-		public bool IsBackupTimeVisible      { get; }
-		public bool IsBackupDayOfWeekVisible { get; }
-		public bool IsBackupDayVisible       { get; }
+		public bool IsBackupFolderVisible     { get; }
+		public bool IsBackupTimeVisible       { get; }
+		public bool IsBackupDayOfWeekVisible  { get; }
+		public bool IsBackupDayVisible        { get; }
+		public bool IsActivateButtonVisible   { get; }
+		public bool IsDeactivateButtonVisible { get; }
 
 		public void Dispose () { }
 		public event PropertyChangedEventHandler PropertyChanged;

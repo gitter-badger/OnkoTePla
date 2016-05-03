@@ -61,6 +61,7 @@
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 					
 					<Grid.ColumnDefinitions>
@@ -140,6 +141,20 @@
 					<TextBox Grid.Row="4"
 							 Grid.Column="1"
 							 Margin="5"/>
+					
+					<Button Grid.Row="5"
+							Grid.Column="0"
+							Grid.ColumnSpan="2"
+							Width="250"
+							Margin="5"
+							Content="Regelmäßiges Backup aktivieren"/>
+
+					<Button Grid.Row="5"
+							Grid.Column="0"
+							Grid.ColumnSpan="2"
+							Width="250"
+							Margin="5"
+							Content="Regelmäßiges Backup deaktivieren"/>
 
 				</Grid>
 				
