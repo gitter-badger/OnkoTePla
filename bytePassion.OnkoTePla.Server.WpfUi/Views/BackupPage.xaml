@@ -4,12 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"            
              xmlns:sampleData="clr-namespace:bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage"
+             xmlns:converter="clr-namespace:bytePassion.Lib.WpfLib.Converter;assembly=bytePassion.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600">
 	
 	<d:DesignData.DataContext>
 		<sampleData:BackupPageViewModelSampleData/>
 	</d:DesignData.DataContext>
+	
+	<UserControl.Resources>
+		<converter:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+	</UserControl.Resources>
 	
     <Grid Background="White">
          
@@ -77,11 +82,17 @@
 							   VerticalAlignment="Center"
 							   Margin="5"
 							   FontSize="15"
+							   IsEnabled="{Binding IsBackupScheduleChangeable}"
 							   FontFamily="{StaticResource StandardFontFamily}"/>
 					
 					<ComboBox Grid.Row="0"
 							  Grid.Column="1"
-							  Margin="5"/>
+							  Margin="5"
+							  IsEnabled="{Binding IsBackupScheduleChangeable}"
+							  ItemsSource="{Binding AllBackupIntervals}"
+							  SelectedItem="{Binding SelectedBackupInterval, 
+													 Mode=TwoWay, 
+													 UpdateSourceTrigger=PropertyChanged}"/>
 
 					<TextBlock Grid.Row="2"
 							   Grid.Column="0"
@@ -90,11 +101,16 @@
 							   VerticalAlignment="Center"
 							   Margin="5"
 							   FontSize="15"
-							   FontFamily="{StaticResource StandardFontFamily}"/>
+							   IsEnabled="{Binding IsBackupScheduleChangeable}"
+							   FontFamily="{StaticResource StandardFontFamily}"
+							   Visibility="{Binding IsBackupTimeVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
 
 					<TextBox Grid.Row="2"
 							 Grid.Column="1"
-							 Margin="5"/>
+							 Margin="5"
+							 IsEnabled="{Binding IsBackupScheduleChangeable}"
+							 Visibility="{Binding IsBackupTimeVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"
+							 Text="{Binding BackupTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 					
 					<TextBlock Grid.Row="1"
 							   Grid.Column="0"
@@ -103,18 +119,26 @@
 							   VerticalAlignment="Center"
 							   Margin="5"
 							   FontSize="15"
-							   FontFamily="{StaticResource StandardFontFamily}"/>
+							   IsEnabled="{Binding IsBackupScheduleChangeable}"
+							   FontFamily="{StaticResource StandardFontFamily}"
+							   Visibility="{Binding IsBackupFolderVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
 					
 					<TextBox Grid.Row="1"
 							 Grid.Column="1"
-							 Margin="5,5,150,5"/>
+							 Margin="5,5,150,5"
+							 IsEnabled="{Binding IsBackupScheduleChangeable}"
+							 Visibility="{Binding IsBackupFolderVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"
+							 Text="{Binding BackupDestinationFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 					
 					<Button Grid.Column="1"
 							Grid.Row="1"
 							Width="140"
 							Margin="5"
 							HorizontalAlignment="Right"
-							Content="Ordner wählen"/>
+							Content="Ordner wählen"
+							IsEnabled="{Binding IsBackupScheduleChangeable}"
+							Visibility="{Binding IsBackupFolderVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"
+							Command="{Binding SelectBackupFolder}"/>
 
 					<TextBlock Grid.Row="3"
 							   Grid.Column="0"
@@ -123,11 +147,19 @@
 							   VerticalAlignment="Center"
 							   Margin="5"
 							   FontSize="15"
-							   FontFamily="{StaticResource StandardFontFamily}"/>
+							   IsEnabled="{Binding IsBackupScheduleChangeable}"
+							   FontFamily="{StaticResource StandardFontFamily}"
+							   Visibility="{Binding IsBackupDayOfWeekVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
 					
 					<ComboBox Grid.Row="3"
 							  Grid.Column="1"
-							  Margin="5"/>
+							  Margin="5"
+							  IsEnabled="{Binding IsBackupScheduleChangeable}"
+							  ItemsSource="{Binding AllDaysOfWeek}"
+							  SelectedItem="{Binding SelectedDayOfWeek, 
+													 Mode=TwoWay, 
+													 UpdateSourceTrigger=PropertyChanged}"
+							  Visibility="{Binding IsBackupDayOfWeekVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
 
 					<TextBlock Grid.Row="4"
 							   Grid.Column="0"
@@ -136,25 +168,34 @@
 							   VerticalAlignment="Center"
 							   Margin="5"
 							   FontSize="15"
-							   FontFamily="{StaticResource StandardFontFamily}"/>
+							   IsEnabled="{Binding IsBackupScheduleChangeable}"
+							   FontFamily="{StaticResource StandardFontFamily}"
+							   Visibility="{Binding IsBackupDayVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"/>
 					
 					<TextBox Grid.Row="4"
 							 Grid.Column="1"
-							 Margin="5"/>
+							 Margin="5"
+							 IsEnabled="{Binding IsBackupScheduleChangeable}"
+							 Visibility="{Binding IsBackupDayVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"
+							 Text="{Binding BackupDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 					
 					<Button Grid.Row="5"
 							Grid.Column="0"
 							Grid.ColumnSpan="2"
 							Width="250"
 							Margin="5"
-							Content="Regelmäßiges Backup aktivieren"/>
+							Content="Regelmäßiges Backup aktivieren"
+							Visibility="{Binding IsActivateButtonVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"
+							Command="{Binding ActivateBackupSchedule}"/>
 
 					<Button Grid.Row="5"
 							Grid.Column="0"
 							Grid.ColumnSpan="2"
 							Width="250"
 							Margin="5"
-							Content="Regelmäßiges Backup deaktivieren"/>
+							Content="Regelmäßiges Backup deaktivieren"
+							Visibility="{Binding IsDeactivateButtonVisible, Converter={StaticResource BoolToCollapsedVisibilityConverter}}"
+							Command="{Binding DeactivateBackupSchedule}"/>
 
 				</Grid>
 				

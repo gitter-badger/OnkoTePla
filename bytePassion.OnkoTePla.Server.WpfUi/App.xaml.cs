@@ -72,7 +72,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 
 			var settingsPersistenceService = new LocalSettingsXmlPersistenceService(GlobalConstants.LocalServerSettingsPersistanceFile);
 			var localSettingsRepository = new LocalSettingsRepository(settingsPersistenceService);
-
+			localSettingsRepository.LoadRepository();
 
 			// Event-Store
 

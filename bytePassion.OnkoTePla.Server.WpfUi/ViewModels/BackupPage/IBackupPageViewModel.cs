@@ -18,10 +18,12 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 		ObservableCollection<DayOfWeek>      AllDaysOfWeek      { get; }
 
 		BackupInterval SelectedBackupInterval  { get; set; }
-		string         BackupdestinationFolder { get; set; }		
+		string         BackupDestinationFolder { get; set; }		
 		string         BackupTime              { get; set; }		
 		DayOfWeek      SelectedDayOfWeek       { get; set; }
 		string         BackupDay               { get; set; }
+
+		bool IsBackupScheduleChangeable { get; }
 
 		bool IsBackupFolderVisible     { get; }
 		bool IsBackupTimeVisible       { get; }
