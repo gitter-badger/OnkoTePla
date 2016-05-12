@@ -17,6 +17,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 	internal class BackupPageViewModel : ViewModel, IBackupPageViewModel
 	{
 		private readonly IBackupService backupService;
+		private readonly IBackupScheduler backupScheduler;
 		private readonly ILocalSettingsRepository localSettingsRepository;
 
 		private BackupInterval selectedBackupInterval;
@@ -33,9 +34,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 		private bool isBackupScheduleChangeable;
 
 		public BackupPageViewModel(IBackupService backupService,
+								   IBackupScheduler backupScheduler,
 								   ILocalSettingsRepository localSettingsRepository)
 		{
 			this.backupService = backupService;
+			this.backupScheduler = backupScheduler;
 			this.localSettingsRepository = localSettingsRepository;			
 
 			AllBackupIntervals = Enum.GetValues(typeof(BackupInterval)).Cast<BackupInterval>().ToObservableCollection();			
@@ -191,7 +194,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 			localSettingsRepository.BackupInterval = BackupInterval.None;
 			localSettingsRepository.PersistRepository();
 
-			// TODO: stop backup-Schedule
+			backupScheduler.Stop();
 
 			IsDeactivateButtonVisible = false;
 			IsActivateButtonVisible = true;
@@ -208,8 +211,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi.ViewModels.BackupPage
 
 			localSettingsRepository.PersistRepository();
 
-			// TODO: init backup-Schedule
-
+			backupScheduler.Start(localSettingsRepository);
+			
 			IsActivateButtonVisible = false;
 			IsDeactivateButtonVisible = true;
 			IsBackupScheduleChangeable = false;

@@ -60,7 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backup\BackupInterval.cs" />
+    <Compile Include="Backup\BackupScheduler.cs" />
     <Compile Include="Backup\BackupService.cs" />
+    <Compile Include="Backup\IBackupScheduler.cs" />
     <Compile Include="Backup\IBackupService.cs" />
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Connection\NotificationObjects\LabelAddedNotificationObject.cs" />

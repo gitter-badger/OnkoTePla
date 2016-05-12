@@ -87,10 +87,11 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			// DataAndService
 
 			var dataCenter = new DataCenter(configRepository, patientRepository, eventStore);			
-
 	        dataCenterContainer.DataCenter = dataCenter;
 
 	        var backUpService = new BackupService(patientRepository, configRepository, eventStore, connectionService);
+	        var backupScheduler = new BackupScheduler(backUpService);
+	        backupScheduler.Start(localSettingsRepository);
 
 			// ViewModel-Variables
 
@@ -117,7 +118,7 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
 			var therapyPlaceTypesPageViewModel = new TherapyPlaceTypesPageViewModel(dataCenter, selectedPageVariable, connectionService);
 			var labelPageViewModel			   = new LabelPageViewModel(dataCenter, selectedPageVariable, connectionService);
 			var patientsPageViewModel          = new PatientsPageViewModel(patientSelectorViewModel, patientRepository, selectedPatientVariable, patientNameGenerator);
-			var backupPageViewModel			   = new BackupPageViewModel(backUpService, localSettingsRepository);
+			var backupPageViewModel			   = new BackupPageViewModel(backUpService, backupScheduler, localSettingsRepository);
 			var optionsPageViewModel           = new OptionsPageViewModel();
             var aboutPageViewModel             = new AboutPageViewModel("0.1.0.0"); 
 	        
@@ -147,6 +148,8 @@ namespace bytePassion.OnkoTePla.Server.WpfUi
             ////////                                                                             //////////
             ///////////////////////////////////////////////////////////////////////////////////////////////
             
+			backupScheduler.Stop();
+
 			configRepository.PersistRepository();
 			patientRepository.PersistRepository();
 			eventStore.PersistRepository();			
