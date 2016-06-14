@@ -118,6 +118,11 @@ namespace bytePassion.Lib.TimeLib
             return dateTime.ToString("D", cultureInfo);
         }
 
+		public DateTime GetDateTime()
+		{
+			return new DateTime(Year, Month, Day);
+		}
+
 		public byte   Day   { get; }
 	    public byte   Month { get; }
 	    public ushort Year  { get; }

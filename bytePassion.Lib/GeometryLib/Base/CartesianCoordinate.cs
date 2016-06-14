@@ -1,7 +1,7 @@
 ﻿using System;
 using bytePassion.Lib.FrameworkExtensions;
-using bytePassion.Lib.GeometryLib.Utils;
 using bytePassion.Lib.Types.SemanticTypes;
+using static bytePassion.Lib.GeometryLib.Utils.GeometryLibUtils;
 
 
 namespace bytePassion.Lib.GeometryLib.Base
@@ -23,14 +23,14 @@ namespace bytePassion.Lib.GeometryLib.Base
 
         public override bool Equals(object obj)
         {           
-            return this.Equals(obj, (c1, c2) =>  GeometryLibUtils.DoubleEquals(c1.X, c2.X) &&
-                                                 GeometryLibUtils.DoubleEquals(c1.Y, c2.Y) &&
-                                                 GeometryLibUtils.DoubleEquals(c1.Z, c2.Z));
+            return this.Equals(obj, (c1, c2) =>  DoubleEquals(c1.X, c2.X) &&
+                                                 DoubleEquals(c1.Y, c2.Y) &&
+                                                 DoubleEquals(c1.Z, c2.Z));
         }
 
         public override string ToString()
         {
-            return $"CC({GeometryLibUtils.DoubleFormat(X)}, {GeometryLibUtils.DoubleFormat(Y)}, {GeometryLibUtils.DoubleFormat(Z)})";
+            return $"CC({DoubleFormat(X)}, {DoubleFormat(Y)}, {DoubleFormat(Z)})";
         }
 
         public override int GetHashCode()

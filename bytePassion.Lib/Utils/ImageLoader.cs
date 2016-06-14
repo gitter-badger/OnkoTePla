@@ -42,7 +42,7 @@ namespace bytePassion.Lib.Utils
 			return new DrawingImage()
 			{
 				Drawing = drawingGroup
-			};
+			};			
 		}
 	}
 }

@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace bytePassion.Lib.GeometryLib.Utils
 {
-    public static class GeometryLibUtils
+	public static class GeometryLibUtils
     {
         private static readonly IFormatProvider Numberformat = CultureInfo.CreateSpecificCulture("en-US");
 
@@ -36,26 +36,26 @@ namespace bytePassion.Lib.GeometryLib.Utils
         {
             switch (precision)
             {
-                case  1: return String.Format(Numberformat, "{0:0.0}", d);
-                case  2: return String.Format(Numberformat, "{0:0.00}", d);
-                case  3: return String.Format(Numberformat, "{0:0.000}", d);
-                case  4: return String.Format(Numberformat, "{0:0.0000}", d);
-                case  5: return String.Format(Numberformat, "{0:0.00000}", d);
-                case  6: return String.Format(Numberformat, "{0:0.000000}", d);
-                case  7: return String.Format(Numberformat, "{0:0.0000000}", d);
-                case  8: return String.Format(Numberformat, "{0:0.00000000}", d);
-                case  9: return String.Format(Numberformat, "{0:0.000000000}", d);
-                case 10: return String.Format(Numberformat, "{0:0.0000000000}", d);
-                case 11: return String.Format(Numberformat, "{0:0.00000000000}", d);
-                case 12: return String.Format(Numberformat, "{0:0.000000000000}", d);
-                case 13: return String.Format(Numberformat, "{0:0.0000000000000}", d);
-                case 14: return String.Format(Numberformat, "{0:0.00000000000000}", d);
-                case 15: return String.Format(Numberformat, "{0:0.000000000000000}", d);
-                case 16: return String.Format(Numberformat, "{0:0.0000000000000000}", d);
-                case 17: return String.Format(Numberformat, "{0:0.00000000000000000}", d);
-                case 18: return String.Format(Numberformat, "{0:0.000000000000000000}", d);
-                case 19: return String.Format(Numberformat, "{0:0.0000000000000000000}", d);
-                case 20: return String.Format(Numberformat, "{0:0.00000000000000000000}", d);
+                case  1: return string.Format(Numberformat, "{0:0.0}", d);
+                case  2: return string.Format(Numberformat, "{0:0.00}", d);
+                case  3: return string.Format(Numberformat, "{0:0.000}", d);
+                case  4: return string.Format(Numberformat, "{0:0.0000}", d);
+                case  5: return string.Format(Numberformat, "{0:0.00000}", d);
+                case  6: return string.Format(Numberformat, "{0:0.000000}", d);
+                case  7: return string.Format(Numberformat, "{0:0.0000000}", d);
+                case  8: return string.Format(Numberformat, "{0:0.00000000}", d);
+                case  9: return string.Format(Numberformat, "{0:0.000000000}", d);
+                case 10: return string.Format(Numberformat, "{0:0.0000000000}", d);
+                case 11: return string.Format(Numberformat, "{0:0.00000000000}", d);
+                case 12: return string.Format(Numberformat, "{0:0.000000000000}", d);
+                case 13: return string.Format(Numberformat, "{0:0.0000000000000}", d);
+                case 14: return string.Format(Numberformat, "{0:0.00000000000000}", d);
+                case 15: return string.Format(Numberformat, "{0:0.000000000000000}", d);
+                case 16: return string.Format(Numberformat, "{0:0.0000000000000000}", d);
+                case 17: return string.Format(Numberformat, "{0:0.00000000000000000}", d);
+                case 18: return string.Format(Numberformat, "{0:0.000000000000000000}", d);
+                case 19: return string.Format(Numberformat, "{0:0.0000000000000000000}", d);
+                case 20: return string.Format(Numberformat, "{0:0.00000000000000000000}", d);
 
                 default: throw new ArgumentException("precision has to be between 1 and 20");
             }

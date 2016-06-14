@@ -35,6 +35,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
@@ -65,6 +66,7 @@
     <Compile Include="FrameworkExtensions\DisposingObject.cs" />
     <Compile Include="FrameworkExtensions\FrameworkElementExtensions.cs" />
     <Compile Include="FrameworkExtensions\ObservableCollectionExtensions.cs" />
+    <Compile Include="TimeLib\Utils.cs" />
     <Compile Include="Types\Communication\Address.cs" />
     <Compile Include="Types\Communication\AddressIdentifier.cs" />
     <Compile Include="Types\Communication\AddressIdentifierType.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Types\SemanticTypes\YCoord.cs" />
     <Compile Include="Types\SemanticTypes\ZCoord.cs" />
     <Compile Include="Utils\ImageLoader.cs" />
+    <Compile Include="Utils\UIElementToImage.cs" />
     <Compile Include="Utils\Workflow\IllegalStateTransitionException.cs" />
     <Compile Include="Utils\Workflow\IWorkflowEngine.cs" />
     <Compile Include="Utils\Workflow\StateTransition.cs" />
@@ -140,6 +143,7 @@
     <Compile Include="WpfLib\Adorner\AdornerPlacement.cs" />
     <Compile Include="WpfLib\Adorner\FrameworkElementAdorner.cs" />
     <Compile Include="WpfLib\Adorner\UIElementAdorner.cs" />
+    <Compile Include="WpfLib\Behaviors\AlwaysScrollDownBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\AutoScrollDownBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\GetFocusOnLoadedBehavior.cs" />
     <Compile Include="WpfLib\Behaviors\HeightWidthReportingBehavior.cs" />

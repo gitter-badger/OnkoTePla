@@ -19,12 +19,12 @@ namespace bytePassion.Lib.GeometryLib.Base
 
 	    public bool IsAngleWithin(Angle a)
 	    {
-			if (To > From)
-				return a < To && a > From;
-			return a < To || a > From;
+		    return To > From 
+					? a < To && a > From 
+					: a < To || a > From;
 	    }
 
-	    public bool IsOverlappingWith(AngleInterval ai)
+		public bool IsOverlappingWith(AngleInterval ai)
 	    {			
 			if (IsAngleWithin(ai.From)) return true;
 			if (IsAngleWithin(ai.To))   return true;

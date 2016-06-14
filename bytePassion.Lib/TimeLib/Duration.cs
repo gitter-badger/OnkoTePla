@@ -11,7 +11,7 @@ namespace bytePassion.Lib.TimeLib
 
 		public Duration(TimeSpan timeSpan)
 		{
-			Seconds = (uint) timeSpan.Seconds;
+			Seconds = (uint) timeSpan.TotalSeconds;
 		}
 
 		public Duration(uint seconds)
